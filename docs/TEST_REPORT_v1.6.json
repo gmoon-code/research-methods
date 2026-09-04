@@ -1,0 +1,60 @@
+{
+  "release": "v1.6",
+  "status": "PASS",
+  "test_commands": [
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.6-scientific-writing-lab/assets/writing.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.6-scientific-writing-lab/assets/writing-lab-ui.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.6-scientific-writing-lab/assets/app.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.6-scientific-writing-lab/tests/writing.test.js",
+      "code": 0,
+      "stdout": "PASS writing lab engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.6-scientific-writing-lab/tests/analytics.test.js",
+      "code": 0,
+      "stdout": "PASS statistics engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.6-scientific-writing-lab/tests/methods.test.js",
+      "code": 0,
+      "stdout": "PASS methods lab engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.6-scientific-writing-lab/tests/literature.test.js",
+      "code": 0,
+      "stdout": "PASS literature workspace engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.6-scientific-writing-lab/tests/coach.test.js",
+      "code": 0,
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.6-scientific-writing-lab/tests/ai-adapter.test.js",
+      "code": 0,
+      "stdout": "PASS AI adapter config\n",
+      "stderr": ""
+    }
+  ]
+}

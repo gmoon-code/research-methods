@@ -1,0 +1,25 @@
+
+global.window={};
+window.RMSLiterature={uniqueThemes:()=>["theme"]};
+window.RMSMethods={readiness:()=>({score:90,label:"ready",critical:0,warning:1,ethicsStatus:"clear"})};
+window.RMSWriting={paperAudit:()=>({score:82,label:"Developing well",issues:[]})};
+window.RMSCoach={reviewStage:(id,p)=>({score:85,label:"Strong",messages:[]})};
+window.RMSCompetency={snapshot:()=>({independentCompetencies:2,totalCompetencies:10}),importTeacherRatings:(p,r)=>{p._ratings=r}};
+require("../assets/journey.js");
+const J=window.RMSJourney;
+let p={created:"2026-01-01",name:"Test",ready:{1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true,11:true,12:true},data:{finalRQ:"Does X relate to Y?",questionType:"Correlational / observational",designType:"Correlational / observational",gapStatement:"Local extension",primaryEstimand:"correlation"},sources:[{screeningStatus:"Included"},{screeningStatus:"Included"},{screeningStatus:"Included"}],methods:{protocolVersions:[{}]},analysis:{rawData:[],runs:[]},writing:{sections:{discussion:"",conclusion:"",abstract:""}},journey:{}};
+J.normalizeProject(p);
+let ms=J.allMilestones(p);
+if(ms[0].state!=="student_ready")process.exit(1);
+if(ms[1].state!=="complete")process.exit(1);
+if(ms[2].state!=="student_ready")process.exit(1);
+J.requestCheckpoint(p,"M1");
+if(J.milestoneStatus(p,J.milestoneDefs[0]).state!=="awaiting_teacher")process.exit(1);
+let packet=J.exportStudentPacket(p);
+if(packet.packet_type!=="rms_student_review"||!packet.project_id||!packet.competency_snapshot)process.exit(1);
+let fb=J.makeTeacherFeedbackPacket(packet,{checkpoints:[{id:"M1",status:"approved",teacher:"T",comment:"Approved",conditions:[]}],feedback:[],competency_ratings:[{competency:"question_formulation",level:2}]});
+J.applyTeacherFeedback(p,fb);
+if(J.checkpoint(p,"M1").status!=="approved"||!p._ratings||p._ratings.length!==1)process.exit(1);
+let sum=J.classSummary([packet]);
+if(sum.n!==1)process.exit(1);
+console.log("PASS journey and teacher packet engine");

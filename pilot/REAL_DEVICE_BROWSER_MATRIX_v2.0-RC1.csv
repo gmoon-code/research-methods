@@ -1,0 +1,8 @@
+device_or_viewport,browser,test,onboarding,stage_navigation,top_tools,modal_scroll,backup_download,restore,teacher_packet_roundtrip,keyboard_focus,result,notes
+Desktop 1366x768,Chrome/Edge,required,,,,,,,,,PENDING,
+Desktop 1920x1080,Chrome/Edge,required,,,,,,,,,PENDING,
+iPhone-class 390px,Safari/Chrome,required,,,,,,,,,PENDING,
+Android-class 412px,Chrome,required,,,,,,,,,PENDING,
+Tablet portrait 768px,Safari/Chrome,required,,,,,,,,,PENDING,
+Keyboard only,Desktop browser,required,,,,,,,,,PENDING,
+Screen-reader smoke test,NVDA/VoiceOver,required,,,,,,,,,PENDING,

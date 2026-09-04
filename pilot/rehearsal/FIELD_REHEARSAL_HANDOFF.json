@@ -1,0 +1,11 @@
+{
+  "release": "v2.0.1 RC1",
+  "artifact": "Field Rehearsal Kit",
+  "measurement_baseline": "RMS-PILOT-BASELINE-v2.0",
+  "application_files_changed_from_rc1": [],
+  "automated_baseline_verification": "PASS",
+  "manual_required_rows": 34,
+  "manual_rows_currently_pass": 0,
+  "release_gate_current_status": "HOLD",
+  "reason": "Real-device/browser, keyboard-only, and screen-reader rehearsal evidence remains pending."
+}

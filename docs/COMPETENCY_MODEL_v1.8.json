@@ -1,0 +1,143 @@
+{
+  "version": "1.8",
+  "status": "provisional_unvalidated_instructional_model",
+  "rubric": {
+    "0": {
+      "label": "Emerging",
+      "description": "The relevant research decision is absent, substantially mismatched, or cannot yet be justified."
+    },
+    "1": {
+      "label": "Supported",
+      "description": "The student identifies part of the decision with substantial structure or prompting, but important reasoning gaps remain."
+    },
+    "2": {
+      "label": "Developing independence",
+      "description": "The decision is mostly defensible and explained, with limited gaps or support still needed."
+    },
+    "3": {
+      "label": "Independent reasoning",
+      "description": "The student makes a defensible decision, explains why it fits the evidence/design, and recognizes important limits with little or no direct support."
+    }
+  },
+  "scaffold_levels": {
+    "0": "No recorded support",
+    "1": "Diagnostic feedback or reflection prompt",
+    "2": "Conceptual cue or explanation",
+    "3": "Structured decision tool, checklist, or guided alternative set",
+    "4": "Worked parallel example from a different context",
+    "5": "Direct rescue/modelled option requiring student adaptation or justification"
+  },
+  "competencies": [
+    {
+      "id": "C1",
+      "key": "question_formulation",
+      "name": "Research question formulation",
+      "definition": "Moves from interest to a bounded, answerable, neutral research question whose wording matches the type of evidence and feasible design.",
+      "stages": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "id": "C2",
+      "key": "literature_search_evaluation",
+      "name": "Literature search and source evaluation",
+      "definition": "Builds reproducible searches, screens sources using explicit criteria, and evaluates source relevance, authority, accuracy, purpose, and methodological usefulness.",
+      "stages": [
+        5,
+        6
+      ]
+    },
+    {
+      "id": "C3",
+      "key": "literature_synthesis",
+      "name": "Literature synthesis and study justification",
+      "definition": "Coordinates evidence across studies, identifies convergence, disagreement, methodological boundaries, and supports an honest gap, replication, extension, or local rationale.",
+      "stages": [
+        7,
+        8
+      ]
+    },
+    {
+      "id": "C4",
+      "key": "operationalization_measurement",
+      "name": "Operationalization and measurement",
+      "definition": "Translates constructs into manipulable or measurable variables, scoring/coding rules, instruments, timing, units, and validity/reliability considerations.",
+      "stages": [
+        3,
+        4,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "id": "C5",
+      "key": "design_validity",
+      "name": "Study design and validity reasoning",
+      "definition": "Matches design to the research question, identifies units and comparison structure, recognizes confounding and repeated/nested structure, and calibrates the causal claim ceiling.",
+      "stages": [
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "id": "C6",
+      "key": "sampling_ethics",
+      "name": "Sampling, ethics, and research responsibility",
+      "definition": "Distinguishes population from sample, evaluates sampling/generalization, and plans consent, privacy, safety, authority, and appropriate oversight.",
+      "stages": [
+        11,
+        12
+      ]
+    },
+    {
+      "id": "C7",
+      "key": "data_reasoning",
+      "name": "Data integrity and descriptive reasoning",
+      "definition": "Preserves raw evidence, defines rows/columns, documents missingness and exclusions, visualizes the design structure, and describes patterns before inference.",
+      "stages": [
+        12,
+        13
+      ]
+    },
+    {
+      "id": "C8",
+      "key": "statistical_reasoning",
+      "name": "Statistical reasoning and uncertainty",
+      "definition": "Defines the estimand, matches analysis to design and data structure, checks relevant assumptions, reports magnitude and uncertainty, and avoids p-value overinterpretation.",
+      "stages": [
+        14,
+        15
+      ]
+    },
+    {
+      "id": "C9",
+      "key": "evidence_claims",
+      "name": "Evidence coordination and claim calibration",
+      "definition": "Connects results to the research question, distinguishes evidence from explanation, evaluates alternatives and limitations, and keeps causal/generalization claims within design boundaries.",
+      "stages": [
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "id": "C10",
+      "key": "scholarly_communication",
+      "name": "Scholarly communication and citation integrity",
+      "definition": "Builds coherent research sections, synthesizes sources, keeps Method/Results/Discussion roles distinct, traces claims to verified sources, and maintains whole-paper alignment.",
+      "stages": [
+        8,
+        15,
+        16,
+        17,
+        18
+      ]
+    }
+  ]
+}

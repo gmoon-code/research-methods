@@ -1,0 +1,85 @@
+{
+  "release": "v1.8",
+  "status": "PASS",
+  "competencies": 10,
+  "test_commands": [
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/assets/competencies.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/assets/competency-ui.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/assets/journey.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/assets/journey-ui.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/assets/app.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/tests/competencies.test.js",
+      "code": 0,
+      "stdout": "PASS competency analytics engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/tests/journey.test.js",
+      "code": 0,
+      "stdout": "PASS journey and teacher packet engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/tests/writing.test.js",
+      "code": 0,
+      "stdout": "PASS writing lab engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/tests/analytics.test.js",
+      "code": 0,
+      "stdout": "PASS statistics engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/tests/methods.test.js",
+      "code": 0,
+      "stdout": "PASS methods lab engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/tests/literature.test.js",
+      "code": 0,
+      "stdout": "PASS literature workspace engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/tests/coach.test.js",
+      "code": 0,
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.8-research-competency-learning-analytics/tests/ai-adapter.test.js",
+      "code": 0,
+      "stdout": "PASS AI adapter config\n",
+      "stderr": ""
+    }
+  ]
+}

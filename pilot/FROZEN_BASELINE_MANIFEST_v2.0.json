@@ -1,0 +1,23 @@
+{
+  "release": "2.0.0",
+  "baseline_id": "RMS-PILOT-BASELINE-v2.0",
+  "frozen_on": "2026-09-04",
+  "measurement_architecture_source": "v1.9 with v1.8 competency model; v2.0 adds deployment/usability/recovery layers without changing the listed measurement-sensitive files",
+  "baseline_sha256": "a94fcca22cfca34bd10dad2dccd34daafb439352549332d6e20a10839cb53b50",
+  "files": {
+    "assets/curriculum.js": "e1848aa45ae26dea86dbf21a842280a05c57c689bacc90568551b2c2a2c2ca05",
+    "assets/engine.js": "6bbf3a49a28d4709525ca6e7626f791738235dd3edbea87266a0b29a4ea175cf",
+    "assets/coach.js": "08e7e7e6e11de94871515b7989cab252d63714f0923ab115c9b0c48338e212a4",
+    "assets/literature.js": "f3834b7147cf3404e935d20ee79c76e2822a0012a65db03f987e49c8b33b4fae",
+    "assets/methods.js": "0c21c353f30eae947a71063d256071c177d4d7f72791ce505ca95031a6bf70ea",
+    "assets/analytics.js": "e7a47ce09a4ef5e0d799f2046eb9bc6189d78268360cd6d2d546e9efc522d137",
+    "assets/writing.js": "35df891b59b96a880aff2a23acdb82f9cf0fba9517303f8e547b23259dbdac22",
+    "assets/transfer-bank.js": "535cd95f8035d0b96265fd9494d0b0f1c49d1b5381250dc5f8018642bfc9d068",
+    "assets/transfer-bank-v1.9.json": "c9244be0552ebf316fb040a4d0532edcee77675040257ecdc9bbecee128667de",
+    "assets/transfer.js": "a0fd075c32f6762cfe3377efbaff696c46a734e4fea9f5d10ac726e9d9f85a3e",
+    "assets/competencies.js": "c984c5a5eb6a6070a6ba9da844d961d0e53b2bdf5471e14619aef8101abf6b0b",
+    "prompts/stage_prompts_v1.2.json": "dbd7dc9de4b89b0e5852863cda387ea734f91ce9654658ce4f952046f7d743c1",
+    "docs/COMPETENCY_MODEL_v1.8.json": "12a3b0d7ff04e718e8c10de1eb9d2cba7c1b0be1ba03c42239d4c724e052aa23"
+  },
+  "rule": "Any modification to a listed file after pilot data collection begins requires a new baseline/version or an explicitly documented protocol deviation."
+}

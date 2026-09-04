@@ -1,0 +1,42 @@
+{
+  "release": "v1.3",
+  "status": "PASS",
+  "test_commands": [
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.3-literature-workspace/assets/literature.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.3-literature-workspace/assets/coach.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.3-literature-workspace/assets/app.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.3-literature-workspace/tests/literature.test.js",
+      "code": 0,
+      "stdout": "PASS literature workspace engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.3-literature-workspace/tests/coach.test.js",
+      "code": 0,
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.3-literature-workspace/tests/ai-adapter.test.js",
+      "code": 0,
+      "stdout": "PASS AI adapter config\n",
+      "stderr": ""
+    }
+  ]
+}

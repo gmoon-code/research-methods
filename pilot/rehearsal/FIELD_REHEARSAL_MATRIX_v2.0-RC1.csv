@@ -1,0 +1,35 @@
+test_id,device_or_context,area,pass_criterion,result,notes,requirement
+DEP-01,All,Deployment,Live HTTPS page loads and refreshes,PENDING,,Required
+DESK-01,Desktop 1366x768 Chrome/Edge,Onboarding,First-run onboarding is readable and completable,PENDING,,Required
+DESK-02,Desktop 1366x768 Chrome/Edge,Navigation,"Stages 1,4,9,12,14,18 reachable",PENDING,,Required
+DESK-03,Desktop 1366x768 Chrome/Edge,Tools,All top-level labs open/close,PENDING,,Required
+DESK-04,Desktop 1366x768 Chrome/Edge,Autosave,Save status reflects actual local save,PENDING,,Required
+DESK-05,Desktop 1920x1080 Chrome/Edge,Layout,No clipped primary navigation or controls,PENDING,,Required
+BKP-01,Desktop,Recovery,Full backup downloads with project/timestamp filename,PENDING,,Required
+BKP-02,Desktop,Recovery,Full backup restores pre-change state,PENDING,,Required
+BKP-03,Desktop,Privacy,Privacy-minimized copy is blocked from recovery restore,PENDING,,Required
+BKP-04,Desktop,Recovery,New Project + refresh does not resurrect old recovery snapshot,PENDING,,Required
+POL-01,Desktop,Pilot policy,Frozen AI-disabled project cannot use AI controls,PENDING,,Required
+POL-02,Desktop,Pilot policy,Private-evaluation transfer policy blocks public bank,PENDING,,Required
+POL-03,Desktop,Pilot policy,Classroom-practice policy permits public candidate bank,PENDING,,Required
+DAT-01,Desktop,CSV import,Sample CSV imports as 18 rows,PENDING,,Required
+DAT-02,Desktop,Data quality,Numerical/categorical exploration works without rewriting raw copy,PENDING,,Required
+DAT-03,Desktop,Traceability,Stored analysis appears in Writing Lab Results evidence,PENDING,,Required
+TCH-01,Desktop,Teacher dashboard,Review packet imports,PENDING,,Required
+TCH-02,Desktop,Teacher dashboard,Repeated import of same project does not duplicate class count,PENDING,,Required
+TCH-03,Desktop,Teacher feedback,Feedback export/import updates student checkpoint/history,PENDING,,Required
+MOB-390-01,iPhone-class 390px Safari/Chrome,Navigation,Go to research stage shows all 18 stages,PENDING,,Required
+MOB-390-02,iPhone-class 390px Safari/Chrome,Tools,Top tool row remains reachable,PENDING,,Required
+MOB-390-03,iPhone-class 390px Safari/Chrome,Modal,Major lab modal scrolls/closes without trap,PENDING,,Required
+MOB-412-01,Android-class 412px Chrome,Navigation,Go to research stage shows all 18 stages,PENDING,,Required
+MOB-412-02,Android-class 412px Chrome,Tools,Top tool row remains reachable,PENDING,,Required
+MOB-412-03,Android-class 412px Chrome,Backup,Backup download works or browser gives normal download handling,PENDING,,Required
+TAB-01,Tablet portrait ~768px Safari/Chrome,Navigation,Stages and top tools remain reachable,PENDING,,Required
+TAB-02,Tablet portrait ~768px Safari/Chrome,Modal,Large modals scroll to bottom and close,PENDING,,Required
+KEY-01,Desktop keyboard only,Accessibility,Skip link reaches main content,PENDING,,Required
+KEY-02,Desktop keyboard only,Accessibility,Visible focus reaches primary controls,PENDING,,Required
+KEY-03,Desktop keyboard only,Accessibility,Journey/lab dialog operable and Escape closes top dialog,PENDING,,Required
+SR-01,NVDA or VoiceOver,Accessibility,Page title/major landmark sequence understandable,PENDING,,Required
+SR-02,NVDA or VoiceOver,Accessibility,Save-status live update is announced,PENDING,,Required
+SR-03,NVDA or VoiceOver,Accessibility,Dialog title and critical form labels announced,PENDING,,Required
+BASE-01,Any,Baseline,Frozen-baseline SHA verification passes after rehearsal,PENDING,,Required

@@ -1,0 +1,22 @@
+{
+  "endpoint": "/api/coach",
+  "method": "POST",
+  "request": {
+    "stage_id": "integer 1-18",
+    "project_context": "object with only stage-relevant fields",
+    "student_work": "object",
+    "deterministic_flags": "array",
+    "scaffold_level": "integer 0-5",
+    "source_context": "optional array of verified source records",
+    "course_config": "optional object"
+  },
+  "response": "Must validate against docs/COACH_RESPONSE_SCHEMA_v1.2.json",
+  "security": [
+    "No provider/API secret in browser code",
+    "Rate limit by deployment/user/session as appropriate",
+    "Validate request size and stage ID",
+    "Do not log raw student work unless the deployment explicitly requires and discloses it",
+    "Validate model JSON before returning it to the browser",
+    "Treat source URLs and retrieved source text as untrusted data"
+  ]
+}
