@@ -1,0 +1,22 @@
+
+global.window={};
+require("../assets/competencies.js");
+const C=window.RMSCompetency;
+let p={competency:{},methods:{protocolVersions:[]},journey:{teacherFeedback:[]}};
+C.normalizeProject(p);
+if(C.scoreToLevel(49)!==0||C.scoreToLevel(50)!==1||C.scoreToLevel(70)!==2||C.scoreToLevel(85)!==3)process.exit(1);
+let ev=C.captureIndependent(p,4,{score:88,label:"Strong"},{finalRQ:"Question?"});
+if(!ev.independentEligible||ev.level!==3)process.exit(1);
+C.recordSupport(p,4,1,"Local review");
+let ev2=C.captureIndependent(p,4,{score:90,label:"Strong"},{finalRQ:"Question revised?"});
+if(ev2.independentEligible)process.exit(1);
+C.recordReview(p,4,{score:88,label:"Strong"},"local");
+C.recordReview(p,4,{score:92,label:"Strong"},"local");
+let prof=C.competencyProfile(p,C.model.competencies[0]);
+if(prof.independentLevel!==3||prof.supportedLevel!==3||prof.supportMax!==1)process.exit(1);
+C.importTeacherRatings(p,[{competency:"question_formulation",level:2,teacher:"T",note:"Good rationale"}]);
+prof=C.competencyProfile(p,C.model.competencies[0]);
+if(prof.teacherRating.level!==2)process.exit(1);
+let snap=C.snapshot(p);
+if(snap.totalCompetencies!==10||snap.independentCompetencies<1)process.exit(1);
+console.log("PASS competency analytics engine");
