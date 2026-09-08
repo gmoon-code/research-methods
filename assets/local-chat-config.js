@@ -4,27 +4,27 @@ window.RMS_LOCAL_CHAT_CONFIG = Object.freeze({
   projectStorageKey: "research_methods_studio_v1",
 
   model: Object.freeze({
-    displayName: "SmolLM2 135M Instruct",
-    id: "smollm2-135m-instruct",
-    sourceRepository: "onnx-community/SmolLM2-135M-Instruct-ONNX",
-    sourceRevision: "b8a5c0f183b78c55955a5364f610c36668b5e681",
+    displayName: "SmolLM2 360M Instruct",
+    id: "smollm2-360m-instruct",
+    sourceRepository: "onnx-community/SmolLM2-360M-Instruct-ONNX",
+    sourceRevision: "fe7c7db4c8921c9e3fa1c65cfd296fb3b1b1a8f9",
     dtype: "q4",
-    expectedModelBytes: 181000000,
-    expectedFirstDownloadMB: 190,
-    modelSha256: "eb0d67c7e3b7d40f42d681b5f2eff4cef78968afe3f76c954f987dd870327a2a"
+    expectedModelBytes: 386495938,
+    expectedFirstDownloadMB: 400,
+    modelSha256: "77b81bc8d2cb60c23a3399acba67dfa241d073764a4d1bdcce479747fb794aa6"
   }),
 
   runtime: Object.freeze({
     transformersVersion: "4.2.0",
     preferWebGPU: true,
     allowWasmFallback: true,
-    maxNewTokens: 160,
+    maxNewTokens: 140,
     maxHistoryTurns: 6,
     maxPromptCharacters: 12000
   }),
 
   minimums: Object.freeze({
-    warnDeviceMemoryGB: 4,
-    recommendedFreeStorageMB: 350
+    warnDeviceMemoryGB: 8,
+    recommendedFreeStorageMB: 650
   })
 });
