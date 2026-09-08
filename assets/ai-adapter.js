@@ -17,6 +17,8 @@ window.RMSAI = (() => {
 
 (() => {
   const base=new URL("./",document.currentScript.src);
+  window.RMS_LOCAL_CHAT_ASSET_BASE=base.href;
+
   const css=document.createElement("link");
   css.rel="stylesheet";
   css.href=new URL("local-chat.css",base).href;
