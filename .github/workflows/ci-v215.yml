@@ -52,20 +52,30 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .cache/rms-model
-          key: smollm2-135m-instruct-q4-b8a5c0f-eb0d67c
+          key: smollm2-360m-instruct-q4-q4f16-fe7c7db-v1
       - name: Install exact browser inference runtime
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Build the exact GitHub Pages artifact
         run: npm run build:pages
-      - name: Verify pinned q4 model and same-site runtime
+      - name: Verify pinned model variants and same-site runtime
         shell: bash
         run: |
           set -euo pipefail
-          test -f _site/models/smollm2-135m-instruct/onnx/model_q4.onnx
-          echo "eb0d67c7e3b7d40f42d681b5f2eff4cef78968afe3f76c954f987dd870327a2a  _site/models/smollm2-135m-instruct/onnx/model_q4.onnx" | sha256sum -c -
+          Q4=_site/models/smollm2-360m-instruct/onnx/model_q4.onnx
+          Q4F16=_site/models/smollm2-360m-instruct/onnx/model_q4f16.onnx
+          test -f "$Q4"
+          test -f "$Q4F16"
+          echo "77b81bc8d2cb60c23a3399acba67dfa241d073764a4d1bdcce479747fb794aa6  $Q4" | sha256sum -c -
+          echo "ce4a145ce32435411a296289d93b2c33334e6876ffba05373c9aa829c28e2026  $Q4F16" | sha256sum -c -
           test -f _site/vendor/transformers/transformers.min.js
           test -f _site/BUILD_MANIFEST_v2.15.json
           grep -q 'env.allowRemoteModels=false' _site/assets/local-chat-worker.js
           ! grep -RIE '(api\.openai\.com|vercel\.app)' _site/assets
-      - name: Report artifact size
-        run: du -sh _site
+      - name: Enforce GitHub Pages size headroom
+        shell: bash
+        run: |
+          set -euo pipefail
+          BYTES=$(du -sb _site | cut -f1)
+          MAX=$((900*1024*1024))
+          echo "Pages artifact bytes: $BYTES"
+          test "$BYTES" -lt "$MAX"
