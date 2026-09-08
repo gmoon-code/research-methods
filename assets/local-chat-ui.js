@@ -5,6 +5,7 @@ window.RMSLocalChatUI = (() => {
 
   const E=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
   const fmtBytes=n=>n==null?"Unknown":`${Math.round(n/1024/1024)} MB`;
+  const firstDownloadMB=info=>info?.webgpu?CFG.model.expectedWebGPUDownloadMB:CFG.model.expectedWasmDownloadMB;
 
   function launcher(){
     let b=document.getElementById("researchChatLauncher");
@@ -27,17 +28,18 @@ window.RMSLocalChatUI = (() => {
   }
 
   function setupHtml(state){
-    const info=deviceInfo||{};
+    const info=deviceInfo||{},downloadMB=firstDownloadMB(info);
     const warnings=[
       info.memoryWarning?`This browser reports ${info.deviceMemoryGB} GB of device memory. The local model may be slow or fail to load.`:"",
       info.storageWarning?`Estimated free browser storage is ${fmtBytes(info.freeStorageBytes)}. The model may not fit in cache.`:""
     ].filter(Boolean);
     return `<section class="rms-chat-setup">
       <h4>Set up free Research Chat on this device</h4>
-      <p>Research Chat runs in this browser. There is no API key and no per-message fee. The first setup downloads about ${CFG.model.expectedFirstDownloadMB} MB from this GitHub Pages site.</p>
+      <p>Research Chat runs in this browser. There is no API key and no per-message fee. The first setup downloads about ${downloadMB} MB from this GitHub Pages site. The browser normally caches the model for later visits on this device.</p>
       <dl>
         <div><dt>Model</dt><dd>${E(CFG.model.displayName)}</dd></div>
-        <div><dt>Acceleration</dt><dd>${info.webgpu?"WebGPU available; GPU will be tried first.":"WebGPU not detected; WebAssembly/CPU fallback will be used."}</dd></div>
+        <div><dt>This device</dt><dd>${info.webgpu?`WebGPU available. Research Chat will try the smaller ${CFG.model.webgpuDtype} GPU model first, then fall back if needed.`:`WebGPU not detected. Research Chat will use the ${CFG.model.wasmDtype} WebAssembly/CPU model.`}</dd></div>
+        <div><dt>First download</dt><dd>About ${downloadMB} MB on this device. Do this before class when possible.</dd></div>
         <div><dt>After loading</dt><dd>Questions and selected project context are processed on this device.</dd></div>
       </dl>
       ${warnings.map(x=>`<div class="rms-chat-warning">${E(x)}</div>`).join("")}
