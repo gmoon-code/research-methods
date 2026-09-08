@@ -1,9 +1,9 @@
 import { pipeline, env } from "../vendor/transformers/transformers.min.js";
 
 const CFG={
-  modelId:"smollm2-135m-instruct",
+  modelId:"smollm2-360m-instruct",
   dtype:"q4",
-  maxNewTokens:160
+  maxNewTokens:140
 };
 
 env.allowRemoteModels=false;
@@ -42,8 +42,7 @@ async function loadModel(){
         generator=await pipeline("text-generation",CFG.modelId,{
           dtype:CFG.dtype,
           device:candidate,
-          progress_callback:progress,
-          local_files_only:true
+          progress_callback:progress
         });
         device=candidate;
         post("ready",{device});
@@ -86,7 +85,7 @@ self.onmessage=async event=>{
         {role:"user",content:String(msg.question||"")}
       ];
       const output=await generator(messages,{
-        max_new_tokens:Math.min(Number(msg.maxNewTokens||CFG.maxNewTokens),220),
+        max_new_tokens:Math.min(Number(msg.maxNewTokens||CFG.maxNewTokens),180),
         do_sample:false,
         repetition_penalty:1.08
       });
