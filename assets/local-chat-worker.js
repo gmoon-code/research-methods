@@ -2,7 +2,8 @@ import { pipeline, env } from "../vendor/transformers/transformers.min.js";
 
 const CFG={
   modelId:"smollm2-360m-instruct",
-  dtype:"q4",
+  webgpuDtype:"q4f16",
+  wasmDtype:"q4",
   maxNewTokens:140
 };
 
@@ -15,6 +16,7 @@ env.backends.onnx.wasm.wasmPaths=new URL("../vendor/transformers/wasm/",import.m
 
 let generator=null;
 let device="wasm";
+let dtype=CFG.wasmDtype;
 let loading=null;
 
 function post(type,data={}){self.postMessage({type,...data})}
@@ -30,27 +32,34 @@ function progress(p){
 }
 
 async function loadModel(){
-  if(generator)return {device};
+  if(generator)return {device,dtype};
   if(loading)return loading;
   loading=(async()=>{
     const wantWebGPU=Boolean(self.navigator?.gpu);
-    const attempts=wantWebGPU?["webgpu","wasm"]:["wasm"];
+    const attempts=wantWebGPU
+      ? [
+          {device:"webgpu",dtype:CFG.webgpuDtype},
+          {device:"webgpu",dtype:CFG.wasmDtype},
+          {device:"wasm",dtype:CFG.wasmDtype}
+        ]
+      : [{device:"wasm",dtype:CFG.wasmDtype}];
     let lastError=null;
     for(const candidate of attempts){
       try{
-        post("loading",{device:candidate});
+        post("loading",candidate);
         generator=await pipeline("text-generation",CFG.modelId,{
-          dtype:CFG.dtype,
-          device:candidate,
+          dtype:candidate.dtype,
+          device:candidate.device,
           progress_callback:progress
         });
-        device=candidate;
-        post("ready",{device});
-        return {device};
+        device=candidate.device;
+        dtype=candidate.dtype;
+        post("ready",{device,dtype});
+        return {device,dtype};
       }catch(err){
         lastError=err;
         generator=null;
-        post("load-warning",{device:candidate,message:String(err?.message||err)});
+        post("load-warning",{device:candidate.device,dtype:candidate.dtype,message:String(err?.message||err)});
       }
     }
     throw lastError||new Error("Research Chat model could not be loaded.");
@@ -78,7 +87,7 @@ self.onmessage=async event=>{
     }
     if(msg.type==="generate"){
       await loadModel();
-      post("generating",{requestId:msg.requestId,device});
+      post("generating",{requestId:msg.requestId,device,dtype});
       const messages=[
         {role:"system",content:String(msg.system||"")},
         ...(Array.isArray(msg.history)?msg.history.slice(-12):[]),
@@ -89,7 +98,7 @@ self.onmessage=async event=>{
         do_sample:false,
         repetition_penalty:1.08
       });
-      post("result",{requestId:msg.requestId,text:answerFromOutput(output),device});
+      post("result",{requestId:msg.requestId,text:answerFromOutput(output),device,dtype});
       return;
     }
     if(msg.type==="dispose"){
