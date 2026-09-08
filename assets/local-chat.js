@@ -1,7 +1,7 @@
 window.RMSLocalChat = (() => {
   "use strict";
   const CFG=window.RMS_LOCAL_CHAT_CONFIG, Policy=window.RMSLocalChatPolicy;
-  let worker=null, state={status:"idle",device:"",progress:null,error:""}, pending=new Map(), listeners=new Set();
+  let worker=null, state={status:"idle",device:"",dtype:"",progress:null,error:""}, pending=new Map(), listeners=new Set();
 
   function emit(){for(const fn of listeners)try{fn({...state})}catch{}}
   function set(patch){state={...state,...patch};emit()}
@@ -10,11 +10,7 @@ window.RMSLocalChat = (() => {
   function store(){
     try{
       const data=JSON.parse(localStorage.getItem(CFG.storageKey)||"{}");
-      return {
-        loadedOnce:!!data.loadedOnce,
-        contextEnabled:data.contextEnabled!==false,
-        messages:Array.isArray(data.messages)?data.messages.slice(-40):[]
-      };
+      return {loadedOnce:!!data.loadedOnce,contextEnabled:data.contextEnabled!==false,messages:Array.isArray(data.messages)?data.messages.slice(-40):[]};
     }catch{return{loadedOnce:false,contextEnabled:true,messages:[]}}
   }
   function save(data){try{localStorage.setItem(CFG.storageKey,JSON.stringify(data))}catch{}}
@@ -28,6 +24,7 @@ window.RMSLocalChat = (() => {
     update(d=>{d.messages.push(m);d.messages=d.messages.slice(-40)});
     return m;
   }
+  function recordError(message){return addMessage("assistant",String(message||"Research Chat error."),{error:true})}
   function clearConversation(){update(d=>d.messages=[])}
 
   function ensureWorker(){
@@ -36,16 +33,15 @@ window.RMSLocalChat = (() => {
     worker=new Worker(new URL("local-chat-worker.js",base),{type:"module"});
     worker.onmessage=e=>{
       const m=e.data||{};
-      if(m.type==="progress")set({status:"loading",progress:m,error:""});
-      if(m.type==="loading")set({status:"loading",device:m.device||"",error:""});
-      if(m.type==="load-warning")set({status:"loading",error:`${m.device||"device"} unavailable; trying fallback.`});
+      if(m.type==="loading")set({status:"loading",device:m.device||"",dtype:m.dtype||"",error:""});
+      if(m.type==="load-warning")set({status:"loading",error:`${m.device||"device"} ${m.dtype||""} unavailable; trying fallback.`});
       if(m.type==="ready"){
         update(d=>d.loadedOnce=true);
-        set({status:"ready",device:m.device||"",progress:null,error:""});
+        set({status:"ready",device:m.device||"",dtype:m.dtype||"",progress:null,error:""});
       }
-      if(m.type==="generating")set({status:"generating",device:m.device||state.device,error:""});
+      if(m.type==="generating")set({status:"generating",device:m.device||state.device,dtype:m.dtype||state.dtype,error:""});
       if(m.type==="result"){
-        set({status:"ready",device:m.device||state.device,progress:null,error:""});
+        set({status:"ready",device:m.device||state.device,dtype:m.dtype||state.dtype,progress:null,error:""});
         const p=pending.get(m.requestId);pending.delete(m.requestId);p?.resolve?.(m);
       }
       if(m.type==="error"){
@@ -63,9 +59,7 @@ window.RMSLocalChat = (() => {
     try{storage=await navigator.storage?.estimate?.()}catch{}
     const free=storage?.quota&&Number.isFinite(storage?.usage)?Math.max(0,storage.quota-storage.usage):null;
     return {
-      webgpu:Boolean(navigator.gpu),
-      deviceMemoryGB:memory||null,
-      freeStorageBytes:free,
+      webgpu:Boolean(navigator.gpu),deviceMemoryGB:memory||null,freeStorageBytes:free,
       memoryWarning:Boolean(memory&&memory<CFG.minimums.warnDeviceMemoryGB),
       storageWarning:Boolean(free!=null&&free<CFG.minimums.recommendedFreeStorageMB*1024*1024)
     };
@@ -85,7 +79,6 @@ window.RMSLocalChat = (() => {
   async function ask(question){
     const q=String(question||"").trim();
     if(!q)throw new Error("Enter a question first.");
-
     const project=Policy.readProject();
     const context=Policy.projectContext(project,contextEnabled());
     addMessage("user",q,{stageId:context?.stage?.id||null});
@@ -95,44 +88,36 @@ window.RMSLocalChat = (() => {
       addMessage("assistant",guarded.message,{guard:guarded.kind,scaffoldLevel:guarded.scaffoldLevel,action:guarded.action||null});
       return {guarded:true,...guarded};
     }
-
     if(state.status!=="ready")throw new Error("Download and load Research Chat before asking a model question.");
 
     const requestId=`req-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
-    const system=Policy.systemPrompt(context);
-    const prompt=q.slice(0,5000);
+    const system=Policy.systemPrompt(context),prompt=q.slice(0,5000);
     const result=await new Promise((resolve,reject)=>{
       pending.set(requestId,{resolve,reject});
-      ensureWorker().postMessage({
-        type:"generate",requestId,system,question:prompt,history:historyForModel(),
-        maxNewTokens:CFG.runtime.maxNewTokens
-      });
+      ensureWorker().postMessage({type:"generate",requestId,system,question:prompt,history:historyForModel(),maxNewTokens:CFG.runtime.maxNewTokens});
       setTimeout(()=>{
         const p=pending.get(requestId);
         if(p){pending.delete(requestId);reject(new Error("Research Chat took too long. Try a shorter question."));set({status:"ready",error:""})}
       },120000);
     });
     const answer=Policy.sanitizeModelText(result.text);
-    addMessage("assistant",answer,{device:result.device||state.device,model:CFG.model.displayName,scaffoldLevel:context?.focusedField?.hasAttempt?2:1});
-    return {guarded:false,message:answer,device:result.device||state.device};
+    addMessage("assistant",answer,{device:result.device||state.device,dtype:result.dtype||state.dtype,model:CFG.model.displayName,scaffoldLevel:context?.focusedField?.hasAttempt?2:1});
+    return {guarded:false,message:answer,device:result.device||state.device,dtype:result.dtype||state.dtype};
   }
 
   function clickAction(action){
-    const id=action?.targetId;
-    if(!id)return false;
-    const el=document.getElementById(id);
-    if(!el)return false;
-    el.click();
-    return true;
+    const id=action?.targetId;if(!id)return false;
+    const el=document.getElementById(id);if(!el)return false;
+    el.click();return true;
   }
 
   function dispose(){
     if(worker){try{worker.postMessage({type:"dispose"});worker.terminate()}catch{}worker=null}
-    set({status:"idle",device:"",progress:null,error:""});
+    set({status:"idle",device:"",dtype:"",progress:null,error:""});
   }
 
   return {
     config:CFG,onState,getState:()=>({...state}),deviceCheck,load,ask,dispose,
-    messages,clearConversation,contextEnabled,setContextEnabled,clickAction
+    messages,recordError,clearConversation,contextEnabled,setContextEnabled,clickAction
   };
 })();
