@@ -17,7 +17,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,7 +27,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .cache/rms-model
-          key: smollm2-135m-instruct-q4-b8a5c0f-eb0d67c
+          key: smollm2-360m-instruct-q4-q4f16-fe7c7db-v1
       - name: Install pinned browser inference runtime
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Test local Research Chat
