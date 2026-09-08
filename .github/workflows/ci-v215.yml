@@ -1,0 +1,71 @@
+name: v2.15 local Research Chat CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - v2.15-github-only-local-chat
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          find assets scripts tests -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | while IFS= read -r -d '' f; do
+            node --check "$f"
+          done
+      - name: Local Research Chat policy tests
+        run: node tests/local-research-chat-policy-v215.test.js
+      - name: Static architecture and security tests
+        run: python3 tests/local-research-chat-static-v215.py
+      - name: Verify no provider/API secrets are committed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -RIE --exclude-dir=.git --exclude='*.md' \
+            '(sk-[A-Za-z0-9_-]{20,}|OPENAI_API_KEY[[:space:]]*=|RMS_CHAT_ACCESS_CODE[[:space:]]*=)' .; then
+            echo "Secret-like cloud credential detected."
+            exit 1
+          fi
+
+  pages-build-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Cache pinned local language model
+        uses: actions/cache@v4
+        with:
+          path: .cache/rms-model
+          key: smollm2-135m-instruct-q4-b8a5c0f-eb0d67c
+      - name: Install exact browser inference runtime
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Build the exact GitHub Pages artifact
+        run: npm run build:pages
+      - name: Verify pinned q4 model and same-site runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f _site/models/smollm2-135m-instruct/onnx/model_q4.onnx
+          echo "eb0d67c7e3b7d40f42d681b5f2eff4cef78968afe3f76c954f987dd870327a2a  _site/models/smollm2-135m-instruct/onnx/model_q4.onnx" | sha256sum -c -
+          test -f _site/vendor/transformers/transformers.min.js
+          test -f _site/BUILD_MANIFEST_v2.15.json
+          grep -q 'env.allowRemoteModels=false' _site/assets/local-chat-worker.js
+          ! grep -RIE '(api\.openai\.com|vercel\.app)' _site/assets
+      - name: Report artifact size
+        run: du -sh _site
