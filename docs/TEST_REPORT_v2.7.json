@@ -1,0 +1,115 @@
+{
+  "release": "v2.7",
+  "status": "PASS",
+  "instructional_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.7",
+  "baseline_digest": "97e42bf743f0272a1d516f7995377e199958222916b67530287b2fdf4f6fd845",
+  "complete_exemplar_stages": 18,
+  "verified_real_literature_records": 3,
+  "synthetic_seed_level_rows": 90,
+  "independent_dish_level_rows": 18,
+  "worked_exemplar_scaffold_level": 4,
+  "automated_and_regression_checks_passed": 32,
+  "checks": [
+    "Syntax exemplar-projects.js",
+    "Syntax exemplar.js",
+    "Syntax exemplar-ui.js",
+    "Syntax app.js",
+    "Exemplar engine and Level 4 support logging",
+    "Exemplar static integration",
+    "Exemplar script order",
+    "Exemplar data/statistical integrity",
+    "Exemplar source/synthetic-status integrity",
+    "v2.6 novice friction guard",
+    "v2.6 novice friction static integration",
+    "Full novice simulation",
+    "v2.5 progressive rescue state/logging",
+    "v2.5 rescue static integration",
+    "Browser dependency script order",
+    "v2.4 pathway-specific coach",
+    "v2.4 path-change readiness invalidation",
+    "v2.4 static integration",
+    "v2.3 guided pathway engine",
+    "v2.3 pathway static integration",
+    "v2.2 novice guidance model",
+    "Student guidance coverage",
+    "RC1 full-path student/teacher simulation",
+    "RC1 pilot hardening",
+    "Competency analytics engine",
+    "Transfer/agreement engine",
+    "Writing lab engine",
+    "Statistics engine",
+    "Methods lab engine",
+    "Literature workspace engine",
+    "Deterministic coach regression",
+    "AI adapter regression"
+  ],
+  "http_smoke_checks": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 7569
+    },
+    {
+      "path": "assets/exemplar-projects.js",
+      "status": 200,
+      "bytes": 35831
+    },
+    {
+      "path": "assets/exemplar.js",
+      "status": 200,
+      "bytes": 5945
+    },
+    {
+      "path": "assets/exemplar-ui.js",
+      "status": 200,
+      "bytes": 14399
+    },
+    {
+      "path": "assets/app.js",
+      "status": 200,
+      "bytes": 99640
+    },
+    {
+      "path": "examples/radish-salinity/SYNTHETIC_SEED_LEVEL_DATA.csv",
+      "status": 200,
+      "bytes": 2188
+    },
+    {
+      "path": "examples/radish-salinity/SYNTHETIC_DISH_LEVEL_ANALYSIS_DATA.csv",
+      "status": 200,
+      "bytes": 462
+    },
+    {
+      "path": "examples/radish-salinity/SYNTHETIC_ANALYSIS_OUTPUT.json",
+      "status": 200,
+      "bytes": 1452
+    },
+    {
+      "path": "examples/radish-salinity/VERIFIED_SOURCE_RECORDS.json",
+      "status": 200,
+      "bytes": 2270
+    },
+    {
+      "path": "examples/radish-salinity/COMPLETE_SYNTHETIC_EXEMPLAR_PAPER.md",
+      "status": 200,
+      "bytes": 8648
+    }
+  ],
+  "core_inherited_files_unchanged_from_v2.6": {
+    "assets/coach.js": true,
+    "assets/methods.js": true,
+    "assets/analytics.js": true,
+    "assets/literature.js": true,
+    "assets/writing.js": true,
+    "assets/transfer.js": true,
+    "assets/competencies.js": true,
+    "assets/curriculum.js": true,
+    "assets/pathways.js": true,
+    "assets/path-coach.js": true,
+    "assets/rescue.js": true,
+    "assets/rescue-model.js": true,
+    "assets/novice-friction.js": true,
+    "prompts/stage_prompts_v1.2.json": true
+  },
+  "visual_browser_render_test": "NOT RUN \u2014 static HTTP and code/integration tests only"
+}

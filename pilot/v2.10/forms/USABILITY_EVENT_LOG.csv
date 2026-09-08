@@ -1,0 +1,2 @@
+session_id,timestamp,stage,path,event_code,observed_behavior_verbatim,built_in_support_used,built_in_support_level,observer_support_level,task_status,probable_cause,evidence_for_interpretation,severity,possible_fix,issue_id
+,,,,,,,0,0,,,,,,

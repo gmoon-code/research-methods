@@ -1,0 +1,30 @@
+{
+  "release": "v1.1",
+  "tests": [
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.1-research-coach/assets/engine.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.1-research-coach/assets/coach.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.1-research-coach/assets/app.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.1-research-coach/tests/coach.test.js",
+      "code": 0,
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk\n",
+      "stderr": ""
+    }
+  ],
+  "status": "PASS"
+}

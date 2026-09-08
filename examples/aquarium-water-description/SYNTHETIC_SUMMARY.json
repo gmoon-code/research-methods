@@ -1,0 +1,14 @@
+{
+  "temperature_C": {
+    "n": 21,
+    "mean": 23.92857142857143,
+    "min": 22.5,
+    "max": 25.7
+  },
+  "dissolved_oxygen_mg_L": {
+    "n": 21,
+    "mean": 7.6,
+    "min": 6.85,
+    "max": 8.19
+  }
+}

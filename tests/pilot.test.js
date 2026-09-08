@@ -1,0 +1,5 @@
+global.window={dispatchEvent:()=>{},addEventListener:()=>{}};global.CustomEvent=function(){};
+global.Blob=class{constructor(xs){this.size=Buffer.byteLength(xs.join(""))}};
+global.localStorage={d:{},setItem(k,v){this.d[k]=String(v)},getItem(k){return this.d[k]??null},removeItem(k){delete this.d[k]}};
+global.MutationObserver=class{observe(){}};global.document={body:{},querySelectorAll:()=>[],addEventListener:()=>{}};
+require("../assets/pilot.js");const P=window.RMSPilot;let p={name:"X",pilot:{config:{identityPolicy:"alias",backupCadence:"every class",teacherReviewProcess:"M1/M3/M4/M5",rawDataLocation:"school drive",aiPolicy:"disabled",transferPolicy:"classroom-practice",ethicsProcess:true,freezeAcknowledged:true}}};P.normalizeProject(p);let s=P.safeSave("k",p);if(!s.ok)process.exit(1);let l=P.safeLoad("k");if(!l.project||l.project.name!=="X")process.exit(1);let b=P.backupEnvelope(p,"full"),v=P.validateBackup(b);if(!v.ok)process.exit(1);let r=P.readiness(p,"k");if(!r.ready)process.exit(1);P.startPilot(p,"k");if(p.pilot.baselineId!==P.BASELINE_ID)process.exit(1);console.log("PASS pilot recovery/readiness engine");

@@ -1,0 +1,11 @@
+item_id,construct,prompt,response_format,status
+U1,navigation,I could tell what research step I was supposed to work on next.,1 Strongly disagree to 5 Strongly agree,locally authored unvalidated
+U2,clarity,The explanations helped me understand why a research decision mattered.,1 Strongly disagree to 5 Strongly agree,locally authored unvalidated
+U3,scaffolding,"When I was stuck, the available support helped me make progress without simply doing the work for me.",1 Strongly disagree to 5 Strongly agree,locally authored unvalidated
+U4,workload,The amount of information on each screen was manageable.,1 Strongly disagree to 5 Strongly agree,locally authored unvalidated
+U5,recovery,I understood how my work was saved and how to make a backup.,1 Strongly disagree to 5 Strongly agree,locally authored unvalidated
+U6,method,The Methods Lab made it clearer how my research question connected to my design and data.,1 Strongly disagree to 5 Strongly agree,locally authored unvalidated
+U7,statistics,The Data & Statistics Lab made it clearer why a particular analysis matched my data structure.,1 Strongly disagree to 5 Strongly agree,locally authored unvalidated
+U8,writing,The Writing Lab helped me connect claims in the paper to evidence from my project.,1 Strongly disagree to 5 Strongly agree,locally authored unvalidated
+U9,open,What part of the website was most confusing or difficult?,Open response,locally authored unvalidated
+U10,open,What change would most improve the website for another student?,Open response,locally authored unvalidated

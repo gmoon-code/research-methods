@@ -1,0 +1,158 @@
+{
+  "release": "v2.5",
+  "status": "PASS",
+  "instructional_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.5",
+  "baseline_digest": "e49d6cfb49d2dff4d1f45bb61f398a5e4029e2e007e8e5e7feb565e7f11d35cf",
+  "notebook_fields_with_progressive_rescue": 113,
+  "rescue_levels": 5,
+  "laboratory_families_with_rescue": [
+    "literature",
+    "methods",
+    "data",
+    "writing"
+  ],
+  "browser_dependency_order_fix": "PASS",
+  "core_inherited_engines_unchanged": true,
+  "test_commands": [
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/assets/rescue-model.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/assets/rescue.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/assets/rescue-ui.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/assets/student-guidance-ui.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/assets/path-coach.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/assets/app.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/rescue-v25.test.js",
+      "stdout": "PASS v2.5 progressive rescue state and logging"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/rescue-v25-static.py",
+      "stdout": "PASS v2.5 rescue static integration"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/script-order-v25.py",
+      "stdout": "PASS browser dependency script order"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/core-integrity-v25.py",
+      "stdout": "PASS inherited core engine integrity"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/path-coach-v24.test.js",
+      "stdout": "PASS pathway-specific coach"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/path-change-v24.test.js",
+      "stdout": "PASS path-change readiness invalidation"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/path-coach-v24-static.py",
+      "stdout": "PASS v2.4 static integration"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/pathways-v23.test.js",
+      "stdout": "PASS guided pathway engine"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/pathways-v23-static.py",
+      "stdout": "PASS v2.3 pathway static integration"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/novice-guidance-v22.test.js",
+      "stdout": "PASS v2.2 novice guidance model"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/student-guidance.test.js",
+      "stdout": "PASS student guidance coverage"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/full-path-rc1.test.js",
+      "stdout": "PASS RC1 full-path student/teacher simulation"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/pilot-rc1.test.js",
+      "stdout": "PASS RC1 pilot hardening"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/competencies.test.js",
+      "stdout": "PASS competency analytics engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/transfer.test.js",
+      "stdout": "PASS transfer and agreement engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/writing.test.js",
+      "stdout": "PASS writing lab engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/analytics.test.js",
+      "stdout": "PASS statistics engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/methods.test.js",
+      "stdout": "PASS methods lab engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/literature.test.js",
+      "stdout": "PASS literature workspace engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/coach.test.js",
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.5-progressive-help-rescue/tests/ai-adapter.test.js",
+      "stdout": "PASS AI adapter config"
+    }
+  ],
+  "http_smoke": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 7309
+    },
+    {
+      "path": "assets/rescue-model.js",
+      "status": 200,
+      "bytes": 230083
+    },
+    {
+      "path": "assets/rescue.js",
+      "status": 200,
+      "bytes": 5891
+    },
+    {
+      "path": "assets/rescue-ui.js",
+      "status": 200,
+      "bytes": 14947
+    },
+    {
+      "path": "assets/path-coach.js",
+      "status": 200,
+      "bytes": 17446
+    },
+    {
+      "path": "assets/app.js",
+      "status": 200,
+      "bytes": 99092
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "release": "v2.3",
+  "status": "PASS",
+  "pathways": 9,
+  "instructional_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.3",
+  "baseline_digest": "9c0414f1ab5fd65d92365c4d03e4eb1d56722f41cae1ecb6c6a6e98eeff71ee5",
+  "core_engine_files_unchanged_from_v2.2": {
+    "assets/engine.js": true,
+    "assets/coach.js": true,
+    "assets/methods.js": true,
+    "assets/analytics.js": true,
+    "assets/literature.js": true,
+    "assets/writing.js": true,
+    "assets/transfer.js": true,
+    "assets/competencies.js": true,
+    "assets/curriculum.js": true,
+    "prompts/stage_prompts_v1.2.json": true
+  },
+  "test_commands": [
+    "node --check assets/pathway-model.js",
+    "node --check assets/pathways.js",
+    "node --check assets/pathway-ui.js",
+    "node --check assets/app.js",
+    "node tests/pathways-v23.test.js",
+    "python tests/pathways-v23-static.py",
+    "node tests/novice-guidance-v22.test.js",
+    "node tests/student-guidance.test.js",
+    "node tests/full-path-rc1.test.js",
+    "node tests/pilot-rc1.test.js",
+    "node tests/competencies.test.js",
+    "node tests/transfer.test.js",
+    "node tests/writing.test.js",
+    "node tests/analytics.test.js",
+    "node tests/methods.test.js",
+    "node tests/literature.test.js",
+    "node tests/coach.test.js",
+    "node tests/ai-adapter.test.js"
+  ],
+  "test_count": 18,
+  "http_smoke": {
+    "status": "PASS",
+    "checks": [
+      {
+        "path": "index.html",
+        "status": 200,
+        "bytes": 6937
+      },
+      {
+        "path": "assets/pathway-model.js",
+        "status": 200,
+        "bytes": 42856
+      },
+      {
+        "path": "assets/pathways.js",
+        "status": 200,
+        "bytes": 3681
+      },
+      {
+        "path": "assets/pathway-ui.js",
+        "status": 200,
+        "bytes": 4634
+      },
+      {
+        "path": "assets/app.js",
+        "status": 200,
+        "bytes": 96607
+      }
+    ]
+  },
+  "note": "Legacy v2.2 static integration test was intentionally replaced because it asserts a v2.2 page-title string. The v2.3 pathway static integration test passed."
+}

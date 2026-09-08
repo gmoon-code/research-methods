@@ -1,0 +1,159 @@
+{
+  "release": "v2.6",
+  "status": "PASS",
+  "instructional_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.6",
+  "baseline_digest": "aa96a6a83450e8d8aadbec7f331954c1eea0fc11775dd33e0128c52a437d77fd",
+  "novice_personas": 10,
+  "misconception_scenarios_passed": 10,
+  "rescue_simulation": "PASS",
+  "core_inherited_files_unchanged_from_v2.5": {
+    "assets/coach.js": true,
+    "assets/methods.js": true,
+    "assets/analytics.js": true,
+    "assets/literature.js": true,
+    "assets/writing.js": true,
+    "assets/transfer.js": true,
+    "assets/competencies.js": true,
+    "assets/curriculum.js": true,
+    "assets/pathways.js": true,
+    "assets/path-coach.js": true,
+    "assets/rescue.js": true,
+    "assets/rescue-model.js": true,
+    "prompts/stage_prompts_v1.2.json": true
+  },
+  "automated_commands": 25,
+  "test_commands": [
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/assets/novice-friction.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/assets/app.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/novice-friction-v26.test.js",
+      "stdout": "PASS v2.6 novice friction guard"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/novice-friction-v26-static.py",
+      "stdout": "PASS v2.6 novice friction static integration"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/validation/novice-simulation/run_novice_simulations.js",
+      "stdout": "Y-TYPE\"\n      ],\n      \"observed\": [\n        \"NG-BINARY-TYPE\"\n      ],\n      \"gate_ready\": false,\n      \"passed\": true\n    }\n  ],\n  \"rescue_result\": {\n    \"passed\": true,\n    \"early_escalation_blocked\": true,\n    \"no_rationale_blocked\": true,\n    \"first_attempt\": {\n      \"id\": \"FA-mtqmjvp8-42twu\",\n      \"time\": \"2026-09-07T02:31:37.532Z\",\n      \"stage\": 14,\n      \"key\": \"analysisChoice\",\n      \"value\": \"idk\",\n      \"status\": \"attempt_present\",\n      \"researchPath\": \"qualitative\"\n    },\n    \"supported_revision\": {\n      \"id\": \"FR-mtqmjvp8-40z2n\",\n      \"time\": \"2026-09-07T02:31:37.532Z\",\n      \"stage\": 14,\n      \"key\": \"analysisChoice\",\n      \"before\": \"idk\",\n      \"after\": \"thematic analysis with an audit trail\",\n      \"rationale\": \"The question asks how participants describe experiences, so a qualitative thematic approach fits.\",\n      \"path\": \"qualitative\",\n      \"supportLevel\": 5\n    },\n    \"support_levels\": [\n      1,\n      2,\n      3,\n      4,\n      5\n    ]\n  },\n  \"passed\": true\n}"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/rescue-v25.test.js",
+      "stdout": "PASS v2.5 progressive rescue state and logging"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/rescue-v25-static.py",
+      "stdout": "PASS v2.5 rescue static integration"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/script-order-v25.py",
+      "stdout": "PASS browser dependency script order"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/path-coach-v24.test.js",
+      "stdout": "PASS pathway-specific coach"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/path-change-v24.test.js",
+      "stdout": "PASS path-change readiness invalidation"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/path-coach-v24-static.py",
+      "stdout": "PASS v2.4 static integration"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/pathways-v23.test.js",
+      "stdout": "PASS guided pathway engine"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/pathways-v23-static.py",
+      "stdout": "PASS v2.3 pathway static integration"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/novice-guidance-v22.test.js",
+      "stdout": "PASS v2.2 novice guidance model"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/student-guidance.test.js",
+      "stdout": "PASS student guidance coverage"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/full-path-rc1.test.js",
+      "stdout": "PASS RC1 full-path student/teacher simulation"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/pilot-rc1.test.js",
+      "stdout": "PASS RC1 pilot hardening"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/competencies.test.js",
+      "stdout": "PASS competency analytics engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/transfer.test.js",
+      "stdout": "PASS transfer and agreement engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/writing.test.js",
+      "stdout": "PASS writing lab engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/analytics.test.js",
+      "stdout": "PASS statistics engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/methods.test.js",
+      "stdout": "PASS methods lab engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/literature.test.js",
+      "stdout": "PASS literature workspace engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/coach.test.js",
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.6-novice-simulation-friction-hardening/tests/ai-adapter.test.js",
+      "stdout": "PASS AI adapter config"
+    }
+  ],
+  "http_smoke": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 7355
+    },
+    {
+      "path": "assets/novice-friction.js",
+      "status": 200,
+      "bytes": 12252
+    },
+    {
+      "path": "assets/path-coach.js",
+      "status": 200,
+      "bytes": 17446
+    },
+    {
+      "path": "assets/rescue.js",
+      "status": 200,
+      "bytes": 5891
+    },
+    {
+      "path": "assets/app.js",
+      "status": 200,
+      "bytes": 99094
+    },
+    {
+      "path": "validation/novice-simulation/SIMULATION_RESULTS_v2.6.json",
+      "status": 200,
+      "bytes": 3889
+    }
+  ]
+}

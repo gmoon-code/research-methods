@@ -1,0 +1,119 @@
+{
+  "release": "2.0.0",
+  "status": "PASS",
+  "baseline_id": "RMS-PILOT-BASELINE-v2.0",
+  "baseline_sha256": "a94fcca22cfca34bd10dad2dccd34daafb439352549332d6e20a10839cb53b50",
+  "measurement_files_frozen": 13,
+  "test_commands": [
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/assets/pilot.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/assets/pilot-ui.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/assets/app.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/tests/pilot.test.js",
+      "code": 0,
+      "stdout": "PASS pilot recovery/readiness engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/tests/static-pilot-qa.test.js",
+      "code": 0,
+      "stdout": "PASS static accessibility/recovery QA\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/tests/e2e-pilot-simulations.test.js",
+      "code": 0,
+      "stdout": "PASS end-to-end pathway simulations\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/tests/transfer.test.js",
+      "code": 0,
+      "stdout": "PASS transfer and agreement engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/tests/competencies.test.js",
+      "code": 0,
+      "stdout": "PASS competency analytics engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/tests/journey.test.js",
+      "code": 0,
+      "stdout": "PASS journey and teacher packet engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/tests/writing.test.js",
+      "code": 0,
+      "stdout": "PASS writing lab engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/tests/analytics.test.js",
+      "code": 0,
+      "stdout": "PASS statistics engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/tests/methods.test.js",
+      "code": 0,
+      "stdout": "PASS methods lab engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/tests/literature.test.js",
+      "code": 0,
+      "stdout": "PASS literature workspace engine\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/tests/coach.test.js",
+      "code": 0,
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/tests/ai-adapter.test.js",
+      "code": 0,
+      "stdout": "PASS AI adapter config\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/validation/agreement.py /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/validation/RATER_TEMPLATE.csv /mnt/data/research-methods-studio-v2.0-classroom-pilot-release/validation/RATER_TEMPLATE.csv",
+      "code": 0,
+      "stdout": "{'n': 0, 'agreement': None, 'kappa': None, 'weighted_kappa': None, 'matrix': [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]}\n",
+      "stderr": ""
+    }
+  ],
+  "static_http_smoke": "PASS",
+  "pilot_instruments": [
+    "BASELINE_FREEZE_POLICY_v2.0.md",
+    "CLASSROOM_IMPLEMENTATION_CHECKLIST_v2.0.md",
+    "CLASSROOM_OBSERVATION_FORM_v2.0.csv",
+    "CONSENT_ASSENT_PLANNING_CHECKLIST_v2.0.md",
+    "FROZEN_BASELINE_MANIFEST_v2.0.json",
+    "INCIDENT_DEVIATION_LOG_v2.0.csv",
+    "PILOT_RESEARCH_READINESS_NOTES_v2.0.md",
+    "PILOT_SESSION_LOG_v2.0.csv",
+    "PRIVACY_DATA_MANAGEMENT_PLAN_TEMPLATE_v2.0.md",
+    "STUDENT_USABILITY_FEEDBACK_FORM_v2.0.csv",
+    "TEACHER_PILOT_GUIDE_v2.0.md"
+  ]
+}

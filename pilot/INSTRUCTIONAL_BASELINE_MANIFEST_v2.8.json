@@ -1,0 +1,206 @@
+{
+  "baseline_id": "RMS-INSTRUCTIONAL-BASELINE-v2.8",
+  "files": [
+    {
+      "path": "assets/analytics.js",
+      "sha256": "e7a47ce09a4ef5e0d799f2046eb9bc6189d78268360cd6d2d546e9efc522d137"
+    },
+    {
+      "path": "assets/app.js",
+      "sha256": "8537682a37277e739c1dbe17471b95c21a34ecc9cd76a15b88f0f3dcaf5ed374"
+    },
+    {
+      "path": "assets/coach.js",
+      "sha256": "08e7e7e6e11de94871515b7989cab252d63714f0923ab115c9b0c48338e212a4"
+    },
+    {
+      "path": "assets/competencies.js",
+      "sha256": "c984c5a5eb6a6070a6ba9da844d961d0e53b2bdf5471e14619aef8101abf6b0b"
+    },
+    {
+      "path": "assets/curriculum.js",
+      "sha256": "e1848aa45ae26dea86dbf21a842280a05c57c689bacc90568551b2c2a2c2ca05"
+    },
+    {
+      "path": "assets/exemplar-projects.js",
+      "sha256": "184d547a9bb0446287e3c34440d683b11b55e7911a7d77784d37ee7b34bfda5f"
+    },
+    {
+      "path": "assets/exemplar-ui.js",
+      "sha256": "fa37dd044f02275b01aaa73b51add01ab5f2992466c409633712a726c5cf6c3d"
+    },
+    {
+      "path": "assets/exemplar.js",
+      "sha256": "9413d3a6c8aac1474cda10f96ae65af5ce07002150b2001481043ecc90958262"
+    },
+    {
+      "path": "assets/literature.js",
+      "sha256": "f3834b7147cf3404e935d20ee79c76e2822a0012a65db03f987e49c8b33b4fae"
+    },
+    {
+      "path": "assets/methods.js",
+      "sha256": "0c21c353f30eae947a71063d256071c177d4d7f72791ce505ca95031a6bf70ea"
+    },
+    {
+      "path": "assets/novice-friction.js",
+      "sha256": "8cbb0c6ed48aecad29d181f1e857714ef0b11f9a475d99d6aedb9e537932bdb2"
+    },
+    {
+      "path": "assets/path-coach.js",
+      "sha256": "b9b0b848017396e7384b4883d9c26c8a0196eb6c62b55c06e8cc49527d665a87"
+    },
+    {
+      "path": "assets/pathways.js",
+      "sha256": "7b177a86d823c46a05be9835887394b8cabc0ba0cb2d66b8b5ca6079e16c6d93"
+    },
+    {
+      "path": "assets/rescue-model.js",
+      "sha256": "61cbd6e0a934f892c0a6a9833bc59ac0a20384905a5c2d90c8067095068e1aa9"
+    },
+    {
+      "path": "assets/rescue.js",
+      "sha256": "309675815b12efd2f62e5ebbad1c05b6b1715d0deb8603a66f347b62cf47b662"
+    },
+    {
+      "path": "assets/style.css",
+      "sha256": "93035501ee0b3690cfe7131014f22bf7d2c9a1e07581f38695028dda645ddaff"
+    },
+    {
+      "path": "assets/transfer.js",
+      "sha256": "a0fd075c32f6762cfe3377efbaff696c46a734e4fea9f5d10ac726e9d9f85a3e"
+    },
+    {
+      "path": "assets/writing.js",
+      "sha256": "35df891b59b96a880aff2a23acdb82f9cf0fba9517303f8e547b23259dbdac22"
+    },
+    {
+      "path": "docs/BASELINE_CHANGE_NOTICE_v2.8.md",
+      "sha256": "6f63cbe7567a06dac19a65adfb09466914c2e0b5c5a0b3e4252c33e875d3aae0"
+    },
+    {
+      "path": "docs/MULTI_PATH_EXEMPLAR_LIBRARY_SPEC_v2.8.md",
+      "sha256": "e4aea23d70d8a69d86dc5add873f8d2105a0025abea1c038ec28f9bfec4ac5e1"
+    },
+    {
+      "path": "docs/MULTI_PATH_SOURCE_VERIFICATION_v2.8.md",
+      "sha256": "ffb80b6e2be9f95118deeed92d0a6dfe416f5500418715d0ea0b69865d278d5d"
+    },
+    {
+      "path": "docs/RELEASE_AUDIT_v2.8.md",
+      "sha256": "ff6fa5b5f6019c1d8d8f96bc985c446e4ccfae700a77120ff12d08f1ae8cca36"
+    },
+    {
+      "path": "examples/aquarium-water-description/SYNTHETIC_AQUARIUM_MONITORING.csv",
+      "sha256": "ed0dc8e37962f016168bebbcb3e32c0253e5280a5050403ee4953eab7a4e83df"
+    },
+    {
+      "path": "examples/aquarium-water-description/SYNTHETIC_SUMMARY.json",
+      "sha256": "2e408dc04b9588cc12317b79e372df9af9cad26161f3d2eb1e782787cd292d71"
+    },
+    {
+      "path": "examples/aquarium-water-description/VERIFIED_SOURCE_RECORDS.json",
+      "sha256": "e3519d344093cd689f7dab6e11aa5246df494c25aca96d66cff65bff372d33ee"
+    },
+    {
+      "path": "examples/multilingual-science-literature-review/VERIFIED_MINI_REVIEW_STUDY_MATRIX.csv",
+      "sha256": "4b27acbc8a033d60b2da13159a2d0d7c878b6e8f7e5c49fc4160dc02742d8af3"
+    },
+    {
+      "path": "examples/multilingual-science-literature-review/VERIFIED_SOURCE_RECORDS.json",
+      "sha256": "d53418ff64c156224246f5fc7e6b94b68dabefec4bc9b88dd1134db774c6a440"
+    },
+    {
+      "path": "examples/multilingual-science-qualitative/SYNTHETIC_INTERVIEW_EXCERPTS.csv",
+      "sha256": "6a09b0d09909fe1d0e8672ff94609378b30fc66709c53307ec02d571dc4b33de"
+    },
+    {
+      "path": "examples/multilingual-science-qualitative/SYNTHETIC_THEME_MATRIX.json",
+      "sha256": "82cce7e9f66a6d34588a6c5d0dde259170c661baf7e1d31e7fcc4690519c024f"
+    },
+    {
+      "path": "examples/multilingual-science-qualitative/VERIFIED_SOURCE_RECORDS.json",
+      "sha256": "5bee00b3fd8543406aa3f587e4045fd2fa529305443fd6ba80164ea5b6cb8acf"
+    },
+    {
+      "path": "examples/radish-salinity/COMPLETE_SYNTHETIC_EXEMPLAR_PAPER.md",
+      "sha256": "748c1346c6ac1bd432255d7cbec78cb36078eb21f077bc3ac8717b4c64809108"
+    },
+    {
+      "path": "examples/radish-salinity/SYNTHETIC_ANALYSIS_OUTPUT.json",
+      "sha256": "69415db59b89a043080be1428d018225be0cd41caef73651139921e27cab1ded"
+    },
+    {
+      "path": "examples/radish-salinity/SYNTHETIC_DISH_LEVEL_ANALYSIS_DATA.csv",
+      "sha256": "0f317d7d37d802cfd389c921819693ae733a1855454ce92b072f4272d995cd75"
+    },
+    {
+      "path": "examples/radish-salinity/SYNTHETIC_SEED_LEVEL_DATA.csv",
+      "sha256": "99bbf18f4b6c387f121c87bba0fa9c9661206cea3ad0556f5e24b8093c8ff83d"
+    },
+    {
+      "path": "examples/radish-salinity/VERIFIED_SOURCE_RECORDS.json",
+      "sha256": "ca7a2dc0179d81b3e27a51bdc7dacf05353655094620852b20ad70610c119074"
+    },
+    {
+      "path": "examples/retrieval-mixed-methods/SYNTHETIC_INTERVIEW_EXCERPTS.csv",
+      "sha256": "7c82de6974c264f13a47816731fd866b65670c9ac2ad846212f9cc4074abf65c"
+    },
+    {
+      "path": "examples/retrieval-mixed-methods/SYNTHETIC_MIXED_OUTPUT.json",
+      "sha256": "99e24f258ec210f00c0ad401b0c024251bad3bd72d270bf9c7810806915e054d"
+    },
+    {
+      "path": "examples/retrieval-mixed-methods/SYNTHETIC_QUANTITATIVE_DATA.csv",
+      "sha256": "0c8de7be3a4d0fd612680706bdf3bc2ef132fb301e80eb32e65756707c8528e5"
+    },
+    {
+      "path": "examples/retrieval-mixed-methods/VERIFIED_SOURCE_RECORDS.json",
+      "sha256": "4174c2e80d61c355139728c4b0366aa18792467bd54492fe8801008275c53ecf"
+    },
+    {
+      "path": "examples/retrieval-quasi-experiment/SYNTHETIC_ANALYSIS_OUTPUT.json",
+      "sha256": "38aa9e9abd1d6b99a803987baf183b379b55cee10e2f627398b539a2ca612337"
+    },
+    {
+      "path": "examples/retrieval-quasi-experiment/SYNTHETIC_QUASI_DATA.csv",
+      "sha256": "ffa907319ab57c7ae31ded96be47b482f80071719affb6e8f165b2d08348225b"
+    },
+    {
+      "path": "examples/retrieval-quasi-experiment/VERIFIED_SOURCE_RECORDS.json",
+      "sha256": "199c6445327ed95f7e03ac916a9af61d14e8b70fde182cd53b3fe74370cc851c"
+    },
+    {
+      "path": "examples/sleep-school-observational/SYNTHETIC_ANALYSIS_OUTPUT.json",
+      "sha256": "3e43742d3027fcb5bd021e63e2dae124996406e6a65eaa1d2152585fbb58f926"
+    },
+    {
+      "path": "examples/sleep-school-observational/SYNTHETIC_OBSERVATIONAL_DATA.csv",
+      "sha256": "2ca8a3d55707bc2049b245e37e0bb6694c9a78d60b113ea3c0749e8ff5f0e1a8"
+    },
+    {
+      "path": "examples/sleep-school-observational/VERIFIED_SOURCE_RECORDS.json",
+      "sha256": "964484523a656bf91035000ef1df838fdf5087c3812a7b04acb3f9fec20df5da"
+    },
+    {
+      "path": "examples/synthetic-meta-analysis/SYNTHETIC_EFFECT_EXTRACTION.csv",
+      "sha256": "e1534a3d7bd293457d61086b1166232dfee4506e8a57ac66828675c81048b6be"
+    },
+    {
+      "path": "examples/synthetic-meta-analysis/SYNTHETIC_META_ANALYSIS_OUTPUT.json",
+      "sha256": "c492e769d0087ae1d151c4953dc64eb6c38a77bc76143a7de9798aad5a249e4f"
+    },
+    {
+      "path": "examples/synthetic-meta-analysis/VERIFIED_SOURCE_RECORDS.json",
+      "sha256": "203f5e54fa0d66190cc5533bf4fe00d86c796ca67d50845336afd282ca941578"
+    },
+    {
+      "path": "index.html",
+      "sha256": "0469c59162756c6f4fa25f97708c6d777b3b6eb02e2711761ede90e17bde7684"
+    },
+    {
+      "path": "prompts/stage_prompts_v1.2.json",
+      "sha256": "dbd7dc9de4b89b0e5852863cda387ea734f91ce9654658ce4f952046f7d743c1"
+    }
+  ],
+  "baseline_digest": "b9870985423af22198b92928e00c607f47239d177109b96388630cf50deda01c"
+}

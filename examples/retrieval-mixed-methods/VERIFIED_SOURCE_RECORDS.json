@@ -1,0 +1,23 @@
+[
+  {
+    "id": "MM-S01",
+    "citation": "Roediger, H. L., III, & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. Psychological Science, 17(3), 249–255. https://doi.org/10.1111/j.1467-9280.2006.01693.x",
+    "verified": true,
+    "use": "Provides experimental background for retrieval-practice effects.",
+    "boundary": "Does not supply the exemplar's classroom scores or interview themes."
+  },
+  {
+    "id": "MM-S02",
+    "citation": "Karpicke, J. D., & Blunt, J. R. (2011). Retrieval practice produces more learning than elaborative studying with concept mapping. Science, 331(6018), 772–775. https://doi.org/10.1126/science.1199327",
+    "verified": true,
+    "use": "Supports a learning-science rationale for retrieval practice.",
+    "boundary": "Published experimental conditions differ from the synthetic classroom workflow."
+  },
+  {
+    "id": "MM-S03",
+    "citation": "Johnson, R. B., & Onwuegbuzie, A. J. (2004). Mixed methods research: A research paradigm whose time has come. Educational Researcher, 33(7), 14–26. https://doi.org/10.3102/0013189X033007014",
+    "verified": true,
+    "use": "Methodological background for combining quantitative and qualitative evidence.",
+    "boundary": "A mixed-methods label is insufficient without actual integration of the two strands."
+  }
+]

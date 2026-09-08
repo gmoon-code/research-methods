@@ -1,0 +1,66 @@
+{
+  "baseline_id": "RMS-INSTRUCTIONAL-BASELINE-v2.3",
+  "files": [
+    {
+      "path": "assets/engine.js",
+      "sha256": "6bbf3a49a28d4709525ca6e7626f791738235dd3edbea87266a0b29a4ea175cf"
+    },
+    {
+      "path": "assets/coach.js",
+      "sha256": "08e7e7e6e11de94871515b7989cab252d63714f0923ab115c9b0c48338e212a4"
+    },
+    {
+      "path": "assets/methods.js",
+      "sha256": "0c21c353f30eae947a71063d256071c177d4d7f72791ce505ca95031a6bf70ea"
+    },
+    {
+      "path": "assets/analytics.js",
+      "sha256": "e7a47ce09a4ef5e0d799f2046eb9bc6189d78268360cd6d2d546e9efc522d137"
+    },
+    {
+      "path": "assets/literature.js",
+      "sha256": "f3834b7147cf3404e935d20ee79c76e2822a0012a65db03f987e49c8b33b4fae"
+    },
+    {
+      "path": "assets/writing.js",
+      "sha256": "35df891b59b96a880aff2a23acdb82f9cf0fba9517303f8e547b23259dbdac22"
+    },
+    {
+      "path": "assets/transfer.js",
+      "sha256": "a0fd075c32f6762cfe3377efbaff696c46a734e4fea9f5d10ac726e9d9f85a3e"
+    },
+    {
+      "path": "assets/competencies.js",
+      "sha256": "c984c5a5eb6a6070a6ba9da844d961d0e53b2bdf5471e14619aef8101abf6b0b"
+    },
+    {
+      "path": "assets/curriculum.js",
+      "sha256": "e1848aa45ae26dea86dbf21a842280a05c57c689bacc90568551b2c2a2c2ca05"
+    },
+    {
+      "path": "prompts/stage_prompts_v1.2.json",
+      "sha256": "dbd7dc9de4b89b0e5852863cda387ea734f91ce9654658ce4f952046f7d743c1"
+    },
+    {
+      "path": "assets/student-guidance.js",
+      "sha256": "7a23de595b5d19227e4301a396bf03b6455da7337d5fc1b90f32ed2e7e1db03c"
+    },
+    {
+      "path": "assets/student-guidance-ui.js",
+      "sha256": "d566dc4ff24f96e841cc18d65fc9e694bd972d6f19d2f3af76e9e4431e1aa0ff"
+    },
+    {
+      "path": "assets/pathway-model.js",
+      "sha256": "1654b931edc74b0387e9997af372599df177258a02c74666e7474ccf5b63ecbe"
+    },
+    {
+      "path": "assets/pathways.js",
+      "sha256": "43314736399d3956e021bd7a24233e03d222c0ee11f9d74402247587f902ab38"
+    },
+    {
+      "path": "assets/pathway-ui.js",
+      "sha256": "9e1d65dd5132634b66ce3f10d00548991160ea41228f9623ca74b8c05bdf5e9d"
+    }
+  ],
+  "baseline_digest": "9c0414f1ab5fd65d92365c4d03e4eb1d56722f41cae1ecb6c6a6e98eeff71ee5"
+}

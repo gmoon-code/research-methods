@@ -1,0 +1,27 @@
+[
+  {
+    "theme": "Language formulation can delay visible participation",
+    "codes": [
+      "language-formulation delay",
+      "explanation language demand",
+      "unclear response expectations"
+    ],
+    "boundary": "Students described hesitation and wording demands; the exemplar does not infer language proficiency from silence."
+  },
+  {
+    "theme": "Representational and multilingual resources support reasoning",
+    "codes": [
+      "multimodal resource",
+      "translanguaging as reasoning resource",
+      "rehearsal and participation"
+    ],
+    "boundary": "The synthetic excerpts describe perceived supports, not experimentally estimated effects."
+  },
+  {
+    "theme": "Scaffolds can support expression while preserving choice",
+    "codes": [
+      "structured language support"
+    ],
+    "boundary": "One theme has relatively narrow synthetic support and would require cautious reporting."
+  }
+]

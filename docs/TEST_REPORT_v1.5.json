@@ -1,0 +1,61 @@
+{
+  "release": "v1.5",
+  "status": "PASS",
+  "test_groups": 9,
+  "results": [
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.5-data-statistics-lab/assets/analytics.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.5-data-statistics-lab/assets/data-lab-ui.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v1.5-data-statistics-lab/assets/app.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.5-data-statistics-lab/tests/analytics.test.js",
+      "code": 0,
+      "stdout": "PASS statistics engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.5-data-statistics-lab/tests/methods.test.js",
+      "code": 0,
+      "stdout": "PASS methods lab engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.5-data-statistics-lab/tests/literature.test.js",
+      "code": 0,
+      "stdout": "PASS literature workspace engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.5-data-statistics-lab/tests/coach.test.js",
+      "code": 0,
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v1.5-data-statistics-lab/tests/ai-adapter.test.js",
+      "code": 0,
+      "stdout": "PASS AI adapter config",
+      "stderr": ""
+    },
+    {
+      "cmd": "static HTTP smoke test",
+      "code": 0,
+      "stdout": "index=200 analytics=200 data-lab-ui=200",
+      "stderr": ""
+    }
+  ]
+}

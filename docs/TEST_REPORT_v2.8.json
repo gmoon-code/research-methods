@@ -1,0 +1,129 @@
+{
+  "release": "v2.8",
+  "status": "PASS",
+  "instructional_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.8",
+  "baseline_digest": "b9870985423af22198b92928e00c607f47239d177109b96388630cf50deda01c",
+  "research_path_exemplars": 8,
+  "new_exemplars": 7,
+  "worked_stage_records": 144,
+  "verified_source_records_across_bank": 22,
+  "automated_and_regression_checks_passed": 32,
+  "checks": [
+    "Syntax exemplar-projects.js",
+    "Syntax exemplar.js",
+    "Syntax exemplar-ui.js",
+    "Syntax app.js",
+    "v2.8 multi-path exemplar engine",
+    "v2.8 multi-path static differentiation",
+    "v2.8 exemplar evidence packs",
+    "v2.8 verified-source registry integrity",
+    "v2.8 exemplar script order",
+    "v2.6 novice friction guard",
+    "v2.6 novice friction static integration",
+    "Full novice simulation",
+    "v2.5 progressive rescue state/logging",
+    "v2.5 rescue static integration",
+    "Browser dependency script order",
+    "v2.4 pathway-specific coach",
+    "v2.4 path-change readiness invalidation",
+    "v2.4 static integration",
+    "v2.3 guided pathway engine",
+    "v2.3 pathway static integration",
+    "v2.2 novice guidance model",
+    "Student guidance coverage",
+    "RC1 full-path student/teacher simulation",
+    "RC1 pilot hardening",
+    "Competency analytics engine",
+    "Transfer/agreement engine",
+    "Writing lab engine",
+    "Statistics engine",
+    "Methods lab engine",
+    "Literature workspace engine",
+    "Deterministic coach regression",
+    "AI adapter regression"
+  ],
+  "http_smoke_checks": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 7567
+    },
+    {
+      "path": "assets/exemplar-projects.js",
+      "status": 200,
+      "bytes": 208925
+    },
+    {
+      "path": "assets/exemplar.js",
+      "status": 200,
+      "bytes": 5538
+    },
+    {
+      "path": "assets/exemplar-ui.js",
+      "status": 200,
+      "bytes": 15246
+    },
+    {
+      "path": "assets/app.js",
+      "status": 200,
+      "bytes": 99694
+    },
+    {
+      "path": "examples/radish-salinity/SYNTHETIC_DISH_LEVEL_ANALYSIS_DATA.csv",
+      "status": 200,
+      "bytes": 462
+    },
+    {
+      "path": "examples/aquarium-water-description/SYNTHETIC_AQUARIUM_MONITORING.csv",
+      "status": 200,
+      "bytes": 362
+    },
+    {
+      "path": "examples/sleep-school-observational/SYNTHETIC_OBSERVATIONAL_DATA.csv",
+      "status": 200,
+      "bytes": 625
+    },
+    {
+      "path": "examples/retrieval-quasi-experiment/SYNTHETIC_QUASI_DATA.csv",
+      "status": 200,
+      "bytes": 1829
+    },
+    {
+      "path": "examples/multilingual-science-qualitative/SYNTHETIC_INTERVIEW_EXCERPTS.csv",
+      "status": 200,
+      "bytes": 1010
+    },
+    {
+      "path": "examples/multilingual-science-literature-review/VERIFIED_MINI_REVIEW_STUDY_MATRIX.csv",
+      "status": 200,
+      "bytes": 990
+    },
+    {
+      "path": "examples/synthetic-meta-analysis/SYNTHETIC_EFFECT_EXTRACTION.csv",
+      "status": 200,
+      "bytes": 176
+    },
+    {
+      "path": "examples/retrieval-mixed-methods/SYNTHETIC_MIXED_OUTPUT.json",
+      "status": 200,
+      "bytes": 697
+    }
+  ],
+  "core_inherited_files_unchanged_from_v2.7": {
+    "assets/coach.js": true,
+    "assets/methods.js": true,
+    "assets/analytics.js": true,
+    "assets/literature.js": true,
+    "assets/writing.js": true,
+    "assets/transfer.js": true,
+    "assets/competencies.js": true,
+    "assets/curriculum.js": true,
+    "assets/pathways.js": true,
+    "assets/path-coach.js": true,
+    "assets/rescue.js": true,
+    "assets/rescue-model.js": true,
+    "assets/novice-friction.js": true,
+    "prompts/stage_prompts_v1.2.json": true
+  },
+  "visual_browser_render_test": "NOT RUN \u2014 static HTTP and code/integration tests only"
+}

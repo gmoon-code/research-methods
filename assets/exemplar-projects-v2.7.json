@@ -1,0 +1,547 @@
+{
+  "version": "2.7",
+  "projects": [
+    {
+      "id": "radish_salinity_experimental_v27",
+      "title": "Radish Salinity Experiment",
+      "subtitle": "A full synthetic teaching exemplar from vague interest to final paper",
+      "path": "experimental",
+      "status": "synthetic_instructional_exemplar",
+      "disclaimer": "The literature records are real and verified. All project data, numerical results, and classroom procedure details are synthetic/instructional and must not be represented as an actual conducted study.",
+      "rq": "Under standardized germination conditions, how does assigned NaCl concentration (0, 50, or 100 mM) affect mean radicle length per dish after 72 hours in radish (Raphanus sativus) seeds?",
+      "stages": [
+        {
+          "id": 1,
+          "title": "Find a research interest",
+          "where": "The student begins with a broad interest in how environmental stress changes plant growth.",
+          "changed": "The idea moves from “plants and the environment” to several possible observable questions.",
+          "reasoning": [
+            "Choose an area that is genuinely interesting.",
+            "Ask what could be observed or measured safely in a school setting.",
+            "Generate several possibilities before committing to one."
+          ],
+          "decision": "Keep salinity stress as one candidate because salt concentration can be controlled safely at modest concentrations and early seedling responses can be measured over a short time.",
+          "rejected": "A project on road-salt effects in local soil was rejected because collecting representative field soil and controlling other environmental variables would make the first experiment harder to interpret.",
+          "notebook": {
+            "broadTopic": "Environmental stress and plant growth",
+            "phenomenon": "Early seedling growth may change under salt stress",
+            "contextPop": "Fast-germinating seeds under controlled classroom/laboratory conditions"
+          },
+          "forward": "This choice makes a short controlled plant experiment possible, but the exact species, salt levels, outcome, and unit are still undecided.",
+          "compare": [
+            "What topic could you observe or measure with evidence you can actually access?",
+            "What tempting idea would become too large or poorly controlled for your timeline?"
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Narrow the topic and test feasibility",
+          "where": "The student now needs one organism, one stressor, one developmental window, and a realistic outcome.",
+          "changed": "The topic becomes radish seed germination and early radicle growth under sodium chloride exposure.",
+          "reasoning": [
+            "Radish seeds germinate quickly enough for a short instructional project.",
+            "Sodium chloride concentration can be prepared as explicit treatment levels.",
+            "Radicle length can be measured directly in millimeters.",
+            "Early growth is a narrower outcome than whole-plant fitness or crop yield."
+          ],
+          "decision": "Use radish (Raphanus sativus), NaCl treatments, and a 72-hour early-growth window.",
+          "rejected": "Long-term biomass and flowering outcomes were rejected because the course timeline and environmental control would be much more demanding.",
+          "notebook": {
+            "scope": "Early radicle growth over 72 hours; not whole-plant fitness, yield, or long-term salt tolerance",
+            "feasibility": "Seeds, dishes, salt solution, water, labels, ruler/image scale, and a controlled germination location are available."
+          },
+          "forward": "The literature scan now needs terminology around salinity, germination, radicle growth, NaCl, and Raphanus sativus.",
+          "compare": [
+            "Which part of your broad topic can one project answer well?",
+            "What outcome can you define and observe without pretending it represents a broader construct?"
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Explore the research landscape",
+          "where": "The student performs a preliminary background scan before finalizing the question.",
+          "changed": "The student learns that salinity can influence plant growth through osmotic and ionic stress and that radish germination/radicle growth has been studied under saline conditions.",
+          "reasoning": [
+            "Munns and Tester (2008) provide broad mechanism vocabulary for salinity tolerance.",
+            "Munns and Gilliham (2015) support the bounded background claim that salinity can constrain plant growth and yield.",
+            "Toscano et al. (2025) provide species-relevant evidence that radish germination and early radicle growth respond to saline germination conditions.",
+            "The scan does not justify claiming that no one has studied radish and salinity."
+          ],
+          "decision": "Use the existing literature to support a local replication/extension teaching study, not a novelty claim.",
+          "rejected": "The statement “no research exists on salt and radish growth” is rejected because the preliminary search directly found relevant research.",
+          "notebook": {
+            "known": "Salinity can constrain plant growth, and radish early growth has been evaluated under saline germination conditions.",
+            "uncertain": "The exact response of this seed batch under this classroom protocol and selected NaCl concentrations is not known in advance."
+          },
+          "forward": "The research question can now specify assigned NaCl concentration, radish seeds, a 72-hour outcome, and a causal experimental structure.",
+          "compare": [
+            "Did your background scan change the language you use for the topic?",
+            "Are you using a real rationale such as replication or extension instead of inventing a gap?"
+          ]
+        },
+        {
+          "id": 4,
+          "title": "Write and refine the research question",
+          "where": "The student converts the narrowed topic into one answerable causal question.",
+          "changed": "The question shifts from “Does salt affect plants?” to a bounded experimental question with treatment levels, outcome, organism, and timing.",
+          "reasoning": [
+            "The researcher will assign NaCl concentration, so causal wording can be considered if experimental safeguards are adequate.",
+            "The outcome must be defined at the level used for analysis.",
+            "The unit of treatment assignment will later determine the true n."
+          ],
+          "decision": "Under standardized germination conditions, how does assigned NaCl concentration (0, 50, or 100 mM) affect mean radicle length per dish after 72 hours in radish (Raphanus sativus) seeds?",
+          "rejected": "“How does salt affect radish?” is rejected because neither salt exposure nor the outcome is defined precisely.",
+          "notebook": {
+            "questionType": "Experimental",
+            "finalRQ": "Under standardized germination conditions, how does assigned NaCl concentration (0, 50, or 100 mM) affect mean radicle length per dish after 72 hours in radish (Raphanus sativus) seeds?",
+            "rqJustification": "A short nonhuman experiment can assign NaCl concentration, standardize germination conditions, and measure radicle length within the course timeline."
+          },
+          "forward": "The exact question determines the literature concepts, experimental treatment levels, outcome measurement, and later statistical structure.",
+          "compare": [
+            "Does every noun in your question have a clear meaning in the planned study?",
+            "Does your wording imply causation, and does your actual design justify that wording?"
+          ]
+        },
+        {
+          "id": 5,
+          "title": "Build a systematic search strategy",
+          "where": "The student now documents how relevant literature will be located.",
+          "changed": "The search moves from one broad phrase to concept blocks with synonyms.",
+          "reasoning": [
+            "Use a species block: radish OR Raphanus sativus.",
+            "Use a stress block: salinity OR salt stress OR sodium chloride OR NaCl.",
+            "Use an outcome block: germination OR radicle OR root growth OR seedling growth.",
+            "Record the database/search system, date, exact string, and filters."
+          ],
+          "decision": "Use multiple documented searches rather than treating one query as exhaustive.",
+          "rejected": "Searching only “salt plant experiment” is rejected because it is too broad and poorly reproducible.",
+          "notebook": {
+            "searchBlock1": "radish OR \"Raphanus sativus\"",
+            "searchBlock2": "salinity OR \"salt stress\" OR \"sodium chloride\" OR NaCl",
+            "searchBlock3": "germination OR radicle OR \"root growth\" OR \"seedling growth\"",
+            "searchStrings": "(\"Raphanus sativus\" OR radish) AND (salinity OR \"salt stress\" OR NaCl) AND (germination OR radicle OR \"seedling growth\")"
+          },
+          "forward": "The search records will support transparent source selection and prevent an exaggerated gap statement later.",
+          "compare": [
+            "What are the 2–3 concept blocks in your question?",
+            "What synonyms would researchers use that a beginner might not think of immediately?"
+          ]
+        },
+        {
+          "id": 6,
+          "title": "Evaluate, read, and extract sources",
+          "where": "The student turns relevant papers into comparable evidence records.",
+          "changed": "The student stops saving papers as isolated PDFs and records design, scope, findings, and limitations.",
+          "reasoning": [
+            "Bibliographic verification is separate from judging methodological quality.",
+            "Broad reviews explain mechanisms but do not provide the exact classroom effect.",
+            "The radish study is directly relevant to species and early growth, while its conditions differ from this exemplar."
+          ],
+          "decision": "Keep three verified sources as background/example records, while continuing the real search in a real project.",
+          "rejected": "Treating every peer-reviewed source as equally strong or directly comparable is rejected.",
+          "notebook": {
+            "sourceRecords": "E-S01, E-S02, and E-S03 are verified against the source records included with this exemplar.",
+            "screeningLogic": "Include sources that inform salinity mechanisms, radish germination, or early radicle growth; record differences in treatment and measurement."
+          },
+          "forward": "The extracted records now make cross-study synthesis possible instead of producing an annotated bibliography.",
+          "compare": [
+            "Can you tell what each source measured and what claim it can actually support?",
+            "Which source is background, which is closest to your question, and what still differs?"
+          ]
+        },
+        {
+          "id": 7,
+          "title": "Synthesize the literature and justify the study",
+          "where": "The student compares sources and chooses a defensible rationale.",
+          "changed": "The rationale changes from searching for novelty to a local replication/extension.",
+          "reasoning": [
+            "Across the sources, salinity is a biologically plausible constraint on plant growth.",
+            "Radish early growth is responsive to saline conditions, but protocols and treatment scales vary.",
+            "A classroom experiment can reproduce the general phenomenon under a simpler protocol without claiming to discover a global gap."
+          ],
+          "decision": "Frame the project as a controlled local replication/extension used to estimate the response of this seed batch under the specified protocol.",
+          "rejected": "“No one has studied this” is explicitly rejected.",
+          "notebook": {
+            "theme1": "Salinity can constrain plant growth through osmotic/ionic stress mechanisms.",
+            "theme2": "Radish germination and radicle growth vary with saline germination conditions.",
+            "tensions": "Published protocols differ in temperature, water potential or NaCl treatment, outcomes, and duration.",
+            "gapStatement": "This project is a local replication/extension of established salinity-growth research using a defined classroom protocol; it does not claim a global literature gap."
+          },
+          "forward": "Because the rationale is replication/extension, the Discussion later should compare the direction of the synthetic teaching result with prior work without claiming novelty.",
+          "compare": [
+            "What do several sources collectively support?",
+            "Would replication, extension, inconsistency, method comparison, or local relevance be more defensible than claiming a gap?"
+          ]
+        },
+        {
+          "id": 8,
+          "title": "Write the literature review",
+          "where": "The student converts source records into a connected argument that leads to the study.",
+          "changed": "The prose shifts from paper-by-paper summaries to claims supported by multiple sources.",
+          "reasoning": [
+            "Paragraph 1 explains why salinity is biologically relevant.",
+            "Paragraph 2 narrows to germination and radicle growth in radish.",
+            "Paragraph 3 explains the local replication/extension rationale and leads directly to the research question."
+          ],
+          "decision": "Use synthesis language and preserve the boundary between broad salinity evidence and the exact classroom protocol.",
+          "rejected": "A sequence such as “Munns studied… Toscano studied…” is rejected because it does not explain relationships among the sources.",
+          "notebook": {
+            "literatureReviewExcerpt": "Salinity can constrain plant growth through osmotic and ionic stress, although tolerance depends on species, developmental stage, and environmental conditions (Munns & Tester, 2008; Munns & Gilliham, 2015). Species-relevant work also demonstrates that radish germination and early radicle growth respond to saline germination conditions (Toscano et al., 2025). These studies establish the biological plausibility of a salt-growth response while leaving the exact magnitude under any new classroom protocol to be measured directly."
+          },
+          "forward": "The Method must now operationalize the causal question exactly as the literature review and RQ describe it.",
+          "compare": [
+            "Does each paragraph make a claim about the literature rather than just name authors?",
+            "Does the final paragraph lead logically to your actual question?"
+          ]
+        },
+        {
+          "id": 9,
+          "title": "Choose the research design",
+          "where": "The student chooses the evidence structure that can answer the causal question.",
+          "changed": "The study is explicitly defined as a completely randomized nonhuman experiment.",
+          "reasoning": [
+            "NaCl concentration will be assigned by the researcher.",
+            "Different dishes will receive one of three conditions.",
+            "Random assignment of dishes to conditions helps reduce systematic baseline differences.",
+            "The causal claim remains limited to the protocol, tested seed lot, and conditions."
+          ],
+          "decision": "Completely randomized experiment with 18 Petri dishes, 6 assigned to each NaCl level.",
+          "rejected": "An observational design is rejected because the project is able to assign the exposure directly.",
+          "notebook": {
+            "designType": "Experimental",
+            "designWhy": "NaCl concentration is deliberately assigned to independent dishes, allowing a controlled treatment comparison.",
+            "comparisonStructure": "18 independent dishes; 6 dishes each at 0, 50, and 100 mM NaCl.",
+            "claimBoundary": "Can estimate the causal effect of assigned NaCl concentration on dish-level early radicle growth under this protocol; cannot establish long-term crop performance or generalize to all radish varieties."
+          },
+          "forward": "The next stage must identify the experimental unit correctly. The number of seeds cannot automatically become the treatment n.",
+          "compare": [
+            "Was your key exposure actually assigned?",
+            "What is the strongest claim your design can support before you know the result?"
+          ]
+        },
+        {
+          "id": 10,
+          "title": "Define hypotheses, variables, controls, and units",
+          "where": "The student translates the experimental question into exact roles and operational definitions.",
+          "changed": "The student discovers that the dish, not the individual seed, is the experimental unit because treatment is assigned to the whole dish.",
+          "reasoning": [
+            "NaCl concentration is the manipulated independent variable.",
+            "Mean radicle length per dish at 72 hours is the primary outcome.",
+            "Five seeds inside one dish are subsamples sharing the same treatment environment.",
+            "The 0 mM condition is the control/reference condition.",
+            "Standardizing volume, seed batch, substrate, temperature range, timing, and measurement reduces alternative explanations."
+          ],
+          "decision": "Analyze treatment replication at the dish level (n = 18 dishes), while retaining seed-level raw records as subsamples.",
+          "rejected": "n = 90 independent treatment replicates is rejected because 90 seeds are nested within only 18 independently treated dishes.",
+          "notebook": {
+            "hypothesisNeeded": "Yes",
+            "researchHyp": "Higher assigned NaCl concentration will reduce mean radicle length per dish after 72 hours.",
+            "predictorIV": "Assigned NaCl concentration: 0, 50, or 100 mM.",
+            "outcomeDV": "Mean radicle length in millimeters among germinated seeds within each dish at 72 hours.",
+            "operationalDefs": "A radicle is measured from seed coat emergence point to radicle tip; the primary dish value is the arithmetic mean of germinated-seed radicle lengths.",
+            "controlCondition": "0 mM NaCl.",
+            "controlledConditions": "Same seed lot, 5 seeds per dish, substrate, solution volume, temperature range, light exposure, incubation time, and measurement procedure.",
+            "experimentalUnit": "Petri dish; seeds within a dish are subsamples."
+          },
+          "forward": "Sampling, measurement quality, and the data table must preserve dish IDs so the analysis does not lose the true unit structure.",
+          "compare": [
+            "What could independently receive a different treatment?",
+            "Are you counting repeated readings or subsamples as if they were independent experiments?"
+          ]
+        },
+        {
+          "id": 11,
+          "title": "Plan sampling, measurement, validity, and ethics",
+          "where": "The student decides what the sample represents and how measurements will be made consistently.",
+          "changed": "The project stops implying that one commercial seed packet represents all radish plants.",
+          "reasoning": [
+            "The seed lot is a convenience biological sample.",
+            "Generalization should stay close to this seed batch and protocol.",
+            "Radicle length is measured in millimeters using the same image/ruler procedure and time point.",
+            "Nonhuman work avoids participant-consent issues, but ordinary lab safety and disposal rules still apply."
+          ],
+          "decision": "Use one accessible radish seed lot, 18 dishes, standardized measurement at 72 hours, and a bounded generalization statement.",
+          "rejected": "“Random sample of all radish seeds” is rejected because the seeds come from one accessible commercial batch.",
+          "notebook": {
+            "population": "Radish seeds comparable to the tested commercial batch under similar early germination conditions.",
+            "sample": "90 seeds from one accessible commercial seed lot placed into 18 dishes.",
+            "samplingMethod": "Convenience biological sample from one seed lot; treatment is randomized at the dish level.",
+            "sampleLimits": "Results should not be generalized to all radish cultivars, field soils, or long-term plant performance.",
+            "instrument": "Standardized millimeter measurement from seed coat to radicle tip at 72 hours, using the same scale/procedure.",
+            "measureQuality": "Same measurer/protocol and time point; coded dish images can reduce expectation effects during measurement.",
+            "ethicsIssues": "No human participants. Use ordinary classroom laboratory safety for salt solutions, biological material, and disposal.",
+            "ethicsPlan": "Teacher-approved nonhuman procedure; label solutions clearly and follow school laboratory handling/disposal rules."
+          },
+          "forward": "The written protocol must now specify exactly how dishes are assigned, prepared, measured, and converted into a dish-level analysis table.",
+          "compare": [
+            "Who or what is actually sampled, and what broader group are you tempted to generalize to?",
+            "What evidence supports the interpretation of your measurement?"
+          ]
+        },
+        {
+          "id": 12,
+          "title": "Write the method and lock the data plan",
+          "where": "The student writes the protocol before seeing the final result and defines two linked data tables.",
+          "changed": "The vague instruction “measure growth” becomes an auditable sequence with raw seed-level records and a dish-level analysis file.",
+          "reasoning": [
+            "Randomly assign 18 labeled dishes to three NaCl conditions.",
+            "Place five seeds in each dish and apply the same solution volume.",
+            "Incubate under the same conditions for 72 hours.",
+            "Record germination and radicle length for each seed.",
+            "Compute one mean radicle-length value per dish for the primary analysis.",
+            "Preserve seed_id and dish_id so subsamples remain linked."
+          ],
+          "decision": "Lock a protocol that treats the dish as the experimental unit and uses dish-level mean radicle length as the primary analysis outcome.",
+          "rejected": "A spreadsheet with one row per seed and no dish ID is rejected because it would invite pseudoreplication.",
+          "notebook": {
+            "procedure": "Randomize 18 dishes to 0, 50, or 100 mM NaCl; place 5 seeds per dish; add equal solution volume; incubate 72 hours under standardized conditions; score germination and radicle length; preserve seed and dish IDs; summarize mean radicle length by dish.",
+            "replication": "18 independent dishes total, 6 per condition; 5 seed subsamples per dish.",
+            "rowUnit": "Primary analysis table: one row = one dish. Raw table: one row = one seed linked to dish_id.",
+            "columns": "dish_id, NaCl_mM, n_seeds, n_germinated, germination_proportion, mean_radicle_length_mm.",
+            "missingRule": "Radicle length is blank for a seed that did not germinate; blank never means zero growth. Dish-level mean uses germinated seeds and records n_germinated.",
+            "analysisIntent": "Compare dish-level mean radicle length across three independently assigned NaCl conditions."
+          },
+          "forward": "Because the protocol is locked before final data, later exclusions or changes must be logged instead of silently adjusted to improve the result.",
+          "compare": [
+            "Could another student run your procedure without inventing missing decisions?",
+            "What does one row represent, and does that match the independent unit?"
+          ]
+        },
+        {
+          "id": 13,
+          "title": "Collect, clean, visualize, and describe data",
+          "where": "The exemplar now introduces synthetic data solely to demonstrate the analysis workflow.",
+          "changed": "The project moves from planned variables to actual-looking records while preserving the dish as the analysis unit.",
+          "reasoning": [
+            "The seed-level file keeps raw subsample information.",
+            "The dish-level file contains the independent units used in the primary analysis.",
+            "No dish-level value is missing in the synthetic dataset.",
+            "Mean dish-level radicle length declines across 0, 50, and 100 mM groups in the synthetic data.",
+            "Germination proportion is summarized secondarily without pretending seed rows are independent treatment replicates."
+          ],
+          "decision": "Use the dish-level dataset for treatment inference and retain the seed-level file for auditability.",
+          "rejected": "Running the primary group comparison on all seed rows as n = 90 is rejected.",
+          "notebook": {
+            "rawLocation": "Synthetic teaching files: SYNTHETIC_SEED_LEVEL_DATA.csv and SYNTHETIC_DISH_LEVEL_ANALYSIS_DATA.csv.",
+            "missingObserved": "Non-germinated seeds have blank radicle length by design; no dish-level primary outcome is missing.",
+            "descriptives": "0 mM: mean 34.70 mm, SD 1.21; 50 mM: mean 26.78 mm, SD 1.30; 100 mM: mean 16.57 mm, SD 1.13. Mean germination proportions are 1.00, 0.93, and 0.73."
+          },
+          "forward": "The analysis must use three independent dish groups and a numerical outcome. The visual dose pattern alone is not a substitute for the planned inferential analysis.",
+          "compare": [
+            "Is your analysis file using the same unit that your design identified as independent?",
+            "Do blanks mean missing, zero, not applicable, or something else?"
+          ]
+        },
+        {
+          "id": 14,
+          "title": "Choose and justify the data analysis",
+          "where": "The student chooses the analysis from the estimand, outcome type, and unit structure.",
+          "changed": "The analysis decision follows design structure instead of starting with a favorite test name.",
+          "reasoning": [
+            "The primary estimand concerns mean dish-level radicle length across three assigned concentrations.",
+            "The outcome is numerical.",
+            "The treatment groups contain different independent dishes.",
+            "Welch one-way ANOVA compares group means without requiring equal population variances.",
+            "A prespecified 0 vs 100 mM contrast communicates a directly interpretable raw difference in millimeters."
+          ],
+          "decision": "Primary analysis: Welch one-way ANOVA on the 18 dish means. Prespecified secondary contrast: Welch independent-groups comparison of 0 vs 100 mM dish means.",
+          "rejected": "An analysis with 90 independent seed observations is rejected because it violates the experimental-unit structure.",
+          "notebook": {
+            "primaryEstimand": "Differences in mean dish-level radicle length among assigned 0, 50, and 100 mM NaCl conditions.",
+            "analysisChoice": "Welch one-way ANOVA for the three independent dish groups; prespecified 0 vs 100 mM Welch contrast for an interpretable raw difference.",
+            "assumptionChecks": "Independent assignment at dish level; inspect group distributions and extreme dish values; numerical outcome measured on the same scale.",
+            "effectSizePlan": "Report group means/SDs and the raw 0 vs 100 mM mean difference with 95% CI. Millimeters are directly interpretable; do not use p as an effect size."
+          },
+          "forward": "The Results must report the actual estimates and uncertainty without introducing a biological mechanism that was not directly measured.",
+          "compare": [
+            "What exact quantity would answer your question even if you never calculated a p-value?",
+            "Are your groups independent, paired, repeated, or nested?"
+          ]
+        },
+        {
+          "id": 15,
+          "title": "Write the Results section",
+          "where": "The student converts the synthetic analysis output into neutral, traceable Results prose.",
+          "changed": "The student stops at what the data show and does not yet explain why salt changes growth.",
+          "reasoning": [
+            "Report n at the dish level.",
+            "Report group means and SDs.",
+            "Report the Welch ANOVA statistic and degrees of freedom.",
+            "Report the prespecified raw difference and 95% CI.",
+            "Keep germination as a secondary descriptive result."
+          ],
+          "decision": "Write the Results around dish-level estimates and uncertainty.",
+          "rejected": "“Salt damaged the seedlings by disrupting water balance” is rejected from Results because mechanism was not measured and belongs, if used cautiously, in Discussion.",
+          "notebook": {
+            "analysisSample": "18 independent dishes, 6 per NaCl condition.",
+            "result1": "Synthetic dish-level mean radicle length was 34.70 mm (SD 1.21) at 0 mM, 26.78 mm (SD 1.30) at 50 mM, and 16.57 mm (SD 1.13) at 100 mM. Welch ANOVA indicated a difference among condition means, F(2, 9.97) = 342.91, p < .001.",
+            "result2": "The prespecified 0 vs 100 mM raw mean difference was 18.13 mm, 95% CI [16.63, 19.64]. Mean dish germination proportions were 1.00, 0.93, and 0.73 across increasing concentrations.",
+            "resultsDraft": "The synthetic results show lower dish-level radicle length at higher assigned NaCl concentrations, with the primary inferential test indicating mean differences among the three conditions."
+          },
+          "forward": "Discussion can now interpret the direction, compare it with the literature, and explain boundaries. It cannot erase that the data are synthetic teaching data.",
+          "compare": [
+            "Can every number in your Results be traced to an output or table?",
+            "Have you accidentally explained a mechanism instead of reporting a finding?"
+          ]
+        },
+        {
+          "id": 16,
+          "title": "Write the Discussion and limitations",
+          "where": "The student interprets the synthetic result while separating observation, mechanism, and limitation.",
+          "changed": "The paper now answers the RQ and links the result to prior salinity literature without claiming that the teaching data prove a universal mechanism.",
+          "reasoning": [
+            "The assigned concentration produced a large ordered difference in the synthetic dish-level outcome.",
+            "This direction is consistent with literature showing salinity can constrain plant growth and radicle development.",
+            "Osmotic/ionic stress is a plausible explanation from prior literature, but it was not directly measured here.",
+            "One seed lot, one short time point, simple laboratory conditions, and synthetic data sharply limit the claim."
+          ],
+          "decision": "Use a bounded causal interpretation for the specified experimental protocol, then explicitly state that the teaching data themselves are synthetic and cannot serve as empirical evidence.",
+          "rejected": "“Salt always prevents radish growth” is rejected as an unjustified universal conclusion.",
+          "notebook": {
+            "directAnswer": "Within this synthetic teaching experiment, assigned NaCl concentration was associated with progressively lower mean radicle length per dish across 0, 50, and 100 mM conditions.",
+            "interpret1": "The direction is consistent with published salinity research, but the exemplar did not measure osmotic or ionic mechanisms directly.",
+            "alternatives": "Seed-batch characteristics, small environmental differences among dishes, and measurement error could contribute to variation, although random assignment and standardization are intended to reduce systematic bias.",
+            "limitations": "One commercial seed lot, 18 dishes, a 72-hour window, laboratory conditions, and synthetic rather than observed data. The exemplar cannot establish real-world effect sizes or long-term radish performance.",
+            "implications": "The workflow demonstrates how to align treatment assignment, experimental unit, analysis, and claim calibration. It is not evidence that students should cite as a biological finding."
+          },
+          "forward": "The conclusion and abstract must preserve the same scope and synthetic-data disclaimer.",
+          "compare": [
+            "Which explanation comes from your data and which comes from prior literature?",
+            "For every limitation, what specific claim becomes weaker?"
+          ]
+        },
+        {
+          "id": 17,
+          "title": "Write the conclusion, abstract, title, and keywords",
+          "where": "The student closes the paper only after the Method, Results, and Discussion are stable.",
+          "changed": "The abstract now contains the actual design and central synthetic result rather than vague promises.",
+          "reasoning": [
+            "The title names the treatment, outcome, organism, and exemplar status.",
+            "The abstract states purpose, design, unit, result, and bounded conclusion.",
+            "The conclusion does not introduce new data or a new literature claim."
+          ],
+          "decision": "Make the synthetic instructional status impossible to miss.",
+          "rejected": "A title such as “The Effect of Salt on Plants” is rejected as vague and overbroad.",
+          "notebook": {
+            "titleDraft": "Synthetic Teaching Exemplar: Assigned Sodium Chloride Concentration and Early Radicle Growth in Radish Seeds",
+            "abstractDraft": "This synthetic instructional exemplar demonstrates an experimental research workflow using radish seed germination. Eighteen Petri dishes were assigned to 0, 50, or 100 mM NaCl, with five seed subsamples per dish. The primary outcome was mean radicle length per dish after 72 hours. In the synthetic dataset, mean radicle length declined across increasing NaCl conditions, and Welch one-way ANOVA indicated differences among treatment means, F(2, 9.97) = 342.91, p < .001. The 0 vs 100 mM raw mean difference was 18.13 mm, 95% CI [16.63, 19.64]. These invented data illustrate how treatment assignment, experimental-unit reasoning, analysis, and claim boundaries connect; they are not empirical evidence about radish salinity tolerance.",
+            "keywords": "salinity; radish; Raphanus sativus; radicle growth; experimental design; synthetic teaching data"
+          },
+          "forward": "The final audit must now verify that citations are real, all numerical results trace to the synthetic files, and the wording never hides the exemplar status.",
+          "compare": [
+            "If a reader saw only your abstract, could they tell what was done and what was found?",
+            "Does the title imply more causality or generality than the design supports?"
+          ]
+        },
+        {
+          "id": 18,
+          "title": "Citations, references, and final alignment audit",
+          "where": "The student checks the entire chain from interest to claim.",
+          "changed": "The final review catches alignment errors that ordinary grammar proofreading would miss.",
+          "reasoning": [
+            "The research question asks about assigned NaCl concentration and dish-level mean radicle length.",
+            "The Method assigns treatment to dishes and preserves seeds as subsamples.",
+            "The analysis uses dish-level means rather than pretending 90 seeds are independent treatment replicates.",
+            "The Results use the synthetic statistical output exactly.",
+            "The Discussion and abstract retain the experimental scope and synthetic-data disclaimer.",
+            "All three bibliography records are real and verified; the synthetic data are never presented as published evidence."
+          ],
+          "decision": "Freeze the exemplar as a complete teaching chain, with its data, source records, analysis output, and paper stored together.",
+          "rejected": "A polished paper with a unit mismatch, invented DOI, or unsupported causal/generalization claim is rejected even if its grammar is excellent.",
+          "notebook": {
+            "citationAudit": "E-S01, E-S02, and E-S03 match verified bibliographic records. All exemplar numerical results trace to SYNTHETIC_DISH_LEVEL_ANALYSIS_DATA.csv and SYNTHETIC_ANALYSIS_OUTPUT.json.",
+            "finalEdits": "Confirm synthetic-data labels, dish-level n = 18, exact Welch ANOVA values, APA references, and consistency of 0/50/100 mM treatment descriptions."
+          },
+          "forward": "The research chain is complete. A real student project would now be submitted with its own raw evidence, audit trail, and teacher approval records.",
+          "compare": [
+            "Can you trace every major claim backward to either data or a verified source?",
+            "If you changed one early decision, which later sections would also need revision?"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "id": "E-S01",
+          "citation": "Munns, R., & Tester, M. (2008). Mechanisms of salinity tolerance. Annual Review of Plant Biology, 59, 651–681. https://doi.org/10.1146/annurev.arplant.59.032607.092911",
+          "type": "Scholarly review",
+          "verified": true,
+          "design": "Review of physiological and molecular mechanisms of plant salinity tolerance",
+          "finding": "Salinity constrains plant growth through osmotic and ionic effects, while tolerance depends on multiple physiological mechanisms.",
+          "use": "Broad biological background and mechanism vocabulary.",
+          "boundary": "This review does not establish the exact effect size for the classroom radish conditions."
+        },
+        {
+          "id": "E-S02",
+          "citation": "Munns, R., & Gilliham, M. (2015). Salinity tolerance of crops – what is the cost? New Phytologist, 208(3), 668–673. https://doi.org/10.1111/nph.13519",
+          "type": "Scholarly review",
+          "verified": true,
+          "design": "Review focused on crop salinity effects and costs",
+          "finding": "Soil salinity can reduce crop growth and yield, with plant responses and tolerance varying among species and conditions.",
+          "use": "Supports the bounded background claim that salinity can constrain plant performance.",
+          "boundary": "The review concerns crop salinity broadly; it is not a direct estimate for this radish seed batch."
+        },
+        {
+          "id": "E-S03",
+          "citation": "Toscano, S., Romano, D., Cafaro, V., & Patanè, C. (2025). Annual Garden Rocket and Radish as Microgreens: Seed Germination Response to Thermal and Salt Stress. Agronomy, 15(2), 361. https://doi.org/10.3390/agronomy15020361",
+          "type": "Peer-reviewed empirical article",
+          "verified": true,
+          "design": "Experimental study of temperature and NaCl-related water potential during rocket and radish germination",
+          "finding": "Radish germination and early radicle growth varied with temperature and salinity-related water potential; radicle length declined under stronger salt stress conditions.",
+          "use": "Species-relevant evidence that radish early growth is responsive to saline germination conditions.",
+          "boundary": "Its temperatures, water-potential treatments, sample structure, and outcome procedures differ from this teaching exemplar."
+        }
+      ],
+      "analysis": {
+        "disclaimer": "All numerical data and statistical results in this exemplar are synthetic and exist only to demonstrate the research workflow.",
+        "experimental_unit": "Petri dish",
+        "subsamples": "Five seeds placed within each dish; seeds do not count as independent treatment replicates.",
+        "groups": {
+          "0": {
+            "n_dishes": 6,
+            "mean_mm": 34.699999999999996,
+            "sd_mm": 1.208304597359459,
+            "mean_germination_proportion": 1.0
+          },
+          "50": {
+            "n_dishes": 6,
+            "mean_mm": 26.78333333333333,
+            "sd_mm": 1.3014094923069626,
+            "mean_germination_proportion": 0.9333333333333332
+          },
+          "100": {
+            "n_dishes": 6,
+            "mean_mm": 16.566666666666666,
+            "sd_mm": 1.1254628677422756,
+            "mean_germination_proportion": 0.7333333333333334
+          }
+        },
+        "primary_analysis": {
+          "name": "Welch one-way ANOVA on dish-level mean radicle length",
+          "F": 342.9054292886502,
+          "df1": 2.0,
+          "df2": 9.965247163294777,
+          "p": 6.488355182697371e-10,
+          "reason": "Three independent treatment groups with a numerical dish-level outcome. Welch ANOVA does not require equal group variances."
+        },
+        "prespecified_secondary_contrast": {
+          "name": "0 mM vs 100 mM Welch independent-groups contrast",
+          "difference_mm": 18.13333333333333,
+          "ci95": [
+            16.63026512629426,
+            19.6364015403724
+          ],
+          "t": 26.899068798017662,
+          "df": 9.949976802560045,
+          "p": 1.2688028839695117e-10
+        }
+      },
+      "files": {
+        "seed_level": "examples/radish-salinity/SYNTHETIC_SEED_LEVEL_DATA.csv",
+        "dish_level": "examples/radish-salinity/SYNTHETIC_DISH_LEVEL_ANALYSIS_DATA.csv",
+        "analysis": "examples/radish-salinity/SYNTHETIC_ANALYSIS_OUTPUT.json",
+        "sources": "examples/radish-salinity/VERIFIED_SOURCE_RECORDS.json",
+        "paper": "examples/radish-salinity/COMPLETE_SYNTHETIC_EXEMPLAR_PAPER.md"
+      }
+    }
+  ]
+}

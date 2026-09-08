@@ -1,0 +1,18 @@
+{
+  "paired_n": 24,
+  "mean_change": 8.695833333333333,
+  "ci95": [
+    6.169165616727087,
+    11.222501049939579
+  ],
+  "paired_t": 7.119536014057916,
+  "df": 23,
+  "p": 2.9843189941350387e-07,
+  "qualitative_themes": [
+    "Retrieval exposed knowledge gaps and changed preparation",
+    "Students valued reconstruction and feedback",
+    "Perceived transfer and burden varied"
+  ],
+  "integration": "Quantitative scores improved on average, while interviews suggest possible mechanisms and boundaries. The qualitative strand does not prove why scores changed.",
+  "boundary": "Synthetic one-group pre/post data cannot establish a causal effect because there is no concurrent comparison group."
+}

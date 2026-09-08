@@ -1,0 +1,94 @@
+{
+  "release": "v2.9",
+  "status": "PASS",
+  "instructional_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.9",
+  "baseline_digest": "c96222c16cf745d45d6fb85ec8afd2dbadbf837e53478bab3a7833873f7572b1",
+  "live_browser_checks_passed": 60,
+  "live_browser_checks_total": 60,
+  "research_paths_browser_swept": 8,
+  "viewports": [
+    "1440x1000 desktop",
+    "768x1024 tablet",
+    "430x900 mobile",
+    "360x800 mobile",
+    "320x800 mobile",
+    "200% text enlargement simulation"
+  ],
+  "regression_and_static_checks_passed": 31,
+  "static_http_smoke_checks": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 7694
+    },
+    {
+      "path": "assets/style.css",
+      "status": 200,
+      "bytes": 71464
+    },
+    {
+      "path": "assets/accessibility.js",
+      "status": 200,
+      "bytes": 7980
+    },
+    {
+      "path": "assets/app.js",
+      "status": 200,
+      "bytes": 99694
+    },
+    {
+      "path": "assets/exemplar-projects.js",
+      "status": 200,
+      "bytes": 208925
+    },
+    {
+      "path": "assets/rescue-ui.js",
+      "status": 200,
+      "bytes": 14947
+    },
+    {
+      "path": "assets/pathway-ui.js",
+      "status": 200,
+      "bytes": 4634
+    },
+    {
+      "path": "docs/browser-qa/BROWSER_QA_RESULTS_v2.9.json",
+      "status": 200,
+      "bytes": 21255
+    },
+    {
+      "path": "docs/browser-qa/screenshots/01-desktop-welcome.png",
+      "status": 200,
+      "bytes": 329413
+    },
+    {
+      "path": "docs/browser-qa/screenshots/03-mobile-320.png",
+      "status": 200,
+      "bytes": 452036
+    },
+    {
+      "path": "docs/browser-qa/screenshots/05-text-zoom-200.png",
+      "status": 200,
+      "bytes": 917188
+    }
+  ],
+  "core_methodological_engines_unchanged_from_v2.8": {
+    "assets/coach.js": true,
+    "assets/methods.js": true,
+    "assets/analytics.js": true,
+    "assets/literature.js": true,
+    "assets/writing.js": true,
+    "assets/transfer.js": true,
+    "assets/competencies.js": true,
+    "assets/curriculum.js": true,
+    "assets/pathways.js": true,
+    "assets/path-coach.js": true,
+    "assets/rescue.js": true,
+    "assets/rescue-model.js": true,
+    "assets/novice-friction.js": true,
+    "assets/exemplar-projects.js": true,
+    "prompts/stage_prompts_v1.2.json": true
+  },
+  "browser_test_origin_limit": "Managed Chromium blocks local/private/file/data navigation. Playwright rendered the exact packaged HTML/CSS/JS via page.set_content; real-origin localStorage persistence was not part of the live browser pass.",
+  "wcag_conformance_claim": "NONE \u2014 this is software/browser QA, not certification."
+}

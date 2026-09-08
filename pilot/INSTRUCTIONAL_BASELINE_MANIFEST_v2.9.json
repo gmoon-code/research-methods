@@ -1,0 +1,98 @@
+{
+  "baseline_id": "RMS-INSTRUCTIONAL-BASELINE-v2.9",
+  "files": [
+    {
+      "path": "assets/coach.js",
+      "sha256": "08e7e7e6e11de94871515b7989cab252d63714f0923ab115c9b0c48338e212a4"
+    },
+    {
+      "path": "assets/methods.js",
+      "sha256": "0c21c353f30eae947a71063d256071c177d4d7f72791ce505ca95031a6bf70ea"
+    },
+    {
+      "path": "assets/analytics.js",
+      "sha256": "e7a47ce09a4ef5e0d799f2046eb9bc6189d78268360cd6d2d546e9efc522d137"
+    },
+    {
+      "path": "assets/literature.js",
+      "sha256": "f3834b7147cf3404e935d20ee79c76e2822a0012a65db03f987e49c8b33b4fae"
+    },
+    {
+      "path": "assets/writing.js",
+      "sha256": "35df891b59b96a880aff2a23acdb82f9cf0fba9517303f8e547b23259dbdac22"
+    },
+    {
+      "path": "assets/transfer.js",
+      "sha256": "a0fd075c32f6762cfe3377efbaff696c46a734e4fea9f5d10ac726e9d9f85a3e"
+    },
+    {
+      "path": "assets/competencies.js",
+      "sha256": "c984c5a5eb6a6070a6ba9da844d961d0e53b2bdf5471e14619aef8101abf6b0b"
+    },
+    {
+      "path": "assets/curriculum.js",
+      "sha256": "e1848aa45ae26dea86dbf21a842280a05c57c689bacc90568551b2c2a2c2ca05"
+    },
+    {
+      "path": "assets/pathways.js",
+      "sha256": "7b177a86d823c46a05be9835887394b8cabc0ba0cb2d66b8b5ca6079e16c6d93"
+    },
+    {
+      "path": "assets/path-coach.js",
+      "sha256": "b9b0b848017396e7384b4883d9c26c8a0196eb6c62b55c06e8cc49527d665a87"
+    },
+    {
+      "path": "assets/rescue.js",
+      "sha256": "309675815b12efd2f62e5ebbad1c05b6b1715d0deb8603a66f347b62cf47b662"
+    },
+    {
+      "path": "assets/rescue-model.js",
+      "sha256": "61cbd6e0a934f892c0a6a9833bc59ac0a20384905a5c2d90c8067095068e1aa9"
+    },
+    {
+      "path": "assets/novice-friction.js",
+      "sha256": "8cbb0c6ed48aecad29d181f1e857714ef0b11f9a475d99d6aedb9e537932bdb2"
+    },
+    {
+      "path": "assets/exemplar-projects.js",
+      "sha256": "184d547a9bb0446287e3c34440d683b11b55e7911a7d77784d37ee7b34bfda5f"
+    },
+    {
+      "path": "prompts/stage_prompts_v1.2.json",
+      "sha256": "dbd7dc9de4b89b0e5852863cda387ea734f91ce9654658ce4f952046f7d743c1"
+    },
+    {
+      "path": "index.html",
+      "sha256": "9fda900ec75467b38123c52df8d3218f0e713414ac64b3e282588efcdcf66db5"
+    },
+    {
+      "path": "assets/style.css",
+      "sha256": "06770b60a7da4f9991c2b661d60900d979851f7f3e4291976fb5000aaa617068"
+    },
+    {
+      "path": "assets/accessibility.js",
+      "sha256": "1500535e14d9f48ab8fa343289dff6c75c1f79f131fe45d8e866015131284c59"
+    },
+    {
+      "path": "assets/app.js",
+      "sha256": "8537682a37277e739c1dbe17471b95c21a34ecc9cd76a15b88f0f3dcaf5ed374"
+    },
+    {
+      "path": "docs/browser-qa/BEGINNER_BROWSER_ACCESSIBILITY_QA_v2.9.md",
+      "sha256": "0bd10f2bf5278b62aedb46ad18ac17f8a7325c96d4afaa1ccec53580d90d9ec6"
+    },
+    {
+      "path": "docs/browser-qa/BROWSER_QA_RESULTS_v2.9.json",
+      "sha256": "30222cbbc738130034db82597aa38836a83a409edb06dbcbb2940c2fe5834fd0"
+    },
+    {
+      "path": "docs/RELEASE_AUDIT_v2.9.md",
+      "sha256": "6fd79eebf80a79bb89b42f68504ac93d46505cbd01760b7f2c74d74287c95d7d"
+    },
+    {
+      "path": "docs/BASELINE_CHANGE_NOTICE_v2.9.md",
+      "sha256": "5f3e1c0bf8e0f4dd9aef6bfb21e8ec30f24be76f4eae9ed6c9f56af371629098"
+    }
+  ],
+  "baseline_digest": "c96222c16cf745d45d6fb85ec8afd2dbadbf837e53478bab3a7833873f7572b1"
+}

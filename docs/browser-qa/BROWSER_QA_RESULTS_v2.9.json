@@ -1,0 +1,663 @@
+{
+  "release": "v2.9",
+  "engine": "Playwright using system Chromium with page.set_content",
+  "note": "The managed system Chromium blocks local/file navigation. The QA therefore loads the exact packaged HTML/CSS/JS into an about:blank page with Playwright set_content. Rendering, CSS, JavaScript, keyboard events, focus, and responsive viewport behavior are exercised; HTTP navigation itself is covered separately by static server smoke tests.",
+  "checks": [
+    {
+      "name": "App shell renders",
+      "passed": true,
+      "detail": "Research Methods Studio \u00b7 Browser Usability & Accessibility QA v2.9"
+    },
+    {
+      "name": "No JavaScript page errors on initial render",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Skip link exists",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "First-run onboarding modal has dialog semantics and initial focus",
+      "passed": true,
+      "detail": {
+        "count": 1,
+        "role": "dialog",
+        "ariaModal": "true",
+        "labelledby": "dialog-title-jmrbbg",
+        "titleText": "Pilot & Recovery Center",
+        "activeTag": "H3",
+        "activeText": "Pilot & Recovery Center",
+        "activeInside": true,
+        "appInert": true,
+        "underlyingInert": null
+      }
+    },
+    {
+      "name": "First-run onboarding can be dismissed with Escape",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Desktop has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "desktop-1440",
+        "innerWidth": 1440,
+        "rootClientWidth": 1440,
+        "rootScrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "height": 1628,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 1037,
+        "topActionsClientWidth": 1037
+      }
+    },
+    {
+      "name": "Skip link moves focus to main content",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Visible Stage 1 form controls have accessible labels",
+      "passed": true,
+      "detail": {
+        "visibleControls": 9,
+        "missingLabels": [],
+        "visibleButtons": 53,
+        "namelessButtons": []
+      }
+    },
+    {
+      "name": "Visible buttons have accessible names",
+      "passed": true,
+      "detail": {
+        "visibleControls": 9,
+        "missingLabels": [],
+        "visibleButtons": 53,
+        "namelessButtons": []
+      }
+    },
+    {
+      "name": "Sampled solid-background instructional text meets WCAG AA contrast thresholds",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Progressive help entry point is visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Progressive-help modal has dialog semantics",
+      "passed": true,
+      "detail": {
+        "count": 1,
+        "role": "dialog",
+        "ariaModal": "true",
+        "labelledby": "dialog-title-4m5mlo",
+        "titleText": "Three science or research areas I enjoy",
+        "activeTag": "H3",
+        "activeText": "Three science or research areas I enjoy",
+        "activeInside": true,
+        "appInert": true,
+        "underlyingInert": null
+      }
+    },
+    {
+      "name": "Focus enters progressive-help dialog",
+      "passed": true,
+      "detail": {
+        "count": 1,
+        "role": "dialog",
+        "ariaModal": "true",
+        "labelledby": "dialog-title-4m5mlo",
+        "titleText": "Three science or research areas I enjoy",
+        "activeTag": "H3",
+        "activeText": "Three science or research areas I enjoy",
+        "activeInside": true,
+        "appInert": true,
+        "underlyingInert": null
+      }
+    },
+    {
+      "name": "Tab key remains trapped inside active modal",
+      "passed": true,
+      "detail": {
+        "count": 1,
+        "role": "dialog",
+        "ariaModal": "true",
+        "labelledby": "dialog-title-4m5mlo",
+        "titleText": "Three science or research areas I enjoy",
+        "activeTag": "BUTTON",
+        "activeText": "L1\nClarify the task",
+        "activeInside": true,
+        "appInert": true,
+        "underlyingInert": null
+      }
+    },
+    {
+      "name": "Escape closes progressive-help modal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Focus returns to progressive-help opener",
+      "passed": true,
+      "detail": "<button type=\"button\" class=\"progressive-help-button\" data-progressive-help=\"interest1\" data-help-stage=\"1\">Progressive help</button>"
+    },
+    {
+      "name": "Exemplar library receives dialog semantics and focus",
+      "passed": true,
+      "detail": {
+        "count": 1,
+        "role": "dialog",
+        "ariaModal": "true",
+        "labelledby": "dialog-title-d72uzc",
+        "titleText": "Multi-Path Exemplar Library",
+        "activeTag": "H3",
+        "activeText": "Multi-Path Exemplar Library",
+        "activeInside": true,
+        "appInert": true,
+        "underlyingInert": null
+      }
+    },
+    {
+      "name": "Nested exemplar confirmation opens above project modal",
+      "passed": true,
+      "detail": {
+        "count": 2,
+        "role": "dialog",
+        "ariaModal": "true",
+        "labelledby": "dialog-title-naalop",
+        "titleText": "Save an independent checkpoint first if you want one",
+        "activeTag": "H3",
+        "activeText": "Save an independent checkpoint first if you want one",
+        "activeInside": true,
+        "appInert": true,
+        "underlyingInert": true
+      }
+    },
+    {
+      "name": "Nested confirmation owns keyboard focus",
+      "passed": true,
+      "detail": {
+        "count": 2,
+        "role": "dialog",
+        "ariaModal": "true",
+        "labelledby": "dialog-title-naalop",
+        "titleText": "Save an independent checkpoint first if you want one",
+        "activeTag": "H3",
+        "activeText": "Save an independent checkpoint first if you want one",
+        "activeInside": true,
+        "appInert": true,
+        "underlyingInert": true
+      }
+    },
+    {
+      "name": "Escape closes only the nested confirmation",
+      "passed": true,
+      "detail": {
+        "count": 1,
+        "role": "dialog",
+        "ariaModal": "true",
+        "labelledby": "dialog-title-wnw7v0",
+        "titleText": "Radish Salinity Experiment",
+        "activeTag": "BUTTON",
+        "activeText": "1\nFind a research interest\nworked reasoning",
+        "activeInside": true,
+        "appInert": true,
+        "underlyingInert": null
+      }
+    },
+    {
+      "name": "Focus restores into underlying exemplar modal",
+      "passed": true,
+      "detail": {
+        "count": 1,
+        "role": "dialog",
+        "ariaModal": "true",
+        "labelledby": "dialog-title-wnw7v0",
+        "titleText": "Radish Salinity Experiment",
+        "activeTag": "BUTTON",
+        "activeText": "1\nFind a research interest\nworked reasoning",
+        "activeInside": true,
+        "appInert": true,
+        "underlyingInert": null
+      }
+    },
+    {
+      "name": "Second Escape closes exemplar modal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Focus returns to Exemplar Project opener",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Descriptive Stage 10 controls are labelled",
+      "passed": true,
+      "detail": {
+        "visibleControls": 4,
+        "missingLabels": [],
+        "visibleButtons": 50,
+        "namelessButtons": []
+      }
+    },
+    {
+      "name": "Descriptive Stage 10 has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "path-descriptive_quantitative-stage10",
+        "innerWidth": 1440,
+        "rootClientWidth": 1440,
+        "rootScrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "height": 2919,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 1037,
+        "topActionsClientWidth": 1037
+      }
+    },
+    {
+      "name": "Descriptive Worked Stage 10 routes to matching exemplar",
+      "passed": true,
+      "detail": "LEVEL 4 WORKED-EXAMPLE SUPPORT\nSave an independent checkpoint first if you want one\n\nA complete worked stage is Level 4 support. If you view it first, a later checkpoint for this stage should be treated as supported.\n\nIf you continue\n\nStage 10 will record worked-example support from the Descriptive "
+    },
+    {
+      "name": "Observational Stage 10 controls are labelled",
+      "passed": true,
+      "detail": {
+        "visibleControls": 9,
+        "missingLabels": [],
+        "visibleButtons": 55,
+        "namelessButtons": []
+      }
+    },
+    {
+      "name": "Observational Stage 10 has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "path-observational-stage10",
+        "innerWidth": 1440,
+        "rootClientWidth": 1440,
+        "rootScrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "height": 3682,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 1037,
+        "topActionsClientWidth": 1037
+      }
+    },
+    {
+      "name": "Observational Worked Stage 10 routes to matching exemplar",
+      "passed": true,
+      "detail": "LEVEL 4 WORKED-EXAMPLE SUPPORT\nSave an independent checkpoint first if you want one\n\nA complete worked stage is Level 4 support. If you view it first, a later checkpoint for this stage should be treated as supported.\n\nIf you continue\n\nStage 10 will record worked-example support from the Observationa"
+    },
+    {
+      "name": "Experimental Stage 10 controls are labelled",
+      "passed": true,
+      "detail": {
+        "visibleControls": 11,
+        "missingLabels": [],
+        "visibleButtons": 56,
+        "namelessButtons": []
+      }
+    },
+    {
+      "name": "Experimental Stage 10 has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "path-experimental-stage10",
+        "innerWidth": 1440,
+        "rootClientWidth": 1440,
+        "rootScrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "height": 3889,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 1037,
+        "topActionsClientWidth": 1037
+      }
+    },
+    {
+      "name": "Experimental Worked Stage 10 routes to matching exemplar",
+      "passed": true,
+      "detail": "LEVEL 4 WORKED-EXAMPLE SUPPORT\nSave an independent checkpoint first if you want one\n\nA complete worked stage is Level 4 support. If you view it first, a later checkpoint for this stage should be treated as supported.\n\nIf you continue\n\nStage 10 will record worked-example support from the Experimental"
+    },
+    {
+      "name": "Quasi-experimental Stage 10 controls are labelled",
+      "passed": true,
+      "detail": {
+        "visibleControls": 11,
+        "missingLabels": [],
+        "visibleButtons": 56,
+        "namelessButtons": []
+      }
+    },
+    {
+      "name": "Quasi-experimental Stage 10 has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "path-quasi_experimental-stage10",
+        "innerWidth": 1440,
+        "rootClientWidth": 1440,
+        "rootScrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "height": 3906,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 1037,
+        "topActionsClientWidth": 1037
+      }
+    },
+    {
+      "name": "Quasi-experimental Worked Stage 10 routes to matching exemplar",
+      "passed": true,
+      "detail": "LEVEL 4 WORKED-EXAMPLE SUPPORT\nSave an independent checkpoint first if you want one\n\nA complete worked stage is Level 4 support. If you view it first, a later checkpoint for this stage should be treated as supported.\n\nIf you continue\n\nStage 10 will record worked-example support from the Quasi-experi"
+    },
+    {
+      "name": "Qualitative Stage 10 controls are labelled",
+      "passed": true,
+      "detail": {
+        "visibleControls": 3,
+        "missingLabels": [],
+        "visibleButtons": 49,
+        "namelessButtons": []
+      }
+    },
+    {
+      "name": "Qualitative Stage 10 has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "path-qualitative-stage10",
+        "innerWidth": 1440,
+        "rootClientWidth": 1440,
+        "rootScrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "height": 2595,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 1037,
+        "topActionsClientWidth": 1037
+      }
+    },
+    {
+      "name": "Qualitative Worked Stage 10 routes to matching exemplar",
+      "passed": true,
+      "detail": "LEVEL 4 WORKED-EXAMPLE SUPPORT\nSave an independent checkpoint first if you want one\n\nA complete worked stage is Level 4 support. If you view it first, a later checkpoint for this stage should be treated as supported.\n\nIf you continue\n\nStage 10 will record worked-example support from the Qualitative "
+    },
+    {
+      "name": "Literature review Stage 10 controls are labelled",
+      "passed": true,
+      "detail": {
+        "visibleControls": 2,
+        "missingLabels": [],
+        "visibleButtons": 48,
+        "namelessButtons": []
+      }
+    },
+    {
+      "name": "Literature review Stage 10 has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "path-literature_review-stage10",
+        "innerWidth": 1440,
+        "rootClientWidth": 1440,
+        "rootScrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "height": 2334,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 1037,
+        "topActionsClientWidth": 1037
+      }
+    },
+    {
+      "name": "Literature review Worked Stage 10 routes to matching exemplar",
+      "passed": true,
+      "detail": "LEVEL 4 WORKED-EXAMPLE SUPPORT\nSave an independent checkpoint first if you want one\n\nA complete worked stage is Level 4 support. If you view it first, a later checkpoint for this stage should be treated as supported.\n\nIf you continue\n\nStage 10 will record worked-example support from the Literature r"
+    },
+    {
+      "name": "Meta-analysis Stage 10 controls are labelled",
+      "passed": true,
+      "detail": {
+        "visibleControls": 4,
+        "missingLabels": [],
+        "visibleButtons": 50,
+        "namelessButtons": []
+      }
+    },
+    {
+      "name": "Meta-analysis Stage 10 has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "path-meta_analysis-stage10",
+        "innerWidth": 1440,
+        "rootClientWidth": 1440,
+        "rootScrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "height": 2872,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 1037,
+        "topActionsClientWidth": 1037
+      }
+    },
+    {
+      "name": "Meta-analysis Worked Stage 10 routes to matching exemplar",
+      "passed": true,
+      "detail": "LEVEL 4 WORKED-EXAMPLE SUPPORT\nSave an independent checkpoint first if you want one\n\nA complete worked stage is Level 4 support. If you view it first, a later checkpoint for this stage should be treated as supported.\n\nIf you continue\n\nStage 10 will record worked-example support from the Meta-analysi"
+    },
+    {
+      "name": "Mixed methods Stage 10 controls are labelled",
+      "passed": true,
+      "detail": {
+        "visibleControls": 11,
+        "missingLabels": [],
+        "visibleButtons": 56,
+        "namelessButtons": []
+      }
+    },
+    {
+      "name": "Mixed methods Stage 10 has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "path-mixed_methods-stage10",
+        "innerWidth": 1440,
+        "rootClientWidth": 1440,
+        "rootScrollWidth": 1440,
+        "bodyScrollWidth": 1440,
+        "height": 3948,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 1037,
+        "topActionsClientWidth": 1037
+      }
+    },
+    {
+      "name": "Mixed methods Worked Stage 10 routes to matching exemplar",
+      "passed": true,
+      "detail": "LEVEL 4 WORKED-EXAMPLE SUPPORT\nSave an independent checkpoint first if you want one\n\nA complete worked stage is Level 4 support. If you view it first, a later checkpoint for this stage should be treated as supported.\n\nIf you continue\n\nStage 10 will record worked-example support from the Mixed method"
+    },
+    {
+      "name": "tablet-768 has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "tablet-768",
+        "innerWidth": 768,
+        "rootClientWidth": 768,
+        "rootScrollWidth": 768,
+        "bodyScrollWidth": 768,
+        "height": 5078,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 2370,
+        "topActionsClientWidth": 748
+      }
+    },
+    {
+      "name": "mobile-430 has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "mobile-430",
+        "innerWidth": 430,
+        "rootClientWidth": 430,
+        "rootScrollWidth": 430,
+        "bodyScrollWidth": 430,
+        "height": 5791,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 2370,
+        "topActionsClientWidth": 410
+      }
+    },
+    {
+      "name": "mobile-430 exposes top tools rather than hiding them",
+      "passed": true,
+      "detail": {
+        "label": "mobile-430",
+        "innerWidth": 430,
+        "rootClientWidth": 430,
+        "rootScrollWidth": 430,
+        "bodyScrollWidth": 430,
+        "height": 5791,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 2370,
+        "topActionsClientWidth": 410
+      }
+    },
+    {
+      "name": "mobile-360 has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "mobile-360",
+        "innerWidth": 360,
+        "rootClientWidth": 360,
+        "rootScrollWidth": 360,
+        "bodyScrollWidth": 360,
+        "height": 6007,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 2370,
+        "topActionsClientWidth": 340
+      }
+    },
+    {
+      "name": "mobile-360 exposes top tools rather than hiding them",
+      "passed": true,
+      "detail": {
+        "label": "mobile-360",
+        "innerWidth": 360,
+        "rootClientWidth": 360,
+        "rootScrollWidth": 360,
+        "bodyScrollWidth": 360,
+        "height": 6007,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 2370,
+        "topActionsClientWidth": 340
+      }
+    },
+    {
+      "name": "mobile-320 has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "mobile-320",
+        "innerWidth": 320,
+        "rootClientWidth": 320,
+        "rootScrollWidth": 320,
+        "bodyScrollWidth": 320,
+        "height": 6284,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 2370,
+        "topActionsClientWidth": 300
+      }
+    },
+    {
+      "name": "mobile-320 exposes top tools rather than hiding them",
+      "passed": true,
+      "detail": {
+        "label": "mobile-320",
+        "innerWidth": 320,
+        "rootClientWidth": 320,
+        "rootScrollWidth": 320,
+        "bodyScrollWidth": 320,
+        "height": 6284,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 2370,
+        "topActionsClientWidth": 300
+      }
+    },
+    {
+      "name": "Narrow-mobile interactive controls meet 40px minimum and most button controls meet 44px target",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Skip link stays fully off-screen at 200% text unless focused",
+      "passed": true,
+      "detail": {
+        "x": 12,
+        "y": -94.4000015258789,
+        "width": 355.484375,
+        "height": 59,
+        "top": -94.4000015258789,
+        "right": 367.484375,
+        "bottom": -35.400001525878906,
+        "left": 12
+      }
+    },
+    {
+      "name": "200% text enlargement has no page-level horizontal overflow",
+      "passed": true,
+      "detail": {
+        "label": "text-zoom-200",
+        "innerWidth": 1280,
+        "rootClientWidth": 1280,
+        "rootScrollWidth": 1280,
+        "bodyScrollWidth": 1280,
+        "height": 7379,
+        "hOverflow": 0,
+        "topActionsDisplay": "flex",
+        "topActionsScrollWidth": 922,
+        "topActionsClientWidth": 922
+      }
+    },
+    {
+      "name": "Reduced-motion media query is present",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Forced-colors media query is present",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Dynamic laboratory tables are keyboard focusable and labelled",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "screenshots": [
+    "screenshots/01-desktop-welcome.png",
+    "screenshots/02-exemplar-library.png",
+    "screenshots/03-mobile-430.png",
+    "screenshots/03-mobile-320.png",
+    "screenshots/04-mobile-stage-work.png",
+    "screenshots/05-text-zoom-200.png"
+  ],
+  "passed": true
+}

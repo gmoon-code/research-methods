@@ -1,0 +1,122 @@
+{
+  "release": "v2.2",
+  "status": "PASS",
+  "fields_specific": 113,
+  "generic_fields_remaining": 0,
+  "stage_walkthroughs": 18,
+  "glossary_terms": 90,
+  "decision_guides": 21,
+  "baseline_id": "RMS-INSTRUCTIONAL-BASELINE-v2.2",
+  "baseline_digest": "e6b098907934490afe539641ad276b1b7fa9c9c444972fbf85b3cc3dc596691b",
+  "http_smoke": "PASS",
+  "test_commands": [
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/assets/student-guidance.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/assets/student-guidance-ui.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/assets/app.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/assets/data-lab-ui.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/novice-guidance-v22.test.js",
+      "code": 0,
+      "stdout": "PASS v2.2 novice guidance model",
+      "stderr": ""
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/novice-guidance-v22-static.py",
+      "code": 0,
+      "stdout": "PASS v2.2 novice guidance integration",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/student-guidance.test.js",
+      "code": 0,
+      "stdout": "PASS student guidance coverage",
+      "stderr": ""
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/student-guidance-static.py",
+      "code": 0,
+      "stdout": "PASS guidance integration",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/full-path-rc1.test.js",
+      "code": 0,
+      "stdout": "PASS RC1 full-path student/teacher simulation",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/pilot-rc1.test.js",
+      "code": 0,
+      "stdout": "PASS RC1 pilot hardening",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/competencies.test.js",
+      "code": 0,
+      "stdout": "PASS competency analytics engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/transfer.test.js",
+      "code": 0,
+      "stdout": "PASS transfer and agreement engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/writing.test.js",
+      "code": 0,
+      "stdout": "PASS writing lab engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/analytics.test.js",
+      "code": 0,
+      "stdout": "PASS statistics engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/methods.test.js",
+      "code": 0,
+      "stdout": "PASS methods lab engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/literature.test.js",
+      "code": 0,
+      "stdout": "PASS literature workspace engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/coach.test.js",
+      "code": 0,
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.2-novice-decision-scaffolding/tests/ai-adapter.test.js",
+      "code": 0,
+      "stdout": "PASS AI adapter config",
+      "stderr": ""
+    }
+  ]
+}

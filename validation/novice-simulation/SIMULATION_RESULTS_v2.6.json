@@ -1,0 +1,179 @@
+{
+  "release": "v2.6",
+  "persona_results": [
+    {
+      "id": "N01",
+      "name": "First interview study",
+      "path": "qualitative",
+      "stage": 14,
+      "expected": [
+        "NG-PLACEHOLDER"
+      ],
+      "observed": [
+        "NG-PLACEHOLDER",
+        "NG-PLACEHOLDER"
+      ],
+      "gate_ready": false,
+      "passed": true
+    },
+    {
+      "id": "N02",
+      "name": "Global gap overclaim",
+      "path": "literature_review",
+      "stage": 7,
+      "expected": [
+        "NG-GAP-OVERCLAIM"
+      ],
+      "observed": [
+        "NG-GAP-OVERCLAIM"
+      ],
+      "gate_ready": false,
+      "passed": true
+    },
+    {
+      "id": "N03",
+      "name": "Random sampling confusion",
+      "path": "experimental",
+      "stage": 11,
+      "expected": [
+        "NG-RANDOM-CONVENIENCE"
+      ],
+      "observed": [
+        "NG-RANDOM-CONVENIENCE"
+      ],
+      "gate_ready": false,
+      "passed": true
+    },
+    {
+      "id": "N04",
+      "name": "Predictor manipulation contradiction",
+      "path": "observational",
+      "stage": 10,
+      "expected": [
+        "NG-OBS-MANIPULATION"
+      ],
+      "observed": [
+        "NG-OBS-MANIPULATION"
+      ],
+      "gate_ready": false,
+      "passed": true
+    },
+    {
+      "id": "N05",
+      "name": "Paired data discarded",
+      "path": "observational",
+      "stage": 14,
+      "expected": [
+        "NG-PAIRING-LOST"
+      ],
+      "observed": [
+        "NG-PAIRING-LOST"
+      ],
+      "gate_ready": false,
+      "passed": true
+    },
+    {
+      "id": "N06",
+      "name": "Binary means continuous misconception",
+      "path": "observational",
+      "stage": 14,
+      "expected": [
+        "NG-BINARY-NUMERIC-CODE"
+      ],
+      "observed": [
+        "NG-BINARY-NUMERIC-CODE"
+      ],
+      "gate_ready": false,
+      "passed": true
+    },
+    {
+      "id": "N07",
+      "name": "P-value probability misconception",
+      "path": "observational",
+      "stage": 15,
+      "expected": [
+        "NG-PVALUE-PROBABILITY"
+      ],
+      "observed": [
+        "NG-PVALUE-PROBABILITY"
+      ],
+      "gate_ready": false,
+      "passed": true
+    },
+    {
+      "id": "N08",
+      "name": "Non-significant proves no effect",
+      "path": "experimental",
+      "stage": 16,
+      "expected": [
+        "NG-NONSIG-NO-EFFECT"
+      ],
+      "observed": [
+        "NG-NONSIG-NO-EFFECT"
+      ],
+      "gate_ready": false,
+      "passed": true
+    },
+    {
+      "id": "N09",
+      "name": "Average p-values meta-analysis",
+      "path": "meta_analysis",
+      "stage": 14,
+      "expected": [
+        "NG-META-PVALUE-AVERAGE"
+      ],
+      "observed": [
+        "NG-META-PVALUE-AVERAGE"
+      ],
+      "gate_ready": false,
+      "passed": true
+    },
+    {
+      "id": "N10",
+      "name": "Binary column type contradiction",
+      "path": "descriptive_quantitative",
+      "stage": 12,
+      "expected": [
+        "NG-BINARY-TYPE"
+      ],
+      "observed": [
+        "NG-BINARY-TYPE"
+      ],
+      "gate_ready": false,
+      "passed": true
+    }
+  ],
+  "rescue_result": {
+    "passed": true,
+    "early_escalation_blocked": true,
+    "no_rationale_blocked": true,
+    "first_attempt": {
+      "id": "FA-mtqof74h-11pp4",
+      "time": "2026-09-07T03:23:58.289Z",
+      "stage": 14,
+      "key": "analysisChoice",
+      "value": "idk",
+      "status": "attempt_present",
+      "researchPath": "qualitative"
+    },
+    "supported_revision": {
+      "id": "FR-mtqof74h-hf5s0",
+      "time": "2026-09-07T03:23:58.289Z",
+      "stage": 14,
+      "key": "analysisChoice",
+      "before": "idk",
+      "after": "thematic analysis with an audit trail",
+      "rationale": "The question asks how participants describe experiences, so a qualitative thematic approach fits.",
+      "path": "qualitative",
+      "supportLevel": 5
+    },
+    "support_levels": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "passed": true
+}

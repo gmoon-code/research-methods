@@ -1,0 +1,76 @@
+{
+  "release": "v2.10",
+  "status": "PASS_PREPARATION_COMPLETE_PILOT_NOT_YET_RUN",
+  "student_facing_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.9",
+  "frozen_student_facing_files": 80,
+  "freeze_digest": "359507496091fac4ea537926ba4e5b17deb02884b3b268a47e8f8a273b30fcb7",
+  "parent_v2.9_archive_sha256": "ef4692f7cf3ddafdebb917e1e78bd24e6c626787fb46e8efae298d5d4d9c31f5",
+  "freeze_verification": "PASS",
+  "new_operational_protocol_files": [
+    "PILOT_RUNBOOK_v2.10.md",
+    "FIRST_CONTACT_NOVICE_PROTOCOL_v2.10.md",
+    "OBSERVER_GUIDE_v2.10.md",
+    "TEACHER_ROUNDTRIP_REHEARSAL_v2.10.md",
+    "PRIVACY_CONSENT_RESEARCH_USE_CHECKLIST_v2.10.md",
+    "PILOT_CHANGE_CONTROL_POLICY_v2.10.md",
+    "GO_NO_GO_CRITERIA_v2.10.md",
+    "PILOT_WAVE_PLAN_TEMPLATE_v2.10.md",
+    "SESSION_MODERATOR_QUICK_REFERENCE_v2.10.md"
+  ],
+  "pathway_scenario_cards": 8,
+  "csv_operational_forms": 11,
+  "static_http_checks": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 7694
+    },
+    {
+      "path": "assets/app.js",
+      "status": 200,
+      "bytes": 99694
+    },
+    {
+      "path": "assets/accessibility.js",
+      "status": 200,
+      "bytes": 7980
+    },
+    {
+      "path": "pilot/v2.10/PILOT_RUNBOOK_v2.10.md",
+      "status": 200,
+      "bytes": 5689
+    },
+    {
+      "path": "pilot/v2.10/PILOT_FREEZE_MANIFEST_v2.10.json",
+      "status": 200,
+      "bytes": 14670
+    },
+    {
+      "path": "pilot/v2.10/forms/PRE_FLIGHT_CHECKLIST.csv",
+      "status": 200,
+      "bytes": 1016
+    },
+    {
+      "path": "pilot/v2.10/scenario-cards/qualitative.md",
+      "status": 200,
+      "bytes": 401
+    },
+    {
+      "path": "pilot/v2.10/scripts/verify_pilot_freeze.py",
+      "status": 200,
+      "bytes": 767
+    }
+  ],
+  "javascript_syntax_checks": [
+    "assets/app.js PASS",
+    "assets/accessibility.js PASS",
+    "assets/exemplar.js PASS"
+  ],
+  "readiness_check_status": "EXPECTED_NOT_YET_GO",
+  "readiness_reason": "12 manual pre-flight items remain PENDING by design until an actual pilot is prepared.",
+  "real_novice_sessions_completed": 0,
+  "teacher_roundtrip_rehearsal_completed": false,
+  "privacy_approval_resolved": false,
+  "go_no_go_signed": false,
+  "important_boundary": "This release prepares and freezes the pilot. It does not claim that real novice sessions, teacher rehearsal, privacy approval, or classroom rollout have occurred."
+}

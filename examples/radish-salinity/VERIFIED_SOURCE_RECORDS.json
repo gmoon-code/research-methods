@@ -1,0 +1,32 @@
+[
+  {
+    "id": "E-S01",
+    "citation": "Munns, R., & Tester, M. (2008). Mechanisms of salinity tolerance. Annual Review of Plant Biology, 59, 651–681. https://doi.org/10.1146/annurev.arplant.59.032607.092911",
+    "type": "Scholarly review",
+    "verified": true,
+    "design": "Review of physiological and molecular mechanisms of plant salinity tolerance",
+    "finding": "Salinity constrains plant growth through osmotic and ionic effects, while tolerance depends on multiple physiological mechanisms.",
+    "use": "Broad biological background and mechanism vocabulary.",
+    "boundary": "This review does not establish the exact effect size for the classroom radish conditions."
+  },
+  {
+    "id": "E-S02",
+    "citation": "Munns, R., & Gilliham, M. (2015). Salinity tolerance of crops – what is the cost? New Phytologist, 208(3), 668–673. https://doi.org/10.1111/nph.13519",
+    "type": "Scholarly review",
+    "verified": true,
+    "design": "Review focused on crop salinity effects and costs",
+    "finding": "Soil salinity can reduce crop growth and yield, with plant responses and tolerance varying among species and conditions.",
+    "use": "Supports the bounded background claim that salinity can constrain plant performance.",
+    "boundary": "The review concerns crop salinity broadly; it is not a direct estimate for this radish seed batch."
+  },
+  {
+    "id": "E-S03",
+    "citation": "Toscano, S., Romano, D., Cafaro, V., & Patanè, C. (2025). Annual Garden Rocket and Radish as Microgreens: Seed Germination Response to Thermal and Salt Stress. Agronomy, 15(2), 361. https://doi.org/10.3390/agronomy15020361",
+    "type": "Peer-reviewed empirical article",
+    "verified": true,
+    "design": "Experimental study of temperature and NaCl-related water potential during rocket and radish germination",
+    "finding": "Radish germination and early radicle growth varied with temperature and salinity-related water potential; radicle length declined under stronger salt stress conditions.",
+    "use": "Species-relevant evidence that radish early growth is responsive to saline germination conditions.",
+    "boundary": "Its temperatures, water-potential treatments, sample structure, and outcome procedures differ from this teaching exemplar."
+  }
+]

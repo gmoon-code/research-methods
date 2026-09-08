@@ -1,0 +1,30 @@
+[
+  {
+    "id": "LR-S01",
+    "citation": "Lee, O., Quinn, H., & Valdés, G. (2013). Science and language for English language learners in relation to Next Generation Science Standards and with implications for Common Core State Standards for English language arts and mathematics. Educational Researcher, 42(4), 223–233. https://doi.org/10.3102/0013189X13480524",
+    "verified": true,
+    "use": "Evidence on language demands and opportunities embedded in science practices.",
+    "boundary": "One conceptual article cannot establish the entire evidence base."
+  },
+  {
+    "id": "LR-S02",
+    "citation": "National Academies of Sciences, Engineering, and Medicine. (2018). English learners in STEM subjects: Transforming classrooms, schools, and lives. The National Academies Press. https://doi.org/10.17226/25182",
+    "verified": true,
+    "use": "Consensus synthesis on supporting English learners in STEM.",
+    "boundary": "A consensus report covers broader populations and topics than the mini-review question."
+  },
+  {
+    "id": "LR-S03",
+    "citation": "National Academies of Sciences, Engineering, and Medicine. (2019). Science and engineering for grades 6–12: Investigation and design at the center. The National Academies Press. https://doi.org/10.17226/25216",
+    "verified": true,
+    "use": "Supports investigation/design as central science-learning practices and the value of contextualized participation.",
+    "boundary": "The report is not specific to multilingual learners."
+  },
+  {
+    "id": "LR-S04",
+    "citation": "Page, M. J., McKenzie, J. E., Bossuyt, P. M., et al. (2021). The PRISMA 2020 statement: An updated guideline for reporting systematic reviews. BMJ, 372, n71. https://doi.org/10.1136/bmj.n71",
+    "verified": true,
+    "use": "Methodological guidance for transparent systematic-review reporting.",
+    "boundary": "PRISMA is a reporting guideline and does not by itself determine review quality or synthesis conclusions."
+  }
+]

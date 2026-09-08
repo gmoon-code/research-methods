@@ -1,0 +1,117 @@
+{
+  "release": "v2.4",
+  "status": "PASS",
+  "instructional_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.4",
+  "baseline_digest": "db7c4efb5e31972ea1bf006b8ec5b1b12fff4ee0a875697d96465cfdacad3f62",
+  "pathways_with_specific_coach": 8,
+  "unsure_path_uses_general_coach": true,
+  "core_engine_files_unchanged_from_v2.3": {
+    "assets/coach.js": true,
+    "assets/methods.js": true,
+    "assets/analytics.js": true,
+    "assets/literature.js": true,
+    "assets/writing.js": true,
+    "assets/transfer.js": true,
+    "assets/competencies.js": true,
+    "assets/curriculum.js": true,
+    "prompts/stage_prompts_v1.2.json": true
+  },
+  "test_commands": [
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/assets/path-coach-model.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/assets/path-coach.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/assets/pathways.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/assets/app.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/assets/journey.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/path-coach-v24.test.js",
+      "stdout": "PASS pathway-specific coach"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/path-change-v24.test.js",
+      "stdout": "PASS path-change readiness invalidation"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/path-coach-v24-static.py",
+      "stdout": "PASS v2.4 static integration"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/pathways-v23.test.js",
+      "stdout": "PASS guided pathway engine"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/pathways-v23-static.py",
+      "stdout": "PASS v2.3 pathway static integration"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/novice-guidance-v22.test.js",
+      "stdout": "PASS v2.2 novice guidance model"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/student-guidance.test.js",
+      "stdout": "PASS student guidance coverage"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/full-path-rc1.test.js",
+      "stdout": "PASS RC1 full-path student/teacher simulation"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/pilot-rc1.test.js",
+      "stdout": "PASS RC1 pilot hardening"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/competencies.test.js",
+      "stdout": "PASS competency analytics engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/transfer.test.js",
+      "stdout": "PASS transfer and agreement engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/writing.test.js",
+      "stdout": "PASS writing lab engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/analytics.test.js",
+      "stdout": "PASS statistics engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/methods.test.js",
+      "stdout": "PASS methods lab engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/literature.test.js",
+      "stdout": "PASS literature workspace engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/coach.test.js",
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.4-pathway-specific-coaching-readiness/tests/ai-adapter.test.js",
+      "stdout": "PASS AI adapter config"
+    }
+  ],
+  "http_smoke": {
+    "status": "PASS",
+    "files": {
+      "index.html": 7067,
+      "assets/path-coach.js": 17446,
+      "assets/app.js": 98355
+    }
+  }
+}

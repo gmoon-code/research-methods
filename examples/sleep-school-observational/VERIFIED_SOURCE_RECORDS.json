@@ -1,0 +1,16 @@
+[
+  {
+    "id": "O-S01",
+    "citation": "Dewald, J. F., Meijer, A. M., Oort, F. J., Kerkhof, G. A., & Bögels, S. M. (2010). The influence of sleep quality, sleep duration and sleepiness on school performance in children and adolescents: A meta-analytic review. Sleep Medicine Reviews, 14(3), 179–189. https://doi.org/10.1016/j.smrv.2009.10.004",
+    "verified": true,
+    "use": "Supports a literature-based rationale for examining sleep variables and school performance.",
+    "boundary": "The review does not make a single student's reported sleep duration a randomized exposure."
+  },
+  {
+    "id": "O-S02",
+    "citation": "Curcio, G., Ferrara, M., & De Gennaro, L. (2006). Sleep loss, learning capacity and academic performance. Sleep Medicine Reviews, 10(5), 323–337. https://doi.org/10.1016/j.smrv.2005.11.001",
+    "verified": true,
+    "use": "Provides background linking sleep loss with learning and academic performance.",
+    "boundary": "Review evidence does not eliminate confounding in a new observational classroom sample."
+  }
+]

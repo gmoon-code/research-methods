@@ -1,0 +1,164 @@
+{
+  "release": "v2.0.1-rc1",
+  "status": "PASS_WITH_MANUAL_BROWSER_MATRIX_PENDING",
+  "measurement_baseline": "RMS-PILOT-BASELINE-v2.0",
+  "baseline_sha256": "a94fcca22cfca34bd10dad2dccd34daafb439352549332d6e20a10839cb53b50",
+  "frozen_files_verified": 13,
+  "defects_fixed": 10,
+  "environment_limitations": 1,
+  "automated_test_commands": [
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/ai-adapter.test.js",
+      "code": 0,
+      "stdout": "PASS AI adapter config",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/analytics.test.js",
+      "code": 0,
+      "stdout": "PASS statistics engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/coach.test.js",
+      "code": 0,
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/competencies.test.js",
+      "code": 0,
+      "stdout": "PASS competency analytics engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/e2e-pilot-simulations.test.js",
+      "code": 0,
+      "stdout": "PASS end-to-end pathway simulations",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/full-path-rc1.test.js",
+      "code": 0,
+      "stdout": "PASS RC1 full-path student/teacher simulation",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/journey-upsert-rc1.test.js",
+      "code": 0,
+      "stdout": "PASS teacher packet upsert",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/journey.test.js",
+      "code": 0,
+      "stdout": "PASS journey and teacher packet engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/literature.test.js",
+      "code": 0,
+      "stdout": "PASS literature workspace engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/methods.test.js",
+      "code": 0,
+      "stdout": "PASS methods lab engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/pilot-rc1.test.js",
+      "code": 0,
+      "stdout": "PASS RC1 pilot hardening",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/pilot.test.js",
+      "code": 0,
+      "stdout": "PASS pilot recovery/readiness engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/static-pilot-qa.test.js",
+      "code": 0,
+      "stdout": "PASS static accessibility/recovery QA",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/storage-unavailable-rc1.test.js",
+      "code": 0,
+      "stdout": "PASS storage-unavailable resilience",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/transfer.test.js",
+      "code": 0,
+      "stdout": "PASS transfer and agreement engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/writing.test.js",
+      "code": 0,
+      "stdout": "PASS writing lab engine",
+      "stderr": ""
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/tests/static-rc1-qa.py",
+      "code": 0,
+      "stdout": "PASS RC1 static mobile/policy QA",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/assets/pilot.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/assets/pilot-ui.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/assets/journey-ui.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.0-rc1-pilot-dry-run/assets/app.js",
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "http_smoke": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 6436
+    },
+    {
+      "path": "/assets/app.js",
+      "status": 200,
+      "bytes": 90192
+    },
+    {
+      "path": "/assets/pilot.js",
+      "status": 200,
+      "bytes": 10958
+    },
+    {
+      "path": "/assets/style.css",
+      "status": 200,
+      "bytes": 43798
+    },
+    {
+      "path": "/pilot/FROZEN_BASELINE_MANIFEST_v2.0.json",
+      "status": 200,
+      "bytes": 1808
+    }
+  ]
+}

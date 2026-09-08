@@ -1,0 +1,44 @@
+{
+  "disclaimer": "All numerical data and statistical results in this exemplar are synthetic and exist only to demonstrate the research workflow.",
+  "experimental_unit": "Petri dish",
+  "subsamples": "Five seeds placed within each dish; seeds do not count as independent treatment replicates.",
+  "groups": {
+    "0": {
+      "n_dishes": 6,
+      "mean_mm": 34.699999999999996,
+      "sd_mm": 1.208304597359459,
+      "mean_germination_proportion": 1.0
+    },
+    "50": {
+      "n_dishes": 6,
+      "mean_mm": 26.78333333333333,
+      "sd_mm": 1.3014094923069626,
+      "mean_germination_proportion": 0.9333333333333332
+    },
+    "100": {
+      "n_dishes": 6,
+      "mean_mm": 16.566666666666666,
+      "sd_mm": 1.1254628677422756,
+      "mean_germination_proportion": 0.7333333333333334
+    }
+  },
+  "primary_analysis": {
+    "name": "Welch one-way ANOVA on dish-level mean radicle length",
+    "F": 342.9054292886502,
+    "df1": 2.0,
+    "df2": 9.965247163294777,
+    "p": 6.488355182697371e-10,
+    "reason": "Three independent treatment groups with a numerical dish-level outcome. Welch ANOVA does not require equal group variances."
+  },
+  "prespecified_secondary_contrast": {
+    "name": "0 mM vs 100 mM Welch independent-groups contrast",
+    "difference_mm": 18.13333333333333,
+    "ci95": [
+      16.63026512629426,
+      19.6364015403724
+    ],
+    "t": 26.899068798017662,
+    "df": 9.949976802560045,
+    "p": 1.2688028839695117e-10
+  }
+}

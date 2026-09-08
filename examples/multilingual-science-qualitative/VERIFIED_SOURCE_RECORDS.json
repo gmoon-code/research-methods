@@ -1,0 +1,23 @@
+[
+  {
+    "id": "QL-S01",
+    "citation": "Lee, O., Quinn, H., & Valdés, G. (2013). Science and language for English language learners in relation to Next Generation Science Standards and with implications for Common Core State Standards for English language arts and mathematics. Educational Researcher, 42(4), 223–233. https://doi.org/10.3102/0013189X13480524",
+    "verified": true,
+    "use": "Supports the premise that science practices create language demands and opportunities for multilingual learners.",
+    "boundary": "The article does not supply the synthetic students' experiences."
+  },
+  {
+    "id": "QL-S02",
+    "citation": "National Academies of Sciences, Engineering, and Medicine. (2018). English learners in STEM subjects: Transforming classrooms, schools, and lives. The National Academies Press. https://doi.org/10.17226/25182",
+    "verified": true,
+    "use": "Provides evidence-based background on multilingual learners' STEM participation, language, and opportunity.",
+    "boundary": "Consensus guidance does not predetermine themes in a local interview study."
+  },
+  {
+    "id": "QL-S03",
+    "citation": "Braun, V., & Clarke, V. (2006). Using thematic analysis in psychology. Qualitative Research in Psychology, 3(2), 77–101. https://doi.org/10.1191/1478088706qp063oa",
+    "verified": true,
+    "use": "Provides a methodological reference for thematic analysis.",
+    "boundary": "The exemplar uses a simplified teaching version and does not claim that one checklist guarantees qualitative validity."
+  }
+]

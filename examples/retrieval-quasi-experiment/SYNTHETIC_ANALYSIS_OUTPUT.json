@@ -1,0 +1,15 @@
+{
+  "n_retrieval": 24,
+  "n_comparison": 24,
+  "mean_change_retrieval": 9.741666666666667,
+  "mean_change_comparison": 3.2833333333333337,
+  "difference_in_mean_change": 6.458333333333334,
+  "welch_t": 4.589713147668634,
+  "df": 44.882465740279194,
+  "p": 3.571663634054065e-05,
+  "ci95": [
+    3.6240186658285274,
+    9.29264800083814
+  ],
+  "interpretation_boundary": "Pre-existing classes were not randomly assigned. The comparison is quasi-experimental and remains vulnerable to selection and classroom-level confounding."
+}

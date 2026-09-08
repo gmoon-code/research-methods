@@ -1,0 +1,11 @@
+scenario_id,path,stage,friction,expected_diagnostic,observed_diagnostics,stage_gate,status
+N01,qualitative,14,Student enters placeholders instead of reasoning,NG-PLACEHOLDER,NG-PLACEHOLDER; NG-PLACEHOLDER,BLOCKED,PASS
+N02,literature_review,7,Student claims no research exists after a very small search,NG-GAP-OVERCLAIM,NG-GAP-OVERCLAIM,BLOCKED,PASS
+N03,experimental,11,Student calls an available class a random sample,NG-RANDOM-CONVENIENCE,NG-RANDOM-CONVENIENCE,BLOCKED,PASS
+N04,observational,10,Student says the exposure was manipulated while using observational path,NG-OBS-MANIPULATION,NG-OBS-MANIPULATION,BLOCKED,PASS
+N05,observational,14,Same students before/after but student chooses independent t-test,NG-PAIRING-LOST,NG-PAIRING-LOST,BLOCKED,PASS
+N06,observational,14,Student thinks 0/1 coding makes a binary outcome continuous,NG-BINARY-NUMERIC-CODE,NG-BINARY-NUMERIC-CODE,BLOCKED,PASS
+N07,observational,15,Student interprets p as probability the hypothesis is true,NG-PVALUE-PROBABILITY,NG-PVALUE-PROBABILITY,BLOCKED,PASS
+N08,experimental,16,Student interprets a non-significant result as proof of no difference,NG-NONSIG-NO-EFFECT,NG-NONSIG-NO-EFFECT,BLOCKED,PASS
+N09,meta_analysis,14,Student proposes averaging p-values instead of pooling effect estimates,NG-META-PVALUE-AVERAGE,NG-META-PVALUE-AVERAGE,BLOCKED,PASS
+N10,descriptive_quantitative,12,Student writes that a binary field is continuous,NG-BINARY-TYPE,NG-BINARY-TYPE,BLOCKED,PASS

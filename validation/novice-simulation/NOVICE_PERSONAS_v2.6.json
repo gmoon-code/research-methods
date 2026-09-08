@@ -1,0 +1,175 @@
+[
+  {
+    "id": "N01",
+    "path": "qualitative",
+    "name": "First interview study",
+    "focus": "Student enters placeholders instead of reasoning",
+    "stage": 14,
+    "expected_codes": [
+      "NG-PLACEHOLDER"
+    ],
+    "data": {
+      "designType": "Qualitative",
+      "analysisChoice": "idk",
+      "assumptionChecks": "not sure"
+    }
+  },
+  {
+    "id": "N02",
+    "path": "literature_review",
+    "name": "Global gap overclaim",
+    "focus": "Student claims no research exists after a very small search",
+    "stage": 7,
+    "expected_codes": [
+      "NG-GAP-OVERCLAIM"
+    ],
+    "data": {
+      "theme1": "Measurement methods differ",
+      "theme2": "Samples differ",
+      "tensions": "mixed methods",
+      "gapStatement": "No research exists on this topic",
+      "litToRQ": "This motivates the review"
+    },
+    "sources": 3,
+    "searches": 1
+  },
+  {
+    "id": "N03",
+    "path": "experimental",
+    "name": "Random sampling confusion",
+    "focus": "Student calls an available class a random sample",
+    "stage": 11,
+    "expected_codes": [
+      "NG-RANDOM-CONVENIENCE"
+    ],
+    "data": {
+      "population": "secondary students",
+      "sample": "my available class",
+      "samplingMethod": "random convenience sample of whoever is available",
+      "sampleLimits": "one class",
+      "instrument": "test",
+      "measureQuality": "same scoring",
+      "ethicsIssues": "student records",
+      "ethicsPlan": "approval and coding"
+    }
+  },
+  {
+    "id": "N04",
+    "path": "observational",
+    "name": "Predictor manipulation contradiction",
+    "focus": "Student says the exposure was manipulated while using observational path",
+    "stage": 10,
+    "expected_codes": [
+      "NG-OBS-MANIPULATION"
+    ],
+    "data": {
+      "predictorIV": "manipulated sleep hours",
+      "outcomeDV": "quiz score",
+      "operationalDefs": "hours and points",
+      "experimentalUnit": "student",
+      "confounders": "study time"
+    }
+  },
+  {
+    "id": "N05",
+    "path": "observational",
+    "name": "Paired data discarded",
+    "focus": "Same students before/after but student chooses independent t-test",
+    "stage": 14,
+    "expected_codes": [
+      "NG-PAIRING-LOST"
+    ],
+    "data": {
+      "comparisonStructure": "same students before and after",
+      "primaryEstimand": "mean paired change",
+      "analysisChoice": "independent t-test between pre and post scores",
+      "assumptionChecks": "checked scores",
+      "effectSizePlan": "mean difference and CI"
+    }
+  },
+  {
+    "id": "N06",
+    "path": "observational",
+    "name": "Binary means continuous misconception",
+    "focus": "Student thinks 0/1 coding makes a binary outcome continuous",
+    "stage": 14,
+    "expected_codes": [
+      "NG-BINARY-NUMERIC-CODE"
+    ],
+    "data": {
+      "comparisonStructure": "same students before and after",
+      "primaryEstimand": "change in correct proportion",
+      "analysisChoice": "The outcome is binary but 0 and 1 are numbers so it is continuous and I can use a t-test",
+      "assumptionChecks": "none",
+      "effectSizePlan": "risk difference"
+    }
+  },
+  {
+    "id": "N07",
+    "path": "observational",
+    "name": "P-value probability misconception",
+    "focus": "Student interprets p as probability the hypothesis is true",
+    "stage": 15,
+    "expected_codes": [
+      "NG-PVALUE-PROBABILITY"
+    ],
+    "data": {
+      "analysisSample": "28 students",
+      "result1": "r=.40, p=.03",
+      "resultsDraft": "The variables were associated, p = .03, so there is a 97% probability that the research hypothesis is true. This result was statistically significant."
+    }
+  },
+  {
+    "id": "N08",
+    "path": "experimental",
+    "name": "Non-significant proves no effect",
+    "focus": "Student interprets a non-significant result as proof of no difference",
+    "stage": 16,
+    "expected_codes": [
+      "NG-NONSIG-NO-EFFECT"
+    ],
+    "data": {
+      "directAnswer": "The treatment showed no statistically significant difference.",
+      "interpret1": "The p-value was above .05.",
+      "alternatives": "measurement noise is possible",
+      "limitations": "small experiment",
+      "implications": "No action",
+      "discussionDraft": "The result was not significant, which proves there is no effect and the groups are the same."
+    }
+  },
+  {
+    "id": "N09",
+    "path": "meta_analysis",
+    "name": "Average p-values meta-analysis",
+    "focus": "Student proposes averaging p-values instead of pooling effect estimates",
+    "stage": 14,
+    "expected_codes": [
+      "NG-META-PVALUE-AVERAGE"
+    ],
+    "data": {
+      "primaryEstimand": "pooled standardized effect",
+      "analysisChoice": "I will average the p-values from all included studies",
+      "assumptionChecks": "studies are peer reviewed",
+      "effectSizePlan": "pooled effect and CI"
+    }
+  },
+  {
+    "id": "N10",
+    "path": "descriptive_quantitative",
+    "name": "Binary column type contradiction",
+    "focus": "Student writes that a binary field is continuous",
+    "stage": 12,
+    "expected_codes": [
+      "NG-BINARY-TYPE"
+    ],
+    "data": {
+      "materials": "observation sheet",
+      "procedure": "record each seed",
+      "rowUnit": "seed",
+      "columns": "germinated: binary continuous variable coded 0/1",
+      "missingRule": "blank means missing",
+      "exclusionRule": "sensor failure only",
+      "analysisIntent": "counts and proportions"
+    }
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "k": 8,
+  "model": "DerSimonian-Laird random-effects teaching calculation",
+  "pooled_g": 0.36876171676704494,
+  "ci95": [
+    0.2632050203170585,
+    0.4743184132170314
+  ],
+  "tau2": 0.0030871409601976236,
+  "Q": 8.072862084482537,
+  "df": 7,
+  "I2_percent": 13.289736319721937,
+  "boundary": "All study effects are synthetic. This is a mechanics exemplar, not a real evidence synthesis."
+}

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Research Methods Studio guides students through finding a research interest, designing a study, analyzing evidence, and writing a research paper.">
+  <meta name="theme-color" content="#245c7f">
+  <title>Research Methods Studio · Browser Usability & Accessibility QA v2.9</title>
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+  <!-- Retained feature: Multi-Path Exemplar Library -->
+  <a class="skip-link" href="#mainContent">Skip to main content</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="brand">Research Methods Studio</div>
+        <div class="subbrand">Learn research by doing research</div>
+      </div>
+      <div class="top-actions" aria-label="Research tools">
+        <span id="saveStatus" class="save-status" role="status" aria-live="polite">Not saved yet</span>
+        <button class="ghost small" id="pilotBtn">Pilot & Recovery</button>
+        <button class="ghost small" data-open-rescue-navigator="0">I’m stuck</button>
+        <button class="ghost small" data-open-exemplar>Exemplar Project</button>
+        <button class="ghost small" id="pathwayBtn">Research Path</button>
+        <button class="ghost small" id="studentGuideBtn">Student Guide</button>
+        <button class="ghost small" id="glossaryBtn">Research Terms</button>
+        <button class="ghost small" id="transferBtn">Transfer Lab</button>
+        <button class="ghost small" id="competencyBtn">Learning Analytics</button>
+        <button class="ghost small" id="journeyBtn">My Journey</button>
+        <button class="ghost small" id="teacherBtn">Teacher Dashboard</button>
+        <button class="ghost small" id="writingLab">Writing Lab</button>
+        <button class="ghost small" id="dataLab">Data & Statistics Lab</button>
+        <button class="ghost small" id="methodsLab">Methods Lab</button>
+        <button class="ghost small" id="litLab">Literature Workspace</button>
+        <button class="ghost small" id="aiSettings">AI Coach settings</button>
+        <button class="ghost small" id="exportMd">Export notebook</button>
+        <button class="ghost small" id="exportJson">Backup JSON</button>
+        <button class="secondary small" id="resetProject">New project</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Student research pathway · v2.9 Browser Usability & Accessibility QA</div>
+        <h1>From a vague interest to a defensible research paper.</h1>
+        <p>This studio teaches you how researchers make decisions. You will discover a topic, refine a research question, evaluate and synthesize literature, design a method, plan data collection, choose an analysis, interpret results, and write each part of the paper with evidence.</p>
+        <div class="hero-rule"><strong>The rule throughout the studio</strong><br>Your reasoning comes first. The coach gives structure, examples, checks, and increasingly direct help when you need it. It does not invent your data, sources, or conclusions.</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-title">A research paper is one connected argument</div>
+        <div class="alignment-chain">
+          <span>Interest</span><b>→</b><span>Question</span><b>→</b><span>Literature</span><b>→</b><span>Design</span><b>→</b><span>Data</span><b>→</b><span>Analysis</span><b>→</b><span>Claim</span>
+        </div>
+        <p>If one link does not match the next, the study becomes difficult to defend. The final audit checks the whole chain.</p>
+      </div>
+    </section>
+
+    <div class="layout">
+      <nav class="sidebar" aria-label="Research stages">
+        <div class="progress-card">
+          <div class="progress-head"><span>Project progress</span><strong id="progressPct">0%</strong></div>
+          <div class="progress-track"><div id="progressBar"></div></div>
+          <div class="muted tiny" id="progressText">0 of 18 stages marked ready</div>
+          <label class="mobile-stage-picker"><span>Go to research stage</span><select id="mobileStageSelect" aria-label="Go to research stage"></select></label>
+        </div>
+        <div id="phaseNav"></div>
+        <div class="sidebar-note">
+          <strong>Research is iterative.</strong>
+          <p>You can return to an earlier stage whenever new evidence changes your thinking.</p>
+        </div>
+      </nav>
+
+      <main class="main" id="mainContent" tabindex="-1">
+        <section id="welcome" class="card welcome">
+          <div class="eyebrow">Start here</div>
+          <h2>Create your research notebook</h2>
+          <p>You can begin without a topic. Your work is saved locally in this browser.</p>
+          <div class="form-grid two">
+            <label><span>Project name</span><input id="projectName" placeholder="Example: Biology Research Project"></label>
+            <label><span>Course or context</span><input id="projectContext" placeholder="Example: Research Methods, Grade 11"></label>
+          </div>
+          <button class="primary" id="beginProject">Begin</button>
+        </section>
+
+        <section id="stageView" hidden></section>
+      </main>
+
+      <aside class="rightbar" aria-label="Research summary and terminology">
+        <section class="card snapshot">
+          <h3>Research snapshot</h3>
+          <div id="snapshot"></div>
+        </section>
+        <section class="card coach-index">
+          <h3>Research language</h3>
+          <div id="termCard"></div>
+        </section>
+      </aside>
+    </div>
+
+    <footer>
+      Student learning prototype. Human-participant research, sensitive topics, hazardous procedures, and school-based interventions require teacher or institutional review before data collection.
+    </footer>
+  </div>
+
+  <script src="./assets/curriculum.js"></script>
+  <script src="./assets/pathway-model.js"></script>
+  <script src="./assets/path-coach-model.js"></script>
+  <script src="./assets/rescue-model.js"></script>
+  <script src="./assets/pathways.js"></script>
+  <script src="./assets/pathway-ui.js"></script>
+  <script src="./assets/student-guidance.js"></script>
+  <script src="./assets/student-guidance-ui.js"></script>
+  <script src="./assets/engine.js"></script>
+  <script src="./assets/coach.js"></script>
+  <script src="./assets/literature.js"></script>
+  <script src="./assets/methods.js"></script>
+  <script src="./assets/path-coach.js"></script>
+  <script src="./assets/novice-friction.js"></script>
+  <script src="./assets/analytics.js"></script>
+  <script src="./assets/data-lab-ui.js"></script>
+  <script src="./assets/writing.js"></script>
+  <script src="./assets/writing-lab-ui.js"></script>
+  <script src="./assets/transfer-bank.js"></script>
+  <script src="./assets/transfer.js"></script>
+  <script src="./assets/transfer-ui.js"></script>
+  <script src="./assets/competencies.js"></script>
+  <script src="./assets/competency-ui.js"></script>
+  <script src="./assets/exemplar-projects.js"></script>
+  <script src="./assets/exemplar.js"></script>
+  <script src="./assets/exemplar-ui.js"></script>
+  <script src="./assets/rescue.js"></script>
+  <script src="./assets/rescue-ui.js"></script>
+  <script src="./assets/journey.js"></script>
+  <script src="./assets/journey-ui.js"></script>
+  <script src="./assets/ai-adapter.js"></script>
+  <script src="./assets/pilot.js"></script>
+  <script src="./assets/pilot-ui.js"></script>
+  <script src="./assets/accessibility.js"></script>
+  <script src="./assets/app.js"></script>
+</body>
+</html>

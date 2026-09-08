@@ -1,0 +1,91 @@
+{
+  "release": "v2.1",
+  "status": "PASS",
+  "stage_guides": 18,
+  "field_guides": 113,
+  "glossary_terms": 90,
+  "instructional_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.1",
+  "baseline_digest": "4458461a1c9742f61c6dc316c60d0a91f4ab0d86f061e798e829076f3068055f",
+  "core_logic_unchanged_from_RC1": {
+    "assets/engine.js": true,
+    "assets/coach.js": true,
+    "assets/methods.js": true,
+    "assets/analytics.js": true,
+    "assets/literature.js": true,
+    "assets/writing.js": true,
+    "assets/transfer.js": true,
+    "assets/competencies.js": true,
+    "assets/curriculum.js": true,
+    "prompts/stage_prompts_v1.2.json": true
+  },
+  "tests": [
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/assets/student-guidance.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/assets/student-guidance-ui.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/assets/app.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/assets/data-lab-ui.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node --check /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/assets/writing-lab-ui.js",
+      "stdout": ""
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/tests/student-guidance.test.js",
+      "stdout": "PASS student guidance coverage"
+    },
+    {
+      "cmd": "python /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/tests/student-guidance-static.py",
+      "stdout": "PASS guidance integration"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/tests/full-path-rc1.test.js",
+      "stdout": "PASS RC1 full-path student/teacher simulation"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/tests/pilot-rc1.test.js",
+      "stdout": "PASS RC1 pilot hardening"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/tests/competencies.test.js",
+      "stdout": "PASS competency analytics engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/tests/transfer.test.js",
+      "stdout": "PASS transfer and agreement engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/tests/writing.test.js",
+      "stdout": "PASS writing lab engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/tests/analytics.test.js",
+      "stdout": "PASS statistics engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/tests/methods.test.js",
+      "stdout": "PASS methods lab engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/tests/literature.test.js",
+      "stdout": "PASS literature workspace engine"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/tests/coach.test.js",
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk"
+    },
+    {
+      "cmd": "node /mnt/data/research-methods-studio-v2.1-student-guidance-scaffolding/tests/ai-adapter.test.js",
+      "stdout": "PASS AI adapter config"
+    }
+  ]
+}
