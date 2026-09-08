@@ -24,22 +24,25 @@ window.RMSLocalChatUI = (() => {
   function messageHtml(m){
     const action=m.action?`<button class="rms-chat-inline-action" data-chat-action="${E(m.action.targetId||"")}">${E(m.action.label||"Open tool")}</button>`:"";
     const meta=m.role==="assistant"&&m.guard?`<div class="rms-chat-meta">Built-in safeguard · ${E(m.guard.replaceAll("_"," "))}</div>`:"";
-    return `<div class="rms-chat-message ${m.role==="user"?"user":"assistant"}"><div class="rms-chat-role">${m.role==="user"?"You":"Research Chat"}</div><div class="rms-chat-text">${E(m.content).replace(/\n/g,"<br>")}</div>${meta}${action}</div>`;
+    const cls=`rms-chat-message ${m.role==="user"?"user":"assistant"}${m.error?" error":""}`;
+    return `<div class="${cls}"><div class="rms-chat-role">${m.role==="user"?"You":"Research Chat"}</div><div class="rms-chat-text">${E(m.content).replace(/\n/g,"<br>")}</div>${meta}${action}</div>`;
   }
 
   function setupHtml(state){
     const info=deviceInfo||{},downloadMB=firstDownloadMB(info);
     const warnings=[
       info.memoryWarning?`This browser reports ${info.deviceMemoryGB} GB of device memory. The local model may be slow or fail to load.`:"",
-      info.storageWarning?`Estimated free browser storage is ${fmtBytes(info.freeStorageBytes)}. The model may not fit in cache.`:""
+      info.storageWarning?`Estimated free browser storage is ${fmtBytes(info.freeStorageBytes)}. Research Chat may not have enough cache space.`:""
     ].filter(Boolean);
+    const fallbackNote=info.webgpu?`If the GPU model cannot load, Research Chat may download the additional ${CFG.model.wasmDtype} fallback of about ${CFG.model.expectedWasmDownloadMB} MB.`:"CPU/WebAssembly generation can be substantially slower than WebGPU. Test this exact device before class.";
     return `<section class="rms-chat-setup">
       <h4>Set up free Research Chat on this device</h4>
-      <p>Research Chat runs in this browser. There is no API key and no per-message fee. The first setup downloads about ${downloadMB} MB from this GitHub Pages site. The browser normally caches the model for later visits on this device.</p>
+      <p>Research Chat runs in this browser. There is no API key and no per-message fee. The first setup normally downloads about ${downloadMB} MB from this GitHub Pages site. The browser normally caches the model for later visits on this device.</p>
       <dl>
         <div><dt>Model</dt><dd>${E(CFG.model.displayName)}</dd></div>
-        <div><dt>This device</dt><dd>${info.webgpu?`WebGPU available. Research Chat will try the smaller ${CFG.model.webgpuDtype} GPU model first, then fall back if needed.`:`WebGPU not detected. Research Chat will use the ${CFG.model.wasmDtype} WebAssembly/CPU model.`}</dd></div>
-        <div><dt>First download</dt><dd>About ${downloadMB} MB on this device. Do this before class when possible.</dd></div>
+        <div><dt>This device</dt><dd>${info.webgpu?`WebGPU available. Research Chat will try the smaller ${CFG.model.webgpuDtype} GPU model first.`:`WebGPU not detected. Research Chat will use the ${CFG.model.wasmDtype} WebAssembly/CPU model.`}</dd></div>
+        <div><dt>First download</dt><dd>About ${downloadMB} MB on the expected path. Do this before class when possible.</dd></div>
+        <div><dt>Fallback</dt><dd>${E(fallbackNote)}</dd></div>
         <div><dt>After loading</dt><dd>Questions and selected project context are processed on this device.</dd></div>
       </dl>
       ${warnings.map(x=>`<div class="rms-chat-warning">${E(x)}</div>`).join("")}
@@ -51,19 +54,19 @@ window.RMSLocalChatUI = (() => {
   }
 
   function progressHtml(state){
-    const p=state.progress||{}, pct=Number.isFinite(p.progress)?Math.round(p.progress):null;
-    const label=p.file?`Downloading ${p.file.split("/").pop()}`:"Preparing local model";
+    const route=state.device==="webgpu"?`Trying WebGPU ${state.dtype||""}`:`Using WebAssembly/CPU ${state.dtype||""}`;
     return `<div class="rms-chat-progress" role="status" aria-live="polite">
-      <div><span>${E(label)}</span><b>${pct==null?"":pct+"%"}</b></div>
-      <progress max="100" value="${pct==null?0:pct}"></progress>
-      <small>${state.device==="webgpu"?"Trying WebGPU":"Using WebAssembly/CPU"}</small>
+      <div><span>Loading the local model…</span><b></b></div>
+      <progress></progress>
+      <small>${E(route.trim())}. Large model loading can take a while on the first visit.</small>
     </div>`;
   }
 
   function readyHtml(state){
     const msgs=Chat.messages();
+    const execution=state.device==="webgpu"?`WebGPU ${state.dtype||""}`:`WebAssembly / CPU ${state.dtype||""}`;
     return `<div class="rms-chat-ready">
-      <div class="rms-chat-status"><span class="dot"></span><b>Ready on this device</b><small>${state.device==="webgpu"?"WebGPU":"WebAssembly / CPU"}</small></div>
+      <div class="rms-chat-status"><span class="dot"></span><b>Ready on this device</b><small>${E(execution.trim())}</small></div>
       <label class="rms-chat-context"><input type="checkbox" id="rmsChatContext" ${Chat.contextEnabled()?"checked":""}> <span>Use my current research-project context</span></label>
       <div class="rms-chat-messages" id="rmsChatMessages" aria-live="polite">${msgs.length?msgs.map(messageHtml).join(""):`<div class="rms-chat-empty"><b>Ask about the part that is stopping you.</b><p>Examples: “What does operational definition mean?” “Why do I need an independent unit?” “Can you check the reasoning in my current answer?”</p></div>`}</div>
       <form id="rmsChatForm" class="rms-chat-form">
@@ -88,25 +91,15 @@ window.RMSLocalChatUI = (() => {
     document.getElementById("rmsChatLoadModel")?.addEventListener("click",()=>Chat.load());
     document.getElementById("rmsChatRetry")?.addEventListener("click",()=>Chat.load());
     document.getElementById("rmsChatContext")?.addEventListener("change",e=>Chat.setContextEnabled(e.target.checked));
-    document.getElementById("rmsChatClear")?.addEventListener("click",()=>{
-      if(confirm("Clear this Research Chat conversation from this browser?")){Chat.clearConversation();render()}
-    });
+    document.getElementById("rmsChatClear")?.addEventListener("click",()=>{if(confirm("Clear this Research Chat conversation from this browser?")){Chat.clearConversation();render()}});
     document.getElementById("rmsChatUnload")?.addEventListener("click",()=>{Chat.dispose();render()});
-    document.querySelectorAll("[data-chat-action]").forEach(b=>b.addEventListener("click",()=>{
-      const targetId=b.dataset.chatAction;
-      if(Chat.clickAction({targetId})){toggle(false)}
-    }));
+    document.querySelectorAll("[data-chat-action]").forEach(b=>b.addEventListener("click",()=>{if(Chat.clickAction({targetId:b.dataset.chatAction}))toggle(false)}));
     const form=document.getElementById("rmsChatForm");
     if(form)form.onsubmit=async e=>{
       e.preventDefault();
-      const input=document.getElementById("rmsChatInput"), q=input.value.trim();
-      if(!q)return;
-      input.value="";
-      render();
-      try{await Chat.ask(q)}catch(err){
-        const box=document.getElementById("rmsChatMessages");
-        if(box)box.insertAdjacentHTML("beforeend",`<div class="rms-chat-message assistant error"><div class="rms-chat-role">Research Chat</div><div class="rms-chat-text">${E(err?.message||err)}</div></div>`);
-      }
+      const input=document.getElementById("rmsChatInput"),q=input.value.trim();if(!q)return;
+      input.value="";render();
+      try{await Chat.ask(q)}catch(err){Chat.recordError(err?.message||err)}
       render();
       requestAnimationFrame(()=>{const m=document.getElementById("rmsChatMessages");if(m)m.scrollTop=m.scrollHeight});
     };
@@ -121,8 +114,7 @@ window.RMSLocalChatUI = (() => {
   }
 
   function toggle(v){
-    open=v==null?!open:!!v;
-    render();
+    open=v==null?!open:!!v;render();
     if(open)requestAnimationFrame(()=>document.getElementById(Chat.getState().status==="ready"?"rmsChatInput":"rmsChatLoadModel")?.focus());
     else launcher().focus();
   }
@@ -136,7 +128,7 @@ window.RMSLocalChatUI = (() => {
     const settings=document.getElementById("aiSettings");
     if(settings){
       settings.textContent="Research Chat";
-      settings.onclick=e=>{e.preventDefault();e.stopImmediatePropagation();toggle(true)};
+      settings.addEventListener("click",e=>{e.preventDefault();e.stopImmediatePropagation();toggle(true)},true);
     }
   }
 
