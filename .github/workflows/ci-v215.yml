@@ -40,9 +40,26 @@ jobs:
             exit 1
           fi
 
-  pages-build-smoke:
+  browser-ui:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install exact browser test/runtime dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Verify pinned Playwright version
+        run: node -e "const p=require('playwright/package.json'); if(p.version!=='1.55.0') throw new Error('Unexpected Playwright '+p.version); console.log('Playwright',p.version)"
+      - name: Install Chromium used for rendered QA
+        run: npx playwright install --with-deps chromium
+      - name: Run rendered Research Chat contract
+        run: npm run test:chat:browser
+
+  pages-build-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -79,3 +96,10 @@ jobs:
           MAX=$((900*1024*1024))
           echo "Pages artifact bytes: $BYTES"
           test "$BYTES" -lt "$MAX"
+      - name: Preserve exact Pages build manifest for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: rms-v2.15-build-manifest
+          path: _site/BUILD_MANIFEST_v2.15.json
+          if-no-files-found: error
+          retention-days: 30
