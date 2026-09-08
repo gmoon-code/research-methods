@@ -29,6 +29,6 @@ window.RMS_LOCAL_CHAT_CONFIG = Object.freeze({
 
   minimums: Object.freeze({
     warnDeviceMemoryGB: 8,
-    recommendedFreeStorageMB: 650
+    recommendedFreeStorageMB: 850
   })
 });
