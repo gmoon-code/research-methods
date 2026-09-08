@@ -20,16 +20,6 @@ let dtype=CFG.wasmDtype;
 let loading=null;
 
 function post(type,data={}){self.postMessage({type,...data})}
-function progress(p){
-  const value=Number.isFinite(p?.progress)?Math.max(0,Math.min(100,p.progress)):null;
-  post("progress",{
-    status:p?.status||"",
-    file:p?.file||"",
-    progress:value,
-    loaded:p?.loaded||0,
-    total:p?.total||0
-  });
-}
 
 async function loadModel(){
   if(generator)return {device,dtype};
@@ -49,8 +39,7 @@ async function loadModel(){
         post("loading",candidate);
         generator=await pipeline("text-generation",CFG.modelId,{
           dtype:candidate.dtype,
-          device:candidate.device,
-          progress_callback:progress
+          device:candidate.device
         });
         device=candidate.device;
         dtype=candidate.dtype;
