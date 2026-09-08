@@ -32,7 +32,8 @@ window.RMSLocalChat = (() => {
 
   function ensureWorker(){
     if(worker)return worker;
-    worker=new Worker(new URL("./local-chat-worker.js",document.baseURI),{type:"module"});
+    const base=window.RMS_LOCAL_CHAT_ASSET_BASE||new URL("./assets/",document.baseURI).href;
+    worker=new Worker(new URL("local-chat-worker.js",base),{type:"module"});
     worker.onmessage=e=>{
       const m=e.data||{};
       if(m.type==="progress")set({status:"loading",progress:m,error:""});
