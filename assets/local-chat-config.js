@@ -8,10 +8,14 @@ window.RMS_LOCAL_CHAT_CONFIG = Object.freeze({
     id: "smollm2-360m-instruct",
     sourceRepository: "onnx-community/SmolLM2-360M-Instruct-ONNX",
     sourceRevision: "fe7c7db4c8921c9e3fa1c65cfd296fb3b1b1a8f9",
-    dtype: "q4",
-    expectedModelBytes: 386495938,
-    expectedFirstDownloadMB: 400,
-    modelSha256: "77b81bc8d2cb60c23a3399acba67dfa241d073764a4d1bdcce479747fb794aa6"
+    webgpuDtype: "q4f16",
+    wasmDtype: "q4",
+    webgpuModelBytes: 272353302,
+    wasmModelBytes: 386495938,
+    expectedWebGPUDownloadMB: 280,
+    expectedWasmDownloadMB: 400,
+    webgpuModelSha256: "ce4a145ce32435411a296289d93b2c33334e6876ffba05373c9aa829c28e2026",
+    wasmModelSha256: "77b81bc8d2cb60c23a3399acba67dfa241d073764a4d1bdcce479747fb794aa6"
   }),
 
   runtime: Object.freeze({
