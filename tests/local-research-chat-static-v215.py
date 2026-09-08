@@ -57,12 +57,11 @@ assert "branches: [main]" in deploy
 assert "npm run build:pages" in deploy
 assert "v2.15-github-only-local-chat" in ci
 
-for token in [
-    "no API key","no per-message fee","first setup downloads about",
-    "Small-model limitation","WebGPU","WebAssembly/CPU",
-    "Do this before class when possible"
-]:
-    assert token.lower() in ui.lower(),token
+low=ui.lower()
+for token in ["no api key","no per-message fee","small-model limitation","webgpu","webassembly/cpu","do this before class when possible"]:
+    assert token in low,token
+assert "first setup" in low and "downloads about" in low
+assert "additional" in low and "fallback" in low
 
 for token in ["statistics_guard","source_integrity_guard","source_search_guard","authorship_guard","teacher_review_guard"]:
     assert token in policy,token
