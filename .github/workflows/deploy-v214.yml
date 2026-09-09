@@ -1,0 +1,165 @@
+name: Deploy v2.14 production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: v214-production
+  cancel-in-progress: false
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  verify:
+    name: Verify exact merged bytes
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+
+  deploy-backend:
+    name: Deploy secure Research Chat backend
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Require deployment secrets
+        shell: bash
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          RMS_CHAT_ACCESS_CODE: ${{ secrets.RMS_CHAT_ACCESS_CODE }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          set -euo pipefail
+          for name in OPENAI_API_KEY RMS_CHAT_ACCESS_CODE VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID; do
+            if [ -z "${!name:-}" ]; then
+              echo "Required GitHub Actions secret is missing: $name" >&2
+              exit 1
+            fi
+          done
+
+      - name: Deploy production backend
+        id: deploy
+        shell: bash
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          RMS_CHAT_ACCESS_CODE: ${{ secrets.RMS_CHAT_ACCESS_CODE }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          set -euo pipefail
+          deployment_url="$(npx --yes vercel@59.11.7 deploy \
+            --prod \
+            --yes \
+            --token "$VERCEL_TOKEN" \
+            --env OPENAI_API_KEY="$OPENAI_API_KEY" \
+            --env RMS_CHAT_ACCESS_CODE="$RMS_CHAT_ACCESS_CODE" \
+            --env RMS_ALLOWED_ORIGINS="https://gmoon-code.github.io" \
+            --env OPENAI_MODEL="gpt-5.6-luna" \
+            2> >(tee /tmp/vercel-deploy.stderr >&2) | tail -n 1)"
+          if [[ ! "$deployment_url" =~ ^https:// ]]; then
+            echo "Vercel did not return an HTTPS deployment URL." >&2
+            exit 1
+          fi
+          echo "deployment_url=$deployment_url" >> "$GITHUB_OUTPUT"
+
+      - name: Verify authenticated health and wrong-code rejection
+        shell: bash
+        env:
+          RMS_CHAT_ACCESS_CODE: ${{ secrets.RMS_CHAT_ACCESS_CODE }}
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment_url }}
+        run: |
+          set -euo pipefail
+          health_code="$(curl --silent --show-error --output /tmp/health.json --write-out '%{http_code}' \
+            -H 'Origin: https://gmoon-code.github.io' \
+            -H "X-RMS-Chat-Code: $RMS_CHAT_ACCESS_CODE" \
+            "$DEPLOYMENT_URL/api/research-chat?health=1")"
+          test "$health_code" = "200"
+          node -e "const fs=require('fs'); const x=JSON.parse(fs.readFileSync('/tmp/health.json','utf8')); if(x.ok!==true) process.exit(1)"
+
+          wrong_code="$(curl --silent --show-error --output /tmp/wrong.json --write-out '%{http_code}' \
+            -H 'Origin: https://gmoon-code.github.io' \
+            -H 'X-RMS-Chat-Code: definitely-wrong' \
+            "$DEPLOYMENT_URL/api/research-chat?health=1")"
+          test "$wrong_code" = "401"
+
+      - name: Verify one real non-sensitive OpenAI response with project context off
+        shell: bash
+        env:
+          RMS_CHAT_ACCESS_CODE: ${{ secrets.RMS_CHAT_ACCESS_CODE }}
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment_url }}
+        run: |
+          set -euo pipefail
+          status="$(curl --silent --show-error --output /tmp/chat.json --write-out '%{http_code}' \
+            -X POST \
+            -H 'Content-Type: application/json' \
+            -H 'Origin: https://gmoon-code.github.io' \
+            -H "X-RMS-Chat-Code: $RMS_CHAT_ACCESS_CODE" \
+            --data '{"question":"Explain the difference between a variable and an operational definition for a high-school research student.","history":[],"context":{"stage":{"id":0,"title":""},"focused_field":{"key":"","label":"","value":""},"project":{"summary":{},"verified_sources":[]}}}' \
+            "$DEPLOYMENT_URL/api/research-chat")"
+          test "$status" = "200"
+          node -e "const fs=require('fs'); const x=JSON.parse(fs.readFileSync('/tmp/chat.json','utf8')); if(typeof x.answer!=='string'||x.answer.trim().length<20) process.exit(1); if(x.scaffold?.stage_id!==0) process.exit(1)"
+
+  deploy-pages:
+    name: Deploy GitHub Pages student site
+    needs: deploy-backend
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build privacy-minimized Pages artifact
+        shell: bash
+        env:
+          RMS_CHAT_BACKEND_URL: ${{ needs.deploy-backend.outputs.deployment_url }}
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site
+          cp index.html _site/index.html
+          if [ -f 404.html ]; then cp 404.html _site/404.html; fi
+          if [ -f .nojekyll ]; then cp .nojekyll _site/.nojekyll; fi
+          cp -R assets _site/assets
+          node scripts/configure-pages-runtime.mjs
+          if grep -RInE 'sk-[A-Za-z0-9_-]{16,}' _site; then
+            echo 'A key-like token was found in the Pages artifact.' >&2
+            exit 1
+          fi
+          if grep -RIn 'OPENAI_API_KEY' _site; then
+            echo 'OPENAI_API_KEY must not appear in the Pages artifact.' >&2
+            exit 1
+          fi
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
