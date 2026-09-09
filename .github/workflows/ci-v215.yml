@@ -59,7 +59,7 @@ jobs:
 
   pages-build-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -88,6 +88,15 @@ jobs:
           test -f _site/BUILD_MANIFEST_v2.15.json
           grep -q 'env.allowRemoteModels=false' _site/assets/local-chat-worker.js
           ! grep -RIE '(api\.openai\.com|vercel\.app)' _site/assets
+      - name: Run the actual pinned local model on representative method questions
+        run: node tests/local-research-chat-actual-model-v215.mjs
+      - name: Preserve actual model responses for methodological review
+        uses: actions/upload-artifact@v4
+        with:
+          name: rms-v2.15-actual-model-smoke
+          path: ACTUAL_MODEL_SMOKE_v2.15.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Enforce GitHub Pages size headroom
         shell: bash
         run: |
