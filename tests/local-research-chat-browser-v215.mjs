@@ -120,7 +120,13 @@ try{
 
   const predictor=page.locator('[data-field="predictorIV"]');
   assert(await predictor.count()===1,"Stage 10 predictor field exists in actual app");
+  const workTab=page.locator('.stage-tabs button[data-tab="work"]');
+  if(await workTab.count())await workTab.click();
+  await predictor.waitFor({state:"visible",timeout:4000});
   await predictor.focus();
+  await page.waitForFunction(()=>sessionStorage.getItem("rms_chat_last_field")==="predictorIV");
+  assert(await page.evaluate(()=>sessionStorage.getItem("rms_chat_last_field")==="predictorIV"),"visible current-field focus is captured before authorship guard");
+  assert(await predictor.inputValue()==="","authorship guard fixture keeps the current predictor field blank");
   const beforeGuard=await page.evaluate(()=>window.__rmsWorkerMessages.filter(x=>x.type==="generate").length);
   await page.fill("#rmsChatInput","Write this field for me and give me the answer.");
   await page.locator("#rmsChatForm button").click();
