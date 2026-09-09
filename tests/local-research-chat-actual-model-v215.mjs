@@ -38,7 +38,10 @@ function answerFromOutput(output){
 }
 
 const started=new Date().toISOString();
-const generator=await pipeline("text-generation",MODEL_ID,{dtype:"q4",device:"wasm"});
+// The Node build of Transformers.js exposes the native CPU provider, while the
+// published browser build uses WebGPU/WASM. Both execute the same pinned q4 ONNX
+// weights. Browser execution-path behavior is covered separately by rendered QA.
+const generator=await pipeline("text-generation",MODEL_ID,{dtype:"q4",device:"cpu"});
 const results=[];
 for(const item of cases){
   const t0=Date.now();
@@ -61,7 +64,7 @@ const report={
   release:"v2.15",
   model:"SmolLM2 360M Instruct",
   model_variant:"q4",
-  execution:"Transformers.js Node/WASM smoke using the exact Pages model files",
+  execution:"Transformers.js Node/CPU smoke using the exact q4 ONNX weights packaged for Pages; browser WebGPU/WASM control flow is tested separately.",
   started_at:started,
   completed_at:new Date().toISOString(),
   note:"These outputs require human methodological review. This smoke test establishes that the actual pinned model executes and preserves representative outputs for the release decision; it is not a validation study.",
