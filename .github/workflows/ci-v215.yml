@@ -1,0 +1,114 @@
+name: v2.15 local Research Chat CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - v2.15-github-only-local-chat
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          find assets scripts tests -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | while IFS= read -r -d '' f; do
+            node --check "$f"
+          done
+      - name: Local Research Chat policy tests
+        run: node tests/local-research-chat-policy-v215.test.js
+      - name: Static architecture and security tests
+        run: python3 tests/local-research-chat-static-v215.py
+      - name: Verify no provider/API secrets are committed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -RIE --exclude-dir=.git --exclude='*.md' \
+            '(sk-[A-Za-z0-9_-]{20,}|OPENAI_API_KEY[[:space:]]*=|RMS_CHAT_ACCESS_CODE[[:space:]]*=)' .; then
+            echo "Secret-like cloud credential detected."
+            exit 1
+          fi
+
+  browser-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install exact browser test/runtime dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Verify pinned Playwright version
+        run: node -e "const p=require('playwright/package.json'); if(p.version!=='1.55.0') throw new Error('Unexpected Playwright '+p.version); console.log('Playwright',p.version)"
+      - name: Install Chromium used for rendered QA
+        run: npx playwright install --with-deps chromium
+      - name: Run rendered Research Chat contract
+        run: npm run test:chat:browser
+
+  pages-build-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Cache pinned local language model
+        uses: actions/cache@v4
+        with:
+          path: .cache/rms-model
+          key: smollm2-360m-instruct-q4-q4f16-fe7c7db-v1
+      - name: Install exact browser inference runtime
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Build the exact GitHub Pages artifact
+        run: npm run build:pages
+      - name: Verify pinned model variants and same-site runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          Q4=_site/models/smollm2-360m-instruct/onnx/model_q4.onnx
+          Q4F16=_site/models/smollm2-360m-instruct/onnx/model_q4f16.onnx
+          test -f "$Q4"
+          test -f "$Q4F16"
+          echo "77b81bc8d2cb60c23a3399acba67dfa241d073764a4d1bdcce479747fb794aa6  $Q4" | sha256sum -c -
+          echo "ce4a145ce32435411a296289d93b2c33334e6876ffba05373c9aa829c28e2026  $Q4F16" | sha256sum -c -
+          test -f _site/vendor/transformers/transformers.min.js
+          test -f _site/BUILD_MANIFEST_v2.15.json
+          grep -q 'env.allowRemoteModels=false' _site/assets/local-chat-worker.js
+          ! grep -RIE '(api\.openai\.com|vercel\.app)' _site/assets
+      - name: Run the actual pinned local model on representative method questions
+        run: node tests/local-research-chat-actual-model-v215.mjs
+      - name: Preserve actual model responses for methodological review
+        uses: actions/upload-artifact@v4
+        with:
+          name: rms-v2.15-actual-model-smoke
+          path: ACTUAL_MODEL_SMOKE_v2.15.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Enforce GitHub Pages size headroom
+        shell: bash
+        run: |
+          set -euo pipefail
+          BYTES=$(du -sb _site | cut -f1)
+          MAX=$((900*1024*1024))
+          echo "Pages artifact bytes: $BYTES"
+          test "$BYTES" -lt "$MAX"
+      - name: Preserve exact Pages build manifest for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: rms-v2.15-build-manifest
+          path: _site/BUILD_MANIFEST_v2.15.json
+          if-no-files-found: error
+          retention-days: 30

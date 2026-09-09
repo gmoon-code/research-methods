@@ -1,0 +1,54 @@
+name: Deploy Research Methods Studio to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Cache pinned local language model
+        uses: actions/cache@v4
+        with:
+          path: .cache/rms-model
+          key: smollm2-360m-instruct-q4-q4f16-fe7c7db-v1
+      - name: Install pinned browser inference runtime
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Test local Research Chat
+        run: npm run test:chat
+      - name: Build self-contained Pages artifact
+        run: npm run build:pages
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 10
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

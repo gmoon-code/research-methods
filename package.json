@@ -1,0 +1,18 @@
+{
+  "name": "research-methods-studio",
+  "private": true,
+  "version": "2.15.0",
+  "description": "GitHub Pages Research Methods Studio with free browser-local Research Chat",
+  "dependencies": {
+    "@huggingface/transformers": "4.2.0",
+    "onnxruntime-web": "1.26.0-dev.20260416-b7804b056c"
+  },
+  "devDependencies": {
+    "playwright": "1.55.0"
+  },
+  "scripts": {
+    "test:chat": "node tests/local-research-chat-policy-v215.test.js && python3 tests/local-research-chat-static-v215.py",
+    "test:chat:browser": "node tests/local-research-chat-browser-v215.mjs",
+    "build:pages": "node scripts/build-pages-v215.mjs"
+  }
+}

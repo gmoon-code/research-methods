@@ -1,151 +1,83 @@
-# Research Methods Studio v2.10 — Classroom Pilot Freeze & Real-Novice Usability Protocol
+# Research Methods Studio v2.15 — GitHub-only Local Research Chat
 
-A static GitHub Pages teaching prototype with a local Research Coach that scaffolds secondary students through the full research process, from interest discovery through a finished research paper.
+Research Methods Studio is a static GitHub Pages teaching application that scaffolds secondary students through a complete research process while preserving student reasoning and authorship.
 
-## Purpose
+## Current deployment architecture
 
-The site teaches research decisions rather than automatically producing a paper. Students build and preserve their own research notebook across 18 stages.
+v2.15 is designed for **GitHub only**.
 
-## Main features
+- source code lives in this GitHub repository
+- GitHub Actions builds the site
+- GitHub Pages serves the application
+- Research Chat runs an open-source language model inside the student's browser
+- there is no Vercel or other runtime backend
+- there is no OpenAI/provider API key
+- there is no per-message inference charge
 
-- research-interest and topic discovery
-- feasibility and ethics screening
-- research-question refinement
-- preliminary background scan
-- systematic search planning
-- source extraction matrix
-- literature synthesis and gap/justification work
-- literature-review planning and drafting
-- design selection
-- hypothesis guidance
-- variable, construct, operational-definition, control, and experimental-unit guidance
-- sampling, measurement, validity, reliability, and ethics
-- protocol and data-table planning
-- data integrity and descriptive analysis
-- statistical decision wizard
-- Results guidance
-- Discussion and limitation guidance
-- conclusion, abstract, title, and keywords
-- APA 7 journal-reference practice helper
-- whole-paper alignment audit
-- local browser saving
-- Markdown notebook export and JSON backup
+The Pages build downloads the pinned open-source model/runtime during GitHub Actions, verifies the model binaries, and includes them in the published Pages artifact. Student browsers then load those files from the GitHub Pages site itself.
 
-## GitHub Pages
+## Research Chat
 
-This version is fully static. Publish from `main` and `/ (root)` in a public repository on GitHub Pages.
+Research Chat is a local assistive tool for:
 
-See `START_HERE.md`.
+- explaining research terminology
+- clarifying what a Stage or field asks
+- explaining why a research step exists
+- summarizing recorded project decisions
+- asking revision questions
+- giving bounded feedback on an existing attempt
 
+It is deliberately **not** the authoritative engine for new statistical calculations, source verification, ethics approval, causal conclusions, hazardous procedures, or final grading.
 
-## v1.1 additions
+Before the local model is called, deterministic application logic intercepts requests to:
 
-See `docs/RESEARCH_COACH_SPEC_v1.1.md` and `docs/RELEASE_AUDIT_v1.1.md`.
+- complete a blank current research decision for the student
+- calculate new inferential statistics
+- invent studies, citations, articles, references, or DOIs
+- pretend to search for or verify literature
+- proceed through clear human-participant/privacy/safety concerns without teacher review
 
+## Local model
 
-## v1.2 architecture
+Research Chat currently pins:
 
-The GitHub Pages site remains fully usable with local deterministic coaching.
+- SmolLM2 360M Instruct
+- ONNX repository `onnx-community/SmolLM2-360M-Instruct-ONNX`
+- revision `fe7c7db4c8921c9e3fa1c65cfd296fb3b1b1a8f9`
+- q4f16 for the preferred WebGPU path
+- q4 for WebGPU/WASM fallback
+- Transformers.js 4.2.0
+- ONNX Runtime Web `1.26.0-dev.20260416-b7804b056c`
 
-An optional AI mode can connect to a secure server-side endpoint. No provider/API secret is stored in the browser.
+The first Research Chat load is intentionally user-initiated because the model download is large. The UI estimates about 280 MB on the preferred WebGPU path and about 400 MB for the q4 fallback path. Preload on classroom devices before the lesson when possible.
+
+## Student project
+
+The existing application provides the 18-stage research workflow, including literature, methods, data/statistics, writing, transfer, competency, and pilot-support systems from the current GitHub baseline.
+
+The local Research Chat reads a minimized subset of the browser-saved project only when the student keeps **Use my current research-project context** enabled. Raw analysis data are excluded from the chat prompt.
+
+## Deployment
+
+The production workflow is:
+
+1. merge a validated branch into `main`
+2. GitHub Actions runs the Research Chat tests
+3. the Pages build downloads and verifies the pinned model files
+4. the build vendors the exact browser inference runtime
+5. the build fails if the published artifact exceeds the release size guard
+6. the official GitHub Pages deployment action publishes `_site`
 
 See:
-- `docs/AI_RESEARCH_COACH_PROTOCOL_v1.2.md`
-- `docs/SOURCE_GROUNDING_POLICY_v1.2.md`
-- `docs/COACH_RESPONSE_SCHEMA_v1.2.json`
-- `server/BACKEND_CONTRACT_v1.2.json`
 
+- `docs/LOCAL_RESEARCH_CHAT_ARCHITECTURE_v2.15.md`
+- `docs/THIRD_PARTY_NOTICES_v2.15.md`
+- `docs/V2_15_MIGRATION_NOTE.md`
 
-## v1.3 Literature Workspace
+## Important migration boundary
 
-See `docs/LITERATURE_WORKSPACE_SPEC_v1.3.md` and `docs/RELEASE_AUDIT_v1.3.md`.
+The current GitHub `main` branch is the stable source baseline for this v2.15 branch. A later guided-flow UI package created in a previous local development runtime is not fully present in GitHub today. v2.15 does not pretend otherwise. See the migration note before merging or doing further UI integration.
 
+## Release gate
 
-## v1.4 Methods Lab
-
-See `docs/METHODS_LAB_SPEC_v1.4.md` and `docs/RELEASE_AUDIT_v1.4.md`.
-
-
-## v1.5 Data & Statistics Lab
-
-See `docs/DATA_STATISTICS_LAB_SPEC_v1.5.md`.
-
-
-## v1.6 Scientific Writing Lab
-
-See `docs/SCIENTIFIC_WRITING_LAB_SPEC_v1.6.md` and `docs/RELEASE_AUDIT_v1.6.md`.
-
-
-## v1.7 Journey & Teacher Dashboard
-
-See `docs/STUDENT_JOURNEY_TEACHER_DASHBOARD_SPEC_v1.7.md` and `docs/RELEASE_AUDIT_v1.7.md`.
-
-
-## v1.8 Learning Analytics
-
-See `docs/LEARNING_ANALYTICS_SPEC_v1.8.md`, `docs/COMPETENCY_MODEL_DESIGN_NOTE_v1.8.md`, and `docs/COMPETENCY_MODEL_v1.8.json`.
-
-
-## v1.9 Transfer & Validation
-
-See `docs/TRANSFER_VALIDATION_SPEC_v1.9.md` and the `validation/` folder.
-
-
-## v2.0 Classroom Pilot
-
-See `docs/CLASSROOM_PILOT_RELEASE_SPEC_v2.0.md`, `pilot/TEACHER_PILOT_GUIDE_v2.0.md`, and `pilot/FROZEN_BASELINE_MANIFEST_v2.0.json`.
-
-
-## RC1 pilot dry run
-
-This release candidate keeps the v2.0 measurement baseline frozen and fixes only deployment/recovery/navigation/policy issues found during the dry run. See `docs/PILOT_DRY_RUN_REPORT_v2.0-RC1.md`.
-
-
-## v2.1
-
-See `docs/STUDENT_GUIDANCE_SCAFFOLDING_SPEC_v2.1.md` and `docs/BASELINE_CHANGE_NOTICE_v2.1.md`.
-
-
-## v2.2 novice usability overhaul
-
-See `docs/NOVICE_USABILITY_AUDIT_v2.2.md` and `docs/NOVICE_DECISION_SCAFFOLDING_SPEC_v2.2.md`.
-
-
-## v2.3 Guided Research Pathways
-
-See `docs/GUIDED_RESEARCH_PATHWAYS_SPEC_v2.3.md` and `docs/BASELINE_CHANGE_NOTICE_v2.3.md`.
-
-
-## v2.4 Pathway-Specific Coaching & Readiness
-
-See `docs/PATHWAY_COACHING_READINESS_SPEC_v2.4.md` and `docs/BASELINE_CHANGE_NOTICE_v2.4.md`.
-
-
-## v2.5 Progressive Help
-
-See `docs/PROGRESSIVE_HELP_RESCUE_SPEC_v2.5.md` and `docs/BASELINE_CHANGE_NOTICE_v2.5.md`.
-
-
-## v2.6 Novice simulation
-
-See `validation/novice-simulation/NOVICE_SIMULATION_REPORT_v2.6.md` and `docs/NOVICE_SIMULATION_FRICTION_HARDENING_SPEC_v2.6.md`.
-
-
-## v2.7 End-to-End Exemplar
-
-See `docs/END_TO_END_EXEMPLAR_SPEC_v2.7.md` and `examples/radish-salinity/README.md`.
-
-
-## v2.8 Multi-Path Exemplar Library
-
-Every supported confirmed research path now has a complete 18-stage exemplar. See `docs/MULTI_PATH_EXEMPLAR_LIBRARY_SPEC_v2.8.md`.
-
-
-## v2.9 Browser QA
-
-See `docs/browser-qa/BEGINNER_BROWSER_ACCESSIBILITY_QA_v2.9.md` and `docs/RELEASE_AUDIT_v2.9.md`.
-
-
-## v2.10 pilot operations
-
-The deployed student-facing application remains frozen at `RMS-INSTRUCTIONAL-BASELINE-v2.9`. See `pilot/v2.10/PILOT_RUNBOOK_v2.10.md`.
+The `v2.15-github-only-local-chat` branch and its draft pull request are the validation branch. Do not merge solely to test the model architecture. Merge only after the GitHub CI Pages build passes and the built artifact is reviewed.
