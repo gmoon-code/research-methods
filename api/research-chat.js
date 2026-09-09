@@ -196,6 +196,15 @@ function sourceVerificationFallback(scaffold = {}) {
   };
 }
 
+function answerContainsDirectCitation(text) {
+  const answer = String(text || '');
+  const authorYear = /\b[A-Z][A-Za-z'’\-]+(?:\s+et\s+al\.)?\s*\((?:19|20)\d{2}[a-z]?\)/;
+  const parentheticalAuthorYear = /\([A-Z][A-Za-z'’\-]+(?:\s+(?:&|and)\s+[A-Z][A-Za-z'’\-]+|\s+et\s+al\.)?,?\s+(?:19|20)\d{2}[a-z]?\)/;
+  const urlOrDoi = /(?:https?:\/\/|www\.|\bdoi\s*:|\b10\.\d{4,9}\/[-._;()/:A-Z0-9]+)/i;
+  const sourceLabel = /\[(?:source|ref(?:erence)?)\s*[:#-]?\s*[^\]]+\]/i;
+  return authorYear.test(answer) || parentheticalAuthorYear.test(answer) || urlOrDoi.test(answer) || sourceLabel.test(answer);
+}
+
 function enforceVerifiedCitations(result, verifiedSources) {
   const allowed = new Map(
     (verifiedSources || [])
@@ -207,6 +216,9 @@ function enforceVerifiedCitations(result, verifiedSources) {
     const id = String(citation?.source_id || '');
     if (!id || !allowed.has(id)) return sourceVerificationFallback(result?.scaffold);
   }
+  // Source references are rendered from the verified citation array only.
+  // Reject conventional/inline citation text so an undeclared source cannot bypass that gate.
+  if (answerContainsDirectCitation(result?.answer)) return sourceVerificationFallback(result?.scaffold);
   const normalized = citations.map(c => {
     const source = allowed.get(String(c.source_id));
     return {
@@ -239,6 +251,7 @@ function buildSystemPrompt(context) {
     'Explain unfamiliar research language in plain language before relying on specialized terminology.',
     'Use the current stage and focused field when they are relevant. Do not invent data, participant information, statistical results, sources, quotations, or findings.',
     'Do not claim a source supports a statement unless that source is supplied in the verified-source context.',
+    'Do not write author-year citations, URLs, DOIs, bibliography entries, bracketed source labels, or source names into the answer text. Put every project source you rely on only in the structured citations array; the interface will render the verified record.',
     'If a question involves human participants, sensitive topics, hazardous procedures, or school interventions, remind the student that teacher or institutional review may be required before data collection.',
     'Do not ask the student to paste raw datasets or personally identifying participant information into chat.',
     sourceRule,
@@ -373,6 +386,7 @@ export default async function handler(req, res) {
 
 export {
   RESPONSE_SCHEMA,
+  answerContainsDirectCitation,
   authorize,
   buildOpenAIRequest,
   cleanHistory,

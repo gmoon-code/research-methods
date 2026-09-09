@@ -73,8 +73,6 @@
   function projectSummary(project) {
     const d = project?.data || {};
     const candidates = {
-      project_name: project?.name,
-      course_context: project?.context,
       research_path: project?.pathway?.selected,
       broad_topic: d.broadTopic,
       topic_choice: d.topicChoice,

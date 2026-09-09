@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   RESPONSE_SCHEMA,
+  answerContainsDirectCitation,
   authorize,
   buildOpenAIRequest,
   enforceVerifiedCitations,
@@ -94,6 +95,32 @@ test('Structured Outputs request uses a strict JSON schema', () => {
   assert.equal(payload.text.format.strict, true);
   assert.deepEqual(payload.text.format.schema, RESPONSE_SCHEMA);
   assert.equal(payload.store, false);
+});
+
+test('project identity labels are not included in Chat project context', async () => {
+  const client = await import('node:fs/promises').then(fs => fs.readFile(new URL('../assets/research-chat.js', import.meta.url), 'utf8'));
+  assert.doesNotMatch(client, /project_name:\s*project\?\.name/);
+  assert.doesNotMatch(client, /course_context:\s*project\?\.context/);
+});
+
+test('direct author-year, URL, DOI, and bracketed source prose is treated as a citation attempt', () => {
+  assert.equal(answerContainsDirectCitation('Smith (2024) reported a result.'), true);
+  assert.equal(answerContainsDirectCitation('See https://example.com for details.'), true);
+  assert.equal(answerContainsDirectCitation('The DOI is 10.1234/example.9.'), true);
+  assert.equal(answerContainsDirectCitation('This comes from [Source: S9].'), true);
+  assert.equal(answerContainsDirectCitation('Define the outcome before choosing an analysis.'), false);
+});
+
+test('undeclared inline citation prose discards the model answer even when the citation array is empty', () => {
+  const result = enforceVerifiedCitations({
+    answer: 'Smith (2024) supports this claim.',
+    next_steps: [],
+    citations: [],
+    scaffold: { stage_id: 6, focused_field: 'source', mode: 'feedback' }
+  }, [{ id: 'S1', title: 'Verified', verified: true }]);
+  assert.equal(result.status, 'source_verification_needed');
+  assert.equal(result.citations.length, 0);
+  assert.doesNotMatch(result.answer, /Smith/);
 });
 
 test('unknown or unverified citations discard the model answer', () => {
