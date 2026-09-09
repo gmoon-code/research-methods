@@ -1,28 +1,19 @@
-
+/* v2.14 compatibility shim.
+   The legacy arbitrary-endpoint AI Coach is intentionally disabled.
+   Student-facing model access now goes only through Research Chat and /api/research-chat. */
 window.RMSAI = (() => {
-  const STORAGE_KEY = "rms_ai_backend_v1_2";
-
-  function getConfig(){
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}"); } catch { return {}; }
+  function getConfig() {
+    return { enabled: false, endpoint: '' };
   }
-  function setConfig(cfg){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg||{}));
+  function setConfig() {
+    try { localStorage.removeItem('rms_ai_backend_v1_2'); } catch {}
+    return getConfig();
   }
-  function enabled(){
-    const c=getConfig();
-    return Boolean(c.enabled && c.endpoint);
+  function enabled() {
+    return false;
   }
-  async function review(payload){
-    const c=getConfig();
-    if(!c.enabled || !c.endpoint) throw new Error("AI Coach backend is not configured.");
-    const res=await fetch(c.endpoint,{
-      method:"POST",
-      headers:{"content-type":"application/json"},
-      body:JSON.stringify(payload)
-    });
-    const data=await res.json().catch(()=>({}));
-    if(!res.ok) throw new Error(data.error||`Coach request failed (${res.status}).`);
-    return data;
+  async function review() {
+    throw new Error('Use Chat for secure class research support.');
   }
-  return {getConfig,setConfig,enabled,review};
+  return { getConfig, setConfig, enabled, review };
 })();

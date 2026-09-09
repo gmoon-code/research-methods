@@ -1,0 +1,57 @@
+name: v2.14 release CI
+
+on:
+  push:
+    branches:
+      - release/v2.14-live-research-chat
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v214-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Security and release contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact commit
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run v2.14 test suite
+        run: npm test
+
+      - name: Verify browser bundle contains no OpenAI secret material
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -RInE 'sk-[A-Za-z0-9_-]{16,}' index.html assets; then
+            echo 'A key-like token was found in browser-delivered files.' >&2
+            exit 1
+          fi
+          if grep -RIn 'OPENAI_API_KEY' index.html assets; then
+            echo 'OPENAI_API_KEY must not appear in browser-delivered files.' >&2
+            exit 1
+          fi
+
+      - name: Verify production endpoint remains server-side
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f api/research-chat.js
+          test -f assets/runtime-config.js
+          test -f assets/research-chat.js
+          test -f assets/doc-export.js
+          test -f vercel.json

@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Research Methods Studio guides students through finding a research interest, designing a study, analyzing evidence, and writing a research paper.">
   <meta name="theme-color" content="#245c7f">
-  <title>Research Methods Studio · Browser Usability & Accessibility QA v2.9</title>
+  <title>Research Methods Studio · v2.14</title>
   <link rel="stylesheet" href="./assets/style.css">
+  <link rel="stylesheet" href="./assets/v214.css">
 </head>
 <body>
-  <!-- Retained feature: Multi-Path Exemplar Library -->
   <a class="skip-link" href="#mainContent">Skip to main content</a>
   <div class="app-shell">
     <header class="topbar">
@@ -19,33 +19,76 @@
       </div>
       <div class="top-actions" aria-label="Research tools">
         <span id="saveStatus" class="save-status" role="status" aria-live="polite">Not saved yet</span>
-        <button class="ghost small" id="pilotBtn">Pilot & Recovery</button>
-        <button class="ghost small" data-open-rescue-navigator="0">I’m stuck</button>
-        <button class="ghost small" data-open-exemplar>Exemplar Project</button>
-        <button class="ghost small" id="pathwayBtn">Research Path</button>
-        <button class="ghost small" id="studentGuideBtn">Student Guide</button>
-        <button class="ghost small" id="glossaryBtn">Research Terms</button>
-        <button class="ghost small" id="transferBtn">Transfer Lab</button>
-        <button class="ghost small" id="competencyBtn">Learning Analytics</button>
-        <button class="ghost small" id="journeyBtn">My Journey</button>
-        <button class="ghost small" id="teacherBtn">Teacher Dashboard</button>
-        <button class="ghost small" id="writingLab">Writing Lab</button>
-        <button class="ghost small" id="dataLab">Data & Statistics Lab</button>
-        <button class="ghost small" id="methodsLab">Methods Lab</button>
-        <button class="ghost small" id="litLab">Literature Workspace</button>
-        <button class="ghost small" id="aiSettings">AI Coach settings</button>
-        <button class="ghost small" id="exportMd">Export notebook</button>
-        <button class="ghost small" id="exportJson">Backup JSON</button>
-        <button class="secondary small" id="resetProject">New project</button>
+        <button class="ghost small" id="currentStageBtn" type="button">Current stage</button>
+
+        <div class="top-menu-wrap">
+          <button class="ghost small" id="helpMenuBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="helpMenu">Help</button>
+          <div class="top-popover" id="helpMenu" hidden>
+            <div class="menu-title">Help with the step in front of you</div>
+            <div class="menu-copy">You can get unstuck without losing sight of the full research route.</div>
+            <div class="menu-grid">
+              <button class="ghost small" id="helpStuck" type="button">I’m stuck</button>
+              <button class="ghost small" id="helpGuide" type="button">Student Guide</button>
+              <button class="ghost small" id="helpTerms" type="button">Research Terms</button>
+              <button class="ghost small" id="helpChat" type="button">Ask Chat</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="primary small primary-compact" id="researchChatBtn" type="button" aria-haspopup="dialog" aria-expanded="false">Chat</button>
+
+        <div class="top-menu-wrap">
+          <button class="ghost small" id="moreMenuBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="moreMenu">More</button>
+          <div class="top-popover more-tools" id="moreMenu" hidden>
+            <div class="menu-group">
+              <div class="menu-group-label">Project</div>
+              <div class="menu-grid">
+                <button class="ghost small" id="pilotBtn">Pilot & Recovery</button>
+                <button class="ghost small" id="exportMd">Download Word (.doc)</button>
+                <button class="ghost small" id="exportJson">Backup JSON</button>
+                <button class="secondary small" id="resetProject">New project</button>
+              </div>
+            </div>
+            <div class="menu-group">
+              <div class="menu-group-label">Research support</div>
+              <div class="menu-grid">
+                <button class="ghost small" data-open-rescue-navigator="0">I’m stuck</button>
+                <button class="ghost small" data-open-exemplar>Exemplar Project</button>
+                <button class="ghost small" id="pathwayBtn">Research Path</button>
+                <button class="ghost small" id="studentGuideBtn">Student Guide</button>
+                <button class="ghost small" id="glossaryBtn">Research Terms</button>
+                <button class="ghost small" id="litLab">Literature Workspace</button>
+                <button class="ghost small" id="methodsLab">Methods Lab</button>
+                <button class="ghost small" id="dataLab">Data & Statistics Lab</button>
+                <button class="ghost small" id="writingLab">Writing Lab</button>
+              </div>
+            </div>
+            <div class="menu-group">
+              <div class="menu-group-label">Progress and review</div>
+              <div class="menu-grid">
+                <button class="ghost small" id="journeyBtn">My Journey</button>
+                <button class="ghost small" id="competencyBtn">Learning Analytics</button>
+                <button class="ghost small" id="transferBtn">Transfer Lab</button>
+                <button class="ghost small" id="teacherBtn">Teacher Dashboard</button>
+              </div>
+            </div>
+            <div class="menu-group">
+              <div class="menu-group-label">Chat</div>
+              <div class="menu-grid">
+                <button class="ghost small" id="aiSettings">Chat settings</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
 
     <section class="hero">
       <div class="hero-copy">
-        <div class="eyebrow">Student research pathway · v2.9 Browser Usability & Accessibility QA</div>
-        <h1>From a vague interest to a defensible research paper.</h1>
-        <p>This studio teaches you how researchers make decisions. You will discover a topic, refine a research question, evaluate and synthesize literature, design a method, plan data collection, choose an analysis, interpret results, and write each part of the paper with evidence.</p>
-        <div class="hero-rule"><strong>The rule throughout the studio</strong><br>Your reasoning comes first. The coach gives structure, examples, checks, and increasingly direct help when you need it. It does not invent your data, sources, or conclusions.</div>
+        <div class="eyebrow">Your full research route stays visible</div>
+        <h1>Build a research project one decision at a time.</h1>
+        <p>Use the stage list and progress tracker to see where you are, what you have completed, and what comes next. The page focuses on your current work while keeping the whole route available.</p>
+        <div class="hero-rule"><strong>Your reasoning comes first.</strong><br>Use the built-in guidance, Help, and Chat when you need support. The system should help you make research decisions without inventing your data, sources, or conclusions.</div>
       </div>
       <div class="hero-card">
         <div class="hero-card-title">A research paper is one connected argument</div>
@@ -103,6 +146,7 @@
     </footer>
   </div>
 
+  <script src="./assets/runtime-config.js"></script>
   <script src="./assets/curriculum.js"></script>
   <script src="./assets/pathway-model.js"></script>
   <script src="./assets/path-coach-model.js"></script>
@@ -138,5 +182,8 @@
   <script src="./assets/pilot-ui.js"></script>
   <script src="./assets/accessibility.js"></script>
   <script src="./assets/app.js"></script>
+  <script src="./assets/research-chat.js"></script>
+  <script src="./assets/doc-export.js"></script>
+  <script src="./assets/v214-shell.js"></script>
 </body>
 </html>
