@@ -1,206 +1,107 @@
-# START HERE — Research Methods Studio v2.10 Pilot Operations
+# Start Here — Research Methods Studio v2.15.0 FREE
 
-## Free GitHub Pages deployment
+This is the current publication/deployment entry point. Do not use older deployment instructions from `docs/archive/`.
 
-1. Create a **public** GitHub repository, for example `research-methods-studio`.
-2. Upload the contents of this folder to the repository root.
-3. Open **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select `main` and `/ (root)`.
-6. Save.
+## 1. Current state
 
-Your site will appear at a URL similar to:
+The complete 18-stage website is offline-verified. Research Chat is intentionally disconnected because `assets/runtime-config.js` contains a blank endpoint.
 
-`https://YOUR-USERNAME.github.io/research-methods-studio/`
+This means you can inspect and test the website without creating a Cloudflare account and without exposing any credential.
 
-## Preview before publishing
+## 2. Verify the package before publication
 
-Open `index.html` locally for a basic preview. Browsers may restrict some local-file behavior, so GitHub Pages is the recommended preview.
+From the repository root, with Node.js 20+ and Python 3 installed:
 
-## Student data
+```bash
+python scripts/verify-complete-release-v2.15.0.py
+python scripts/verify-public-github-readiness-v2.15.0.py
+```
 
-The current static version stores the research notebook in the browser's `localStorage`. It does not send notebook content to a server.
+Both commands must pass before a GitHub publication is treated as release-ready.
 
-Students should use **Backup JSON** or **Export notebook** regularly. Browser storage can be cleared.
+## 3. Future GitHub publication
 
-## Important limitation
+The first remote step is deliberately **not** a direct upload to `main`. Publish the exact frozen release to the review branch first:
 
-This version contains structured guidance and rule-based feedback. It does not yet use an AI backend to evaluate the scientific quality of arbitrary student prose or retrieve literature automatically. Those capabilities should be added only with safeguards against fabricated sources, invalid methods, and over-automation of student reasoning.
+`release/v2.15.0-free-public`
 
+From the extracted release, run the publication helper against a clean local clone of `gmoon-code/research-methods`:
 
-## Research Coach
+```bash
+python scripts/prepare-github-publication-v2.15.0.py --check
+python scripts/prepare-github-publication-v2.15.0.py \
+  --target "PATH_TO_YOUR_CLONED_RESEARCH_METHODS_REPO" \
+  --dry-run
+```
 
-Each stage now has **Review my work**. The score is a local diagnostic readiness indicator, not a grade. Review messages identify the next reasoning move without rewriting the student's work.
+Only after the dry run passes should the same command be run without `--dry-run`. The helper pushes only `release/v2.15.0-free-public`, verifies the remote Git tree, and proves that remote `main` did not move. It does not enable GitHub Pages or merge anything. Normal publication does not rerun the release-engineering browser suite, so Git and Python are sufficient for this branch-publication step.
 
+Use `docs/GITHUB_PUBLICATION_HANDOFF_v2.15.0.md` for the exact procedure.
 
-## Optional AI Coach
+After that remote branch has been reviewed and verified, a separate later gate can merge the exact release to `main` and configure GitHub Pages from `main` and `/ (root)`.
 
-The website works without AI.
+The site is designed to work as a project page such as:
 
-To enable deeper AI review, deploy a secure server endpoint implementing `server/BACKEND_CONTRACT_v1.2.json`, then use **AI Coach settings** in the website and enter the endpoint URL.
+`https://YOUR-USERNAME.github.io/research-methods/`
 
-Never place a model-provider API key directly in the GitHub repository or browser JavaScript.
+All page assets are referenced relatively so the repository-name path prefix is preserved.
 
+## 4. Student data before Chat is enabled
 
-## Literature Workspace
+The research notebook is stored in browser `localStorage`. Students should download JSON backups regularly. Word `.doc` export provides a readable copy but is not a full recovery backup.
 
-Use **Literature Workspace** in the top navigation. Students can log searches, screen sources, complete TRAPP evaluation, build the study matrix, map themes and disagreements, audit gap claims, trace claims to source IDs, and export a literature-review outline.
+Browser storage can be cleared, so backup practice is part of normal use.
 
+## 5. Research Chat remains optional
 
-## Methods Lab
+Publishing the static site does **not** activate Chat. The checked-in runtime configuration is intentionally blank.
 
-Use **Methods Lab** in the top navigation after the research question and preliminary literature work. Complete all nine tabs before final data collection. The final tab produces a pre-collection audit and can lock a protocol version.
+Later, if you want Chat:
 
+1. keep the static site on GitHub Pages
+2. create a Cloudflare Workers **Free** deployment
+3. deploy `backend/cloudflare-workers-ai/worker.mjs` through the provided helper
+4. store only `RMS_CHAT_ACCESS_CODE` as a Worker secret
+5. configure the resulting clean `https://...workers.dev/` endpoint locally
+6. run the production smoke test
+7. complete every item in `docs/PRODUCTION_ACCEPTANCE_CHECKLIST_v2.15.0.md`
 
-## Data & Statistics Lab
+Use `docs/CLOUDFLARE_FREE_DEPLOYMENT_v2.15.0.md` for the exact procedure.
 
-Use **Data & Statistics Lab** after the Methods protocol and data dictionary are ready. Import a CSV locally, inspect data quality, define the estimand, map variables to the design, run the analysis, and preserve a Results-ready analysis record.
+## 6. Privacy when Chat is later enabled
 
+The browser sends the student's question and recent Chat history. Project context is included only when **Use my current project context** is enabled.
 
-## Writing Lab
+Before network transmission, the browser excludes raw dataset fields and obvious identifying fields. The Worker repeats server-side minimization. The class code stays outside the project JSON and is stored only for the browser session.
 
-Use **Writing Lab** after the literature, method, and analysis records are substantially complete. The lab constructs evidence maps for each paper section, audits section boundaries and citations, and performs a final whole-paper consistency check.
+Research Chat is a support tool. It does not replace the student's paper, invent data, or treat unverified project sources as verified citations.
 
-## Student Journey
+## 7. Zero-cost boundary
 
-Use **My Journey** to see the next best action, milestone blockers, teacher checkpoints, and feedback history.
+The v2.15.0 executable Chat path uses Cloudflare Workers AI and no paid model API key. To keep the hosted configuration at $0, remain on Workers Free and do not enable Workers Paid or prepaid AI Gateway billing.
 
-## Teacher Dashboard
+Provider pricing and model availability can change. Recheck Cloudflare's current Workers AI pricing/model documentation immediately before deployment.
 
-Students export a **teacher review packet** from My Journey. Teachers can import multiple packets into **Teacher Dashboard**, review checkpoint status, and export structured teacher-feedback JSON files for students to import.
+## 8. What belongs in the public repository
 
-This file-based workflow keeps v1.7 fully compatible with free static GitHub Pages.
+Safe to publish:
 
-## Learning Analytics
+- static application files
+- current Cloudflare Worker source
+- tests and QA records
+- generic synthetic exemplar/pilot data
+- `.env.example` with blank secret values
+- deployment documentation
 
-Use **Learning Analytics** to inspect independent evidence, supported/current performance, support exposure, revision cycles, and teacher-coded ratings.
+Never publish:
 
-For the cleanest independent evidence, students should click **Save independent checkpoint** before using the Research Coach, AI Coach, Interest Compass, Design Matcher, Statistics Wizard, or other recorded scaffolds in that stage.
-
-These indicators are provisional instructional analytics. They are not validated grades or psychometric scores.
-
-
-## Transfer Lab
-
-Use **Transfer Lab** for novel-context research reasoning tasks.
-
-The first response is locked before optional support. The software does not auto-score free-response transfer competence. Export the blinded response packet for human rating.
-
-The included task bank is public and unvalidated. For formal validation research, follow `validation/VALIDATION_PROTOCOL_v1.9.md` and keep locked evaluation items outside the public GitHub repository.
-
-
-## Before a classroom pilot
-
-Open **Pilot & Recovery** and complete the classroom pilot readiness checklist. Test full backup and restore on a non-sensitive sample project before students begin.
-
-For pilot documentation, start with `pilot/TEACHER_PILOT_GUIDE_v2.0.md`. The measurement baseline is recorded in `pilot/FROZEN_BASELINE_MANIFEST_v2.0.json`.
-
-The v2.0 release is intended as a feasibility/usability baseline. Provisional competency indicators and public transfer tasks remain unvalidated.
-
-
-## RC1 dry-run fixes
-
-- New Project clears the rolling recovery snapshot so an old project cannot reappear.
-- Privacy-minimized sharing copies cannot be restored as full recovery backups.
-- AI and the public Transfer Lab obey the frozen classroom pilot policy after pilot start.
-- Mobile users have a direct stage picker.
-- Teacher Dashboard imports replace newer packets for the same project instead of double-counting them.
-- Local-storage failure paths no longer crash the readiness/onboarding layer.
-
-The frozen measurement baseline remains `RMS-PILOT-BASELINE-v2.0`.
-
-
-## High-scaffolding student guidance
-
-Every stage now starts with a detailed Student Guide. Every notebook field has expandable help. The top navigation includes a searchable **Research Terms** glossary.
-
-Students are not expected to already know research vocabulary such as binary, paired, estimand, experimental unit, or confounder.
-
-Use `RMS-INSTRUCTIONAL-BASELINE-v2.1` for a future pilot of this version.
-
-
-## v2.2 novice guidance
-
-Every stage now includes a worked reasoning walkthrough. Every notebook field has field-specific help, and major decisions include an option-by-option “How do I choose?” explanation. Use `RMS-INSTRUCTIONAL-BASELINE-v2.2` for any future pilot of this build.
-
-
-## Guided Research Pathways
-
-After the research question is refined, open **Research Path** and confirm the route that matches the evidence structure. Later stages will show the decisions normally needed for that route first.
-
-Fields that are usually irrelevant to a path are hidden, not deleted. Use **Show fields usually not needed for this path** whenever a project genuinely needs a cross-design decision.
-
-Use `RMS-INSTRUCTIONAL-BASELINE-v2.3` for future pilot work using this interface.
-
-
-## Pathway-specific coaching
-
-Once a research path is confirmed, **Run local review** and **Mark stage ready** use that path's actual methodological requirements. Qualitative work is not penalized for missing p-values or IV/DV, literature reviews are checked for synthesis/review logic, observational studies are checked for confounding and causal limits, and experiments retain unit/replication/condition requirements.
-
-Changing the path invalidates downstream Stage 9–18 readiness and requires a new protocol review if a protocol was already locked.
-
-Use `RMS-INSTRUCTIONAL-BASELINE-v2.4` for future pilot work using this coaching/readiness condition.
-
-
-## Progressive Help
-
-Students can use **I’m stuck** at any stage or **Progressive help** beside a notebook field.
-
-Support increases from L1 through L5. The current attempt is preserved before optional rescue, and each level used is recorded in scaffold-load evidence.
-
-L5 never invents the project answer. It gives a structure, requires student-authored content, and requires the student to explain why the answer fits before it can be applied.
-
-Use `RMS-INSTRUCTIONAL-BASELINE-v2.5` for a future pilot of this instructional condition.
-
-
-## Novice-friction hardening
-
-The local review now recognizes several common first-time-researcher mistakes that can look nonblank while still showing unresolved reasoning. Examples include `idk`, unfinished scaffold tokens, random/convenience sampling confusion, loss of pairing, binary-data misconceptions, and incorrect p-value interpretations.
-
-When a blocker is detected, use **Progressive help** for the named field. The diagnostic does not silently replace the student's answer.
-
-Use `RMS-INSTRUCTIONAL-BASELINE-v2.6` for a future pilot using this readiness condition.
-
-
-## End-to-End Exemplar Project
-
-Use **Exemplar Project** to inspect one complete synthetic research project from Stage 1 through Stage 18.
-
-A worked stage is strong instructional support. The site warns students before the first view and records it as **Level 4 worked-example support**. Save an independent checkpoint first when independent evidence is desired.
-
-The exemplar is experimental. Students on other research paths receive an explicit warning to study the reasoning chain without copying experimental terminology or statistical choices into a mismatched design.
-
-Use `RMS-INSTRUCTIONAL-BASELINE-v2.7` for future pilot work using this exemplar condition.
-
-
-## Multi-Path Exemplar Library
-
-Open **Exemplar Project** to see all eight research-path exemplars. The stage-level **Worked Stage** button automatically opens the exemplar that matches the student's current path.
-
-Viewing worked content remains Level 4 support. Save an independent checkpoint first if independent evidence is desired.
-
-Experimental methodology is no longer the default exemplar. Descriptive, observational, quasi-experimental, qualitative, literature-review, meta-analysis, and mixed-methods projects each have their own complete reasoning chain.
-
-Use `RMS-INSTRUCTIONAL-BASELINE-v2.8` for a future pilot using this exemplar condition.
-
-
-## Browser usability and accessibility hardening
-
-v2.9 completed a live Chromium pass across desktop, tablet, 320–430 px mobile layouts, 200% text enlargement, keyboard modal navigation, and all eight research paths at Stage 10.
-
-The final automated browser pass completed **60/60 checks successfully after fixes**.
-
-Dynamic dialogs now receive a consistent keyboard/focus contract, instructional microprint has been enlarged, mobile targets are larger, the desktop tool bar no longer widens the page, and path-specific Stage 10 views were browser-tested.
-
-This is browser/software QA. It is not a WCAG certification or a usability study with real students.
-
-Use `RMS-INSTRUCTIONAL-BASELINE-v2.9` for future pilot work using this browser-facing condition.
-
-
-## Pilot freeze
-
-v2.10 does **not** change the student-facing Research Methods Studio application. Participants remain on `RMS-INSTRUCTIONAL-BASELINE-v2.9`.
-
-Before a pilot session run `python pilot/v2.10/scripts/verify_pilot_freeze.py`, complete `pilot/v2.10/forms/PRE_FLIGHT_CHECKLIST.csv`, and review the runbook, observer protocol, selected scenario card, and teacher round-trip rehearsal.
-
-Do not mark a pilot wave ready until the go/no-go criteria are satisfied.
+- a real `RMS_CHAT_ACCESS_CODE`
+- `.env` or `.dev.vars`
+- Wrangler local state
+- `node_modules`
+- student project backups or exported student work
+- real participant/student datasets
+- screenshots containing student information
+- Cloudflare credentials or tokens
+
+See `SECURITY.md` and `docs/PUBLIC_GITHUB_READINESS_v2.15.0.md`.

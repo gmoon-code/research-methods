@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+.vercel/
+.wrangler/
+node_modules/
+_site/
+*.log
+__pycache__/
+.pytest_cache/
+.DS_Store
+
+# Local publication-helper temporary state
+.publication-worktree/

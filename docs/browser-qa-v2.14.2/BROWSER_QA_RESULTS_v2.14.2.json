@@ -1,0 +1,337 @@
+{
+  "release": "v2.14.2",
+  "checks": [
+    {
+      "name": "Welcome keeps one primary start action while Research Chat remains available",
+      "passed": true,
+      "detail": [
+        "Start Stage 1",
+        "Chat\nResearch Chat"
+      ]
+    },
+    {
+      "name": "Operational/teacher tools are absent from student welcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Research Chat remains available before Stage 1 without replacing the start action",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "First-run onboarding is short and student-facing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Onboarding explains browser-local saving and safe earlier revision",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Full welcome hero disappears after project start",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Student toolbar is reduced to Snapshot/Help/More on desktop",
+      "passed": true,
+      "detail": [
+        "My Research Snapshot",
+        "Help",
+        "More"
+      ]
+    },
+    {
+      "name": "Desktop keeps the complete five-phase route visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Only the current phase is expanded by default",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Current-work panel remains visible beside the task",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Stage explicitly shows FROM EARLIER / NOW / NEXT",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Stage 1 Learn fits within roughly one desktop viewport",
+      "passed": true,
+      "detail": 889
+    },
+    {
+      "name": "The first Stage 1 work field appears in the first desktop viewport",
+      "passed": true,
+      "detail": 823
+    },
+    {
+      "name": "Only the current Stage subsection fields are shown",
+      "passed": true,
+      "detail": [
+        "interest1",
+        "problem1",
+        "claim1",
+        "access1"
+      ]
+    },
+    {
+      "name": "The whole Stage outline remains visible while only one subsection is open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Field scaffolding is compact until requested",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Work footer has one dominant forward action",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Example opens in one contextual Help surface",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Desktop route can reveal future stages without leaving the current task",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Future-stage navigation previews the road ahead instead of opening advanced work",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Future-stage preview explains prior/current/next continuity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Stage 4 opens directly on the current working subsection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Research-path decision appears after the question-building subsection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Path chooser is recommendation-first",
+      "passed": true,
+      "detail": "RESEARCH-PATH DECISION\nWhat kind of research are you doing?\n\nYour research path controls which method decisions the site emphasizes. Choosing a path never deletes your earlier work.\n\nClose\nRECOMMENDED FROM YOUR CURRENT QUESTION TYPE\nObservational / correlational study\n\nMeasure variables as they naturally occur and examine relationships or differences without assigning the main exposure.\n\nUsually fits when Choose this when you are measuring a predictor/exposure and outcome but are not deliberately assigning the key exposure.\nUse this research path\nHow to think about the choice\nDescribe\nMeasure or document what exists.\nRelationship\nObserve whether measured variables vary together.\nAssigned change\nDeliberately assign an intervention or condition.\nExperience / meaning\nStudy explanations, experiences, or processes using qualitative evidence.\nExisting research\nSynthesize published studies, with or without quantitative pooling.\nMore than one evidence type\nIntegrate quantitative and qualitative strands.\nCompare other possible research paths\nI am still deciding\n\nCan I change this later? Yes. The site preserves your work and marks later stages for review when an earlier path-defining decision changes."
+    },
+    {
+      "name": "Alternative methodologies are hidden behind comparison disclosure",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Path chooser explicitly says changing path does not delete earlier work",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Stage 10 keeps earlier question/design decisions visible",
+      "passed": true,
+      "detail": "Keep these earlier decisions in view\nView all my work\nRESEARCH QUESTION\nWhat is the association between reported weekday sleep duration and biology quiz score among students in one class?\nDESIGN\nCorrelational / observational\nCLAIM LIMIT\nAssociation only; no causal claim."
+    },
+    {
+      "name": "Stage 10 shows only the current subsection before revealing variables",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "High-jargon Stage 10 labels lead with plain-language questions",
+      "passed": true,
+      "detail": [
+        "What factor are you changing or measuring first? (predictor, exposure, or independent variable)",
+        "What result will you measure or observe? (outcome or dependent variable)",
+        "How exactly will each important variable or construct be measured, changed, coded, or identified? (operational definitions)",
+        "What other factors could help explain the result? (potential confounders)",
+        "What counts as one independent case in your study? (experimental or observational unit)"
+      ]
+    },
+    {
+      "name": "Methods Lab shows one sequential step with the full route available on demand",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Methods Lab and Stage share one outcome value",
+      "passed": true,
+      "detail": "Revised biology quiz percent score"
+    },
+    {
+      "name": "Changing an earlier research question preserves later work but marks Stage 10 for review",
+      "passed": true,
+      "detail": "!\n10. Hypothesis and variables\nNeeds review after an earlier change"
+    },
+    {
+      "name": "Stage 12 data-column plan is presented as one structured source of truth",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Older text-only data plan is preserved during migration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Structured data plan opens the Methods Lab data-table step",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Stage 14 keeps the research question, design, unit, and outcome visible",
+      "passed": true,
+      "detail": "keep these earlier decisions in view\nview all my work\nresearch question\nwhat is the association between reported weekday sleep duration and biology quiz score among students in one class?\ndesign\ncorrelational / observational\nindependent case / unit\none student contributes one independent observational case.\noutcome\nbiology quiz score"
+    },
+    {
+      "name": "Data Lab is sequential rather than seven equally prominent tabs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Analysis setup reuses earlier project decisions instead of relying on memory",
+      "passed": true,
+      "detail": "EVIDENCE-ANALYSIS WORKFLOW\nData Analysis & Statistics Laboratory\n\nWork through the evidence pipeline one step at a time. The complete analysis route remains available from the step menu.\n\nClose\nSTEP 4 OF 7\nAnalysis setup\nView full lab route\n← Explore\nRun analysis →\nHelp with this step\nChoose the analysis that matches your existing research plan\n\nYou should not have to remember the whole project. Check the decisions already recorded below, then choose the data structure that matches them.\n\nRESEARCH QUESTION\nWhat is the association between reported weekday sleep duration and biology quiz score among students in one class?\nDESIGN\nCorrelational / observational\nINDEPENDENT CASE / UNIT\nOne student contributes one independent observational case.\nOUTCOME\nBiology quiz score\nData/design structure\nChoose…\nDescribe one numerical variable\nDescribe one categorical variable\nAssociation between two measured variables\nTwo independent groups, numerical outcome\nTwo paired/repeated numerical measurements\nThree or more independent groups\nTwo categorical variables\nSame units measured twice; outcome has two categories (paired binary)\nSame units in 3+ conditions; outcome has two categories (repeated binar"
+    },
+    {
+      "name": "Writing Lab is a sequential route rather than eight competing tabs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Writing Lab opens the same Discussion draft saved in the Stage notebook",
+      "passed": true,
+      "detail": "Initial discussion draft from the Stage notebook."
+    },
+    {
+      "name": "Writing Lab edits synchronize back to the Stage Discussion field",
+      "passed": true,
+      "detail": "Revised discussion written in the Writing Lab."
+    },
+    {
+      "name": "Source evaluation is split into three progressive passes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Only source-identification pass is open initially",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Student More menu contains backup/project actions but hides teacher operations",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Disconnected Research Chat uses student-friendly fallback language",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Research Chat explains what is sent and when project context is used",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Research Chat has no student-facing Research AI label",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Configured Chat asks for the class code without exposing endpoint editing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Teacher Chat settings show the owner-controlled endpoint as read-only",
+      "passed": true,
+      "detail": "Chat settings\n\nThe Research Chat server address is controlled by the site owner in assets/runtime-config.js. Students and teachers cannot replace it from the browser. Model-provider API keys must stay on the server and must never be placed in GitHub Pages files.\n\nConfigured Chat endpoint\n\nhttps://rms-research-chat-free.example.workers.dev/\n\nClass Chat code for this browser session\nEnable Research Chat on this browser session\nNo · local guidance only\nYes\nPrivacy reminder\n\nThe class code is kept only for this browser session and is not saved in the research-project backup. Questions and recent Chat messages go to the configured class service. Current project context is included only when the student leaves Use my current project context enabled, and the browser removes raw datasets and obvious identifying fields before transmission.\n\nClear class code\nTest connection\nCancel\nSave session set"
+    },
+    {
+      "name": "Teacher Chat settings explain session-only class-code handling",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Class Chat code is absent from full project backup",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile keeps compact Route / Snapshot / Help / More controls",
+      "passed": true,
+      "detail": [
+        "Route",
+        "My Research Snapshot",
+        "Help",
+        "More"
+      ]
+    },
+    {
+      "name": "Mobile has no horizontally scrolling global tool strip",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "Mobile current task still shows Stage number and title immediately",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile retains explicit Route access while desktop sidebar is hidden",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile Research Chat launcher keeps the full understandable label",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile Route still exposes all five research phases",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No unexpected JavaScript page errors occurred",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "page_errors": [],
+  "console_errors": [],
+  "screenshots": [
+    "screenshots/01-welcome-clean-student-start.png",
+    "screenshots/02-stage1-route-orientation-desktop.png",
+    "screenshots/03-stage1-focused-work-desktop.png",
+    "screenshots/04-future-stage-preview.png",
+    "screenshots/05-recommendation-first-research-path.png",
+    "screenshots/06-route-needs-review-after-earlier-change.png",
+    "screenshots/07-data-lab-carry-forward-context.png",
+    "screenshots/08-three-pass-source-evaluation.png",
+    "screenshots/09-mobile-stage10-route-and-task.png"
+  ],
+  "measurements": {
+    "stage1_learn_height_px": 889,
+    "stage1_first_work_field_y_px": 823,
+    "stage1_work_visible_stage_buttons": 18
+  },
+  "passed": true
+}

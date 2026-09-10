@@ -1,0 +1,97 @@
+{
+  "release": "v2.13.2",
+  "passed": 18,
+  "total": 18,
+  "results": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 8865
+    },
+    {
+      "path": "404.html",
+      "status": 200,
+      "bytes": 115
+    },
+    {
+      "path": ".nojekyll",
+      "status": 200,
+      "bytes": 0
+    },
+    {
+      "path": "README.md",
+      "status": 200,
+      "bytes": 8198
+    },
+    {
+      "path": "START_HERE.md",
+      "status": 200,
+      "bytes": 16493
+    },
+    {
+      "path": "assets/style.css",
+      "status": 200,
+      "bytes": 108565
+    },
+    {
+      "path": "assets/app.js",
+      "status": 200,
+      "bytes": 119645
+    },
+    {
+      "path": "assets/student-flow.js",
+      "status": 200,
+      "bytes": 22317
+    },
+    {
+      "path": "assets/student-flow-ui.js",
+      "status": 200,
+      "bytes": 10573
+    },
+    {
+      "path": "assets/student-help-ui.js",
+      "status": 200,
+      "bytes": 5106
+    },
+    {
+      "path": "assets/ai-helper-ui.js",
+      "status": 200,
+      "bytes": 12147
+    },
+    {
+      "path": "assets/pathway-ui.js",
+      "status": 200,
+      "bytes": 6240
+    },
+    {
+      "path": "assets/data-lab-ui.js",
+      "status": 200,
+      "bytes": 18400
+    },
+    {
+      "path": "assets/writing-lab-ui.js",
+      "status": 200,
+      "bytes": 13780
+    },
+    {
+      "path": "docs/RELEASE_AUDIT_v2.13.2.md",
+      "status": 200,
+      "bytes": 1377
+    },
+    {
+      "path": "docs/browser-qa-v2.13.2/RESEARCH_CHAT_QA_RESULTS_v2.13.2.json",
+      "status": 200,
+      "bytes": 2180
+    },
+    {
+      "path": "pilot/INSTRUCTIONAL_BASELINE_MANIFEST_v2.13.2.json",
+      "status": 200,
+      "bytes": 13835
+    },
+    {
+      "path": "pilot/v2.13.2/PILOT_FREEZE_MANIFEST_v2.13.2.json",
+      "status": 200,
+      "bytes": 15815
+    }
+  ]
+}

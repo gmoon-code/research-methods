@@ -1,0 +1,13 @@
+item_id,requirement,status,evidence_or_file,owner,date_checked,notes
+PF-01,Frozen-file verification passes,PENDING,PILOT_FREEZE_MANIFEST_v2.11.json,,,
+PF-02,Teacher backup/restore rehearsal passes,PENDING,TEACHER_ROUNDTRIP_REHEARSAL_v2.11.md,,,
+PF-03,Teacher review packet round trip passes,PENDING,TEACHER_ROUNDTRIP_REHEARSAL_v2.11.md,,,
+PF-04,Privacy/consent/research-use decision is documented,PENDING,PRIVACY_CONSENT_RESEARCH_USE_CHECKLIST_v2.11.md,,,
+PF-05,Observer has reviewed neutral-prompt rules,PENDING,OBSERVER_GUIDE_v2.11.md,,,
+PF-06,Participant scenario/path selected,PENDING,scenario-cards/,,,
+PF-07,Participant-code scheme defined,PENDING,,,,
+PF-08,Data storage location and access defined,PENDING,,,,
+PF-09,No Blocker defects open,PENDING,PILOT_ISSUE_LOG.csv,,,
+PF-10,No Major defects open,PENDING,PILOT_ISSUE_LOG.csv,,,
+PF-11,Recovery procedure available during session,PENDING,TEACHER_ROUNDTRIP_REHEARSAL_v2.11.md,,,
+PF-12,Go/no-go decision signed,PENDING,GO_NO_GO_DECISION_LOG.csv,,,

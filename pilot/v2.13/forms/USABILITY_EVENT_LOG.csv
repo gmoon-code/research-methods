@@ -1,0 +1,2 @@
+session_id,timestamp,stage,path,event_code,observed_behavior_verbatim,built_in_support_used,built_in_support_level,observer_support_level,task_status,probable_cause,evidence_for_interpretation,severity,possible_fix,issue_id,orientation_breakdown,route_used,snapshot_used,carry_forward_used,future_preview_used,needs_review_understood,primary_action_found_without_prompt
+,,,,,,,0,0,,,,,,,,,,,,,

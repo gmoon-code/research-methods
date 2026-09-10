@@ -1,0 +1,101 @@
+{
+  "release": "v2.11",
+  "status": "PASS",
+  "instructional_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.11",
+  "baseline_digest": "8a372dc40fec62591e5c71187ce79dcaac15d538c712b92868ec6c611dbf4155",
+  "student_facing_freeze_digest": "ccb20d8708be7ec47685155c13c3ec2862f1bd1d578c9680f0e52d6e9d4036f3",
+  "student_facing_files_frozen": 84,
+  "curriculum_fields_with_response_models": 113,
+  "current_research_snapshot": {
+    "top_level_access": true,
+    "stage_context_strip": true,
+    "five_phase_notebook_view": true,
+    "source_records": true,
+    "search_history": true,
+    "methods_lab_records": true,
+    "data_schema": true,
+    "analysis_runs": true,
+    "writing_lab_drafts": true,
+    "teacher_feedback": true,
+    "cross_path_response_preservation": true,
+    "markdown_export": true
+  },
+  "browser_qa": {
+    "passed": 18,
+    "total": 18,
+    "screenshots": [
+      "screenshots/03-response-example-guidance.png",
+      "screenshots/01-full-research-snapshot-desktop.png",
+      "screenshots/02-full-research-snapshot-mobile-360.png"
+    ],
+    "page_errors": [],
+    "console_errors": []
+  },
+  "final_command_level_suite": "PASS",
+  "command_level_checks": 40,
+  "static_http_smoke": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 7999
+    },
+    {
+      "path": "assets/app.js",
+      "status": 200,
+      "bytes": 100414
+    },
+    {
+      "path": "assets/research-snapshot.js",
+      "status": 200,
+      "bytes": 12384
+    },
+    {
+      "path": "assets/research-snapshot-ui.js",
+      "status": 200,
+      "bytes": 14393
+    },
+    {
+      "path": "assets/response-examples.js",
+      "status": 200,
+      "bytes": 79416
+    },
+    {
+      "path": "assets/student-guidance-ui.js",
+      "status": 200,
+      "bytes": 8633
+    },
+    {
+      "path": "assets/style.css",
+      "status": 200,
+      "bytes": 81157
+    },
+    {
+      "path": "docs/browser-qa-v2.11/BROWSER_QA_RESULTS_v2.11.json",
+      "status": 200,
+      "bytes": 3776
+    },
+    {
+      "path": "docs/browser-qa-v2.11/screenshots/01-full-research-snapshot-desktop.png",
+      "status": 200,
+      "bytes": 182069
+    },
+    {
+      "path": "docs/browser-qa-v2.11/screenshots/02-full-research-snapshot-mobile-360.png",
+      "status": 200,
+      "bytes": 48577
+    },
+    {
+      "path": "docs/browser-qa-v2.11/screenshots/03-response-example-guidance.png",
+      "status": 200,
+      "bytes": 215778
+    },
+    {
+      "path": "pilot/v2.11/PILOT_FREEZE_MANIFEST_v2.11.json",
+      "status": 200,
+      "bytes": 15056
+    }
+  ],
+  "pilot_readiness_expected_status": "NOT YET GO until teacher rehearsal, privacy/approval, and other manual pre-flight items are completed",
+  "pilot_sessions_recorded": 0,
+  "important_boundary": "v2.11 browser and regression results are software QA. They do not constitute educational validation, psychometric validation, or a usability study with real students."
+}

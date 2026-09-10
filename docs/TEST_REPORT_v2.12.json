@@ -1,0 +1,113 @@
+{
+  "release": "v2.12",
+  "status": "PASS",
+  "instructional_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.12",
+  "baseline_digest": "8168d012feb99d999694dcc35077568c72b272f19bf9bfb73213b6c714900f96",
+  "student_facing_freeze_digest": "b6d3d8916319d8d761271dfedf0dfd4a38a5d57ad8da8ce5ad91cdd778df9d79",
+  "student_facing_files_frozen": 86,
+  "persistent_ai_helper": {
+    "launcher_all_stages": true,
+    "major_lab_overlay_access": true,
+    "project_context_toggle": true,
+    "focused_field_context": true,
+    "accumulated_snapshot_context": true,
+    "default_raw_dataset_transmission": false,
+    "conversation_persists_across_stages": true,
+    "authorship_guard": true,
+    "scaffold_level_logging": true,
+    "non_stage_questions_can_avoid_stage_support_logging": true,
+    "secure_backend_required": true,
+    "provider_key_in_browser": false
+  },
+  "live_chromium_v2_12": {
+    "passed": 29,
+    "total": 29,
+    "screenshots": [
+      "screenshots/01-ai-helper-concept-question.png",
+      "screenshots/02-ai-helper-authorship-guard.png",
+      "screenshots/03-ai-helper-mobile-360.png"
+    ],
+    "page_errors": []
+  },
+  "v2_11_snapshot_browser_regression": {
+    "passed": 18,
+    "total": 18
+  },
+  "current_regression_and_integration_commands_passed": 47,
+  "static_http_checks": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 8060
+    },
+    {
+      "path": "assets/ai-adapter.js",
+      "status": 200,
+      "bytes": 1577
+    },
+    {
+      "path": "assets/ai-helper.js",
+      "status": 200,
+      "bytes": 9336
+    },
+    {
+      "path": "assets/ai-helper-ui.js",
+      "status": 200,
+      "bytes": 12004
+    },
+    {
+      "path": "assets/app.js",
+      "status": 200,
+      "bytes": 101596
+    },
+    {
+      "path": "assets/style.css",
+      "status": 200,
+      "bytes": 88097
+    },
+    {
+      "path": "docs/AI_HELPER_PROTOCOL_v2.12.md",
+      "status": 200,
+      "bytes": 4277
+    },
+    {
+      "path": "docs/AI_HELPER_RESPONSE_SCHEMA_v2.12.json",
+      "status": 200,
+      "bytes": 3334
+    },
+    {
+      "path": "docs/browser-qa-v2.12/BROWSER_QA_RESULTS_v2.12.json",
+      "status": 200,
+      "bytes": 16326
+    },
+    {
+      "path": "docs/browser-qa-v2.12/screenshots/01-ai-helper-concept-question.png",
+      "status": 200,
+      "bytes": 248917
+    },
+    {
+      "path": "docs/browser-qa-v2.12/screenshots/02-ai-helper-authorship-guard.png",
+      "status": 200,
+      "bytes": 220104
+    },
+    {
+      "path": "docs/browser-qa-v2.12/screenshots/03-ai-helper-mobile-360.png",
+      "status": 200,
+      "bytes": 64389
+    },
+    {
+      "path": "backend/openai-cloudflare-worker/worker.mjs",
+      "status": 200,
+      "bytes": 8121
+    },
+    {
+      "path": "pilot/v2.12/PILOT_FREEZE_MANIFEST_v2.12.json",
+      "status": 200,
+      "bytes": 15433
+    }
+  ],
+  "pilot_sessions_recorded": 0,
+  "pilot_readiness": "NOT YET GO until manual teacher, privacy, and AI-condition preflight requirements are completed",
+  "backend_boundary": "The package includes a frontend and backend contract plus an optional reference Cloudflare Worker. A live secure AI service is not deployed by this release.",
+  "validation_boundary": "Software/browser QA only. This is not educational validation, psychometric validation, WCAG certification, or real-student usability evidence."
+}

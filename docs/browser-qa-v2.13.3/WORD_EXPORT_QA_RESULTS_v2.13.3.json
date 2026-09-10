@@ -1,0 +1,43 @@
+{
+  "release": "v2.13.3",
+  "passed": 7,
+  "total": 7,
+  "checks": [
+    {
+      "name": "Student More menu identifies the notebook as a Word download",
+      "passed": true,
+      "detail": "Project options\n\nSecondary actions live here so the main workspace stays focused.\n\nClose\nDownload Word notebook\nDownload your current research notebook as a Microsoft Word-compatible .doc file.\nDownload backup\nCreate a full recovery copy before switching devices or making major changes.\nOpen My Research Snapshot\nSee your accumulated work in one organized view.\nStart a different project\nYour current project will stay only if you download a backup first.\nTeacher/setup tools are hidden in student mode.\nOpen this site with ?mode=teacher when teacher operations are needed."
+    },
+    {
+      "name": "Notebook download uses .doc extension",
+      "passed": true,
+      "detail": "research-notebook.doc"
+    },
+    {
+      "name": "Downloaded .doc contains Word-compatible document markup",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Downloaded Word notebook contains accumulated student work",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Downloaded Word notebook is not Markdown text",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Research Snapshot also downloads as .doc",
+      "passed": true,
+      "detail": "current-research-snapshot.doc"
+    },
+    {
+      "name": "No unexpected JavaScript page errors",
+      "passed": true,
+      "detail": "[]"
+    }
+  ],
+  "page_errors": []
+}

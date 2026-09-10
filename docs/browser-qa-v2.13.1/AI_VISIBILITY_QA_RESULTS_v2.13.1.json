@@ -1,0 +1,58 @@
+{
+  "release": "v2.13.1",
+  "passed": 10,
+  "total": 10,
+  "checks": [
+    {
+      "name": "Ask Research AI is visible before Stage 1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Launcher uses the full Ask Research AI label",
+      "passed": true,
+      "detail": "AI\nAsk Research AI"
+    },
+    {
+      "name": "AI conversation panel opens from welcome",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ask Research AI remains visible during Stage work",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Structured Help still includes Ask Research AI",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Ask Research AI remains visible above a major Lab modal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "AI panel can open while a Lab is still open",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile keeps the full Ask Research AI label",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile launcher is visible without page-level horizontal overflow",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No unexpected JavaScript page errors occurred",
+      "passed": true,
+      "detail": "[]"
+    }
+  ],
+  "page_errors": []
+}

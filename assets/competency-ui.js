@@ -62,7 +62,7 @@ window.RMSCompetencyUI = (() => {
     C.normalizeProject(p);
     const items=[
       ...p.competency.independentCheckpoints.map(x=>({...x,type:"Independent checkpoint",sort:x.time,levelText:x.level===null?"":`level ${x.level}`,detail:x.independentEligible?"Eligible independent evidence":`Captured after ${x.priorSupportCount} support event(s)`})),
-      ...p.competency.reviewEvents.map(x=>({...x,type:x.kind==="local"?"Local review":"AI review",sort:x.time,levelText:x.level===null?"":`level ${x.level}`,detail:x.score!==null?`${x.score}/100 · ${x.label}`:x.label})),
+      ...p.competency.reviewEvents.map(x=>({...x,type:x.kind==="local"?"Local review":"Chat review",sort:x.time,levelText:x.level===null?"":`level ${x.level}`,detail:x.score!==null?`${x.score}/100 · ${x.label}`:x.label})),
       ...p.competency.supportEvents.map(x=>({...x,type:"Support",sort:x.time,levelText:`L${x.level}`,detail:`${x.source}${x.detail?` · ${x.detail}`:""}`})),
       ...p.competency.teacherRatings.map(x=>({...x,type:"Teacher rating",sort:x.time,stage:"—",levelText:`${x.level}/3`,detail:`${C.model.competencies.find(c=>c.key===x.competency)?.name||x.competency}${x.note?` · ${x.note}`:""}`}))
     ].sort((a,b)=>new Date(b.sort)-new Date(a.sort));
@@ -92,7 +92,7 @@ window.RMSCompetencyUI = (() => {
     const rr=t=>{wrap.remove();open(p,save,t||active)};
     wrap.onclick=e=>{if(e.target===wrap)wrap.remove()};id("closeCompetency").onclick=()=>wrap.remove();
     document.querySelectorAll("[data-ctab]").forEach(b=>b.onclick=()=>rr(b.dataset.ctab));
-    id("exportCompetencyMD").onclick=()=>dl("research-competency-learning-evidence.md",C.reportMarkdown(p),"text/markdown");
+    id("exportCompetencyMD").onclick=()=>window.RMSWordExport.fromMarkdown("research-competency-learning-evidence.doc",C.reportMarkdown(p),"Research Competency Learning Evidence");
     id("exportCompetencyJSON").onclick=()=>dl("research-competency-learning-evidence.json",JSON.stringify({snapshot:C.snapshot(p),events:p.competency},null,2),"application/json");
   }
 

@@ -1,0 +1,19 @@
+item_id,requirement,status,evidence_or_file,owner,date_checked,notes
+PF-01,Frozen-file verification passes,PENDING,PILOT_FREEZE_MANIFEST_v2.13.2.json,,,
+PF-02,Teacher backup/restore rehearsal passes,PENDING,TEACHER_ROUNDTRIP_REHEARSAL_v2.13.2.md,,,
+PF-03,Teacher review packet round trip passes,PENDING,TEACHER_ROUNDTRIP_REHEARSAL_v2.13.2.md,,,
+PF-04,Privacy/consent/research-use decision is documented,PENDING,PRIVACY_CONSENT_RESEARCH_USE_CHECKLIST_v2.13.2.md,,,
+PF-05,Observer has reviewed neutral-prompt rules,PENDING,OBSERVER_GUIDE_v2.13.2.md,,,
+PF-06,Participant scenario/path selected,PENDING,scenario-cards/,,,
+PF-07,Participant-code scheme defined,PENDING,,,,
+PF-08,Data storage location and access defined,PENDING,,,,
+PF-09,No Blocker defects open,PENDING,PILOT_ISSUE_LOG.csv,,,
+PF-10,No Major defects open,PENDING,PILOT_ISSUE_LOG.csv,,,
+PF-11,Recovery procedure available during session,PENDING,TEACHER_ROUNDTRIP_REHEARSAL_v2.13.2.md,,,
+PF-12,Go/no-go decision signed,PENDING,GO_NO_GO_DECISION_LOG.csv,,,
+PF-13,AI helper condition selected: disabled or secure-approved-backend,PENDING,AI_HELPER_PILOT_POLICY_v2.13.2.md,,,
+PF-14,"If AI enabled, backend privacy/security/origin/rate-limit review passes",PENDING,AI_HELPER_PILOT_POLICY_v2.13.2.md,,,Mark PASS with 'AI disabled' when the pilot condition disables AI.
+PF-15,"If AI enabled, endpoint/model/prompt configuration frozen for the pilot wave",PENDING,AI_HELPER_PILOT_POLICY_v2.13.2.md,,,Mark PASS with 'AI disabled' when applicable.
+PF-16,Student mode verified: teacher/setup controls are not visible in the ordinary student workspace,PENDING,../../docs/UX_BROWSER_QA_v2.13.2.md,,,
+PF-17,"Target-device check confirms Route, Snapshot, Help, save status, and primary Stage action are usable",PENDING,STUDENT_FLOW_OBSERVATION_ADDENDUM_v2.13.2.md,,,
+PF-18,Teacher reviews v2.13.2 dependency-review behavior and understands that earlier changes preserve later work but can invalidate readiness,PENDING,STUDENT_FLOW_OBSERVATION_ADDENDUM_v2.13.2.md,,,

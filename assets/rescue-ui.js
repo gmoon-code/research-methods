@@ -87,14 +87,21 @@ window.RMSRescueUI=(()=>{
    };
  }
  function navigator(stage){
-   const p=ctx.project,fields=Object.values(R.model.fields).filter(x=>Number(x.stage)===Number(stage)).filter(x=>!Paths?.shouldShowField||Paths.shouldShowField(p,Object.keys(R.model.fields).find(k=>R.model.fields[k]===x),stage));
-   const entries=Object.entries(R.model.fields).filter(([k,x])=>Number(x.stage)===Number(stage)&&(!Paths?.shouldShowField||Paths.shouldShowField(p,k,stage)));
-   const wrap=document.createElement("div");wrap.className="modal-backdrop";wrap.id="rescueBackdrop";
-   const sum=R.stageSupportSummary(p,stage);
-   wrap.innerHTML=`<div class="modal rescue-modal rescue-navigator"><div class="journey-head"><div><div class="guide-kicker">No-dead-end help</div><h3>I’m stuck in Stage ${stage}</h3><p>Choose the exact decision that is stopping you. Help escalates only as far as you request it.</p></div><button class="ghost small" id="closeRescue">Close</button></div>
-     <div class="rescue-stage-summary"><span>Current path</span><b>${E(Paths?.selected?Paths.selected(p).name:"")}</b><span>Highest optional help used in this stage</span><b>L${sum.maxLevel||0}</b></div>
-     <div class="rescue-field-list">${entries.map(([k,x])=>{const val=String(p.data?.[k]??"").trim(),lv=R.maxFieldLevel(p,stage,k);return `<button data-rescue-field="${k}"><div><b>${E(Paths?.label?Paths.label(p,k,x.label):x.label)}</b><small>${val?"Has a current response":"Blank"} · help L${lv}</small></div><span>Open help →</span></button>`}).join("")}</div>
-     <div class="rescue-integrity"><b>If you cannot even start</b><p>That is allowed. Open the field and request Level 1. The system records that the field was blank when you requested help, then gives progressively stronger support.</p></div>
+   const p=ctx.project,allEntries=Object.entries(R.model.fields).filter(([k,x])=>Number(x.stage)===Number(stage)&&(!Paths?.shouldShowField||Paths.shouldShowField(p,k,stage)));
+   let currentKeys=[];
+   try{
+     const s=window.RMSCurriculum.stages.find(x=>Number(x.id)===Number(stage)),secs=(s.sections||[]).map(sec=>({...sec,fields:sec.fields.filter(f=>!Paths?.shouldShowField||Paths.shouldShowField(p,f[0],stage))})).filter(sec=>sec.fields.length);
+     const idx=window.RMSStudentFlow?.sectionIndex?.(p,stage,secs.length)||0;
+     currentKeys=(secs[idx]?.fields||[]).map(f=>f[0]);
+   }catch{}
+   const current=allEntries.filter(([k])=>currentKeys.includes(k)),other=allEntries.filter(([k])=>!currentKeys.includes(k));
+   const renderEntries=entries=>entries.map(([k,x])=>{const val=String(p.data?.[k]??"").trim(),lv=R.maxFieldLevel(p,stage,k);return `<button data-rescue-field="${k}"><div><b>${E(Paths?.label?Paths.label(p,k,x.label):x.label)}</b><small>${val?"Has a current response":"Blank"} · help L${lv}</small></div><span>Open help →</span></button>`}).join("");
+   const wrap=document.createElement("div");wrap.className="modal-backdrop";wrap.id="rescueBackdrop",sum=R.stageSupportSummary(p,stage);
+   wrap.innerHTML=`<div class="modal rescue-modal rescue-navigator"><div class="journey-head"><div><div class="guide-kicker">No-dead-end help</div><h3>What are you stuck on?</h3><p>Start with the part you are working on now. Help becomes more direct only when you request another level.</p></div><button class="ghost small" id="closeRescue">Close</button></div>
+     <div class="rescue-stage-summary"><span>Stage</span><b>${stage}</b><span>Highest optional help used here</span><b>L${sum.maxLevel||0}</b></div>
+     <h4>Current part of this stage</h4><div class="rescue-field-list">${renderEntries(current.length?current:allEntries.slice(0,4))}</div>
+     ${other.length?`<details class="other-stage-help"><summary>Other fields in Stage ${stage}</summary><div class="rescue-field-list">${renderEntries(other)}</div></details>`:""}
+     <div class="rescue-integrity"><b>If you cannot even start</b><p>That is okay. Open the field and begin at Level 1. Your blank or original attempt is preserved before stronger support appears.</p></div>
    </div>`;
    document.body.appendChild(wrap);id("closeRescue").onclick=close;wrap.onclick=e=>{if(e.target===wrap)close()};
    document.querySelectorAll("[data-rescue-field]").forEach(b=>b.onclick=()=>{const k=b.dataset.rescueField;close();fieldModal(stage,k)});

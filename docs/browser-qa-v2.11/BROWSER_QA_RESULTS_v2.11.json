@@ -1,0 +1,103 @@
+{
+  "release": "v2.11",
+  "checks": [
+    {
+      "name": "Initial app renders without page errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "My Research Snapshot is a top-level tool",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Stage field shows expected response length before typing",
+      "passed": true,
+      "detail": "Typical working response\nexactly 3 short topic areas \u00b7 about 3\u201315 words total\n0 words currently"
+    },
+    {
+      "name": "Live response word count updates",
+      "passed": true,
+      "detail": "Typical working response\nexactly 3 short topic areas \u00b7 about 3\u201315 words total\n7 words currently"
+    },
+    {
+      "name": "Field guidance includes explicit amount-to-write guidance",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Field guidance contrasts too-vague and good responses",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Field guidance gives an actual concrete example",
+      "passed": true,
+      "detail": "Need help with \u201cThree science or research areas I enjoy\u201d?\nHow much should I write?\n\nexactly 3 short topic areas. A typical working response is about 3\u201315 words total.\n\nThis is a working range, not a grading rule. Write enough to make the research decision clear and specific.\nToo vague\n\nScience, biology, and other things.\n\nGood working response\n\nPlant physiology; human memory and learning; freshwater ecosystem health.\n\nThis is a model from another research context. Use the level of specificity, n"
+    },
+    {
+      "name": "Current context strip shows the accumulated research question",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Full snapshot contains the research question entered in Stage 4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Full snapshot contains earlier Stage 1 work",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Full snapshot is organized into the five research phases",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Snapshot provides at-a-glance research chain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Snapshot explains that it updates from the notebook",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Snapshot has no desktop horizontal overflow",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "Snapshot can jump directly back to a source stage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Mobile top tools still expose My Research Snapshot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Full snapshot has no 360px horizontal page overflow",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "High-risk guidance includes a fuller detailed model",
+      "passed": true,
+      "detail": "Need help with \u201cAt least two limitations and exactly how each restricts claims\u201d?\nHow much should I write?\n\n2\u20134 focused sentences. A typical working response is about 40\u2013120 words.\n\nThis is a working range, not a grading rule. Write enough to make the research decision clear and specific.\nToo vague\n\nThe sample was small.\n\nGood working response\n\nSelf-reported sleep may contain measurement error, limiting precision of the estimated association; one-class convenience sample limits generalization.\n\nT"
+    }
+  ],
+  "page_errors": [],
+  "console_errors": [],
+  "screenshots": [
+    "screenshots/03-response-example-guidance.png",
+    "screenshots/01-full-research-snapshot-desktop.png",
+    "screenshots/02-full-research-snapshot-mobile-360.png"
+  ],
+  "passed": true
+}

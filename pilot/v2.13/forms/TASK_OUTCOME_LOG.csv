@@ -1,0 +1,2 @@
+session_id,task_id,stage,path,task_start,first_meaningful_action,first_built_in_help,first_observer_prompt,task_end,completion_category,navigation_reversals,term_clarifications,built_in_help_max_level,observer_help_max_level,participant_confidence_1_5,notes
+,,,,,,,,,,0,0,0,0,,

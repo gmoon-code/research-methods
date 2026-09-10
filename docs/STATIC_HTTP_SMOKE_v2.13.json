@@ -1,0 +1,123 @@
+{
+  "release": "v2.13",
+  "scope": "final release tree",
+  "passed": 23,
+  "total": 23,
+  "results": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 8859
+    },
+    {
+      "path": "404.html",
+      "status": 200,
+      "bytes": 115
+    },
+    {
+      "path": "README.md",
+      "status": 200,
+      "bytes": 7506
+    },
+    {
+      "path": "START_HERE.md",
+      "status": 200,
+      "bytes": 15516
+    },
+    {
+      "path": "assets/style.css",
+      "status": 200,
+      "bytes": 108379
+    },
+    {
+      "path": "assets/app.js",
+      "status": 200,
+      "bytes": 119580
+    },
+    {
+      "path": "assets/student-flow.js",
+      "status": 200,
+      "bytes": 22317
+    },
+    {
+      "path": "assets/student-flow-ui.js",
+      "status": 200,
+      "bytes": 10573
+    },
+    {
+      "path": "assets/student-help-ui.js",
+      "status": 200,
+      "bytes": 5110
+    },
+    {
+      "path": "assets/pathway-ui.js",
+      "status": 200,
+      "bytes": 6240
+    },
+    {
+      "path": "assets/data-lab-ui.js",
+      "status": 200,
+      "bytes": 18400
+    },
+    {
+      "path": "assets/writing-lab-ui.js",
+      "status": 200,
+      "bytes": 13780
+    },
+    {
+      "path": "assets/research-snapshot.js",
+      "status": 200,
+      "bytes": 12892
+    },
+    {
+      "path": "assets/research-snapshot-ui.js",
+      "status": 200,
+      "bytes": 15214
+    },
+    {
+      "path": "assets/ai-helper-ui.js",
+      "status": 200,
+      "bytes": 12088
+    },
+    {
+      "path": "assets/accessibility.js",
+      "status": 200,
+      "bytes": 8141
+    },
+    {
+      "path": "docs/RELEASE_AUDIT_v2.13.md",
+      "status": 200,
+      "bytes": 7395
+    },
+    {
+      "path": "docs/TEST_REPORT_v2.13.json",
+      "status": 200,
+      "bytes": 1907
+    },
+    {
+      "path": "docs/UX_BROWSER_QA_v2.13.md",
+      "status": 200,
+      "bytes": 2965
+    },
+    {
+      "path": "docs/browser-qa-v2.13/BROWSER_QA_RESULTS_v2.13.json",
+      "status": 200,
+      "bytes": 11761
+    },
+    {
+      "path": "pilot/INSTRUCTIONAL_BASELINE_MANIFEST_v2.13.json",
+      "status": 200,
+      "bytes": 13895
+    },
+    {
+      "path": "pilot/v2.13/PILOT_FREEZE_MANIFEST_v2.13.json",
+      "status": 200,
+      "bytes": 15812
+    },
+    {
+      "path": "pilot/v2.13/scripts/verify_pilot_freeze.py",
+      "status": 200,
+      "bytes": 790
+    }
+  ]
+}

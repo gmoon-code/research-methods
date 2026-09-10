@@ -1,0 +1,235 @@
+{
+  "release": "v2.13.3",
+  "passed": 38,
+  "total": 38,
+  "results": [
+    {
+      "test": "ai-adapter.test.js",
+      "passed": true,
+      "stdout": "PASS AI adapter config",
+      "stderr": ""
+    },
+    {
+      "test": "ai-helper-v212.test.js",
+      "passed": true,
+      "stdout": "PASS v2.12 AI helper context, authorship guard metadata, history, and context minimization",
+      "stderr": ""
+    },
+    {
+      "test": "analytics.test.js",
+      "passed": true,
+      "stdout": "PASS statistics engine",
+      "stderr": ""
+    },
+    {
+      "test": "coach.test.js",
+      "passed": true,
+      "stdout": "PASS association design\nPASS randomized manipulation\nPASS nonrandom manipulation\nPASS qualitative\nPASS boolean AND\nPASS boolean OR\nPASS causal mismatch detected\nPASS sleep risk",
+      "stderr": ""
+    },
+    {
+      "test": "competencies.test.js",
+      "passed": true,
+      "stdout": "PASS competency analytics engine",
+      "stderr": ""
+    },
+    {
+      "test": "e2e-pilot-simulations.test.js",
+      "passed": true,
+      "stdout": "PASS end-to-end pathway simulations",
+      "stderr": ""
+    },
+    {
+      "test": "exemplar-v28.test.js",
+      "passed": true,
+      "stdout": "PASS v2.8 multi-path exemplar engine",
+      "stderr": ""
+    },
+    {
+      "test": "full-path-rc1.test.js",
+      "passed": true,
+      "stdout": "PASS RC1 full-path student/teacher simulation",
+      "stderr": ""
+    },
+    {
+      "test": "journey-upsert-rc1.test.js",
+      "passed": true,
+      "stdout": "PASS teacher packet upsert",
+      "stderr": ""
+    },
+    {
+      "test": "journey.test.js",
+      "passed": true,
+      "stdout": "PASS journey and teacher packet engine",
+      "stderr": ""
+    },
+    {
+      "test": "literature.test.js",
+      "passed": true,
+      "stdout": "PASS literature workspace engine",
+      "stderr": ""
+    },
+    {
+      "test": "methods.test.js",
+      "passed": true,
+      "stdout": "PASS methods lab engine",
+      "stderr": ""
+    },
+    {
+      "test": "novice-friction-v26.test.js",
+      "passed": true,
+      "stdout": "PASS v2.6 novice friction guard",
+      "stderr": ""
+    },
+    {
+      "test": "novice-guidance-v22.test.js",
+      "passed": true,
+      "stdout": "PASS v2.2 novice guidance model",
+      "stderr": ""
+    },
+    {
+      "test": "path-change-v24.test.js",
+      "passed": true,
+      "stdout": "PASS path-change readiness invalidation",
+      "stderr": ""
+    },
+    {
+      "test": "path-coach-v24.test.js",
+      "passed": true,
+      "stdout": "PASS pathway-specific coach",
+      "stderr": ""
+    },
+    {
+      "test": "pathways-v23.test.js",
+      "passed": true,
+      "stdout": "PASS guided pathway engine",
+      "stderr": ""
+    },
+    {
+      "test": "pilot-rc1.test.js",
+      "passed": true,
+      "stdout": "PASS RC1 pilot hardening",
+      "stderr": ""
+    },
+    {
+      "test": "pilot.test.js",
+      "passed": true,
+      "stdout": "PASS pilot recovery/readiness engine",
+      "stderr": ""
+    },
+    {
+      "test": "rescue-v25.test.js",
+      "passed": true,
+      "stdout": "PASS v2.5 progressive rescue state and logging",
+      "stderr": ""
+    },
+    {
+      "test": "response-examples-v211.test.js",
+      "passed": true,
+      "stdout": "PASS v2.11 response-example coverage and depth",
+      "stderr": ""
+    },
+    {
+      "test": "single-source-v213.test.js",
+      "passed": true,
+      "stdout": "PASS v2.13 Stage/Lab canonical value synchronization",
+      "stderr": ""
+    },
+    {
+      "test": "snapshot-v211.test.js",
+      "passed": true,
+      "stdout": "PASS v2.11 current research snapshot engine",
+      "stderr": ""
+    },
+    {
+      "test": "static-pilot-qa.test.js",
+      "passed": true,
+      "stdout": "PASS static accessibility/recovery QA",
+      "stderr": ""
+    },
+    {
+      "test": "storage-unavailable-rc1.test.js",
+      "passed": true,
+      "stdout": "PASS storage-unavailable resilience",
+      "stderr": ""
+    },
+    {
+      "test": "student-flow-v213.test.js",
+      "passed": true,
+      "stdout": "PASS v2.13 route, continuity, dependency review, and single-source-of-truth flow engine",
+      "stderr": ""
+    },
+    {
+      "test": "student-guidance.test.js",
+      "passed": true,
+      "stdout": "PASS student guidance coverage",
+      "stderr": ""
+    },
+    {
+      "test": "transfer.test.js",
+      "passed": true,
+      "stdout": "PASS transfer and agreement engine",
+      "stderr": ""
+    },
+    {
+      "test": "writing.test.js",
+      "passed": true,
+      "stdout": "PASS writing lab engine",
+      "stderr": ""
+    },
+    {
+      "test": "core-integrity-v213.py",
+      "passed": true,
+      "stdout": "PASS v2.13 inherited substantive research/instruction engines unchanged: 22 files",
+      "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/generated/interface/models.py\", line 32317, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document."
+    },
+    {
+      "test": "exemplar-data-v28.py",
+      "passed": true,
+      "stdout": "PASS v2.8 exemplar evidence packs",
+      "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/generated/interface/models.py\", line 32317, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document."
+    },
+    {
+      "test": "exemplar-script-order-v28.py",
+      "passed": true,
+      "stdout": "PASS v2.8 exemplar script order",
+      "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/generated/interface/models.py\", line 32317, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document."
+    },
+    {
+      "test": "exemplar-source-v28.py",
+      "passed": true,
+      "stdout": "PASS v2.8 verified-source registry integrity",
+      "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/generated/interface/models.py\", line 32317, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document."
+    },
+    {
+      "test": "novice-friction-v26-static.py",
+      "passed": true,
+      "stdout": "PASS v2.6 novice friction static integration",
+      "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/generated/interface/models.py\", line 32317, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document."
+    },
+    {
+      "test": "path-coach-v24-static.py",
+      "passed": true,
+      "stdout": "PASS v2.4 static integration",
+      "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/generated/interface/models.py\", line 32317, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document."
+    },
+    {
+      "test": "script-order-v25.py",
+      "passed": true,
+      "stdout": "PASS browser dependency script order",
+      "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/generated/interface/models.py\", line 32317, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document."
+    },
+    {
+      "test": "student-flow-static-v2132.py",
+      "passed": true,
+      "stdout": "PASS v2.13.2 student-shell, progressive-disclosure, route, help, lab, and storage static integration",
+      "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/generated/interface/models.py\", line 32317, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document."
+    },
+    {
+      "test": "current-release-v2133.py",
+      "passed": true,
+      "stdout": "PASS v2.13.3 Word .doc export, baseline, and student-shell integration",
+      "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/generated/interface/models.py\", line 32317, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.L2TH2Y5coc/artifact_tool_v2-2.8.22/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document."
+    }
+  ]
+}

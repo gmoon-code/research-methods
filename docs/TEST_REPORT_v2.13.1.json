@@ -1,0 +1,15 @@
+{
+  "release": "v2.13.1",
+  "status": "PASS_AI_VISIBILITY_PATCH",
+  "browser_qa": {
+    "passed": 10,
+    "total": 10,
+    "page_errors": []
+  },
+  "unchanged_core_files_verified": 29,
+  "syntax_checks": "PASS",
+  "instructional_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.13.1",
+  "baseline_digest": "8c9ae051927b378f8583cce8c8beecd7085d8e37c8bd82541757caf1a91c5cee",
+  "pilot_freeze_digest": "5f395e07b6aae6b4692332ab09ebff561d86868fe6ea7dd368024a3ed9e63e16",
+  "pilot_readiness": "NOT_YET_GO"
+}

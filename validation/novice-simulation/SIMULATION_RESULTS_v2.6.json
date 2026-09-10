@@ -148,8 +148,8 @@
     "early_escalation_blocked": true,
     "no_rationale_blocked": true,
     "first_attempt": {
-      "id": "FA-mtqof74h-11pp4",
-      "time": "2026-09-07T03:23:58.289Z",
+      "id": "FA-mts1xbe1-53mxw",
+      "time": "2026-09-08T02:29:44.810Z",
       "stage": 14,
       "key": "analysisChoice",
       "value": "idk",
@@ -157,8 +157,8 @@
       "researchPath": "qualitative"
     },
     "supported_revision": {
-      "id": "FR-mtqof74h-hf5s0",
-      "time": "2026-09-07T03:23:58.289Z",
+      "id": "FR-mts1xbe2-zk0th",
+      "time": "2026-09-08T02:29:44.810Z",
       "stage": 14,
       "key": "analysisChoice",
       "before": "idk",

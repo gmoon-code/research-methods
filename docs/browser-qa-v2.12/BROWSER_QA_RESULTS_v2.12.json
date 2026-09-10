@@ -1,0 +1,383 @@
+{
+  "release": "v2.12",
+  "checks": [
+    {
+      "name": "App renders with no initial JavaScript page error",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Persistent Ask Research AI launcher is visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Launcher is available before any particular stage tool is opened",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Chat panel identifies itself as available across the research process",
+      "passed": true,
+      "detail": "ALWAYS AVAILABLE RESEARCH HELP\nAsk Research AI\nAI connected\nClose\nUse my current project context\nStage 1 \u00b7 Find your research interests\nExplain this stage\nHelp with this field\nCheck my thinking\nSummarize my project\nWhy I am still deciding?\nAI\nAsk about anything in your research process\n\nI can explain research terms, clarify what a stage or field means, compare methods, help you understand warnings, discuss your current project decisions, and help you reason through something you are stuck on.\n\nI"
+    },
+    {
+      "name": "Chat panel provides project-context toggle",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Chat panel displays privacy warning",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "AI helper renders a direct concept clarification",
+      "passed": true,
+      "detail": "You\n02:29 AM\n\nWhat is an experimental unit?\n\nResearch AI\nScaffold L1\n\nAn experimental unit is the smallest unit that can be independently assigned to a treatment condition. For example, if an entire Petri dish receives one salt concentration, the dish is the experimental unit even when several seeds are measured inside it."
+    },
+    {
+      "name": "General clarification is labelled without a stage-support penalty",
+      "passed": true,
+      "detail": "You\n02:29 AM\n\nWhat is an experimental unit?\n\nResearch AI\nScaffold L1\n\nAn experimental unit is the smallest unit that can be independently assigned to a treatment condition. For example, if an entire Petri dish receives one salt concentration, the dish is the experimental unit even when several seeds are measured inside it."
+    },
+    {
+      "name": "General clarification did not create a competency support event",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "Helper request sends the current stage and path",
+      "passed": true,
+      "detail": {
+        "stage": {
+          "id": 1,
+          "title": "Find your research interests"
+        },
+        "research_path": {
+          "id": "unsure",
+          "name": "I am still deciding"
+        },
+        "current_field": {
+          "key": "projectContext",
+          "label": "Course or context",
+          "type": "input",
+          "value": "",
+          "has_attempt": false,
+          "stage_id": 1,
+          "origin": "workspace_control"
+        },
+        "current_stage_fields": [
+          {
+            "key": "interest1",
+            "label": "Three science or research areas I enjoy",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          },
+          {
+            "key": "problem1",
+            "label": "A problem or pattern I have noticed",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          },
+          {
+            "key": "claim1",
+            "label": "A claim I would like to investigate",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          },
+          {
+            "key": "access1",
+            "label": "Resources, settings, people, organisms, tools, or datasets I can realistically access",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          },
+          {
+            "key": "ideaA",
+            "label": "Possible direction A",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          },
+          {
+            "key": "ideaB",
+            "label": "Possible direction B",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          },
+          {
+            "key": "ideaC",
+            "label": "Possible direction C",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          }
+        ],
+        "accumulated_research_chain": [
+          {
+            "label": "Research path",
+            "value": "I am still deciding",
+            "stage": 4
+          }
+        ],
+        "literature_sources": [],
+        "analysis_context": {},
+        "writing_context": [],
+        "deterministic_flags": [
+          {
+            "level": "warn",
+            "title": "Generate alternatives",
+            "body": "Researchers make better topic decisions when they compare several possible directions."
+          },
+          {
+            "level": "warn",
+            "title": "Evidence access is missing",
+            "body": "A topic can be interesting and still be impossible to investigate in your setting."
+          },
+          {
+            "level": "info",
+            "title": "Broaden the interest inventory",
+            "body": "Try more than one way of entering a topic: curiosity, observed problem, disputed claim, or unexplained pattern."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Helper request does not send raw datasets by default",
+      "passed": true,
+      "detail": {
+        "stage": {
+          "id": 1,
+          "title": "Find your research interests"
+        },
+        "research_path": {
+          "id": "unsure",
+          "name": "I am still deciding"
+        },
+        "current_field": {
+          "key": "projectContext",
+          "label": "Course or context",
+          "type": "input",
+          "value": "",
+          "has_attempt": false,
+          "stage_id": 1,
+          "origin": "workspace_control"
+        },
+        "current_stage_fields": [
+          {
+            "key": "interest1",
+            "label": "Three science or research areas I enjoy",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          },
+          {
+            "key": "problem1",
+            "label": "A problem or pattern I have noticed",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          },
+          {
+            "key": "claim1",
+            "label": "A claim I would like to investigate",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          },
+          {
+            "key": "access1",
+            "label": "Resources, settings, people, organisms, tools, or datasets I can realistically access",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          },
+          {
+            "key": "ideaA",
+            "label": "Possible direction A",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          },
+          {
+            "key": "ideaB",
+            "label": "Possible direction B",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          },
+          {
+            "key": "ideaC",
+            "label": "Possible direction C",
+            "type": "textarea",
+            "value": "",
+            "has_attempt": false
+          }
+        ],
+        "accumulated_research_chain": [
+          {
+            "label": "Research path",
+            "value": "I am still deciding",
+            "stage": 4
+          }
+        ],
+        "literature_sources": [],
+        "analysis_context": {},
+        "writing_context": [],
+        "deterministic_flags": [
+          {
+            "level": "warn",
+            "title": "Generate alternatives",
+            "body": "Researchers make better topic decisions when they compare several possible directions."
+          },
+          {
+            "level": "warn",
+            "title": "Evidence access is missing",
+            "body": "A topic can be interesting and still be impossible to investigate in your setting."
+          },
+          {
+            "level": "info",
+            "title": "Broaden the interest inventory",
+            "body": "Try more than one way of entering a topic: curiosity, observed problem, disputed claim, or unexplained pattern."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Field-aware quick help appears after focusing a notebook field",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Unfinished decision triggers guided reasoning rather than a completed answer",
+      "passed": true,
+      "detail": "You\n02:29 AM\n\nWhat is an experimental unit?\n\nResearch AI\nScaffold L1\n\nAn experimental unit is the smallest unit that can be independently assigned to a treatment condition. For example, if an entire Petri dish receives one salt concentration, the dish is the experimental unit even when several seeds are measured inside it.\n\nYou\n02:29 AM\n\nWrite my research question for me.\n\nResearch AI\nScaffold L2 \u00b7 stage support\n\nI can help you build it without choosing it for you. Tell me the two variables you want to relate and exactly which students your question is about.\n\nQuestions for you\nWhat is the measured predictor?\nWhat is the outcome?\nWhich students are in scope?\nWhy I did not write the answer for you\n\nYour current research-question field is still unfinished, so a completed question would replace the decision you are meant to make."
+    },
+    {
+      "name": "Authorship guard explains why the direct answer was withheld",
+      "passed": true,
+      "detail": "You\n02:29 AM\n\nWhat is an experimental unit?\n\nResearch AI\nScaffold L1\n\nAn experimental unit is the smallest unit that can be independently assigned to a treatment condition. For example, if an entire Petri dish receives one salt concentration, the dish is the experimental unit even when several seeds are measured inside it.\n\nYou\n02:29 AM\n\nWrite my research question for me.\n\nResearch AI\nScaffold L2 \u00b7 stage support\n\nI can help you build it without choosing it for you. Tell me the two variables you want to relate and exactly which students your question is about.\n\nQuestions for you\nWhat is the measured predictor?\nWhat is the outcome?\nWhich students are in scope?\nWhy I did not write the answer for you\n\nYour current research-question field is still unfinished, so a completed question would replace the decision you are meant to make."
+    },
+    {
+      "name": "Guided research-decision help is visibly logged as stage support",
+      "passed": true,
+      "detail": "You\n02:29 AM\n\nWhat is an experimental unit?\n\nResearch AI\nScaffold L1\n\nAn experimental unit is the smallest unit that can be independently assigned to a treatment condition. For example, if an entire Petri dish receives one salt concentration, the dish is the experimental unit even when several seeds are measured inside it.\n\nYou\n02:29 AM\n\nWrite my research question for me.\n\nResearch AI\nScaffold L2 \u00b7 stage support\n\nI can help you build it without choosing it for you. Tell me the two variables you want to relate and exactly which students your question is about.\n\nQuestions for you\nWhat is the measured predictor?\nWhat is the outcome?\nWhich students are in scope?\nWhy I did not write the answer for you\n\nYour current research-question field is still unfinished, so a completed question would replace the decision you are meant to make."
+    },
+    {
+      "name": "Guided decision help records the returned scaffold level in competency analytics",
+      "passed": true,
+      "detail": [
+        [
+          4,
+          2,
+          "Ask Research AI",
+          "Conversational AI help \u00b7 guided_reasoning"
+        ]
+      ]
+    },
+    {
+      "name": "Question about 'this field' includes the focused field and empty-attempt status",
+      "passed": true,
+      "detail": {
+        "key": "finalRQ",
+        "label": "Working research question",
+        "type": "textarea",
+        "value": "",
+        "has_attempt": false,
+        "stage_id": 4,
+        "origin": "stage_notebook"
+      }
+    },
+    {
+      "name": "Project-aware chat receives accumulated research context",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Direct-completion guard policy is sent to the backend",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Student can disable accumulated project context for a question",
+      "passed": true,
+      "detail": {
+        "stage": {
+          "id": 4,
+          "title": "Write and refine the research question"
+        },
+        "research_path": {
+          "id": "unsure",
+          "name": "I am still deciding"
+        },
+        "current_field": {
+          "key": "finalRQ",
+          "label": "Working research question",
+          "type": "textarea",
+          "value": "",
+          "has_attempt": false,
+          "stage_id": 4,
+          "origin": "stage_notebook"
+        }
+      }
+    },
+    {
+      "name": "Context-off request still includes stage/path and current field",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Conversation persists across stage navigation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Chat header updates to the new current stage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Chatbot remains available on a 360px mobile viewport",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Open mobile chatbot does not create page-level horizontal overflow",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "Ask Research AI launcher remains clickable above a major lab modal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Chatbot opens while the Methods Lab remains open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Escape closes the chatbot without closing the underlying lab",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Disconnected chatbot explains that a secure server-side endpoint is required",
+      "passed": true,
+      "detail": "ALWAYS AVAILABLE RESEARCH HELP\nAsk Research AI\nAI helper not connected\nClose\nUse my current project context\nStage 10 \u00b7 Define hypotheses, variables, controls, and experimental units\nAI helper not connected\n\nA teacher or administrator must configure a secure server-side AI endpoint.\n\nOpen AI settings\nExplain this stage\nHelp with this field\nCheck my thinking\nSummarize my project\nWhy I am still deciding?\nYou\n02:29 AM\n\nWhat is an experimental unit?\n\nResearch AI\nScaffold L1\n\nAn experimental unit is the smallest unit that can be independently assigned to a treatment condition. For example, if an entire Petri dish receives one salt concentration, the dish is the experimental unit even when several seeds are measured inside it.\n\nYou\n02:29 AM\n\nWrite my research question for me.\n\nResearch AI\nScaffold L2 \u00b7 stage support\n\nI can help you build it without choosing it for you. Tell me the two variables you want to relate and exactly which students your question is about.\n\nQuestions for you\nWhat is the measured predictor?\nWhat is the outcome?\nWhich students are in scope?\nWhy I did not write the answer for you\n\nYour current research-question field is still unfinished, so a completed question would replace the decision you are meant to make.\n\nYou\n02:29 AM\n\nWhat does correlation mean?\n\nResearch AI\nScaffold L1\n\nAn experimental unit is the smallest unit that can be independently assigned to a treatment condition. For example, if an entire Petri dish receives one salt concentration, the dish is the experimental unit even when several seeds are measured inside it.\n\nAsk Research AI a question\nDo not enter student names or unnecessary private information.\nClear chat\nAsk"
+    }
+  ],
+  "page_errors": [],
+  "console_errors": [],
+  "screenshots": [
+    "screenshots/01-ai-helper-concept-question.png",
+    "screenshots/02-ai-helper-authorship-guard.png",
+    "screenshots/03-ai-helper-mobile-360.png"
+  ],
+  "passed": true
+}

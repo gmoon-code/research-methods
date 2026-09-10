@@ -1,0 +1,53 @@
+{
+  "release": "v2.13.2",
+  "passed": 9,
+  "total": 9,
+  "checks": [
+    {
+      "name": "Welcome launcher is named Research Chat",
+      "passed": true,
+      "detail": "Chat\nResearch Chat"
+    },
+    {
+      "name": "Opened panel is branded as research chat",
+      "passed": true,
+      "detail": "ALWAYS AVAILABLE RESEARCH CHAT\nResearch Chat\nResearch Chat is unavailable right now\nClose\nUse my current project context\nStage 1 \u00b7 Find your research interests\nPrivacy\nYour question and recent Research Chat messages go to the secure class Chat service. Relevant project responses are included only while Use my current project context is on. Raw datasets and obvious identifying fields are excluded before sending.\nResearch Chat is unavailable right now\n\nYou can still use field examples, Help, Resea"
+    },
+    {
+      "name": "Opened panel does not present itself as Research AI",
+      "passed": true,
+      "detail": "ALWAYS AVAILABLE RESEARCH CHAT\nResearch Chat\nResearch Chat is unavailable right now\nClose\nUse my current project context\nStage 1 \u00b7 Find your research interests\nPrivacy\nYour question and recent Research Chat messages go to the secure class Chat service. Relevant project responses are included only while Use my current project context is on. Raw datasets and obvious identifying fields are excluded before sending.\nResearch Chat is unavailable right now\n\nYou can still use field examples, Help, Resea"
+    },
+    {
+      "name": "Stage launcher remains Research Chat",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Structured Help names the conversational option Research Chat",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Research Chat remains visible over a Lab",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile keeps full Research Chat label",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Mobile has no page-level horizontal overflow",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No unexpected page errors",
+      "passed": true,
+      "detail": "[]"
+    }
+  ],
+  "page_errors": []
+}

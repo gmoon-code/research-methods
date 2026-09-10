@@ -1,0 +1,77 @@
+{
+  "release": "v2.13.3",
+  "passed": 14,
+  "total": 14,
+  "results": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 8922
+    },
+    {
+      "path": "404.html",
+      "status": 200,
+      "bytes": 115
+    },
+    {
+      "path": ".nojekyll",
+      "status": 200,
+      "bytes": 0
+    },
+    {
+      "path": "README.md",
+      "status": 200,
+      "bytes": 8859
+    },
+    {
+      "path": "START_HERE.md",
+      "status": 200,
+      "bytes": 16836
+    },
+    {
+      "path": "assets/app.js",
+      "status": 200,
+      "bytes": 119741
+    },
+    {
+      "path": "assets/word-export.js",
+      "status": 200,
+      "bytes": 4956
+    },
+    {
+      "path": "assets/student-flow-ui.js",
+      "status": 200,
+      "bytes": 10609
+    },
+    {
+      "path": "assets/research-snapshot-ui.js",
+      "status": 200,
+      "bytes": 15044
+    },
+    {
+      "path": "assets/writing-lab-ui.js",
+      "status": 200,
+      "bytes": 13932
+    },
+    {
+      "path": "assets/data-lab-ui.js",
+      "status": 200,
+      "bytes": 18441
+    },
+    {
+      "path": "docs/browser-qa-v2.13.3/WORD_EXPORT_QA_RESULTS_v2.13.3.json",
+      "status": 200,
+      "bytes": 1570
+    },
+    {
+      "path": "pilot/INSTRUCTIONAL_BASELINE_MANIFEST_v2.13.3.json",
+      "status": 200,
+      "bytes": 14005
+    },
+    {
+      "path": "pilot/v2.13.3/PILOT_FREEZE_MANIFEST_v2.13.3.json",
+      "status": 200,
+      "bytes": 15885
+    }
+  ]
+}

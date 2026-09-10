@@ -1,0 +1,110 @@
+{
+  "baseline_id": "RMS-INSTRUCTIONAL-BASELINE-v2.11",
+  "files": [
+    {
+      "path": "assets/coach.js",
+      "sha256": "08e7e7e6e11de94871515b7989cab252d63714f0923ab115c9b0c48338e212a4"
+    },
+    {
+      "path": "assets/methods.js",
+      "sha256": "0c21c353f30eae947a71063d256071c177d4d7f72791ce505ca95031a6bf70ea"
+    },
+    {
+      "path": "assets/analytics.js",
+      "sha256": "e7a47ce09a4ef5e0d799f2046eb9bc6189d78268360cd6d2d546e9efc522d137"
+    },
+    {
+      "path": "assets/literature.js",
+      "sha256": "f3834b7147cf3404e935d20ee79c76e2822a0012a65db03f987e49c8b33b4fae"
+    },
+    {
+      "path": "assets/writing.js",
+      "sha256": "35df891b59b96a880aff2a23acdb82f9cf0fba9517303f8e547b23259dbdac22"
+    },
+    {
+      "path": "assets/transfer.js",
+      "sha256": "a0fd075c32f6762cfe3377efbaff696c46a734e4fea9f5d10ac726e9d9f85a3e"
+    },
+    {
+      "path": "assets/competencies.js",
+      "sha256": "c984c5a5eb6a6070a6ba9da844d961d0e53b2bdf5471e14619aef8101abf6b0b"
+    },
+    {
+      "path": "assets/curriculum.js",
+      "sha256": "e1848aa45ae26dea86dbf21a842280a05c57c689bacc90568551b2c2a2c2ca05"
+    },
+    {
+      "path": "assets/pathways.js",
+      "sha256": "7b177a86d823c46a05be9835887394b8cabc0ba0cb2d66b8b5ca6079e16c6d93"
+    },
+    {
+      "path": "assets/path-coach.js",
+      "sha256": "b9b0b848017396e7384b4883d9c26c8a0196eb6c62b55c06e8cc49527d665a87"
+    },
+    {
+      "path": "assets/rescue.js",
+      "sha256": "309675815b12efd2f62e5ebbad1c05b6b1715d0deb8603a66f347b62cf47b662"
+    },
+    {
+      "path": "assets/rescue-model.js",
+      "sha256": "61cbd6e0a934f892c0a6a9833bc59ac0a20384905a5c2d90c8067095068e1aa9"
+    },
+    {
+      "path": "assets/novice-friction.js",
+      "sha256": "8cbb0c6ed48aecad29d181f1e857714ef0b11f9a475d99d6aedb9e537932bdb2"
+    },
+    {
+      "path": "assets/exemplar-projects.js",
+      "sha256": "184d547a9bb0446287e3c34440d683b11b55e7911a7d77784d37ee7b34bfda5f"
+    },
+    {
+      "path": "assets/exemplar.js",
+      "sha256": "9413d3a6c8aac1474cda10f96ae65af5ce07002150b2001481043ecc90958262"
+    },
+    {
+      "path": "assets/exemplar-ui.js",
+      "sha256": "fa37dd044f02275b01aaa73b51add01ab5f2992466c409633712a726c5cf6c3d"
+    },
+    {
+      "path": "assets/accessibility.js",
+      "sha256": "1500535e14d9f48ab8fa343289dff6c75c1f79f131fe45d8e866015131284c59"
+    },
+    {
+      "path": "assets/student-guidance.js",
+      "sha256": "7a23de595b5d19227e4301a396bf03b6455da7337d5fc1b90f32ed2e7e1db03c"
+    },
+    {
+      "path": "assets/student-guidance-ui.js",
+      "sha256": "0c0cb781c05e82ba3930eb1eb19656ac2acf1173ecd7b6f3433614b640dcb7fd"
+    },
+    {
+      "path": "assets/response-examples.js",
+      "sha256": "d52c576c2f42cf3c05c0a8673f8f16a853c745eb201fde162f5674081d1ec349"
+    },
+    {
+      "path": "assets/research-snapshot.js",
+      "sha256": "562c9a91187ff05dbcb9ad17bbe2e8453d1fe129a8ecad149bb3443b621f310e"
+    },
+    {
+      "path": "assets/research-snapshot-ui.js",
+      "sha256": "a5c8babb2ea63e151e1335b06642c0206da41c9d2dd1a6e6c963b78a68ba6723"
+    },
+    {
+      "path": "assets/app.js",
+      "sha256": "b08334888b294be3196ccbda0f7e7fb55f6f6d035d45ef47c9fcfc8068e183d6"
+    },
+    {
+      "path": "assets/style.css",
+      "sha256": "2c5beb3aff8c910e5ca241aefd5f6c0c9d60070c56ca110fda6df1c1ddeca45d"
+    },
+    {
+      "path": "index.html",
+      "sha256": "fbefac2eb0c0ed700244d901dd94a9f637c00d1bd805fc140ff7e688c225c069"
+    },
+    {
+      "path": "prompts/stage_prompts_v1.2.json",
+      "sha256": "dbd7dc9de4b89b0e5852863cda387ea734f91ce9654658ce4f952046f7d743c1"
+    }
+  ],
+  "baseline_digest": "8a372dc40fec62591e5c71187ce79dcaac15d538c712b92868ec6c611dbf4155"
+}

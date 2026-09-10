@@ -120,6 +120,8 @@ window.RMSAccessibility=(()=>{
   }
 
   function keyHandler(e){
+    const helper=document.querySelector('#aiHelperPanel:not([hidden])');
+    if(helper && (helper.contains(document.activeElement) || e.key==="Escape")) return;
     const backs=[...document.querySelectorAll('.modal-backdrop')].filter(visible);
     if(!backs.length) return;
     const top=backs[backs.length-1];

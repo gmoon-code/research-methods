@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Research Methods Studio Ask Research AI Response v2.12",
+  "type": "object",
+  "required": [
+    "message",
+    "response_kind",
+    "scaffold_level_used",
+    "counts_as_stage_support",
+    "stage_id",
+    "questions_for_student",
+    "direct_completion_guard",
+    "citations",
+    "safety",
+    "prohibited_completion"
+  ],
+  "properties": {
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "response_kind": {
+      "type": "string",
+      "enum": [
+        "clarification",
+        "concept_explanation",
+        "project_summary",
+        "guided_reasoning",
+        "feedback_on_attempt",
+        "parallel_example",
+        "direct_rescue",
+        "source_verification_needed",
+        "safety_redirect"
+      ]
+    },
+    "scaffold_level_used": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "counts_as_stage_support": {
+      "type": "boolean"
+    },
+    "stage_id": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 18
+    },
+    "questions_for_student": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "string"
+      }
+    },
+    "direct_completion_guard": {
+      "type": "object",
+      "required": [
+        "student_attempt_present",
+        "direct_answer_withheld",
+        "reason"
+      ],
+      "properties": {
+        "student_attempt_present": {
+          "type": "boolean"
+        },
+        "direct_answer_withheld": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "citations": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "required": [
+          "claim",
+          "citation_label",
+          "source_url",
+          "verified"
+        ],
+        "properties": {
+          "claim": {
+            "type": "string"
+          },
+          "citation_label": {
+            "type": "string"
+          },
+          "source_url": {
+            "type": "string"
+          },
+          "verified": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "safety": {
+      "type": "object",
+      "required": [
+        "status",
+        "reason"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "clear",
+            "teacher_review",
+            "do_not_facilitate"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prohibited_completion": {
+      "type": "object",
+      "required": [
+        "did_not_replace_student_work",
+        "did_not_invent_sources",
+        "did_not_invent_data",
+        "did_not_calculate_unvalidated_statistics"
+      ],
+      "properties": {
+        "did_not_replace_student_work": {
+          "type": "boolean"
+        },
+        "did_not_invent_sources": {
+          "type": "boolean"
+        },
+        "did_not_invent_data": {
+          "type": "boolean"
+        },
+        "did_not_calculate_unvalidated_statistics": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

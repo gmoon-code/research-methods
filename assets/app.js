@@ -1,42 +1,39 @@
 
 (() => {
   "use strict";
-  const C=window.RMSCurriculum,E=window.RMSEngine,Coach=window.RMSCoach,AI=window.RMSAI,Lit=window.RMSLiterature,Methods=window.RMSMethods,Stats=window.RMSAnalytics,DataLab=window.RMSDataLab,Writing=window.RMSWriting,WritingLab=window.RMSWritingLab,Transfer=window.RMSTransfer,TransferUI=window.RMSTransferUI,Competency=window.RMSCompetency,CompetencyUI=window.RMSCompetencyUI,Journey=window.RMSJourney,JourneyUI=window.RMSJourneyUI,Pilot=window.RMSPilot,PilotUI=window.RMSPilotUI,Guide=window.RMSGuidanceUI,Paths=window.RMSPathways,PathUI=window.RMSPathwayUI,PathCoach=window.RMSNoviceGuard,Rescue=window.RMSRescue,RescueUI=window.RMSRescueUI,Exemplar=window.RMSExemplar,ExemplarUI=window.RMSExemplarUI;
+  const C=window.RMSCurriculum,E=window.RMSEngine,Coach=window.RMSCoach,AI=window.RMSAI,AIHelper=window.RMSAIHelper,AIHelperUI=window.RMSAIHelperUI,Lit=window.RMSLiterature,Methods=window.RMSMethods,Stats=window.RMSAnalytics,DataLab=window.RMSDataLab,Writing=window.RMSWriting,WritingLab=window.RMSWritingLab,Transfer=window.RMSTransfer,TransferUI=window.RMSTransferUI,Competency=window.RMSCompetency,CompetencyUI=window.RMSCompetencyUI,Journey=window.RMSJourney,JourneyUI=window.RMSJourneyUI,Pilot=window.RMSPilot,PilotUI=window.RMSPilotUI,Guide=window.RMSGuidanceUI,Paths=window.RMSPathways,PathUI=window.RMSPathwayUI,Flow=window.RMSStudentFlow,FlowUI=window.RMSStudentFlowUI,HelpUI=window.RMSStudentHelpUI,Snapshot=window.RMSResearchSnapshot,SnapshotUI=window.RMSResearchSnapshotUI,PathCoach=window.RMSNoviceGuard,Rescue=window.RMSRescue,RescueUI=window.RMSRescueUI,Exemplar=window.RMSExemplar,ExemplarUI=window.RMSExemplarUI;
   const $=id=>document.getElementById(id);
   const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
   const KEY="research_methods_studio_v1";
-  let project=Pilot.normalizeProject(Journey.normalizeProject(Competency.normalizeProject(Transfer.normalizeProject(Writing.normalizeProject(Stats.normalizeProject(Methods.normalizeProject(Lit.normalizeProject(Exemplar.normalizeProject(Rescue.normalizeProject(Paths.normalizeProject({name:"",context:"",currentStage:1,ready:{},data:{},sources:[],reviews:[],schema:[],searchLog:[],litClaims:[],litOutline:[],methods:{},analysis:{},writing:{},transfer:{},competency:{},journey:{},pilot:{},pathway:{},rescue:{},created:new Date().toISOString()})))))))))));
+  let project=Flow.normalizeProject(AIHelper.normalizeProject(Pilot.normalizeProject(Journey.normalizeProject(Competency.normalizeProject(Transfer.normalizeProject(Writing.normalizeProject(Stats.normalizeProject(Methods.normalizeProject(Lit.normalizeProject(Exemplar.normalizeProject(Rescue.normalizeProject(Paths.normalizeProject({name:"",context:"",currentStage:1,ready:{},data:{},sources:[],reviews:[],schema:[],searchLog:[],litClaims:[],litOutline:[],methods:{},analysis:{},writing:{},transfer:{},competency:{},journey:{},pilot:{},pathway:{},rescue:{},aiHelper:{},flow:{},created:new Date().toISOString()})))))))))))));
 
-  const load=()=>{const got=Pilot.safeLoad(KEY);if(got.project){project=got.project;project.reviews=project.reviews||[];project.schema=project.schema||[];project.sources=project.sources||[];project.ready=project.ready||{};project.data=project.data||{};Paths.normalizeProject(project);Rescue.normalizeProject(project);Exemplar.normalizeProject(project);Lit.normalizeProject(project);Methods.normalizeProject(project);Stats.normalizeProject(project);Writing.normalizeProject(project);Transfer.normalizeProject(project);Competency.normalizeProject(project);Journey.normalizeProject(project);Pilot.normalizeProject(project);if(got.source==="recovery"){Pilot.logRuntime(project,"recovery_load","Primary project could not be read; recovery snapshot was loaded.");Pilot.safeSave(KEY,project)}}};
-  const save=()=>Pilot.safeSave(KEY,project);
+  const load=()=>{const got=Pilot.safeLoad(KEY);if(got.project){project=got.project;project.reviews=project.reviews||[];project.schema=project.schema||[];project.sources=project.sources||[];project.ready=project.ready||{};project.data=project.data||{};Paths.normalizeProject(project);Rescue.normalizeProject(project);Exemplar.normalizeProject(project);Lit.normalizeProject(project);Methods.normalizeProject(project);Stats.normalizeProject(project);Writing.normalizeProject(project);Transfer.normalizeProject(project);Competency.normalizeProject(project);Journey.normalizeProject(project);Pilot.normalizeProject(project);AIHelper.normalizeProject(project);Flow.normalizeProject(project);Flow.syncCanonical(project);if(got.source==="recovery"){Pilot.logRuntime(project,"recovery_load","Primary project could not be read; recovery snapshot was loaded.");Pilot.safeSave(KEY,project)}}};
+  const save=()=>{Flow.syncCanonical(project);return Pilot.safeSave(KEY,project)};
   const stage=id=>C.stages.find(s=>s.id===Number(id));
   const current=()=>stage(project.currentStage);
   function pct(){return Math.round(Object.values(project.ready||{}).filter(Boolean).length/C.stages.length*100)}
 
   function renderNav(){
-    $("phaseNav").innerHTML=C.phases.map(ph=>`<div class="phase"><div class="phase-title">${esc(ph.label)}</div>${ph.steps.map(id=>{
-      const s=stage(id),title=Paths.stageTitle(project,id,s.nav);return `<button class="nav-step ${project.currentStage===id?"active":""} ${project.ready[id]?"done":""}" data-stage="${id}"><span class="nav-num">${project.ready[id]?"✓":id}</span><span class="nav-label">${esc(title)}</span></button>`
-    }).join("")}</div>`).join("");
-    document.querySelectorAll("[data-stage]").forEach(b=>b.onclick=()=>{project.currentStage=Number(b.dataset.stage);save();renderAll();window.scrollTo({top:210,behavior:"smooth"})});
-    $("progressPct").textContent=pct()+"%";$("progressBar").style.width=pct()+"%";
-    $("progressText").textContent=`${Object.values(project.ready||{}).filter(Boolean).length} of ${C.stages.length} stages marked ready`;
+    Flow.normalizeProject(project);
+    $("phaseNav").innerHTML=FlowUI.routeHTML(project);
+    FlowUI.bindRoute(document);
+    const done=Object.values(project.ready||{}).filter(Boolean).length;
+    $("progressPct").textContent=`${done}/18`;
+    $("progressBar").style.width=Math.round(done/C.stages.length*100)+"%";
+    $("progressText").textContent=`Stage ${project.currentStage} of 18 · ${done} done for now`;
     const mobile=$("mobileStageSelect");
-    if(mobile){mobile.innerHTML=C.stages.map(s=>`<option value="${s.id}" ${project.currentStage===s.id?"selected":""}>${s.id}. ${esc(Paths.stageTitle(project,s.id,s.nav))}</option>`).join("");mobile.onchange=()=>{project.currentStage=Number(mobile.value);save();renderAll();window.scrollTo({top:210,behavior:"smooth"})}}
+    if(mobile){
+      mobile.innerHTML=C.stages.map(s=>`<option value="${s.id}" ${project.currentStage===s.id?"selected":""}>${s.id}. ${esc(Paths.stageTitle(project,s.id,s.nav))}</option>`).join("");
+    }
+    if($("projectHeaderName"))$("projectHeaderName").textContent=project.name?`${project.name} · Stage ${project.currentStage} of 18`:"Learn research by doing research";
   }
 
   function snapshot(){
-    const d=project.data;
-    const vals=[
-      ["Research path",Paths.selected(project).name],
-      ["Topic",d.topicChoice||d.broadTopic],
-      ["Research question",d.finalRQ],
-      ["Design",d.designType],
-      ["Predictor / IV",d.predictorIV],
-      ["Outcome",d.outcomeDV],
-      ["Analysis",d.analysisChoice],
-      ["Title",d.titleDraft]
-    ].filter(x=>x[1]);
-    $("snapshot").innerHTML=vals.length?vals.map(v=>`<div class="snap-item"><span>${esc(v[0])}</span><b>${esc(v[1])}</b></div>`).join(""):`<p class="empty-snap">Your major decisions will appear here as the project develops.</p>`;
+    $("snapshot").innerHTML=SnapshotUI.compactHTML(project);
+  }
+  function updateCurrentContextStrip(){
+    const box=document.querySelector(".stage-context-compact");
+    if(box)box.outerHTML=stageContextHTML(current());
   }
 
   function termCard(){
@@ -45,21 +42,44 @@
   }
 
   function fieldHTML(f,stageId){
-    const [key,baseLabel,type,options]=f, val=project.data[key]??"", mode=Paths.fieldMode(project,key), label=Paths.label(project,key,baseLabel);
+    const [key,baseLabel,type,options]=f,val=project.data[key]??"",mode=Paths.fieldMode(project,key);
+    const pathLabel=Paths.label(project,key,baseLabel),label=Flow.fieldLabel(project,key,pathLabel);
+    const model=window.RMSResponseExamples?.fields?.[key];
+    if(key==="columns"){
+      const summary=Flow.syncSchemaSummary(project),legacy=!project.schema?.length&&String(project.data.columns||"").trim();
+      return `<div class="guided-field structured-field" data-field-wrap="${key}">
+        <div class="structured-field-head"><div><span>${esc(label)}</span><small>Build this once in the structured Data Table & Dictionary Builder. The Stage summary updates automatically.</small></div><button type="button" class="secondary small" data-open-schema-builder>${project.schema?.length?"Edit data columns":"Build data columns"}</button></div>
+        ${summary?`<pre class="structured-field-summary">${esc(summary)}</pre>`:`<p class="muted">No structured columns have been defined yet.</p>`}
+        ${legacy?`<div class="legacy-plan-note"><b>Earlier text plan preserved</b><p>${esc(project.data.columns)}</p><span>Convert this plan into structured columns before final collection so the dataset and Stage 12 use one record.</span></div>`:""}
+        <div class="field-compact-actions"><button type="button" class="ghost small" data-unified-help="${key}">Help</button></div>
+      </div>`;
+    }
     let control="";
-    if(type==="textarea") control=`<label><span>${esc(label)} ${PathUI.fieldBadge(mode)}</span><textarea data-field="${key}">${esc(val)}</textarea></label>`;
-    else if(type==="select") control=`<label><span>${esc(label)} ${PathUI.fieldBadge(mode)}</span><select data-field="${key}"><option value="">Choose…</option>${options.map(o=>`<option ${val===o?"selected":""}>${esc(o)}</option>`).join("")}</select></label>`;
+    if(type==="textarea")control=`<label><span>${esc(label)} ${PathUI.fieldBadge(mode)}</span><textarea data-field="${key}">${esc(val)}</textarea></label>`;
+    else if(type==="select")control=`<label><span>${esc(label)} ${PathUI.fieldBadge(mode)}</span><select data-field="${key}"><option value="">Choose the option that fits your project…</option>${options.map(o=>`<option ${val===o?"selected":""}>${esc(o)}</option>`).join("")}</select></label>`;
     else control=`<label><span>${esc(label)} ${PathUI.fieldBadge(mode)}</span><input data-field="${key}" value="${esc(val)}"></label>`;
-    const supportLevel=Rescue.maxFieldLevel(project,stageId,key);
-    return `<div class="guided-field ${mode==="hide"?"cross-design-field":""}">${control}<div class="field-support-row"><button type="button" class="progressive-help-button" data-progressive-help="${key}" data-help-stage="${stageId}">Progressive help${supportLevel?` · L${supportLevel} used`:""}</button></div>${Guide.fieldHelp(key,label)}</div>`;
+    const words=String(val||"").trim()?String(val).trim().split(/\s+/).length:0;
+    const meta=type==="select"
+      ?`Choose one option. You can change it later if your research plan changes.`
+      :model?`${esc(model.expected_shape)} · ${esc(model.typical_length)} · <span data-response-count="${esc(key)}">${words} word${words===1?"":"s"} now</span>`:`Write enough to make this research decision clear and specific.`;
+    const needLabel=mode==="optional"?"Optional for your current path":mode==="hide"?"Usually not needed for this path":"Needed for this stage";
+    return `<div class="guided-field ${mode==="hide"?"cross-design-field":""}" data-field-wrap="${key}">
+      ${control}
+      <div class="field-compact-meta"><span>${meta}</span><span>${needLabel}</span></div>
+      <div class="field-compact-actions"><button type="button" class="ghost small" data-unified-example="${key}">Example</button><button type="button" class="ghost small" data-unified-help="${key}">Help</button></div>
+    </div>`;
+  }
+
+  function visibleSections(s){
+    return (s.sections||[]).map(sec=>({...sec,fields:sec.fields.filter(f=>Paths.shouldShowField(project,f[0],s.id))})).filter(sec=>sec.fields.length);
   }
 
   function sectionsHTML(s){
-    return s.sections.map(sec=>{
-      const visible=sec.fields.filter(f=>Paths.shouldShowField(project,f[0],s.id));
-      if(!visible.length)return"";
-      return `<div class="form-section"><h4>${esc(sec.title)}</h4><p>${esc(sec.desc)}</p><div class="form-grid ${visible.length>4?"two":""}">${visible.map(f=>fieldHTML(f,s.id)).join("")}</div></div>`;
-    }).join("");
+    const secs=visibleSections(s);
+    if(!secs.length)return"";
+    const idx=Flow.sectionIndex(project,s.id,secs.length),sec=secs[idx];
+    const outline=`<nav class="stage-section-outline" aria-label="Parts of this stage">${secs.map((x,i)=>{const st=Flow.sectionStatus(project,s.id,x);return `<button type="button" data-section-step="${i}" class="${i===idx?"active":st.complete?"done":""}"><span>${st.complete?"✓":i+1}</span>${esc(x.title)}</button>`}).join("")}</nav>`;
+    return `${outline}<section class="current-form-section"><h4>${esc(sec.title)}</h4><p>${esc(sec.desc)}</p><div class="form-grid">${sec.fields.map(f=>fieldHTML(f,s.id)).join("")}</div></section>`;
   }
 
   function sourceManager(){
@@ -106,7 +126,7 @@
   }
 
   function dataSchemaBuilder(){
-    const rows=(project.schema||[]).map((r,i)=>`<div class="schema-row"><input value="${esc(r.name)}" data-schema-name="${i}"><select data-schema-type="${i}"><option ${r.type==="ID"?"selected":""}>ID</option><option ${r.type==="Numeric"?"selected":""}>Numeric</option><option ${r.type==="Categorical"?"selected":""}>Categorical</option><option ${r.type==="Ordinal"?"selected":""}>Ordinal</option><option ${r.type==="Binary"?"selected":""}>Binary</option><option ${r.type==="Text"?"selected":""}>Text</option><option ${r.type==="Date/time"?"selected":""}>Date/time</option></select><input value="${esc(r.definition)}" data-schema-def="${i}" placeholder="unit, coding rule, allowed values"><button class="danger small" data-schema-del="${i}">×</button></div>`).join("");
+    const rows=(project.schema||[]).map((r,i)=>`<div class="schema-row"><input value="${esc(r.name)}" data-schema-name="${i}"><select data-schema-type="${i}"><option ${r.type==="ID"?"selected":""}>ID</option><option ${r.type==="Numeric"?"selected":""}>Numeric</option><option ${r.type==="Categorical"?"selected":""}>Categorical</option><option ${r.type==="Ordinal"?"selected":""}>Ordinal</option><option ${r.type==="Binary"?"selected":""}>Binary</option><option ${r.type==="Text"?"selected":""}>Text</option><option ${r.type==="Date/time"?"selected":""}>Date/time</option></select><input value="${esc(r.definition)}" data-schema-def="${i}" placeholder="unit, coding rule, allowed values"><button class="danger small" data-schema-del="${i}" aria-label="Remove data column ${i+1}">×</button></div>`).join("");
     return `<div class="tool-card"><h4>Data Table & Dictionary Builder</h4><p>Define columns before collecting final data. The CSV template will contain headers only. Never use blank cells to mean several different things.</p><details class="choice-help" open><summary>What do the data types mean?</summary><ul><li><b>ID</b> tracks a unit, such as plant_01.</li><li><b>Numeric</b> is a meaningful quantity such as 12.4 cm.</li><li><b>Categorical</b> is a named group such as treatment A/B/C.</li><li><b>Ordinal</b> is an ordered category such as low/medium/high.</li><li><b>Binary</b> has exactly two categories such as yes/no, germinated/not germinated, or correct/incorrect.</li><li><b>Text</b> stores open written evidence.</li><li><b>Date/time</b> records when something occurred.</li></ul><button class="ghost small" data-open-glossary="binary">Explain binary more</button></details>
       <div class="schema-list">${rows||'<p class="muted tiny">No columns defined yet.</p>'}</div>
       <div class="button-row"><button id="addSchema" class="secondary small">Add column</button><button id="downloadSchema" class="ghost small">Download CSV template</button></div></div>`;
@@ -125,12 +145,13 @@
   }
 
   function coachPanel(){
-    const hist=(project.reviews||[]).filter(r=>r.stage===current().id).slice(-4).reverse();
-    const aiPolicy=Pilot.featureAccess(project,"ai");
-    const ai=AI.enabled()&&aiPolicy.allowed;
-    return `<div class="coach-panel"><div class="coach-panel-head"><div><h4>Research Coach</h4><div class="muted tiny">Local diagnostics are always available. A secure AI backend can add deeper prose-level feedback.</div></div><span class="ai-status ${ai?"on":""}">${ai?"AI connected":"local only"}</span></div>
-      <div class="button-row"><button class="ghost small" id="saveIndependent">Save independent checkpoint</button><button class="primary small" id="reviewStage">Run local review</button>${ai?'<button class="secondary small" id="reviewAI">Ask AI Coach</button>':""}</div><div id="independentStatus"></div><div id="coachReview"></div><div id="aiCoachReview"></div>
-      ${hist.length?`<details class="history"><summary>Previous reviews for this stage (${hist.length})</summary>${hist.map(h=>`<div class="history-row">${new Date(h.time).toLocaleString()} · ${esc(h.kind||"local")} · ${h.score!==undefined?`score ${h.score}/100 · `:""}${esc(h.label||h.verdict||"review")}</div>`).join("")}</details>`:""}</div>`;
+    const hist=(project.reviews||[]).filter(r=>r.stage===current().id).slice(-3).reverse();
+    const aiPolicy=Pilot.featureAccess(project,"ai"),ai=AI.reviewEnabled()&&aiPolicy.allowed;
+    return `<div class="coach-panel"><div class="coach-panel-head"><div><h4>Check my work</h4><div class="muted tiny">Use this after you have made your own attempt. The local check looks for missing or inconsistent research decisions.</div></div></div>
+      <div class="button-row"><button class="primary small" id="reviewStage">Check my work</button>${ai?'<button class="ghost small" id="reviewAI">Ask Chat for deeper feedback</button>':""}</div>
+      <div id="coachReview"></div><div id="aiCoachReview"></div>
+      ${hist.length?`<details class="history"><summary>Earlier checks (${hist.length})</summary>${hist.map(h=>`<div class="history-row">${new Date(h.time).toLocaleString()} · ${esc((h.kind||"local")==="AI"?"Chat":(h.kind||"local"))} · ${esc(h.label||h.verdict||"review")}</div>`).join("")}</details>`:""}
+    </div>`;
   }
 
 
@@ -183,17 +204,87 @@
     </div>`;
   }
 
+
+  function stageOrientationHTML(s){
+    const t=Flow.transitionFor(s.id);
+    return `<div class="stage-orientation"><div><span>FROM EARLIER</span><p>${esc(t.from)}</p></div><div class="current"><span>NOW</span><p>${esc(t.now)}</p></div><div><span>NEXT</span><p>${esc(t.next)}</p></div></div>`;
+  }
+  function stageContextHTML(s){
+    const items=Flow.contextItems(project,s.id);
+    return `<section class="stage-context-compact"><div class="stage-context-head"><b>Keep these earlier decisions in view</b><button class="ghost small" data-open-research-snapshot>View all my work</button></div>${items.length?`<div class="stage-context-items">${items.map(x=>`<div class="stage-context-item"><span>${esc(x.label)}</span><b title="${esc(x.value)}">${esc(x.value)}</b></div>`).join("")}</div>`:`<p class="muted tiny">Your most relevant earlier decisions will appear here as the project develops.</p>`}</section>`;
+  }
+  function stageTaskListHTML(s){
+    const secs=visibleSections(s);
+    const items=secs.length?secs.map(x=>x.title):s.id===6?["Evaluate and extract your source evidence"]:["Complete the main decision for this stage"];
+    return `<div class="stage-task-list">${items.map((x,i)=>`<div><span>${i+1}</span><b>${esc(x)}</b></div>`).join("")}</div>`;
+  }
+  function stageToolDrawer(s){
+    const tool=Flow.stageTool(s.id),custom=s.custom;
+    const buttons=[];
+    if(tool){
+      if(tool.id==="literature")buttons.push('<button class="secondary small" id="openStageLitTool">Open Literature Workspace</button>');
+      if(tool.id==="methods")buttons.push('<button class="secondary small" id="openStageMethodsTool">Open Methods Lab</button>');
+      if(tool.id==="data")buttons.push('<button class="secondary small" id="openStageDataTool">Open Data & Statistics Lab</button>');
+      if(tool.id==="writing")buttons.push('<button class="secondary small" id="openStageWritingTool">Open Writing Lab</button>');
+      if(tool.id==="data-writing"){buttons.push('<button class="secondary small" id="openStageDataTool">Open Data & Statistics Lab</button>','<button class="ghost small" id="openStageWritingTool">Open Writing Lab</button>')}
+    }
+    const customBlock=(custom&&s.id!==6)?`<details class="stage-tool-drawer"><summary>${s.id===18?"Final citation and alignment tools":"Optional tool for this stage"}</summary><p>Open this when it helps with the current decision. You do not need to use every tool.</p>${customHTML(s)}</details>`:"";
+    const toolBlock=tool?`<details class="stage-tool-drawer"><summary>${esc(tool.label)}</summary><p>${esc(tool.description)}</p><div class="button-row">${buttons.join("")}</div></details>`:"";
+    const exemplar=`<details class="stage-tool-drawer"><summary>See a worked example from a similar research path</summary><p>The example shows reasoning in another project. Viewing it is recorded as Level 4 worked-example support.</p><button class="ghost small" data-open-exemplar-stage="${s.id}">Open worked Stage ${s.id}</button></details>`;
+    return toolBlock+customBlock+exemplar;
+  }
+  function nextStageHTML(s){
+    if(s.id>=18)return '<div class="next-stage-card"><b>You reached the final stage.</b><p>Resolve the final audit and complete teacher review before submission.</p></div>';
+    const next=stage(s.id+1);
+    return `<div class="next-stage-card"><b>Coming next · Stage ${next.id}</b><p>${esc(Flow.transitionFor(next.id).now)}</p></div>`;
+  }
+
   function renderStage(){
-    const s=current();
+    const s=current();Flow.markVisited(project,s.id);
     $("welcome").hidden=true;$("stageView").hidden=false;
+    const activeTab=project.flow.activeTabByStage?.[s.id]||"learn";
+    const phase=C.phases.find(p=>p.id===s.phase);
+    const needsReview=project.flow.needsReview?.[s.id],reviewReason=project.flow.reviewReasons?.[s.id]||"";
+    const workContent=s.id===6
+      ?`<section class="current-form-section"><h4>Evaluate and extract source evidence</h4><p>Add sources in the Literature Workspace, decide whether each source belongs, and record the evidence you will need for later synthesis.</p>${sourceManager()}</section>`
+      :sectionsHTML(s);
+    const stageSecs=visibleSections(s),stageSectionIndex=Flow.sectionIndex(project,s.id,stageSecs.length);
+    const pathCard=s.id===4&&stageSectionIndex>=Math.max(0,stageSecs.length-1)?`<details class="stage-tool-drawer path-suggestion" ${project.pathway?.selected==="unsure"?"open":""}><summary>Choose your research path after your working question is clear</summary><p>The site will recommend a path from the question you have written. This only changes which research decisions are emphasized. Your earlier work stays saved if the path changes.</p><button class="secondary" data-open-pathway>Choose / confirm research path</button></details>`:"";
     $("stageView").innerHTML=`<article class="card stage-card">
-      <header class="stage-header"><div class="stage-meta"><span class="phase-pill">${esc(C.phases.find(p=>p.id===s.phase).label)}</span><span class="stage-count">Stage ${s.id} of ${C.stages.length}</span></div><h2>${esc(Paths.stageTitle(project,s.id,s.title))}</h2><div class="purpose">${esc(s.purpose)}</div></header>
+      <header class="stage-header"><div class="stage-meta"><span class="phase-pill">${esc(Flow.phaseLabel(s.phase))}</span><span class="stage-count">Stage ${s.id} of ${C.stages.length}</span></div><h2>${esc(Paths.stageTitle(project,s.id,s.title))}</h2><div class="purpose">${esc(s.purpose)}</div></header>
+      ${needsReview?`<div class="needs-review-banner"><b>This stage needs review after an earlier change.</b><p>${esc(reviewReason)}</p></div>`:""}
+      ${stageOrientationHTML(s)}
+      ${stageContextHTML(s)}
       ${PathUI.stageBanner(project,s.id,s.sections)}
-      <div class="exemplar-inline-card"><div><b>See this decision inside a complete path-matched project</b><span>The exemplar library automatically opens the complete project matching your current research path. You can also compare other paths. Viewing worked stage content is logged as Level 4 support.</span></div><button class="ghost small" data-open-exemplar-stage="${s.id}">Worked Stage ${s.id}</button></div>
-      <div class="stage-tabs"><button class="active" data-tab="learn">1 · Learn</button><button data-tab="work">2 · Do the work</button><button data-tab="check">3 · Check & revise</button></div>
-      <div class="tab-panel" id="tabLearn"><div class="lesson-grid"><div class="lesson">${Guide.stagePanel(s.id,false)}${s.learn}</div><aside>${`<div class="example-box">${s.example}</div><div class="warning-box">${s.warning}</div>`}</aside></div></div>
-      <div class="tab-panel hidden" id="tabWork"><div class="work"><h3>Your research notebook</h3>${Guide.stagePanel(s.id,true)}<div class="no-dead-end"><div><b>Still stuck?</b><span>Choose the exact field that is blocking you and increase support one level at a time.</span></div><button class="secondary small" data-open-rescue-navigator="${s.id}">Open progressive help</button></div>${coachPanel()}${s.id===4?`<div class="tool-card path-suggestion"><h4>Choose the research path after refining your question</h4><p>Your current question family suggests <b>${esc(Paths.pathById(Paths.recommendation(project)).name)}</b>. Confirm the path so later stages show only the decisions that normally belong to that design.</p><button class="secondary" data-open-pathway>Choose / confirm research path</button></div>`:""}${customHTML(s)}${s.id>=15&&s.id<=17?`<div class="tool-card"><h4>Scientific Writing Laboratory</h4><p>Use the evidence maps and section-specific audits while drafting this part of the paper.</p><button class="secondary" id="openWritingFromStage">Open Writing Lab</button></div>`:""}${sectionsHTML(s)}</div></div>
-      <div class="tab-panel hidden" id="tabCheck"><div class="check"><h3>Readiness check</h3><p>Mark a stage ready only when these statements are true. You can return later and revise.</p>${(()=>{const pc=Paths.completion(project,s.id,s.sections),gate=PathCoach.stageGate(s.id,project);return `<div class="path-readiness ${gate.canMarkReady?"ready-pass":""}"><b>${esc(PathCoach.pathName(project))} readiness</b>${pc.total?`<span>${pc.done}/${pc.total} visible core notebook fields currently contain a response.</span>`:""}${gate.missing?.length?`<small>Coach-required items still blank: ${gate.missing.slice(0,6).map(k=>esc(Paths.label(project,k,k))).join(", ")}${gate.missing.length>6?"…":""}</small>`:`<small>No core pathway field is currently missing.</small>`}</div>`})()}<div class="readiness">${PathCoach.readinessChecks(s.id,project,s.checks).map((c,i)=>`<label class="ready-item"><input type="checkbox" data-ready-check="${i}"><span>${esc(c)}</span></label>`).join("")}</div><div id="pathGateFeedback"></div>${s.id===4?'<button class="secondary" id="checkRQ">Run question wording check</button><div id="rqFeedback"></div>':""}<div class="ready-controls"><span class="ready-status ${project.ready[s.id]?"good":""}">${project.ready[s.id]?"Stage marked ready":"Not yet marked ready"}</span><button class="${project.ready[s.id]?"secondary":"primary"}" id="markReady">${project.ready[s.id]?"Mark as not ready":"Mark stage ready"}</button></div></div></div>
+      <div class="stage-tabs" role="tablist"><button class="${activeTab==="learn"?"active":""}" data-tab="learn">1 · Learn</button><button class="${activeTab==="work"?"active":""}" data-tab="work">2 · Do the work</button><button class="${activeTab==="check"?"active":""}" data-tab="check">3 · Check & revise</button></div>
+
+      <div class="tab-panel ${activeTab==="learn"?"":"hidden"}" id="tabLearn">
+        <div class="learn-essential"><h3>What you will do in this stage</h3>${stageTaskListHTML(s)}<div class="stage-example-compact">${s.example}</div>
+          <details class="learn-more-details"><summary>More explanation, research terms, and common mistakes</summary><div class="lesson">${Guide.stagePanel(s.id,false)}${s.learn}<div class="warning-box">${s.warning}</div></div></details>
+        </div>
+        <div class="stage-bottom-nav"><button class="ghost" data-route-open>View research route</button><button class="primary" data-go-tab="work">Start this stage →</button></div>
+      </div>
+
+      <div class="tab-panel ${activeTab==="work"?"":"hidden"}" id="tabWork">
+        <div class="work"><div class="stage-work-intro"><div><h3>Your current task</h3><p>Complete one part at a time. The stage outline stays visible so you know what remains.</p></div><button class="ghost small" id="workHelpBtn">Help with this stage</button></div>
+          ${workContent}
+          ${pathCard}
+          ${stageToolDrawer(s)}
+          <details class="stage-support-drawer"><summary>Check my reasoning before I continue</summary>${coachPanel()}</details>
+        </div>
+        <div class="stage-bottom-nav">${stageSecs.length&&stageSectionIndex>0?`<button class="ghost" data-section-step="${stageSectionIndex-1}">← ${esc(stageSecs[stageSectionIndex-1].title)}</button>`:`<button class="ghost" data-go-tab="learn">← Review explanation</button>`}${stageSecs.length&&stageSectionIndex<stageSecs.length-1?`<button class="primary" data-section-step="${stageSectionIndex+1}">Next part · ${esc(stageSecs[stageSectionIndex+1].title)} →</button>`:`<button class="primary" data-go-tab="check">Check this stage →</button>`}</div>
+      </div>
+
+      <div class="tab-panel ${activeTab==="check"?"":"hidden"}" id="tabCheck">
+        <div class="check"><div class="check-primary-card"><h3>Check this stage before continuing</h3><p>Your work remains editable. This check looks for missing or inconsistent research decisions and tells you what to revise.</p><button class="primary" id="checkStagePrimary">Check this stage</button></div>
+          <div id="pathGateFeedback"></div><div id="stageCheckResult"></div>
+          <details><summary>Optional self-check questions</summary><div class="readiness">${PathCoach.readinessChecks(s.id,project,s.checks).map((c,i)=>`<label class="ready-item"><input type="checkbox" data-ready-check="${i}"><span>${esc(c)}</span></label>`).join("")}</div></details>
+          ${s.id===4?'<button class="ghost small" id="checkRQ">Check my question wording</button><div id="rqFeedback"></div>':""}
+          <div class="ready-controls"><span class="ready-status ${project.ready[s.id]?"good":""}">${project.ready[s.id]?"Done for now · you can still revise this stage":"Not marked done yet"}</span><button class="${project.ready[s.id]?"ghost":"secondary"}" id="markReady">${project.ready[s.id]?"Mark as working again":"Ready to continue"}</button></div>
+          ${project.ready[s.id]?nextStageHTML(s):""}
+        </div>
+        <div class="stage-bottom-nav"><button class="ghost" data-go-tab="work">← Revise my work</button>${project.ready[s.id]&&s.id<18?`<button class="primary" id="continueNextStage">Continue to Stage ${s.id+1} →</button>`:project.ready[s.id]&&s.id===18?`<button class="primary" disabled>Final stage done for now ✓</button>`:`<button class="primary" id="markReadyBottom">Ready to continue</button>`}</div>
+      </div>
     </article>`;
     bindStage();
   }
@@ -201,37 +292,46 @@
 
 
   function litSourceForm(s={},idx=null){
-    const t=s.trapp||{};
-    const ev=s.themeEvidence||[];
-    return `<div class="lit-section"><h4>${idx===null?"Add a source":`Edit ${esc(s.id)}`}</h4><p>Bibliographic verification and methodological evaluation are separate. “Verified” means you checked the bibliographic record against the actual source; it does not mean the study is high quality.</p>
-      <div class="form-grid two">
-        <label><span>Working citation</span><input id="lfCitation" value="${esc(s.citation||"")}"></label>
-        <label><span>Title</span><input id="lfTitle" value="${esc(s.title||"")}"></label>
-        <label><span>Authors</span><input id="lfAuthors" value="${esc(s.authors||"")}"></label>
-        <label><span>Year</span><input id="lfYear" value="${esc(s.year||"")}"></label>
-        <label><span>Journal / publisher</span><input id="lfJournal" value="${esc(s.journal||"")}"></label>
-        <label><span>DOI</span><input id="lfDoi" value="${esc(s.doi||"")}"></label>
-        <label><span>URL</span><input id="lfUrl" value="${esc(s.url||"")}"></label>
-        <label><span>Source type</span><select id="lfType">${["Peer-reviewed empirical article","Systematic review / meta-analysis","Scholarly review","Government / institutional report","Book / chapter","Other"].map(o=>`<option ${s.type===o?"selected":""}>${o}</option>`).join("")}</select></label>
-        <label><span>Study design</span><input id="lfDesign" value="${esc(s.design||"")}"></label>
-        <label><span>Population / context</span><textarea id="lfSample">${esc(s.sample||"")}</textarea></label>
-        <label><span>Variables / constructs</span><textarea id="lfVariables">${esc(s.variables||"")}</textarea></label>
-        <label><span>Measures / operational definitions</span><textarea id="lfMeasures">${esc(s.measures||"")}</textarea></label>
-        <label><span>Key finding in comparable language</span><textarea id="lfFinding">${esc(s.finding||"")}</textarea></label>
-        <label><span>Limitations</span><textarea id="lfLimits">${esc(s.limits||"")}</textarea></label>
-        <label><span>Relevance / gap clue</span><textarea id="lfRelevance">${esc(s.relevance||"")}</textarea></label>
-        <label><span>Quality / methods notes</span><textarea id="lfQuality">${esc(s.qualityNotes||"")}</textarea></label>
-        <label><span>Screening status</span><select id="lfStatus">${["Included","Pending","Excluded"].map(o=>`<option ${s.screeningStatus===o?"selected":""}>${o}</option>`).join("")}</select></label>
-        <label><span>Reason for include/exclude/pending</span><textarea id="lfScreenReason">${esc(s.screeningReason||"")}</textarea></label>
-        <label><span>Bibliographic record checked against source?</span><select id="lfVerified"><option value="false" ${!s.verified?"selected":""}>Not yet</option><option value="true" ${s.verified?"selected":""}>Yes</option></select></label>
-      </div>
-      <h4 style="margin-top:16px">TRAPP source evaluation</h4><div class="trapp-grid">
-        ${[["timeframe","Timeframe"],["relevance","Relevance"],["authority","Authority"],["accuracy","Accuracy"],["purpose","Purpose"]].map(([k,l])=>`<div class="trapp-box"><label><span>${l}</span><textarea id="tr_${k}" placeholder="Evidence and judgment">${esc(t[k]||"")}</textarea></label></div>`).join("")}
-      </div>
-      <h4 style="margin-top:16px">Theme evidence</h4><p class="muted tiny">A source can support one theme, conflict with another, or provide mixed/background evidence. Add a short note explaining what the paper contributes.</p>
-      <div id="themeEvidenceRows">${ev.map((e,j)=>themeEvidenceRow(e,j)).join("")}</div>
-      <button class="ghost small" id="addThemeEvidence">Add theme evidence</button>
-      <div class="button-row"><button class="primary" id="saveLitSource">${idx===null?"Add source":"Save changes"}</button>${idx!==null?'<button class="ghost" id="cancelLitEdit">Cancel</button>':""}</div>
+    const t=s.trapp||{},ev=s.themeEvidence||[];
+    return `<div class="lit-section source-three-pass"><div class="source-three-pass-head"><div><h4>${idx===null?"Add a source":`Edit ${esc(s.id)}`}</h4><p>Work through three short passes. You do not need to evaluate every detail before you have identified the source.</p></div><span>${idx===null?"New source":"Saved source"}</span></div>
+      <details class="source-pass" open><summary><span>1</span><div><b>Identify the source</b><small>Record enough information to find and cite it again.</small></div></summary>
+        <div class="form-grid two">
+          <label><span>Working citation</span><input id="lfCitation" value="${esc(s.citation||"")}"></label>
+          <label><span>Title</span><input id="lfTitle" value="${esc(s.title||"")}"></label>
+          <label><span>Authors</span><input id="lfAuthors" value="${esc(s.authors||"")}"></label>
+          <label><span>Year</span><input id="lfYear" value="${esc(s.year||"")}"></label>
+          <label><span>Journal / publisher</span><input id="lfJournal" value="${esc(s.journal||"")}"></label>
+          <label><span>DOI</span><input id="lfDoi" value="${esc(s.doi||"")}"></label>
+          <label><span>URL</span><input id="lfUrl" value="${esc(s.url||"")}"></label>
+          <label><span>Source type</span><select id="lfType">${["Peer-reviewed empirical article","Systematic review / meta-analysis","Scholarly review","Government / institutional report","Book / chapter","Other"].map(o=>`<option ${s.type===o?"selected":""}>${o}</option>`).join("")}</select></label>
+          <label><span>Bibliographic record checked against the actual source?</span><select id="lfVerified"><option value="false" ${!s.verified?"selected":""}>Not yet</option><option value="true" ${s.verified?"selected":""}>Yes</option></select></label>
+        </div>
+        <p class="source-pass-note"><b>Important</b> “Bibliography verified” means you checked the citation details against the source. It does not mean the study is automatically high quality.</p>
+      </details>
+
+      <details class="source-pass"><summary><span>2</span><div><b>Decide whether the source belongs</b><small>Use your research question and inclusion rules before extracting everything.</small></div></summary>
+        <div class="form-grid two">
+          <label><span>Screening decision</span><select id="lfStatus">${["Included","Pending","Excluded"].map(o=>`<option ${s.screeningStatus===o?"selected":""}>${o}</option>`).join("")}</select></label>
+          <label><span>Why include, exclude, or keep it pending?</span><textarea id="lfScreenReason">${esc(s.screeningReason||"")}</textarea></label>
+          <label><span>How is this source relevant to your research question?</span><textarea id="lfRelevance">${esc(s.relevance||"")}</textarea></label>
+          <label><span>Quality / methods notes</span><textarea id="lfQuality">${esc(s.qualityNotes||"")}</textarea></label>
+        </div>
+        <details class="nested-source-help"><summary>Optional TRAPP source evaluation</summary><div class="trapp-grid">${[["timeframe","Timeframe"],["relevance","Relevance"],["authority","Authority"],["accuracy","Accuracy"],["purpose","Purpose"]].map(([k,l])=>`<div class="trapp-box"><label><span>${l}</span><textarea id="tr_${k}" placeholder="Evidence and judgment">${esc(t[k]||"")}</textarea></label></div>`).join("")}</div></details>
+      </details>
+
+      <details class="source-pass"><summary><span>3</span><div><b>Extract the evidence you will use later</b><small>Record the study details, findings, and limitations in comparable language.</small></div></summary>
+        <div class="form-grid two">
+          <label><span>Study design</span><input id="lfDesign" value="${esc(s.design||"")}"></label>
+          <label><span>Population / context</span><textarea id="lfSample">${esc(s.sample||"")}</textarea></label>
+          <label><span>Variables / constructs</span><textarea id="lfVariables">${esc(s.variables||"")}</textarea></label>
+          <label><span>Measures / operational definitions</span><textarea id="lfMeasures">${esc(s.measures||"")}</textarea></label>
+          <label><span>Key finding in comparable language</span><textarea id="lfFinding">${esc(s.finding||"")}</textarea></label>
+          <label><span>Limitations that affect interpretation</span><textarea id="lfLimits">${esc(s.limits||"")}</textarea></label>
+        </div>
+        <details class="nested-source-help"><summary>Theme evidence for later synthesis</summary><p class="muted tiny">A source can support one theme, conflict with another, or provide mixed/background evidence.</p><div id="themeEvidenceRows">${ev.map((e,j)=>themeEvidenceRow(e,j)).join("")}</div><button class="ghost small" id="addThemeEvidence">Add theme evidence</button></details>
+      </details>
+
+      <div class="button-row source-save-row"><button class="primary" id="saveLitSource">${idx===null?"Save source":"Save changes"}</button>${idx!==null?'<button class="ghost" id="cancelLitEdit">Cancel</button>':""}</div>
     </div>`;
   }
 
@@ -334,7 +434,7 @@
       if(active==="outline")return outlineWorkspace();
       return "";
     }
-    wrap.innerHTML=`<div class="modal lit-modal"><div style="display:flex;justify-content:space-between;gap:12px;align-items:start"><div><h3>Literature Research Workspace</h3><p>Search → evaluate → screen → extract → synthesize → justify → trace claims → outline.</p></div><button class="ghost small" id="closeLit">Close</button></div><div class="lit-tabs">${tabs.map(([k,l])=>`<button data-lit-tab="${k}" class="${active===k?"active":""}">${l}</button>`).join("")}</div>${Guide.labPanel("literature",active)}<div id="litContent">${content()}</div></div>`;
+    wrap.innerHTML=`<div class="modal lit-modal"><div style="display:flex;justify-content:space-between;gap:12px;align-items:start"><div><div class="guide-kicker">Literature evidence workflow</div><h3>Literature Research Workspace</h3><p>Work through one literature task at a time. The complete route remains available from the step menu.</p></div><button class="ghost small" id="closeLit">Close</button></div>${FlowUI.labStepper(tabs,active,"lit-tab")}${Guide.labPanel("literature",active)}<div id="litContent">${content()}</div></div>`;
     document.body.appendChild(wrap);
     const rerender=(tab=active,idx=null)=>{wrap.remove();literatureWorkspace(tab,idx)};
     $("closeLit").onclick=()=>wrap.remove();
@@ -351,7 +451,7 @@
     if($("addSearchLog")) $("addSearchLog").onclick=()=>{
       project.searchLog.push({date:$("slDate").value,database:$("slDatabase").value,query:$("slQuery").value,filters:$("slFilters").value,results:$("slResults").value,kept:$("slKept").value,notes:$("slNotes").value});save();rerender("search");
     };
-    document.querySelectorAll("[data-del-search]").forEach(b=>b.onclick=()=>{project.searchLog.splice(Number(b.dataset.delSearch),1);save();rerender("search")});
+    document.querySelectorAll("[data-del-search]").forEach(b=>b.onclick=()=>{const i=Number(b.dataset.delSearch),removed=project.searchLog.splice(i,1)[0];save();rerender("search");FlowUI.offerUndo("Search record removed.",()=>{project.searchLog.splice(i,0,removed);save();rerender("search")})});
     if($("addThemeEvidence")) $("addThemeEvidence").onclick=()=>{
       const rows=[...document.querySelectorAll("#themeEvidenceRows [data-theme-row]")].length;
       $("themeEvidenceRows").insertAdjacentHTML("beforeend",themeEvidenceRow({},rows));
@@ -383,16 +483,16 @@
     if($("addLitClaim")) $("addLitClaim").onclick=()=>{
       project.litClaims.push({text:$("claimText").value,type:$("claimType").value,sourceIds:$("claimSources").value.split(",").map(x=>x.trim()).filter(Boolean),boundary:$("claimBoundary").value});save();rerender("claims");
     };
-    document.querySelectorAll("[data-del-claim]").forEach(b=>b.onclick=()=>{project.litClaims.splice(Number(b.dataset.delClaim),1);save();rerender("claims")});
+    document.querySelectorAll("[data-del-claim]").forEach(b=>b.onclick=()=>{const i=Number(b.dataset.delClaim),removed=project.litClaims.splice(i,1)[0];save();rerender("claims");FlowUI.offerUndo("Literature claim removed.",()=>{project.litClaims.splice(i,0,removed);save();rerender("claims")})});
     if($("addOutline")) $("addOutline").onclick=()=>{
       const theme=$("outlineTheme").value||$("outlineCustom").value.trim();
       const ids=theme?Lit.sourceIdsForTheme(project,theme):[];
       project.litOutline.push({theme,sourceIds:ids,job:"",claim:"",synthesis:"",tension:"",conditions:"",transition:""});save();rerender("outline");
     };
-    document.querySelectorAll("[data-del-outline]").forEach(b=>b.onclick=()=>{project.litOutline.splice(Number(b.dataset.delOutline),1);save();rerender("outline")});
+    document.querySelectorAll("[data-del-outline]").forEach(b=>b.onclick=()=>{const i=Number(b.dataset.delOutline),removed=project.litOutline.splice(i,1)[0];save();rerender("outline");FlowUI.offerUndo("Outline row removed.",()=>{project.litOutline.splice(i,0,removed);save();rerender("outline")})});
     const bindOutline=(attr,key,split=false)=>document.querySelectorAll(`[${attr}]`).forEach(el=>el.oninput=()=>{const i=Number(el.getAttribute(attr));project.litOutline[i][key]=split?el.value.split(",").map(x=>x.trim()).filter(Boolean):el.value;save()});
     bindOutline("data-outline-theme","theme");bindOutline("data-outline-sources","sourceIds",true);bindOutline("data-outline-job","job");bindOutline("data-outline-claim","claim");bindOutline("data-outline-synth","synthesis");bindOutline("data-outline-tension","tension");bindOutline("data-outline-cond","conditions");bindOutline("data-outline-transition","transition");
-    if($("downloadLitOutline")) $("downloadLitOutline").onclick=()=>download("literature-review-outline.md",Lit.outlineMarkdown(project),"text/markdown");
+    if($("downloadLitOutline")) $("downloadLitOutline").onclick=()=>RMSWordExport.fromMarkdown("literature-review-outline.doc",Lit.outlineMarkdown(project),"Literature Review Outline");
   }
 
 
@@ -445,19 +545,27 @@
 
   function methodsDesignTab(){
     const d=project.methods.design||{}, p=Methods.designProfile(project), a=PathCoach.methodSection(project,"design");
-    return `<div class="methods-section"><h4>Design map</h4><p>The research question determines what evidence is needed. The selected design is <b>${esc(p.type)}</b>. Use this page to define how units reach conditions/exposures and what causal comparison is actually possible.</p>
-      <div class="form-grid two">
-        ${mInput("mdPrimaryOutcome","Primary outcome",d.primaryOutcome||project.data.outcomeDV||"")}
-        ${mInput("mdExperimentalUnit",p.isExp||p.isQuasi?"Experimental unit":"Observational / analytic unit",d.experimentalUnit||project.data.experimentalUnit||"")}
-        ${mInput("mdAssignment","How units reach conditions/exposure",d.assignment||"","select",["Random assignment","Nonrandom assignment","Naturally occurring / observed exposure","Single-group / no assignment","Not applicable"])}
-        ${mInput("mdSameUnit","Does the same unit receive multiple conditions/time points?",d.sameUnitAllConditions||"","select",["yes","no","not applicable"])}
-        ${mInput("mdOrder","Randomization / counterbalancing / order plan",d.orderPlan||"","textarea")}
-        ${mInput("mdBlinding","Blinding / masking / expectancy-bias plan",d.blinding||"","textarea")}
-        ${mInput("mdFidelity","Implementation/fidelity check",d.fidelity||"","textarea")}
-        ${mInput("mdClaim","Maximum claim this design could support",d.claimCeiling||project.data.claimBoundary||"","textarea")}
-      </div>
-      <h4 style="margin-top:16px">Conditions / levels / comparison</h4><div class="conditions-grid">${conditionsRows()||'<p class="muted tiny">No conditions recorded.</p>'}</div><button class="ghost small" id="addCondition">Add condition</button>
-      <h4 style="margin-top:16px">Design check</h4>${a.issues.map(x=>`<div class="issue ${x[0]}"><b>${esc(x[1])}</b><p>${esc(x[2])}</p></div>`).join("")||'<div class="issue info"><b>No major design-structure issue detected</b><p>Continue through replication, sampling, measurement, ethics, and data structure before collection.</p></div>'}
+    return `<div class="methods-section"><h4>Design map</h4><p>Start with the evidence structure that answers the research question. Advanced implementation protections can be added after the core comparison is clear.</p>
+      <section class="method-substep open"><div class="method-substep-head"><span>1</span><div><b>Core design decision</b><small>Outcome, independent unit, assignment/exposure structure, and claim boundary</small></div></div>
+        <div class="form-grid two">
+          ${mInput("mdPrimaryOutcome","Primary outcome",d.primaryOutcome||project.data.outcomeDV||"")}
+          ${mInput("mdExperimentalUnit",p.isExp||p.isQuasi?"Experimental unit":"Observational / analytic unit",d.experimentalUnit||project.data.experimentalUnit||"")}
+          ${mInput("mdAssignment","How units reach conditions/exposure",d.assignment||"","select",["Random assignment","Nonrandom assignment","Naturally occurring / observed exposure","Single-group / no assignment","Not applicable"])}
+          ${mInput("mdClaim","Strongest claim this design could support",d.claimCeiling||project.data.claimBoundary||"","textarea")}
+        </div>
+      </section>
+      <details class="method-substep"><summary><span>2</span><div><b>Conditions and comparison structure</b><small>Open when the design has distinct conditions, exposures, groups, or time points.</small></div></summary>
+        <div class="form-grid two">${mInput("mdSameUnit","Does the same unit receive multiple conditions/time points?",d.sameUnitAllConditions||"","select",["yes","no","not applicable"])}</div>
+        <div class="conditions-grid">${conditionsRows()||'<p class="muted tiny">No conditions recorded.</p>'}</div><button class="ghost small" id="addCondition">Add condition / comparison group</button>
+      </details>
+      <details class="method-substep"><summary><span>3</span><div><b>Implementation protections</b><small>Randomization, order, masking, or fidelity checks when they genuinely apply</small></div></summary>
+        <div class="form-grid two">
+          ${mInput("mdOrder","Randomization / counterbalancing / order plan",d.orderPlan||"","textarea")}
+          ${mInput("mdBlinding","Blinding / masking / expectancy-bias plan",d.blinding||"","textarea")}
+          ${mInput("mdFidelity","Implementation/fidelity check",d.fidelity||"","textarea")}
+        </div>
+      </details>
+      <div style="margin-top:10px">${a.issues.map(x=>`<div class="issue ${x[0]}"><b>${esc(x[1])}</b><p>${esc(x[2])}</p></div>`).join("")||'<div class="issue info"><b>No major design-structure issue detected</b><p>Continue through units, sampling, measurement, ethics, and data structure before collection.</p></div>'}</div>
     </div>`;
   }
 
@@ -475,17 +583,27 @@
 
   function methodsReplicationTab(){
     const d=project.methods.design||{}, r=PathCoach.methodSection(project,"replication");
-    return `<div class="methods-section"><h4>Experimental unit, replication, repeated measurement, and subsampling</h4><p>Counting observations is not the same as counting independent units. This page protects against pseudoreplication.</p>
-      <div class="form-grid two">
-        ${mInput("mrUnit","Independent experimental/observational unit",d.experimentalUnit||"")}
-        ${mInput("mrNUnits","Number of independent units",d.independentUnits||"")}
-        ${mInput("mrRepeats","Repeated measurements/trials per unit",d.repeatsPerUnit||"")}
-        ${mInput("mrSubs","Subsamples/technical measurements per unit",d.subsamplesPerUnit||"")}
-        ${mInput("mrRowUnit","What one data-table row will represent",d.rowUnit||project.data.rowUnit||"")}
-        ${mInput("mrCluster","Clustering / nesting structure",d.cluster||"","textarea")}
-        ${mInput("mrRepReason","Why this replication structure is adequate/feasible",d.replicationReason||"","textarea")}
-        ${mInput("mrIndependence","How independence or dependence will be handled in analysis",d.independencePlan||"","textarea")}
-      </div>
+    return `<div class="methods-section"><h4>Independent units, repeated measures, and replication</h4><p>First decide what counts as one independent case. Then describe repeats, subsamples, and dependence only as far as your design needs them.</p>
+      <section class="method-substep open"><div class="method-substep-head"><span>1</span><div><b>What is one independent case?</b><small>This decision controls the effective sample size and analysis structure.</small></div></div>
+        <div class="form-grid two">
+          ${mInput("mrUnit","Independent experimental/observational unit",d.experimentalUnit||"")}
+          ${mInput("mrNUnits","Number of independent units",d.independentUnits||"")}
+          ${mInput("mrRowUnit","What one data-table row will represent",d.rowUnit||project.data.rowUnit||"")}
+        </div>
+      </section>
+      <details class="method-substep"><summary><span>2</span><div><b>Repeated or nested observations</b><small>Open when a unit is measured more than once or contains subsamples.</small></div></summary>
+        <div class="form-grid two">
+          ${mInput("mrRepeats","Repeated measurements/trials per unit",d.repeatsPerUnit||"")}
+          ${mInput("mrSubs","Subsamples/technical measurements per unit",d.subsamplesPerUnit||"")}
+          ${mInput("mrCluster","Clustering / nesting structure",d.cluster||"","textarea")}
+        </div>
+      </details>
+      <details class="method-substep"><summary><span>3</span><div><b>Why this structure is defensible</b><small>Explain adequacy and how dependence will be handled.</small></div></summary>
+        <div class="form-grid two">
+          ${mInput("mrRepReason","Why this replication structure is adequate/feasible",d.replicationReason||"","textarea")}
+          ${mInput("mrIndependence","How independence or dependence will be handled in analysis",d.independencePlan||"","textarea")}
+        </div>
+      </details>
       <div class="method-scorecards"><div class="method-scorecard"><span>Independent units</span><b>${r.nUnits||"—"}</b></div><div class="method-scorecard"><span>Repeats / unit</span><b>${r.repeats||"—"}</b></div><div class="method-scorecard"><span>Subsamples / unit</span><b>${r.subs||"—"}</b></div><div class="method-scorecard"><span>Structure</span><b style="font-size:11px">${esc(Methods.inferStructure(project).structure)}</b></div></div>
       ${r.issues.map(x=>`<div class="issue ${x[0]}"><b>${esc(x[1])}</b><p>${esc(x[2])}</p></div>`).join("")}
     </div>`;
@@ -493,18 +611,29 @@
 
   function methodsSamplingTab(){
     const s=project.methods.sampling||{}, a=PathCoach.methodSection(project,"sampling");
-    return `<div class="methods-section"><h4>Population, sample, sampling, and recruitment</h4><p>Random sampling and random assignment solve different problems. Sampling affects who the results may represent; assignment affects causal comparability between conditions.</p>
-      <div class="form-grid two">
-        ${mInput("msPopulation","Target population / system",s.population||project.data.population||"","textarea")}
-        ${mInput("msFrame","Sampling frame / accessible population",s.frame||"","textarea")}
-        ${mInput("msSample","Actual sample",s.sample||project.data.sample||"","textarea")}
-        ${mInput("msMethod","Sampling method",s.method||project.data.samplingMethod||"","select",["Census / all available units","Simple random / probability sample","Stratified probability sample","Cluster sample","Systematic sample","Convenience sample","Purposive / criterion sample","Snowball / network sample","Other"])}
-        ${mInput("msRecruit","Recruitment / selection procedure",s.recruitment||"","textarea")}
-        ${mInput("msInclusion","Inclusion criteria",s.inclusion||"","textarea")}
-        ${mInput("msExclusion","Eligibility exclusion criteria",s.exclusion||"","textarea")}
-        ${mInput("msSize","Planned sample/unit count and rationale",s.sizeRationale||"","textarea")}
-        ${mInput("msGeneral","Generalization boundary",s.generalization||project.data.sampleLimits||"","textarea")}
-      </div>${a.issues.map(x=>`<div class="issue ${x[0]}"><b>${esc(x[1])}</b><p>${esc(x[2])}</p></div>`).join("")}
+    return `<div class="methods-section"><h4>Population, sample, sampling, and recruitment</h4><p>Keep two questions separate. Who or what do you want the results to describe? Who or what will actually provide the evidence?</p>
+      <section class="method-substep open"><div class="method-substep-head"><span>1</span><div><b>Who or what is in scope?</b><small>Target population/system, accessible frame, and actual sample/corpus</small></div></div>
+        <div class="form-grid two">
+          ${mInput("msPopulation","Target population / system",s.population||project.data.population||"","textarea")}
+          ${mInput("msFrame","Sampling frame / accessible population",s.frame||"","textarea")}
+          ${mInput("msSample","Actual sample / corpus",s.sample||project.data.sample||"","textarea")}
+        </div>
+      </section>
+      <details class="method-substep"><summary><span>2</span><div><b>How will cases enter the study?</b><small>Selection method, recruitment, and eligibility rules</small></div></summary>
+        <div class="form-grid two">
+          ${mInput("msMethod","Sampling / selection method",s.method||project.data.samplingMethod||"","select",["Census / all available units","Simple random / probability sample","Stratified probability sample","Cluster sample","Systematic sample","Convenience sample","Purposive / criterion sample","Snowball / network sample","Other"])}
+          ${mInput("msRecruit","Recruitment / selection procedure",s.recruitment||"","textarea")}
+          ${mInput("msInclusion","Inclusion criteria",s.inclusion||"","textarea")}
+          ${mInput("msExclusion","Eligibility exclusion criteria",s.exclusion||"","textarea")}
+        </div>
+      </details>
+      <details class="method-substep"><summary><span>3</span><div><b>How far can the evidence reasonably extend?</b><small>Sample-size rationale and generalization/transferability boundary</small></div></summary>
+        <div class="form-grid two">
+          ${mInput("msSize","Planned sample/unit count and rationale",s.sizeRationale||"","textarea")}
+          ${mInput("msGeneral","Generalization / transferability boundary",s.generalization||project.data.sampleLimits||"","textarea")}
+        </div>
+      </details>
+      ${a.issues.map(x=>`<div class="issue ${x[0]}"><b>${esc(x[1])}</b><p>${esc(x[2])}</p></div>`).join("")}
     </div>`;
   }
 
@@ -519,23 +648,34 @@
   function methodsEthicsTab(){
     const e=project.methods.ethics||{}, r=PathCoach.methodSection(project,"ethics");
     const cls=r.status==="clear"?"ethics-clear":r.status==="teacher_review"?"ethics-review":"ethics-stop";
-    return `<div class="methods-section"><h4>Ethics, safety, privacy, and authority</h4><p>This page is an educational screening tool, not formal ethics approval. School policy, institutional review, applicable law, and teacher supervision still govern what may be done.</p>
-      <div class="concept-box ${cls}"><strong>Status</strong><br>${esc(r.status.replaceAll("_"," "))}</div>
-      <div class="form-grid two">
-        ${mInput("meHuman","Human participants or identifiable human records?",e.humanParticipants||"","select",["yes","no"])}
-        ${mInput("meMinors","Are any participants minors?",e.minors||"","select",["yes","no","not applicable"])}
-        ${mInput("meIdent","Will you collect identifiers, images, audio, video, location, or linkable records?",e.identifiable||"","select",["yes","no"])}
-        ${mInput("meSensitive","Does the study involve sensitive personal information?",e.sensitive||"","select",["yes","no"])}
-        ${mInput("meIntervention","Will you assign/manipulate an intervention involving people?",e.intervention||"","select",["yes","no"])}
-        ${mInput("meAuthority","Who has authority to approve/implement the intervention or data access?",e.authority||"","textarea")}
-        ${mInput("meRisks","Possible physical, emotional, social, privacy, academic, environmental, or other risks",e.risks||"","textarea")}
-        ${mInput("meConsent","Consent / permission process",e.consent||"","textarea")}
-        ${mInput("meAssent","Assent / parent-guardian permission plan if relevant",e.assent||"","textarea")}
-        ${mInput("meWithdraw","Voluntariness / withdrawal plan",e.withdrawal||"","textarea")}
-        ${mInput("meDeid","Deidentification / confidentiality plan",e.deidentification||"","textarea")}
-        ${mInput("meStorage","Storage, access, retention, and deletion plan",e.storage||"","textarea")}
-        ${mInput("meRiskProc","Procedure-specific safety controls",e.procedureRisk||"","textarea")}
-      </div>${r.issues.map(x=>`<div class="issue ${x[0]}"><b>${esc(x[1])}</b><p>${esc(x[2])}</p></div>`).join("")}
+    return `<div class="methods-section"><h4>Ethics, safety, privacy, and authority</h4><p>This educational screen helps identify when teacher, school, institutional, or other approval is needed. It does not provide formal ethics approval.</p>
+      <div class="concept-box ${cls}"><strong>Current route</strong><br>${esc(r.status.replaceAll("_"," "))}</div>
+      <section class="method-substep open"><div class="method-substep-head"><span>1</span><div><b>Quick screening</b><small>Identify participant, privacy, sensitivity, or intervention conditions that change the review route.</small></div></div>
+        <div class="form-grid two">
+          ${mInput("meHuman","Human participants or identifiable human records?",e.humanParticipants||"","select",["yes","no"])}
+          ${mInput("meMinors","Are any participants minors?",e.minors||"","select",["yes","no","not applicable"])}
+          ${mInput("meIdent","Will you collect identifiers, images, audio, video, location, or linkable records?",e.identifiable||"","select",["yes","no"])}
+          ${mInput("meSensitive","Does the study involve sensitive personal information?",e.sensitive||"","select",["yes","no"])}
+          ${mInput("meIntervention","Will you assign/manipulate an intervention involving people?",e.intervention||"","select",["yes","no"])}
+        </div>
+      </section>
+      <details class="method-substep"><summary><span>2</span><div><b>Approval and risk</b><small>Who can authorize the work and what could reasonably go wrong?</small></div></summary>
+        <div class="form-grid two">
+          ${mInput("meAuthority","Who has authority to approve/implement the intervention or data access?",e.authority||"","textarea")}
+          ${mInput("meRisks","Possible physical, emotional, social, privacy, academic, environmental, or other risks",e.risks||"","textarea")}
+          ${mInput("meRiskProc","Risk-reduction / safe-procedure plan",e.procedureRisk||"","textarea")}
+        </div>
+      </details>
+      <details class="method-substep"><summary><span>3</span><div><b>Participation and privacy protections</b><small>Open when human participants or identifiable records are involved.</small></div></summary>
+        <div class="form-grid two">
+          ${mInput("meConsent","Consent / permission process",e.consent||"","textarea")}
+          ${mInput("meAssent","Assent / parent-guardian permission plan if relevant",e.assent||"","textarea")}
+          ${mInput("meWithdraw","Voluntariness / withdrawal plan",e.withdrawal||"","textarea")}
+          ${mInput("meDeid","Deidentification / confidentiality plan",e.deidentification||"","textarea")}
+          ${mInput("meStorage","Storage, access, retention, and deletion plan",e.storage||"","textarea")}
+        </div>
+      </details>
+      <div style="margin-top:10px">${r.issues.map(x=>`<div class="issue ${x[0]}"><b>${esc(x[1])}</b><p>${esc(x[2])}</p></div>`).join("")}</div>
     </div>`;
   }
 
@@ -551,7 +691,7 @@
 
   function methodsDataTab(){
     const d=project.methods.design||{}, a=PathCoach.methodSection(project,"data");
-    const rows=(project.schema||[]).map((r,i)=>`<div class="schema-row" style="grid-template-columns:1fr 120px 180px 1.4fr 90px 48px"><input data-schema-name="${i}" value="${esc(r.name||"")}"><select data-schema-type="${i}">${["ID","Numeric","Count","Categorical","Ordinal","Binary","Text","Date/time"].map(o=>`<option ${r.type===o?"selected":""}>${o}</option>`).join("")}</select><input data-schema-role="${i}" value="${esc(r.role||"")}" placeholder="role"><input data-schema-def="${i}" value="${esc(r.definition||"")}" placeholder="unit/categories/coding/allowed values"><input data-schema-missing="${i}" value="${esc(r.missing||"")}" placeholder="missing code"><button class="danger small" data-schema-del="${i}">×</button></div>`).join("");
+    const rows=(project.schema||[]).map((r,i)=>`<div class="schema-row" style="grid-template-columns:1fr 120px 180px 1.4fr 90px 48px"><input data-schema-name="${i}" value="${esc(r.name||"")}"><select data-schema-type="${i}">${["ID","Numeric","Count","Categorical","Ordinal","Binary","Text","Date/time"].map(o=>`<option ${r.type===o?"selected":""}>${o}</option>`).join("")}</select><input data-schema-role="${i}" value="${esc(r.role||"")}" placeholder="role"><input data-schema-def="${i}" value="${esc(r.definition||"")}" placeholder="unit/categories/coding/allowed values"><input data-schema-missing="${i}" value="${esc(r.missing||"")}" placeholder="missing code"><button class="danger small" data-schema-del="${i}" aria-label="Remove data column ${i+1}">×</button></div>`).join("");
     return `<div class="methods-section"><h4>Data table & dictionary</h4><p>Your research question decides the structure of the dataset. Define what one row represents, then define each column so another person could collect the same information.</p>
       <div class="form-grid two">${mInput("mRowUnit","What ONE row represents",d.rowUnit||project.data.rowUnit||"")}${mInput("mIdPlan","Identifier / linkage plan",d.identifierPlan||"","textarea")}</div>
       <div class="schema-list">${rows||'<p class="muted tiny">No columns defined.</p>'}</div>
@@ -563,7 +703,7 @@
   function methodsAuditTab(){
     const r=PathCoach.methodsReadiness(project), versions=project.methods.protocolVersions||[];
     return `<div class="methods-section"><h4>Pre-collection method audit</h4><p>Do this before final data collection. A locked protocol can still be amended later, but the previous version remains in the notebook.</p>
-      <div class="audit-summary"><div class="audit-score">${r.score}</div><div><h4>${esc(r.label)}</h4><p>${r.critical} critical issue(s) · ${r.warning} warning(s) · ${r.info} information note(s)</p><p>Ethics/safety route: <b>${esc(r.ethicsStatus)}</b></p></div></div>
+      <div class="audit-summary"><div><h4>${esc(r.label)}</h4><p>${r.critical} item(s) to fix before collection · ${r.warning} item(s) to review · ${r.info} information note(s)</p><p>Ethics/safety route: <b>${esc(r.ethicsStatus.replaceAll("_"," "))}</b></p></div></div>
       ${Object.entries(r.sections).map(([name,x])=>`<div class="method-row"><div class="method-row-head"><b>${esc(name)}</b><span class="role-pill">${(x.issues||[]).length} issue(s)</span></div>${(x.issues||[]).slice(0,5).map(i=>`<div class="issue ${i[0]}"><b>${esc(i[1])}</b><p>${esc(i[2])}</p></div>`).join("")||'<p>No issue detected by current rule set.</p>'}</div>`).join("")}
       <div class="button-row"><button id="lockProtocol" class="primary" ${r.critical||r.ethicsStatus==="do_not_facilitate"?"disabled":""}>Lock protocol version</button><button id="downloadMethodPlan" class="ghost">Export method plan</button></div>
       ${r.critical?'<div class="gap-warning">Resolve critical methodological issues before locking the protocol.</div>':""}
@@ -573,11 +713,11 @@
   }
 
   function methodsWorkspace(active="design"){
-    Methods.normalizeProject(project);
+    Methods.normalizeProject(project);Flow.syncCanonical(project);
     const wrap=document.createElement("div");wrap.className="modal-backdrop";wrap.id="methodsBackdrop";
     const tabs=[["design","1 · Design"],["vars","2 · Variables"],["rep","3 · Units & replication"],["sample","4 · Sampling"],["measure","5 · Measurement"],["ethics","6 · Ethics"],["procedure","7 · Procedure"],["data","8 · Data table"],["audit","9 · Audit & lock"]];
     const content=()=>active==="design"?methodsDesignTab():active==="vars"?methodsVariablesTab():active==="rep"?methodsReplicationTab():active==="sample"?methodsSamplingTab():active==="measure"?methodsMeasurementTab():active==="ethics"?methodsEthicsTab():active==="procedure"?methodsProcedureTab():active==="data"?methodsDataTab():methodsAuditTab();
-    wrap.innerHTML=`<div class="modal methods-modal"><div style="display:flex;justify-content:space-between;gap:12px;align-items:start"><div><h3>Methods & Study Design Laboratory</h3><p>Question → design → variables/constructs → units → sample → measurement → ethics → procedure → data structure → protocol lock.</p></div><button class="ghost small" id="closeMethods">Close</button></div><div class="methods-tabs">${tabs.map(([k,l])=>`<button data-mtab="${k}" class="${active===k?"active":""}">${l}</button>`).join("")}</div>${Guide.labPanel("methods",active)}<div>${content()}</div></div>`;
+    wrap.innerHTML=`<div class="modal methods-modal"><div style="display:flex;justify-content:space-between;gap:12px;align-items:start"><div><div class="guide-kicker">Study-design workflow</div><h3>Methods & Study Design Laboratory</h3><p>Work through one method decision at a time. The full method route stays available from the step menu.</p></div><button class="ghost small" id="closeMethods">Close</button></div>${FlowUI.labStepper(tabs,active,"mtab")}${Guide.labPanel("methods",active)}<div>${content()}</div></div>`;
     document.body.appendChild(wrap);
     const rerender=tab=>{wrap.remove();methodsWorkspace(tab||active)};
     $("closeMethods").onclick=()=>wrap.remove();wrap.onclick=e=>{if(e.target===wrap)wrap.remove()};
@@ -587,47 +727,47 @@
 
   function bindMethodsWorkspace(rerender,active){
     const m=project.methods,d=m.design,s=m.sampling,e=m.ethics;
-    const set=(id,obj,key)=>{if($(id)){$(id).oninput=()=>{obj[key]=$(id).value;save()};$(id).onchange=$(id).oninput}};
+    const set=(id,obj,key,group)=>{if($(id)){$(id).oninput=()=>{const old=obj[key]??"",value=$(id).value;obj[key]=value;if(group)Flow.syncMethodFromLab(project,group,key,value);const pair=Object.entries(Flow.methodPairs||{}).find(([,path])=>path[0]===group&&path[1]===key);if(pair)Flow.noteFieldChange(project,pair[0],old,value);save()};$(id).onchange=$(id).oninput}};
     [["mdPrimaryOutcome","primaryOutcome"],["mdExperimentalUnit","experimentalUnit"],["mdAssignment","assignment"],["mdSameUnit","sameUnitAllConditions"],["mdOrder","orderPlan"],["mdBlinding","blinding"],["mdFidelity","fidelity"],["mdClaim","claimCeiling"],
      ["mrUnit","experimentalUnit"],["mrNUnits","independentUnits"],["mrRepeats","repeatsPerUnit"],["mrSubs","subsamplesPerUnit"],["mrRowUnit","rowUnit"],["mrCluster","cluster"],["mrRepReason","replicationReason"],["mrIndependence","independencePlan"],
-     ["mRowUnit","rowUnit"],["mIdPlan","identifierPlan"]].forEach(([id,k])=>set(id,d,k));
-    [["msPopulation","population"],["msFrame","frame"],["msSample","sample"],["msMethod","method"],["msRecruit","recruitment"],["msInclusion","inclusion"],["msExclusion","exclusion"],["msSize","sizeRationale"],["msGeneral","generalization"]].forEach(([id,k])=>set(id,s,k));
-    [["meHuman","humanParticipants"],["meMinors","minors"],["meIdent","identifiable"],["meSensitive","sensitive"],["meIntervention","intervention"],["meAuthority","authority"],["meRisks","risks"],["meConsent","consent"],["meAssent","assent"],["meWithdraw","withdrawal"],["meDeid","deidentification"],["meStorage","storage"],["meRiskProc","procedureRisk"]].forEach(([id,k])=>set(id,e,k));
+     ["mRowUnit","rowUnit"],["mIdPlan","identifierPlan"]].forEach(([id,k])=>set(id,d,k,"design"));
+    [["msPopulation","population"],["msFrame","frame"],["msSample","sample"],["msMethod","method"],["msRecruit","recruitment"],["msInclusion","inclusion"],["msExclusion","exclusion"],["msSize","sizeRationale"],["msGeneral","generalization"]].forEach(([id,k])=>set(id,s,k,"sampling"));
+    [["meHuman","humanParticipants"],["meMinors","minors"],["meIdent","identifiable"],["meSensitive","sensitive"],["meIntervention","intervention"],["meAuthority","authority"],["meRisks","risks"],["meConsent","consent"],["meAssent","assent"],["meWithdraw","withdrawal"],["meDeid","deidentification"],["meStorage","storage"],["meRiskProc","procedureRisk"]].forEach(([id,k])=>set(id,e,k,"ethics"));
 
     if($("addCondition")) $("addCondition").onclick=()=>{m.conditions.push({name:"",definition:""});save();rerender("design")};
     document.querySelectorAll("[data-cond-name]").forEach(x=>x.oninput=()=>{m.conditions[+x.dataset.condName].name=x.value;save()});
     document.querySelectorAll("[data-cond-def]").forEach(x=>x.oninput=()=>{m.conditions[+x.dataset.condDef].definition=x.value;save()});
-    document.querySelectorAll("[data-cond-del]").forEach(x=>x.onclick=()=>{m.conditions.splice(+x.dataset.condDel,1);save();rerender("design")});
+    document.querySelectorAll("[data-cond-del]").forEach(x=>x.onclick=()=>{const i=+x.dataset.condDel,removed=m.conditions.splice(i,1)[0];save();rerender("design");FlowUI.offerUndo("Condition removed.",()=>{m.conditions.splice(i,0,removed);save();rerender("design")})});
 
     if($("addConstruct")) $("addConstruct").onclick=()=>{m.constructs.push({name:"",role:Methods.roleOptions(project)[0],operational:""});save();rerender("vars")};
     document.querySelectorAll("[data-mc-name]").forEach(x=>x.oninput=()=>{m.constructs[+x.dataset.mcName].name=x.value;save()});
     document.querySelectorAll("[data-mc-role]").forEach(x=>x.onchange=()=>{m.constructs[+x.dataset.mcRole].role=x.value;save()});
     document.querySelectorAll("[data-mc-op]").forEach(x=>x.oninput=()=>{m.constructs[+x.dataset.mcOp].operational=x.value;save()});
-    document.querySelectorAll("[data-mc-del]").forEach(x=>x.onclick=()=>{m.constructs.splice(+x.dataset.mcDel,1);save();rerender("vars")});
+    document.querySelectorAll("[data-mc-del]").forEach(x=>x.onclick=()=>{const i=+x.dataset.mcDel,removed=m.constructs.splice(i,1)[0];save();rerender("vars");FlowUI.offerUndo("Construct or variable removed.",()=>{m.constructs.splice(i,0,removed);save();rerender("vars")})});
     if($("addControlled")) $("addControlled").onclick=()=>{m.controlled.push({name:"",definition:""});save();rerender("vars")};
     document.querySelectorAll("[data-ctl-name]").forEach(x=>x.oninput=()=>{m.controlled[+x.dataset.ctlName].name=x.value;save()});
     document.querySelectorAll("[data-ctl-def]").forEach(x=>x.oninput=()=>{m.controlled[+x.dataset.ctlDef].definition=x.value;save()});
-    document.querySelectorAll("[data-ctl-del]").forEach(x=>x.onclick=()=>{m.controlled.splice(+x.dataset.ctlDel,1);save();rerender("vars")});
+    document.querySelectorAll("[data-ctl-del]").forEach(x=>x.onclick=()=>{const i=+x.dataset.ctlDel,removed=m.controlled.splice(i,1)[0];save();rerender("vars");FlowUI.offerUndo("Controlled condition removed.",()=>{m.controlled.splice(i,0,removed);save();rerender("vars")})});
     if($("addConfounder")) $("addConfounder").onclick=()=>{m.confounders.push({name:"",plan:""});save();rerender("vars")};
     document.querySelectorAll("[data-cf-name]").forEach(x=>x.oninput=()=>{m.confounders[+x.dataset.cfName].name=x.value;save()});
     document.querySelectorAll("[data-cf-def]").forEach(x=>x.oninput=()=>{m.confounders[+x.dataset.cfDef].plan=x.value;save()});
-    document.querySelectorAll("[data-cf-del]").forEach(x=>x.onclick=()=>{m.confounders.splice(+x.dataset.cfDel,1);save();rerender("vars")});
+    document.querySelectorAll("[data-cf-del]").forEach(x=>x.onclick=()=>{const i=+x.dataset.cfDel,removed=m.confounders.splice(i,1)[0];save();rerender("vars");FlowUI.offerUndo("Potential confounder removed.",()=>{m.confounders.splice(i,0,removed);save();rerender("vars")})});
 
     if($("addMeasurement")) $("addMeasurement").onclick=()=>{m.measurements.push({construct:"",instrument:"",operational:"",scale:"",timing:"",reliability:"",validity:"",quality:""});save();rerender("measure")};
     ["construct","instrument","operational","scale","timing","reliability","validity","quality"].forEach(k=>document.querySelectorAll(`[data-mm-${k}]`).forEach(x=>x.oninput=()=>{m.measurements[+x.getAttribute(`data-mm-${k}`)][k]=x.value;save()}));
-    document.querySelectorAll("[data-mm-del]").forEach(x=>x.onclick=()=>{m.measurements.splice(+x.dataset.mmDel,1);save();rerender("measure")});
+    document.querySelectorAll("[data-mm-del]").forEach(x=>x.onclick=()=>{const i=+x.dataset.mmDel,removed=m.measurements.splice(i,1)[0];save();rerender("measure");FlowUI.offerUndo("Measurement record removed.",()=>{m.measurements.splice(i,0,removed);save();rerender("measure")})});
 
     if($("addProcedureStep")) $("addProcedureStep").onclick=()=>{m.procedureSteps.push({phase:"",action:"",record:"",deviation:""});save();rerender("procedure")};
     ["phase","action","record","dev"].forEach(k=>document.querySelectorAll(`[data-ps-${k}]`).forEach(x=>x.oninput=()=>{const idx=+x.getAttribute(`data-ps-${k}`);m.procedureSteps[idx][k==="dev"?"deviation":k]=x.value;save()}));
-    document.querySelectorAll("[data-ps-del]").forEach(x=>x.onclick=()=>{m.procedureSteps.splice(+x.dataset.psDel,1);save();rerender("procedure")});
+    document.querySelectorAll("[data-ps-del]").forEach(x=>x.onclick=()=>{const i=+x.dataset.psDel,removed=m.procedureSteps.splice(i,1)[0];save();rerender("procedure");FlowUI.offerUndo("Procedure step removed.",()=>{m.procedureSteps.splice(i,0,removed);save();rerender("procedure")})});
 
-    if($("mAddSchema")) $("mAddSchema").onclick=()=>{project.schema.push({name:`variable_${project.schema.length+1}`,type:"Numeric",role:"",definition:"",missing:"NA"});save();rerender("data")};
-    document.querySelectorAll("[data-schema-name]").forEach(x=>x.oninput=()=>{project.schema[+x.dataset.schemaName].name=x.value;save()});
-    document.querySelectorAll("[data-schema-type]").forEach(x=>x.onchange=()=>{project.schema[+x.dataset.schemaType].type=x.value;save()});
-    document.querySelectorAll("[data-schema-role]").forEach(x=>x.oninput=()=>{project.schema[+x.dataset.schemaRole].role=x.value;save()});
-    document.querySelectorAll("[data-schema-def]").forEach(x=>x.oninput=()=>{project.schema[+x.dataset.schemaDef].definition=x.value;save()});
-    document.querySelectorAll("[data-schema-missing]").forEach(x=>x.oninput=()=>{project.schema[+x.dataset.schemaMissing].missing=x.value;save()});
-    document.querySelectorAll("[data-schema-del]").forEach(x=>x.onclick=()=>{project.schema.splice(+x.dataset.schemaDel,1);save();rerender("data")});
+    if($("mAddSchema")) $("mAddSchema").onclick=()=>{project.schema.push({name:`variable_${project.schema.length+1}`,type:"Numeric",role:"",definition:"",missing:"NA"});Flow.syncSchemaSummary(project);save();rerender("data")};
+    document.querySelectorAll("[data-schema-name]").forEach(x=>x.oninput=()=>{project.schema[+x.dataset.schemaName].name=x.value;Flow.syncSchemaSummary(project);save()});
+    document.querySelectorAll("[data-schema-type]").forEach(x=>x.onchange=()=>{project.schema[+x.dataset.schemaType].type=x.value;Flow.syncSchemaSummary(project);save()});
+    document.querySelectorAll("[data-schema-role]").forEach(x=>x.oninput=()=>{project.schema[+x.dataset.schemaRole].role=x.value;Flow.syncSchemaSummary(project);save()});
+    document.querySelectorAll("[data-schema-def]").forEach(x=>x.oninput=()=>{project.schema[+x.dataset.schemaDef].definition=x.value;Flow.syncSchemaSummary(project);save()});
+    document.querySelectorAll("[data-schema-missing]").forEach(x=>x.oninput=()=>{project.schema[+x.dataset.schemaMissing].missing=x.value;Flow.syncSchemaSummary(project);save()});
+    document.querySelectorAll("[data-schema-del]").forEach(x=>x.onclick=()=>{const i=+x.dataset.schemaDel,removed=project.schema.splice(i,1)[0];Flow.syncSchemaSummary(project);save();rerender("data");FlowUI.offerUndo("Data column removed.",()=>{project.schema.splice(i,0,removed);Flow.syncSchemaSummary(project);save();rerender("data")})});
     if($("mDownloadTemplate")) $("mDownloadTemplate").onclick=()=>download("research-data-template.csv",Methods.csvTemplate(project),"text/csv");
     if($("mDownloadDictionary")) $("mDownloadDictionary").onclick=()=>download("research-data-dictionary.csv",Methods.dictionaryCSV(project),"text/csv");
 
@@ -636,12 +776,12 @@
       if(r.critical||r.ethicsStatus==="do_not_facilitate"){alert("Resolve critical path-specific or ethics issues before locking the protocol.");return}
       const snap=Methods.protocolSnapshot(project);
       snap.researchPath=project.pathway?.selected||"unsure";
-      snap.instructionalBaseline="RMS-INSTRUCTIONAL-BASELINE-v2.4";
+      snap.instructionalBaseline="RMS-INSTRUCTIONAL-BASELINE-v2.13.3";
       project.methods.protocolVersions.push(snap);
       if(project.pathway) project.pathway.protocolReviewRequired=false;
       save();rerender("audit");
     };
-    if($("downloadMethodPlan")) $("downloadMethodPlan").onclick=()=>download("method-planning-record.md",Methods.methodMarkdown(project),"text/markdown");
+    if($("downloadMethodPlan")) $("downloadMethodPlan").onclick=()=>RMSWordExport.fromMarkdown("method-planning-record.doc",Methods.methodMarkdown(project),"Method Planning Record");
   }
 
   function stageStudentWork(){
@@ -673,7 +813,7 @@
     const ds=Array.isArray(r.diagnostics)?r.diagnostics:[];
     const qs=Array.isArray(r.questions_for_student)?r.questions_for_student:[];
     const cites=r.source_status?.citations||[];
-    return `<div class="ai-result"><div class="ai-summary"><b>${esc(r.verdict||"AI review")}</b><br>${esc(r.summary||"")}</div>
+    return `<div class="ai-result"><div class="ai-summary"><b>${esc(r.verdict||"Chat review")}</b><br>${esc(r.summary||"")}</div>
       ${ds.map(x=>`<div class="coach-msg ${x.severity==="critical"?"bad":x.severity==="warning"?"warn":"info"}"><b>${esc(x.category||"Diagnostic")}</b><p>${esc(x.finding||"")}</p><p>${esc(x.why_it_matters||"")}</p><p class="next">Your task: ${esc(x.student_task||"")}</p></div>`).join("")}
       ${qs.length?`<div class="coach-feedback"><b>Questions to answer next</b><br>${qs.map((q,i)=>`${i+1}. ${esc(q)}`).join("<br>")}</div>`:""}
       ${r.next_action?`<div class="coach-feedback good"><b>Next action</b><br>${esc(r.next_action)}</div>`:""}
@@ -683,28 +823,56 @@
   }
 
   function bindStage(){
-    document.querySelectorAll(".stage-tabs button").forEach(b=>b.onclick=()=>{
-      document.querySelectorAll(".stage-tabs button").forEach(x=>x.classList.remove("active"));b.classList.add("active");
-      ["Learn","Work","Check"].forEach(n=>$("tab"+n).classList.toggle("hidden",b.dataset.tab!==n.toLowerCase()));
-    });
-    document.querySelectorAll("[data-field]").forEach(el=>{
-      el.oninput=()=>{project.data[el.dataset.field]=el.value;save();snapshot()};
-      el.onchange=el.oninput;
-    });
-    if($("saveIndependent")) $("saveIndependent").onclick=()=>{
-      const r=PathCoach.reviewStage(current().id,project);
-      const ev=Competency.captureIndependent(project,current().id,r,stageStudentWork());
-      save();
-      $("independentStatus").innerHTML=`<div class="coach-feedback ${ev.independentEligible?"good":"warn"}"><b>Independent checkpoint saved</b><br>${ev.independentEligible?`This attempt was captured before any recorded support in Stage ${ev.stage}. Diagnostic feedback remains hidden until you request a review.`:`This checkpoint was saved after ${ev.priorSupportCount} recorded support event(s), so it will not be counted as independent evidence.`}</div>`;
+    const activateTab=(tab)=>{
+      project.flow.activeTabByStage[current().id]=tab;save();
+      document.querySelectorAll(".stage-tabs button").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));
+      ["Learn","Work","Check"].forEach(n=>$("tab"+n)?.classList.toggle("hidden",tab!==n.toLowerCase()));
+      if(tab==="check"){
+        const already=(project.competency?.independentCheckpoints||[]).some(x=>Number(x.stage)===Number(current().id));
+        if(!already){
+          const diagnostic=PathCoach.reviewStage(current().id,project);
+          Competency.captureIndependent(project,current().id,diagnostic,stageStudentWork());
+          save();
+        }
+      }
+      window.scrollTo({top:0,behavior:"smooth"});
     };
-    if($("reviewStage")) $("reviewStage").onclick=()=>{
+    document.querySelectorAll(".stage-tabs button").forEach(b=>b.onclick=()=>activateTab(b.dataset.tab));
+    document.querySelectorAll("[data-go-tab]").forEach(b=>b.onclick=()=>activateTab(b.dataset.goTab));
+    document.querySelectorAll("[data-route-open]").forEach(b=>b.onclick=()=>FlowUI.openRoute());
+    if($("workHelpBtn"))$("workHelpBtn").onclick=()=>HelpUI.openGlobal();
+
+    document.querySelectorAll("[data-section-step]").forEach(b=>b.onclick=()=>{
+      Flow.setSection(project,current().id,Number(b.dataset.sectionStep));
+      project.flow.activeTabByStage[current().id]="work";save();renderStage();window.scrollTo({top:0,behavior:"smooth"});
+    });
+
+    document.querySelectorAll("[data-field]").forEach(el=>{
+      const update=()=>{
+        const key=el.dataset.field,old=project.data[key]??"",next=el.value;
+        const affected=Flow.noteFieldChange(project,key,old,next);
+        Flow.syncDataField(project,key,next);
+        save();snapshot();updateCurrentContextStrip();Guide.updateResponseCount?.(key,next);
+        if(affected.length)renderNav();
+      };
+      el.oninput=update;el.onchange=update;
+    });
+
+    const runLocalCheck=()=>{
       const r=PathCoach.reviewStage(current().id,project);
+      const already=(project.competency?.independentCheckpoints||[]).some(x=>Number(x.stage)===Number(current().id));
+      if(!already)Competency.captureIndependent(project,current().id,r,stageStudentWork());
       project.reviews.push({stage:current().id,time:new Date().toISOString(),kind:"local",score:r.score,label:r.label,messages:r.messages});
       Competency.recordReview(project,current().id,r,"local");
-      Competency.recordSupport(project,current().id,1,"Local diagnostic review","Rule-based diagnostic feedback");
+      Competency.recordSupport(project,current().id,1,"Check my work","Rule-based diagnostic feedback");
       save();
-      $("coachReview").innerHTML=`<div class="coach-review-result"><div class="coach-score"><div class="score-circle">${r.score}</div><div class="score-label"><strong>${esc(r.label)}</strong><span>Diagnostic readiness score, not a grade</span></div></div>${r.messages.length?r.messages.map(x=>`<div class="coach-msg ${x.level}"><b>${esc(x.title)}</b><p>${esc(x.body)}</p>${x.next?`<p class="next">Next move: ${esc(x.next)}</p>`:""}</div>`).join(""):`<div class="coach-msg good"><b>No major rule-based issue detected</b><p>The stage passes the current local checks. Teacher/expert review can still identify issues this heuristic cannot detect.</p></div>`}</div>`;
+      const html=`<div class="coach-review-result"><div class="score-label"><strong>${esc(r.label||"Check complete")}</strong><span>This is guidance for revision, not a grade.</span></div>${r.messages.length?r.messages.slice(0,6).map(x=>`<div class="coach-msg ${x.level}"><b>${esc(x.title)}</b><p>${esc(x.body)}</p>${x.next?`<p class="next">Next move: ${esc(x.next)}</p>`:""}</div>`).join(""):`<div class="coach-msg good"><b>No major issue detected by the current checks</b><p>Your work passes the current rule-based check. You can still revise it as later evidence changes your thinking.</p></div>`}</div>`;
+      if($("coachReview"))$("coachReview").innerHTML=html;
+      if($("stageCheckResult"))$("stageCheckResult").innerHTML=html;
     };
+    if($("reviewStage"))$("reviewStage").onclick=runLocalCheck;
+    if($("checkStagePrimary"))$("checkStagePrimary").onclick=runLocalCheck;
+
     if($("reviewAI")) $("reviewAI").onclick=async()=>{
       const btn=$("reviewAI"); btn.disabled=true; btn.textContent="Reviewing…";
       const local=PathCoach.reviewStage(current().id,project);
@@ -720,11 +888,11 @@
       try{
         const r=await AI.review(payload);
         project.reviews.push({stage:current().id,time:new Date().toISOString(),kind:"AI",verdict:r.verdict,label:r.verdict});
-        Competency.recordSupport(project,current().id,1,"AI Coach diagnostic","Source-grounded diagnostic review when configured");
+        Competency.recordSupport(project,current().id,1,"Chat feedback","Source-grounded diagnostic review when configured");
         save(); $("aiCoachReview").innerHTML=renderAIResponse(r);
       }catch(err){
-        $("aiCoachReview").innerHTML=`<div class="coach-feedback bad"><b>AI Coach unavailable</b><br>${esc(err.message)}</div>`;
-      }finally{btn.disabled=false;btn.textContent="Ask AI Coach";}
+        $("aiCoachReview").innerHTML=`<div class="coach-feedback bad"><b>Chat feedback is unavailable right now</b><br>${esc(err.message)}</div>`;
+      }finally{btn.disabled=false;btn.textContent="Ask Chat for deeper feedback";}
     };
     if($("runInterest")) $("runInterest").onclick=()=>{
       Competency.recordSupport(project,current().id,2,"Interest Compass","Conceptual research-pathway cue");
@@ -735,36 +903,46 @@
       Competency.recordSupport(project,current().id,3,"Boolean Search Builder","Structured search construction scaffold");
       const q=Coach.makeBoolean([$(`boolA`).value,$(`boolB`).value,$(`boolC`).value]);
       $("booleanResult").innerHTML=q?`<div class="citation-output">${esc(q)}</div>`:`<div class="coach-feedback warn">Add at least one concept block.</div>`;
-      if(q){project.data.searchStrings=q;save();}
+      if(q){Flow.syncDataField(project,"searchStrings",q);save();}
     };
     if($("runDesignMatcher")) $("runDesignMatcher").onclick=()=>{
       Competency.recordSupport(project,current().id,3,"Research Design Matcher","Structured design-selection scaffold");
       const r=Coach.designRecommendation($("dmGoal").value,$("dmManip").value,$("dmAssign").value,$("dmEvidence").value);
       $("designMatcherResult").innerHTML=`<div class="wizard-result"><h4>${esc(r.design)}</h4><p>${esc(r.why)}</p><div class="stats-note"><b>Claim ceiling:</b> ${esc(r.ceiling)}</div><button id="useDesign" class="primary small">Save as working design</button></div>`;
-      $("useDesign").onclick=()=>{project.data.designType=r.design;project.data.designWhy=r.why;project.data.claimBoundary=r.ceiling;save();renderStage();activateWork()};
+      $("useDesign").onclick=()=>{const old=project.data.designType||"";Flow.noteFieldChange(project,"designType",old,r.design);Flow.syncDataField(project,"designType",r.design);Flow.syncDataField(project,"designWhy",r.why);Flow.syncDataField(project,"claimBoundary",r.ceiling);save();renderStage();activateWork()};
     };
-    if($("addSchema")) $("addSchema").onclick=()=>{project.schema.push({name:`variable_${project.schema.length+1}`,type:"Numeric",definition:""});save();renderStage();activateWork()};
-    document.querySelectorAll("[data-schema-name]").forEach(el=>el.oninput=()=>{project.schema[Number(el.dataset.schemaName)].name=el.value;save()});
-    document.querySelectorAll("[data-schema-type]").forEach(el=>el.onchange=()=>{project.schema[Number(el.dataset.schemaType)].type=el.value;save()});
-    document.querySelectorAll("[data-schema-def]").forEach(el=>el.oninput=()=>{project.schema[Number(el.dataset.schemaDef)].definition=el.value;save()});
-    document.querySelectorAll("[data-schema-del]").forEach(el=>el.onclick=()=>{project.schema.splice(Number(el.dataset.schemaDel),1);save();renderStage();activateWork()});
+    if($("addSchema")) $("addSchema").onclick=()=>{project.schema.push({name:`variable_${project.schema.length+1}`,type:"Numeric",definition:""});Flow.syncSchemaSummary(project);save();renderStage();activateWork()};
+    document.querySelectorAll("[data-schema-name]").forEach(el=>el.oninput=()=>{project.schema[Number(el.dataset.schemaName)].name=el.value;Flow.syncSchemaSummary(project);save()});
+    document.querySelectorAll("[data-schema-type]").forEach(el=>el.onchange=()=>{project.schema[Number(el.dataset.schemaType)].type=el.value;Flow.syncSchemaSummary(project);save()});
+    document.querySelectorAll("[data-schema-def]").forEach(el=>el.oninput=()=>{project.schema[Number(el.dataset.schemaDef)].definition=el.value;Flow.syncSchemaSummary(project);save()});
+    document.querySelectorAll("[data-schema-del]").forEach(el=>el.onclick=()=>{const i=Number(el.dataset.schemaDel),removed=project.schema.splice(i,1)[0];Flow.syncSchemaSummary(project);save();renderStage();activateWork();FlowUI.offerUndo("Data column removed.",()=>{project.schema.splice(i,0,removed);Flow.syncSchemaSummary(project);save();renderStage();activateWork()})});
     if($("downloadSchema")) $("downloadSchema").onclick=()=>{
       if(!project.schema.length){alert("Add at least one column first.");return}
       const headers=project.schema.map(r=>`"${String(r.name).replaceAll('"','""')}"`).join(",");
       download("research-data-template.csv",headers+"\\n","text/csv");
     };
 
-    if($("markReady")) $("markReady").onclick=()=>{
+    const toggleReady=()=>{
       const stageId=current().id;
-      if(project.ready[stageId]){project.ready[stageId]=false;save();renderAll();return}
+      if(project.ready[stageId]){
+        project.ready[stageId]=false;project.flow.activeTabByStage[stageId]="check";save();renderAll();return;
+      }
       const gate=PathCoach.stageGate(stageId,project);
       if(!gate.canMarkReady){
         const target=$("pathGateFeedback");
-        if(target) target.innerHTML=`<div class="coach-feedback warn"><b>This stage is not ready on the ${esc(PathCoach.pathName(project))} path yet.</b><br>${gate.missing?.length?`Complete: ${gate.missing.map(k=>esc(Paths.label(project,k,k))).join(", ")}.<br>`:""}${gate.blockingMessages?.map(x=>esc(x.body)).join("<br>")||""}<br>Open the field help or run the local review for a specific next move.</div>`;
+        if(target)target.innerHTML=`<div class="coach-feedback warn"><b>There are still decisions to finish before continuing.</b><br>${gate.missing?.length?`Complete: ${gate.missing.map(k=>esc(Flow.fieldLabel(project,k,Paths.label(project,k,k)))).join(", ")}.<br>`:""}${gate.blockingMessages?.map(x=>esc(x.body)).join("<br>")||""}<br>Open Help beside the relevant field if you are unsure what to change.</div>`;
         return;
       }
-      project.ready[stageId]=true;save();renderAll();
+      project.ready[stageId]=true;Flow.clearReview(project,stageId);project.flow.activeTabByStage[stageId]="check";save();renderAll();
     };
+    if($("markReady"))$("markReady").onclick=toggleReady;
+    if($("markReadyBottom"))$("markReadyBottom").onclick=toggleReady;
+    if($("continueNextStage"))$("continueNextStage").onclick=()=>{const n=current().id+1;if(n<=18){project.currentStage=n;Flow.markVisited(project,n);project.flow.activeTabByStage[n]="learn";save();renderAll();window.scrollTo({top:0,behavior:"smooth"})}};
+    document.querySelectorAll("[data-open-schema-builder]").forEach(b=>b.onclick=()=>methodsWorkspace("data"));
+    if($("openStageLitTool"))$("openStageLitTool").onclick=()=>literatureWorkspace(current().id===5?"search":current().id===6?"sources":current().id===7?"synth":"outline");
+    if($("openStageMethodsTool"))$("openStageMethodsTool").onclick=()=>methodsWorkspace(current().id===9?"design":current().id===10?"vars":current().id===11?"sample":"procedure");
+    if($("openStageDataTool"))$("openStageDataTool").onclick=()=>DataLab.open(project,save,current().id===13?"quality":current().id===14?"setup":current().id===15?"history":"import");
+    if($("openStageWritingTool"))$("openStageWritingTool").onclick=()=>WritingLab.open(project,save,current().id===15?"results":current().id===16?"discussion":current().id===17?"closing":"audit");
     if($("checkRQ")) $("checkRQ").onclick=()=>{const f=E.questionFeedback(project.data.finalRQ,project.data.questionType);$("rqFeedback").innerHTML=`<div class="coach-feedback ${f.length>1?"warn":"good"}">${f.map(esc).join("<br>")}</div>`};
     if($("openMethodsFromStage")) $("openMethodsFromStage").onclick=()=>methodsWorkspace(current().id===9?"design":current().id===10?"vars":current().id===11?"sample":"data");
     if($("openDataFromStage")) $("openDataFromStage").onclick=()=>DataLab.open(project,save,"setup");
@@ -775,7 +953,7 @@
       project.sources.push({citation:$("srcCitation").value,type:$("srcType").value,design:$("srcDesign").value,sample:$("srcSample").value,measures:$("srcMeasures").value,finding:$("srcFinding").value,limits:$("srcLimits").value,relevance:$("srcRelevance").value,themes:$("srcThemes").value.split(",").map(x=>x.trim()).filter(Boolean)});
       save();renderStage();activateWork();
     };
-    document.querySelectorAll("[data-del-source]").forEach(b=>b.onclick=()=>{project.sources.splice(Number(b.dataset.delSource),1);save();renderStage();activateWork()});
+    document.querySelectorAll("[data-del-source]").forEach(b=>b.onclick=()=>{const i=Number(b.dataset.delSource),removed=project.sources.splice(i,1)[0];save();renderStage();activateWork();FlowUI.offerUndo("Source record removed.",()=>{project.sources.splice(i,0,removed);save();renderStage();activateWork()})});
     if($("runWizard")) $("runWizard").onclick=()=>{
       Competency.recordSupport(project,current().id,3,"Statistics decision wizard","Structured analysis-selection scaffold");
       const cfg={structure:$("statStructure").value,outcome:$("statOutcome").value,assumptions:$("statAssume").value};
@@ -783,7 +961,7 @@
       const r=E.statsRecommendation(cfg);
       project.data.statsWizard=cfg;project.data.statsRecommendation=r;save();
       $("wizardResult").innerHTML=`<div class="wizard-result"><h4>Recommended analysis family</h4><dl><dt>Primary</dt><dd>${esc(r.primary)}</dd><dt>Graph</dt><dd>${esc(r.graph)}</dd><dt>Magnitude</dt><dd>${esc(r.effect)}</dd><dt>Checks</dt><dd>${esc(r.assumptions)}</dd></dl><div class="stats-note">${r.notes.map(esc).join("<br>")}</div><button id="useAnalysis" class="primary small">Save this reasoning to analysis plan</button></div>`;
-      $("useAnalysis").onclick=()=>{project.data.analysisChoice=r.primary;project.data.assumptionChecks=r.assumptions;project.data.effectSizePlan=r.effect;save();renderStage();activateWork()};
+      $("useAnalysis").onclick=()=>{const old=project.data.analysisChoice||"";Flow.noteFieldChange(project,"analysisChoice",old,r.primary);Flow.syncDataField(project,"analysisChoice",r.primary);Flow.syncDataField(project,"assumptionChecks",r.assumptions);Flow.syncDataField(project,"effectSizePlan",r.effect);save();renderStage();activateWork()};
     };
     if($("makeCitation")) $("makeCitation").onclick=()=>{
       const ref=E.apaJournalReference({authors:$("citAuthors").value,year:$("citYear").value,title:$("citTitle").value,journal:$("citJournal").value,volume:$("citVolume").value,issue:$("citIssue").value,pages:$("citPages").value,doi:$("citDoi").value});
@@ -798,7 +976,14 @@
     if($("aiSettings")){ $("aiSettings").disabled=!ai.allowed; $("aiSettings").classList.toggle("policy-disabled",!ai.allowed); $("aiSettings").title=ai.allowed?"":ai.reason; }
     if($("transferBtn")){ $("transferBtn").disabled=!tr.allowed; $("transferBtn").classList.toggle("policy-disabled",!tr.allowed); $("transferBtn").title=tr.allowed?"":tr.reason; }
   }
-  function renderAll(){renderNav();snapshot();termCard();applyPilotFeaturePolicy();if(project.name)renderStage();else{$("welcome").hidden=false;$("stageView").hidden=true}}
+  function renderAll(){
+    Flow.normalizeProject(project);Flow.syncCanonical(project);
+    document.body.classList.toggle("project-active",!!project.name);
+    document.body.classList.toggle("teacher-mode",new URLSearchParams(location.search).get("mode")==="teacher");
+    FlowUI.init(project,save,renderAll);HelpUI.bind(project,()=>current().id);
+    renderNav();snapshot();termCard();applyPilotFeaturePolicy();
+    if(project.name)renderStage();else{$("welcome").hidden=false;$("stageView").hidden=true}
+  }
   function markdown(){
     const d=project.data, lines=[`# ${project.name||"Research Project"}`,``,project.context?`**Context:** ${project.context}`:"",``];
     C.stages.forEach(s=>{lines.push(`## ${s.id}. ${s.title}`);for(const sec of s.sections){for(const f of sec.fields){const v=d[f[0]];if(v)lines.push(`**${f[1]}**\n\n${v}\n`)}}});
@@ -806,51 +991,90 @@
     return lines.join("\n");
   }
   function download(name,text,type="text/plain"){const blob=new Blob([text],{type});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
-  $("beginProject").onclick=()=>{project.name=$("projectName").value.trim()||"My Research Project";project.context=$("projectContext").value.trim();save();renderAll()};
-  $("exportJson").onclick=()=>download("research-methods-studio-v2-full-backup.json",JSON.stringify(Pilot.backupEnvelope(project,"full"),null,2),"application/json");
-  $("exportMd").onclick=()=>download("research-notebook.md",markdown(),"text/markdown");
-  $("resetProject").onclick=()=>{if(confirm("Start a new project? Download a backup first if you want to keep this notebook.")){Pilot.clearProjectStorage(KEY,{clearOnboarding:true});location.reload()}};
+  load();
+  Flow.normalizeProject(project);Flow.syncCanonical(project);
+  document.body.classList.toggle("teacher-mode",new URLSearchParams(location.search).get("mode")==="teacher");
 
+  FlowUI.init(project,save,renderAll);
+  Guide.bindDelegated();
+  SnapshotUI.bind(()=>project,save,(stageId)=>{stageId=Number(stageId);if(!Flow.canWorkStage(project,stageId)){FlowUI.previewStage(stageId);return}project.currentStage=stageId;Flow.markVisited(project,stageId);project.flow.activeTabByStage[stageId]=project.flow.activeTabByStage[stageId]||"work";save();renderAll();window.scrollTo({top:0,behavior:"smooth"})});
+  AIHelperUI.bind(project,save,Competency,PathCoach,Pilot,()=>current().id);
+  PathUI.bind(project,save,renderAll);
+  RescueUI.bind(project,save,Competency,renderStage,()=>current().id);
+  ExemplarUI.bind(project,save,Competency,()=>current().id);
+  HelpUI.bind(project,()=>current().id);
 
+  $("beginProject").onclick=()=>{
+    project.name=$("projectName").value.trim()||"My Research Project";
+    project.context=$("projectContext").value.trim();
+    Flow.markVisited(project,1);project.flow.activeTabByStage[1]="learn";
+    save();renderAll();FlowUI.maybeOnboard(project,save);
+  };
+  $("exportJson").onclick=()=>download("research-methods-studio-full-backup.json",JSON.stringify(Pilot.backupEnvelope(project,"full"),null,2),"application/json");
+  $("exportMd").onclick=()=>RMSWordExport.fromMarkdown("research-notebook.doc",markdown(),project.name||"Research Notebook");
+  $("resetProject").onclick=()=>{
+    const wrap=document.createElement("div");wrap.className="modal-backdrop";wrap.id="newProjectBackdrop";
+    wrap.innerHTML=`<div class="modal"><div class="journey-head"><div><h3>Start a different project?</h3><p>Your current project is saved only on this browser unless you download a backup.</p></div><button class="ghost small" id="cancelNewProject">Cancel</button></div>
+      <div class="help-choice-grid"><button id="backupThenNew"><b>Download backup and start new</b><span>Recommended. Save a full recovery copy first.</span></button><button id="newWithoutBackup" class="destructive-option"><b>Start new without backup</b><span>Clear this browser's current project and begin again.</span></button></div></div>`;
+    document.body.appendChild(wrap);$("cancelNewProject").onclick=()=>wrap.remove();wrap.onclick=e=>{if(e.target===wrap)wrap.remove()};
+    $("backupThenNew").onclick=()=>{download("research-methods-studio-full-backup.json",JSON.stringify(Pilot.backupEnvelope(project,"full"),null,2),"application/json");setTimeout(()=>{Pilot.clearProjectStorage(KEY,{clearOnboarding:false});location.reload()},250)};
+    $("newWithoutBackup").onclick=()=>{if(confirm("Clear the current browser project without downloading a backup?")){Pilot.clearProjectStorage(KEY,{clearOnboarding:false});location.reload()}};
+  };
+
+  // Hidden compatibility controls remain available through the student More menu or ?mode=teacher.
   $("pilotBtn").onclick=()=>PilotUI.open(project,save,KEY,"onboard");
   $("transferBtn").onclick=()=>{const a=Pilot.featureAccess(project,"public-transfer");if(!a.allowed){alert(a.reason);return}TransferUI.open(project,save,"student")};
   $("pathwayBtn").onclick=()=>PathUI.open(project,save,renderAll);
   $("studentGuideBtn").onclick=()=>Guide.guideModal(current().id);
   $("glossaryBtn").onclick=()=>Guide.glossaryModal("");
-  Guide.bindDelegated();
-  PathUI.bind(project,save,renderStage);
-  RescueUI.bind(project,save,Competency,renderStage,()=>current().id);
-  ExemplarUI.bind(project,save,Competency,()=>current().id);
   $("competencyBtn").onclick=()=>CompetencyUI.open(project,save,"overview");
-  $("journeyBtn").onclick=()=>JourneyUI.openJourney(project,save,(stageId)=>{project.currentStage=stageId;save();renderAll();window.scrollTo({top:210,behavior:"smooth"})});
+  $("journeyBtn").onclick=()=>JourneyUI.openJourney(project,save,(stageId)=>{project.currentStage=stageId;Flow.markVisited(project,stageId);save();renderAll();window.scrollTo({top:0,behavior:"smooth"})});
   $("teacherBtn").onclick=()=>JourneyUI.openTeacherDashboard();
   $("writingLab").onclick=()=>WritingLab.open(project,save,"intro");
   $("dataLab").onclick=()=>DataLab.open(project,save,"import");
   $("methodsLab").onclick=()=>methodsWorkspace("design");
   $("litLab").onclick=()=>literatureWorkspace("search");
 
+  $("routeBtn").onclick=()=>FlowUI.openRoute();
+  $("helpMenuBtn").onclick=()=>HelpUI.openGlobal();
+  $("moreMenuBtn").onclick=()=>FlowUI.openMore();
+  $("saveProblemOptions").onclick=()=>FlowUI.openMore();
+
   $("aiSettings").onclick=()=>{
     const access=Pilot.featureAccess(project,"ai");if(!access.allowed){alert(access.reason);return}
-    const c=AI.getConfig();
+    const c=AI.getConfig(),endpoint=AI.effectiveChatEndpoint();
     const wrap=document.createElement("div");wrap.className="modal-backdrop";
-    wrap.innerHTML=`<div class="modal"><h3>AI Coach settings</h3><p>GitHub Pages cannot safely contain a model-provider API key. Enter only the URL of a secure server-side coach endpoint that implements the v1.2 backend contract.</p>
-      <label><span>Secure coach endpoint</span><input id="aiEndpoint" placeholder="https://your-server.example/api/coach" value="${esc(c.endpoint||"")}"></label>
-      <label style="margin-top:12px"><span>Enable AI Coach</span><select id="aiEnabled"><option value="false" ${!c.enabled?"selected":""}>No — local diagnostics only</option><option value="true" ${c.enabled?"selected":""}>Yes</option></select></label>
-      <div class="modal-actions"><button class="ghost" id="closeAI">Cancel</button><button class="primary" id="saveAI">Save</button></div></div>`;
-    document.body.appendChild(wrap);
-    wrap.onclick=e=>{if(e.target===wrap)wrap.remove()};
-    $("closeAI").onclick=()=>wrap.remove();
-    $("saveAI").onclick=()=>{AI.setConfig({endpoint:$("aiEndpoint").value.trim(),enabled:$("aiEnabled").value==="true"});wrap.remove();renderAll()};
+    wrap.innerHTML=`<div class="modal"><h3>Chat settings</h3>
+      <p>The Research Chat server address is controlled by the site owner in <code>assets/runtime-config.js</code>. Students and teachers cannot replace it from the browser. This FREE release uses the Cloudflare Workers AI binding and does not require a model-provider API key.</p>
+      <div class="privacy-note"><b>Configured Chat endpoint</b><p><code>${esc(endpoint||"Not configured yet")}</code></p>${endpoint?"":`<p>Research Chat will remain unavailable until the site owner configures the public backend endpoint.</p>`}</div>
+      <label><span>Class Chat code for this browser session</span><input id="aiAccessCode" type="password" autocomplete="off" maxlength="256" placeholder="${c.accessCodeSet?"A class code is already set · enter a new code only to replace it":"Enter the teacher-provided class code"}"></label>
+      <label style="margin-top:12px"><span>Enable Research Chat on this browser session</span><select id="aiEnabled"><option value="false" ${!c.enabled?"selected":""}>No · local guidance only</option><option value="true" ${c.enabled?"selected":""}>Yes</option></select></label>
+      <div class="privacy-note"><b>Privacy reminder</b><p>The class code is kept only for this browser session and is not saved in the research-project backup. Questions and recent Chat messages go to the configured class service. Current project context is included only when the student leaves <b>Use my current project context</b> enabled, and the browser removes raw datasets and obvious identifying fields before transmission.</p></div>
+      <div class="modal-actions"><button class="ghost" id="clearChatCode" ${c.accessCodeSet?"":"disabled"}>Clear class code</button><button class="ghost" id="testChat">Test connection</button><button class="ghost" id="closeAI">Cancel</button><button class="primary" id="saveAI">Save session settings</button></div></div>`;
+    document.body.appendChild(wrap);wrap.onclick=e=>{if(e.target===wrap)wrap.remove()};$("closeAI").onclick=()=>wrap.remove();
+    const applySessionSettings=()=>{const code=$("aiAccessCode").value.trim(),enabled=$("aiEnabled").value==="true";AI.setConfig({enabled,...(code?{accessCode:code}:{})});return {code,enabled}};
+    $("clearChatCode").onclick=()=>{AI.clearAccessCode();$("aiAccessCode").value="";$("clearChatCode").disabled=true;window.dispatchEvent(new CustomEvent("rms-ai-config-changed"));alert("The class Chat code was cleared from this browser session.")};
+    $("testChat").onclick=async()=>{try{applySessionSettings();const b=$("testChat"),original=b.textContent;b.disabled=true;b.textContent="Testing…";const h=await AI.health({force:true,interactive:false});alert(h.ok?`Research Chat connection passed${h.model?` · ${h.model}`:""}.`:h.message||"Research Chat is not connected yet.");b.disabled=false;b.textContent=original}catch(err){alert(err?.message||String(err));$("testChat").disabled=false;$("testChat").textContent="Test connection"}};
+    $("saveAI").onclick=()=>{try{applySessionSettings();wrap.remove();renderAll();window.dispatchEvent(new CustomEvent("rms-ai-config-changed"))}catch(err){alert(err?.message||String(err))}};
   };
 
-
   Pilot.enhanceAccessibility();
-  window.addEventListener("rms-save-status",e=>{const el=$("saveStatus");if(!el)return;el.textContent=e.detail.ok?`Saved · ${new Date(e.detail.time).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}`:"Save problem";el.classList.toggle("save-error",!e.detail.ok);el.title=e.detail.message||""});
+  window.addEventListener("rms-save-status",e=>{
+    const el=$("saveStatus"),banner=$("saveProblemBanner");if(!el)return;
+    if(e.detail.ok){
+      el.textContent=`Saved on this browser · ${new Date(e.detail.time).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}`;
+      el.classList.remove("save-error");el.title="Your latest changes are saved on this browser.";
+      if(banner)banner.hidden=true;
+    }else{
+      el.textContent="Save problem";el.classList.add("save-error");el.title=e.detail.message||"Your latest changes could not be saved.";
+      if(banner)banner.hidden=false;
+    }
+  });
   window.addEventListener("error",e=>{try{Pilot.logRuntime(project,"runtime_error",e.message||"Unknown runtime error")}catch{}});
   window.addEventListener("unhandledrejection",e=>{try{Pilot.logRuntime(project,"unhandled_rejection",String(e.reason?.message||e.reason||"Unknown rejection"))}catch{}});
-  load();
-  {const sr=Pilot.storageReport(KEY),el=$("saveStatus");if(el){if(sr.lastSavedAt){el.textContent=`Saved · ${new Date(sr.lastSavedAt).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}`;el.title="Last saved locally"}else{el.textContent=sr.available?"Not saved yet":"Storage unavailable";el.classList.toggle("save-error",!sr.available);el.title=sr.error||""}}}
+
+  {const sr=Pilot.storageReport(KEY),el=$("saveStatus");if(el){if(sr.lastSavedAt){el.textContent=`Saved on this browser · ${new Date(sr.lastSavedAt).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}`;el.title="Your latest saved copy is stored on this browser."}else{el.textContent=sr.available?"Not saved yet":"Storage unavailable";el.classList.toggle("save-error",!sr.available);el.title=sr.error||""}}}
   if(project.name){$("projectName").value=project.name;$("projectContext").value=project.context||""}
   renderAll();
-  PilotUI.maybeOnboard(project,save,KEY);
+
 })();

@@ -1,0 +1,48 @@
+{
+  "release": "v2.13",
+  "status": "PASS_SOFTWARE_QA",
+  "pilot_status": "NOT_YET_GO",
+  "instructional_baseline": "RMS-INSTRUCTIONAL-BASELINE-v2.13",
+  "baseline_digest": "0f44cb41e45156d6dd999ec3b8b3e42bfe9efbaedef85eabf275f17448e5d93c",
+  "student_facing_file_count": 89,
+  "pilot_freeze_digest": "212079926af3e4fa8d9375b06159635622a924bbae3f13c3ec36f8dc8e63fdcf",
+  "browser_qa": {
+    "passed": 52,
+    "total": 52,
+    "page_errors": [],
+    "console_errors": [],
+    "measurements": {
+      "stage1_learn_height_px": 889,
+      "stage1_first_work_field_y_px": 823,
+      "stage1_work_visible_stage_buttons": 18
+    },
+    "screenshots": [
+      "screenshots/01-welcome-clean-student-start.png",
+      "screenshots/02-stage1-route-orientation-desktop.png",
+      "screenshots/03-stage1-focused-work-desktop.png",
+      "screenshots/04-future-stage-preview.png",
+      "screenshots/05-recommendation-first-research-path.png",
+      "screenshots/06-route-needs-review-after-earlier-change.png",
+      "screenshots/07-data-lab-carry-forward-context.png",
+      "screenshots/08-three-pass-source-evaluation.png",
+      "screenshots/09-mobile-stage10-route-and-task.png"
+    ],
+    "environment_note": "Production assets were rendered in Chromium by inlining exact site bytes. Browser storage was replaced with an in-memory QA stub because this execution environment blocks browser navigation to localhost/file URLs."
+  },
+  "command_regression": {
+    "passed": 40,
+    "total": 40,
+    "scope": "exact final student-facing bytes"
+  },
+  "static_http_smoke": {
+    "passed": 23,
+    "total": 23,
+    "scope": "final release tree"
+  },
+  "pilot_readiness": {
+    "status": "NOT_YET_GO",
+    "pending_preflight_items": 18,
+    "freeze_verification": "PASS"
+  },
+  "important_boundary": "Software QA does not constitute real-student usability validation, educational validation, psychometric validation, or institutional research approval."
+}

@@ -1,151 +1,78 @@
-# Research Methods Studio v2.10 — Classroom Pilot Freeze & Real-Novice Usability Protocol
+# Research Methods Studio v2.15.0 FREE
 
-A static GitHub Pages teaching prototype with a local Research Coach that scaffolds secondary students through the full research process, from interest discovery through a finished research paper.
+Research Methods Studio is a static, student-facing research-methods workspace that guides students through an 18-stage research process while preserving their route, current Stage, current work, progress, and upcoming steps.
 
-## Purpose
+## Current release status
 
-The site teaches research decisions rather than automatically producing a paper. Students build and preserve their own research notebook across 18 stages.
+- **Complete static application:** offline-verified and ready for a future GitHub Pages publication gate.
+- **Research Chat hosting:** intentionally not active. `assets/runtime-config.js` ships with a blank endpoint.
+- **Cost architecture:** GitHub Pages for the static site plus Cloudflare Workers Free / Workers AI free allocation for Research Chat.
+- **Paid model APIs:** none in the v2.15.0 executable path.
+- **Automatic deployment:** none. This repository contains no active `.github/workflows` deployment directory.
 
-## Main features
+Uploading the repository later will not activate Research Chat by itself. Chat becomes live only after the site owner deliberately deploys the Cloudflare Worker, sets the class code as a Worker secret, and writes the resulting `workers.dev` URL into `assets/runtime-config.js`.
 
-- research-interest and topic discovery
-- feasibility and ethics screening
-- research-question refinement
-- preliminary background scan
-- systematic search planning
-- source extraction matrix
-- literature synthesis and gap/justification work
-- literature-review planning and drafting
-- design selection
-- hypothesis guidance
-- variable, construct, operational-definition, control, and experimental-unit guidance
-- sampling, measurement, validity, reliability, and ethics
-- protocol and data-table planning
-- data integrity and descriptive analysis
-- statistical decision wizard
-- Results guidance
-- Discussion and limitation guidance
-- conclusion, abstract, title, and keywords
-- APA 7 journal-reference practice helper
-- whole-paper alignment audit
-- local browser saving
-- Markdown notebook export and JSON backup
+## Student experience
 
-## GitHub Pages
+Students retain continuous access to the research route and their progress while working through the project. Major tools include:
 
-This version is fully static. Publish from `main` and `/ (root)` in a public repository on GitHub Pages.
+- 18 guided research Stages
+- Current Stage and route/progress orientation
+- My Research Snapshot
+- Help, Research Terms, Progressive Help, and local deterministic guidance
+- Literature Workspace
+- Methods Lab
+- Data & Statistics Lab
+- Scientific Writing Lab
+- Research Chat
+- My Journey and teacher-review packet workflow
+- Word `.doc` notebook export
+- JSON backup and recovery
 
-See `START_HERE.md`.
+Research Chat is optional. If the free AI allowance is unavailable or exhausted, the rest of the application continues to work.
 
+## Privacy boundary
 
-## v1.1 additions
+The research notebook is stored in the student's browser unless the student deliberately uses Research Chat.
 
-See `docs/RESEARCH_COACH_SPEC_v1.1.md` and `docs/RELEASE_AUDIT_v1.1.md`.
+When Chat project context is enabled, the browser minimizes the project data before transmission. Raw dataset fields and obvious identifying fields are excluded, and the server repeats the minimization. When project context is disabled, project context is removed before the request is serialized.
 
+The class Chat code is session-only in the browser and is not included in the project backup. The repository contains no real class code or model API key.
 
-## v1.2 architecture
+See `SECURITY.md` and `docs/FREE_ZERO_COST_ARCHITECTURE_v2.15.0.md`.
 
-The GitHub Pages site remains fully usable with local deterministic coaching.
+## Zero-cost boundary
 
-An optional AI mode can connect to a secure server-side endpoint. No provider/API secret is stored in the browser.
+To keep hosted Research Chat at $0, use Cloudflare Workers Free and do not upgrade to Workers Paid or configure prepaid AI Gateway billing. The release model is locked to:
 
-See:
-- `docs/AI_RESEARCH_COACH_PROTOCOL_v1.2.md`
-- `docs/SOURCE_GROUNDING_POLICY_v1.2.md`
-- `docs/COACH_RESPONSE_SCHEMA_v1.2.json`
-- `server/BACKEND_CONTRACT_v1.2.json`
+`@cf/meta/llama-3.3-70b-instruct-fp8-fast`
 
+Cloudflare currently provides a daily Workers AI free allocation. When the free allocation is exhausted on Workers Free, further AI operations fail until the allocation resets instead of producing Workers AI overage charges. Recheck Cloudflare pricing and model availability immediately before deployment because provider terms can change.
 
-## v1.3 Literature Workspace
+## Future GitHub Pages publication
 
-See `docs/LITERATURE_WORKSPACE_SPEC_v1.3.md` and `docs/RELEASE_AUDIT_v1.3.md`.
+This repository is prepared for GitHub Pages publication from a branch root. `.nojekyll` is included, page assets use relative paths, and `assets/runtime-config.js` remains intentionally blank until the backend is deliberately configured.
 
+Current GitHub publication guidance is in `START_HERE.md`, `docs/PUBLIC_GITHUB_READINESS_v2.15.0.md`, and `docs/GITHUB_PUBLICATION_HANDOFF_v2.15.0.md`. The first remote step is a release-candidate branch, not `main` or Pages.
 
-## v1.4 Methods Lab
+## Verification
 
-See `docs/METHODS_LAB_SPEC_v1.4.md` and `docs/RELEASE_AUDIT_v1.4.md`.
+Node.js 20+ and Python 3 are required for the complete offline verifier.
 
+```bash
+python scripts/verify-complete-release-v2.15.0.py
+python scripts/verify-public-github-readiness-v2.15.0.py
+```
 
-## v1.5 Data & Statistics Lab
+The current release verification record is `docs/OFFLINE_RELEASE_VERIFICATION_v2.15.0.md`.
 
-See `docs/DATA_STATISTICS_LAB_SPEC_v1.5.md`.
+## Current deployment documents
 
+Use only these for v2.15.0 FREE:
 
-## v1.6 Scientific Writing Lab
+- `docs/FREE_ZERO_COST_ARCHITECTURE_v2.15.0.md`
+- `docs/CLOUDFLARE_FREE_DEPLOYMENT_v2.15.0.md`
+- `docs/PRODUCTION_ACCEPTANCE_CHECKLIST_v2.15.0.md`
+- `docs/PUBLIC_GITHUB_READINESS_v2.15.0.md`
 
-See `docs/SCIENTIFIC_WRITING_LAB_SPEC_v1.6.md` and `docs/RELEASE_AUDIT_v1.6.md`.
-
-
-## v1.7 Journey & Teacher Dashboard
-
-See `docs/STUDENT_JOURNEY_TEACHER_DASHBOARD_SPEC_v1.7.md` and `docs/RELEASE_AUDIT_v1.7.md`.
-
-
-## v1.8 Learning Analytics
-
-See `docs/LEARNING_ANALYTICS_SPEC_v1.8.md`, `docs/COMPETENCY_MODEL_DESIGN_NOTE_v1.8.md`, and `docs/COMPETENCY_MODEL_v1.8.json`.
-
-
-## v1.9 Transfer & Validation
-
-See `docs/TRANSFER_VALIDATION_SPEC_v1.9.md` and the `validation/` folder.
-
-
-## v2.0 Classroom Pilot
-
-See `docs/CLASSROOM_PILOT_RELEASE_SPEC_v2.0.md`, `pilot/TEACHER_PILOT_GUIDE_v2.0.md`, and `pilot/FROZEN_BASELINE_MANIFEST_v2.0.json`.
-
-
-## RC1 pilot dry run
-
-This release candidate keeps the v2.0 measurement baseline frozen and fixes only deployment/recovery/navigation/policy issues found during the dry run. See `docs/PILOT_DRY_RUN_REPORT_v2.0-RC1.md`.
-
-
-## v2.1
-
-See `docs/STUDENT_GUIDANCE_SCAFFOLDING_SPEC_v2.1.md` and `docs/BASELINE_CHANGE_NOTICE_v2.1.md`.
-
-
-## v2.2 novice usability overhaul
-
-See `docs/NOVICE_USABILITY_AUDIT_v2.2.md` and `docs/NOVICE_DECISION_SCAFFOLDING_SPEC_v2.2.md`.
-
-
-## v2.3 Guided Research Pathways
-
-See `docs/GUIDED_RESEARCH_PATHWAYS_SPEC_v2.3.md` and `docs/BASELINE_CHANGE_NOTICE_v2.3.md`.
-
-
-## v2.4 Pathway-Specific Coaching & Readiness
-
-See `docs/PATHWAY_COACHING_READINESS_SPEC_v2.4.md` and `docs/BASELINE_CHANGE_NOTICE_v2.4.md`.
-
-
-## v2.5 Progressive Help
-
-See `docs/PROGRESSIVE_HELP_RESCUE_SPEC_v2.5.md` and `docs/BASELINE_CHANGE_NOTICE_v2.5.md`.
-
-
-## v2.6 Novice simulation
-
-See `validation/novice-simulation/NOVICE_SIMULATION_REPORT_v2.6.md` and `docs/NOVICE_SIMULATION_FRICTION_HARDENING_SPEC_v2.6.md`.
-
-
-## v2.7 End-to-End Exemplar
-
-See `docs/END_TO_END_EXEMPLAR_SPEC_v2.7.md` and `examples/radish-salinity/README.md`.
-
-
-## v2.8 Multi-Path Exemplar Library
-
-Every supported confirmed research path now has a complete 18-stage exemplar. See `docs/MULTI_PATH_EXEMPLAR_LIBRARY_SPEC_v2.8.md`.
-
-
-## v2.9 Browser QA
-
-See `docs/browser-qa/BEGINNER_BROWSER_ACCESSIBILITY_QA_v2.9.md` and `docs/RELEASE_AUDIT_v2.9.md`.
-
-
-## v2.10 pilot operations
-
-The deployed student-facing application remains frozen at `RMS-INSTRUCTIONAL-BASELINE-v2.9`. See `pilot/v2.10/PILOT_RUNBOOK_v2.10.md`.
+Historical release engineering records are retained under `docs/archive/`. Archived deployment instructions are superseded and must not be used for the current release.

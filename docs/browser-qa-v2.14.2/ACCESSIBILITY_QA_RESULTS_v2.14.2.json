@@ -1,0 +1,118 @@
+{
+  "release": "v2.14.2",
+  "passed": 22,
+  "total": 22,
+  "checks": [
+    {
+      "name": "Skip link is present and keyboard focusable",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Skip link moves focus to main content",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Visible current-stage form controls have accessible labels",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Visible buttons have accessible names",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "Help modal has dialog semantics",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Keyboard focus enters the Help modal",
+      "passed": true,
+      "detail": "<h3 id=\"dialog-title-andx05\" tabindex=\"-1\">Help with Stage 1</h3>"
+    },
+    {
+      "name": "Tab focus remains inside the active Help modal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape closes Help and restores focus to its opener",
+      "passed": true,
+      "detail": "<button class=\"ghost small\" id=\"helpMenuBtn\">Help</button>"
+    },
+    {
+      "name": "Research Chat drawer has a labelled nonmodal dialog role",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Research Chat exposes its context toggle and privacy text",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape closes Research Chat and returns focus to launcher",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "430px has no page-level horizontal overflow",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "430px keeps Route, Help, and Research Chat reachable",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "360px has no page-level horizontal overflow",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "360px keeps Route, Help, and Research Chat reachable",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "320px has no page-level horizontal overflow",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "320px keeps Route, Help, and Research Chat reachable",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Visible narrow-mobile interactive controls meet a 40px minimum height",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "200% root text enlargement has no page-level horizontal overflow",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "Reduced-motion support is present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Forced-colors support is present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "No unexpected JavaScript page errors occurred",
+      "passed": true,
+      "detail": "[]"
+    }
+  ],
+  "page_errors": []
+}

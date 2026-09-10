@@ -1,0 +1,8 @@
+field,file,definition,type,allowed_values_or_format,interpretation_warning
+external_support_max,PILOT_SESSION_LOG.csv,Highest observer support provided during session,ordinal integer,0|1|2|3,Keep separate from app scaffold levels
+event_code,USABILITY_EVENT_LOG.csv,Observed friction-event category,categorical,NAV|TERM|TASK|PATH|METHOD|STAT|SOURCE|WRITE|HELP|EXAMPLE|SAVE|A11Y|TEACHER|PRIVACY,Event code is not a diagnosis of the participant
+severity,USABILITY_EVENT_LOG.csv,Operational severity of the observed issue,categorical,Blocker|Major|Moderate|Minor,Severity concerns system/task impact
+completion_category,TASK_OUTCOME_LOG.csv,How the task ended,categorical,without_observer_help|after_builtin_help|after_neutral_prompt|after_task_clarification|after_external_concept_rescue|not_completed,Do not collapse to a numeric competence score
+built_in_help_max_level,TASK_OUTCOME_LOG.csv,Maximum RMS scaffold level observed for the task,ordinal integer,0-5,Higher support does not by itself mean lower ability
+participant_confidence_1_5,TASK_OUTCOME_LOG.csv,Participant self-rating after task,ordinal integer,1-5,Not a validated self-efficacy measure
+would_scale_to_class,TEACHER_WORKFLOW_BURDEN.csv,Teacher judgment about operational scalability,categorical,yes|no|uncertain,Requires accompanying notes

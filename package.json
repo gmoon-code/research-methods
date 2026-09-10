@@ -1,0 +1,19 @@
+{
+  "name": "research-methods-studio",
+  "private": true,
+  "version": "2.15.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test:research-chat": "node --test tests/research-chat-backend.test.mjs tests/adapter-contract.test.mjs tests/configure-endpoint.test.mjs tests/cloudflare-worker.test.mjs tests/cloudflare-deploy-helper.test.mjs",
+    "test:research-chat:browser": "node tests/browser-smoke.mjs",
+    "verify:complete": "python scripts/verify-complete-release-v2.15.0.py",
+    "check:cloudflare": "node scripts/deploy-cloudflare-research-chat.mjs --check",
+    "deploy:cloudflare": "node scripts/deploy-cloudflare-research-chat.mjs",
+    "verify:public": "python scripts/verify-public-github-readiness-v2.15.0.py",
+    "check:github-publication": "python scripts/prepare-github-publication-v2.15.0.py --check",
+    "test:github-publication": "python tests/github-publication-helper-v215.py",
+    "publish:github-candidate": "python scripts/prepare-github-publication-v2.15.0.py"
+  }
+}

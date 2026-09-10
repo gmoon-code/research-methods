@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Research Methods Studio guides students through finding a research interest, designing a study, analyzing evidence, and writing a research paper.">
   <meta name="theme-color" content="#245c7f">
-  <title>Research Methods Studio · Browser Usability & Accessibility QA v2.9</title>
+  <title>Research Methods Studio · Guided Student Flow v2.13.3</title>
   <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
@@ -13,36 +13,46 @@
   <a class="skip-link" href="#mainContent">Skip to main content</a>
   <div class="app-shell">
     <header class="topbar">
-      <div>
+      <div class="brand-block">
         <div class="brand">Research Methods Studio</div>
-        <div class="subbrand">Learn research by doing research</div>
+        <div class="subbrand" id="projectHeaderName">Learn research by doing research</div>
       </div>
-      <div class="top-actions" aria-label="Research tools">
+      <div class="student-top-actions" aria-label="Project controls">
         <span id="saveStatus" class="save-status" role="status" aria-live="polite">Not saved yet</span>
-        <button class="ghost small" id="pilotBtn">Pilot & Recovery</button>
-        <button class="ghost small" data-open-rescue-navigator="0">I’m stuck</button>
-        <button class="ghost small" data-open-exemplar>Exemplar Project</button>
-        <button class="ghost small" id="pathwayBtn">Research Path</button>
-        <button class="ghost small" id="studentGuideBtn">Student Guide</button>
-        <button class="ghost small" id="glossaryBtn">Research Terms</button>
-        <button class="ghost small" id="transferBtn">Transfer Lab</button>
-        <button class="ghost small" id="competencyBtn">Learning Analytics</button>
-        <button class="ghost small" id="journeyBtn">My Journey</button>
-        <button class="ghost small" id="teacherBtn">Teacher Dashboard</button>
-        <button class="ghost small" id="writingLab">Writing Lab</button>
-        <button class="ghost small" id="dataLab">Data & Statistics Lab</button>
-        <button class="ghost small" id="methodsLab">Methods Lab</button>
-        <button class="ghost small" id="litLab">Literature Workspace</button>
-        <button class="ghost small" id="aiSettings">AI Coach settings</button>
-        <button class="ghost small" id="exportMd">Export notebook</button>
-        <button class="ghost small" id="exportJson">Backup JSON</button>
-        <button class="secondary small" id="resetProject">New project</button>
+        <button class="ghost small mobile-route-button" id="routeBtn">Route</button>
+        <button class="ghost small snapshot-primary-tool" data-open-research-snapshot>My Research Snapshot</button>
+        <button class="ghost small" id="helpMenuBtn">Help</button>
+        <button class="ghost small" id="moreMenuBtn" aria-haspopup="dialog">More</button>
+      </div>
+      <div class="legacy-tool-hooks" aria-hidden="true">
+        <button id="pilotBtn" tabindex="-1">Pilot & Recovery</button>
+        <button data-open-rescue-navigator="0" tabindex="-1">I’m stuck</button>
+        <button data-open-exemplar tabindex="-1">Exemplar Project</button>
+        <button id="pathwayBtn" tabindex="-1">Research Path</button>
+        <button id="studentGuideBtn" tabindex="-1">Student Guide</button>
+        <button id="glossaryBtn" tabindex="-1">Research Terms</button>
+        <button id="transferBtn" tabindex="-1">Transfer Lab</button>
+        <button id="competencyBtn" tabindex="-1">Learning Analytics</button>
+        <button id="journeyBtn" tabindex="-1">My Journey</button>
+        <button id="teacherBtn" tabindex="-1">Teacher Dashboard</button>
+        <button id="writingLab" tabindex="-1">Writing Lab</button>
+        <button id="dataLab" tabindex="-1">Data & Statistics Lab</button>
+        <button id="methodsLab" tabindex="-1">Methods Lab</button>
+        <button id="litLab" tabindex="-1">Literature Workspace</button>
+        <button id="aiSettings" tabindex="-1">Chat settings</button>
+        <button id="exportMd" tabindex="-1">Download Word notebook</button>
+        <button id="exportJson" tabindex="-1">Backup JSON</button>
+        <button id="resetProject" tabindex="-1">New project</button>
       </div>
     </header>
+    <div id="saveProblemBanner" class="save-problem-banner" hidden>
+      <div><b>Your latest changes could not be saved.</b><span>Keep this tab open. Download a backup now or ask your teacher for help.</span></div>
+      <button class="secondary small" id="saveProblemOptions">Project options</button>
+    </div>
 
     <section class="hero">
       <div class="hero-copy">
-        <div class="eyebrow">Student research pathway · v2.9 Browser Usability & Accessibility QA</div>
+        <div class="eyebrow">Student research pathway · v2.13.3 Guided Student Flow</div>
         <h1>From a vague interest to a defensible research paper.</h1>
         <p>This studio teaches you how researchers make decisions. You will discover a topic, refine a research question, evaluate and synthesize literature, design a method, plan data collection, choose an analysis, interpret results, and write each part of the paper with evidence.</p>
         <div class="hero-rule"><strong>The rule throughout the studio</strong><br>Your reasoning comes first. The coach gives structure, examples, checks, and increasingly direct help when you need it. It does not invent your data, sources, or conclusions.</div>
@@ -75,31 +85,29 @@
         <section id="welcome" class="card welcome">
           <div class="eyebrow">Start here</div>
           <h2>Create your research notebook</h2>
-          <p>You can begin without a topic. Your work is saved locally in this browser.</p>
+          <p>You can begin without a final topic. The research route will stay visible as you work, and your answers will build into one organized project.</p>
           <div class="form-grid two">
             <label><span>Project name</span><input id="projectName" placeholder="Example: Biology Research Project"></label>
             <label><span>Course or context</span><input id="projectContext" placeholder="Example: Research Methods, Grade 11"></label>
           </div>
-          <button class="primary" id="beginProject">Begin</button>
+          <button class="primary" id="beginProject">Start Stage 1</button>
         </section>
 
         <section id="stageView" hidden></section>
       </main>
 
-      <aside class="rightbar" aria-label="Research summary and terminology">
+      <aside class="rightbar" aria-label="Current research work">
         <section class="card snapshot">
-          <h3>Research snapshot</h3>
+          <div class="rightbar-kicker">Keep earlier decisions in view</div>
+          <h3>My project right now</h3>
           <div id="snapshot"></div>
         </section>
-        <section class="card coach-index">
-          <h3>Research language</h3>
-          <div id="termCard"></div>
-        </section>
+        <div id="termCard" class="legacy-term-hook" hidden></div>
       </aside>
     </div>
 
     <footer>
-      Student learning prototype. Human-participant research, sensitive topics, hazardous procedures, and school-based interventions require teacher or institutional review before data collection.
+      Your work saves on this browser. Download a backup before switching devices. Projects involving people, sensitive information, or potentially unsafe procedures require teacher review before data collection.
     </footer>
   </div>
 
@@ -109,7 +117,12 @@
   <script src="./assets/rescue-model.js"></script>
   <script src="./assets/pathways.js"></script>
   <script src="./assets/pathway-ui.js"></script>
+  <script src="./assets/student-flow.js"></script>
+  <script src="./assets/student-flow-ui.js"></script>
+  <script src="./assets/research-snapshot.js"></script>
+  <script src="./assets/research-snapshot-ui.js"></script>
   <script src="./assets/student-guidance.js"></script>
+  <script src="./assets/response-examples.js"></script>
   <script src="./assets/student-guidance-ui.js"></script>
   <script src="./assets/engine.js"></script>
   <script src="./assets/coach.js"></script>
@@ -118,6 +131,7 @@
   <script src="./assets/path-coach.js"></script>
   <script src="./assets/novice-friction.js"></script>
   <script src="./assets/analytics.js"></script>
+  <script src="./assets/word-export.js"></script>
   <script src="./assets/data-lab-ui.js"></script>
   <script src="./assets/writing.js"></script>
   <script src="./assets/writing-lab-ui.js"></script>
@@ -133,7 +147,11 @@
   <script src="./assets/rescue-ui.js"></script>
   <script src="./assets/journey.js"></script>
   <script src="./assets/journey-ui.js"></script>
-  <script src="./assets/ai-adapter.js"></script>
+    <script src="./assets/runtime-config.js"></script>
+<script src="./assets/ai-adapter.js"></script>
+  <script src="./assets/ai-helper.js"></script>
+  <script src="./assets/ai-helper-ui.js"></script>
+  <script src="./assets/student-help-ui.js"></script>
   <script src="./assets/pilot.js"></script>
   <script src="./assets/pilot-ui.js"></script>
   <script src="./assets/accessibility.js"></script>

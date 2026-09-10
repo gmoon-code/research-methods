@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+      xmlns:w="urn:schemas-microsoft-com:office:word"
+      xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="utf-8">
+<meta name="ProgId" content="Word.Document">
+<meta name="Generator" content="Research Methods Studio">
+<title>Word Export QA Project</title>
+<!--[if gte mso 9]>
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+<w:DoNotOptimizeForBrowser/>
+</w:WordDocument>
+</xml>
+<![endif]-->
+<style>
+@page{margin:1in}
+body{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.45;color:#111}
+h1{font-size:20pt;margin:0 0 14pt}
+h2{font-size:15pt;margin:18pt 0 8pt}
+h3{font-size:12.5pt;margin:14pt 0 6pt}
+h4,h5,h6{font-size:11pt;margin:12pt 0 5pt}
+p{margin:0 0 8pt}
+ul,ol{margin:0 0 8pt 24pt}
+li{margin:0 0 3pt}
+blockquote{margin:8pt 24pt;padding-left:10pt;border-left:2pt solid #bbb;color:#444}
+table{border-collapse:collapse;width:100%;margin:8pt 0}
+th,td{border:1px solid #999;padding:5pt;vertical-align:top}
+th{background:#eee;font-weight:bold}
+code{font-family:Consolas,monospace;font-size:9.5pt}
+hr{border:0;border-top:1px solid #aaa;margin:12pt 0}
+a{color:#0563c1}
+</style>
+</head>
+<body>
+<h1>Word Export QA Project</h1>
+<p><strong>Context:</strong> Student research project</p>
+<h2>1. Find your research interests</h2>
+<h2>2. Narrow a topic and test feasibility</h2>
+<p><strong>Broad area</strong></p>
+<p>Sleep and learning</p>
+<h2>3. Explore the research landscape</h2>
+<h2>4. Write and refine the research question</h2>
+<p><strong>Question family</strong></p>
+<p>Relationship / association</p>
+<p><strong>Working research question</strong></p>
+<p>What is the association between reported weekday sleep duration and biology quiz score?</p>
+<h2>5. Build a systematic search strategy</h2>
+<h2>6. Evaluate, read, and extract sources</h2>
+<h2>7. Synthesize the literature and justify the study</h2>
+<h2>8. Write the literature review</h2>
+<h2>9. Choose the research design</h2>
+<p><strong>Primary design</strong></p>
+<p>Correlational / observational</p>
+<p><strong>What this design will and will not allow me to claim</strong></p>
+<p>Association only</p>
+<h2>10. Define hypotheses, variables, controls, and experimental units</h2>
+<p><strong>Outcome/dependent variable</strong></p>
+<p>Biology quiz score</p>
+<p><strong>Experimental or observational unit</strong></p>
+<p>One student</p>
+<h2>11. Plan sampling, measurement, validity, and ethics</h2>
+<h2>12. Write the method and lock the data plan</h2>
+<h2>13. Collect, clean, visualize, and describe data</h2>
+<h2>14. Choose and justify the data analysis</h2>
+<h2>15. Write the Results section</h2>
+<h2>16. Write the Discussion and limitations</h2>
+<h2>17. Write the conclusion, abstract, title, and keywords</h2>
+<h2>18. Citations, references, and final alignment audit</h2>
+</body>
+</html>
