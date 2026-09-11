@@ -6,7 +6,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "test:research-chat": "node --test tests/research-chat-backend.test.mjs tests/adapter-contract.test.mjs tests/configure-endpoint.test.mjs tests/cloudflare-worker.test.mjs tests/cloudflare-deploy-helper.test.mjs",
+    "test:research-chat": "node --test tests/ai-helper-ui-ready-state.test.mjs tests/research-chat-backend.test.mjs tests/adapter-contract.test.mjs tests/configure-endpoint.test.mjs tests/cloudflare-worker.test.mjs tests/cloudflare-deploy-helper.test.mjs",
     "test:research-chat:browser": "node tests/browser-smoke.mjs",
     "verify:complete": "python scripts/verify-complete-release-v2.15.0.py",
     "check:cloudflare": "node scripts/deploy-cloudflare-research-chat.mjs --check",

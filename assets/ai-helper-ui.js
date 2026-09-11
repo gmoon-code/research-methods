@@ -115,7 +115,7 @@ window.RMSAIHelperUI=(()=>{
   }
   async function send(){
     const ta=id("aiHelperInput"),q=String(ta?.value||"").trim();if(!q||busy)return;
-    const st=status();if(st.kind!=="online")return;
+    const st=status();if(st.kind!=="ready")return;
     const payload=H.buildPayload(p(),q,ctx.PathCoach);
     H.addMessage(p(),"user",q,{stage:H.stage(p()).id,field_key:H.currentField(p())?.key||""});
     p().aiHelper.events.push({time:new Date().toISOString(),type:"question_sent",stage:H.stage(p()).id,field:H.currentField(p())?.key||""});
