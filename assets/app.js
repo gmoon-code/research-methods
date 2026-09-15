@@ -1331,7 +1331,6 @@
   const bindCriticalButtons=()=>{
     if($("routeBtn"))$("routeBtn").onclick=()=>FlowUI.openRoute();
     if($("helpMenuBtn"))$("helpMenuBtn").onclick=()=>HelpUI.openGlobal();
-    if($("moreMenuBtn"))$("moreMenuBtn").onclick=()=>FlowUI.openMore();
     if($("saveProblemOptions"))$("saveProblemOptions").onclick=()=>FlowUI.openMore();
   };
 

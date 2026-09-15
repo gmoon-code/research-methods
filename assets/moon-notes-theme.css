@@ -1696,7 +1696,7 @@ footer{
 }
 
 .stage-preview-mode .preview-field::before {
-  content: "PREVIEW ? READ ONLY";
+  content: "PREVIEW · READ ONLY";
   display: inline-block;
   margin: 0 0 6px;
   padding: 2px 6px;
