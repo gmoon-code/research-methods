@@ -17,6 +17,16 @@ const flow = readFileSync(
   "utf8"
 );
 
+const app = readFileSync(
+  "assets/app.js",
+  "utf8"
+);
+
+const theme = readFileSync(
+  "assets/moon-notes-theme.css",
+  "utf8"
+);
+
 test(
   "teacher entry has no client-only activation bypass",
   () => {
@@ -143,6 +153,57 @@ test(
     assert.ok(
       runtime < teacherSession,
       "runtime-config.js must load before teacher-session.js"
+    );
+  }
+);
+
+test(
+  "More menu has one primary click path and blocks concurrent opening",
+  () => {
+    assert.doesNotMatch(
+      app,
+      /\$\("moreMenuBtn"\)\.onclick/
+    );
+
+    assert.match(
+      flow,
+      /"#moreMenuBtn"/
+    );
+
+    assert.match(
+      flow,
+      /let moreOpening = false;/
+    );
+
+    assert.match(
+      flow,
+      /if \(moreOpening\) return;/
+    );
+
+    assert.match(
+      flow,
+      /id\("leaveTeacherMode"\)\?\.[\s\S]{0,300}RMSTeacherSession\?\.leave\?\.\(\)[\s\S]{0,150}location\.href = "\.\/";/
+    );
+  }
+);
+
+test(
+  "future-stage preview uses an intentional read-only separator",
+  () => {
+    const separator =
+      String.fromCharCode(183);
+
+    assert.ok(
+      theme.includes(
+        'content: "PREVIEW ' +
+        separator +
+        ' READ ONLY";'
+      )
+    );
+
+    assert.doesNotMatch(
+      theme,
+      /PREVIEW \? READ ONLY/
     );
   }
 );

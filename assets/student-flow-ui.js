@@ -29,6 +29,7 @@ window.RMSStudentFlowUI = (() => {
 
   let globalDelegationBound = false;
   let previewStageId = null;
+  let moreOpening = false;
 
   function safeSave() {
     try {
@@ -495,14 +496,23 @@ window.RMSStudentFlowUI = (() => {
   }
 
   async function openMore() {
+    if (moreOpening) return;
+
+    moreOpening = true;
     removeModal("moreBackdrop");
 
-    const teacherMode =
-      !!(
-        await window
-          .RMSTeacherSession
-          ?.verify?.()
-      );
+    let teacherMode = false;
+
+    try {
+      teacherMode =
+        !!(
+          await window
+            .RMSTeacherSession
+            ?.verify?.()
+        );
+    } finally {
+      moreOpening = false;
+    }
 
     const wrap =
       document.createElement("div");
