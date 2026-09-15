@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { randomBytes } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -85,8 +86,19 @@ async function packagePreflight() {
 
   const config = JSON.parse(await readFile(join(WORKER_DIR, 'wrangler.jsonc'), 'utf8'));
   const requiredSecrets = new Set(config?.secrets?.required || []);
-  if (requiredSecrets.size !== 1 || !requiredSecrets.has('RMS_CHAT_ACCESS_CODE')) {
-    throw new Error('wrangler.jsonc must require only RMS_CHAT_ACCESS_CODE. The free edition must not require an AI API key.');
+  const expectedSecrets = new Set([
+    'RMS_CHAT_ACCESS_CODE',
+    'RMS_TEACHER_ACCESS_CODE',
+    'RMS_TEACHER_SESSION_SECRET'
+  ]);
+  const secretMismatch =
+    requiredSecrets.size !== expectedSecrets.size ||
+    [...expectedSecrets].some(name => !requiredSecrets.has(name));
+
+  if (secretMismatch) {
+    throw new Error(
+      'wrangler.jsonc must require exactly the class code, teacher access code, and teacher session signing secret. No AI provider API key is permitted.'
+    );
   }
   if (config?.ai?.binding !== 'AI') throw new Error('wrangler.jsonc must declare the Cloudflare Workers AI binding as AI.');
   if (config?.vars?.RMS_AI_MODEL !== FREE_MODEL) throw new Error(`RMS_AI_MODEL must remain ${FREE_MODEL} for this verified free release.`);
@@ -101,7 +113,8 @@ async function packagePreflight() {
   console.log('PASS zero-cost package preflight');
   console.log(`PASS Workers AI binding: AI`);
   console.log(`PASS free-model release lock: ${FREE_MODEL}`);
-  console.log('PASS only RMS_CHAT_ACCESS_CODE is secret');
+  console.log('PASS class and teacher authentication secrets declared');
+  console.log('PASS no AI provider API key required');
   console.log(`PASS GitHub Pages origin: ${ORIGIN}`);
 }
 
@@ -114,7 +127,7 @@ async function main() {
   console.log('Use a Cloudflare Workers FREE account. Do not upgrade Workers and do not enable prepaid AI Gateway billing.');
   console.log('On Workers Free, Cloudflare currently provides a daily Workers AI free allocation; when exhausted, AI operations fail instead of creating overage charges.');
   if (!(await yesNo('Confirm you intend to keep this deployment on Cloudflare Workers Free with no paid AI billing.', false))) {
-    throw new Error('Deployment cancelled. The v2.15.0 FREE release is intended for a zero-cost Cloudflare Workers Free setup.');
+    throw new Error('Deployment cancelled. The v2.16.0 FREE release is intended for a zero-cost Cloudflare Workers Free setup.');
   }
 
   const npm = command('npm');
@@ -136,12 +149,29 @@ async function main() {
   if (who.status !== 0) throw new Error('Wrangler is not authenticated.');
 
   const classCode = (await hiddenPrompt('Enter RMS_CHAT_ACCESS_CODE, 16-256 characters (input hidden): ')).trim();
-  if (classCode.length < 16 || classCode.length > 256) throw new Error('RMS_CHAT_ACCESS_CODE must be 16-256 characters.');
+  if (classCode.length < 16 || classCode.length > 256) {
+    throw new Error('RMS_CHAT_ACCESS_CODE must be 16-256 characters.');
+  }
+
+  const teacherCode = (await hiddenPrompt('Enter RMS_TEACHER_ACCESS_CODE, 16-256 characters (input hidden): ')).trim();
+  if (teacherCode.length < 16 || teacherCode.length > 256) {
+    throw new Error('RMS_TEACHER_ACCESS_CODE must be 16-256 characters.');
+  }
+
+  const teacherSessionSecret = randomBytes(48).toString('base64url');
 
   const tempDir = await mkdtemp(join(tmpdir(), 'rms-free-cloudflare-secret-'));
   const secretFile = join(tempDir, 'secrets.json');
   try {
-    await writeFile(secretFile, JSON.stringify({ RMS_CHAT_ACCESS_CODE: classCode }), { encoding: 'utf8', mode: 0o600 });
+    await writeFile(
+      secretFile,
+      JSON.stringify({
+        RMS_CHAT_ACCESS_CODE: classCode,
+        RMS_TEACHER_ACCESS_CODE: teacherCode,
+        RMS_TEACHER_SESSION_SECRET: teacherSessionSecret
+      }),
+      { encoding: 'utf8', mode: 0o600 }
+    );
     console.log('\nDeploying the free Workers AI backend...');
     const deployed = runCapture(npx, ['wrangler', 'deploy', '--strict', '--secrets-file', secretFile], WORKER_DIR);
     process.stdout.write(deployed.stdout || '');
@@ -167,6 +197,7 @@ async function main() {
     console.log('\nCLOUDFLARE FREE RESEARCH CHAT DEPLOYMENT: COMPLETE');
     console.log(`Worker endpoint: ${endpoint}`);
     console.log('Only assets/runtime-config.js changed locally. No model API key exists in this architecture.');
+    console.log('Teacher session signing secret was generated locally for this deployment and was not written into the repository.');
     console.log('Upload the website to GitHub only when you are ready.');
   } finally {
     await rm(tempDir, { recursive: true, force: true }).catch(() => {});

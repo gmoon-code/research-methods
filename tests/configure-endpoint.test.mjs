@@ -22,7 +22,7 @@ test('configure-chat-endpoint writes only a clean public HTTPS endpoint and rele
     const result = spawnSync(process.execPath, [script, 'https://rms-research-chat.example.workers.dev/'], { cwd: dir, encoding: 'utf8' });
     assert.equal(result.status, 0, result.stderr);
     const output = await readFile(path.join(dir, 'assets', 'runtime-config.js'), 'utf8');
-    assert.match(output, /version: '2\.15\.0'|"version": "2\.15\.0"/);
+    assert.match(output, /version: '2\.16\.0'|"version": "2\.16\.0"/);
     assert.match(output, /https:\/\/rms-research-chat\.example\.workers\.dev\//);
     assert.match(output, /researchChatEndpoint/);
     assert.match(output, /chatEndpoint/);
@@ -58,7 +58,7 @@ test('configure-chat-endpoint accepts only the free workers.dev production root'
     assert.equal(ok.status, 0, ok.stderr);
     const output = await readFile(path.join(dir, 'assets', 'runtime-config.js'), 'utf8');
     assert.match(output, /freeEdition/);
-    assert.match(output, /2\.15\.0/);
+    assert.match(output, /2\.16\.0/);
     for (const endpoint of [
       'https://rms-chat.example/api/research-chat',
       'https://rms-research-chat-free.example.workers.dev/custom-path'

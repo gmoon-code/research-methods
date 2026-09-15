@@ -120,7 +120,7 @@ window.RMSWordExport=(()=>{
 <![endif]-->
 <style>
 @page{margin:1in}
-body{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.45;color:#111}
+body{font-family:"Times New Roman",Times,serif;font-size:11pt;line-height:1.45;color:#111}
 h1{font-size:20pt;margin:0 0 14pt}
 h2{font-size:15pt;margin:18pt 0 8pt}
 h3{font-size:12.5pt;margin:14pt 0 6pt}

@@ -13,10 +13,16 @@ test('free deployment helper passes its offline package preflight', () => {
   assert.match(result.stdout, /CLOUDFLARE FREE DEPLOYMENT HELPER CHECK: PASS/);
 });
 
-test('first deployment requires only class code and never asks for an AI API key', () => {
+test('deployment collects only application access secrets and never asks for an AI API key', () => {
   assert.match(helper, /--secrets-file/);
-  assert.match(helper, /JSON\.stringify\(\{ RMS_CHAT_ACCESS_CODE: classCode \}\)/);
-  assert.doesNotMatch(helper, /OPENAI_API_KEY|openaiKey|Bearer/);
+  assert.match(helper, /RMS_CHAT_ACCESS_CODE: classCode/);
+  assert.match(helper, /RMS_TEACHER_ACCESS_CODE: teacherCode/);
+  assert.match(helper, /RMS_TEACHER_SESSION_SECRET: teacherSessionSecret/);
+  assert.match(helper, /randomBytes\(48\)\.toString\('base64url'\)/);
+  assert.doesNotMatch(
+    helper,
+    /OPENAI_API_KEY|ANTHROPIC_API_KEY|GEMINI_API_KEY|openaiKey|Bearer/
+  );
   assert.match(helper, /mode: 0o600/);
   assert.match(helper, /await rm\(tempDir, \{ recursive: true, force: true \}\)/);
 });
@@ -30,7 +36,14 @@ test('helper makes zero-cost intent explicit before account deployment', () => {
 
 test('worker config binds Workers AI and locks the verified free model', () => {
   assert.equal(wrangler.ai?.binding, 'AI');
-  assert.deepEqual(wrangler.secrets?.required, ['RMS_CHAT_ACCESS_CODE']);
+  assert.deepEqual(
+    wrangler.secrets?.required,
+    [
+      'RMS_CHAT_ACCESS_CODE',
+      'RMS_TEACHER_ACCESS_CODE',
+      'RMS_TEACHER_SESSION_SECRET'
+    ]
+  );
   assert.equal(wrangler.vars?.RMS_AI_MODEL, '@cf/meta/llama-3.3-70b-instruct-fp8-fast');
   assert.equal(wrangler.vars?.RMS_ALLOWED_ORIGINS, 'https://gmoon-code.github.io');
   const spec = String(workerPkg.devDependencies?.wrangler || '');

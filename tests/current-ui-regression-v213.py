@@ -17,8 +17,21 @@ model=json.loads((r/"assets/response-examples-v2.11.json").read_text(encoding="u
 # The full research route and current accumulated work remain first-class.
 for token in ['id="routeBtn"','data-open-research-snapshot','id="helpMenuBtn"','id="moreMenuBtn"']:
     assert token in idx,token
-for token in ["My Research Route","Needs review after an earlier change","Coming later","Done for now"]:
+for token in ["My Research Route","Needs review after an earlier change","Preview available","Done for now"]:
     assert token in flowui,token
+
+# Future stages use the v2.16 full-stage read-only preview.
+for token in [
+    "openFullStagePreview",
+    "exitStagePreview",
+    "getPreviewStage",
+    "isPreviewing"
+]:
+    assert token in flowui,token
+
+assert "Coming later" not in flowui
+assert "Preview · Stage" in flowui
+assert "Preview · Stage" in app
 assert "stage-context-compact" in app
 assert "FROM EARLIER" in app and "NOW" in app and "NEXT" in app
 
@@ -44,7 +57,8 @@ for token in ["At-a-glance research chain","Earlier or cross-path responses","Ea
 # Old global tool hooks are preserved for compatibility but hidden from student mode.
 assert "legacy-tool-hooks" in idx
 assert "Teacher Dashboard" in idx
-assert "Teacher/setup tools are hidden in student mode" in flowui
+assert "Teacher/setup tools are hidden in student mode" not in flowui
+assert "?mode=teacher" not in flowui
 
 # Student-facing diagnostic review no longer renders a percentage-like coach score.
 assert 'class="coach-score"' not in app
@@ -54,4 +68,4 @@ assert "Ask Research AI" not in helpui and "Ask Research AI" not in flowui
 assert "AI settings" not in flowui
 assert "id=\"aiEndpoint\"" not in app and "id=\"aiChatEndpoint\"" not in app
 assert "assets/runtime-config.js" in app and "Class Chat code for this browser session" in app
-print("PASS v2.14.2 current route/help/pathway/exemplar/snapshot/Chat student-UI regression")
+print("PASS v2.16.0 current route/help/pathway/exemplar/snapshot/Chat student-UI regression")

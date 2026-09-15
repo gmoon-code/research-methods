@@ -1,10 +1,10 @@
-# Start Here — Research Methods Studio v2.15.0 FREE
+# Start Here — Research Methods Studio v2.16.0 FREE
 
 This is the current publication/deployment entry point. Do not use older deployment instructions from `docs/archive/`.
 
 ## 1. Current state
 
-The complete 18-stage website is offline-verified. Research Chat is intentionally disconnected because `assets/runtime-config.js` contains a blank endpoint.
+The v2.16.0 18-stage website is in final release validation. The production Cloudflare Worker is deployed, Research Chat authentication has been production-smoke-tested, teacher-session authentication has been production-smoke-tested, and `assets/runtime-config.js` contains the validated public Worker endpoint.
 
 This means you can inspect and test the website without creating a Cloudflare account and without exposing any credential.
 
@@ -13,8 +13,8 @@ This means you can inspect and test the website without creating a Cloudflare ac
 From the repository root, with Node.js 20+ and Python 3 installed:
 
 ```bash
-python scripts/verify-complete-release-v2.15.0.py
-python scripts/verify-public-github-readiness-v2.15.0.py
+python scripts/verify-complete-release-v2.16.0.py
+python scripts/verify-public-github-readiness-v2.16.0.py
 ```
 
 Both commands must pass before a GitHub publication is treated as release-ready.
@@ -23,20 +23,20 @@ Both commands must pass before a GitHub publication is treated as release-ready.
 
 The first remote step is deliberately **not** a direct upload to `main`. Publish the exact frozen release to the review branch first:
 
-`release/v2.15.0-free-public`
+`release/v2.16.0-free-public`
 
 From the extracted release, run the publication helper against a clean local clone of `gmoon-code/research-methods`:
 
 ```bash
-python scripts/prepare-github-publication-v2.15.0.py --check
-python scripts/prepare-github-publication-v2.15.0.py \
+python scripts/prepare-github-publication-v2.16.0.py --check
+python scripts/prepare-github-publication-v2.16.0.py \
   --target "PATH_TO_YOUR_CLONED_RESEARCH_METHODS_REPO" \
   --dry-run
 ```
 
-Only after the dry run passes should the same command be run without `--dry-run`. The helper pushes only `release/v2.15.0-free-public`, verifies the remote Git tree, and proves that remote `main` did not move. It does not enable GitHub Pages or merge anything. Normal publication does not rerun the release-engineering browser suite, so Git and Python are sufficient for this branch-publication step.
+Only after the dry run passes should the same command be run without `--dry-run`. The helper pushes only `release/v2.16.0-free-public`, verifies the remote Git tree, and proves that remote `main` did not move. It does not enable GitHub Pages or merge anything. Normal publication does not rerun the release-engineering browser suite, so Git and Python are sufficient for this branch-publication step.
 
-Use `docs/GITHUB_PUBLICATION_HANDOFF_v2.15.0.md` for the exact procedure.
+Use `docs/GITHUB_PUBLICATION_HANDOFF_v2.16.0.md` for the exact procedure.
 
 After that remote branch has been reviewed and verified, a separate later gate can merge the exact release to `main` and configure GitHub Pages from `main` and `/ (root)`.
 
@@ -61,12 +61,12 @@ Later, if you want Chat:
 1. keep the static site on GitHub Pages
 2. create a Cloudflare Workers **Free** deployment
 3. deploy `backend/cloudflare-workers-ai/worker.mjs` through the provided helper
-4. store only `RMS_CHAT_ACCESS_CODE` as a Worker secret
+4. store `RMS_CHAT_ACCESS_CODE`, `RMS_TEACHER_ACCESS_CODE`, and `RMS_TEACHER_SESSION_SECRET` as Worker secrets
 5. configure the resulting clean `https://...workers.dev/` endpoint locally
 6. run the production smoke test
-7. complete every item in `docs/PRODUCTION_ACCEPTANCE_CHECKLIST_v2.15.0.md`
+7. complete every item in `docs/PRODUCTION_ACCEPTANCE_CHECKLIST_v2.16.0.md`
 
-Use `docs/CLOUDFLARE_FREE_DEPLOYMENT_v2.15.0.md` for the exact procedure.
+Use `docs/CLOUDFLARE_FREE_DEPLOYMENT_v2.16.0.md` for the exact procedure.
 
 ## 6. Privacy when Chat is later enabled
 
@@ -78,7 +78,7 @@ Research Chat is a support tool. It does not replace the student's paper, invent
 
 ## 7. Zero-cost boundary
 
-The v2.15.0 executable Chat path uses Cloudflare Workers AI and no paid model API key. To keep the hosted configuration at $0, remain on Workers Free and do not enable Workers Paid or prepaid AI Gateway billing.
+The v2.16.0 executable Chat path uses Cloudflare Workers AI and no paid model API key. To keep the hosted configuration at $0, remain on Workers Free and do not enable Workers Paid or prepaid AI Gateway billing.
 
 Provider pricing and model availability can change. Recheck Cloudflare's current Workers AI pricing/model documentation immediately before deployment.
 
@@ -96,6 +96,8 @@ Safe to publish:
 Never publish:
 
 - a real `RMS_CHAT_ACCESS_CODE`
+- a separate real `RMS_TEACHER_ACCESS_CODE`
+- a cryptographically random `RMS_TEACHER_SESSION_SECRET`
 - `.env` or `.dev.vars`
 - Wrangler local state
 - `node_modules`
@@ -104,4 +106,16 @@ Never publish:
 - screenshots containing student information
 - Cloudflare credentials or tokens
 
-See `SECURITY.md` and `docs/PUBLIC_GITHUB_READINESS_v2.15.0.md`.
+See `SECURITY.md` and `docs/PUBLIC_GITHUB_READINESS_v2.16.0.md`.
+
+
+## Teacher entry
+
+Teachers enter through `teacher.html`. The teacher credential is sent directly
+to the Cloudflare Worker and is never saved in local storage or committed to
+the repository. The Worker issues a signed session token after successful
+authentication. Teacher tools become available only after that token verifies.
+
+The production teacher routes are `/teacher/session` and
+`/teacher/session/verify`. Teacher sessions have an eight-hour maximum lifetime.
+Leaving teacher mode clears the browser-session token.

@@ -2,13 +2,13 @@
 from pathlib import Path
 import re,hashlib
 r=Path(__file__).resolve().parents[1]
-idx=(r/"index.html").read_text()
-app=(r/"assets/app.js").read_text()
-css=(r/"assets/style.css").read_text()
-pathui=(r/"assets/pathway-ui.js").read_text()
-helpui=(r/"assets/student-help-ui.js").read_text()
-data=(r/"assets/data-lab-ui.js").read_text()
-writing=(r/"assets/writing-lab-ui.js").read_text()
+idx=(r/"index.html").read_text(encoding="utf-8")
+app=(r/"assets/app.js").read_text(encoding="utf-8")
+css=(r/"assets/style.css").read_text(encoding="utf-8")
+pathui=(r/"assets/pathway-ui.js").read_text(encoding="utf-8")
+helpui=(r/"assets/student-help-ui.js").read_text(encoding="utf-8")
+data=(r/"assets/data-lab-ui.js").read_text(encoding="utf-8")
+writing=(r/"assets/writing-lab-ui.js").read_text(encoding="utf-8")
 
 # Student shell retains orientation and accumulated-work access.
 for token in ["id=\"routeBtn\"","data-open-research-snapshot","id=\"helpMenuBtn\"","id=\"moreMenuBtn\"","id=\"saveStatus\""]:

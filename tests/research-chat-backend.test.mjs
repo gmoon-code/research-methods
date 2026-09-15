@@ -31,7 +31,7 @@ function modelOutput(overrides = {}) {
 const aiRun = async () => ({ response: modelOutput() });
 
 test('release is locked to one verified free Workers AI model', () => {
-  assert.equal(VERSION, '2.15.0'); assert.deepEqual([...ALLOWED_MODELS], [MODEL]);
+  assert.equal(VERSION, '2.16.0'); assert.deepEqual([...ALLOWED_MODELS], [MODEL]);
   assert.equal(MIN_ACCESS_CODE_LENGTH, 16); assert.equal(MAX_ACCESS_CODE_LENGTH, 256); assert.equal(MAX_STAGE_ID, 18);
 });
 
@@ -113,7 +113,7 @@ test('legacy and normalized response aliases are emitted together', () => {
 
 test('OPTIONS and health preserve CORS/security and free-edition metadata', async () => {
   const options = await route(request('OPTIONS'), { env: ENV, aiRun }); assert.equal(options.status, 204); assert.equal(options.headers.get('access-control-allow-origin'), ORIGIN);
-  const health = await route(request('GET'), { env: ENV, aiRun }); const body = await health.json(); assert.equal(health.status, 200); assert.equal(body.version, '2.15.0'); assert.equal(body.model, MODEL); assert.equal(body.provider, 'cloudflare-workers-ai'); assert.equal(body.free_edition, true);
+  const health = await route(request('GET'), { env: ENV, aiRun }); const body = await health.json(); assert.equal(health.status, 200); assert.equal(body.version, '2.16.0'); assert.equal(body.model, MODEL); assert.equal(body.provider, 'cloudflare-workers-ai'); assert.equal(body.free_edition, true);
 });
 
 test('health fails closed for wrong code, missing binding, unsupported model, and disallowed origin', async () => {

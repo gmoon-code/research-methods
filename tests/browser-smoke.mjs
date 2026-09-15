@@ -5,13 +5,58 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import process from 'node:process';
 
-const candidates = process.env.CHROMIUM ? [process.env.CHROMIUM] : ['/usr/bin/chromium','/usr/bin/chromium-browser','/usr/bin/google-chrome'];
-let browser = '';
-for (const candidate of candidates) {
-  try { await access(candidate); browser = candidate; break; } catch {}
+const candidates = [
+  process.env.CHROMIUM,
+  process.env.CHROME,
+  process.env.CHROME_PATH
+];
+
+if (process.platform === 'win32') {
+  const pf = process.env.PROGRAMFILES;
+  const pf86 = process.env['PROGRAMFILES(X86)'];
+  const local = process.env.LOCALAPPDATA;
+
+  if (pf) {
+    candidates.push(
+      join(pf, 'Google', 'Chrome', 'Application', 'chrome.exe'),
+      join(pf, 'Microsoft', 'Edge', 'Application', 'msedge.exe')
+    );
+  }
+
+  if (pf86) {
+    candidates.push(
+      join(pf86, 'Google', 'Chrome', 'Application', 'chrome.exe'),
+      join(pf86, 'Microsoft', 'Edge', 'Application', 'msedge.exe')
+    );
+  }
+
+  if (local) {
+    candidates.push(
+      join(local, 'Google', 'Chrome', 'Application', 'chrome.exe'),
+      join(local, 'Microsoft', 'Edge', 'Application', 'msedge.exe')
+    );
+  }
+} else {
+  candidates.push(
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+    '/usr/bin/google-chrome',
+    '/usr/bin/google-chrome-stable'
+  );
 }
+
+let browser = '';
+
+for (const candidate of [...new Set(candidates.filter(Boolean))]) {
+  try {
+    await access(candidate);
+    browser = candidate;
+    break;
+  } catch {}
+}
+
 if (!browser) {
-  console.log('BROWSER ADAPTER SMOKE: SKIP (Chromium/Chrome not found)');
+  console.log('BROWSER ADAPTER SMOKE: SKIP (Chromium/Chrome/Edge not found)');
   process.exit(0);
 }
 
@@ -72,7 +117,7 @@ try {
 
   const adapter = await readFile(new URL('../assets/ai-adapter.js', import.meta.url), 'utf8');
   const bootstrap = `
-    window.RMS_RUNTIME_CONFIG = Object.freeze({version:'2.15.0',researchChatEndpoint:'https://rms-research-chat-free.example.workers.dev/',chatEndpoint:'https://rms-research-chat-free.example.workers.dev/'});
+    window.RMS_RUNTIME_CONFIG = Object.freeze({version:'2.16.0',researchChatEndpoint:'https://rms-research-chat-free.example.workers.dev/',chatEndpoint:'https://rms-research-chat-free.example.workers.dev/'});
     window.__requests = [];
     window.fetch = async function(url, options={}) {
       const body = options.body ? JSON.parse(options.body) : null;
@@ -119,32 +164,110 @@ try {
   console.error(error?.stack || error);
   process.exitCode = 1;
 } finally {
-  try { ws?.close(); } catch {}
+  /*
+    Chromium uses multiple processes. On Windows, terminating only the
+    process returned by spawn can leave Chromium subprocesses holding the
+    temporary QA profile open.
+  */
+  try {
+    ws?.close();
+  } catch {}
 
-  const waitForChildClose = async (timeoutMs) => {
-    if (child.exitCode != null) return;
+  try {
+    if (
+      process.platform === 'win32' &&
+      child.pid
+    ) {
+      await new Promise(resolve => {
+        const killer = spawn(
+          'taskkill',
+          [
+            '/PID',
+            String(child.pid),
+            '/T',
+            '/F'
+          ],
+          {
+            stdio: 'ignore'
+          }
+        );
+
+        killer.once(
+          'error',
+          () => resolve()
+        );
+
+        killer.once(
+          'exit',
+          () => resolve()
+        );
+      });
+    } else if (
+      child.exitCode == null
+    ) {
+      child.kill('SIGTERM');
+    }
+  } catch {}
+
+  try {
     await Promise.race([
-      new Promise(resolve => child.once('close', resolve)),
-      sleep(timeoutMs)
+      new Promise(resolve => {
+        if (
+          child.exitCode != null
+        ) {
+          resolve();
+          return;
+        }
+
+        child.once(
+          'close',
+          resolve
+        );
+      }),
+      sleep(5000)
     ]);
-  };
+  } catch {}
 
-  if (child.exitCode == null) {
-    try { child.kill('SIGTERM'); } catch {}
-    await waitForChildClose(1200);
-  }
-  if (child.exitCode == null) {
-    try { child.kill('SIGKILL'); } catch {}
-    await waitForChildClose(1200);
+  let cleanupError = null;
+
+  for (
+    let attempt = 0;
+    attempt < 20;
+    attempt++
+  ) {
+    try {
+      await rm(
+        profile,
+        {
+          recursive: true,
+          force: true
+        }
+      );
+
+      cleanupError = null;
+      break;
+    } catch (error) {
+      cleanupError = error;
+
+      if (
+        ![
+          'EBUSY',
+          'EPERM',
+          'ENOTEMPTY'
+        ].includes(error?.code)
+      ) {
+        throw error;
+      }
+
+      await sleep(250);
+    }
   }
 
-  // Chromium may leave profile files briefly while child processes finish
-  // shutting down. fs.rm's retry controls make cleanup deterministic instead
-  // of turning a successful browser test into a transient ENOTEMPTY failure.
-  await rm(profile, {
-    recursive: true,
-    force: true,
-    maxRetries: 10,
-    retryDelay: 150
-  });
+  if (cleanupError) {
+    console.warn(
+      'WARN temporary Chromium QA profile could not be removed immediately:',
+      profile,
+      cleanupError.code || cleanupError.message
+    );
+  }
 }

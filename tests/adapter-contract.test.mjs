@@ -18,7 +18,7 @@ function storage(seed = {}) {
 function successBody(overrides = {}) {
   return {
     ok: true,
-    version: '2.15.0',
+    version: '2.16.0',
     status: 'ok',
     answer: 'Check the measurement rule.',
     next_steps: ['Define the unit.'],
@@ -49,7 +49,7 @@ function makeContext(fetchImpl, { runtime = {}, sessionSeed = {}, localSeed = {}
   const context = {
     window: {
       RMS_RUNTIME_CONFIG: {
-        version: '2.15.0',
+        version: '2.16.0',
         researchChatEndpoint: 'https://rms-research-chat-free.example.workers.dev/',
         chatEndpoint: 'https://rms-research-chat-free.example.workers.dev/',
         ...runtime
@@ -58,7 +58,7 @@ function makeContext(fetchImpl, { runtime = {}, sessionSeed = {}, localSeed = {}
     },
     sessionStorage: session,
     localStorage: local,
-    fetch: fetchImpl || (async () => new Response(JSON.stringify({ ok: true, configured: true, requires_access_code: true, version: '2.15.0', model: '@cf/meta/llama-3.3-70b-instruct-fp8-fast' }), { status: 200, headers: { 'Content-Type': 'application/json' } })),
+    fetch: fetchImpl || (async () => new Response(JSON.stringify({ ok: true, configured: true, requires_access_code: true, version: '2.16.0', model: '@cf/meta/llama-3.3-70b-instruct-fp8-fast' }), { status: 200, headers: { 'Content-Type': 'application/json' } })),
     Headers, Response, Request, URL, AbortController,
     setTimeout, clearTimeout, Math, Date, Uint8Array,
     crypto: globalThis.crypto,
@@ -111,7 +111,7 @@ test('health preserves legacy non-throwing state contract and sends pseudonymous
   let captured;
   const { ctx } = makeContext(async (url, options) => {
     captured = { url, options };
-    return new Response(JSON.stringify({ ok: true, configured: true, requires_access_code: true, version: '2.15.0', model: '@cf/meta/llama-3.3-70b-instruct-fp8-fast', message: 'Connected.' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ ok: true, configured: true, requires_access_code: true, version: '2.16.0', model: '@cf/meta/llama-3.3-70b-instruct-fp8-fast', message: 'Connected.' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
   });
   let state = await ctx.window.RMSAI.health();
   assert.equal(state.ok, false);
@@ -133,7 +133,7 @@ test('health can use legacy interactive code prompt after 401 without persisting
     if (options.headers['X-RMS-Chat-Code'] !== 'prompted-class-code-1234') {
       return new Response(JSON.stringify({ error: 'Invalid class code.' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
     }
-    return new Response(JSON.stringify({ ok: true, configured: true, requires_access_code: true, version: '2.15.0', model: '@cf/meta/llama-3.3-70b-instruct-fp8-fast' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ ok: true, configured: true, requires_access_code: true, version: '2.16.0', model: '@cf/meta/llama-3.3-70b-instruct-fp8-fast' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
   }, { promptValue: 'prompted-class-code-1234' });
   ctx.window.RMSAI.setAccessCode('wrong-code-but-long');
   const state = await ctx.window.RMSAI.health({ force: true, interactive: true });

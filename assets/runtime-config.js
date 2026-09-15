@@ -1,5 +1,5 @@
 window.RMS_RUNTIME_CONFIG = Object.freeze({
-  "version": "2.15.0",
+  "version": "2.16.0",
   "freeEdition": true,
   "researchChatEndpoint": "https://rms-research-chat-free.gmoon-code.workers.dev/",
   "chatEndpoint": "https://rms-research-chat-free.gmoon-code.workers.dev/"

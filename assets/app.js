@@ -1,4 +1,3 @@
-
 (() => {
   "use strict";
   const C=window.RMSCurriculum,E=window.RMSEngine,Coach=window.RMSCoach,AI=window.RMSAI,AIHelper=window.RMSAIHelper,AIHelperUI=window.RMSAIHelperUI,Lit=window.RMSLiterature,Methods=window.RMSMethods,Stats=window.RMSAnalytics,DataLab=window.RMSDataLab,Writing=window.RMSWriting,WritingLab=window.RMSWritingLab,Transfer=window.RMSTransfer,TransferUI=window.RMSTransferUI,Competency=window.RMSCompetency,CompetencyUI=window.RMSCompetencyUI,Journey=window.RMSJourney,JourneyUI=window.RMSJourneyUI,Pilot=window.RMSPilot,PilotUI=window.RMSPilotUI,Guide=window.RMSGuidanceUI,Paths=window.RMSPathways,PathUI=window.RMSPathwayUI,Flow=window.RMSStudentFlow,FlowUI=window.RMSStudentFlowUI,HelpUI=window.RMSStudentHelpUI,Snapshot=window.RMSResearchSnapshot,SnapshotUI=window.RMSResearchSnapshotUI,PathCoach=window.RMSNoviceGuard,Rescue=window.RMSRescue,RescueUI=window.RMSRescueUI,Exemplar=window.RMSExemplar,ExemplarUI=window.RMSExemplarUI;
@@ -10,7 +9,58 @@
   const load=()=>{const got=Pilot.safeLoad(KEY);if(got.project){project=got.project;project.reviews=project.reviews||[];project.schema=project.schema||[];project.sources=project.sources||[];project.ready=project.ready||{};project.data=project.data||{};Paths.normalizeProject(project);Rescue.normalizeProject(project);Exemplar.normalizeProject(project);Lit.normalizeProject(project);Methods.normalizeProject(project);Stats.normalizeProject(project);Writing.normalizeProject(project);Transfer.normalizeProject(project);Competency.normalizeProject(project);Journey.normalizeProject(project);Pilot.normalizeProject(project);AIHelper.normalizeProject(project);Flow.normalizeProject(project);Flow.syncCanonical(project);if(got.source==="recovery"){Pilot.logRuntime(project,"recovery_load","Primary project could not be read; recovery snapshot was loaded.");Pilot.safeSave(KEY,project)}}};
   const save=()=>{Flow.syncCanonical(project);return Pilot.safeSave(KEY,project)};
   const stage=id=>C.stages.find(s=>s.id===Number(id));
-  const current=()=>stage(project.currentStage);
+  const current=()=>stage(
+    FlowUI?.getPreviewStage?.() ?? project.currentStage
+  );
+
+  /*
+    Future-stage navigation exists only in memory.
+    It must never be written into the research project.
+  */
+  let previewViewState=null;
+
+  function previewViewFor(stageId,sectionCount=0){
+    const id=Number(stageId);
+
+    if(
+      !previewViewState ||
+      Number(previewViewState.stageId)!==id
+    ){
+      previewViewState={
+        stageId:id,
+        tab:"learn",
+        section:0
+      };
+    }
+
+    if(
+      !["learn","work","check"].includes(
+        previewViewState.tab
+      )
+    ){
+      previewViewState.tab="learn";
+    }
+
+    const maxSection=Math.max(
+      0,
+      Number(sectionCount||0)-1
+    );
+
+    previewViewState.section=Math.min(
+      Math.max(
+        0,
+        Number(previewViewState.section)||0
+      ),
+      maxSection
+    );
+
+    return previewViewState;
+  }
+
+  function clearPreviewView(){
+    previewViewState=null;
+  }
+
   function pct(){return Math.round(Object.values(project.ready||{}).filter(Boolean).length/C.stages.length*100)}
 
   function renderNav(){
@@ -29,7 +79,19 @@
   }
 
   function snapshot(){
-    $("snapshot").innerHTML=SnapshotUI.compactHTML(project);
+    const box = $("snapshot");
+    if(!box) return;
+
+    if(SnapshotUI && typeof SnapshotUI.compactHTML === "function"){
+      box.innerHTML = SnapshotUI.compactHTML(project);
+    }else{
+      box.innerHTML = `
+        <div class="snapshot-fallback">
+          <b>My Research Snapshot</b>
+          <p>Your project work is still saved. The snapshot view is temporarily unavailable.</p>
+        </div>
+      `;
+    }
   }
   function updateCurrentContextStrip(){
     const box=document.querySelector(".stage-context-compact");
@@ -77,7 +139,11 @@
   function sectionsHTML(s){
     const secs=visibleSections(s);
     if(!secs.length)return"";
-    const idx=Flow.sectionIndex(project,s.id,secs.length),sec=secs[idx];
+    const previewMode=!!FlowUI?.isPreviewing?.();
+    const idx=previewMode
+      ?previewViewFor(s.id,secs.length).section
+      :Flow.sectionIndex(project,s.id,secs.length);
+    const sec=secs[idx];
     const outline=`<nav class="stage-section-outline" aria-label="Parts of this stage">${secs.map((x,i)=>{const st=Flow.sectionStatus(project,s.id,x);return `<button type="button" data-section-step="${i}" class="${i===idx?"active":st.complete?"done":""}"><span>${st.complete?"✓":i+1}</span>${esc(x.title)}</button>`}).join("")}</nav>`;
     return `${outline}<section class="current-form-section"><h4>${esc(sec.title)}</h4><p>${esc(sec.desc)}</p><div class="form-grid">${sec.fields.map(f=>fieldHTML(f,s.id)).join("")}</div></section>`;
   }
@@ -154,7 +220,6 @@
     </div>`;
   }
 
-
   function statsWizard(){
     return `<div class="wizard">
       <h4>Analysis decision wizard</h4>
@@ -204,7 +269,6 @@
     </div>`;
   }
 
-
   function stageOrientationHTML(s){
     const t=Flow.transitionFor(s.id);
     return `<div class="stage-orientation"><div><span>FROM EARLIER</span><p>${esc(t.from)}</p></div><div class="current"><span>NOW</span><p>${esc(t.now)}</p></div><div><span>NEXT</span><p>${esc(t.next)}</p></div></div>`;
@@ -240,18 +304,58 @@
   }
 
   function renderStage(){
-    const s=current();Flow.markVisited(project,s.id);
+    const s=current();
+    const previewMode=!!FlowUI?.isPreviewing?.();
+
+    if(!previewMode){
+      clearPreviewView();
+      Flow.markVisited(project,s.id);
+    }
     $("welcome").hidden=true;$("stageView").hidden=false;
-    const activeTab=project.flow.activeTabByStage?.[s.id]||"learn";
+    const activeTab=previewMode
+      ?previewViewFor(
+          s.id,
+          visibleSections(s).length
+        ).tab
+      :project.flow.activeTabByStage?.[s.id]||"learn";
     const phase=C.phases.find(p=>p.id===s.phase);
     const needsReview=project.flow.needsReview?.[s.id],reviewReason=project.flow.reviewReasons?.[s.id]||"";
     const workContent=s.id===6
       ?`<section class="current-form-section"><h4>Evaluate and extract source evidence</h4><p>Add sources in the Literature Workspace, decide whether each source belongs, and record the evidence you will need for later synthesis.</p>${sourceManager()}</section>`
       :sectionsHTML(s);
-    const stageSecs=visibleSections(s),stageSectionIndex=Flow.sectionIndex(project,s.id,stageSecs.length);
+    const stageSecs=visibleSections(s);
+    const stageSectionIndex=previewMode
+      ?previewViewFor(
+          s.id,
+          stageSecs.length
+        ).section
+      :Flow.sectionIndex(
+          project,
+          s.id,
+          stageSecs.length
+        );
     const pathCard=s.id===4&&stageSectionIndex>=Math.max(0,stageSecs.length-1)?`<details class="stage-tool-drawer path-suggestion" ${project.pathway?.selected==="unsure"?"open":""}><summary>Choose your research path after your working question is clear</summary><p>The site will recommend a path from the question you have written. This only changes which research decisions are emphasized. Your earlier work stays saved if the path changes.</p><button class="secondary" data-open-pathway>Choose / confirm research path</button></details>`:"";
     $("stageView").innerHTML=`<article class="card stage-card">
       <header class="stage-header"><div class="stage-meta"><span class="phase-pill">${esc(Flow.phaseLabel(s.phase))}</span><span class="stage-count">Stage ${s.id} of ${C.stages.length}</span></div><h2>${esc(Paths.stageTitle(project,s.id,s.title))}</h2><div class="purpose">${esc(s.purpose)}</div></header>
+      ${previewMode?`
+        <div class="stage-preview-banner">
+          <div>
+            <b>Preview · Stage ${s.id}</b>
+            <span>
+              You are viewing the complete future stage in read-only mode.
+              Your current stage, progress, and saved answers will not change.
+            </span>
+          </div>
+
+          <button
+            type="button"
+            class="primary small"
+            id="exitStagePreview"
+          >
+            Return to my current stage
+          </button>
+        </div>
+      `:""}
       ${needsReview?`<div class="needs-review-banner"><b>This stage needs review after an earlier change.</b><p>${esc(reviewReason)}</p></div>`:""}
       ${stageOrientationHTML(s)}
       ${stageContextHTML(s)}
@@ -286,10 +390,50 @@
         <div class="stage-bottom-nav"><button class="ghost" data-go-tab="work">← Revise my work</button>${project.ready[s.id]&&s.id<18?`<button class="primary" id="continueNextStage">Continue to Stage ${s.id+1} →</button>`:project.ready[s.id]&&s.id===18?`<button class="primary" disabled>Final stage done for now ✓</button>`:`<button class="primary" id="markReadyBottom">Ready to continue</button>`}</div>
       </div>
     </article>`;
+    if(previewMode){
+      const card=document.querySelector("#stageView .stage-card");
+
+      if(card){
+        card.classList.add("stage-preview-mode");
+
+        card.querySelectorAll(
+          "input, textarea, select"
+        ).forEach(control=>{
+          control.disabled=true;
+          control.setAttribute("aria-disabled","true");
+        });
+
+        card.querySelectorAll("button").forEach(button=>{
+          const allowed=
+            button.matches(".stage-tabs button") ||
+            button.matches("[data-go-tab]") ||
+            button.matches("[data-section-step]") ||
+            button.matches("[data-route-open]") ||
+            button.id==="exitStagePreview";
+
+          if(!allowed){
+            button.disabled=true;
+            button.setAttribute("aria-disabled","true");
+          }
+        });
+
+        card.querySelectorAll(
+          ".guided-field, .structured-field"
+        ).forEach(field=>{
+          field.classList.add("preview-field");
+        });
+      }
+    }
+
     bindStage();
+
+    if(previewMode && $("exitStagePreview")){
+      $("exitStagePreview").onclick=()=>{
+        clearPreviewView();
+        FlowUI.exitStagePreview();
+      };
+    }
   }
-
-
 
   function litSourceForm(s={},idx=null){
     const t=s.trapp||{},ev=s.themeEvidence||[];
@@ -416,7 +560,7 @@
         <label><span>How method, measure, population, or context may explain differences</span><textarea data-outline-cond="${i}">${esc(p.conditions||"")}</textarea></label>
         <label><span>Transition / implication for next paragraph or study</span><textarea data-outline-transition="${i}">${esc(p.transition||"")}</textarea></label>
       </div>`).join("")}
-      <div class="lit-toolbar"><button class="ghost small" id="downloadLitOutline">Export outline Markdown</button></div></div>`;
+      <div class="lit-toolbar"><button class="ghost small" id="downloadLitOutline">Download Word outline</button></div></div>`;
   }
 
   function literatureWorkspace(active="search", editIndex=null){
@@ -494,7 +638,6 @@
     bindOutline("data-outline-theme","theme");bindOutline("data-outline-sources","sourceIds",true);bindOutline("data-outline-job","job");bindOutline("data-outline-claim","claim");bindOutline("data-outline-synth","synthesis");bindOutline("data-outline-tension","tension");bindOutline("data-outline-cond","conditions");bindOutline("data-outline-transition","transition");
     if($("downloadLitOutline")) $("downloadLitOutline").onclick=()=>RMSWordExport.fromMarkdown("literature-review-outline.doc",Lit.outlineMarkdown(project),"Literature Review Outline");
   }
-
 
   function mInput(id,label,val="",type="text",options=[]){
     let control="";
@@ -823,11 +966,21 @@
   }
 
   function bindStage(){
+    const previewMode=!!FlowUI?.isPreviewing?.();
+
     const activateTab=(tab)=>{
-      project.flow.activeTabByStage[current().id]=tab;save();
+      if(previewMode){
+        previewViewFor(
+          current().id,
+          visibleSections(current()).length
+        ).tab=tab;
+      }else{
+        project.flow.activeTabByStage[current().id]=tab;
+        save();
+      }
       document.querySelectorAll(".stage-tabs button").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));
       ["Learn","Work","Check"].forEach(n=>$("tab"+n)?.classList.toggle("hidden",tab!==n.toLowerCase()));
-      if(tab==="check"){
+      if(!previewMode && tab==="check"){
         const already=(project.competency?.independentCheckpoints||[]).some(x=>Number(x.stage)===Number(current().id));
         if(!already){
           const diagnostic=PathCoach.reviewStage(current().id,project);
@@ -843,8 +996,31 @@
     if($("workHelpBtn"))$("workHelpBtn").onclick=()=>HelpUI.openGlobal();
 
     document.querySelectorAll("[data-section-step]").forEach(b=>b.onclick=()=>{
-      Flow.setSection(project,current().id,Number(b.dataset.sectionStep));
-      project.flow.activeTabByStage[current().id]="work";save();renderStage();window.scrollTo({top:0,behavior:"smooth"});
+      const nextSection=Number(
+        b.dataset.sectionStep
+      );
+
+      if(previewMode){
+        const view=previewViewFor(
+          current().id,
+          visibleSections(current()).length
+        );
+
+        view.section=nextSection;
+        view.tab="work";
+      }else{
+        Flow.setSection(
+          project,
+          current().id,
+          nextSection
+        );
+
+        project.flow.activeTabByStage[current().id]="work";
+        save();
+      }
+
+      renderStage();
+      window.scrollTo({top:0,behavior:"smooth"});
     });
 
     document.querySelectorAll("[data-field]").forEach(el=>{
@@ -979,71 +1155,311 @@
   function renderAll(){
     Flow.normalizeProject(project);Flow.syncCanonical(project);
     document.body.classList.toggle("project-active",!!project.name);
-    document.body.classList.toggle("teacher-mode",new URLSearchParams(location.search).get("mode")==="teacher");
+    document.body.classList.toggle("teacher-mode",!!window.RMSTeacherSession?.isActive?.());
     FlowUI.init(project,save,renderAll);HelpUI.bind(project,()=>current().id);
     renderNav();snapshot();termCard();applyPilotFeaturePolicy();
     if(project.name)renderStage();else{$("welcome").hidden=false;$("stageView").hidden=true}
   }
+
   function markdown(){
-    const d=project.data, lines=[`# ${project.name||"Research Project"}`,``,project.context?`**Context:** ${project.context}`:"",``];
-    C.stages.forEach(s=>{lines.push(`## ${s.id}. ${s.title}`);for(const sec of s.sections){for(const f of sec.fields){const v=d[f[0]];if(v)lines.push(`**${f[1]}**\n\n${v}\n`)}}});
-    if(project.sources.length){lines.push("## Source extraction records");project.sources.forEach((s,i)=>{lines.push(`### Source ${i+1}`);Object.entries(s).forEach(([k,v])=>{if(v)lines.push(`**${k}:** ${v}`)})})}
+    const d=project.data||{};
+    const lines=[
+      `# ${project.name||"Research Project"}`,
+      ``
+    ];
+
+    const hasValue=value=>{
+      if(value===null||value===undefined)return false;
+      if(Array.isArray(value))return value.length>0;
+      if(typeof value==="object")return Object.keys(value).length>0;
+      return String(value).trim().length>0;
+    };
+
+    const printable=value=>{
+      if(Array.isArray(value)){
+        return value
+          .map(item=>{
+            if(item&&typeof item==="object"){
+              return Object.entries(item)
+                .filter(([,v])=>hasValue(v))
+                .map(([k,v])=>`${k}: ${String(v)}`)
+                .join("; ");
+            }
+            return String(item);
+          })
+          .filter(Boolean)
+          .join("; ");
+      }
+
+      if(value&&typeof value==="object"){
+        return Object.entries(value)
+          .filter(([,v])=>hasValue(v))
+          .map(([k,v])=>`${k}: ${String(v)}`)
+          .join("; ");
+      }
+
+      return String(value);
+    };
+
+    const readableKey=key=>
+      String(key)
+        .replace(/_/g," ")
+        .replace(/([a-z])([A-Z])/g,"$1 $2")
+        .replace(/^./,c=>c.toUpperCase());
+
+    if(project.context){
+      lines.push(
+        `**Course or context**`,
+        ``,
+        project.context,
+        ``
+      );
+    }
+
+    C.phases.forEach(ph=>{
+      const phaseLines=[];
+
+      (ph.steps||[]).forEach(stageId=>{
+        const s=C.stages.find(
+          x=>x.id===stageId
+        );
+
+        if(!s)return;
+
+        const stageLines=[];
+
+        (s.sections||[]).forEach(sec=>{
+          const fieldLines=[];
+
+          (sec.fields||[]).forEach(f=>{
+            const value=d[f[0]];
+
+            if(!hasValue(value))return;
+
+            fieldLines.push(
+              `**${f[1]}**`,
+              ``,
+              printable(value),
+              ``
+            );
+          });
+
+          if(fieldLines.length){
+            stageLines.push(
+              `#### ${sec.title}`,
+              ``,
+              ...fieldLines
+            );
+          }
+        });
+
+        if(stageLines.length){
+          phaseLines.push(
+            `### ${s.id}. ${s.title}`,
+            ``,
+            ...stageLines
+          );
+        }
+      });
+
+      if(phaseLines.length){
+        lines.push(
+          `## ${Flow.phaseLabel(ph.id)}`,
+          ``,
+          ...phaseLines
+        );
+      }
+    });
+
+    if(project.sources?.length){
+      const sourceLines=[];
+
+      project.sources.forEach(
+        (source,index)=>{
+          const entries=
+            Object.entries(source)
+              .filter(([,value])=>
+                hasValue(value)
+              );
+
+          if(!entries.length)return;
+
+          sourceLines.push(
+            `### Source ${index+1}`,
+            ``
+          );
+
+          entries.forEach(
+            ([key,value])=>{
+              sourceLines.push(
+                `**${readableKey(key)}**`,
+                ``,
+                printable(value),
+                ``
+              );
+            }
+          );
+        }
+      );
+
+      if(sourceLines.length){
+        lines.push(
+          `## Source extraction records`,
+          ``,
+          ...sourceLines
+        );
+      }
+    }
+
     return lines.join("\n");
   }
-  function download(name,text,type="text/plain"){const blob=new Blob([text],{type});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+
+  function download(name,text,type="text/plain"){
+    const blob=new Blob([text],{type});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download=name;
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),500);
+  }
+
   load();
-  Flow.normalizeProject(project);Flow.syncCanonical(project);
-  document.body.classList.toggle("teacher-mode",new URLSearchParams(location.search).get("mode")==="teacher");
+  Flow.normalizeProject(project);
+  Flow.syncCanonical(project);
+  document.body.classList.toggle("teacher-mode",!!window.RMSTeacherSession?.isActive?.());
 
-  FlowUI.init(project,save,renderAll);
-  Guide.bindDelegated();
-  SnapshotUI.bind(()=>project,save,(stageId)=>{stageId=Number(stageId);if(!Flow.canWorkStage(project,stageId)){FlowUI.previewStage(stageId);return}project.currentStage=stageId;Flow.markVisited(project,stageId);project.flow.activeTabByStage[stageId]=project.flow.activeTabByStage[stageId]||"work";save();renderAll();window.scrollTo({top:0,behavior:"smooth"})});
-  AIHelperUI.bind(project,save,Competency,PathCoach,Pilot,()=>current().id);
-  PathUI.bind(project,save,renderAll);
-  RescueUI.bind(project,save,Competency,renderStage,()=>current().id);
-  ExemplarUI.bind(project,save,Competency,()=>current().id);
-  HelpUI.bind(project,()=>current().id);
-
-  $("beginProject").onclick=()=>{
-    project.name=$("projectName").value.trim()||"My Research Project";
-    project.context=$("projectContext").value.trim();
-    Flow.markVisited(project,1);project.flow.activeTabByStage[1]="learn";
-    save();renderAll();FlowUI.maybeOnboard(project,save);
+  const bindCriticalButtons=()=>{
+    if($("routeBtn"))$("routeBtn").onclick=()=>FlowUI.openRoute();
+    if($("helpMenuBtn"))$("helpMenuBtn").onclick=()=>HelpUI.openGlobal();
+    if($("moreMenuBtn"))$("moreMenuBtn").onclick=()=>FlowUI.openMore();
+    if($("saveProblemOptions"))$("saveProblemOptions").onclick=()=>FlowUI.openMore();
   };
-  $("exportJson").onclick=()=>download("research-methods-studio-full-backup.json",JSON.stringify(Pilot.backupEnvelope(project,"full"),null,2),"application/json");
-  $("exportMd").onclick=()=>RMSWordExport.fromMarkdown("research-notebook.doc",markdown(),project.name||"Research Notebook");
-  $("resetProject").onclick=()=>{
-    const wrap=document.createElement("div");wrap.className="modal-backdrop";wrap.id="newProjectBackdrop";
+
+  bindCriticalButtons();
+
+  try{FlowUI.init(project,save,renderAll)}catch(err){console.error("Flow UI initialization failed",err)}
+  try{Guide.bindDelegated()}catch(err){console.error("Guidance initialization failed",err)}
+  try{
+    if(SnapshotUI && typeof SnapshotUI.bind === "function") SnapshotUI.bind(()=>project,save,(stageId)=>{
+      stageId=Number(stageId);
+      if(!Flow.canWorkStage(project,stageId)){
+        FlowUI.openFullStagePreview(stageId);
+        return;
+      }
+      project.currentStage=stageId;
+      Flow.markVisited(project,stageId);
+      project.flow.activeTabByStage[stageId]=project.flow.activeTabByStage[stageId]||"work";
+      save();
+      renderAll();
+      window.scrollTo({top:0,behavior:"smooth"});
+    });
+  }catch(err){console.error("Research Snapshot initialization failed",err)}
+  try{AIHelperUI.bind(project,save,Competency,PathCoach,Pilot,()=>current().id)}catch(err){console.error("Research Chat initialization failed",err)}
+  try{PathUI.bind(project,save,renderAll)}catch(err){console.error("Pathway UI initialization failed",err)}
+  try{RescueUI.bind(project,save,Competency,renderStage,()=>current().id)}catch(err){console.error("Rescue UI initialization failed",err)}
+  try{ExemplarUI.bind(project,save,Competency,()=>current().id)}catch(err){console.error("Exemplar UI initialization failed",err)}
+  try{HelpUI.bind(project,()=>current().id)}catch(err){console.error("Help UI initialization failed",err)}
+
+  bindCriticalButtons();
+
+  if($("beginProject"))$("beginProject").onclick=()=>{
+    project.name=$("projectName")?.value.trim()||"My Research Project";
+    project.context=$("projectContext")?.value.trim()||"";
+    Flow.markVisited(project,1);
+    project.flow.activeTabByStage[1]="learn";
+    save();
+    renderAll();
+    FlowUI.maybeOnboard(project,save);
+  };
+
+  if($("exportJson"))$("exportJson").onclick=()=>download(
+    "research-methods-studio-full-backup.json",
+    JSON.stringify(Pilot.backupEnvelope(project,"full"),null,2),
+    "application/json"
+  );
+
+  {
+    const exportNotebookButton=$("exportDoc")||$("exportMd");
+    if(exportNotebookButton){
+      exportNotebookButton.onclick=()=>RMSWordExport.fromMarkdown(
+        "research-notebook.doc",
+        markdown(),
+        project.name||"Research Notebook"
+      );
+    }
+  }
+
+  if($("resetProject"))$("resetProject").onclick=()=>{
+    const wrap=document.createElement("div");
+    wrap.className="modal-backdrop";
+    wrap.id="newProjectBackdrop";
     wrap.innerHTML=`<div class="modal"><div class="journey-head"><div><h3>Start a different project?</h3><p>Your current project is saved only on this browser unless you download a backup.</p></div><button class="ghost small" id="cancelNewProject">Cancel</button></div>
       <div class="help-choice-grid"><button id="backupThenNew"><b>Download backup and start new</b><span>Recommended. Save a full recovery copy first.</span></button><button id="newWithoutBackup" class="destructive-option"><b>Start new without backup</b><span>Clear this browser's current project and begin again.</span></button></div></div>`;
-    document.body.appendChild(wrap);$("cancelNewProject").onclick=()=>wrap.remove();wrap.onclick=e=>{if(e.target===wrap)wrap.remove()};
-    $("backupThenNew").onclick=()=>{download("research-methods-studio-full-backup.json",JSON.stringify(Pilot.backupEnvelope(project,"full"),null,2),"application/json");setTimeout(()=>{Pilot.clearProjectStorage(KEY,{clearOnboarding:false});location.reload()},250)};
-    $("newWithoutBackup").onclick=()=>{if(confirm("Clear the current browser project without downloading a backup?")){Pilot.clearProjectStorage(KEY,{clearOnboarding:false});location.reload()}};
+    document.body.appendChild(wrap);
+    $("cancelNewProject").onclick=()=>wrap.remove();
+    wrap.onclick=e=>{if(e.target===wrap)wrap.remove()};
+    $("backupThenNew").onclick=()=>{
+      download(
+        "research-methods-studio-full-backup.json",
+        JSON.stringify(Pilot.backupEnvelope(project,"full"),null,2),
+        "application/json"
+      );
+      setTimeout(()=>{
+        Pilot.clearProjectStorage(KEY,{clearOnboarding:false});
+        location.reload();
+      },250);
+    };
+    $("newWithoutBackup").onclick=()=>{
+      if(confirm("Clear the current browser project without downloading a backup?")){
+        Pilot.clearProjectStorage(KEY,{clearOnboarding:false});
+        location.reload();
+      }
+    };
   };
 
-  // Hidden compatibility controls remain available through the student More menu or ?mode=teacher.
-  $("pilotBtn").onclick=()=>PilotUI.open(project,save,KEY,"onboard");
-  $("transferBtn").onclick=()=>{const a=Pilot.featureAccess(project,"public-transfer");if(!a.allowed){alert(a.reason);return}TransferUI.open(project,save,"student")};
-  $("pathwayBtn").onclick=()=>PathUI.open(project,save,renderAll);
-  $("studentGuideBtn").onclick=()=>Guide.guideModal(current().id);
-  $("glossaryBtn").onclick=()=>Guide.glossaryModal("");
-  $("competencyBtn").onclick=()=>CompetencyUI.open(project,save,"overview");
-  $("journeyBtn").onclick=()=>JourneyUI.openJourney(project,save,(stageId)=>{project.currentStage=stageId;Flow.markVisited(project,stageId);save();renderAll();window.scrollTo({top:0,behavior:"smooth"})});
-  $("teacherBtn").onclick=()=>JourneyUI.openTeacherDashboard();
-  $("writingLab").onclick=()=>WritingLab.open(project,save,"intro");
-  $("dataLab").onclick=()=>DataLab.open(project,save,"import");
-  $("methodsLab").onclick=()=>methodsWorkspace("design");
-  $("litLab").onclick=()=>literatureWorkspace("search");
+  if($("pilotBtn"))$("pilotBtn").onclick=()=>PilotUI.open(project,save,KEY,"onboard");
 
-  $("routeBtn").onclick=()=>FlowUI.openRoute();
-  $("helpMenuBtn").onclick=()=>HelpUI.openGlobal();
-  $("moreMenuBtn").onclick=()=>FlowUI.openMore();
-  $("saveProblemOptions").onclick=()=>FlowUI.openMore();
+  if($("transferBtn"))$("transferBtn").onclick=()=>{
+    const a=Pilot.featureAccess(project,"public-transfer");
+    if(!a.allowed){
+      alert(a.reason);
+      return;
+    }
+    TransferUI.open(project,save,"student");
+  };
 
-  $("aiSettings").onclick=()=>{
-    const access=Pilot.featureAccess(project,"ai");if(!access.allowed){alert(access.reason);return}
-    const c=AI.getConfig(),endpoint=AI.effectiveChatEndpoint();
-    const wrap=document.createElement("div");wrap.className="modal-backdrop";
+  if($("pathwayBtn"))$("pathwayBtn").onclick=()=>PathUI.open(project,save,renderAll);
+  if($("studentGuideBtn"))$("studentGuideBtn").onclick=()=>Guide.guideModal(current().id);
+  if($("glossaryBtn"))$("glossaryBtn").onclick=()=>Guide.glossaryModal("");
+  if($("competencyBtn"))$("competencyBtn").onclick=()=>CompetencyUI.open(project,save,"overview");
+
+  if($("journeyBtn"))$("journeyBtn").onclick=()=>JourneyUI.openJourney(project,save,(stageId)=>{
+    project.currentStage=stageId;
+    Flow.markVisited(project,stageId);
+    save();
+    renderAll();
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+
+  if($("teacherBtn"))$("teacherBtn").onclick=()=>JourneyUI.openTeacherDashboard();
+  if($("writingLab"))$("writingLab").onclick=()=>WritingLab.open(project,save,"intro");
+  if($("dataLab"))$("dataLab").onclick=()=>DataLab.open(project,save,"import");
+  if($("methodsLab"))$("methodsLab").onclick=()=>methodsWorkspace("design");
+  if($("litLab"))$("litLab").onclick=()=>literatureWorkspace("search");
+
+  bindCriticalButtons();
+
+  if($("aiSettings"))$("aiSettings").onclick=()=>{
+    const access=Pilot.featureAccess(project,"ai");
+    if(!access.allowed){
+      alert(access.reason);
+      return;
+    }
+
+    const c=AI.getConfig();
+    const endpoint=AI.effectiveChatEndpoint();
+    const wrap=document.createElement("div");
+    wrap.className="modal-backdrop";
     wrap.innerHTML=`<div class="modal"><h3>Chat settings</h3>
       <p>The Research Chat server address is controlled by the site owner in <code>assets/runtime-config.js</code>. Students and teachers cannot replace it from the browser. This FREE release uses the Cloudflare Workers AI binding and does not require a model-provider API key.</p>
       <div class="privacy-note"><b>Configured Chat endpoint</b><p><code>${esc(endpoint||"Not configured yet")}</code></p>${endpoint?"":`<p>Research Chat will remain unavailable until the site owner configures the public backend endpoint.</p>`}</div>
@@ -1051,30 +1467,129 @@
       <label style="margin-top:12px"><span>Enable Research Chat on this browser session</span><select id="aiEnabled"><option value="false" ${!c.enabled?"selected":""}>No · local guidance only</option><option value="true" ${c.enabled?"selected":""}>Yes</option></select></label>
       <div class="privacy-note"><b>Privacy reminder</b><p>The class code is kept only for this browser session and is not saved in the research-project backup. Questions and recent Chat messages go to the configured class service. Current project context is included only when the student leaves <b>Use my current project context</b> enabled, and the browser removes raw datasets and obvious identifying fields before transmission.</p></div>
       <div class="modal-actions"><button class="ghost" id="clearChatCode" ${c.accessCodeSet?"":"disabled"}>Clear class code</button><button class="ghost" id="testChat">Test connection</button><button class="ghost" id="closeAI">Cancel</button><button class="primary" id="saveAI">Save session settings</button></div></div>`;
-    document.body.appendChild(wrap);wrap.onclick=e=>{if(e.target===wrap)wrap.remove()};$("closeAI").onclick=()=>wrap.remove();
-    const applySessionSettings=()=>{const code=$("aiAccessCode").value.trim(),enabled=$("aiEnabled").value==="true";AI.setConfig({enabled,...(code?{accessCode:code}:{})});return {code,enabled}};
-    $("clearChatCode").onclick=()=>{AI.clearAccessCode();$("aiAccessCode").value="";$("clearChatCode").disabled=true;window.dispatchEvent(new CustomEvent("rms-ai-config-changed"));alert("The class Chat code was cleared from this browser session.")};
-    $("testChat").onclick=async()=>{try{applySessionSettings();const b=$("testChat"),original=b.textContent;b.disabled=true;b.textContent="Testing…";const h=await AI.health({force:true,interactive:false});alert(h.ok?`Research Chat connection passed${h.model?` · ${h.model}`:""}.`:h.message||"Research Chat is not connected yet.");b.disabled=false;b.textContent=original}catch(err){alert(err?.message||String(err));$("testChat").disabled=false;$("testChat").textContent="Test connection"}};
-    $("saveAI").onclick=()=>{try{applySessionSettings();wrap.remove();renderAll();window.dispatchEvent(new CustomEvent("rms-ai-config-changed"))}catch(err){alert(err?.message||String(err))}};
+
+    document.body.appendChild(wrap);
+    wrap.onclick=e=>{if(e.target===wrap)wrap.remove()};
+
+    if($("closeAI"))$("closeAI").onclick=()=>wrap.remove();
+
+    const applySessionSettings=()=>{
+      const code=$("aiAccessCode")?.value.trim()||"";
+      const enabled=$("aiEnabled")?.value==="true";
+      AI.setConfig({enabled,...(code?{accessCode:code}:{})});
+      return {code,enabled};
+    };
+
+    if($("clearChatCode"))$("clearChatCode").onclick=()=>{
+      AI.clearAccessCode();
+      if($("aiAccessCode"))$("aiAccessCode").value="";
+      $("clearChatCode").disabled=true;
+      window.dispatchEvent(new CustomEvent("rms-ai-config-changed"));
+      alert("The class Chat code was cleared from this browser session.");
+    };
+
+    if($("testChat"))$("testChat").onclick=async()=>{
+      const b=$("testChat");
+      const original=b.textContent;
+      try{
+        applySessionSettings();
+        b.disabled=true;
+        b.textContent="Testing…";
+        const h=await AI.health({force:true,interactive:false});
+        alert(
+          h.ok
+            ?`Research Chat connection passed${h.model?` · ${h.model}`:""}.`
+            :h.message||"Research Chat is not connected yet."
+        );
+      }catch(err){
+        alert(err?.message||String(err));
+      }finally{
+        b.disabled=false;
+        b.textContent=original;
+      }
+    };
+
+    if($("saveAI"))$("saveAI").onclick=()=>{
+      try{
+        applySessionSettings();
+        wrap.remove();
+        renderAll();
+        bindCriticalButtons();
+        window.dispatchEvent(new CustomEvent("rms-ai-config-changed"));
+      }catch(err){
+        alert(err?.message||String(err));
+      }
+    };
   };
 
-  Pilot.enhanceAccessibility();
+  try{Pilot.enhanceAccessibility()}catch(err){console.error("Accessibility enhancement failed",err)}
+
   window.addEventListener("rms-save-status",e=>{
-    const el=$("saveStatus"),banner=$("saveProblemBanner");if(!el)return;
+    const el=$("saveStatus"),banner=$("saveProblemBanner");
+    if(!el)return;
+
     if(e.detail.ok){
-      el.textContent=`Saved on this browser · ${new Date(e.detail.time).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}`;
-      el.classList.remove("save-error");el.title="Your latest changes are saved on this browser.";
+      el.textContent=`Saved on this browser · ${new Date(e.detail.time).toLocaleTimeString([],{
+        hour:"2-digit",
+        minute:"2-digit"
+      })}`;
+      el.classList.remove("save-error");
+      el.title="Your latest changes are saved on this browser.";
       if(banner)banner.hidden=true;
     }else{
-      el.textContent="Save problem";el.classList.add("save-error");el.title=e.detail.message||"Your latest changes could not be saved.";
+      el.textContent="Save problem";
+      el.classList.add("save-error");
+      el.title=e.detail.message||"Your latest changes could not be saved.";
       if(banner)banner.hidden=false;
     }
   });
-  window.addEventListener("error",e=>{try{Pilot.logRuntime(project,"runtime_error",e.message||"Unknown runtime error")}catch{}});
-  window.addEventListener("unhandledrejection",e=>{try{Pilot.logRuntime(project,"unhandled_rejection",String(e.reason?.message||e.reason||"Unknown rejection"))}catch{}});
 
-  {const sr=Pilot.storageReport(KEY),el=$("saveStatus");if(el){if(sr.lastSavedAt){el.textContent=`Saved on this browser · ${new Date(sr.lastSavedAt).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}`;el.title="Your latest saved copy is stored on this browser."}else{el.textContent=sr.available?"Not saved yet":"Storage unavailable";el.classList.toggle("save-error",!sr.available);el.title=sr.error||""}}}
-  if(project.name){$("projectName").value=project.name;$("projectContext").value=project.context||""}
-  renderAll();
+  window.addEventListener("error",e=>{
+    try{
+      Pilot.logRuntime(project,"runtime_error",e.message||"Unknown runtime error");
+    }catch{}
+  });
+
+  window.addEventListener("unhandledrejection",e=>{
+    try{
+      Pilot.logRuntime(
+        project,
+        "unhandled_rejection",
+        String(e.reason?.message||e.reason||"Unknown rejection")
+      );
+    }catch{}
+  });
+
+  {
+    const sr=Pilot.storageReport(KEY);
+    const el=$("saveStatus");
+
+    if(el){
+      if(sr.lastSavedAt){
+        el.textContent=`Saved on this browser · ${new Date(sr.lastSavedAt).toLocaleTimeString([],{
+          hour:"2-digit",
+          minute:"2-digit"
+        })}`;
+        el.title="Your latest saved copy is stored on this browser.";
+      }else{
+        el.textContent=sr.available?"Not saved yet":"Storage unavailable";
+        el.classList.toggle("save-error",!sr.available);
+        el.title=sr.error||"";
+      }
+    }
+  }
+
+  if(project.name){
+    if($("projectName"))$("projectName").value=project.name;
+    if($("projectContext"))$("projectContext").value=project.context||"";
+  }
+
+  try{
+    renderAll();
+    bindCriticalButtons();
+  }catch(err){
+    console.error("Initial render failed",err);
+    bindCriticalButtons();
+  }
 
 })();

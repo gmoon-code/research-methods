@@ -4,6 +4,94 @@ from playwright.sync_api import sync_playwright
 import json,re,sys,traceback,os,tempfile
 
 ROOT=Path(__file__).resolve().parents[2]
+
+def browser_executable():
+    candidates = [
+        os.getenv("RMS_BROWSER_EXECUTABLE"),
+        os.getenv("CHROMIUM"),
+        os.getenv("CHROME"),
+        os.getenv("CHROME_PATH"),
+    ]
+
+    if os.name == "nt":
+        pf = os.getenv("PROGRAMFILES")
+        pf86 = os.getenv("PROGRAMFILES(X86)")
+        local = os.getenv("LOCALAPPDATA")
+
+        for base in [pf, pf86]:
+            if base:
+                candidates.extend([
+                    str(
+                        Path(base)
+                        / "Google"
+                        / "Chrome"
+                        / "Application"
+                        / "chrome.exe"
+                    ),
+                    str(
+                        Path(base)
+                        / "Microsoft"
+                        / "Edge"
+                        / "Application"
+                        / "msedge.exe"
+                    ),
+                ])
+
+        if local:
+            candidates.extend([
+                str(
+                    Path(local)
+                    / "Google"
+                    / "Chrome"
+                    / "Application"
+                    / "chrome.exe"
+                ),
+                str(
+                    Path(local)
+                    / "Microsoft"
+                    / "Edge"
+                    / "Application"
+                    / "msedge.exe"
+                ),
+            ])
+
+    elif sys.platform == "darwin":
+        candidates.extend([
+            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+            "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
+            "/Applications/Chromium.app/Contents/MacOS/Chromium",
+        ])
+
+    else:
+        candidates.extend([
+            "/usr/bin/chromium",
+            "/usr/bin/chromium-browser",
+            "/usr/bin/google-chrome",
+            "/usr/bin/google-chrome-stable",
+            "/usr/bin/microsoft-edge",
+        ])
+
+    seen = set()
+
+    for candidate in candidates:
+        if not candidate:
+            continue
+
+        candidate = str(candidate)
+
+        if candidate in seen:
+            continue
+
+        seen.add(candidate)
+
+        if Path(candidate).is_file():
+            return candidate
+
+    raise RuntimeError(
+        "Chrome, Chromium, or Edge was not found. "
+        "Set RMS_BROWSER_EXECUTABLE to the browser executable."
+    )
+
 OUT=Path(tempfile.mkdtemp(prefix="rms-combined-qa-")) if os.getenv("RMS_QA_READ_ONLY")=="1" else Path(__file__).resolve().parent
 SHOTS=OUT/"screenshots"
 SHOTS.mkdir(parents=True,exist_ok=True)
@@ -165,7 +253,7 @@ def main():
         print(("PASS" if ok else "FAIL"),name)
 
     with sync_playwright() as pw:
-      browser=pw.chromium.launch(executable_path="/usr/bin/chromium",headless=True,args=["--no-sandbox","--disable-gpu"])
+      browser=pw.chromium.launch(executable_path=browser_executable(),headless=True,args=["--no-sandbox","--disable-gpu"])
 
       # 1. First-time welcome and Stage 1 orientation.
       page,errs,cons=new_page(browser,None)
@@ -211,11 +299,58 @@ def main():
       # The full route is persistently visible on desktop. Expand a future phase directly.
       page.locator('[data-route-phase="analyze"]').click();page.wait_for_timeout(30)
       ck("Desktop route can reveal future stages without leaving the current task",page.locator('[data-route-stage="14"]:visible').count()==1)
-      page.locator('[data-route-stage="14"]').click();page.wait_for_timeout(50)
-      ck("Future-stage navigation previews the road ahead instead of opening advanced work","You do not need to complete this yet" in page.locator("#futureStagePreview").inner_text())
-      ck("Future-stage preview explains prior/current/next continuity",all(x in page.locator("#futureStagePreview").inner_text() for x in ["FROM EARLIER","IN THIS STAGE","NEXT"]))
+      page.locator('[data-route-stage="14"]').click();page.wait_for_timeout(80)
+
+      preview_card=page.locator("#stageView .stage-card.stage-preview-mode")
+      ck(
+          "Future-stage navigation opens the full future stage in preview mode",
+          preview_card.count()==1
+      )
+
+      preview_banner=page.locator("#stageView .stage-preview-banner")
+      ck(
+          "Future-stage preview clearly identifies the previewed stage",
+          preview_banner.count()==1 and "Stage 14" in preview_banner.inner_text(),
+          preview_banner.inner_text() if preview_banner.count() else ""
+      )
+
+      ck(
+          "Future-stage preview retains Learn, Work, and Check navigation",
+          all(
+              page.locator(f'#stageView [data-tab="{tab}"]').count()==1
+              for tab in ["learn","work","check"]
+          )
+      )
+
+      preview_controls=preview_card.locator("input, textarea, select")
+      ck(
+          "Future-stage preview keeps student work controls read only",
+          preview_controls.count()>0 and preview_controls.evaluate_all(
+              "(els)=>els.every(el=>el.disabled)"
+          )
+      )
+
+      ck(
+          "Future-stage preview leaves real project progress on Stage 1",
+          "Stage 1 of 18" in page.locator("#progressText").inner_text(),
+          page.locator("#progressText").inner_text()
+      )
+
+      ck(
+          "Legacy future-stage modal is no longer used",
+          page.locator("#futureStagePreview").count()==0
+      )
+
       page.screenshot(path=str(SHOTS/"04-future-stage-preview.png"),full_page=False);result["screenshots"].append("screenshots/04-future-stage-preview.png")
-      page.click("#returnCurrentStage");page.wait_for_timeout(30)
+
+      page.click("#exitStagePreview");page.wait_for_timeout(50)
+
+      ck(
+          "Leaving future-stage preview returns to the real current stage",
+          page.locator("#stageView .stage-preview-mode").count()==0
+          and "Stage 1 of 18" in page.locator("#stageView .stage-count").inner_text(),
+          page.locator("#stageView .stage-count").inner_text()
+      )
       page.close()
 
       # 2. Stage 4 question → path recommendation.
@@ -316,15 +451,42 @@ def main():
       page.screenshot(path=str(SHOTS/"08-three-pass-source-evaluation.png"),full_page=False);result["screenshots"].append("screenshots/08-three-pass-source-evaluation.png")
       page.close()
 
-      # 8. Student More menu and Research Chat fallback/privacy.
+      # 8. Student More menu and normal production Research Chat privacy.
       page,errs,cons=new_page(browser,seed_stage4());result["page_errors"]+=errs;result["console_errors"]+=cons
       page.click("#moreMenuBtn");page.wait_for_timeout(40)
       mtxt=page.locator("#moreBackdrop").inner_text()
-      ck("Student More menu contains backup/project actions but hides teacher operations","Download backup" in mtxt and "Teacher/setup tools are hidden in student mode" in mtxt and "Teacher Dashboard" not in mtxt)
+
+      ck(
+          "Student More menu contains student project actions without teacher controls",
+          all(
+              x in mtxt
+              for x in [
+                  "Download Word notebook",
+                  "Download backup",
+                  "Open My Research Snapshot"
+              ]
+          )
+          and "Start" in mtxt
+          and "project" in mtxt.lower()
+          and "Teacher Dashboard" not in mtxt
+          and "Teacher / setup tools" not in mtxt
+          and "Leave teacher mode" not in mtxt,
+          mtxt
+      )
+
       page.click("#closeMore");page.wait_for_timeout(30)
       page.click("#aiHelperLauncher");page.wait_for_timeout(40)
       atxt=page.locator("#aiHelperPanel").inner_text()
-      ck("Disconnected Research Chat uses student-friendly fallback language","Research Chat is unavailable right now" in atxt and "server-side" not in atxt.lower())
+
+      ck(
+          "Production Research Chat asks students for the class code without exposing server details",
+          "Research Chat needs the class code" in atxt
+          and page.locator("#aiHelperAccessCode").count()==1
+          and "server-side" not in atxt.lower()
+          and "workers.dev" not in atxt.lower(),
+          atxt
+      )
+
       ck("Research Chat explains what is sent and when project context is used",all(x in atxt for x in ["Privacy","recent Research Chat messages","Use my current project context","Raw datasets"]))
       ck("Research Chat has no student-facing Research AI label","Research AI" not in atxt and "Ask Research AI" not in atxt)
       page.close()

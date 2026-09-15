@@ -26,11 +26,11 @@ if (url.protocol !== 'https:' && !(allowLocalhost && local && url.protocol === '
   process.exit(2);
 }
 if (!local && !url.hostname.endsWith('.workers.dev')) {
-  console.error('The v2.15.0 FREE production endpoint must be the Cloudflare workers.dev URL created by the included Worker.');
+  console.error('The v2.16.0 FREE production endpoint must be the Cloudflare workers.dev URL created by the included Worker.');
   process.exit(2);
 }
 if (!local && url.pathname !== '/') {
-  console.error('The v2.15.0 FREE Worker endpoint must use the workers.dev origin root with no custom path.');
+  console.error('The v2.16.0 FREE Worker endpoint must use the workers.dev origin root with no custom path.');
   process.exit(2);
 }
 if (url.username || url.password || url.search || url.hash) {
@@ -43,7 +43,7 @@ if (url.pathname !== '/') url.pathname = url.pathname.replace(/\/+$/, '');
 const endpoint = url.toString();
 const target = path.resolve(process.cwd(), 'assets', 'runtime-config.js');
 const content = `window.RMS_RUNTIME_CONFIG = Object.freeze(${JSON.stringify({
-  version: '2.15.0',
+  version: '2.16.0',
   freeEdition: true,
   researchChatEndpoint: endpoint,
   chatEndpoint: endpoint

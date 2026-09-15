@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
 const endpoint = String(process.env.RMS_CHAT_ENDPOINT || '').trim();
 const code = String(process.env.RMS_CHAT_ACCESS_CODE || '').trim();
 const origin = String(process.env.RMS_CHAT_ORIGIN || '').trim();
-const EXPECTED_VERSION = '2.15.0';
+const EXPECTED_VERSION = '2.16.0';
 const EXPECTED_MODEL = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
 
 function fail(message) {

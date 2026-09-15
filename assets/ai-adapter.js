@@ -33,7 +33,7 @@
   }
 
   function sameOriginEndpoint() {
-    // v2.15.0 FREE deliberately has no same-origin paid-provider fallback.
+    // v2.16.0 FREE deliberately has no same-origin paid-provider fallback.
     // The owner must configure the deployed Cloudflare Worker HTTPS URL.
     return '';
   }
@@ -138,7 +138,7 @@
       enabled: isEnabled,
       endpoint: ep,
       chatEndpoint: ep,
-      version: String(runtimeConfig().version || '2.15.0'),
+      version: String(runtimeConfig().version || '2.16.0'),
       accessCodeSet: Boolean(getAccessCode())
     };
   }

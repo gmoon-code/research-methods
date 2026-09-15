@@ -1,6 +1,8 @@
-// Research Methods Studio v2.15.0 FREE Research Chat
+// Research Methods Studio v2.16.0 FREE Research Chat
 // Cloudflare Workers AI adapter. No OpenAI API key or paid model provider is used.
-// RMS_CHAT_ACCESS_CODE is the only required Worker secret.
+// Required Worker secrets are RMS_CHAT_ACCESS_CODE, RMS_TEACHER_ACCESS_CODE, and RMS_TEACHER_SESSION_SECRET.
+
+import { handleTeacherRequest } from './teacher-auth.mjs';
 
 import {
   VERSION,
@@ -89,6 +91,13 @@ async function applyRateLimits(request, env) {
 function createWorker() {
   return {
     async fetch(request, env) {
+      const teacherResponse =
+        await handleTeacherRequest(request, env);
+
+      if (teacherResponse) {
+        return teacherResponse;
+      }
+
       const limited = await applyRateLimits(request, env);
       if (limited) return limited;
       const aiRun = aiConfigured(env) ? (model, input) => env.AI.run(model, input) : undefined;
