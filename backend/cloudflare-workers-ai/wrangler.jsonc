@@ -9,7 +9,11 @@
     "RMS_AI_MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
   },
   "secrets": {
-    "required": ["RMS_CHAT_ACCESS_CODE"]
+    "required": [
+      "RMS_CHAT_ACCESS_CODE",
+      "RMS_TEACHER_ACCESS_CODE",
+      "RMS_TEACHER_SESSION_SECRET"
+    ]
   },
   "ai": {
     "binding": "AI"

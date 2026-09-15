@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="referrer"
+    content="no-referrer"
+  >
+
+  <title>
+    Research Methods Studio - Teacher Access
+  </title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #f4f4f1;
+      color: #111;
+      font-family:
+        "Times New Roman",
+        Times,
+        serif;
+    }
+
+    main {
+      width: min(560px, 100%);
+      padding: 30px 32px;
+      background: #fff;
+      border: 1px solid #aaa;
+      box-shadow:
+        0 12px 36px
+        rgba(0, 0, 0, .08);
+    }
+
+    .kicker {
+      display: inline-block;
+      padding: 2px 7px;
+      background: #fff4a3;
+      font-size: .82rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: 1.9rem;
+    }
+
+    p {
+      line-height: 1.5;
+      color: #444;
+    }
+
+    .rule {
+      margin: 22px 0;
+      border: 0;
+      border-top:
+        1px solid #bbb;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      min-height: 44px;
+      padding: 9px 11px;
+      border: 1px solid #777;
+      background: #fff;
+      color: #111;
+      font: inherit;
+    }
+
+    input:focus {
+      outline: 2px solid #111;
+      outline-offset: 2px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    button {
+      min-height: 42px;
+      padding: 9px 15px;
+      border: 1px solid #111;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: wait;
+    }
+
+    .primary {
+      background: #111;
+      color: #fff;
+    }
+
+    .secondary {
+      background: #fff;
+      color: #111;
+    }
+
+    .status {
+      min-height: 1.4em;
+      margin: 13px 0 0;
+      font-size: .92rem;
+    }
+
+    .status.error {
+      color: #8b1e1e;
+    }
+
+    .note {
+      margin-top: 20px;
+      font-size: .88rem;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <span class="kicker">
+      Teacher access
+    </span>
+
+    <h1>
+      Research Methods Studio
+    </h1>
+
+    <p>
+      Enter the teacher access code to open
+      teacher tools for this browser session.
+    </p>
+
+    <hr class="rule">
+
+    <form id="teacherAccessForm">
+      <label for="teacherAccessCode">
+        Teacher access code
+      </label>
+
+      <input
+        id="teacherAccessCode"
+        name="teacherAccessCode"
+        type="password"
+        minlength="16"
+        maxlength="256"
+        autocomplete="off"
+        autocapitalize="none"
+        spellcheck="false"
+        required
+      >
+
+      <div class="actions">
+        <button
+          type="submit"
+          class="primary"
+          id="teacherSubmit"
+        >
+          Continue
+        </button>
+
+        <button
+          type="button"
+          class="secondary"
+          id="returnStudent"
+        >
+          Return to student site
+        </button>
+      </div>
+
+      <p
+        class="status"
+        id="teacherStatus"
+        role="status"
+        aria-live="polite"
+      ></p>
+    </form>
+
+    <p class="note">
+      The access code is sent directly to
+      the secure class service for
+      verification and is not saved by
+      this page.
+    </p>
+  </main>
+
+  <script
+    src="./assets/runtime-config.js"
+  ></script>
+
+  <script
+    src="./assets/teacher-session.js"
+  ></script>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const form =
+        document.getElementById(
+          "teacherAccessForm"
+        );
+
+      const input =
+        document.getElementById(
+          "teacherAccessCode"
+        );
+
+      const submit =
+        document.getElementById(
+          "teacherSubmit"
+        );
+
+      const status =
+        document.getElementById(
+          "teacherStatus"
+        );
+
+      const returnStudent =
+        document.getElementById(
+          "returnStudent"
+        );
+
+      function message(
+        text,
+        isError = false
+      ) {
+        status.textContent =
+          String(text || "");
+
+        status.classList.toggle(
+          "error",
+          isError
+        );
+      }
+
+      function busy(value) {
+        submit.disabled = value;
+        input.disabled = value;
+
+        submit.textContent =
+          value
+            ? "Checking..."
+            : "Continue";
+      }
+
+      form.addEventListener(
+        "submit",
+        async event => {
+          event.preventDefault();
+
+          message("");
+          busy(true);
+
+          const code =
+            input.value;
+
+          try {
+            const result =
+              await window
+                .RMSTeacherSession
+                .login(code);
+
+            /*
+              Remove the code from the
+              DOM as soon as the request
+              finishes.
+            */
+            input.value = "";
+
+            if (!result.ok) {
+              message(
+                result.error ||
+                  "Teacher access was not accepted.",
+                true
+              );
+
+              input.focus();
+              return;
+            }
+
+            message(
+              "Access accepted. Opening teacher workspace..."
+            );
+
+            location.replace("./");
+          } finally {
+            busy(false);
+          }
+        }
+      );
+
+      returnStudent.addEventListener(
+        "click",
+        () => {
+          window
+            .RMSTeacherSession
+            .leave();
+
+          location.replace("./");
+        }
+      );
+
+      /*
+        A teacher who already has a
+        valid session does not need to
+        type the code again.
+      */
+      if (
+        window
+          .RMSTeacherSession
+          .hasStoredSession()
+      ) {
+        busy(true);
+        message(
+          "Checking existing teacher session..."
+        );
+
+        window
+          .RMSTeacherSession
+          .verify()
+          .then(ok => {
+            if (ok) {
+              location.replace("./");
+              return;
+            }
+
+            message("");
+            busy(false);
+            input.focus();
+          });
+      } else {
+        input.focus();
+      }
+    })();
+  </script>
+</body>
+</html>

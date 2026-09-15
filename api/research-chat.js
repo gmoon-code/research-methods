@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 
-const VERSION = '2.15.0';
+const VERSION = '2.16.0';
 const DEFAULT_MODEL = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
 // The free edition intentionally permits only the model currently documented as
 // available on Workers Free and supporting Cloudflare JSON Mode. Changing models

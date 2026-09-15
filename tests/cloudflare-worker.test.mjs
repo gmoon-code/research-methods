@@ -40,7 +40,7 @@ function req(method = 'GET', { code = CODE, origin = ORIGIN, session = 'session1
 }
 
 test('Cloudflare adapter reports free release and requires AI/rate-limit bindings', () => {
-  assert.equal(VERSION, '2.15.0');
+  assert.equal(VERSION, '2.16.0');
   assert.equal(rateLimitersConfigured(env()), true);
   assert.equal(rateLimitersConfigured(env({ CLASS_RATE_LIMITER: undefined })), false);
   assert.equal(aiConfigured(env()), true);
@@ -76,7 +76,7 @@ test('auth limiter returns browser-readable 429', async () => {
 
 test('health reports Cloudflare Workers AI free edition without inference', async () => {
   const e = env(); const response = await createWorker().fetch(req('GET'), e); const body = await response.json();
-  assert.equal(response.status, 200); assert.equal(body.version, '2.15.0'); assert.equal(body.model, MODEL);
+  assert.equal(response.status, 200); assert.equal(body.version, '2.16.0'); assert.equal(body.model, MODEL);
   assert.equal(body.provider, 'cloudflare-workers-ai'); assert.equal(body.free_edition, true); assert.equal(e.AI.calls.length, 0);
   assert.equal(e.SESSION_RATE_LIMITER.calls.length, 1); assert.equal(e.CLASS_RATE_LIMITER.calls.length, 1);
 });

@@ -3,6 +3,94 @@ from playwright.sync_api import sync_playwright
 import json,re,sys,traceback,os,tempfile
 
 ROOT=Path(__file__).resolve().parents[2]
+
+def browser_executable():
+    candidates = [
+        os.getenv("RMS_BROWSER_EXECUTABLE"),
+        os.getenv("CHROMIUM"),
+        os.getenv("CHROME"),
+        os.getenv("CHROME_PATH"),
+    ]
+
+    if os.name == "nt":
+        pf = os.getenv("PROGRAMFILES")
+        pf86 = os.getenv("PROGRAMFILES(X86)")
+        local = os.getenv("LOCALAPPDATA")
+
+        for base in [pf, pf86]:
+            if base:
+                candidates.extend([
+                    str(
+                        Path(base)
+                        / "Google"
+                        / "Chrome"
+                        / "Application"
+                        / "chrome.exe"
+                    ),
+                    str(
+                        Path(base)
+                        / "Microsoft"
+                        / "Edge"
+                        / "Application"
+                        / "msedge.exe"
+                    ),
+                ])
+
+        if local:
+            candidates.extend([
+                str(
+                    Path(local)
+                    / "Google"
+                    / "Chrome"
+                    / "Application"
+                    / "chrome.exe"
+                ),
+                str(
+                    Path(local)
+                    / "Microsoft"
+                    / "Edge"
+                    / "Application"
+                    / "msedge.exe"
+                ),
+            ])
+
+    elif sys.platform == "darwin":
+        candidates.extend([
+            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+            "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
+            "/Applications/Chromium.app/Contents/MacOS/Chromium",
+        ])
+
+    else:
+        candidates.extend([
+            "/usr/bin/chromium",
+            "/usr/bin/chromium-browser",
+            "/usr/bin/google-chrome",
+            "/usr/bin/google-chrome-stable",
+            "/usr/bin/microsoft-edge",
+        ])
+
+    seen = set()
+
+    for candidate in candidates:
+        if not candidate:
+            continue
+
+        candidate = str(candidate)
+
+        if candidate in seen:
+            continue
+
+        seen.add(candidate)
+
+        if Path(candidate).is_file():
+            return candidate
+
+    raise RuntimeError(
+        "Chrome, Chromium, or Edge was not found. "
+        "Set RMS_BROWSER_EXECUTABLE to the browser executable."
+    )
+
 OUT=Path(tempfile.mkdtemp(prefix="rms-chat-qa-")) if os.getenv("RMS_QA_READ_ONLY")=="1" else ROOT/"docs/browser-qa-v2.13.2"
 SHOTS=OUT/"screenshots"
 
@@ -42,7 +130,7 @@ def main():
     def ck(n,o,d=""):
         checks.append({"name":n,"passed":bool(o),"detail":d});print(("PASS" if o else "FAIL"),n)
     with sync_playwright() as pw:
-        b=pw.chromium.launch(executable_path="/usr/bin/chromium",headless=True,args=["--no-sandbox","--disable-gpu"])
+        b=pw.chromium.launch(executable_path=browser_executable(),headless=True,args=["--no-sandbox","--disable-gpu"])
 
         p=b.new_page(viewport={"width":1440,"height":950});p.on("pageerror",lambda e:errors.append(str(e)));p.set_content(inline(None),wait_until="load");p.wait_for_timeout(120)
         ck("Welcome launcher is named Research Chat",p.locator("#aiHelperLauncher").inner_text().strip().endswith("Research Chat"),p.locator("#aiHelperLauncher").inner_text())

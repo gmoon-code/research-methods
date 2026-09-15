@@ -81,12 +81,12 @@ window.RMSResearchSnapshotUI=(()=>{
  function open(){
    const p=project();if(!p)return;
    const wrap=document.createElement("div");wrap.className="modal-backdrop";wrap.id="researchSnapshotBackdrop";
-   wrap.innerHTML=`<div class="modal research-snapshot-modal"><div class="snapshot-modal-top"><div><div class="guide-kicker">Live project context</div><h3>My Research Snapshot</h3></div><div class="snapshot-actions"><button class="ghost small" id="snapshotToggleEmpty">${showEmpty?"Hide empty fields":"Show empty fields"}</button><button class="ghost small" id="copyResearchSnapshot">Copy as text</button><button class="ghost small" id="downloadResearchSnapshot">Download .md</button><button class="ghost small" id="closeResearchSnapshot">Close</button></div></div><div id="researchSnapshotBody">${renderBody(p)}</div></div>`;
+   wrap.innerHTML=`<div class="modal research-snapshot-modal"><div class="snapshot-modal-top"><div><div class="guide-kicker">Live project context</div><h3>My Research Snapshot</h3></div><div class="snapshot-actions"><button class="ghost small" id="snapshotToggleEmpty">${showEmpty?"Hide empty fields":"Show empty fields"}</button><button class="ghost small" id="copyResearchSnapshot">Copy as text</button><button class="ghost small" id="downloadResearchSnapshot">Download Word</button><button class="ghost small" id="closeResearchSnapshot">Close</button></div></div><div id="researchSnapshotBody">${renderBody(p)}</div></div>`;
    document.body.appendChild(wrap);
    id("closeResearchSnapshot").onclick=close;
    wrap.onclick=e=>{if(e.target===wrap)close()};
    id("snapshotToggleEmpty").onclick=()=>{showEmpty=!showEmpty;id("researchSnapshotBody").innerHTML=renderBody(project());id("snapshotToggleEmpty").textContent=showEmpty?"Hide empty fields":"Show empty fields";bindInside()};
-   id("copyResearchSnapshot").onclick=async()=>{const text=S.markdown(project(),showEmpty);try{await navigator.clipboard.writeText(text);id("copyResearchSnapshot").textContent="Copied";setTimeout(()=>{if(id("copyResearchSnapshot"))id("copyResearchSnapshot").textContent="Copy as text"},1000)}catch(_){alert("Copy was blocked by the browser. Use Download .md instead.")}};
+   id("copyResearchSnapshot").onclick=async()=>{const text=S.markdown(project(),showEmpty);try{await navigator.clipboard.writeText(text);id("copyResearchSnapshot").textContent="Copied";setTimeout(()=>{if(id("copyResearchSnapshot"))id("copyResearchSnapshot").textContent="Copy as text"},1000)}catch(_){alert("Copy was blocked by the browser. Use Download Word instead.")}};
    id("downloadResearchSnapshot").onclick=()=>window.RMSWordExport.fromMarkdown("current-research-snapshot.doc",S.markdown(project(),showEmpty),"Current Research Snapshot");
    bindInside();
  }
