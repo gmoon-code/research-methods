@@ -709,11 +709,494 @@ window.RMSTeacherWorkspaceData = (() => {
     });
   }
 
+  function normalizedPacketCollection(
+    packets
+  ) {
+    if (!Array.isArray(packets)) {
+      return [];
+    }
+
+    const byProjectId =
+      new Map();
+
+    packets.forEach(packet => {
+      const result =
+        normalizeStudentPacket(
+          packet
+        );
+
+      if (!result.ok) {
+        return;
+      }
+
+      byProjectId.set(
+        result.packet.project_id,
+        result.packet
+      );
+    });
+
+    return Array.from(
+      byProjectId.values()
+    );
+  }
+
+  function upsertStudentPacket(
+    packets,
+    packet
+  ) {
+    const current =
+      normalizedPacketCollection(
+        packets
+      );
+
+    const candidate =
+      normalizeStudentPacket(
+        packet
+      );
+
+    if (!candidate.ok) {
+      return Object.freeze({
+        ok: false,
+        replaced: false,
+        index: -1,
+        errors:
+          candidate.errors,
+        packets:
+          Object.freeze(
+            current
+          )
+      });
+    }
+
+    const next =
+      current.slice();
+
+    const index =
+      next.findIndex(
+        item =>
+          item.project_id ===
+          candidate.packet
+            .project_id
+      );
+
+    const replaced =
+      index >= 0;
+
+    if (replaced) {
+      next[index] =
+        candidate.packet;
+    } else {
+      next.push(
+        candidate.packet
+      );
+    }
+
+    return Object.freeze({
+      ok: true,
+      replaced,
+      index:
+        replaced
+          ? index
+          : next.length - 1,
+      errors:
+        Object.freeze([]),
+      packets:
+        Object.freeze(next)
+    });
+  }
+
+  function milestoneStateCount(
+    packet,
+    state
+  ) {
+    return packet.milestones
+      .filter(
+        milestone =>
+          milestone.state === state
+      )
+      .length;
+  }
+
+  function projectHasBlockers(
+    packet
+  ) {
+    return packet.milestones
+      .some(
+        milestone =>
+          milestone.blockers
+            .length > 0
+      );
+  }
+
+  function deriveOverview(
+    packets
+  ) {
+    const valid =
+      normalizedPacketCollection(
+        packets
+      );
+
+    let awaitingReviewCheckpoints =
+      0;
+
+    let revisionRequestCheckpoints =
+      0;
+
+    let projectsWithBlockers =
+      0;
+
+    let ethicsReviewProjects =
+      0;
+
+    let doNotFacilitateProjects =
+      0;
+
+    let lockedProtocols =
+      0;
+
+    let projectsWithStoredAnalysis =
+      0;
+
+    valid.forEach(packet => {
+      awaitingReviewCheckpoints +=
+        milestoneStateCount(
+          packet,
+          "awaiting_teacher"
+        );
+
+      revisionRequestCheckpoints +=
+        milestoneStateCount(
+          packet,
+          "revision_requested"
+        );
+
+      if (
+        projectHasBlockers(
+          packet
+        )
+      ) {
+        projectsWithBlockers +=
+          1;
+      }
+
+      if (
+        packet.methods
+          .ethicsStatus ===
+        "teacher_review"
+      ) {
+        ethicsReviewProjects +=
+          1;
+      }
+
+      if (
+        packet.methods
+          .ethicsStatus ===
+        "do_not_facilitate"
+      ) {
+        doNotFacilitateProjects +=
+          1;
+      }
+
+      if (
+        packet.methods.locked ===
+        true
+      ) {
+        lockedProtocols +=
+          1;
+      }
+
+      if (
+        Number.isFinite(
+          packet.analysis
+            .stored_runs
+        ) &&
+        packet.analysis
+          .stored_runs > 0
+      ) {
+        projectsWithStoredAnalysis +=
+          1;
+      }
+    });
+
+    return Object.freeze({
+      importedProjects:
+        valid.length,
+      awaitingReviewCheckpoints,
+      revisionRequestCheckpoints,
+      projectsWithBlockers,
+      ethicsReviewProjects,
+      doNotFacilitateProjects,
+      lockedProtocols,
+      projectsWithStoredAnalysis
+    });
+  }
+
+  function milestoneIdsForState(
+    packet,
+    state
+  ) {
+    return packet.milestones
+      .filter(
+        milestone =>
+          milestone.state ===
+          state
+      )
+      .map(
+        milestone =>
+          milestone.id
+      );
+  }
+
+  function blockerSummary(
+    packet
+  ) {
+    const blockers = [];
+
+    packet.milestones
+      .forEach(milestone => {
+        milestone.blockers
+          .forEach(blocker => {
+            blockers.push({
+              milestone:
+                milestone.id,
+              blocker
+            });
+          });
+      });
+
+    if (!blockers.length) {
+      return null;
+    }
+
+    const first =
+      blockers[0];
+
+    const remaining =
+      blockers.length - 1;
+
+    const suffix =
+      remaining > 0
+        ? ` (+${remaining} more blocker${remaining === 1 ? "" : "s"})`
+        : "";
+
+    return (
+      `${first.milestone}: ` +
+      `${first.blocker}` +
+      suffix
+    );
+  }
+
+  function queueFlag(
+    id,
+    label,
+    reason
+  ) {
+    return Object.freeze({
+      id,
+      label,
+      reason
+    });
+  }
+
+  function queueFlagsForPacket(
+    packet
+  ) {
+    const flags = [];
+
+    const awaiting =
+      milestoneIdsForState(
+        packet,
+        "awaiting_teacher"
+      );
+
+    if (awaiting.length) {
+      flags.push(
+        queueFlag(
+          "awaiting_review",
+          "Awaiting review",
+          `Awaiting teacher review at ${awaiting.join(", ")}.`
+        )
+      );
+    }
+
+    const revision =
+      milestoneIdsForState(
+        packet,
+        "revision_requested"
+      );
+
+    if (revision.length) {
+      flags.push(
+        queueFlag(
+          "revision_requested",
+          "Revision requested",
+          `Revision requested at ${revision.join(", ")}.`
+        )
+      );
+    }
+
+    if (
+      packet.methods
+        .ethicsStatus ===
+      "teacher_review"
+    ) {
+      flags.push(
+        queueFlag(
+          "ethics_review",
+          "Ethics review",
+          "The packet reports teacher or institutional review as required."
+        )
+      );
+    }
+
+    if (
+      packet.methods
+        .ethicsStatus ===
+      "do_not_facilitate"
+    ) {
+      flags.push(
+        queueFlag(
+          "do_not_facilitate",
+          "Do not facilitate",
+          "The packet diagnostic reports DO NOT FACILITATE. Teacher or institutional judgment remains separate."
+        )
+      );
+    }
+
+    const blocked =
+      blockerSummary(
+        packet
+      );
+
+    if (blocked) {
+      flags.push(
+        queueFlag(
+          "blocked",
+          "Blocked",
+          blocked
+        )
+      );
+    }
+
+    if (!flags.length) {
+      flags.push(
+        queueFlag(
+          "no_immediate_action",
+          "No immediate teacher action",
+          "No current T2 queue flag is reported in this packet. This does not mean the project is complete, correct, approved, or safe."
+        )
+      );
+    }
+
+    return Object.freeze(
+      flags
+    );
+  }
+
+  function compareDisplayValue(
+    left,
+    right
+  ) {
+    const a =
+      cleanString(left)
+        .trim()
+        .toLowerCase();
+
+    const b =
+      cleanString(right)
+        .trim()
+        .toLowerCase();
+
+    if (!a && b) {
+      return 1;
+    }
+
+    if (a && !b) {
+      return -1;
+    }
+
+    if (a < b) {
+      return -1;
+    }
+
+    if (a > b) {
+      return 1;
+    }
+
+    return 0;
+  }
+
+  function compareQueuePackets(
+    left,
+    right
+  ) {
+    for (
+      const field
+      of [
+        "course_section",
+        "student_alias",
+        "project_name",
+        "project_id"
+      ]
+    ) {
+      const result =
+        compareDisplayValue(
+          left[field],
+          right[field]
+        );
+
+      if (result !== 0) {
+        return result;
+      }
+    }
+
+    return 0;
+  }
+
+  function deriveReviewQueue(
+    packets
+  ) {
+    const valid =
+      normalizedPacketCollection(
+        packets
+      );
+
+    valid.sort(
+      compareQueuePackets
+    );
+
+    const rows =
+      valid.map(packet =>
+        Object.freeze({
+          project_id:
+            packet.project_id,
+          student_alias:
+            packet.student_alias,
+          course_section:
+            packet.course_section,
+          project_name:
+            packet.project_name,
+          flags:
+            queueFlagsForPacket(
+              packet
+            ),
+          packet
+        })
+      );
+
+    return Object.freeze(
+      rows
+    );
+  }
+
   return Object.freeze({
     PACKET_TYPE,
     PACKET_VERSION,
     VALIDATION_CODES,
     validateStudentPacket,
-    normalizeStudentPacket
+    normalizeStudentPacket,
+    upsertStudentPacket,
+    deriveOverview,
+    deriveReviewQueue
   });
 })();
