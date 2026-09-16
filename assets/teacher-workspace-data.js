@@ -2421,6 +2421,860 @@ window.RMSTeacherWorkspaceData = (() => {
     );
   }
 
+
+  const ASSIGNMENT_PACKET_TYPE =
+    "rms_assignment_setup";
+
+  const ASSIGNMENT_PACKET_VERSION =
+    "1.0";
+
+  const ASSIGNMENT_MILESTONE_IDS =
+    Object.freeze([
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5"
+    ]);
+
+  const ASSIGNMENT_TEXT_FIELDS =
+    Object.freeze([
+      "assignment_id",
+      "title",
+      "course_section",
+      "teacher_display_name",
+      "student_instructions",
+      "teacher_notes"
+    ]);
+
+  const ASSIGNMENT_DRAFT_FIELDS =
+    Object.freeze([
+      ...ASSIGNMENT_TEXT_FIELDS,
+      "milestone_due_dates"
+    ]);
+
+  const ASSIGNMENT_PACKET_FIELDS =
+    Object.freeze([
+      "packet_type",
+      "version",
+      "created_at",
+      ...ASSIGNMENT_DRAFT_FIELDS
+    ]);
+
+  function assignmentObject(
+    value
+  ) {
+    return Boolean(
+      value &&
+      typeof value === "object" &&
+      !Array.isArray(value)
+    );
+  }
+
+  function assignmentResult(
+    errors,
+    extra = {}
+  ) {
+    return Object.freeze({
+      ok:
+        errors.length === 0,
+      errors:
+        Object.freeze(
+          errors.slice()
+        ),
+      ...extra
+    });
+  }
+
+  function assignmentHasOwn(
+    value,
+    key
+  ) {
+    return Object.prototype
+      .hasOwnProperty
+      .call(
+        value,
+        key
+      );
+  }
+
+  function assignmentExactKeysErrors(
+    value,
+    expected,
+    label
+  ) {
+    const errors = [];
+
+    if (!assignmentObject(value)) {
+      return [
+        `${label} must be an object.`
+      ];
+    }
+
+    const actual =
+      Object.keys(value);
+
+    for (
+      const key
+      of expected
+    ) {
+      if (
+        !assignmentHasOwn(
+          value,
+          key
+        )
+      ) {
+        errors.push(
+          `${label} is missing ${key}.`
+        );
+      }
+    }
+
+    for (
+      const key
+      of actual
+    ) {
+      if (
+        !expected.includes(
+          key
+        )
+      ) {
+        errors.push(
+          `${label} contains unsupported field ${key}.`
+        );
+      }
+    }
+
+    return errors;
+  }
+
+  function validAssignmentDate(
+    value
+  ) {
+    if (value === "") {
+      return true;
+    }
+
+    if (
+      typeof value !==
+        "string"
+    ) {
+      return false;
+    }
+
+    const match =
+      /^(\d{4})-(\d{2})-(\d{2})$/
+        .exec(value);
+
+    if (!match) {
+      return false;
+    }
+
+    const year =
+      Number(match[1]);
+
+    const month =
+      Number(match[2]);
+
+    const day =
+      Number(match[3]);
+
+    if (
+      month < 1 ||
+      month > 12 ||
+      day < 1 ||
+      day > 31
+    ) {
+      return false;
+    }
+
+    const date =
+      new Date(0);
+
+    date.setUTCHours(
+      0,
+      0,
+      0,
+      0
+    );
+
+    date.setUTCFullYear(
+      year,
+      month - 1,
+      day
+    );
+
+    return (
+      date.getUTCFullYear() ===
+        year &&
+      date.getUTCMonth() ===
+        month - 1 &&
+      date.getUTCDate() ===
+        day
+    );
+  }
+
+  function validAssignmentTimestamp(
+    value
+  ) {
+    if (
+      typeof value !==
+        "string" ||
+      !value.includes("T")
+    ) {
+      return false;
+    }
+
+    const parsed =
+      Date.parse(value);
+
+    return Number.isFinite(
+      parsed
+    );
+  }
+
+  function freezeAssignmentDueDates(
+    source
+  ) {
+    const input =
+      assignmentObject(source)
+        ? source
+        : {};
+
+    const dueDates = {};
+
+    for (
+      const milestoneId
+      of ASSIGNMENT_MILESTONE_IDS
+    ) {
+      dueDates[milestoneId] =
+        typeof input[
+          milestoneId
+        ] === "string"
+          ? input[
+              milestoneId
+            ]
+          : "";
+    }
+
+    return Object.freeze(
+      dueDates
+    );
+  }
+
+  function freezeAssignmentDraft(
+    source
+  ) {
+    return Object.freeze({
+      assignment_id:
+        source.assignment_id,
+      title:
+        source.title,
+      course_section:
+        source.course_section,
+      teacher_display_name:
+        source.teacher_display_name,
+      student_instructions:
+        source.student_instructions,
+      teacher_notes:
+        source.teacher_notes,
+      milestone_due_dates:
+        freezeAssignmentDueDates(
+          source
+            .milestone_due_dates
+        )
+    });
+  }
+
+  function assignmentDraftErrors(
+    draft,
+    requireIdentity = true
+  ) {
+    const errors =
+      assignmentExactKeysErrors(
+        draft,
+        ASSIGNMENT_DRAFT_FIELDS,
+        "Assignment draft"
+      );
+
+    if (
+      !assignmentObject(draft)
+    ) {
+      return errors;
+    }
+
+    for (
+      const field
+      of ASSIGNMENT_TEXT_FIELDS
+    ) {
+      if (
+        typeof draft[field] !==
+          "string"
+      ) {
+        errors.push(
+          `${field} must be text.`
+        );
+      }
+    }
+
+    if (
+      requireIdentity &&
+      typeof draft.assignment_id ===
+        "string" &&
+      !draft.assignment_id.trim()
+    ) {
+      errors.push(
+        "assignment_id is required."
+      );
+    }
+
+    if (
+      requireIdentity &&
+      typeof draft.title ===
+        "string" &&
+      !draft.title.trim()
+    ) {
+      errors.push(
+        "title is required."
+      );
+    }
+
+    if (
+      !assignmentObject(
+        draft.milestone_due_dates
+      )
+    ) {
+      errors.push(
+        "milestone_due_dates must be an object."
+      );
+
+      return errors;
+    }
+
+    for (
+      const key
+      of Object.keys(
+        draft.milestone_due_dates
+      )
+    ) {
+      if (
+        !ASSIGNMENT_MILESTONE_IDS
+          .includes(key)
+      ) {
+        errors.push(
+          `Unknown milestone due-date key ${key}.`
+        );
+      }
+    }
+
+    for (
+      const milestoneId
+      of ASSIGNMENT_MILESTONE_IDS
+    ) {
+      if (
+        !assignmentHasOwn(
+          draft.milestone_due_dates,
+          milestoneId
+        )
+      ) {
+        errors.push(
+          `milestone_due_dates is missing ${milestoneId}.`
+        );
+
+        continue;
+      }
+
+      const value =
+        draft
+          .milestone_due_dates[
+            milestoneId
+          ];
+
+      if (
+        typeof value !==
+          "string"
+      ) {
+        errors.push(
+          `${milestoneId} due date must be text.`
+        );
+
+        continue;
+      }
+
+      if (
+        !validAssignmentDate(
+          value
+        )
+      ) {
+        errors.push(
+          `${milestoneId} due date must be empty or YYYY-MM-DD.`
+        );
+      }
+    }
+
+    return errors;
+  }
+
+  function createAssignmentDraft() {
+    const draft =
+      freezeAssignmentDraft({
+        assignment_id:
+          "",
+        title:
+          "",
+        course_section:
+          "",
+        teacher_display_name:
+          "",
+        student_instructions:
+          "",
+        teacher_notes:
+          "",
+        milestone_due_dates:
+          Object.fromEntries(
+            ASSIGNMENT_MILESTONE_IDS
+              .map(
+                milestoneId => [
+                  milestoneId,
+                  ""
+                ]
+              )
+          )
+      });
+
+    return assignmentResult(
+      [],
+      {
+        draft
+      }
+    );
+  }
+
+  function validateAssignmentDraft(
+    draft
+  ) {
+    return assignmentResult(
+      assignmentDraftErrors(
+        draft,
+        true
+      )
+    );
+  }
+
+  function updateAssignmentField(
+    draft,
+    field,
+    value
+  ) {
+    const structuralErrors =
+      assignmentDraftErrors(
+        draft,
+        false
+      );
+
+    if (
+      structuralErrors.length
+    ) {
+      return assignmentResult(
+        structuralErrors,
+        {
+          draft: null
+        }
+      );
+    }
+
+    if (
+      !ASSIGNMENT_TEXT_FIELDS
+        .includes(field)
+    ) {
+      return assignmentResult(
+        [
+          `Unsupported assignment field ${field}.`
+        ],
+        {
+          draft: null
+        }
+      );
+    }
+
+    if (
+      typeof value !==
+        "string"
+    ) {
+      return assignmentResult(
+        [
+          `${field} must be text.`
+        ],
+        {
+          draft: null
+        }
+      );
+    }
+
+    const next =
+      freezeAssignmentDraft({
+        ...draft,
+        [field]:
+          value
+      });
+
+    return assignmentResult(
+      [],
+      {
+        draft:
+          next
+      }
+    );
+  }
+
+  function updateAssignmentMilestoneDueDate(
+    draft,
+    milestoneId,
+    value
+  ) {
+    const structuralErrors =
+      assignmentDraftErrors(
+        draft,
+        false
+      );
+
+    if (
+      structuralErrors.length
+    ) {
+      return assignmentResult(
+        structuralErrors,
+        {
+          draft: null
+        }
+      );
+    }
+
+    if (
+      !ASSIGNMENT_MILESTONE_IDS
+        .includes(
+          milestoneId
+        )
+    ) {
+      return assignmentResult(
+        [
+          `Unknown assignment milestone ${milestoneId}.`
+        ],
+        {
+          draft: null
+        }
+      );
+    }
+
+    if (
+      typeof value !==
+        "string" ||
+      !validAssignmentDate(
+        value
+      )
+    ) {
+      return assignmentResult(
+        [
+          `${milestoneId} due date must be empty or YYYY-MM-DD.`
+        ],
+        {
+          draft: null
+        }
+      );
+    }
+
+    const dueDates = {
+      ...draft
+        .milestone_due_dates,
+      [milestoneId]:
+        value
+    };
+
+    const next =
+      freezeAssignmentDraft({
+        ...draft,
+        milestone_due_dates:
+          dueDates
+      });
+
+    return assignmentResult(
+      [],
+      {
+        draft:
+          next
+      }
+    );
+  }
+
+  function validateAssignmentPacket(
+    packet
+  ) {
+    const errors =
+      assignmentExactKeysErrors(
+        packet,
+        ASSIGNMENT_PACKET_FIELDS,
+        "Assignment packet"
+      );
+
+    if (
+      !assignmentObject(packet)
+    ) {
+      return assignmentResult(
+        errors
+      );
+    }
+
+    if (
+      packet.packet_type !==
+        ASSIGNMENT_PACKET_TYPE
+    ) {
+      errors.push(
+        "The file is not an RMS assignment setup packet."
+      );
+    }
+
+    if (
+      packet.version !==
+        ASSIGNMENT_PACKET_VERSION
+    ) {
+      errors.push(
+        "The assignment setup packet version is not supported."
+      );
+    }
+
+    if (
+      !validAssignmentTimestamp(
+        packet.created_at
+      )
+    ) {
+      errors.push(
+        "created_at must be a valid ISO-8601 timestamp."
+      );
+    }
+
+    const draft = {
+      assignment_id:
+        packet.assignment_id,
+      title:
+        packet.title,
+      course_section:
+        packet.course_section,
+      teacher_display_name:
+        packet.teacher_display_name,
+      student_instructions:
+        packet.student_instructions,
+      teacher_notes:
+        packet.teacher_notes,
+      milestone_due_dates:
+        packet.milestone_due_dates
+    };
+
+    errors.push(
+      ...assignmentDraftErrors(
+        draft,
+        true
+      )
+    );
+
+    return assignmentResult(
+      errors
+    );
+  }
+
+  function normalizeAssignmentPacket(
+    packet
+  ) {
+    const validation =
+      validateAssignmentPacket(
+        packet
+      );
+
+    if (!validation.ok) {
+      return assignmentResult(
+        validation.errors,
+        {
+          packet: null
+        }
+      );
+    }
+
+    const normalized =
+      Object.freeze({
+        packet_type:
+          ASSIGNMENT_PACKET_TYPE,
+        version:
+          ASSIGNMENT_PACKET_VERSION,
+        created_at:
+          packet.created_at,
+        assignment_id:
+          packet.assignment_id,
+        title:
+          packet.title,
+        course_section:
+          packet.course_section,
+        teacher_display_name:
+          packet.teacher_display_name,
+        student_instructions:
+          packet.student_instructions,
+        teacher_notes:
+          packet.teacher_notes,
+        milestone_due_dates:
+          freezeAssignmentDueDates(
+            packet
+              .milestone_due_dates
+          )
+      });
+
+    return assignmentResult(
+      [],
+      {
+        packet:
+          normalized
+      }
+    );
+  }
+
+  function assignmentDraftFromPacket(
+    packet
+  ) {
+    const normalized =
+      normalizeAssignmentPacket(
+        packet
+      );
+
+    if (!normalized.ok) {
+      return assignmentResult(
+        normalized.errors,
+        {
+          draft: null
+        }
+      );
+    }
+
+    const source =
+      normalized.packet;
+
+    const draft =
+      freezeAssignmentDraft({
+        assignment_id:
+          source.assignment_id,
+        title:
+          source.title,
+        course_section:
+          source.course_section,
+        teacher_display_name:
+          source.teacher_display_name,
+        student_instructions:
+          source.student_instructions,
+        teacher_notes:
+          source.teacher_notes,
+        milestone_due_dates:
+          source
+            .milestone_due_dates
+      });
+
+    return assignmentResult(
+      [],
+      {
+        draft
+      }
+    );
+  }
+
+  function assignmentExportTimestamp(
+    createdAt
+  ) {
+    if (
+      createdAt ===
+        undefined
+    ) {
+      return new Date()
+        .toISOString();
+    }
+
+    if (
+      !validAssignmentTimestamp(
+        createdAt
+      )
+    ) {
+      return "";
+    }
+
+    return new Date(
+      Date.parse(
+        createdAt
+      )
+    ).toISOString();
+  }
+
+  function buildAssignmentPacket(
+    draft,
+    createdAt
+  ) {
+    const validation =
+      validateAssignmentDraft(
+        draft
+      );
+
+    if (!validation.ok) {
+      return assignmentResult(
+        validation.errors,
+        {
+          packet: null
+        }
+      );
+    }
+
+    const timestamp =
+      assignmentExportTimestamp(
+        createdAt
+      );
+
+    if (!timestamp) {
+      return assignmentResult(
+        [
+          "A valid export timestamp is required."
+        ],
+        {
+          packet: null
+        }
+      );
+    }
+
+    const packet =
+      Object.freeze({
+        packet_type:
+          ASSIGNMENT_PACKET_TYPE,
+        version:
+          ASSIGNMENT_PACKET_VERSION,
+        created_at:
+          timestamp,
+        assignment_id:
+          draft.assignment_id,
+        title:
+          draft.title,
+        course_section:
+          draft.course_section,
+        teacher_display_name:
+          draft.teacher_display_name,
+        student_instructions:
+          draft.student_instructions,
+        teacher_notes:
+          draft.teacher_notes,
+        milestone_due_dates:
+          freezeAssignmentDueDates(
+            draft
+              .milestone_due_dates
+          )
+      });
+
+    return assignmentResult(
+      [],
+      {
+        packet
+      }
+    );
+  }
+
   return Object.freeze({
     PACKET_TYPE,
     PACKET_VERSION,
@@ -2428,6 +3282,9 @@ window.RMSTeacherWorkspaceData = (() => {
     FEEDBACK_PACKET_TYPE,
     FEEDBACK_PACKET_VERSION,
     REVIEW_DECISION_STATUSES,
+    ASSIGNMENT_PACKET_TYPE,
+    ASSIGNMENT_PACKET_VERSION,
+    ASSIGNMENT_MILESTONE_IDS,
     validateStudentPacket,
     normalizeStudentPacket,
     upsertStudentPacket,
@@ -2440,6 +3297,14 @@ window.RMSTeacherWorkspaceData = (() => {
     upsertCheckpointDecision,
     upsertTeacherFeedback,
     hasExportableTeacherReview,
-    buildTeacherFeedbackPacket
+    buildTeacherFeedbackPacket,
+    createAssignmentDraft,
+    validateAssignmentDraft,
+    updateAssignmentField,
+    updateAssignmentMilestoneDueDate,
+    validateAssignmentPacket,
+    normalizeAssignmentPacket,
+    assignmentDraftFromPacket,
+    buildAssignmentPacket
   });
 })();

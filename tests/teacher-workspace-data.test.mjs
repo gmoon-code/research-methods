@@ -3116,3 +3116,825 @@ test(
     }
   }
 );
+
+
+test(
+  "T4 exposes the local assignment setup contract",
+  () => {
+    const data =
+      loadModule();
+
+    assert.equal(
+      data.ASSIGNMENT_PACKET_TYPE,
+      "rms_assignment_setup"
+    );
+
+    assert.equal(
+      data.ASSIGNMENT_PACKET_VERSION,
+      "1.0"
+    );
+
+    assert.deepEqual(
+      Array.from(
+        data.ASSIGNMENT_MILESTONE_IDS
+      ),
+      [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5"
+      ]
+    );
+
+    for (
+      const name
+      of [
+        "createAssignmentDraft",
+        "validateAssignmentDraft",
+        "updateAssignmentField",
+        "updateAssignmentMilestoneDueDate",
+        "validateAssignmentPacket",
+        "normalizeAssignmentPacket",
+        "assignmentDraftFromPacket",
+        "buildAssignmentPacket"
+      ]
+    ) {
+      assert.equal(
+        typeof data[name],
+        "function",
+        name
+      );
+    }
+  }
+);
+
+test(
+  "T4 creates an empty frozen assignment draft with exactly five milestone dates",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data.createAssignmentDraft();
+
+    assert.equal(
+      result.ok,
+      true
+    );
+
+    assert.deepEqual(
+      JSON.parse(
+        JSON.stringify(
+          result.draft
+        )
+      ),
+      {
+        assignment_id:
+          "",
+        title:
+          "",
+        course_section:
+          "",
+        teacher_display_name:
+          "",
+        student_instructions:
+          "",
+        teacher_notes:
+          "",
+        milestone_due_dates: {
+          M1: "",
+          M2: "",
+          M3: "",
+          M4: "",
+          M5: ""
+        }
+      }
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        result.draft
+      ),
+      true
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        result.draft
+          .milestone_due_dates
+      ),
+      true
+    );
+  }
+);
+
+test(
+  "T4 requires assignment identity and title before export",
+  () => {
+    const data =
+      loadModule();
+
+    const draft =
+      data
+        .createAssignmentDraft()
+        .draft;
+
+    const validation =
+      data.validateAssignmentDraft(
+        draft
+      );
+
+    assert.equal(
+      validation.ok,
+      false
+    );
+
+    assert.match(
+      validation.errors.join(
+        " "
+      ),
+      /assignment_id is required/i
+    );
+
+    assert.match(
+      validation.errors.join(
+        " "
+      ),
+      /title is required/i
+    );
+
+    const built =
+      data.buildAssignmentPacket(
+        draft,
+        "2026-09-16T07:00:00.000Z"
+      );
+
+    assert.equal(
+      built.ok,
+      false
+    );
+
+    assert.equal(
+      built.packet,
+      null
+    );
+  }
+);
+
+test(
+  "T4 updates assignment text immutably and accepts empty optional text",
+  () => {
+    const data =
+      loadModule();
+
+    const first =
+      data
+        .createAssignmentDraft()
+        .draft;
+
+    const second =
+      data.updateAssignmentField(
+        first,
+        "assignment_id",
+        "BIO-AR-01"
+      ).draft;
+
+    const third =
+      data.updateAssignmentField(
+        second,
+        "title",
+        "AP Biology Action Research"
+      ).draft;
+
+    const fourth =
+      data.updateAssignmentField(
+        third,
+        "student_instructions",
+        ""
+      ).draft;
+
+    assert.equal(
+      first.assignment_id,
+      ""
+    );
+
+    assert.equal(
+      second.assignment_id,
+      "BIO-AR-01"
+    );
+
+    assert.equal(
+      third.title,
+      "AP Biology Action Research"
+    );
+
+    assert.equal(
+      fourth.student_instructions,
+      ""
+    );
+
+    assert.notEqual(
+      first,
+      second
+    );
+
+    assert.notEqual(
+      second,
+      third
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        fourth
+      ),
+      true
+    );
+  }
+);
+
+test(
+  "T4 rejects unsupported assignment fields",
+  () => {
+    const data =
+      loadModule();
+
+    const draft =
+      data
+        .createAssignmentDraft()
+        .draft;
+
+    const result =
+      data.updateAssignmentField(
+        draft,
+        "grade_weight",
+        "20"
+      );
+
+    assert.equal(
+      result.ok,
+      false
+    );
+
+    assert.equal(
+      result.draft,
+      null
+    );
+  }
+);
+
+test(
+  "T4 accepts valid milestone dates and rejects unknown milestones or invalid calendar dates",
+  () => {
+    const data =
+      loadModule();
+
+    let draft =
+      data
+        .createAssignmentDraft()
+        .draft;
+
+    const validDates = {
+      M1:
+        "2026-09-30",
+      M2:
+        "2026-10-14",
+      M3:
+        "2026-10-28",
+      M4:
+        "2026-11-11",
+      M5:
+        "2026-11-25"
+    };
+
+    for (
+      const [
+        milestone,
+        date
+      ]
+      of Object.entries(
+        validDates
+      )
+    ) {
+      const result =
+        data
+          .updateAssignmentMilestoneDueDate(
+            draft,
+            milestone,
+            date
+          );
+
+      assert.equal(
+        result.ok,
+        true,
+        milestone
+      );
+
+      draft =
+        result.draft;
+    }
+
+    assert.deepEqual(
+      JSON.parse(
+        JSON.stringify(
+          draft.milestone_due_dates
+        )
+      ),
+      validDates
+    );
+
+    assert.equal(
+      data
+        .updateAssignmentMilestoneDueDate(
+          draft,
+          "M6",
+          "2026-12-01"
+        )
+        .ok,
+      false
+    );
+
+    for (
+      const invalid
+      of [
+        "09/30/2026",
+        "2026-02-30",
+        "2026-13-01",
+        "2026-9-01",
+        "tomorrow"
+      ]
+    ) {
+      assert.equal(
+        data
+          .updateAssignmentMilestoneDueDate(
+            draft,
+            "M1",
+            invalid
+          )
+          .ok,
+        false,
+        invalid
+      );
+    }
+
+    assert.equal(
+      data
+        .updateAssignmentMilestoneDueDate(
+          draft,
+          "M1",
+          ""
+        )
+        .ok,
+      true
+    );
+  }
+);
+
+test(
+  "T4 validates strict assignment packet type version and allowlist",
+  () => {
+    const data =
+      loadModule();
+
+    let draft =
+      data
+        .createAssignmentDraft()
+        .draft;
+
+    draft =
+      data.updateAssignmentField(
+        draft,
+        "assignment_id",
+        "BIO-AR-01"
+      ).draft;
+
+    draft =
+      data.updateAssignmentField(
+        draft,
+        "title",
+        "Action Research"
+      ).draft;
+
+    const packet =
+      JSON.parse(
+        JSON.stringify(
+          data.buildAssignmentPacket(
+            draft,
+            "2026-09-16T07:15:00.000Z"
+          ).packet
+        )
+      );
+
+    assert.equal(
+      data
+        .validateAssignmentPacket(
+          packet
+        )
+        .ok,
+      true
+    );
+
+    assert.equal(
+      data
+        .validateAssignmentPacket({
+          ...packet,
+          packet_type:
+            "wrong"
+        })
+        .ok,
+      false
+    );
+
+    assert.equal(
+      data
+        .validateAssignmentPacket({
+          ...packet,
+          version:
+            "2.0"
+        })
+        .ok,
+      false
+    );
+
+    assert.equal(
+      data
+        .validateAssignmentPacket({
+          ...packet,
+          project_id:
+            "STUDENT-PROJECT"
+        })
+        .ok,
+      false
+    );
+
+    assert.equal(
+      data
+        .validateAssignmentPacket({
+          ...packet,
+          milestone_due_dates: {
+            ...packet
+              .milestone_due_dates,
+            M6:
+              "2026-12-01"
+          }
+        })
+        .ok,
+      false
+    );
+  }
+);
+
+test(
+  "T4 builds the exact allowlisted rms_assignment_setup version 1.0 packet",
+  () => {
+    const data =
+      loadModule();
+
+    let draft =
+      data
+        .createAssignmentDraft()
+        .draft;
+
+    const values = {
+      assignment_id:
+        "BIO-AR-01",
+      title:
+        "AP Biology Action Research",
+      course_section:
+        "Period 2",
+      teacher_display_name:
+        "Ms. Moon",
+      student_instructions:
+        "Use the Research Journey for each checkpoint.",
+      teacher_notes:
+        "Review M3 carefully."
+    };
+
+    for (
+      const [
+        field,
+        value
+      ]
+      of Object.entries(
+        values
+      )
+    ) {
+      draft =
+        data.updateAssignmentField(
+          draft,
+          field,
+          value
+        ).draft;
+    }
+
+    draft =
+      data
+        .updateAssignmentMilestoneDueDate(
+          draft,
+          "M1",
+          "2026-09-30"
+        )
+        .draft;
+
+    const result =
+      data.buildAssignmentPacket(
+        draft,
+        "2026-09-16T07:30:00.000Z"
+      );
+
+    assert.equal(
+      result.ok,
+      true
+    );
+
+    const plain =
+      JSON.parse(
+        JSON.stringify(
+          result.packet
+        )
+      );
+
+    assert.deepEqual(
+      Object.keys(
+        plain
+      ),
+      [
+        "packet_type",
+        "version",
+        "created_at",
+        "assignment_id",
+        "title",
+        "course_section",
+        "teacher_display_name",
+        "student_instructions",
+        "teacher_notes",
+        "milestone_due_dates"
+      ]
+    );
+
+    assert.equal(
+      plain.packet_type,
+      "rms_assignment_setup"
+    );
+
+    assert.equal(
+      plain.version,
+      "1.0"
+    );
+
+    assert.equal(
+      plain.created_at,
+      "2026-09-16T07:30:00.000Z"
+    );
+
+    assert.deepEqual(
+      plain.milestone_due_dates,
+      {
+        M1:
+          "2026-09-30",
+        M2:
+          "",
+        M3:
+          "",
+        M4:
+          "",
+        M5:
+          ""
+      }
+    );
+
+    for (
+      const forbidden
+      of [
+        "project_id",
+        "student_alias",
+        "stage_ready",
+        "checkpoints",
+        "methods",
+        "analysis",
+        "writing",
+        "teacher_feedback",
+        "competency_ratings",
+        "grade",
+        "grade_weight"
+      ]
+    ) {
+      assert.equal(
+        forbidden in plain,
+        false,
+        forbidden
+      );
+    }
+  }
+);
+
+test(
+  "T4 imports a validated assignment packet into an independent frozen draft",
+  () => {
+    const data =
+      loadModule();
+
+    let draft =
+      data
+        .createAssignmentDraft()
+        .draft;
+
+    draft =
+      data.updateAssignmentField(
+        draft,
+        "assignment_id",
+        "BIO-AR-02"
+      ).draft;
+
+    draft =
+      data.updateAssignmentField(
+        draft,
+        "title",
+        "Second Assignment"
+      ).draft;
+
+    draft =
+      data
+        .updateAssignmentMilestoneDueDate(
+          draft,
+          "M3",
+          "2026-10-28"
+        )
+        .draft;
+
+    const packet =
+      data.buildAssignmentPacket(
+        draft,
+        "2026-09-16T08:00:00.000Z"
+      ).packet;
+
+    const imported =
+      data.assignmentDraftFromPacket(
+        JSON.parse(
+          JSON.stringify(
+            packet
+          )
+        )
+      );
+
+    assert.equal(
+      imported.ok,
+      true
+    );
+
+    assert.equal(
+      imported.draft.assignment_id,
+      "BIO-AR-02"
+    );
+
+    assert.equal(
+      imported.draft
+        .milestone_due_dates
+        .M3,
+      "2026-10-28"
+    );
+
+    assert.equal(
+      "created_at"
+        in imported.draft,
+      false
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        imported.draft
+      ),
+      true
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        imported.draft
+          .milestone_due_dates
+      ),
+      true
+    );
+  }
+);
+
+test(
+  "T4 rejects malformed imported packets and invalid export timestamps",
+  () => {
+    const data =
+      loadModule();
+
+    let draft =
+      data
+        .createAssignmentDraft()
+        .draft;
+
+    draft =
+      data.updateAssignmentField(
+        draft,
+        "assignment_id",
+        "BIO-AR-03"
+      ).draft;
+
+    draft =
+      data.updateAssignmentField(
+        draft,
+        "title",
+        "Third Assignment"
+      ).draft;
+
+    const built =
+      data.buildAssignmentPacket(
+        draft,
+        "not-a-time"
+      );
+
+    assert.equal(
+      built.ok,
+      false
+    );
+
+    assert.equal(
+      built.packet,
+      null
+    );
+
+    const malformed =
+      data.assignmentDraftFromPacket({
+        packet_type:
+          "rms_assignment_setup",
+        version:
+          "1.0"
+      });
+
+    assert.equal(
+      malformed.ok,
+      false
+    );
+
+    assert.equal(
+      malformed.draft,
+      null
+    );
+  }
+);
+
+test(
+  "T4 assignment draft normalized packet and exported packet structures are frozen",
+  () => {
+    const data =
+      loadModule();
+
+    let draft =
+      data
+        .createAssignmentDraft()
+        .draft;
+
+    draft =
+      data.updateAssignmentField(
+        draft,
+        "assignment_id",
+        "BIO-AR-04"
+      ).draft;
+
+    draft =
+      data.updateAssignmentField(
+        draft,
+        "title",
+        "Frozen Assignment"
+      ).draft;
+
+    const built =
+      data.buildAssignmentPacket(
+        draft,
+        "2026-09-16T08:30:00.000Z"
+      );
+
+    const normalized =
+      data.normalizeAssignmentPacket(
+        JSON.parse(
+          JSON.stringify(
+            built.packet
+          )
+        )
+      );
+
+    for (
+      const value
+      of [
+        draft,
+        draft.milestone_due_dates,
+        built.packet,
+        built.packet
+          .milestone_due_dates,
+        normalized.packet,
+        normalized.packet
+          .milestone_due_dates
+      ]
+    ) {
+      assert.equal(
+        Object.isFrozen(value),
+        true
+      );
+    }
+  }
+);
