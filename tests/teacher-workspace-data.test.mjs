@@ -1520,3 +1520,563 @@ test(
     );
   }
 );
+
+
+test(
+  "Student Inspector rejects an invalid packet",
+  () => {
+    const data = loadModule();
+
+    const result =
+      data.deriveStudentInspector({
+        packet_type:
+          "wrong",
+        version:
+          "1.7",
+        project_id:
+          "RMS-BAD",
+        milestones: []
+      });
+
+    assert.equal(
+      result.ok,
+      false
+    );
+
+    assert.equal(
+      result.inspector,
+      null
+    );
+
+    assert.ok(
+      result.errors.length > 0
+    );
+  }
+);
+
+test(
+  "Student Inspector exposes only the contract-authorized top-level sections",
+  () => {
+    const data = loadModule();
+
+    const result =
+      data.deriveStudentInspector(
+        minimalPacket({
+          student_alias:
+            "Student A",
+          project_name:
+            "Project A"
+        })
+      );
+
+    assert.equal(
+      result.ok,
+      true
+    );
+
+    assert.deepEqual(
+      Object.keys(
+        result.inspector
+      ).sort(),
+      [
+        "analysis",
+        "header",
+        "methods",
+        "milestones",
+        "notices",
+        "research",
+        "sources",
+        "stage_progress",
+        "teacher_feedback",
+        "writing"
+      ].sort()
+    );
+
+    assert.equal(
+      "packet"
+        in result.inspector,
+      false
+    );
+  }
+);
+
+test(
+  "Student Inspector header and research model use only permitted review-packet fields",
+  () => {
+    const data = loadModule();
+
+    const result =
+      data.deriveStudentInspector(
+        minimalPacket({
+          exported_at:
+            "2026-09-16T01:00:00.000Z",
+          student_alias:
+            "Alias 7",
+          course_section:
+            "AP Bio A",
+          project_name:
+            "Seed Study",
+          context:
+            "Classroom context",
+          topic:
+            "Seed growth",
+          research_question:
+            "How does X relate to Y?",
+          question_type:
+            "Correlational",
+          design:
+            "Observational"
+        })
+      );
+
+    const inspector =
+      result.inspector;
+
+    assert.equal(
+      inspector.header
+        .student_alias,
+      "Alias 7"
+    );
+
+    assert.equal(
+      inspector.header
+        .project_id,
+      "RMS-TEST-001"
+    );
+
+    assert.equal(
+      inspector.header
+        .course_section,
+      "AP Bio A"
+    );
+
+    assert.equal(
+      inspector.header
+        .project_name,
+      "Seed Study"
+    );
+
+    assert.equal(
+      inspector.header
+        .exported_at,
+      "2026-09-16T01:00:00.000Z"
+    );
+
+    assert.equal(
+      inspector.research
+        .research_question,
+      "How does X relate to Y?"
+    );
+
+    assert.equal(
+      inspector.research.design,
+      "Observational"
+    );
+  }
+);
+
+test(
+  "Student Inspector always derives an 18-stage read-only progress model",
+  () => {
+    const data = loadModule();
+
+    const result =
+      data.deriveStudentInspector(
+        minimalPacket({
+          stage_ready: {
+            1: true,
+            3: true,
+            18: true
+          }
+        })
+      );
+
+    const progress =
+      result.inspector
+        .stage_progress;
+
+    assert.equal(
+      progress.total_stages,
+      18
+    );
+
+    assert.equal(
+      progress.stages.length,
+      18
+    );
+
+    assert.equal(
+      progress.ready_count,
+      3
+    );
+
+    assert.deepEqual(
+      Array.from(
+        progress.stages,
+        item => item.stage
+      ),
+      Array.from(
+        {
+          length: 18
+        },
+        (_, index) =>
+          index + 1
+      )
+    );
+
+    assert.equal(
+      progress.stages[0]
+        .status,
+      "ready"
+    );
+
+    assert.equal(
+      progress.stages[1]
+        .status,
+      "not_marked_ready"
+    );
+
+    assert.match(
+      progress.interpretation,
+      /not a grade/i
+    );
+  }
+);
+
+test(
+  "Student Inspector carries milestone checkpoint evidence without editing it",
+  () => {
+    const data = loadModule();
+
+    const original =
+      minimalPacket({
+        milestones: [
+          {
+            id: "M3",
+            title:
+              "Method Approved",
+            state:
+              "revision_requested",
+            blockers: [
+              "Protocol is not locked."
+            ],
+            warnings: [
+              "Teacher review required."
+            ],
+            checkpoint: {
+              status:
+                "revise",
+              requestedAt:
+                "2026-09-15T01:00:00.000Z",
+              reviewedAt:
+                "2026-09-16T01:00:00.000Z",
+              teacher:
+                "Teacher",
+              comment:
+                "Revise sampling.",
+              conditions: [
+                "Clarify sample."
+              ]
+            }
+          }
+        ]
+      });
+
+    const before =
+      JSON.stringify(original);
+
+    const result =
+      data.deriveStudentInspector(
+        original
+      );
+
+    const milestone =
+      result.inspector
+        .milestones[0];
+
+    assert.equal(
+      milestone.id,
+      "M3"
+    );
+
+    assert.equal(
+      milestone.state,
+      "revision_requested"
+    );
+
+    assert.equal(
+      milestone.checkpoint
+        .comment,
+      "Revise sampling."
+    );
+
+    assert.deepEqual(
+      Array.from(
+        milestone.checkpoint
+          .conditions
+      ),
+      [
+        "Clarify sample."
+      ]
+    );
+
+    assert.equal(
+      JSON.stringify(original),
+      before
+    );
+  }
+);
+
+test(
+  "Student Inspector keeps missing optional evidence neutral",
+  () => {
+    const data = loadModule();
+
+    const result =
+      data.deriveStudentInspector(
+        minimalPacket()
+      );
+
+    const inspector =
+      result.inspector;
+
+    assert.equal(
+      inspector.sources.total,
+      null
+    );
+
+    assert.equal(
+      inspector.methods
+        .available,
+      null
+    );
+
+    assert.equal(
+      inspector.methods.locked,
+      null
+    );
+
+    assert.equal(
+      inspector.analysis
+        .imported_rows,
+      null
+    );
+
+    assert.equal(
+      inspector.analysis
+        .stored_runs,
+      null
+    );
+
+    assert.equal(
+      inspector.writing
+        .paper_audit,
+      null
+    );
+
+    assert.match(
+      inspector.notices
+        .missing_data,
+      /not provided/i
+    );
+  }
+);
+
+test(
+  "Student Inspector includes explicit privacy and interpretation notices",
+  () => {
+    const data = loadModule();
+
+    const inspector =
+      data.deriveStudentInspector(
+        minimalPacket()
+      ).inspector;
+
+    assert.match(
+      inspector.notices.scope,
+      /does not contain all student work/i
+    );
+
+    assert.match(
+      inspector.sources.notice,
+      /source records/i
+    );
+
+    assert.match(
+      inspector.sources.notice,
+      /source notes/i
+    );
+
+    assert.match(
+      inspector.analysis.notice,
+      /raw dataset rows are not included/i
+    );
+
+    assert.match(
+      inspector.writing.notice,
+      /full paper text is not included/i
+    );
+
+    assert.equal(
+      inspector.methods.kind,
+      "packet_diagnostic"
+    );
+
+    assert.match(
+      inspector.methods.notice,
+      /separate from teacher judgment/i
+    );
+  }
+);
+
+test(
+  "Student Inspector teacher feedback history is read-only and frozen",
+  () => {
+    const data = loadModule();
+
+    const inspector =
+      data.deriveStudentInspector(
+        minimalPacket({
+          teacher_feedback: [
+            {
+              milestone:
+                "M1",
+              comment:
+                "Clarify the question.",
+              createdAt:
+                "2026-09-16T01:00:00.000Z"
+            }
+          ]
+        })
+      ).inspector;
+
+    assert.equal(
+      inspector.teacher_feedback
+        .read_only,
+      true
+    );
+
+    assert.equal(
+      inspector.teacher_feedback
+        .items.length,
+      1
+    );
+
+    assert.equal(
+      inspector.teacher_feedback
+        .items[0].comment,
+      "Clarify the question."
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        inspector.teacher_feedback
+      ),
+      true
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        inspector.teacher_feedback
+          .items
+      ),
+      true
+    );
+  }
+);
+
+test(
+  "Student Inspector does not expose competency or omitted full-work fields",
+  () => {
+    const data = loadModule();
+
+    const inspector =
+      data.deriveStudentInspector(
+        minimalPacket({
+          competency_snapshot: {
+            score: 100
+          },
+          rawData: [
+            {
+              private:
+                "raw"
+            }
+          ],
+          full_paper_text:
+            "private paper",
+          full_source_text:
+            "private source",
+          full_source_notes:
+            "private notes",
+          research_chat_transcript:
+            "private chat"
+        })
+      ).inspector;
+
+    const serialized =
+      JSON.stringify(
+        inspector
+      );
+
+    for (
+      const value
+      of [
+        "competency_snapshot",
+        "private raw",
+        "private paper",
+        "private source",
+        "private notes",
+        "private chat"
+      ]
+    ) {
+      assert.equal(
+        serialized.includes(value),
+        false,
+        value
+      );
+    }
+  }
+);
+
+test(
+  "Student Inspector model and nested sections are frozen",
+  () => {
+    const data = loadModule();
+
+    const inspector =
+      data.deriveStudentInspector(
+        minimalPacket({
+          milestones: [
+            {
+              id: "M1"
+            }
+          ]
+        })
+      ).inspector;
+
+    for (
+      const value
+      of [
+        inspector,
+        inspector.header,
+        inspector.research,
+        inspector.stage_progress,
+        inspector.stage_progress
+          .stages,
+        inspector.milestones,
+        inspector.milestones[0],
+        inspector.sources,
+        inspector.methods,
+        inspector.analysis,
+        inspector.writing,
+        inspector.teacher_feedback,
+        inspector.notices
+      ]
+    ) {
+      assert.equal(
+        Object.isFrozen(value),
+        true
+      );
+    }
+  }
+);

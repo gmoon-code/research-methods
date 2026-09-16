@@ -1189,6 +1189,321 @@ window.RMSTeacherWorkspaceData = (() => {
     );
   }
 
+  function inspectorStageProgress(
+    stageReady
+  ) {
+    const stages = [];
+
+    let readyCount = 0;
+
+    for (
+      let stage = 1;
+      stage <= 18;
+      stage += 1
+    ) {
+      const ready =
+        stageReady[stage] ===
+        true;
+
+      if (ready) {
+        readyCount += 1;
+      }
+
+      stages.push(
+        Object.freeze({
+          stage,
+          ready,
+          status:
+            ready
+              ? "ready"
+              : "not_marked_ready"
+        })
+      );
+    }
+
+    return Object.freeze({
+      ready_count:
+        readyCount,
+      total_stages:
+        18,
+      stages:
+        Object.freeze(stages),
+      interpretation:
+        "Stage readiness is a read-only progress indicator and is not a grade."
+    });
+  }
+
+  function inspectorMilestone(
+    milestone
+  ) {
+    return Object.freeze({
+      id:
+        milestone.id,
+      title:
+        milestone.title,
+      state:
+        milestone.state,
+      blockers:
+        Object.freeze(
+          Array.from(
+            milestone.blockers
+          )
+        ),
+      warnings:
+        Object.freeze(
+          Array.from(
+            milestone.warnings
+          )
+        ),
+      checkpoint:
+        Object.freeze({
+          status:
+            milestone.checkpoint
+              .status,
+          requestedAt:
+            milestone.checkpoint
+              .requestedAt,
+          reviewedAt:
+            milestone.checkpoint
+              .reviewedAt,
+          teacher:
+            milestone.checkpoint
+              .teacher,
+          comment:
+            milestone.checkpoint
+              .comment,
+          conditions:
+            Object.freeze(
+              Array.from(
+                milestone.checkpoint
+                  .conditions
+              )
+            )
+        })
+    });
+  }
+
+  function inspectorTeacherFeedback(
+    feedback
+  ) {
+    return Object.freeze(
+      feedback.map(item =>
+        Object.freeze({
+          milestone:
+            item.milestone,
+          stage:
+            item.stage,
+          comment:
+            item.comment,
+          message:
+            item.message,
+          createdAt:
+            item.createdAt,
+          importedAt:
+            item.importedAt
+        })
+      )
+    );
+  }
+
+  function deriveStudentInspector(
+    packet
+  ) {
+    const normalized =
+      normalizeStudentPacket(
+        packet
+      );
+
+    if (!normalized.ok) {
+      return Object.freeze({
+        ok: false,
+        errors:
+          normalized.errors,
+        inspector: null
+      });
+    }
+
+    const source =
+      normalized.packet;
+
+    const paperAudit =
+      source.writing
+        .paper_audit
+        ? Object.freeze({
+            available:
+              source.writing
+                .paper_audit
+                .available,
+            score:
+              source.writing
+                .paper_audit
+                .score,
+            label:
+              source.writing
+                .paper_audit
+                .label
+          })
+        : null;
+
+    const sectionWords =
+      Object.freeze({
+        ...source.writing
+          .section_words
+      });
+
+    const inspector =
+      Object.freeze({
+        header:
+          Object.freeze({
+            student_alias:
+              source.student_alias,
+            project_id:
+              source.project_id,
+            course_section:
+              source.course_section,
+            project_name:
+              source.project_name,
+            exported_at:
+              source.exported_at
+          }),
+
+        research:
+          Object.freeze({
+            context:
+              source.context,
+            topic:
+              source.topic,
+            research_question:
+              source.research_question,
+            question_type:
+              source.question_type,
+            design:
+              source.design
+          }),
+
+        stage_progress:
+          inspectorStageProgress(
+            source.stage_ready
+          ),
+
+        milestones:
+          Object.freeze(
+            source.milestones.map(
+              inspectorMilestone
+            )
+          ),
+
+        sources:
+          Object.freeze({
+            total:
+              source.sources.total,
+            included:
+              source.sources
+                .included,
+            verified:
+              source.sources
+                .verified,
+            themes:
+              Object.freeze(
+                Array.from(
+                  source.sources
+                    .themes
+                )
+              ),
+            notice:
+              "Individual source records, source notes, and full source text are not included in this review packet."
+          }),
+
+        methods:
+          Object.freeze({
+            available:
+              source.methods
+                .available,
+            score:
+              source.methods.score,
+            label:
+              source.methods.label,
+            critical:
+              source.methods
+                .critical,
+            warning:
+              source.methods
+                .warning,
+            ethicsStatus:
+              source.methods
+                .ethicsStatus,
+            locked:
+              source.methods.locked,
+            kind:
+              "packet_diagnostic",
+            notice:
+              "These values are packet diagnostics and remain separate from teacher judgment."
+          }),
+
+        analysis:
+          Object.freeze({
+            dataset_file:
+              source.analysis
+                .dataset_file,
+            imported_rows:
+              source.analysis
+                .imported_rows,
+            stored_runs:
+              source.analysis
+                .stored_runs,
+            primary_estimand:
+              source.analysis
+                .primary_estimand,
+            primary_result:
+              source.analysis
+                .primary_result,
+            notice:
+              "Raw dataset rows are not included in this review packet."
+          }),
+
+        writing:
+          Object.freeze({
+            paper_audit:
+              paperAudit,
+            section_words:
+              sectionWords,
+            notice:
+              "Full paper text is not included in this review packet."
+          }),
+
+        teacher_feedback:
+          Object.freeze({
+            items:
+              inspectorTeacherFeedback(
+                source.teacher_feedback
+              ),
+            read_only:
+              true,
+            notice:
+              "Existing teacher feedback is shown as read-only history in this Inspector."
+          }),
+
+        notices:
+          Object.freeze({
+            scope:
+              "This Inspector is based on an exported review packet and does not contain all student work.",
+            missing_data:
+              "Missing optional values mean the information was not provided in this review packet.",
+            stage_progress:
+              "Stage readiness is a progress indicator and is not a grade.",
+            methods:
+              "Software-generated method diagnostics remain separate from teacher decisions."
+          })
+      });
+
+    return Object.freeze({
+      ok: true,
+      errors:
+        Object.freeze([]),
+      inspector
+    });
+  }
+
   return Object.freeze({
     PACKET_TYPE,
     PACKET_VERSION,
@@ -1197,6 +1512,7 @@ window.RMSTeacherWorkspaceData = (() => {
     normalizeStudentPacket,
     upsertStudentPacket,
     deriveOverview,
-    deriveReviewQueue
+    deriveReviewQueue,
+    deriveStudentInspector
   });
 })();
