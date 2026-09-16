@@ -398,3 +398,179 @@ test(
     );
   }
 );
+
+
+const {
+  default: t3Test
+} = await import(
+  "node:test"
+);
+
+const {
+  default: t3Assert
+} = await import(
+  "node:assert/strict"
+);
+
+const {
+  readFile: readT3WorkspaceFile
+} = await import(
+  "node:fs/promises"
+);
+
+const t3WorkspaceSource =
+  await readT3WorkspaceFile(
+    new URL(
+      "../teacher-workspace.html",
+      import.meta.url
+    ),
+    "utf8"
+  );
+
+t3Test(
+  "T3 review authoring remains local, explicit, and packet-compatible",
+  () => {
+    for (
+      const required
+      of [
+        "let teacherReviewDraft = null;",
+        "let teacherReviewPacket = null;",
+        "createTeacherReviewDraft",
+        "setTeacherDisplayName",
+        "upsertCheckpointDecision",
+        "upsertTeacherFeedback",
+        "hasExportableTeacherReview",
+        "buildTeacherFeedbackPacket",
+        "Preview feedback packet",
+        "Download feedback JSON",
+        "Discard review draft",
+        "approved",
+        "revision_requested",
+        "rms-teacher-feedback-"
+      ]
+    ) {
+      t3Assert.equal(
+        t3WorkspaceSource.includes(
+          required
+        ),
+        true,
+        required
+      );
+    }
+
+    t3Assert.equal(
+      t3WorkspaceSource.includes(
+        "window.confirm("
+      ),
+      true
+    );
+
+    t3Assert.equal(
+      t3WorkspaceSource.includes(
+        "URL.createObjectURL("
+      ),
+      true
+    );
+
+    t3Assert.equal(
+      t3WorkspaceSource.includes(
+        "new Blob("
+      ),
+      true
+    );
+  }
+);
+
+t3Test(
+  "T3 review UI does not introduce persistence, feedback networking, or unsafe HTML",
+  () => {
+    for (
+      const forbidden
+      of [
+        ".innerHTML =",
+        ".innerHTML=",
+        "insertAdjacentHTML",
+        "localStorage",
+        "indexedDB",
+        "XMLHttpRequest",
+        "WebSocket",
+        "FormData"
+      ]
+    ) {
+      t3Assert.equal(
+        t3WorkspaceSource.includes(
+          forbidden
+        ),
+        false,
+        forbidden
+      );
+    }
+
+    t3Assert.equal(
+      /\bfetch\s*\(/.test(
+        t3WorkspaceSource
+      ),
+      false
+    );
+
+    t3Assert.equal(
+      t3WorkspaceSource.includes(
+        "review-preview"
+      ),
+      true
+    );
+
+    t3Assert.equal(
+      t3WorkspaceSource.includes(
+        "preview.textContent ="
+      ),
+      true
+    );
+  }
+);
+
+t3Test(
+  "T3 preserves seven primary areas and leaves later milestones reserved",
+  () => {
+    const primaryAreas =
+      [
+        "overview",
+        "review-queue",
+        "students",
+        "assignment-setup",
+        "analytics",
+        "chat-controls",
+        "recovery"
+      ];
+
+    for (
+      const area
+      of primaryAreas
+    ) {
+      t3Assert.equal(
+        t3WorkspaceSource.includes(
+          `data-workspace-panel="${area}"`
+        ),
+        true,
+        area
+      );
+    }
+
+    t3Assert.equal(
+      (
+        t3WorkspaceSource.match(
+          /Reserved for a later milestone\./g
+        ) ||
+        []
+      ).length,
+      4
+    );
+
+    t3Assert.equal(
+      t3WorkspaceSource.includes(
+        "competency_ratings"
+      ),
+      false
+    );
+  }
+);

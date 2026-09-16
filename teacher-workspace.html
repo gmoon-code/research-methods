@@ -585,6 +585,102 @@
       font-size: 0.86rem;
     }
 
+    .teacher-review-section {
+      margin-top: 18px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .teacher-review-section > h3 {
+      margin-top: 0;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .review-field {
+      display: grid;
+      gap: 6px;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .review-field input,
+    .review-field select,
+    .review-field textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 9px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-weight: 400;
+    }
+
+    .review-field textarea {
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    .review-field-wide {
+      grid-column: 1 / -1;
+    }
+
+    .review-card {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-soft);
+    }
+
+    .review-card h4 {
+      margin: 0 0 8px;
+      font-size: 0.96rem;
+    }
+
+    .review-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .review-status {
+      margin-top: 12px;
+      min-height: 1.4em;
+      font-size: 0.88rem;
+    }
+
+    .review-preview {
+      margin-top: 14px;
+      max-height: 360px;
+      overflow: auto;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-soft);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .review-separator {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
     @media (max-width: 760px) {
       .topbar {
         position: static;
@@ -1112,6 +1208,8 @@
       let dataUiInitialized = false;
       let importedPackets = [];
       let selectedProjectId = "";
+      let teacherReviewDraft = null;
+      let teacherReviewPacket = null;
 
       function returnToTeacherEntry() {
         location.replace("./teacher.html");
@@ -1280,6 +1378,20 @@
           typeof data.deriveReviewQueue ===
             "function" &&
           typeof data.deriveStudentInspector ===
+            "function" &&
+          typeof data.createTeacherReviewDraft ===
+            "function" &&
+          typeof data.validateTeacherReviewDraft ===
+            "function" &&
+          typeof data.setTeacherDisplayName ===
+            "function" &&
+          typeof data.upsertCheckpointDecision ===
+            "function" &&
+          typeof data.upsertTeacherFeedback ===
+            "function" &&
+          typeof data.hasExportableTeacherReview ===
+            "function" &&
+          typeof data.buildTeacherFeedbackPacket ===
             "function"
         );
       }
@@ -1327,7 +1439,1030 @@
           );
       }
 
+      function reviewField(
+        labelText,
+        control,
+        wide = false
+      ) {
+        const label =
+          makeElement(
+            "label",
+            wide
+              ? "review-field review-field-wide"
+              : "review-field"
+          );
+
+        label.append(
+          makeElement(
+            "span",
+            "",
+            labelText
+          ),
+          control
+        );
+
+        return label;
+      }
+
+      function reviewConditions(
+        value
+      ) {
+        return String(
+          value || ""
+        )
+          .split(/\r?\n/)
+          .map(
+            item =>
+              item.trim()
+          )
+          .filter(Boolean);
+      }
+
+      function reviewFilename(
+        projectId
+      ) {
+        const safe =
+          String(
+            projectId || "project"
+          )
+            .replace(
+              /[^A-Za-z0-9._-]+/g,
+              "-"
+            )
+            .replace(
+              /^-+|-+$/g,
+              ""
+            )
+            .slice(
+              0,
+              80
+            ) ||
+          "project";
+
+        return (
+          "rms-teacher-feedback-" +
+          safe +
+          ".json"
+        );
+      }
+
+      function downloadTeacherFeedback(
+        packet
+      ) {
+        const blob =
+          new Blob(
+            [
+              JSON.stringify(
+                packet,
+                null,
+                2
+              )
+            ],
+            {
+              type:
+                "application/json"
+            }
+          );
+
+        const url =
+          URL.createObjectURL(
+            blob
+          );
+
+        const link =
+          document.createElement(
+            "a"
+          );
+
+        link.href =
+          url;
+
+        link.download =
+          reviewFilename(
+            packet.project_id
+          );
+
+        link.rel =
+          "noopener";
+
+        document.body.append(
+          link
+        );
+
+        link.click();
+        link.remove();
+
+        URL.revokeObjectURL(
+          url
+        );
+      }
+
+      function ensureTeacherReviewDraft(
+        packet
+      ) {
+        if (
+          teacherReviewDraft &&
+          teacherReviewDraft.project_id ===
+            packet.project_id
+        ) {
+          return true;
+        }
+
+        const result =
+          teacherData
+            .createTeacherReviewDraft(
+              packet
+            );
+
+        if (!result.ok) {
+          teacherReviewDraft =
+            null;
+
+          teacherReviewPacket =
+            null;
+
+          return false;
+        }
+
+        teacherReviewDraft =
+          result.draft;
+
+        teacherReviewPacket =
+          null;
+
+        return true;
+      }
+
+      function replaceTeacherReviewDraft(
+        result
+      ) {
+        if (
+          !result ||
+          result.ok !== true ||
+          !result.draft
+        ) {
+          return false;
+        }
+
+        teacherReviewDraft =
+          result.draft;
+
+        teacherReviewPacket =
+          null;
+
+        return true;
+      }
+
+      function reviewStatusMessage(
+        section,
+        message,
+        isError = false
+      ) {
+        const status =
+          section.querySelector(
+            "[data-review-status]"
+          );
+
+        if (!status) {
+          return;
+        }
+
+        status.textContent =
+          message;
+
+        status.dataset.error =
+          isError
+            ? "true"
+            : "false";
+      }
+
+      function buildTeacherReviewSection(
+        packet,
+        inspector
+      ) {
+        const section =
+          makeElement(
+            "section",
+            "inspector-section teacher-review-section"
+          );
+
+        section.dataset.teacherReview =
+          "true";
+
+        section.append(
+          makeElement(
+            "h3",
+            "",
+            "Teacher review and feedback"
+          ),
+          makeElement(
+            "p",
+            "privacy-note",
+            "Imported student evidence above remains read-only. Teacher review drafts stay only in memory on this page until you export a feedback packet."
+          )
+        );
+
+        if (
+          !ensureTeacherReviewDraft(
+            packet
+          )
+        ) {
+          section.append(
+            makeElement(
+              "p",
+              "empty-state",
+              "A teacher review draft could not be created for this packet."
+            )
+          );
+
+          return section;
+        }
+
+        const identity =
+          makeElement(
+            "div",
+            "review-grid"
+          );
+
+        appendKeyValue(
+          identity,
+          "Project ID",
+          inspector.header.project_id
+        );
+
+        appendKeyValue(
+          identity,
+          "Student",
+          inspector.header.student_alias
+        );
+
+        appendKeyValue(
+          identity,
+          "Course section",
+          inspector.header.course_section
+        );
+
+        appendKeyValue(
+          identity,
+          "Project",
+          inspector.header.project_name
+        );
+
+        section.append(identity);
+
+        const teacherName =
+          document.createElement(
+            "input"
+          );
+
+        teacherName.type =
+          "text";
+
+        teacherName.value =
+          teacherReviewDraft.teacher;
+
+        teacherName.autocomplete =
+          "off";
+
+        teacherName.placeholder =
+          "Teacher display name";
+
+        teacherName.addEventListener(
+          "change",
+          () => {
+            const result =
+              teacherData
+                .setTeacherDisplayName(
+                  packet,
+                  teacherReviewDraft,
+                  teacherName.value
+                );
+
+            if (
+              replaceTeacherReviewDraft(
+                result
+              )
+            ) {
+              reviewStatusMessage(
+                section,
+                "Teacher display name saved in this page session."
+              );
+            } else {
+              reviewStatusMessage(
+                section,
+                result.errors.join(
+                  " "
+                ),
+                true
+              );
+            }
+          }
+        );
+
+        section.append(
+          reviewField(
+            "Teacher display name",
+            teacherName,
+            true
+          )
+        );
+
+        const decisionsHeading =
+          makeElement(
+            "div",
+            "review-separator"
+          );
+
+        decisionsHeading.append(
+          makeElement(
+            "h4",
+            "",
+            "Checkpoint decisions"
+          ),
+          makeElement(
+            "p",
+            "",
+            "Choose a decision explicitly. Packet blockers, warnings, and software diagnostics never choose a decision for you."
+          )
+        );
+
+        section.append(
+          decisionsHeading
+        );
+
+        for (
+          const milestone
+          of inspector.milestones
+        ) {
+          const card =
+            makeElement(
+              "div",
+              "review-card"
+            );
+
+          card.dataset.reviewCheckpoint =
+            milestone.id;
+
+          card.append(
+            makeElement(
+              "h4",
+              "",
+              `${milestone.id} ${milestone.title || ""}`.trim()
+            ),
+            makeElement(
+              "p",
+              "",
+              `Imported state: ${displayValue(milestone.state)}`
+            )
+          );
+
+          const current =
+            teacherReviewDraft
+              .checkpoints
+              .find(
+                item =>
+                  item.id ===
+                  milestone.id
+              );
+
+          const controls =
+            makeElement(
+              "div",
+              "review-grid"
+            );
+
+          const decision =
+            document.createElement(
+              "select"
+            );
+
+          const blankOption =
+            document.createElement(
+              "option"
+            );
+
+          blankOption.value =
+            "";
+
+          blankOption.textContent =
+            "Choose a decision";
+
+          decision.append(
+            blankOption
+          );
+
+          for (
+            const [
+              value,
+              text
+            ]
+            of [
+              [
+                "approved",
+                "Approved"
+              ],
+              [
+                "revision_requested",
+                "Revision requested"
+              ]
+            ]
+          ) {
+            const option =
+              document.createElement(
+                "option"
+              );
+
+            option.value =
+              value;
+
+            option.textContent =
+              text;
+
+            decision.append(
+              option
+            );
+          }
+
+          decision.value =
+            current?.status ||
+            "";
+
+          const comment =
+            document.createElement(
+              "textarea"
+            );
+
+          comment.value =
+            current?.comment ||
+            "";
+
+          comment.placeholder =
+            "Optional checkpoint comment";
+
+          const conditions =
+            document.createElement(
+              "textarea"
+            );
+
+          conditions.value =
+            (
+              current?.conditions ||
+              []
+            ).join("\n");
+
+          conditions.placeholder =
+            "One teacher-authored condition per line";
+
+          const saveDecision =
+            () => {
+              if (
+                !decision.value
+              ) {
+                if (current) {
+                  decision.value =
+                    current.status;
+
+                  reviewStatusMessage(
+                    section,
+                    "Use Discard review draft to clear an existing checkpoint decision.",
+                    true
+                  );
+                }
+
+                return;
+              }
+
+              const result =
+                teacherData
+                  .upsertCheckpointDecision(
+                    packet,
+                    teacherReviewDraft,
+                    {
+                      id:
+                        milestone.id,
+                      status:
+                        decision.value,
+                      comment:
+                        comment.value,
+                      conditions:
+                        reviewConditions(
+                          conditions.value
+                        )
+                    }
+                  );
+
+              if (
+                replaceTeacherReviewDraft(
+                  result
+                )
+              ) {
+                openInspector(
+                  packet
+                );
+              } else {
+                reviewStatusMessage(
+                  section,
+                  result.errors.join(
+                    " "
+                  ),
+                  true
+                );
+              }
+            };
+
+          decision.addEventListener(
+            "change",
+            saveDecision
+          );
+
+          comment.addEventListener(
+            "change",
+            saveDecision
+          );
+
+          conditions.addEventListener(
+            "change",
+            saveDecision
+          );
+
+          controls.append(
+            reviewField(
+              "Teacher decision",
+              decision
+            ),
+            reviewField(
+              "Checkpoint comment",
+              comment,
+              true
+            ),
+            reviewField(
+              "Revision conditions",
+              conditions,
+              true
+            )
+          );
+
+          card.append(
+            controls
+          );
+
+          section.append(
+            card
+          );
+        }
+
+        const general =
+          makeElement(
+            "div",
+            "review-separator"
+          );
+
+        general.append(
+          makeElement(
+            "h4",
+            "",
+            "General teacher feedback"
+          ),
+          makeElement(
+            "p",
+            "",
+            "This feedback is authored by the teacher. Software diagnostics are not copied into it."
+          )
+        );
+
+        const existingFeedback =
+          teacherReviewDraft
+            .feedback[0] ||
+          null;
+
+        const feedbackGrid =
+          makeElement(
+            "div",
+            "review-grid"
+          );
+
+        const milestoneSelect =
+          document.createElement(
+            "select"
+          );
+
+        const noMilestone =
+          document.createElement(
+            "option"
+          );
+
+        noMilestone.value =
+          "";
+
+        noMilestone.textContent =
+          "No milestone selected";
+
+        milestoneSelect.append(
+          noMilestone
+        );
+
+        for (
+          const milestone
+          of inspector.milestones
+        ) {
+          const option =
+            document.createElement(
+              "option"
+            );
+
+          option.value =
+            milestone.id;
+
+          option.textContent =
+            `${milestone.id} ${milestone.title || ""}`.trim();
+
+          milestoneSelect.append(
+            option
+          );
+        }
+
+        milestoneSelect.value =
+          existingFeedback
+            ?.milestone ||
+          "";
+
+        const stageInput =
+          document.createElement(
+            "input"
+          );
+
+        stageInput.type =
+          "text";
+
+        stageInput.value =
+          existingFeedback
+            ?.stage ||
+          "";
+
+        stageInput.placeholder =
+          "Optional stage";
+
+        const feedbackComment =
+          document.createElement(
+            "textarea"
+          );
+
+        feedbackComment.value =
+          existingFeedback
+            ?.comment ||
+          "";
+
+        feedbackComment.placeholder =
+          "Teacher-authored feedback";
+
+        feedbackGrid.append(
+          reviewField(
+            "Related milestone",
+            milestoneSelect
+          ),
+          reviewField(
+            "Related stage",
+            stageInput
+          ),
+          reviewField(
+            "Feedback comment",
+            feedbackComment,
+            true
+          )
+        );
+
+        general.append(
+          feedbackGrid
+        );
+
+        const saveFeedback =
+          makeElement(
+            "button",
+            "button",
+            existingFeedback
+              ? "Update general feedback"
+              : "Add general feedback"
+          );
+
+        saveFeedback.type =
+          "button";
+
+        saveFeedback.addEventListener(
+          "click",
+          () => {
+            const result =
+              teacherData
+                .upsertTeacherFeedback(
+                  packet,
+                  teacherReviewDraft,
+                  {
+                    milestone:
+                      milestoneSelect.value,
+                    stage:
+                      stageInput.value,
+                    comment:
+                      feedbackComment.value
+                  },
+                  existingFeedback
+                    ? 0
+                    : -1
+                );
+
+            if (
+              replaceTeacherReviewDraft(
+                result
+              )
+            ) {
+              openInspector(
+                packet
+              );
+            } else {
+              reviewStatusMessage(
+                section,
+                result.errors.join(
+                  " "
+                ),
+                true
+              );
+            }
+          }
+        );
+
+        general.append(
+          saveFeedback
+        );
+
+        section.append(
+          general
+        );
+
+        const actions =
+          makeElement(
+            "div",
+            "review-actions"
+          );
+
+        const previewButton =
+          makeElement(
+            "button",
+            "button",
+            "Preview feedback packet"
+          );
+
+        previewButton.type =
+          "button";
+
+        previewButton.disabled =
+          !teacherData
+            .hasExportableTeacherReview(
+              teacherReviewDraft
+            );
+
+        previewButton.addEventListener(
+          "click",
+          () => {
+            const result =
+              teacherData
+                .buildTeacherFeedbackPacket(
+                  packet,
+                  teacherReviewDraft
+                );
+
+            if (!result.ok) {
+              teacherReviewPacket =
+                null;
+
+              reviewStatusMessage(
+                section,
+                result.errors.join(
+                  " "
+                ),
+                true
+              );
+
+              return;
+            }
+
+            teacherReviewPacket =
+              result.packet;
+
+            openInspector(
+              packet
+            );
+          }
+        );
+
+        const downloadButton =
+          makeElement(
+            "button",
+            "button",
+            "Download feedback JSON"
+          );
+
+        downloadButton.type =
+          "button";
+
+        downloadButton.disabled =
+          !(
+            teacherReviewPacket &&
+            teacherReviewPacket
+              .project_id ===
+              packet.project_id
+          );
+
+        downloadButton.addEventListener(
+          "click",
+          () => {
+            if (
+              !teacherReviewPacket ||
+              teacherReviewPacket
+                .project_id !==
+                packet.project_id
+            ) {
+              reviewStatusMessage(
+                section,
+                "Preview the validated feedback packet before downloading.",
+                true
+              );
+
+              return;
+            }
+
+            downloadTeacherFeedback(
+              teacherReviewPacket
+            );
+
+            reviewStatusMessage(
+              section,
+              "Feedback JSON downloaded. Student work was not modified."
+            );
+          }
+        );
+
+        const discardButton =
+          makeElement(
+            "button",
+            "button",
+            "Discard review draft"
+          );
+
+        discardButton.type =
+          "button";
+
+        discardButton.addEventListener(
+          "click",
+          () => {
+            const hasWork =
+              teacherData
+                .hasExportableTeacherReview(
+                  teacherReviewDraft
+                );
+
+            if (
+              hasWork &&
+              !window.confirm(
+                "Discard the unsaved teacher review draft for this project?"
+              )
+            ) {
+              return;
+            }
+
+            const result =
+              teacherData
+                .createTeacherReviewDraft(
+                  packet
+                );
+
+            if (!result.ok) {
+              reviewStatusMessage(
+                section,
+                result.errors.join(
+                  " "
+                ),
+                true
+              );
+
+              return;
+            }
+
+            teacherReviewDraft =
+              result.draft;
+
+            teacherReviewPacket =
+              null;
+
+            openInspector(
+              packet
+            );
+          }
+        );
+
+        actions.append(
+          previewButton,
+          downloadButton,
+          discardButton
+        );
+
+        section.append(
+          actions
+        );
+
+        const status =
+          makeElement(
+            "p",
+            "review-status",
+            teacherData
+              .hasExportableTeacherReview(
+                teacherReviewDraft
+              )
+              ? "Unsaved teacher review work is held only in this page session."
+              : "No teacher review decision or feedback has been authored yet."
+          );
+
+        status.dataset.reviewStatus =
+          "true";
+
+        status.setAttribute(
+          "aria-live",
+          "polite"
+        );
+
+        section.append(
+          status
+        );
+
+        if (
+          teacherReviewPacket &&
+          teacherReviewPacket
+            .project_id ===
+            packet.project_id
+        ) {
+          section.append(
+            makeElement(
+              "p",
+              "privacy-note",
+              "Preview below is the validated version 1.7 feedback packet. Exporting it does not modify the student's project."
+            )
+          );
+
+          const preview =
+            makeElement(
+              "pre",
+              "review-preview"
+            );
+
+          preview.dataset.reviewPreview =
+            "true";
+
+          preview.textContent =
+            JSON.stringify(
+              teacherReviewPacket,
+              null,
+              2
+            );
+
+          section.append(
+            preview
+          );
+        }
+
+        return section;
+      }
+
       function openInspector(packet) {
+        const incomingProjectId =
+          typeof packet?.project_id ===
+            "string"
+            ? packet.project_id
+            : "";
+
+        if (
+          teacherReviewDraft &&
+          teacherReviewDraft.project_id !==
+            incomingProjectId
+        ) {
+          const hasUnsavedReview =
+            teacherData
+              .hasExportableTeacherReview(
+                teacherReviewDraft
+              );
+
+          if (
+            hasUnsavedReview &&
+            !window.confirm(
+              "Discard the unsaved teacher review draft and switch projects?"
+            )
+          ) {
+            return false;
+          }
+
+          teacherReviewDraft =
+            null;
+
+          teacherReviewPacket =
+            null;
+        }
+
         const result =
           teacherData
             .deriveStudentInspector(
@@ -1358,6 +2493,10 @@
 
         selectedProjectId =
           inspector.header.project_id;
+
+        ensureTeacherReviewDraft(
+          packet
+        );
 
         const head =
           makeElement(
@@ -1959,7 +3098,11 @@
         }
 
         studentInspector.append(
-          feedbackSection
+          feedbackSection,
+          buildTeacherReviewSection(
+            packet,
+            inspector
+          )
         );
 
         studentInspector.hidden =
@@ -2271,6 +3414,8 @@
       function clearImportedPackets() {
         importedPackets = [];
         selectedProjectId = "";
+        teacherReviewDraft = null;
+        teacherReviewPacket = null;
 
         importReport.textContent =
           "Imported review packets were cleared from this page session.";
