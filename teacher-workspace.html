@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+  <meta
+    name="robots"
+    content="noindex, nofollow"
+  >
+  <title>Teacher Workspace | Research Methods Studio</title>
+
+  <style>
+    :root {
+      color-scheme: light;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      --page: #f5f7fb;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --text: #172033;
+      --muted: #667085;
+      --border: #d9e0ea;
+      --accent: #284b7a;
+      --accent-soft: #edf3fb;
+      --danger: #8f2d2d;
+      --focus: #1d70b8;
+      --radius: 14px;
+      --shadow:
+        0 12px 30px rgba(23, 32, 51, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--page);
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .auth-gate {
+      display: grid;
+      min-height: 100vh;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .auth-card {
+      width: min(520px, 100%);
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .auth-card h1 {
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+    }
+
+    .auth-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .workspace[hidden],
+    .auth-gate[hidden],
+    .workspace-panel[hidden] {
+      display: none !important;
+    }
+
+    .workspace {
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky;
+      z-index: 10;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 70px;
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 760;
+    }
+
+    .brand-subtitle {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .topbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .button {
+      min-height: 40px;
+      padding: 8px 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background: var(--surface-soft);
+    }
+
+    .button-danger {
+      border-color: #e5bcbc;
+      color: var(--danger);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 245px minmax(0, 1fr);
+      min-height: calc(100vh - 70px);
+    }
+
+    .sidebar {
+      padding: 22px 14px;
+      border-right: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .sidebar-label {
+      margin: 0 10px 10px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: grid;
+      gap: 5px;
+    }
+
+    .nav-button {
+      width: 100%;
+      padding: 11px 12px;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .nav-button:hover {
+      background: var(--surface-soft);
+    }
+
+    .nav-button[aria-current="page"] {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .content {
+      min-width: 0;
+      padding: 30px;
+    }
+
+    .content-inner {
+      width: min(1040px, 100%);
+      margin: 0 auto;
+    }
+
+    .workspace-header {
+      margin-bottom: 24px;
+    }
+
+    .workspace-header h1 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+    }
+
+    .workspace-header p {
+      max-width: 720px;
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .notice {
+      margin-bottom: 22px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .panel {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 5px 18px rgba(23, 32, 51, 0.045);
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 1.3rem;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .placeholder-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .placeholder-card {
+      min-height: 110px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .placeholder-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .placeholder-card span {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        position: static;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .sidebar {
+        overflow-x: auto;
+        padding: 10px 14px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .sidebar-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      .nav {
+        display: flex;
+        width: max-content;
+        min-width: 100%;
+      }
+
+      .nav-button {
+        width: auto;
+        white-space: nowrap;
+      }
+
+      .content {
+        padding: 22px 16px 34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section
+    class="auth-gate"
+    id="authGate"
+    aria-live="polite"
+  >
+    <div class="auth-card">
+      <h1>Checking teacher access</h1>
+      <p>
+        Teacher tools remain locked until this browser session is
+        verified by the class service.
+      </p>
+    </div>
+  </section>
+
+  <div
+    class="workspace"
+    id="teacherWorkspace"
+    hidden
+  >
+    <header class="topbar">
+      <div class="brand">
+        <p class="brand-title">
+          Research Methods Studio
+        </p>
+        <p class="brand-subtitle">
+          Teacher Workspace
+        </p>
+      </div>
+
+      <div
+        class="topbar-actions"
+        aria-label="Teacher workspace actions"
+      >
+        <a
+          class="button"
+          href="./"
+          id="viewStudentSite"
+        >
+          View student site
+        </a>
+
+        <button
+          class="button button-danger"
+          type="button"
+          id="leaveTeacherMode"
+        >
+          Leave teacher mode
+        </button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside
+        class="sidebar"
+        aria-label="Teacher workspace sections"
+      >
+        <p class="sidebar-label">
+          Workspace
+        </p>
+
+        <nav
+          class="nav"
+          id="workspaceNav"
+        >
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="overview"
+            aria-current="page"
+          >
+            Overview
+          </button>
+
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="review-queue"
+          >
+            Review Queue
+          </button>
+
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="students"
+          >
+            Students
+          </button>
+
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="assignment-setup"
+          >
+            Assignment Setup
+          </button>
+
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="analytics"
+          >
+            Analytics
+          </button>
+
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="chat-controls"
+          >
+            Chat Controls
+          </button>
+
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="recovery"
+          >
+            Recovery
+          </button>
+        </nav>
+      </aside>
+
+      <main
+        class="content"
+        id="mainContent"
+        tabindex="-1"
+      >
+        <div class="content-inner">
+          <div class="workspace-header">
+            <h1>Teacher Workspace</h1>
+            <p>
+              Review student research progress while keeping teacher
+              decisions separate from software-generated indicators.
+            </p>
+          </div>
+
+          <div class="notice">
+            This T1 shell does not load student projects, review
+            packets, chat transcripts, raw datasets, or class data.
+          </div>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-overview"
+            data-workspace-panel="overview"
+          >
+            <h2>Overview</h2>
+            <p>
+              Class-level review information will appear here after
+              the packet workflow is added in a later milestone.
+            </p>
+
+            <div
+              class="placeholder-grid"
+              aria-label="Planned overview summaries"
+            >
+              <div class="placeholder-card">
+                <strong>Imported projects</strong>
+                <span>No project data is loaded in T1.</span>
+              </div>
+
+              <div class="placeholder-card">
+                <strong>Awaiting review</strong>
+                <span>No review queue is loaded in T1.</span>
+              </div>
+
+              <div class="placeholder-card">
+                <strong>Revision requests</strong>
+                <span>No student feedback data is loaded in T1.</span>
+              </div>
+
+              <div class="placeholder-card">
+                <strong>Research safeguards</strong>
+                <span>No ethics or safety records are loaded in T1.</span>
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-review-queue"
+            data-workspace-panel="review-queue"
+            hidden
+          >
+            <h2>Review Queue</h2>
+            <p>
+              Review packet triage will be implemented after the
+              authenticated workspace shell is validated.
+            </p>
+          </section>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-students"
+            data-workspace-panel="students"
+            hidden
+          >
+            <h2>Students</h2>
+            <p>
+              Student project inspection is not active in this T1
+              shell. No student records are loaded.
+            </p>
+          </section>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-assignment-setup"
+            data-workspace-panel="assignment-setup"
+            hidden
+          >
+            <h2>Assignment Setup</h2>
+            <p>
+              Reserved for a later milestone. No class configuration
+              is stored by this page.
+            </p>
+          </section>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-analytics"
+            data-workspace-panel="analytics"
+            hidden
+          >
+            <h2>Analytics</h2>
+            <p>
+              Reserved for a later milestone. No grades or competency
+              decisions are generated by this shell.
+            </p>
+          </section>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-chat-controls"
+            data-workspace-panel="chat-controls"
+            hidden
+          >
+            <h2>Chat Controls</h2>
+            <p>
+              Reserved for a later milestone. Student Research Chat
+              transcripts are not exposed here.
+            </p>
+          </section>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-recovery"
+            data-workspace-panel="recovery"
+            hidden
+          >
+            <h2>Recovery</h2>
+            <p>
+              Reserved for a later milestone. This shell performs no
+              backup, restore, deletion, or destructive operations.
+            </p>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="./assets/runtime-config.js"></script>
+  <script src="./assets/teacher-session.js"></script>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const gate =
+        document.getElementById("authGate");
+
+      const workspace =
+        document.getElementById(
+          "teacherWorkspace"
+        );
+
+      const leaveButton =
+        document.getElementById(
+          "leaveTeacherMode"
+        );
+
+      const mainContent =
+        document.getElementById(
+          "mainContent"
+        );
+
+      const navButtons = Array.from(
+        document.querySelectorAll(
+          "[data-panel]"
+        )
+      );
+
+      const panels = Array.from(
+        document.querySelectorAll(
+          "[data-workspace-panel]"
+        )
+      );
+
+      function returnToTeacherEntry() {
+        location.replace("./teacher.html");
+      }
+
+      function activatePanel(panelId) {
+        for (const button of navButtons) {
+          const active =
+            button.dataset.panel === panelId;
+
+          if (active) {
+            button.setAttribute(
+              "aria-current",
+              "page"
+            );
+          } else {
+            button.removeAttribute(
+              "aria-current"
+            );
+          }
+        }
+
+        for (const panel of panels) {
+          panel.hidden =
+            panel.dataset.workspacePanel !==
+            panelId;
+        }
+
+        mainContent.focus({
+          preventScroll: true
+        });
+      }
+
+      for (const button of navButtons) {
+        button.addEventListener(
+          "click",
+          () => {
+            activatePanel(
+              button.dataset.panel
+            );
+          }
+        );
+      }
+
+      leaveButton.addEventListener(
+        "click",
+        () => {
+          const teacherSession =
+            window.RMSTeacherSession;
+
+          if (teacherSession) {
+            teacherSession.leave();
+          }
+
+          location.replace("./");
+        }
+      );
+
+      async function openWorkspace() {
+        const teacherSession =
+          window.RMSTeacherSession;
+
+        if (
+          !teacherSession ||
+          typeof teacherSession.verify !==
+            "function" ||
+          typeof teacherSession.isActive !==
+            "function"
+        ) {
+          returnToTeacherEntry();
+          return;
+        }
+
+        if (
+          !teacherSession.hasStoredSession()
+        ) {
+          returnToTeacherEntry();
+          return;
+        }
+
+        let verified = false;
+
+        try {
+          verified =
+            await teacherSession.verify();
+        } catch {
+          verified = false;
+        }
+
+        if (
+          !verified ||
+          !teacherSession.isActive()
+        ) {
+          returnToTeacherEntry();
+          return;
+        }
+
+        gate.hidden = true;
+        workspace.hidden = false;
+      }
+
+      void openWorkspace();
+    })();
+  </script>
+</body>
+</html>
