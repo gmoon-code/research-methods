@@ -681,6 +681,104 @@
       border-top: 1px solid var(--border);
     }
 
+    .assignment-setup-form {
+      display: grid;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .assignment-field-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .assignment-field {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .assignment-field-wide {
+      grid-column: 1 / -1;
+    }
+
+    .assignment-field input,
+    .assignment-field textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 9px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-weight: 400;
+    }
+
+    .assignment-field textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .assignment-milestones {
+      margin: 0;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .assignment-milestones legend {
+      padding: 0 7px;
+      font-weight: 700;
+    }
+
+    .assignment-milestone-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .assignment-actions,
+    .assignment-import-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .assignment-status {
+      min-height: 1.4em;
+      margin-top: 4px;
+      font-size: 0.88rem;
+    }
+
+    .assignment-status[data-error="true"] {
+      font-weight: 700;
+    }
+
+    .assignment-preview {
+      max-height: 380px;
+      overflow: auto;
+      margin: 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-soft);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .assignment-preview[hidden] {
+      display: none !important;
+    }
+
     @media (max-width: 760px) {
       .topbar {
         position: static;
@@ -1042,9 +1140,204 @@
           >
             <h2>Assignment Setup</h2>
             <p>
-              Reserved for a later milestone. No class configuration
-              is stored by this page.
+              Create assignment context around the existing 18-stage
+              Research Journey. Assignment Setup does not change student
+              progress, milestone logic, checkpoints, grades, or teacher
+              review decisions.
             </p>
+
+            <div class="notice">
+              Assignment Setup stays in memory in this page only. You may
+              preview, download, and later re-import an
+              rms_assignment_setup version 1.0 JSON file. Nothing here
+              is uploaded or written into student projects.
+            </div>
+
+            <div
+              class="assignment-setup-form"
+              id="assignmentSetupForm"
+            >
+              <div class="assignment-field-grid">
+                <label class="assignment-field">
+                  <span>Assignment ID</span>
+                  <input
+                    id="assignmentId"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="BIO-AR-01"
+                  >
+                </label>
+
+                <label class="assignment-field">
+                  <span>Assignment title</span>
+                  <input
+                    id="assignmentTitle"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="AP Biology Action Research"
+                  >
+                </label>
+
+                <label class="assignment-field">
+                  <span>Course / section</span>
+                  <input
+                    id="assignmentCourseSection"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Period 2"
+                  >
+                </label>
+
+                <label class="assignment-field">
+                  <span>Teacher display name</span>
+                  <input
+                    id="assignmentTeacherName"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Teacher name shown in this assignment file"
+                  >
+                </label>
+
+                <label
+                  class="assignment-field assignment-field-wide"
+                >
+                  <span>Student instructions</span>
+                  <textarea
+                    id="assignmentStudentInstructions"
+                    placeholder="Optional assignment-specific directions"
+                  ></textarea>
+                </label>
+
+                <label
+                  class="assignment-field assignment-field-wide"
+                >
+                  <span>Teacher notes</span>
+                  <textarea
+                    id="assignmentTeacherNotes"
+                    placeholder="Optional teacher-only notes"
+                  ></textarea>
+                </label>
+              </div>
+
+              <fieldset class="assignment-milestones">
+                <legend>Milestone due dates</legend>
+
+                <p class="privacy-note">
+                  Due dates are planning information only. They never
+                  block work, change milestone state, request revision,
+                  approve work, assign a grade, or change queue priority.
+                </p>
+
+                <div class="assignment-milestone-grid">
+                  <label class="assignment-field">
+                    <span>M1 ? Question Ready</span>
+                    <input
+                      id="assignmentDueM1"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="YYYY-MM-DD"
+                      autocomplete="off"
+                    >
+                  </label>
+
+                  <label class="assignment-field">
+                    <span>M2 ? Evidence Base Ready</span>
+                    <input
+                      id="assignmentDueM2"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="YYYY-MM-DD"
+                      autocomplete="off"
+                    >
+                  </label>
+
+                  <label class="assignment-field">
+                    <span>M3 ? Method Approved</span>
+                    <input
+                      id="assignmentDueM3"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="YYYY-MM-DD"
+                      autocomplete="off"
+                    >
+                  </label>
+
+                  <label class="assignment-field">
+                    <span>M4 ? Analysis Ready</span>
+                    <input
+                      id="assignmentDueM4"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="YYYY-MM-DD"
+                      autocomplete="off"
+                    >
+                  </label>
+
+                  <label class="assignment-field">
+                    <span>M5 ? Paper Ready for Final Review</span>
+                    <input
+                      id="assignmentDueM5"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="YYYY-MM-DD"
+                      autocomplete="off"
+                    >
+                  </label>
+                </div>
+              </fieldset>
+
+              <div class="assignment-import-actions">
+                <label class="file-control">
+                  <span>Import assignment setup JSON</span>
+                  <input
+                    id="assignmentSetupFile"
+                    type="file"
+                    accept=".json,application/json"
+                  >
+                </label>
+
+                <button
+                  class="button"
+                  id="clearAssignmentSetup"
+                  type="button"
+                >
+                  Clear assignment draft
+                </button>
+              </div>
+
+              <div class="assignment-actions">
+                <button
+                  class="button"
+                  id="previewAssignmentSetup"
+                  type="button"
+                >
+                  Preview assignment JSON
+                </button>
+
+                <button
+                  class="button"
+                  id="downloadAssignmentSetup"
+                  type="button"
+                  disabled
+                >
+                  Download assignment JSON
+                </button>
+              </div>
+
+              <p
+                class="assignment-status"
+                id="assignmentSetupStatus"
+                aria-live="polite"
+              >
+                Assignment draft is held only in this page session.
+              </p>
+
+              <pre
+                class="assignment-preview"
+                id="assignmentSetupPreview"
+                hidden
+              ></pre>
+            </div>
           </section>
 
           <section
@@ -1168,6 +1461,90 @@
           "studentInspector"
         );
 
+      const assignmentId =
+        document.getElementById(
+          "assignmentId"
+        );
+
+      const assignmentTitle =
+        document.getElementById(
+          "assignmentTitle"
+        );
+
+      const assignmentCourseSection =
+        document.getElementById(
+          "assignmentCourseSection"
+        );
+
+      const assignmentTeacherName =
+        document.getElementById(
+          "assignmentTeacherName"
+        );
+
+      const assignmentStudentInstructions =
+        document.getElementById(
+          "assignmentStudentInstructions"
+        );
+
+      const assignmentTeacherNotes =
+        document.getElementById(
+          "assignmentTeacherNotes"
+        );
+
+      const assignmentSetupFile =
+        document.getElementById(
+          "assignmentSetupFile"
+        );
+
+      const clearAssignmentSetupButton =
+        document.getElementById(
+          "clearAssignmentSetup"
+        );
+
+      const previewAssignmentSetupButton =
+        document.getElementById(
+          "previewAssignmentSetup"
+        );
+
+      const downloadAssignmentSetupButton =
+        document.getElementById(
+          "downloadAssignmentSetup"
+        );
+
+      const assignmentSetupStatus =
+        document.getElementById(
+          "assignmentSetupStatus"
+        );
+
+      const assignmentSetupPreview =
+        document.getElementById(
+          "assignmentSetupPreview"
+        );
+
+      const assignmentDueInputs =
+        Object.freeze({
+          M1:
+            document.getElementById(
+              "assignmentDueM1"
+            ),
+          M2:
+            document.getElementById(
+              "assignmentDueM2"
+            ),
+          M3:
+            document.getElementById(
+              "assignmentDueM3"
+            ),
+          M4:
+            document.getElementById(
+              "assignmentDueM4"
+            ),
+          M5:
+            document.getElementById(
+              "assignmentDueM5"
+            )
+        });
+
       const metricElements =
         Object.freeze({
           importedProjects:
@@ -1210,6 +1587,8 @@
       let selectedProjectId = "";
       let teacherReviewDraft = null;
       let teacherReviewPacket = null;
+      let assignmentDraft = null;
+      let assignmentPreviewPacket = null;
 
       function returnToTeacherEntry() {
         location.replace("./teacher.html");
@@ -1392,6 +1771,20 @@
           typeof data.hasExportableTeacherReview ===
             "function" &&
           typeof data.buildTeacherFeedbackPacket ===
+            "function" &&
+          typeof data.createAssignmentDraft ===
+            "function" &&
+          typeof data.validateAssignmentDraft ===
+            "function" &&
+          typeof data.updateAssignmentField ===
+            "function" &&
+          typeof data.updateAssignmentMilestoneDueDate ===
+            "function" &&
+          typeof data.validateAssignmentPacket ===
+            "function" &&
+          typeof data.assignmentDraftFromPacket ===
+            "function" &&
+          typeof data.buildAssignmentPacket ===
             "function"
         );
       }
@@ -3431,6 +3824,630 @@
         renderAll();
       }
 
+      function assignmentStatus(
+        message,
+        isError = false
+      ) {
+        assignmentSetupStatus.textContent =
+          message;
+
+        assignmentSetupStatus.dataset.error =
+          isError
+            ? "true"
+            : "false";
+      }
+
+      function assignmentDraftHasContent() {
+        if (!assignmentDraft) {
+          return false;
+        }
+
+        const textValues = [
+          assignmentDraft.assignment_id,
+          assignmentDraft.title,
+          assignmentDraft.course_section,
+          assignmentDraft.teacher_display_name,
+          assignmentDraft.student_instructions,
+          assignmentDraft.teacher_notes
+        ];
+
+        if (
+          textValues.some(
+            value =>
+              Boolean(
+                String(
+                  value || ""
+                ).trim()
+              )
+          )
+        ) {
+          return true;
+        }
+
+        return Object.values(
+          assignmentDraft
+            .milestone_due_dates ||
+          {}
+        ).some(
+          value =>
+            Boolean(
+              String(
+                value || ""
+              ).trim()
+            )
+        );
+      }
+
+      function assignmentFilename(
+        assignmentId
+      ) {
+        const safe =
+          String(
+            assignmentId ||
+            "assignment"
+          )
+            .replace(
+              /[^A-Za-z0-9._-]+/g,
+              "-"
+            )
+            .replace(
+              /^-+|-+$/g,
+              ""
+            )
+            .slice(
+              0,
+              80
+            ) ||
+          "assignment";
+
+        return (
+          "rms-assignment-setup-" +
+          safe +
+          ".json"
+        );
+      }
+
+      function downloadAssignmentPacket(
+        packet
+      ) {
+        const blob =
+          new Blob(
+            [
+              JSON.stringify(
+                packet,
+                null,
+                2
+              )
+            ],
+            {
+              type:
+                "application/json"
+            }
+          );
+
+        const url =
+          URL.createObjectURL(
+            blob
+          );
+
+        const link =
+          document.createElement(
+            "a"
+          );
+
+        link.href =
+          url;
+
+        link.download =
+          assignmentFilename(
+            packet.assignment_id
+          );
+
+        link.rel =
+          "noopener";
+
+        document.body.append(
+          link
+        );
+
+        link.click();
+        link.remove();
+
+        URL.revokeObjectURL(
+          url
+        );
+      }
+
+      function invalidateAssignmentPreview() {
+        assignmentPreviewPacket =
+          null;
+
+        assignmentSetupPreview.textContent =
+          "";
+
+        assignmentSetupPreview.hidden =
+          true;
+
+        downloadAssignmentSetupButton.disabled =
+          true;
+      }
+
+      function renderAssignmentSetup() {
+        if (!assignmentDraft) {
+          return;
+        }
+
+        assignmentId.value =
+          assignmentDraft
+            .assignment_id;
+
+        assignmentTitle.value =
+          assignmentDraft.title;
+
+        assignmentCourseSection.value =
+          assignmentDraft
+            .course_section;
+
+        assignmentTeacherName.value =
+          assignmentDraft
+            .teacher_display_name;
+
+        assignmentStudentInstructions.value =
+          assignmentDraft
+            .student_instructions;
+
+        assignmentTeacherNotes.value =
+          assignmentDraft
+            .teacher_notes;
+
+        for (
+          const [
+            milestoneId,
+            input
+          ]
+          of Object.entries(
+            assignmentDueInputs
+          )
+        ) {
+          input.value =
+            assignmentDraft
+              .milestone_due_dates[
+                milestoneId
+              ] ||
+            "";
+        }
+
+        if (
+          assignmentPreviewPacket
+        ) {
+          assignmentSetupPreview.textContent =
+            JSON.stringify(
+              assignmentPreviewPacket,
+              null,
+              2
+            );
+
+          assignmentSetupPreview.hidden =
+            false;
+
+          downloadAssignmentSetupButton.disabled =
+            false;
+        } else {
+          assignmentSetupPreview.textContent =
+            "";
+
+          assignmentSetupPreview.hidden =
+            true;
+
+          downloadAssignmentSetupButton.disabled =
+            true;
+        }
+      }
+
+      function replaceAssignmentDraft(
+        result,
+        successMessage
+      ) {
+        if (
+          !result ||
+          result.ok !== true ||
+          !result.draft
+        ) {
+          assignmentStatus(
+            (
+              result?.errors ||
+              [
+                "Assignment Setup could not update this value."
+              ]
+            ).join(
+              " "
+            ),
+            true
+          );
+
+          return false;
+        }
+
+        assignmentDraft =
+          result.draft;
+
+        invalidateAssignmentPreview();
+        renderAssignmentSetup();
+
+        if (successMessage) {
+          assignmentStatus(
+            successMessage
+          );
+        }
+
+        return true;
+      }
+
+      function updateAssignmentTextField(
+        field,
+        value
+      ) {
+        const result =
+          teacherData
+            .updateAssignmentField(
+              assignmentDraft,
+              field,
+              value
+            );
+
+        replaceAssignmentDraft(
+          result,
+          "Assignment draft updated in this page session."
+        );
+      }
+
+      function updateAssignmentDueDate(
+        milestoneId,
+        input
+      ) {
+        const previous =
+          assignmentDraft
+            .milestone_due_dates[
+              milestoneId
+            ];
+
+        const result =
+          teacherData
+            .updateAssignmentMilestoneDueDate(
+              assignmentDraft,
+              milestoneId,
+              input.value.trim()
+            );
+
+        if (
+          !result ||
+          result.ok !== true
+        ) {
+          input.value =
+            previous;
+
+          assignmentStatus(
+            (
+              result?.errors ||
+              [
+                `${milestoneId} due date is invalid.`
+              ]
+            ).join(
+              " "
+            ),
+            true
+          );
+
+          return;
+        }
+
+        assignmentDraft =
+          result.draft;
+
+        invalidateAssignmentPreview();
+        renderAssignmentSetup();
+
+        assignmentStatus(
+          `${milestoneId} due date updated in this page session.`
+        );
+      }
+
+      async function importAssignmentSetupFile(
+        file
+      ) {
+        if (!file) {
+          return;
+        }
+
+        let parsed;
+
+        try {
+          parsed =
+            JSON.parse(
+              await file.text()
+            );
+        } catch {
+          assignmentStatus(
+            "The selected assignment file is not valid JSON.",
+            true
+          );
+
+          assignmentSetupFile.value =
+            "";
+
+          return;
+        }
+
+        const result =
+          teacherData
+            .assignmentDraftFromPacket(
+              parsed
+            );
+
+        if (!result.ok) {
+          assignmentStatus(
+            result.errors.join(
+              " "
+            ),
+            true
+          );
+
+          assignmentSetupFile.value =
+            "";
+
+          return;
+        }
+
+        if (
+          assignmentDraftHasContent() &&
+          !window.confirm(
+            "Replace the current in-memory assignment draft with the imported assignment setup?"
+          )
+        ) {
+          assignmentSetupFile.value =
+            "";
+
+          assignmentStatus(
+            "Assignment import was cancelled."
+          );
+
+          return;
+        }
+
+        assignmentDraft =
+          result.draft;
+
+        invalidateAssignmentPreview();
+        renderAssignmentSetup();
+
+        assignmentSetupFile.value =
+          "";
+
+        assignmentStatus(
+          "Assignment setup imported locally. Student projects were not modified."
+        );
+      }
+
+      function previewAssignmentSetup() {
+        const result =
+          teacherData
+            .buildAssignmentPacket(
+              assignmentDraft
+            );
+
+        if (!result.ok) {
+          assignmentPreviewPacket =
+            null;
+
+          invalidateAssignmentPreview();
+
+          assignmentStatus(
+            result.errors.join(
+              " "
+            ),
+            true
+          );
+
+          return;
+        }
+
+        assignmentPreviewPacket =
+          result.packet;
+
+        renderAssignmentSetup();
+
+        assignmentStatus(
+          "Validated rms_assignment_setup version 1.0 preview is ready."
+        );
+      }
+
+      function clearAssignmentSetup() {
+        if (
+          assignmentDraftHasContent() &&
+          !window.confirm(
+            "Clear the current in-memory assignment draft?"
+          )
+        ) {
+          return;
+        }
+
+        const result =
+          teacherData
+            .createAssignmentDraft();
+
+        if (!result.ok) {
+          assignmentStatus(
+            result.errors.join(
+              " "
+            ),
+            true
+          );
+
+          return;
+        }
+
+        assignmentDraft =
+          result.draft;
+
+        invalidateAssignmentPreview();
+        renderAssignmentSetup();
+
+        assignmentSetupFile.value =
+          "";
+
+        assignmentStatus(
+          "Assignment draft cleared from this page session."
+        );
+      }
+
+      function initializeAssignmentSetup() {
+        const result =
+          teacherData
+            .createAssignmentDraft();
+
+        if (!result.ok) {
+          assignmentStatus(
+            result.errors.join(
+              " "
+            ),
+            true
+          );
+
+          return false;
+        }
+
+        assignmentDraft =
+          result.draft;
+
+        assignmentPreviewPacket =
+          null;
+
+        const fieldBindings = [
+          [
+            assignmentId,
+            "assignment_id"
+          ],
+          [
+            assignmentTitle,
+            "title"
+          ],
+          [
+            assignmentCourseSection,
+            "course_section"
+          ],
+          [
+            assignmentTeacherName,
+            "teacher_display_name"
+          ],
+          [
+            assignmentStudentInstructions,
+            "student_instructions"
+          ],
+          [
+            assignmentTeacherNotes,
+            "teacher_notes"
+          ]
+        ];
+
+        for (
+          const [
+            element,
+            field
+          ]
+          of fieldBindings
+        ) {
+          element.addEventListener(
+            "change",
+            () => {
+              updateAssignmentTextField(
+                field,
+                element.value
+              );
+            }
+          );
+        }
+
+        for (
+          const [
+            milestoneId,
+            input
+          ]
+          of Object.entries(
+            assignmentDueInputs
+          )
+        ) {
+          input.addEventListener(
+            "change",
+            () => {
+              updateAssignmentDueDate(
+                milestoneId,
+                input
+              );
+            }
+          );
+        }
+
+        assignmentSetupFile.addEventListener(
+          "change",
+          () => {
+            const file =
+              assignmentSetupFile
+                .files?.[0];
+
+            if (file) {
+              void importAssignmentSetupFile(
+                file
+              );
+            }
+          }
+        );
+
+        clearAssignmentSetupButton
+          .addEventListener(
+            "click",
+            clearAssignmentSetup
+          );
+
+        previewAssignmentSetupButton
+          .addEventListener(
+            "click",
+            previewAssignmentSetup
+          );
+
+        downloadAssignmentSetupButton
+          .addEventListener(
+            "click",
+            () => {
+              if (
+                !assignmentPreviewPacket
+              ) {
+                assignmentStatus(
+                  "Preview the validated assignment JSON before downloading.",
+                  true
+                );
+
+                return;
+              }
+
+              downloadAssignmentPacket(
+                assignmentPreviewPacket
+              );
+
+              assignmentStatus(
+                "Assignment JSON downloaded locally. Student projects were not modified."
+              );
+            }
+          );
+
+        renderAssignmentSetup();
+
+        assignmentStatus(
+          "Assignment draft is held only in this page session."
+        );
+
+        return true;
+      }
+
       function initializeDataWorkspace(
         data
       ) {
@@ -3439,6 +4456,12 @@
         }
 
         teacherData = data;
+
+        if (
+          !initializeAssignmentSetup()
+        ) {
+          return;
+        }
 
         packetFiles.addEventListener(
           "change",
@@ -3497,6 +4520,10 @@
 
           importedPackets = [];
           selectedProjectId = "";
+          teacherReviewDraft = null;
+          teacherReviewPacket = null;
+          assignmentDraft = null;
+          assignmentPreviewPacket = null;
 
           location.replace("./");
         }

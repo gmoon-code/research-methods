@@ -133,7 +133,7 @@ test(
   () => {
     assert.match(
       workspace,
-      /leaveButton\.addEventListener\([\s\S]{0,420}teacherSession\.leave\(\);[\s\S]{0,120}location\.replace\("\.\/"\);/
+      /leaveButton\.addEventListener\([\s\S]{0,420}teacherSession\.leave\(\);[\s\S]{0,520}location\.replace\("\.\/"\);/
     );
   }
 );
@@ -394,7 +394,7 @@ test(
         ) ||
         []
       ).length,
-      4
+      3
     );
   }
 );
@@ -563,7 +563,7 @@ t3Test(
         ) ||
         []
       ).length,
-      4
+      3
     );
 
     t3Assert.equal(
@@ -571,6 +571,192 @@ t3Test(
         "competency_ratings"
       ),
       false
+    );
+  }
+);
+
+
+test(
+  "T4 Assignment Setup UI uses the committed pure data API",
+  () => {
+    for (
+      const required
+      of [
+        'id="panel-assignment-setup"',
+        'id="assignmentId"',
+        'id="assignmentTitle"',
+        'id="assignmentCourseSection"',
+        'id="assignmentTeacherName"',
+        'id="assignmentStudentInstructions"',
+        'id="assignmentTeacherNotes"',
+        'id="assignmentDueM1"',
+        'id="assignmentDueM2"',
+        'id="assignmentDueM3"',
+        'id="assignmentDueM4"',
+        'id="assignmentDueM5"',
+        'id="assignmentSetupFile"',
+        'id="previewAssignmentSetup"',
+        'id="downloadAssignmentSetup"',
+        'id="clearAssignmentSetup"',
+        "let assignmentDraft = null;",
+        "let assignmentPreviewPacket = null;",
+        "createAssignmentDraft",
+        "updateAssignmentField",
+        "updateAssignmentMilestoneDueDate",
+        "assignmentDraftFromPacket",
+        "buildAssignmentPacket",
+        "Preview assignment JSON",
+        "Download assignment JSON",
+        "rms_assignment_setup version 1.0"
+      ]
+    ) {
+      assert.equal(
+        workspace.includes(
+          required
+        ),
+        true,
+        required
+      );
+    }
+  }
+);
+
+test(
+  "T4 assignment state remains local and does not mutate student work",
+  () => {
+    assert.match(
+      workspace,
+      /Assignment Setup stays in memory in this page only\./
+    );
+
+    assert.match(
+      workspace,
+      /Nothing here[\s\S]*student projects\./
+    );
+
+    assert.match(
+      workspace,
+      /Due dates are planning information only\./
+    );
+
+    assert.equal(
+      /\bfetch\s*\(/.test(
+        workspace
+      ),
+      false
+    );
+
+    for (
+      const forbidden
+      of [
+        ".innerHTML =",
+        ".innerHTML=",
+        "insertAdjacentHTML",
+        "localStorage",
+        "indexedDB",
+        "XMLHttpRequest",
+        "WebSocket",
+        "FormData"
+      ]
+    ) {
+      assert.equal(
+        workspace.includes(
+          forbidden
+        ),
+        false,
+        forbidden
+      );
+    }
+  }
+);
+
+test(
+  "T4 Assignment Setup supports local import preview download and safe replacement",
+  () => {
+    for (
+      const required
+      of [
+        "await file.text()",
+        "JSON.parse(",
+        "window.confirm(",
+        "URL.createObjectURL(",
+        "new Blob(",
+        "assignmentFilename(",
+        "rms-assignment-setup-",
+        "assignmentSetupPreview.textContent ="
+      ]
+    ) {
+      assert.equal(
+        workspace.includes(
+          required
+        ),
+        true,
+        required
+      );
+    }
+
+    assert.match(
+      workspace,
+      /Replace the current in-memory assignment draft/
+    );
+
+    assert.match(
+      workspace,
+      /Student projects were not modified\./
+    );
+  }
+);
+
+test(
+  "T4 preserves the fixed Teacher Workspace structure",
+  () => {
+    const primaryAreas =
+      [
+        "overview",
+        "review-queue",
+        "students",
+        "assignment-setup",
+        "analytics",
+        "chat-controls",
+        "recovery"
+      ];
+
+    for (
+      const area
+      of primaryAreas
+    ) {
+      assert.equal(
+        workspace.includes(
+          `data-workspace-panel="${area}"`
+        ),
+        true,
+        area
+      );
+    }
+
+    assert.equal(
+      (
+        workspace.match(
+          /Reserved for a later milestone\./g
+        ) ||
+        []
+      ).length,
+      3
+    );
+
+    assert.match(
+      workspace,
+      /id="panel-analytics"[\s\S]*Reserved for a later milestone\./
+    );
+
+    assert.match(
+      workspace,
+      /id="panel-chat-controls"[\s\S]*Reserved for a later milestone\./
+    );
+
+    assert.match(
+      workspace,
+      /id="panel-recovery"[\s\S]*Reserved for a later milestone\./
     );
   }
 );
