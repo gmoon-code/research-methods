@@ -2080,3 +2080,1039 @@ test(
     }
   }
 );
+
+function reviewablePacket(
+  overrides = {}
+) {
+  return minimalPacket({
+    exported_at:
+      "2026-09-16T00:00:00.000Z",
+    student_alias:
+      "Student One",
+    course_section:
+      "AP Biology",
+    project_name:
+      "Reflection Study",
+    milestones: [
+      {
+        id:
+          "M1",
+        title:
+          "Question checkpoint",
+        state:
+          "awaiting_teacher",
+        blockers: [
+          "Imported blocker must not become a teacher condition."
+        ],
+        warnings: [
+          "Imported warning must not become teacher feedback."
+        ],
+        checkpoint: {
+          status:
+            "awaiting_teacher",
+          requestedAt:
+            "2026-09-15T00:00:00.000Z",
+          reviewedAt:
+            "",
+          teacher:
+            "",
+          comment:
+            "",
+          conditions:
+            []
+        }
+      },
+      {
+        id:
+          "M3",
+        title:
+          "Methods checkpoint",
+        state:
+          "student_ready",
+        blockers:
+          [],
+        warnings:
+          [],
+        checkpoint: {
+          status:
+            "not_requested",
+          requestedAt:
+            "",
+          reviewedAt:
+            "",
+          teacher:
+            "",
+          comment:
+            "",
+          conditions:
+            []
+        }
+      }
+    ],
+    teacher_feedback: [
+      {
+        milestone:
+          "M1",
+        stage:
+          "Stage 2",
+        comment:
+          "Existing history must remain read-only.",
+        createdAt:
+          "2026-09-14T00:00:00.000Z"
+      }
+    ],
+    ...overrides
+  });
+}
+
+test(
+  "T3 exposes the existing v1.7 teacher feedback contract",
+  () => {
+    const data =
+      loadModule();
+
+    assert.equal(
+      data.FEEDBACK_PACKET_TYPE,
+      "rms_teacher_feedback"
+    );
+
+    assert.equal(
+      data.FEEDBACK_PACKET_VERSION,
+      "1.7"
+    );
+
+    assert.deepEqual(
+      Array.from(
+        data.REVIEW_DECISION_STATUSES
+      ),
+      [
+        "approved",
+        "revision_requested"
+      ]
+    );
+
+    for (
+      const name
+      of [
+        "createTeacherReviewDraft",
+        "validateTeacherReviewDraft",
+        "setTeacherDisplayName",
+        "upsertCheckpointDecision",
+        "upsertTeacherFeedback",
+        "hasExportableTeacherReview",
+        "buildTeacherFeedbackPacket"
+      ]
+    ) {
+      assert.equal(
+        typeof data[name],
+        "function",
+        name
+      );
+    }
+  }
+);
+
+test(
+  "T3 creates an empty frozen review draft for one valid project",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket();
+
+    const before =
+      JSON.stringify(
+        packet
+      );
+
+    const result =
+      data.createTeacherReviewDraft(
+        packet
+      );
+
+    assert.equal(
+      result.ok,
+      true
+    );
+
+    assert.equal(
+      result.draft.project_id,
+      packet.project_id
+    );
+
+    assert.equal(
+      result.draft.teacher,
+      ""
+    );
+
+    assert.equal(
+      result.draft.checkpoints.length,
+      0
+    );
+
+    assert.equal(
+      result.draft.feedback.length,
+      0
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        result.draft
+      ),
+      true
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        result.draft.checkpoints
+      ),
+      true
+    );
+
+    assert.equal(
+      JSON.stringify(
+        packet
+      ),
+      before
+    );
+  }
+);
+
+test(
+  "T3 refuses to create a review draft from an invalid student packet",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data.createTeacherReviewDraft({
+        packet_type:
+          "wrong",
+        version:
+          "1.7",
+        project_id:
+          "RMS-TEST-001",
+        milestones:
+          []
+      });
+
+    assert.equal(
+      result.ok,
+      false
+    );
+
+    assert.equal(
+      result.draft,
+      null
+    );
+  }
+);
+
+test(
+  "T3 sets teacher display name without mutating the prior draft",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket();
+
+    const first =
+      data.createTeacherReviewDraft(
+        packet
+      ).draft;
+
+    const result =
+      data.setTeacherDisplayName(
+        packet,
+        first,
+        "Ms. Moon"
+      );
+
+    assert.equal(
+      result.ok,
+      true
+    );
+
+    assert.equal(
+      first.teacher,
+      ""
+    );
+
+    assert.equal(
+      result.draft.teacher,
+      "Ms. Moon"
+    );
+
+    assert.notEqual(
+      result.draft,
+      first
+    );
+  }
+);
+
+test(
+  "T3 accepts explicit approved and revision_requested decisions and replaces by checkpoint ID",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket();
+
+    let draft =
+      data.createTeacherReviewDraft(
+        packet
+      ).draft;
+
+    draft =
+      data.upsertCheckpointDecision(
+        packet,
+        draft,
+        {
+          id:
+            "M1",
+          status:
+            "approved",
+          comment:
+            "Approved after review.",
+          conditions:
+            []
+        }
+      ).draft;
+
+    assert.equal(
+      draft.checkpoints.length,
+      1
+    );
+
+    assert.equal(
+      draft.checkpoints[0].status,
+      "approved"
+    );
+
+    draft =
+      data.upsertCheckpointDecision(
+        packet,
+        draft,
+        {
+          id:
+            "M1",
+          status:
+            "revision_requested",
+          comment:
+            "Please revise.",
+          conditions: [
+            "Clarify the sampling plan."
+          ]
+        }
+      ).draft;
+
+    assert.equal(
+      draft.checkpoints.length,
+      1
+    );
+
+    assert.equal(
+      draft.checkpoints[0].status,
+      "revision_requested"
+    );
+
+    assert.deepEqual(
+      Array.from(
+        draft.checkpoints[0]
+          .conditions
+      ),
+      [
+        "Clarify the sampling plan."
+      ]
+    );
+  }
+);
+
+test(
+  "T3 rejects unknown checkpoint IDs",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket();
+
+    const draft =
+      data.createTeacherReviewDraft(
+        packet
+      ).draft;
+
+    const result =
+      data.upsertCheckpointDecision(
+        packet,
+        draft,
+        {
+          id:
+            "M999",
+          status:
+            "approved",
+          comment:
+            "",
+          conditions:
+            []
+        }
+      );
+
+    assert.equal(
+      result.ok,
+      false
+    );
+
+    assert.equal(
+      result.draft,
+      null
+    );
+  }
+);
+
+test(
+  "T3 rejects unsupported checkpoint statuses",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket();
+
+    const draft =
+      data.createTeacherReviewDraft(
+        packet
+      ).draft;
+
+    for (
+      const status
+      of [
+        "complete",
+        "student_ready",
+        "awaiting_teacher",
+        "auto_approved"
+      ]
+    ) {
+      const result =
+        data.upsertCheckpointDecision(
+          packet,
+          draft,
+          {
+            id:
+              "M1",
+            status,
+            comment:
+              "",
+            conditions:
+              []
+          }
+        );
+
+      assert.equal(
+        result.ok,
+        false,
+        status
+      );
+    }
+  }
+);
+
+test(
+  "T3 never converts imported blockers or warnings into teacher-authored conditions",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket();
+
+    const draft =
+      data.createTeacherReviewDraft(
+        packet
+      ).draft;
+
+    const result =
+      data.upsertCheckpointDecision(
+        packet,
+        draft,
+        {
+          id:
+            "M1",
+          status:
+            "revision_requested",
+          comment:
+            "Teacher-authored comment.",
+          conditions:
+            []
+        }
+      );
+
+    assert.equal(
+      result.ok,
+      true
+    );
+
+    assert.equal(
+      result.draft
+        .checkpoints[0]
+        .conditions.length,
+      0
+    );
+
+    const serialized =
+      JSON.stringify(
+        result.draft
+      );
+
+    assert.equal(
+      serialized.includes(
+        "Imported blocker"
+      ),
+      false
+    );
+
+    assert.equal(
+      serialized.includes(
+        "Imported warning"
+      ),
+      false
+    );
+  }
+);
+
+test(
+  "T3 adds and replaces explicit general teacher feedback",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket();
+
+    let draft =
+      data.createTeacherReviewDraft(
+        packet
+      ).draft;
+
+    draft =
+      data.upsertTeacherFeedback(
+        packet,
+        draft,
+        {
+          milestone:
+            "M1",
+          stage:
+            2,
+          comment:
+            "Explain how the variables connect."
+        }
+      ).draft;
+
+    assert.equal(
+      draft.feedback.length,
+      1
+    );
+
+    assert.equal(
+      draft.feedback[0].stage,
+      "2"
+    );
+
+    draft =
+      data.upsertTeacherFeedback(
+        packet,
+        draft,
+        {
+          milestone:
+            "M1",
+          stage:
+            "Stage 2",
+          comment:
+            "Revised teacher comment."
+        },
+        0
+      ).draft;
+
+    assert.equal(
+      draft.feedback.length,
+      1
+    );
+
+    assert.equal(
+      draft.feedback[0].comment,
+      "Revised teacher comment."
+    );
+  }
+);
+
+test(
+  "T3 requires meaningful teacher feedback and rejects unknown feedback milestones",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket();
+
+    const draft =
+      data.createTeacherReviewDraft(
+        packet
+      ).draft;
+
+    const blank =
+      data.upsertTeacherFeedback(
+        packet,
+        draft,
+        {
+          comment:
+            "   "
+        }
+      );
+
+    assert.equal(
+      blank.ok,
+      false
+    );
+
+    const unknown =
+      data.upsertTeacherFeedback(
+        packet,
+        draft,
+        {
+          milestone:
+            "M999",
+          comment:
+            "Teacher comment."
+        }
+      );
+
+    assert.equal(
+      unknown.ok,
+      false
+    );
+  }
+);
+
+test(
+  "T3 does not export an empty review",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket();
+
+    const draft =
+      data.createTeacherReviewDraft(
+        packet
+      ).draft;
+
+    assert.equal(
+      data.hasExportableTeacherReview(
+        draft
+      ),
+      false
+    );
+
+    const result =
+      data.buildTeacherFeedbackPacket(
+        packet,
+        draft,
+        "2026-09-16T04:00:00.000Z"
+      );
+
+    assert.equal(
+      result.ok,
+      false
+    );
+
+    assert.equal(
+      result.packet,
+      null
+    );
+  }
+);
+
+test(
+  "T3 builds the exact allowlisted rms_teacher_feedback v1.7 envelope",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket({
+        competency_snapshot: {
+          private:
+            "COMPETENCY-SECRET"
+        },
+        rawData: [
+          {
+            private:
+              "RAW-SECRET"
+          }
+        ],
+        full_paper_text:
+          "PAPER-SECRET",
+        full_source_text:
+          "SOURCE-SECRET",
+        full_source_notes:
+          "NOTES-SECRET",
+        research_chat_transcript:
+          "CHAT-SECRET"
+      });
+
+    let draft =
+      data.createTeacherReviewDraft(
+        packet
+      ).draft;
+
+    draft =
+      data.setTeacherDisplayName(
+        packet,
+        draft,
+        "Ms. Moon"
+      ).draft;
+
+    draft =
+      data.upsertCheckpointDecision(
+        packet,
+        draft,
+        {
+          id:
+            "M1",
+          status:
+            "revision_requested",
+          comment:
+            "Revise the sampling explanation.",
+          conditions: [
+            "Define the sampling frame."
+          ]
+        }
+      ).draft;
+
+    draft =
+      data.upsertTeacherFeedback(
+        packet,
+        draft,
+        {
+          milestone:
+            "M1",
+          stage:
+            "Stage 2",
+          comment:
+            "Connect the evidence to the research question."
+        }
+      ).draft;
+
+    const result =
+      data.buildTeacherFeedbackPacket(
+        packet,
+        draft,
+        "2026-09-16T04:05:06.000Z"
+      );
+
+    assert.equal(
+      result.ok,
+      true
+    );
+
+    const plain =
+      JSON.parse(
+        JSON.stringify(
+          result.packet
+        )
+      );
+
+    assert.deepEqual(
+      Object.keys(
+        plain
+      ),
+      [
+        "packet_type",
+        "version",
+        "created_at",
+        "project_id",
+        "student_alias",
+        "checkpoints",
+        "feedback",
+        "competency_ratings"
+      ]
+    );
+
+    assert.equal(
+      plain.packet_type,
+      "rms_teacher_feedback"
+    );
+
+    assert.equal(
+      plain.version,
+      "1.7"
+    );
+
+    assert.equal(
+      plain.created_at,
+      "2026-09-16T04:05:06.000Z"
+    );
+
+    assert.equal(
+      plain.project_id,
+      packet.project_id
+    );
+
+    assert.equal(
+      plain.student_alias,
+      "Student One"
+    );
+
+    assert.deepEqual(
+      plain.competency_ratings,
+      []
+    );
+
+    assert.deepEqual(
+      plain.checkpoints,
+      [
+        {
+          id:
+            "M1",
+          status:
+            "revision_requested",
+          reviewedAt:
+            "2026-09-16T04:05:06.000Z",
+          teacher:
+            "Ms. Moon",
+          comment:
+            "Revise the sampling explanation.",
+          conditions: [
+            "Define the sampling frame."
+          ]
+        }
+      ]
+    );
+
+    assert.deepEqual(
+      plain.feedback,
+      [
+        {
+          milestone:
+            "M1",
+          stage:
+            "Stage 2",
+          comment:
+            "Connect the evidence to the research question.",
+          createdAt:
+            "2026-09-16T04:05:06.000Z"
+        }
+      ]
+    );
+
+    const serialized =
+      JSON.stringify(
+        plain
+      );
+
+    for (
+      const hidden
+      of [
+        "COMPETENCY-SECRET",
+        "RAW-SECRET",
+        "PAPER-SECRET",
+        "SOURCE-SECRET",
+        "NOTES-SECRET",
+        "CHAT-SECRET",
+        "Existing history must remain read-only.",
+        "Imported blocker",
+        "Imported warning"
+      ]
+    ) {
+      assert.equal(
+        serialized.includes(
+          hidden
+        ),
+        false,
+        hidden
+      );
+    }
+  }
+);
+
+test(
+  "T3 rejects a review draft attached to a different project",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket();
+
+    const draft =
+      data.createTeacherReviewDraft(
+        packet
+      ).draft;
+
+    const wrongProject =
+      {
+        project_id:
+          "RMS-OTHER",
+        teacher:
+          draft.teacher,
+        checkpoints:
+          [],
+        feedback:
+          []
+      };
+
+    const result =
+      data.validateTeacherReviewDraft(
+        packet,
+        wrongProject
+      );
+
+    assert.equal(
+      result.ok,
+      false
+    );
+  }
+);
+
+test(
+  "T3 review operations never mutate the imported student packet",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket();
+
+    const before =
+      JSON.stringify(
+        packet
+      );
+
+    let draft =
+      data.createTeacherReviewDraft(
+        packet
+      ).draft;
+
+    draft =
+      data.setTeacherDisplayName(
+        packet,
+        draft,
+        "Teacher"
+      ).draft;
+
+    draft =
+      data.upsertCheckpointDecision(
+        packet,
+        draft,
+        {
+          id:
+            "M1",
+          status:
+            "approved",
+          comment:
+            "Reviewed.",
+          conditions:
+            []
+        }
+      ).draft;
+
+    draft =
+      data.upsertTeacherFeedback(
+        packet,
+        draft,
+        {
+          milestone:
+            "M1",
+          comment:
+            "Teacher-authored feedback."
+        }
+      ).draft;
+
+    const result =
+      data.buildTeacherFeedbackPacket(
+        packet,
+        draft,
+        "2026-09-16T05:00:00.000Z"
+      );
+
+    assert.equal(
+      result.ok,
+      true
+    );
+
+    assert.equal(
+      JSON.stringify(
+        packet
+      ),
+      before
+    );
+  }
+);
+
+test(
+  "T3 review draft and exported packet structures are frozen",
+  () => {
+    const data =
+      loadModule();
+
+    const packet =
+      reviewablePacket();
+
+    let draft =
+      data.createTeacherReviewDraft(
+        packet
+      ).draft;
+
+    draft =
+      data.upsertCheckpointDecision(
+        packet,
+        draft,
+        {
+          id:
+            "M1",
+          status:
+            "approved",
+          comment:
+            "",
+          conditions:
+            []
+        }
+      ).draft;
+
+    const result =
+      data.buildTeacherFeedbackPacket(
+        packet,
+        draft,
+        "2026-09-16T06:00:00.000Z"
+      );
+
+    for (
+      const value
+      of [
+        draft,
+        draft.checkpoints,
+        draft.checkpoints[0],
+        draft.checkpoints[0]
+          .conditions,
+        result.packet,
+        result.packet.checkpoints,
+        result.packet.checkpoints[0],
+        result.packet
+          .checkpoints[0]
+          .conditions,
+        result.packet.feedback,
+        result.packet
+          .competency_ratings
+      ]
+    ) {
+      assert.equal(
+        Object.isFrozen(value),
+        true
+      );
+    }
+  }
+);

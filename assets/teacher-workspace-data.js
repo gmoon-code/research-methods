@@ -1504,15 +1504,942 @@ window.RMSTeacherWorkspaceData = (() => {
     });
   }
 
+
+  const FEEDBACK_PACKET_TYPE =
+    "rms_teacher_feedback";
+
+  const FEEDBACK_PACKET_VERSION =
+    "1.7";
+
+  const REVIEW_DECISION_STATUSES =
+    Object.freeze([
+      "approved",
+      "revision_requested"
+    ]);
+
+  function reviewObject(
+    value
+  ) {
+    return Boolean(
+      value &&
+      typeof value === "object" &&
+      !Array.isArray(value)
+    );
+  }
+
+  function reviewErrorsResult(
+    errors,
+    extra = {}
+  ) {
+    return Object.freeze({
+      ok:
+        errors.length === 0,
+      errors:
+        Object.freeze(
+          errors.slice()
+        ),
+      ...extra
+    });
+  }
+
+  function freezeTeacherReviewDraft(
+    draft
+  ) {
+    const checkpoints =
+      Object.freeze(
+        draft.checkpoints.map(
+          item =>
+            Object.freeze({
+              id:
+                item.id,
+              status:
+                item.status,
+              comment:
+                item.comment,
+              conditions:
+                Object.freeze(
+                  item.conditions.slice()
+                )
+            })
+        )
+      );
+
+    const feedback =
+      Object.freeze(
+        draft.feedback.map(
+          item =>
+            Object.freeze({
+              milestone:
+                item.milestone,
+              stage:
+                item.stage,
+              comment:
+                item.comment
+            })
+        )
+      );
+
+    return Object.freeze({
+      project_id:
+        draft.project_id,
+      teacher:
+        draft.teacher,
+      checkpoints,
+      feedback
+    });
+  }
+
+  function knownReviewMilestones(
+    studentPacket
+  ) {
+    return new Set(
+      Array.isArray(
+        studentPacket?.milestones
+      )
+        ? studentPacket.milestones
+            .map(
+              milestone =>
+                typeof milestone?.id ===
+                  "string"
+                  ? milestone.id
+                  : ""
+            )
+            .filter(Boolean)
+        : []
+    );
+  }
+
+  function validateReviewStudentPacket(
+    studentPacket
+  ) {
+    const result =
+      validateStudentPacket(
+        studentPacket
+      );
+
+    return Boolean(
+      result?.ok === true
+    );
+  }
+
+  function createTeacherReviewDraft(
+    studentPacket
+  ) {
+    if (
+      !validateReviewStudentPacket(
+        studentPacket
+      )
+    ) {
+      return reviewErrorsResult(
+        [
+          "A valid rms_student_review version 1.7 packet is required."
+        ],
+        {
+          draft: null
+        }
+      );
+    }
+
+    const projectId =
+      typeof studentPacket.project_id ===
+        "string"
+        ? studentPacket.project_id
+        : "";
+
+    if (!projectId) {
+      return reviewErrorsResult(
+        [
+          "The student review packet does not contain a project ID."
+        ],
+        {
+          draft: null
+        }
+      );
+    }
+
+    return reviewErrorsResult(
+      [],
+      {
+        draft:
+          freezeTeacherReviewDraft({
+            project_id:
+              projectId,
+            teacher:
+              "",
+            checkpoints:
+              [],
+            feedback:
+              []
+          })
+      }
+    );
+  }
+
+  function validateTeacherReviewDraft(
+    studentPacket,
+    draft
+  ) {
+    const errors = [];
+
+    if (
+      !validateReviewStudentPacket(
+        studentPacket
+      )
+    ) {
+      errors.push(
+        "A valid rms_student_review version 1.7 packet is required."
+      );
+
+      return reviewErrorsResult(
+        errors
+      );
+    }
+
+    if (!reviewObject(draft)) {
+      errors.push(
+        "Teacher review draft must be an object."
+      );
+
+      return reviewErrorsResult(
+        errors
+      );
+    }
+
+    if (
+      typeof draft.project_id !==
+        "string" ||
+      !draft.project_id ||
+      draft.project_id !==
+        studentPacket.project_id
+    ) {
+      errors.push(
+        "Teacher review draft belongs to a different or unknown project."
+      );
+    }
+
+    if (
+      typeof draft.teacher !==
+        "string"
+    ) {
+      errors.push(
+        "Teacher display name must be text."
+      );
+    }
+
+    const milestoneIds =
+      knownReviewMilestones(
+        studentPacket
+      );
+
+    if (
+      !Array.isArray(
+        draft.checkpoints
+      )
+    ) {
+      errors.push(
+        "Teacher review checkpoints must be an array."
+      );
+    } else {
+      const seenIds =
+        new Set();
+
+      for (
+        const item
+        of draft.checkpoints
+      ) {
+        if (!reviewObject(item)) {
+          errors.push(
+            "Each checkpoint decision must be an object."
+          );
+          continue;
+        }
+
+        if (
+          typeof item.id !==
+            "string" ||
+          !item.id ||
+          !milestoneIds.has(
+            item.id
+          )
+        ) {
+          errors.push(
+            "Checkpoint decision references an unknown checkpoint ID."
+          );
+        } else if (
+          seenIds.has(
+            item.id
+          )
+        ) {
+          errors.push(
+            "A checkpoint may have only one draft decision."
+          );
+        } else {
+          seenIds.add(
+            item.id
+          );
+        }
+
+        if (
+          !REVIEW_DECISION_STATUSES
+            .includes(
+              item.status
+            )
+        ) {
+          errors.push(
+            "Checkpoint decision status must be approved or revision_requested."
+          );
+        }
+
+        if (
+          typeof item.comment !==
+            "string"
+        ) {
+          errors.push(
+            "Checkpoint comment must be text."
+          );
+        }
+
+        if (
+          !Array.isArray(
+            item.conditions
+          )
+        ) {
+          errors.push(
+            "Checkpoint conditions must be an array."
+          );
+        } else {
+          for (
+            const condition
+            of item.conditions
+          ) {
+            if (
+              typeof condition !==
+                "string" ||
+              !condition.trim()
+            ) {
+              errors.push(
+                "Checkpoint conditions must contain meaningful teacher-authored text."
+              );
+            }
+          }
+        }
+      }
+    }
+
+    if (
+      !Array.isArray(
+        draft.feedback
+      )
+    ) {
+      errors.push(
+        "Teacher feedback must be an array."
+      );
+    } else {
+      for (
+        const item
+        of draft.feedback
+      ) {
+        if (!reviewObject(item)) {
+          errors.push(
+            "Each teacher feedback item must be an object."
+          );
+          continue;
+        }
+
+        if (
+          typeof item.milestone !==
+            "string"
+        ) {
+          errors.push(
+            "Teacher feedback milestone must be text."
+          );
+        } else if (
+          item.milestone &&
+          !milestoneIds.has(
+            item.milestone
+          )
+        ) {
+          errors.push(
+            "Teacher feedback references an unknown milestone ID."
+          );
+        }
+
+        if (
+          typeof item.stage !==
+            "string"
+        ) {
+          errors.push(
+            "Teacher feedback stage must be text."
+          );
+        }
+
+        if (
+          typeof item.comment !==
+            "string" ||
+          !item.comment.trim()
+        ) {
+          errors.push(
+            "Teacher feedback requires a meaningful teacher-authored comment."
+          );
+        }
+      }
+    }
+
+    return reviewErrorsResult(
+      errors
+    );
+  }
+
+  function setTeacherDisplayName(
+    studentPacket,
+    draft,
+    teacher
+  ) {
+    const validation =
+      validateTeacherReviewDraft(
+        studentPacket,
+        draft
+      );
+
+    if (!validation.ok) {
+      return reviewErrorsResult(
+        validation.errors,
+        {
+          draft: null
+        }
+      );
+    }
+
+    if (
+      typeof teacher !==
+        "string"
+    ) {
+      return reviewErrorsResult(
+        [
+          "Teacher display name must be text."
+        ],
+        {
+          draft: null
+        }
+      );
+    }
+
+    return reviewErrorsResult(
+      [],
+      {
+        draft:
+          freezeTeacherReviewDraft({
+            project_id:
+              draft.project_id,
+            teacher,
+            checkpoints:
+              draft.checkpoints,
+            feedback:
+              draft.feedback
+          })
+      }
+    );
+  }
+
+  function upsertCheckpointDecision(
+    studentPacket,
+    draft,
+    decision
+  ) {
+    const validation =
+      validateTeacherReviewDraft(
+        studentPacket,
+        draft
+      );
+
+    if (!validation.ok) {
+      return reviewErrorsResult(
+        validation.errors,
+        {
+          draft: null
+        }
+      );
+    }
+
+    const errors = [];
+    const milestoneIds =
+      knownReviewMilestones(
+        studentPacket
+      );
+
+    if (!reviewObject(decision)) {
+      errors.push(
+        "Checkpoint decision must be an object."
+      );
+    } else {
+      if (
+        typeof decision.id !==
+          "string" ||
+        !decision.id ||
+        !milestoneIds.has(
+          decision.id
+        )
+      ) {
+        errors.push(
+          "Checkpoint decision references an unknown checkpoint ID."
+        );
+      }
+
+      if (
+        !REVIEW_DECISION_STATUSES
+          .includes(
+            decision.status
+          )
+      ) {
+        errors.push(
+          "Checkpoint decision status must be approved or revision_requested."
+        );
+      }
+
+      if (
+        decision.comment !==
+          undefined &&
+        typeof decision.comment !==
+          "string"
+      ) {
+        errors.push(
+          "Checkpoint comment must be text."
+        );
+      }
+
+      if (
+        decision.conditions !==
+          undefined &&
+        !Array.isArray(
+          decision.conditions
+        )
+      ) {
+        errors.push(
+          "Checkpoint conditions must be an array."
+        );
+      }
+
+      if (
+        Array.isArray(
+          decision.conditions
+        )
+      ) {
+        for (
+          const condition
+          of decision.conditions
+        ) {
+          if (
+            typeof condition !==
+              "string" ||
+            !condition.trim()
+          ) {
+            errors.push(
+              "Checkpoint conditions must contain meaningful teacher-authored text."
+            );
+          }
+        }
+      }
+    }
+
+    if (errors.length) {
+      return reviewErrorsResult(
+        errors,
+        {
+          draft: null
+        }
+      );
+    }
+
+    const normalized =
+      Object.freeze({
+        id:
+          decision.id,
+        status:
+          decision.status,
+        comment:
+          decision.comment ??
+          "",
+        conditions:
+          Object.freeze(
+            (
+              decision.conditions ??
+              []
+            ).slice()
+          )
+      });
+
+    const checkpoints =
+      draft.checkpoints.slice();
+
+    const index =
+      checkpoints.findIndex(
+        item =>
+          item.id ===
+          normalized.id
+      );
+
+    if (index >= 0) {
+      checkpoints[index] =
+        normalized;
+    } else {
+      checkpoints.push(
+        normalized
+      );
+    }
+
+    return reviewErrorsResult(
+      [],
+      {
+        draft:
+          freezeTeacherReviewDraft({
+            project_id:
+              draft.project_id,
+            teacher:
+              draft.teacher,
+            checkpoints,
+            feedback:
+              draft.feedback
+          })
+      }
+    );
+  }
+
+  function upsertTeacherFeedback(
+    studentPacket,
+    draft,
+    item,
+    index = -1
+  ) {
+    const validation =
+      validateTeacherReviewDraft(
+        studentPacket,
+        draft
+      );
+
+    if (!validation.ok) {
+      return reviewErrorsResult(
+        validation.errors,
+        {
+          draft: null
+        }
+      );
+    }
+
+    const errors = [];
+    const milestoneIds =
+      knownReviewMilestones(
+        studentPacket
+      );
+
+    if (!reviewObject(item)) {
+      errors.push(
+        "Teacher feedback item must be an object."
+      );
+    } else {
+      if (
+        item.milestone !==
+          undefined &&
+        typeof item.milestone !==
+          "string"
+      ) {
+        errors.push(
+          "Teacher feedback milestone must be text."
+        );
+      } else if (
+        item.milestone &&
+        !milestoneIds.has(
+          item.milestone
+        )
+      ) {
+        errors.push(
+          "Teacher feedback references an unknown milestone ID."
+        );
+      }
+
+      if (
+        item.stage !==
+          undefined &&
+        typeof item.stage !==
+          "string" &&
+        typeof item.stage !==
+          "number"
+      ) {
+        errors.push(
+          "Teacher feedback stage must be text or a number."
+        );
+      }
+
+      if (
+        typeof item.comment !==
+          "string" ||
+        !item.comment.trim()
+      ) {
+        errors.push(
+          "Teacher feedback requires a meaningful teacher-authored comment."
+        );
+      }
+    }
+
+    if (
+      !Number.isInteger(index) ||
+      index < -1 ||
+      index >=
+        draft.feedback.length
+    ) {
+      errors.push(
+        "Teacher feedback replacement index is invalid."
+      );
+    }
+
+    if (errors.length) {
+      return reviewErrorsResult(
+        errors,
+        {
+          draft: null
+        }
+      );
+    }
+
+    const normalized =
+      Object.freeze({
+        milestone:
+          item.milestone ??
+          "",
+        stage:
+          item.stage ===
+            undefined
+            ? ""
+            : String(
+                item.stage
+              ),
+        comment:
+          item.comment
+      });
+
+    const feedback =
+      draft.feedback.slice();
+
+    if (index === -1) {
+      feedback.push(
+        normalized
+      );
+    } else {
+      feedback[index] =
+        normalized;
+    }
+
+    return reviewErrorsResult(
+      [],
+      {
+        draft:
+          freezeTeacherReviewDraft({
+            project_id:
+              draft.project_id,
+            teacher:
+              draft.teacher,
+            checkpoints:
+              draft.checkpoints,
+            feedback
+          })
+      }
+    );
+  }
+
+  function hasExportableTeacherReview(
+    draft
+  ) {
+    return Boolean(
+      reviewObject(draft) &&
+      Array.isArray(
+        draft.checkpoints
+      ) &&
+      Array.isArray(
+        draft.feedback
+      ) &&
+      (
+        draft.checkpoints.length >
+          0 ||
+        draft.feedback.length >
+          0
+      )
+    );
+  }
+
+  function reviewExportTimestamp(
+    value
+  ) {
+    const candidate =
+      value === undefined
+        ? new Date()
+            .toISOString()
+        : value;
+
+    if (
+      typeof candidate !==
+        "string"
+    ) {
+      return "";
+    }
+
+    const parsed =
+      Date.parse(
+        candidate
+      );
+
+    if (
+      !Number.isFinite(
+        parsed
+      )
+    ) {
+      return "";
+    }
+
+    return new Date(
+      parsed
+    ).toISOString();
+  }
+
+  function buildTeacherFeedbackPacket(
+    studentPacket,
+    draft,
+    createdAt
+  ) {
+    const validation =
+      validateTeacherReviewDraft(
+        studentPacket,
+        draft
+      );
+
+    if (!validation.ok) {
+      return reviewErrorsResult(
+        validation.errors,
+        {
+          packet: null
+        }
+      );
+    }
+
+    if (
+      !hasExportableTeacherReview(
+        draft
+      )
+    ) {
+      return reviewErrorsResult(
+        [
+          "Teacher review contains no checkpoint decision or teacher feedback to export."
+        ],
+        {
+          packet: null
+        }
+      );
+    }
+
+    const timestamp =
+      reviewExportTimestamp(
+        createdAt
+      );
+
+    if (!timestamp) {
+      return reviewErrorsResult(
+        [
+          "Feedback export requires a valid ISO-8601 timestamp."
+        ],
+        {
+          packet: null
+        }
+      );
+    }
+
+    const checkpoints =
+      Object.freeze(
+        draft.checkpoints.map(
+          item =>
+            Object.freeze({
+              id:
+                item.id,
+              status:
+                item.status,
+              reviewedAt:
+                timestamp,
+              teacher:
+                draft.teacher,
+              comment:
+                item.comment,
+              conditions:
+                Object.freeze(
+                  item.conditions.slice()
+                )
+            })
+        )
+      );
+
+    const feedback =
+      Object.freeze(
+        draft.feedback.map(
+          item =>
+            Object.freeze({
+              milestone:
+                item.milestone,
+              stage:
+                item.stage,
+              comment:
+                item.comment,
+              createdAt:
+                timestamp
+            })
+        )
+      );
+
+    const packet =
+      Object.freeze({
+        packet_type:
+          FEEDBACK_PACKET_TYPE,
+        version:
+          FEEDBACK_PACKET_VERSION,
+        created_at:
+          timestamp,
+        project_id:
+          studentPacket.project_id,
+        student_alias:
+          typeof studentPacket
+            .student_alias ===
+            "string"
+            ? studentPacket
+                .student_alias
+            : "",
+        checkpoints,
+        feedback,
+        competency_ratings:
+          Object.freeze([])
+      });
+
+    return reviewErrorsResult(
+      [],
+      {
+        packet
+      }
+    );
+  }
+
   return Object.freeze({
     PACKET_TYPE,
     PACKET_VERSION,
     VALIDATION_CODES,
+    FEEDBACK_PACKET_TYPE,
+    FEEDBACK_PACKET_VERSION,
+    REVIEW_DECISION_STATUSES,
     validateStudentPacket,
     normalizeStudentPacket,
     upsertStudentPacket,
     deriveOverview,
     deriveReviewQueue,
-    deriveStudentInspector
+    deriveStudentInspector,
+    createTeacherReviewDraft,
+    validateTeacherReviewDraft,
+    setTeacherDisplayName,
+    upsertCheckpointDecision,
+    upsertTeacherFeedback,
+    hasExportableTeacherReview,
+    buildTeacherFeedbackPacket
   });
 })();
