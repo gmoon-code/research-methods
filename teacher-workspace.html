@@ -288,6 +288,303 @@
       line-height: 1.45;
     }
 
+    .import-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .file-control {
+      display: grid;
+      gap: 6px;
+      min-width: min(340px, 100%);
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .file-control input,
+    .queue-filter select {
+      min-height: 42px;
+      max-width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+    }
+
+    .file-control input:focus-visible,
+    .queue-filter select:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .import-report {
+      margin-top: 14px !important;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-soft);
+      white-space: pre-line;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(175px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .metric-card {
+      min-height: 105px;
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .metric-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .metric-card strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 1.65rem;
+      line-height: 1;
+    }
+
+    .queue-filter {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .queue-filter label {
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .result-count {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .item-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .project-card {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .project-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .project-card-title {
+      min-width: 0;
+    }
+
+    .project-card-title strong {
+      display: block;
+      overflow-wrap: anywhere;
+    }
+
+    .project-card-title span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      overflow-wrap: anywhere;
+    }
+
+    .project-card p {
+      margin-top: 10px;
+    }
+
+    .flag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .queue-flag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 8px;
+      border: 1px solid #bfd0e5;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .queue-flag-danger {
+      border-color: #e5bcbc;
+      background: #fff4f4;
+      color: var(--danger);
+    }
+
+    .flag-reason {
+      margin-top: 6px !important;
+      font-size: 0.88rem;
+    }
+
+    .empty-state {
+      margin-top: 18px !important;
+      padding: 18px;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .inspector {
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+    }
+
+    .inspector[hidden] {
+      display: none !important;
+    }
+
+    .inspector-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .inspector-head h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .inspector-head p {
+      margin-top: 5px;
+      font-size: 0.88rem;
+    }
+
+    .inspector-section {
+      padding: 18px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .inspector-section h3 {
+      margin: 0 0 12px;
+      font-size: 1.05rem;
+    }
+
+    .key-value-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(210px, 1fr));
+      gap: 10px;
+      margin: 0;
+    }
+
+    .key-value {
+      min-width: 0;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-soft);
+    }
+
+    .key-value dt {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .key-value dd {
+      margin: 5px 0 0;
+      overflow-wrap: anywhere;
+      line-height: 1.5;
+    }
+
+    .stage-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(68px, 1fr));
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .stage-chip {
+      padding: 8px 6px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-soft);
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.78rem;
+    }
+
+    .stage-chip[data-ready="true"] {
+      border-color: #b9d3c0;
+      background: #f2faf4;
+      color: #245c32;
+      font-weight: 700;
+    }
+
+    .milestone-card {
+      margin-top: 10px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-soft);
+    }
+
+    .milestone-card h4 {
+      margin: 0;
+      font-size: 0.96rem;
+    }
+
+    .milestone-card p {
+      margin-top: 7px;
+      font-size: 0.88rem;
+    }
+
+    .compact-list {
+      margin: 8px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .privacy-note {
+      margin-top: 12px !important;
+      padding: 10px 12px;
+      border-left: 3px solid var(--border);
+      background: var(--surface-soft);
+      font-size: 0.86rem;
+    }
+
     @media (max-width: 760px) {
       .topbar {
         position: static;
@@ -476,9 +773,14 @@
             </p>
           </div>
 
-          <div class="notice">
-            This T1 shell does not load student projects, review
-            packets, chat transcripts, raw datasets, or class data.
+          <div
+            class="notice"
+            id="workspaceDataNotice"
+          >
+            Imported review packets stay in memory in this page only.
+            This workspace does not upload or persist packet contents.
+            Review packets omit raw dataset rows, full paper and source
+            text, full source notes, and Research Chat transcripts.
           </div>
 
           <section
@@ -488,32 +790,81 @@
           >
             <h2>Overview</h2>
             <p>
-              Class-level review information will appear here after
-              the packet workflow is added in a later milestone.
+              Import version 1.7 student review packets to build a
+              temporary class-level review view in this browser tab.
+            </p>
+
+            <div class="import-controls">
+              <label class="file-control">
+                <span>Import student review packets</span>
+                <input
+                  id="studentPacketFiles"
+                  type="file"
+                  multiple
+                  accept=".json,application/json"
+                  aria-describedby="workspaceDataNotice"
+                >
+              </label>
+
+              <button
+                class="button"
+                id="clearImportedPackets"
+                type="button"
+              >
+                Clear imported packets
+              </button>
+            </div>
+
+            <p
+              class="import-report"
+              id="importReport"
+              aria-live="polite"
+            >
+              No review packets are imported.
             </p>
 
             <div
-              class="placeholder-grid"
-              aria-label="Planned overview summaries"
+              class="metric-grid"
+              aria-label="Imported review packet summary"
             >
-              <div class="placeholder-card">
-                <strong>Imported projects</strong>
-                <span>No project data is loaded in T1.</span>
+              <div class="metric-card">
+                <span>Imported projects</span>
+                <strong id="metricImportedProjects">0</strong>
               </div>
 
-              <div class="placeholder-card">
-                <strong>Awaiting review</strong>
-                <span>No review queue is loaded in T1.</span>
+              <div class="metric-card">
+                <span>Checkpoints awaiting review</span>
+                <strong id="metricAwaitingReview">0</strong>
               </div>
 
-              <div class="placeholder-card">
-                <strong>Revision requests</strong>
-                <span>No student feedback data is loaded in T1.</span>
+              <div class="metric-card">
+                <span>Revision requests</span>
+                <strong id="metricRevisionRequests">0</strong>
               </div>
 
-              <div class="placeholder-card">
-                <strong>Research safeguards</strong>
-                <span>No ethics or safety records are loaded in T1.</span>
+              <div class="metric-card">
+                <span>Projects with blockers</span>
+                <strong id="metricBlockers">0</strong>
+              </div>
+
+              <div class="metric-card">
+                <span>Ethics teacher review</span>
+                <strong id="metricEthicsReview">0</strong>
+              </div>
+
+              <div class="metric-card">
+                <span>Do not facilitate</span>
+                <strong id="metricEthicsStop">0</strong>
+              </div>
+
+              <div class="metric-card">
+                <span>Locked protocols</span>
+                <strong id="metricLockedProtocols">0</strong>
+              </div>
+
+              <div class="metric-card">
+                <span>Projects with analysis records</span>
+                <strong id="metricAnalysisRecords">0</strong>
               </div>
             </div>
           </section>
@@ -526,9 +877,39 @@
           >
             <h2>Review Queue</h2>
             <p>
-              Review packet triage will be implemented after the
-              authenticated workspace shell is validated.
+              Queue flags come only from explicit evidence in imported
+              review packets. They are triage signals and do not create
+              grades, approvals, or student rankings.
             </p>
+
+            <div class="queue-filter">
+              <label for="reviewQueueFilter">
+                Show
+              </label>
+
+              <select id="reviewQueueFilter">
+                <option value="all">All imported projects</option>
+                <option value="awaiting_review">Awaiting review</option>
+                <option value="revision_requested">Revision requested</option>
+                <option value="ethics_review">Ethics review</option>
+                <option value="do_not_facilitate">Do not facilitate</option>
+                <option value="blocked">Blocked</option>
+                <option value="no_immediate_action">No immediate teacher action</option>
+              </select>
+
+              <span
+                class="result-count"
+                id="reviewQueueCount"
+                aria-live="polite"
+              >
+                0 projects
+              </span>
+            </div>
+
+            <div
+              class="item-list"
+              id="reviewQueueList"
+            ></div>
           </section>
 
           <section
@@ -539,9 +920,22 @@
           >
             <h2>Students</h2>
             <p>
-              Student project inspection is not active in this T1
-              shell. No student records are loaded.
+              Inspect the information contained in each imported review
+              packet. The Inspector is read-only and does not contain
+              all student work.
             </p>
+
+            <div
+              class="item-list"
+              id="studentList"
+            ></div>
+
+            <div
+              class="inspector"
+              id="studentInspector"
+              aria-live="polite"
+              hidden
+            ></div>
           </section>
 
           <section
@@ -602,6 +996,7 @@
 
   <script src="./assets/runtime-config.js"></script>
   <script src="./assets/teacher-session.js"></script>
+  <script src="./assets/teacher-workspace-data.js"></script>
 
   <script>
     (() => {
@@ -637,6 +1032,87 @@
         )
       );
 
+      const packetFiles =
+        document.getElementById(
+          "studentPacketFiles"
+        );
+
+      const clearPacketsButton =
+        document.getElementById(
+          "clearImportedPackets"
+        );
+
+      const importReport =
+        document.getElementById(
+          "importReport"
+        );
+
+      const queueFilter =
+        document.getElementById(
+          "reviewQueueFilter"
+        );
+
+      const queueCount =
+        document.getElementById(
+          "reviewQueueCount"
+        );
+
+      const queueList =
+        document.getElementById(
+          "reviewQueueList"
+        );
+
+      const studentList =
+        document.getElementById(
+          "studentList"
+        );
+
+      const studentInspector =
+        document.getElementById(
+          "studentInspector"
+        );
+
+      const metricElements =
+        Object.freeze({
+          importedProjects:
+            document.getElementById(
+              "metricImportedProjects"
+            ),
+          awaitingReviewCheckpoints:
+            document.getElementById(
+              "metricAwaitingReview"
+            ),
+          revisionRequestCheckpoints:
+            document.getElementById(
+              "metricRevisionRequests"
+            ),
+          projectsWithBlockers:
+            document.getElementById(
+              "metricBlockers"
+            ),
+          ethicsReviewProjects:
+            document.getElementById(
+              "metricEthicsReview"
+            ),
+          doNotFacilitateProjects:
+            document.getElementById(
+              "metricEthicsStop"
+            ),
+          lockedProtocols:
+            document.getElementById(
+              "metricLockedProtocols"
+            ),
+          projectsWithStoredAnalysis:
+            document.getElementById(
+              "metricAnalysisRecords"
+            )
+        });
+
+      let teacherData = null;
+      let dataUiInitialized = false;
+      let importedPackets = [];
+      let selectedProjectId = "";
+
       function returnToTeacherEntry() {
         location.replace("./teacher.html");
       }
@@ -669,6 +1145,1190 @@
         });
       }
 
+      function makeElement(
+        tag,
+        className = "",
+        text = ""
+      ) {
+        const element =
+          document.createElement(tag);
+
+        if (className) {
+          element.className =
+            className;
+        }
+
+        if (text !== "") {
+          element.textContent =
+            String(text);
+        }
+
+        return element;
+      }
+
+      function displayValue(value) {
+        if (
+          value === null ||
+          value === undefined ||
+          value === ""
+        ) {
+          return "Not provided in this review packet";
+        }
+
+        if (value === true) {
+          return "Yes";
+        }
+
+        if (value === false) {
+          return "No";
+        }
+
+        return String(value);
+      }
+
+      function appendKeyValue(
+        grid,
+        label,
+        value
+      ) {
+        const wrapper =
+          makeElement(
+            "div",
+            "key-value"
+          );
+
+        const term =
+          makeElement(
+            "dt",
+            "",
+            label
+          );
+
+        const description =
+          makeElement(
+            "dd",
+            "",
+            displayValue(value)
+          );
+
+        wrapper.append(
+          term,
+          description
+        );
+
+        grid.append(wrapper);
+      }
+
+      function buildKeyValueSection(
+        title,
+        entries,
+        notice = ""
+      ) {
+        const section =
+          makeElement(
+            "section",
+            "inspector-section"
+          );
+
+        section.append(
+          makeElement(
+            "h3",
+            "",
+            title
+          )
+        );
+
+        const grid =
+          makeElement(
+            "dl",
+            "key-value-grid"
+          );
+
+        for (
+          const [label, value]
+          of entries
+        ) {
+          appendKeyValue(
+            grid,
+            label,
+            value
+          );
+        }
+
+        section.append(grid);
+
+        if (notice) {
+          section.append(
+            makeElement(
+              "p",
+              "privacy-note",
+              notice
+            )
+          );
+        }
+
+        return section;
+      }
+
+      function dataLayerReady(data) {
+        return Boolean(
+          data &&
+          typeof data.upsertStudentPacket ===
+            "function" &&
+          typeof data.deriveOverview ===
+            "function" &&
+          typeof data.deriveReviewQueue ===
+            "function" &&
+          typeof data.deriveStudentInspector ===
+            "function"
+        );
+      }
+
+      function showDataLayerFailure() {
+        const heading =
+          gate.querySelector("h1");
+
+        const detail =
+          gate.querySelector("p");
+
+        heading.textContent =
+          "Teacher tools unavailable";
+
+        detail.textContent =
+          "The local Teacher Workspace data tools did not load. Reload this page or return to teacher sign-in.";
+      }
+
+      function renderOverview() {
+        const overview =
+          teacherData.deriveOverview(
+            importedPackets
+          );
+
+        for (
+          const [
+            key,
+            element
+          ]
+          of Object.entries(
+            metricElements
+          )
+        ) {
+          element.textContent =
+            String(
+              overview[key] ?? 0
+            );
+        }
+      }
+
+      function queueRows() {
+        return teacherData
+          .deriveReviewQueue(
+            importedPackets
+          );
+      }
+
+      function openInspector(packet) {
+        const result =
+          teacherData
+            .deriveStudentInspector(
+              packet
+            );
+
+        studentInspector.replaceChildren();
+
+        if (!result.ok) {
+          selectedProjectId = "";
+
+          studentInspector.append(
+            makeElement(
+              "p",
+              "empty-state",
+              "This review packet cannot be inspected."
+            )
+          );
+
+          studentInspector.hidden =
+            false;
+
+          return;
+        }
+
+        const inspector =
+          result.inspector;
+
+        selectedProjectId =
+          inspector.header.project_id;
+
+        const head =
+          makeElement(
+            "div",
+            "inspector-head"
+          );
+
+        const headingGroup =
+          makeElement("div");
+
+        const title =
+          inspector.header
+            .student_alias ||
+          inspector.header
+            .project_name ||
+          inspector.header
+            .project_id;
+
+        headingGroup.append(
+          makeElement(
+            "h3",
+            "",
+            title
+          ),
+          makeElement(
+            "p",
+            "",
+            `Project ID ${inspector.header.project_id}`
+          )
+        );
+
+        const closeButton =
+          makeElement(
+            "button",
+            "button",
+            "Close Inspector"
+          );
+
+        closeButton.type =
+          "button";
+
+        closeButton.addEventListener(
+          "click",
+          () => {
+            selectedProjectId = "";
+            studentInspector.hidden =
+              true;
+            studentInspector
+              .replaceChildren();
+          }
+        );
+
+        head.append(
+          headingGroup,
+          closeButton
+        );
+
+        studentInspector.append(
+          head,
+          makeElement(
+            "p",
+            "privacy-note",
+            inspector.notices.scope
+          )
+        );
+
+        studentInspector.append(
+          buildKeyValueSection(
+            "Project",
+            [
+              [
+                "Student alias",
+                inspector.header
+                  .student_alias
+              ],
+              [
+                "Project ID",
+                inspector.header
+                  .project_id
+              ],
+              [
+                "Course or section",
+                inspector.header
+                  .course_section
+              ],
+              [
+                "Project name",
+                inspector.header
+                  .project_name
+              ],
+              [
+                "Packet exported",
+                inspector.header
+                  .exported_at
+              ]
+            ],
+            inspector.notices
+              .missing_data
+          )
+        );
+
+        studentInspector.append(
+          buildKeyValueSection(
+            "Research overview",
+            [
+              [
+                "Context",
+                inspector.research
+                  .context
+              ],
+              [
+                "Topic",
+                inspector.research
+                  .topic
+              ],
+              [
+                "Research question",
+                inspector.research
+                  .research_question
+              ],
+              [
+                "Question type",
+                inspector.research
+                  .question_type
+              ],
+              [
+                "Design",
+                inspector.research
+                  .design
+              ]
+            ]
+          )
+        );
+
+        const progressSection =
+          makeElement(
+            "section",
+            "inspector-section"
+          );
+
+        progressSection.append(
+          makeElement(
+            "h3",
+            "",
+            "Stage progress"
+          ),
+          makeElement(
+            "p",
+            "",
+            `${inspector.stage_progress.ready_count} of ${inspector.stage_progress.total_stages} stages are marked ready.`
+          )
+        );
+
+        const stageGrid =
+          makeElement(
+            "div",
+            "stage-grid"
+          );
+
+        for (
+          const stage
+          of inspector
+            .stage_progress
+            .stages
+        ) {
+          const chip =
+            makeElement(
+              "div",
+              "stage-chip",
+              `Stage ${stage.stage}`
+            );
+
+          chip.dataset.ready =
+            String(stage.ready);
+
+          chip.title =
+            stage.ready
+              ? "Marked ready"
+              : "Not marked ready";
+
+          stageGrid.append(chip);
+        }
+
+        progressSection.append(
+          stageGrid,
+          makeElement(
+            "p",
+            "privacy-note",
+            inspector
+              .stage_progress
+              .interpretation
+          )
+        );
+
+        studentInspector.append(
+          progressSection
+        );
+
+        const milestonesSection =
+          makeElement(
+            "section",
+            "inspector-section"
+          );
+
+        milestonesSection.append(
+          makeElement(
+            "h3",
+            "",
+            "Milestones"
+          )
+        );
+
+        if (
+          inspector.milestones
+            .length === 0
+        ) {
+          milestonesSection.append(
+            makeElement(
+              "p",
+              "empty-state",
+              "No milestone records are included in this review packet."
+            )
+          );
+        }
+
+        for (
+          const milestone
+          of inspector.milestones
+        ) {
+          const card =
+            makeElement(
+              "div",
+              "milestone-card"
+            );
+
+          card.append(
+            makeElement(
+              "h4",
+              "",
+              `${milestone.id} ${milestone.title}`.trim()
+            ),
+            makeElement(
+              "p",
+              "",
+              `State ${displayValue(milestone.state)}`
+            )
+          );
+
+          if (
+            milestone.blockers
+              .length
+          ) {
+            card.append(
+              makeElement(
+                "p",
+                "",
+                "Blockers"
+              )
+            );
+
+            const list =
+              makeElement(
+                "ul",
+                "compact-list"
+              );
+
+            for (
+              const blocker
+              of milestone.blockers
+            ) {
+              list.append(
+                makeElement(
+                  "li",
+                  "",
+                  blocker
+                )
+              );
+            }
+
+            card.append(list);
+          }
+
+          if (
+            milestone.warnings
+              .length
+          ) {
+            card.append(
+              makeElement(
+                "p",
+                "",
+                "Warnings"
+              )
+            );
+
+            const list =
+              makeElement(
+                "ul",
+                "compact-list"
+              );
+
+            for (
+              const warning
+              of milestone.warnings
+            ) {
+              list.append(
+                makeElement(
+                  "li",
+                  "",
+                  warning
+                )
+              );
+            }
+
+            card.append(list);
+          }
+
+          const checkpoint =
+            makeElement(
+              "dl",
+              "key-value-grid"
+            );
+
+          for (
+            const [label, value]
+            of [
+              [
+                "Checkpoint status",
+                milestone.checkpoint
+                  .status
+              ],
+              [
+                "Requested",
+                milestone.checkpoint
+                  .requestedAt
+              ],
+              [
+                "Reviewed",
+                milestone.checkpoint
+                  .reviewedAt
+              ],
+              [
+                "Teacher",
+                milestone.checkpoint
+                  .teacher
+              ],
+              [
+                "Teacher comment",
+                milestone.checkpoint
+                  .comment
+              ],
+              [
+                "Conditions",
+                milestone.checkpoint
+                  .conditions.length
+                  ? milestone.checkpoint
+                      .conditions.join("; ")
+                  : ""
+              ]
+            ]
+          ) {
+            appendKeyValue(
+              checkpoint,
+              label,
+              value
+            );
+          }
+
+          card.append(checkpoint);
+
+          milestonesSection.append(
+            card
+          );
+        }
+
+        studentInspector.append(
+          milestonesSection
+        );
+
+        studentInspector.append(
+          buildKeyValueSection(
+            "Sources",
+            [
+              [
+                "Total sources",
+                inspector.sources.total
+              ],
+              [
+                "Included sources",
+                inspector.sources
+                  .included
+              ],
+              [
+                "Verified sources",
+                inspector.sources
+                  .verified
+              ],
+              [
+                "Themes",
+                inspector.sources
+                  .themes.length
+                  ? inspector.sources
+                      .themes.join("; ")
+                  : ""
+              ]
+            ],
+            inspector.sources.notice
+          )
+        );
+
+        studentInspector.append(
+          buildKeyValueSection(
+            "Methods diagnostics",
+            [
+              [
+                "Available",
+                inspector.methods
+                  .available
+              ],
+              [
+                "Diagnostic score",
+                inspector.methods.score
+              ],
+              [
+                "Diagnostic label",
+                inspector.methods.label
+              ],
+              [
+                "Critical issues",
+                inspector.methods
+                  .critical
+              ],
+              [
+                "Warnings",
+                inspector.methods
+                  .warning
+              ],
+              [
+                "Ethics status",
+                inspector.methods
+                  .ethicsStatus
+              ],
+              [
+                "Protocol locked",
+                inspector.methods.locked
+              ]
+            ],
+            inspector.methods.notice
+          )
+        );
+
+        studentInspector.append(
+          buildKeyValueSection(
+            "Analysis summary",
+            [
+              [
+                "Dataset file",
+                inspector.analysis
+                  .dataset_file
+              ],
+              [
+                "Imported rows",
+                inspector.analysis
+                  .imported_rows
+              ],
+              [
+                "Stored analysis records",
+                inspector.analysis
+                  .stored_runs
+              ],
+              [
+                "Primary estimand",
+                inspector.analysis
+                  .primary_estimand
+              ],
+              [
+                "Primary result",
+                inspector.analysis
+                  .primary_result
+              ]
+            ],
+            inspector.analysis.notice
+          )
+        );
+
+        const paperAudit =
+          inspector.writing
+            .paper_audit;
+
+        const sectionWordEntries =
+          Object.entries(
+            inspector.writing
+              .section_words
+          )
+          .map(
+            ([key, value]) => [
+              `Words in ${key}`,
+              value
+            ]
+          );
+
+        studentInspector.append(
+          buildKeyValueSection(
+            "Writing summary",
+            [
+              [
+                "Paper audit available",
+                paperAudit
+                  ? paperAudit.available
+                  : null
+              ],
+              [
+                "Paper audit score",
+                paperAudit
+                  ? paperAudit.score
+                  : null
+              ],
+              [
+                "Paper audit label",
+                paperAudit
+                  ? paperAudit.label
+                  : null
+              ],
+              ...sectionWordEntries
+            ],
+            inspector.writing.notice
+          )
+        );
+
+        const feedbackSection =
+          makeElement(
+            "section",
+            "inspector-section"
+          );
+
+        feedbackSection.append(
+          makeElement(
+            "h3",
+            "",
+            "Teacher feedback history"
+          ),
+          makeElement(
+            "p",
+            "privacy-note",
+            inspector
+              .teacher_feedback
+              .notice
+          )
+        );
+
+        if (
+          inspector
+            .teacher_feedback
+            .items.length === 0
+        ) {
+          feedbackSection.append(
+            makeElement(
+              "p",
+              "empty-state",
+              "No teacher feedback is included in this review packet."
+            )
+          );
+        }
+
+        for (
+          const item
+          of inspector
+            .teacher_feedback
+            .items
+        ) {
+          const card =
+            makeElement(
+              "div",
+              "milestone-card"
+            );
+
+          const label =
+            item.milestone ||
+            item.stage ||
+            "Feedback";
+
+          card.append(
+            makeElement(
+              "h4",
+              "",
+              label
+            ),
+            makeElement(
+              "p",
+              "",
+              item.comment ||
+              item.message ||
+              "No comment is included."
+            )
+          );
+
+          feedbackSection.append(
+            card
+          );
+        }
+
+        studentInspector.append(
+          feedbackSection
+        );
+
+        studentInspector.hidden =
+          false;
+      }
+
+      function createProjectCard(
+        row,
+        includeFlags
+      ) {
+        const card =
+          makeElement(
+            "article",
+            "project-card"
+          );
+
+        const head =
+          makeElement(
+            "div",
+            "project-card-head"
+          );
+
+        const titleGroup =
+          makeElement(
+            "div",
+            "project-card-title"
+          );
+
+        const title =
+          row.student_alias ||
+          row.project_name ||
+          row.project_id;
+
+        titleGroup.append(
+          makeElement(
+            "strong",
+            "",
+            title
+          ),
+          makeElement(
+            "span",
+            "",
+            `${row.course_section || "No section provided"} ? ${row.project_id}`
+          )
+        );
+
+        const inspectButton =
+          makeElement(
+            "button",
+            "button",
+            "Inspect"
+          );
+
+        inspectButton.type =
+          "button";
+
+        inspectButton.addEventListener(
+          "click",
+          () => {
+            activatePanel(
+              "students"
+            );
+
+            openInspector(
+              row.packet
+            );
+          }
+        );
+
+        head.append(
+          titleGroup,
+          inspectButton
+        );
+
+        card.append(head);
+
+        if (includeFlags) {
+          const flags =
+            makeElement(
+              "div",
+              "flag-list"
+            );
+
+          for (
+            const flag
+            of row.flags
+          ) {
+            const className =
+              flag.id ===
+                "do_not_facilitate"
+                ? "queue-flag queue-flag-danger"
+                : "queue-flag";
+
+            flags.append(
+              makeElement(
+                "span",
+                className,
+                flag.label
+              )
+            );
+          }
+
+          card.append(flags);
+
+          for (
+            const flag
+            of row.flags
+          ) {
+            card.append(
+              makeElement(
+                "p",
+                "flag-reason",
+                flag.reason
+              )
+            );
+          }
+        }
+
+        return card;
+      }
+
+      function renderReviewQueue() {
+        queueList.replaceChildren();
+
+        const allRows =
+          queueRows();
+
+        const filter =
+          queueFilter.value;
+
+        const rows =
+          filter === "all"
+            ? allRows
+            : allRows.filter(
+                row =>
+                  row.flags.some(
+                    flag =>
+                      flag.id ===
+                      filter
+                  )
+              );
+
+        queueCount.textContent =
+          `${rows.length} ${rows.length === 1 ? "project" : "projects"}`;
+
+        if (!rows.length) {
+          queueList.append(
+            makeElement(
+              "p",
+              "empty-state",
+              importedPackets.length
+                ? "No imported projects match this queue filter."
+                : "Import student review packets from Overview to populate the queue."
+            )
+          );
+
+          return;
+        }
+
+        for (const row of rows) {
+          queueList.append(
+            createProjectCard(
+              row,
+              true
+            )
+          );
+        }
+      }
+
+      function renderStudents() {
+        studentList.replaceChildren();
+
+        const rows =
+          queueRows();
+
+        if (!rows.length) {
+          studentList.append(
+            makeElement(
+              "p",
+              "empty-state",
+              "Import student review packets from Overview to inspect projects."
+            )
+          );
+
+          selectedProjectId = "";
+          studentInspector.hidden =
+            true;
+          studentInspector
+            .replaceChildren();
+
+          return;
+        }
+
+        for (const row of rows) {
+          studentList.append(
+            createProjectCard(
+              row,
+              false
+            )
+          );
+        }
+
+        if (selectedProjectId) {
+          const selected =
+            rows.find(
+              row =>
+                row.project_id ===
+                selectedProjectId
+            );
+
+          if (selected) {
+            openInspector(
+              selected.packet
+            );
+          } else {
+            selectedProjectId = "";
+            studentInspector.hidden =
+              true;
+            studentInspector
+              .replaceChildren();
+          }
+        }
+      }
+
+      function renderAll() {
+        renderOverview();
+        renderReviewQueue();
+        renderStudents();
+      }
+
+      async function importFiles(
+        files
+      ) {
+        const selected =
+          files.length;
+
+        let imported = 0;
+        let rejected = 0;
+        let replaced = 0;
+
+        const details = [];
+
+        for (const file of files) {
+          try {
+            const parsed =
+              JSON.parse(
+                await file.text()
+              );
+
+            const result =
+              teacherData
+                .upsertStudentPacket(
+                  importedPackets,
+                  parsed
+                );
+
+            if (!result.ok) {
+              rejected += 1;
+
+              const reason =
+                result.errors[0]
+                  ?.message ||
+                "The review packet was rejected.";
+
+              details.push(
+                `${file.name} was rejected. ${reason}`
+              );
+
+              continue;
+            }
+
+            importedPackets =
+              Array.from(
+                result.packets
+              );
+
+            imported += 1;
+
+            if (result.replaced) {
+              replaced += 1;
+              details.push(
+                `${file.name} updated an imported project.`
+              );
+            } else {
+              details.push(
+                `${file.name} was imported.`
+              );
+            }
+          } catch {
+            rejected += 1;
+
+            details.push(
+              `${file.name} was rejected. The file is not valid JSON.`
+            );
+          }
+        }
+
+        importReport.textContent =
+          [
+            `Selected ${selected}. Imported ${imported}. Rejected ${rejected}. Updated existing projects ${replaced}.`,
+            ...details
+          ].join("\n");
+
+        packetFiles.value = "";
+
+        renderAll();
+      }
+
+      function clearImportedPackets() {
+        importedPackets = [];
+        selectedProjectId = "";
+
+        importReport.textContent =
+          "Imported review packets were cleared from this page session.";
+
+        queueFilter.value =
+          "all";
+
+        studentInspector.hidden =
+          true;
+        studentInspector
+          .replaceChildren();
+
+        renderAll();
+      }
+
+      function initializeDataWorkspace(
+        data
+      ) {
+        if (dataUiInitialized) {
+          return;
+        }
+
+        teacherData = data;
+
+        packetFiles.addEventListener(
+          "change",
+          () => {
+            const files =
+              Array.from(
+                packetFiles.files ||
+                []
+              );
+
+            if (!files.length) {
+              return;
+            }
+
+            void importFiles(files);
+          }
+        );
+
+        clearPacketsButton
+          .addEventListener(
+            "click",
+            clearImportedPackets
+          );
+
+        queueFilter
+          .addEventListener(
+            "change",
+            renderReviewQueue
+          );
+
+        dataUiInitialized = true;
+
+        renderAll();
+      }
+
       for (const button of navButtons) {
         button.addEventListener(
           "click",
@@ -689,6 +2349,9 @@
           if (teacherSession) {
             teacherSession.leave();
           }
+
+          importedPackets = [];
+          selectedProjectId = "";
 
           location.replace("./");
         }
@@ -732,6 +2395,22 @@
           returnToTeacherEntry();
           return;
         }
+
+        const dataLayer =
+          window.RMSTeacherWorkspaceData;
+
+        if (
+          !dataLayerReady(
+            dataLayer
+          )
+        ) {
+          showDataLayerFailure();
+          return;
+        }
+
+        initializeDataWorkspace(
+          dataLayer
+        );
 
         gate.hidden = true;
         workspace.hidden = false;

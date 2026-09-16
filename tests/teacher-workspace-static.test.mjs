@@ -139,7 +139,7 @@ test(
 );
 
 test(
-  "teacher workspace loads only the established teacher authentication dependencies",
+  "teacher workspace loads authentication dependencies before the T2 data module",
   () => {
     const runtime =
       workspace.indexOf(
@@ -151,9 +151,16 @@ test(
         "./assets/teacher-session.js"
       );
 
+    const data =
+      workspace.indexOf(
+        "./assets/teacher-workspace-data.js"
+      );
+
     assert.ok(runtime >= 0);
     assert.ok(session >= 0);
+    assert.ok(data >= 0);
     assert.ok(runtime < session);
+    assert.ok(session < data);
 
     const externalScripts = [
       ...workspace.matchAll(
@@ -165,7 +172,8 @@ test(
       externalScripts,
       [
         "./assets/runtime-config.js",
-        "./assets/teacher-session.js"
+        "./assets/teacher-session.js",
+        "./assets/teacher-workspace-data.js"
       ]
     );
   }
@@ -242,11 +250,61 @@ test(
 );
 
 test(
-  "T1 shell does not implement packet, database, or student-account behavior",
+  "T2 packet workspace is authenticated, local-only, and text-safe",
   () => {
+    assert.match(
+      workspace,
+      /id="studentPacketFiles"[\s\S]{0,180}type="file"[\s\S]{0,180}multiple/
+    );
+
+    assert.match(
+      workspace,
+      /let importedPackets = \[\];/
+    );
+
+    assert.match(
+      workspace,
+      /teacherData[\s\S]{0,80}\.upsertStudentPacket/
+    );
+
+    assert.match(
+      workspace,
+      /teacherData\.deriveOverview/
+    );
+
+    assert.match(
+      workspace,
+      /teacherData[\s\S]{0,80}\.deriveReviewQueue/
+    );
+
+    assert.match(
+      workspace,
+      /teacherData[\s\S]{0,100}\.deriveStudentInspector/
+    );
+
+    assert.match(
+      workspace,
+      /\.textContent\s*=/
+    );
+
+    assert.match(
+      workspace,
+      /\.replaceChildren\(\)/
+    );
+
     assert.doesNotMatch(
       workspace,
-      /rms_student_review/
+      /\.innerHTML\s*=/
+    );
+
+    assert.doesNotMatch(
+      workspace,
+      /insertAdjacentHTML/
+    );
+
+    assert.doesNotMatch(
+      workspace,
+      /\bfetch\s*\(/
     );
 
     assert.doesNotMatch(
@@ -256,12 +314,87 @@ test(
 
     assert.doesNotMatch(
       workspace,
-      /new\s+Worker\s*\(/
+      /localStorage/
+    );
+
+    assert.doesNotMatch(
+      workspace,
+      /indexedDB/i
+    );
+
+    assert.doesNotMatch(
+      workspace,
+      /FormData/
     );
 
     assert.doesNotMatch(
       workspace,
       /studentAccount|student_account|student-account/i
+    );
+
+    const verify =
+      workspace.indexOf(
+        "await teacherSession.verify()"
+      );
+
+    const active =
+      workspace.indexOf(
+        "!teacherSession.isActive()"
+      );
+
+    const dataLayer =
+      workspace.indexOf(
+        "window.RMSTeacherWorkspaceData"
+      );
+
+    const reveal =
+      workspace.indexOf(
+        "workspace.hidden = false"
+      );
+
+    assert.ok(verify >= 0);
+    assert.ok(active > verify);
+    assert.ok(dataLayer > active);
+    assert.ok(reveal > dataLayer);
+
+    assert.match(
+      workspace,
+      /Imported review packets stay in memory in this page only\./
+    );
+
+    assert.match(
+      workspace,
+      /raw dataset rows/
+    );
+
+    assert.match(
+      workspace,
+      /Research Chat transcripts/
+    );
+
+    assert.match(
+      workspace,
+      /id="panel-overview"[\s\S]*id="studentPacketFiles"/
+    );
+
+    assert.match(
+      workspace,
+      /id="panel-review-queue"[\s\S]*id="reviewQueueFilter"/
+    );
+
+    assert.match(
+      workspace,
+      /id="panel-students"[\s\S]*id="studentInspector"/
+    );
+
+    assert.equal(
+      (
+        workspace.match(
+          /Reserved for a later milestone\./g
+        ) ||
+        []
+      ).length,
+      4
     );
   }
 );
