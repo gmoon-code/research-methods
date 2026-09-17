@@ -394,7 +394,7 @@ test(
         ) ||
         []
       ).length,
-      3
+      2
     );
   }
 );
@@ -563,7 +563,7 @@ t3Test(
         ) ||
         []
       ).length,
-      3
+      2
     );
 
     t3Assert.equal(
@@ -741,12 +741,12 @@ test(
         ) ||
         []
       ).length,
-      3
+      2
     );
 
     assert.match(
       workspace,
-      /id="panel-analytics"[\s\S]*Reserved for a later milestone\./
+      /id="panel-analytics"[\s\S]*id="analyticsProjectCount"/
     );
 
     assert.match(
@@ -757,6 +757,243 @@ test(
     assert.match(
       workspace,
       /id="panel-recovery"[\s\S]*Reserved for a later milestone\./
+    );
+  }
+);
+
+
+test(
+  "T5 Analytics UI renders only descriptive packet aggregates",
+  () => {
+    for (
+      const required
+      of [
+        'id="panel-analytics"',
+        'id="analyticsProjectCount"',
+        'id="analyticsZeroState"',
+        'id="analyticsContent"',
+        'id="analyticsStageReadiness"',
+        'id="analyticsMilestoneStates"',
+        'id="analyticsCourseSections"',
+        'id="analyticsAwaitingTeacher"',
+        'id="analyticsRevisionRequested"',
+        'id="analyticsBlockers"',
+        'id="analyticsEthicsReview"',
+        'id="analyticsEthicsStop"',
+        'id="analyticsLockedProtocols"',
+        'id="analyticsStoredAnalysis"',
+        'id="analyticsIncludedSources"',
+        'id="analyticsVerifiedSources"',
+        "deriveTeacherAnalytics",
+        "function renderAnalytics(",
+        "Stage readiness is packet-reported workflow status.",
+        "Milestone-state distributions",
+        "Course sections",
+        "Literature-status presence"
+      ]
+    ) {
+      assert.equal(
+        workspace.includes(
+          required
+        ),
+        true,
+        required
+      );
+    }
+  }
+);
+
+test(
+  "T5 Analytics has a clear zero-packet state and interpretation boundaries",
+  () => {
+    assert.match(
+      workspace,
+      /Import student review packets to generate local,[\s\S]*descriptive workflow analytics\./
+    );
+
+    assert.match(
+      workspace,
+      /These counts describe packet-reported workflow status only\./
+    );
+
+    assert.match(
+      workspace,
+      /They are not grades, rankings, predictions, measures of[\s\S]*student ability/
+    );
+
+    assert.match(
+      workspace,
+      /Missing optional packet information remains unknown\./
+    );
+
+    assert.match(
+      workspace,
+      /raw dataset rows, full[\s\S]*Research Chat[\s\S]*transcripts/
+    );
+  }
+);
+
+test(
+  "T5 Analytics remains text-safe local-only and view-only",
+  () => {
+    assert.equal(
+      workspace.includes(
+        "analyticsCourseSections.append("
+      ),
+      true
+    );
+
+    assert.equal(
+      workspace.includes(
+        "makeElement("
+      ),
+      true
+    );
+
+    for (
+      const forbidden
+      of [
+        ".innerHTML =",
+        ".innerHTML=",
+        "insertAdjacentHTML",
+        "localStorage",
+        "indexedDB",
+        "XMLHttpRequest",
+        "WebSocket",
+        "FormData"
+      ]
+    ) {
+      assert.equal(
+        workspace.includes(
+          forbidden
+        ),
+        false,
+        forbidden
+      );
+    }
+
+    assert.equal(
+      /\bfetch\s*\(/.test(
+        workspace
+      ),
+      false
+    );
+  }
+);
+
+test(
+  "T5 Analytics exposes no grading ranking prediction or competency controls",
+  () => {
+    const analyticsPanel =
+      workspace.match(
+        /id="panel-analytics"[\s\S]*?(?=<section[\s\S]*?id="panel-chat-controls")/
+      )?.[0] ||
+      "";
+
+    for (
+      const forbidden
+      of [
+        'id="analyticsGrade',
+        'id="analyticsRank',
+        'id="analyticsRisk',
+        'id="analyticsPrediction',
+        'id="analyticsCompetency',
+        'name="grade',
+        'name="rank',
+        'name="risk',
+        'name="competency'
+      ]
+    ) {
+      assert.equal(
+        analyticsPanel.includes(
+          forbidden
+        ),
+        false,
+        forbidden
+      );
+    }
+
+    assert.equal(
+      analyticsPanel.includes(
+        "leaderboard"
+      ),
+      false
+    );
+
+    assert.equal(
+      analyticsPanel.includes(
+        "overall score"
+      ),
+      false
+    );
+  }
+);
+
+test(
+  "T5 Analytics preserves seven areas and leaves only Chat Controls and Recovery reserved",
+  () => {
+    const primaryAreas =
+      [
+        "overview",
+        "review-queue",
+        "students",
+        "assignment-setup",
+        "analytics",
+        "chat-controls",
+        "recovery"
+      ];
+
+    for (
+      const area
+      of primaryAreas
+    ) {
+      assert.equal(
+        workspace.includes(
+          `data-workspace-panel="${area}"`
+        ),
+        true,
+        area
+      );
+    }
+
+    assert.equal(
+      (
+        workspace.match(
+          /Reserved for a later milestone\./g
+        ) ||
+        []
+      ).length,
+      2
+    );
+
+    assert.doesNotMatch(
+      workspace,
+      /id="panel-analytics"[\s\S]{0,500}Reserved for a later milestone\./
+    );
+
+    assert.match(
+      workspace,
+      /id="panel-chat-controls"[\s\S]*Reserved for a later milestone\./
+    );
+
+    assert.match(
+      workspace,
+      /id="panel-recovery"[\s\S]*Reserved for a later milestone\./
+    );
+  }
+);
+
+test(
+  "T5 Analytics is included in every imported-packet render cycle",
+  () => {
+    assert.match(
+      workspace,
+      /function renderAll\(\)[\s\S]{0,220}renderOverview\(\);[\s\S]{0,120}renderReviewQueue\(\);[\s\S]{0,120}renderStudents\(\);[\s\S]{0,120}renderAnalytics\(\);/
+    );
+
+    assert.match(
+      workspace,
+      /function clearImportedPackets\(\)[\s\S]*?renderAll\(\);/
     );
   }
 );
