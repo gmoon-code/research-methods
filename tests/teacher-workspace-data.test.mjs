@@ -5931,9 +5931,27 @@ test(
     );
 
     assert.equal(
+      result.format
+        .created_at,
+      "2026-09-17T05:00:00.000Z"
+    );
+
+    assert.equal(
+      result.format
+        .baseline_id,
+      "RMS-PILOT-BASELINE-v2.0"
+    );
+
+    assert.equal(
       result.integrity
         .checksum_verified,
       true
+    );
+
+    assert.equal(
+      result.integrity
+        .checksum_fingerprint,
+      "abc123"
     );
 
     assert.equal(

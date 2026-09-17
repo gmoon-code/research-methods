@@ -1592,7 +1592,11 @@ window.RMSTeacherWorkspaceData = (() => {
           version:
             packetVersion,
           mode,
-          legacy
+          legacy,
+          created_at:
+            createdAt,
+          baseline_id:
+            baselineId
         }),
       integrity:
         Object.freeze({
@@ -1603,7 +1607,9 @@ window.RMSTeacherWorkspaceData = (() => {
           validation_ok:
             validationOk,
           checksum_verified:
-            checksumVerified
+            checksumVerified,
+          checksum_fingerprint:
+            checksumFingerprint
         }),
       recovery:
         Object.freeze({
