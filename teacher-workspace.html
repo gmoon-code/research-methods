@@ -779,6 +779,73 @@
       display: none !important;
     }
 
+    .chat-controls-section {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .chat-controls-section h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .chat-control-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .chat-control-copy {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .chat-control-copy h4 {
+      margin: 0 0 5px;
+      font-size: 0.98rem;
+    }
+
+    .chat-control-copy p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .chat-control-action {
+      flex: 0 0 auto;
+    }
+
+    .chat-control-action label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      font-weight: 700;
+    }
+
+    .chat-control-state {
+      margin: 10px 0 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 720px) {
+      .chat-control-row {
+        flex-direction: column;
+      }
+
+      .chat-control-action {
+        width: 100%;
+      }
+    }
+
     .analytics-section {
       margin-top: 24px;
       padding-top: 20px;
@@ -1624,10 +1691,201 @@
             hidden
           >
             <h2>Chat Controls</h2>
+
             <p>
-              Reserved for a later milestone. Student Research Chat
-              transcripts are not exposed here.
+              Review Research Chat configuration and manage the limited
+              preview controls available in this browser session.
             </p>
+
+            <div class="notice">
+              These controls do not create or change a class-wide Chat
+              policy. Student Research Chat transcripts are not available
+              in Teacher Workspace.
+            </div>
+
+            <div
+              class="chat-controls-section"
+              aria-labelledby="chatServiceHeading"
+            >
+              <h3 id="chatServiceHeading">
+                Research Chat configuration
+              </h3>
+
+              <div
+                class="metric-grid"
+                aria-label="Research Chat configuration status"
+              >
+                <div class="metric-card">
+                  <span>Configuration</span>
+                  <strong id="chatServiceConfigured">
+                    Checking
+                  </strong>
+                </div>
+
+                <div class="metric-card">
+                  <span>Endpoint origin</span>
+                  <strong id="chatEndpointOrigin">
+                    Checking
+                  </strong>
+                </div>
+
+                <div class="metric-card">
+                  <span>Runtime release</span>
+                  <strong id="chatRuntimeVersion">
+                    Checking
+                  </strong>
+                </div>
+
+                <div class="metric-card">
+                  <span>Edition</span>
+                  <strong id="chatEdition">
+                    Checking
+                  </strong>
+                </div>
+              </div>
+
+              <p class="privacy-note">
+                Configuration status confirms only what this page is
+                configured to use. It does not perform a background
+                service-health request.
+              </p>
+            </div>
+
+            <div
+              class="chat-controls-section"
+              aria-labelledby="chatTeacherSessionHeading"
+            >
+              <h3 id="chatTeacherSessionHeading">
+                Teacher session
+              </h3>
+
+              <div class="metric-grid">
+                <div class="metric-card">
+                  <span>Signed teacher session</span>
+                  <strong id="chatTeacherSessionStatus">
+                    Checking
+                  </strong>
+                </div>
+              </div>
+
+              <p class="privacy-note">
+                Teacher access codes and signed session tokens are never
+                displayed in Chat Controls.
+              </p>
+            </div>
+
+            <div
+              class="chat-controls-section"
+              aria-labelledby="chatLocalPreviewHeading"
+            >
+              <h3 id="chatLocalPreviewHeading">
+                Current-browser Chat preview
+              </h3>
+
+              <div class="notice">
+                <strong>This browser session only.</strong>
+                These controls do not change another device and do not
+                apply settings to students as a class.
+              </div>
+
+              <div class="chat-control-row">
+                <div class="chat-control-copy">
+                  <h4>Research Chat availability</h4>
+                  <p>
+                    Use the existing Research Chat browser-session
+                    preference to preview Chat as enabled or disabled in
+                    this browser.
+                  </p>
+
+                  <p
+                    class="chat-control-state"
+                    id="chatLocalEnabledStatus"
+                    aria-live="polite"
+                  >
+                    Checking local preference
+                  </p>
+                </div>
+
+                <div class="chat-control-action">
+                  <label for="chatLocalEnabled">
+                    <input
+                      id="chatLocalEnabled"
+                      type="checkbox"
+                    >
+                    Enable Research Chat locally
+                  </label>
+                </div>
+              </div>
+
+              <div class="chat-control-row">
+                <div class="chat-control-copy">
+                  <h4>Student class Chat code</h4>
+                  <p>
+                    The code value is never shown. Only whether a class
+                    Chat code is present in this browser session is
+                    reported.
+                  </p>
+
+                  <p
+                    class="chat-control-state"
+                    id="chatClassCodeStatus"
+                    aria-live="polite"
+                  >
+                    Checking code presence
+                  </p>
+                </div>
+
+                <div class="chat-control-action">
+                  <button
+                    class="secondary"
+                    id="clearClassChatCode"
+                    type="button"
+                  >
+                    Clear class Chat code from this browser session
+                  </button>
+                </div>
+              </div>
+
+              <p class="privacy-note">
+                Clearing the student class Chat code does not sign the
+                teacher out and does not change the configured Research
+                Chat endpoint.
+              </p>
+            </div>
+
+            <div
+              class="chat-controls-section"
+              aria-labelledby="chatPrivacyHeading"
+            >
+              <h3 id="chatPrivacyHeading">
+                Student privacy and control boundaries
+              </h3>
+
+              <div class="notice">
+                Students keep control of
+                <strong>Use my current project context</strong>.
+                Teacher Workspace cannot force that setting on or off.
+              </div>
+
+              <ul>
+                <li>
+                  Student Research Chat questions, responses, conversation
+                  history, and transcript content are not exposed here.
+                </li>
+                <li>
+                  Chat Controls does not inspect raw datasets, full
+                  manuscripts, full source notes, or student project
+                  content.
+                </li>
+                <li>
+                  The Research Chat endpoint is owner-controlled and
+                  cannot be edited from Teacher Workspace.
+                </li>
+                <li>
+                  No class-wide Chat policy is available in this version.
+                </li>
+              </ul>
+            </div>
           </section>
 
           <section
@@ -1649,6 +1907,7 @@
 
   <script src="./assets/runtime-config.js"></script>
   <script src="./assets/teacher-session.js"></script>
+  <script src="./assets/ai-adapter.js"></script>
   <script src="./assets/teacher-workspace-data.js"></script>
 
   <script>
@@ -2104,6 +2363,8 @@
           typeof data.deriveStudentInspector ===
             "function" &&
           typeof data.deriveTeacherAnalytics ===
+            "function" &&
+          typeof data.deriveTeacherChatControlsStatus ===
             "function" &&
           typeof data.createTeacherReviewDraft ===
             "function" &&
@@ -4319,11 +4580,255 @@
         }
       }
 
+      let chatControlsBound =
+        false;
+
+      function chatControlElement(
+        id
+      ) {
+        return document.getElementById(
+          id
+        );
+      }
+
+      function currentChatControlsStatus() {
+        const runtime =
+          window.RMS_RUNTIME_CONFIG ||
+          {};
+
+        const chat =
+          window.RMSAI;
+
+        let chatConfig =
+          null;
+
+        if (
+          chat &&
+          typeof chat.getConfig ===
+            "function"
+        ) {
+          try {
+            chatConfig =
+              chat.getConfig();
+          } catch {
+            chatConfig =
+              null;
+          }
+        }
+
+        return teacherData
+          .deriveTeacherChatControlsStatus({
+            runtime_version:
+              typeof runtime.version ===
+                "string"
+                ? runtime.version
+                : "",
+            free_edition:
+              runtime.freeEdition ===
+              true,
+            research_chat_endpoint:
+              typeof runtime
+                .researchChatEndpoint ===
+                  "string"
+                ? runtime
+                    .researchChatEndpoint
+                : (
+                    typeof runtime
+                      .chatEndpoint ===
+                        "string"
+                      ? runtime.chatEndpoint
+                      : ""
+                  ),
+            teacher_session_active:
+              window
+                .RMSTeacherSession
+                ?.isActive?.() ===
+              true,
+            local_chat_enabled:
+              chatConfig?.enabled ===
+              true,
+            class_chat_code_present:
+              chatConfig
+                ?.accessCodeSet ===
+              true
+          });
+      }
+
+      function renderChatControls() {
+        const status =
+          currentChatControlsStatus();
+
+        const chat =
+          window.RMSAI;
+
+        const adapterAvailable =
+          Boolean(
+            chat &&
+            typeof chat.getConfig ===
+              "function" &&
+            typeof chat.setConfig ===
+              "function" &&
+            typeof chat.clearAccessCode ===
+              "function"
+          );
+
+        chatControlElement(
+          "chatServiceConfigured"
+        ).textContent =
+          status.service.configured
+            ? "Configured"
+            : "Not configured";
+
+        chatControlElement(
+          "chatEndpointOrigin"
+        ).textContent =
+          status.service
+            .endpoint_origin ||
+          "Unavailable";
+
+        chatControlElement(
+          "chatRuntimeVersion"
+        ).textContent =
+          status.service
+            .runtime_version ||
+          "Unavailable";
+
+        chatControlElement(
+          "chatEdition"
+        ).textContent =
+          status.service
+            .free_edition
+            ? "Free edition"
+            : "Other or unspecified";
+
+        chatControlElement(
+          "chatTeacherSessionStatus"
+        ).textContent =
+          status.teacher_session
+            .active
+            ? "Verified and active"
+            : "Not active";
+
+        const localToggle =
+          chatControlElement(
+            "chatLocalEnabled"
+          );
+
+        localToggle.checked =
+          status.local_preview
+            .chat_enabled;
+
+        localToggle.disabled =
+          !adapterAvailable;
+
+        chatControlElement(
+          "chatLocalEnabledStatus"
+        ).textContent =
+          adapterAvailable
+            ? (
+                status.local_preview
+                  .chat_enabled
+                  ? "Research Chat is enabled in this browser session."
+                  : "Research Chat is disabled in this browser session."
+              )
+            : "Local preview controls are unavailable because the Research Chat adapter did not load.";
+
+        const clearCodeButton =
+          chatControlElement(
+            "clearClassChatCode"
+          );
+
+        clearCodeButton.disabled =
+          !adapterAvailable ||
+          !status.local_preview
+            .class_code_present;
+
+        chatControlElement(
+          "chatClassCodeStatus"
+        ).textContent =
+          adapterAvailable
+            ? (
+                status.local_preview
+                  .class_code_present
+                  ? "A student class Chat code is present in this browser session."
+                  : "No student class Chat code is present in this browser session."
+              )
+            : "Class Chat code status is unavailable because the Research Chat adapter did not load.";
+      }
+
+      function bindChatControls() {
+        if (chatControlsBound) {
+          return;
+        }
+
+        const localToggle =
+          chatControlElement(
+            "chatLocalEnabled"
+          );
+
+        const clearCodeButton =
+          chatControlElement(
+            "clearClassChatCode"
+          );
+
+        localToggle.addEventListener(
+          "change",
+          event => {
+            const chat =
+              window.RMSAI;
+
+            if (
+              !chat ||
+              typeof chat.setConfig !==
+                "function"
+            ) {
+              renderChatControls();
+              return;
+            }
+
+            chat.setConfig({
+              enabled:
+                event.currentTarget
+                  .checked ===
+                true
+            });
+
+            renderChatControls();
+          }
+        );
+
+        clearCodeButton.addEventListener(
+          "click",
+          () => {
+            const chat =
+              window.RMSAI;
+
+            if (
+              !chat ||
+              typeof chat.clearAccessCode !==
+                "function"
+            ) {
+              renderChatControls();
+              return;
+            }
+
+            chat.clearAccessCode();
+
+            renderChatControls();
+          }
+        );
+
+        chatControlsBound =
+          true;
+      }
+
       function renderAll() {
         renderOverview();
         renderReviewQueue();
         renderStudents();
         renderAnalytics();
+        bindChatControls();
+        renderChatControls();
       }
 
       async function importFiles(

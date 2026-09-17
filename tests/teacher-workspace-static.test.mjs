@@ -151,6 +151,11 @@ test(
         "./assets/teacher-session.js"
       );
 
+    const adapter =
+      workspace.indexOf(
+        "./assets/ai-adapter.js"
+      );
+
     const data =
       workspace.indexOf(
         "./assets/teacher-workspace-data.js"
@@ -158,9 +163,11 @@ test(
 
     assert.ok(runtime >= 0);
     assert.ok(session >= 0);
+    assert.ok(adapter >= 0);
     assert.ok(data >= 0);
     assert.ok(runtime < session);
-    assert.ok(session < data);
+    assert.ok(session < adapter);
+    assert.ok(adapter < data);
 
     const externalScripts = [
       ...workspace.matchAll(
@@ -173,6 +180,7 @@ test(
       [
         "./assets/runtime-config.js",
         "./assets/teacher-session.js",
+        "./assets/ai-adapter.js",
         "./assets/teacher-workspace-data.js"
       ]
     );
@@ -394,7 +402,7 @@ test(
         ) ||
         []
       ).length,
-      2
+      1
     );
   }
 );
@@ -563,7 +571,7 @@ t3Test(
         ) ||
         []
       ).length,
-      2
+      1
     );
 
     t3Assert.equal(
@@ -741,7 +749,7 @@ test(
         ) ||
         []
       ).length,
-      2
+      1
     );
 
     assert.match(
@@ -751,12 +759,17 @@ test(
 
     assert.match(
       workspace,
-      /id="panel-chat-controls"[\s\S]*Reserved for a later milestone\./
+      /id="panel-chat-controls"[\s\S]*id="chatLocalEnabled"/
     );
 
+    const recoveryPanel =
+      workspace.match(
+        /<section[^>]*id="panel-recovery"[\s\S]*?<\/section>/
+      )?.[0] || "";
+
     assert.match(
-      workspace,
-      /id="panel-recovery"[\s\S]*Reserved for a later milestone\./
+      recoveryPanel,
+      /Reserved for a later milestone\./
     );
   }
 );
@@ -930,7 +943,7 @@ test(
 );
 
 test(
-  "T5 Analytics preserves seven areas and leaves only Chat Controls and Recovery reserved",
+  "T6 Chat Controls preserves seven areas and leaves only Recovery reserved",
   () => {
     const primaryAreas =
       [
@@ -960,28 +973,43 @@ test(
       (
         workspace.match(
           /Reserved for a later milestone\./g
-        ) ||
-        []
+        ) || []
       ).length,
-      2
+      1
+    );
+
+    const chatPanel =
+      workspace.match(
+        /<section[^>]*id="panel-chat-controls"[\s\S]*?<\/section>/
+      )?.[0] || "";
+
+    const recoveryPanel =
+      workspace.match(
+        /<section[^>]*id="panel-recovery"[\s\S]*?<\/section>/
+      )?.[0] || "";
+
+    assert.notEqual(
+      chatPanel,
+      ""
+    );
+
+    assert.notEqual(
+      recoveryPanel,
+      ""
     );
 
     assert.doesNotMatch(
-      workspace,
-      /id="panel-analytics"[\s\S]{0,500}Reserved for a later milestone\./
+      chatPanel,
+      /Reserved for a later milestone\./
     );
 
     assert.match(
-      workspace,
-      /id="panel-chat-controls"[\s\S]*Reserved for a later milestone\./
-    );
-
-    assert.match(
-      workspace,
-      /id="panel-recovery"[\s\S]*Reserved for a later milestone\./
+      recoveryPanel,
+      /Reserved for a later milestone\./
     );
   }
 );
+
 
 test(
   "T5 Analytics is included in every imported-packet render cycle",
@@ -994,6 +1022,292 @@ test(
     assert.match(
       workspace,
       /function clearImportedPackets\(\)[\s\S]*?renderAll\(\);/
+    );
+  }
+);
+
+test(
+  "T6 Chat Controls exposes truthful current-browser controls",
+  () => {
+    for (
+      const required
+      of [
+        'id="panel-chat-controls"',
+        'id="chatServiceConfigured"',
+        'id="chatEndpointOrigin"',
+        'id="chatRuntimeVersion"',
+        'id="chatEdition"',
+        'id="chatTeacherSessionStatus"',
+        'id="chatLocalEnabled"',
+        'id="chatLocalEnabledStatus"',
+        'id="chatClassCodeStatus"',
+        'id="clearClassChatCode"'
+      ]
+    ) {
+      assert.equal(
+        workspace.includes(
+          required
+        ),
+        true,
+        required
+      );
+    }
+
+    assert.match(
+      workspace,
+      /This browser session only\./
+    );
+
+    assert.match(
+      workspace,
+      /do not change another device/
+    );
+
+    assert.match(
+      workspace,
+      /do not\s+apply settings to students as a class/
+    );
+
+    assert.match(
+      workspace,
+      /No class-wide Chat policy is available in this version\./
+    );
+  }
+);
+
+test(
+  "T6 Chat Controls uses the committed pure status API and existing Research Chat adapter",
+  () => {
+    assert.match(
+      workspace,
+      /deriveTeacherChatControlsStatus/
+    );
+
+    assert.match(
+      workspace,
+      /window\.RMSAI/
+    );
+
+    assert.match(
+      workspace,
+      /chat\.getConfig\(\)/
+    );
+
+    assert.match(
+      workspace,
+      /chat\.setConfig\(\{[\s\S]*enabled:/
+    );
+
+    assert.match(
+      workspace,
+      /chat\.clearAccessCode\(\)/
+    );
+
+    assert.doesNotMatch(
+      workspace,
+      /setConfig\(\{[\s\S]{0,120}(?:endpoint|chatEndpoint|researchChatEndpoint)/
+    );
+  }
+);
+
+test(
+  "T6 Chat Controls keeps endpoint credentials and transcript content inaccessible",
+  () => {
+    assert.doesNotMatch(
+      workspace,
+      /id="chatEndpoint(?:Input|Editor|Field)"/
+    );
+
+    assert.doesNotMatch(
+      workspace,
+      /type="password"[\s\S]{0,160}Chat/
+    );
+
+    assert.doesNotMatch(
+      workspace,
+      /aiHelper\.messages/
+    );
+
+    assert.doesNotMatch(
+      workspace,
+      /aiHelper\.events/
+    );
+
+    assert.doesNotMatch(
+      workspace,
+      /getAccessCode\(\)/
+    );
+
+    assert.match(
+      workspace,
+      /The code value is never shown\./
+    );
+
+    assert.match(
+      workspace,
+      /Teacher access codes and signed session tokens are never[\s\S]*displayed/
+    );
+  }
+);
+
+test(
+  "T6 Chat Controls preserves student ownership of project context",
+  () => {
+    assert.match(
+      workspace,
+      /Use my current project context/
+    );
+
+    assert.match(
+      workspace,
+      /Teacher Workspace cannot force that setting on or off\./
+    );
+
+    assert.doesNotMatch(
+      workspace,
+      /id="[^"]*(?:force|require|block)[^"]*Context/i
+    );
+  }
+);
+
+test(
+  "T6 Chat Controls introduces no policy network path or new persistence mechanism",
+  () => {
+    const start =
+      workspace.indexOf(
+        "function currentChatControlsStatus()"
+      );
+
+    const end =
+      workspace.indexOf(
+        "function renderAll()",
+        start
+      );
+
+    assert.ok(
+      start >= 0
+    );
+
+    assert.ok(
+      end > start
+    );
+
+    const chatLogic =
+      workspace.slice(
+        start,
+        end
+      );
+
+    assert.doesNotMatch(
+      chatLogic,
+      /\bfetch\s*\(/
+    );
+
+    assert.doesNotMatch(
+      chatLogic,
+      /XMLHttpRequest/
+    );
+
+    assert.doesNotMatch(
+      chatLogic,
+      /localStorage/
+    );
+
+    assert.doesNotMatch(
+      chatLogic,
+      /sessionStorage/
+    );
+
+    assert.doesNotMatch(
+      chatLogic,
+      /\/teacher\/chat/i
+    );
+
+    assert.doesNotMatch(
+      chatLogic,
+      /\/chat\/policy/i
+    );
+  }
+);
+
+test(
+  "T6 Chat Controls keeps dynamic status rendering text-safe",
+  () => {
+    const start =
+      workspace.indexOf(
+        "function renderChatControls()"
+      );
+
+    const end =
+      workspace.indexOf(
+        "function bindChatControls()",
+        start
+      );
+
+    assert.ok(
+      start >= 0
+    );
+
+    assert.ok(
+      end > start
+    );
+
+    const renderer =
+      workspace.slice(
+        start,
+        end
+      );
+
+    assert.match(
+      renderer,
+      /\.textContent\s*=/
+    );
+
+    assert.doesNotMatch(
+      renderer,
+      /\.innerHTML\s*=/
+    );
+
+    assert.doesNotMatch(
+      renderer,
+      /insertAdjacentHTML/
+    );
+  }
+);
+
+test(
+  "T6 Chat Controls is independent of imported student review packets",
+  () => {
+    const start =
+      workspace.indexOf(
+        "function currentChatControlsStatus()"
+      );
+
+    const end =
+      workspace.indexOf(
+        "function renderChatControls()",
+        start
+      );
+
+    const statusReader =
+      workspace.slice(
+        start,
+        end
+      );
+
+    assert.doesNotMatch(
+      statusReader,
+      /importedPackets/
+    );
+
+    assert.doesNotMatch(
+      statusReader,
+      /selectedProjectId/
+    );
+
+    assert.doesNotMatch(
+      statusReader,
+      /student_alias/
     );
   }
 );
