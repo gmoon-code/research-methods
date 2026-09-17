@@ -1342,6 +1342,296 @@ window.RMSTeacherWorkspaceData = (() => {
     });
   }
 
+
+  const TEACHER_RECOVERY_MAX_FILE_BYTES =
+    26214400;
+
+  function recoverySafeText(
+    value,
+    maxLength = 200
+  ) {
+    if (
+      typeof value !==
+        "string"
+    ) {
+      return "";
+    }
+
+    return value
+      .trim()
+      .slice(
+        0,
+        maxLength
+      );
+  }
+
+  function recoverySafeSize(
+    value
+  ) {
+    if (
+      typeof value !==
+        "number" ||
+      !Number.isFinite(
+        value
+      ) ||
+      value < 0
+    ) {
+      return null;
+    }
+
+    return Math.floor(
+      value
+    );
+  }
+
+  function deriveTeacherRecoveryInspection(
+    input = {}
+  ) {
+    const source =
+      input &&
+      typeof input ===
+        "object" &&
+      !Array.isArray(
+        input
+      )
+        ? input
+        : {};
+
+    const fileName =
+      recoverySafeText(
+        source.file_name,
+        180
+      );
+
+    const fileSize =
+      recoverySafeSize(
+        source.file_size_bytes
+      );
+
+    const fileSelected =
+      Boolean(
+        fileName
+      ) ||
+      fileSize !==
+        null;
+
+    const withinSizeLimit =
+      fileSize ===
+        null
+        ? null
+        : fileSize <=
+          TEACHER_RECOVERY_MAX_FILE_BYTES;
+
+    const parseOk =
+      source.parse_success ===
+        true;
+
+    const validatorAvailable =
+      source.validator_available ===
+        true;
+
+    const validationOk =
+      fileSelected &&
+      withinSizeLimit !==
+        false &&
+      parseOk &&
+      validatorAvailable &&
+      source.validation_success ===
+        true;
+
+    const legacy =
+      validationOk &&
+      source.legacy ===
+        true;
+
+    const packetType =
+      recoverySafeText(
+        source.packet_type,
+        80
+      );
+
+    const packetVersion =
+      recoverySafeText(
+        source.packet_version,
+        40
+      );
+
+    const mode =
+      recoverySafeText(
+        source.backup_mode,
+        40
+      );
+
+    const createdAt =
+      recoverySafeText(
+        source.created_at,
+        120
+      );
+
+    const baselineId =
+      recoverySafeText(
+        source.baseline_id,
+        160
+      );
+
+    const checksumFingerprint =
+      recoverySafeText(
+        source.checksum_fingerprint,
+        160
+      );
+
+    const isVersionTwoEnvelope =
+      !legacy &&
+      packetType ===
+        "rms_project_backup" &&
+      packetVersion ===
+        "2.0";
+
+    const isPrivacyCopy =
+      validationOk &&
+      mode ===
+        "privacy";
+
+    const restorable =
+      validationOk &&
+      source.restorable ===
+        true &&
+      !isPrivacyCopy;
+
+    let checksumVerified =
+      null;
+
+    if (
+      isVersionTwoEnvelope
+    ) {
+      checksumVerified =
+        validationOk;
+    }
+
+    let message =
+      "No backup is currently selected.";
+
+    if (
+      fileSelected &&
+      withinSizeLimit ===
+        false
+    ) {
+      message =
+        "The selected file is too large for Teacher Workspace inspection.";
+    } else if (
+      fileSelected &&
+      !parseOk
+    ) {
+      message =
+        "The selected file is not valid JSON.";
+    } else if (
+      fileSelected &&
+      !validatorAvailable
+    ) {
+      message =
+        "Recovery inspection is unavailable because the existing backup validator did not load.";
+    } else if (
+      fileSelected &&
+      parseOk &&
+      validatorAvailable &&
+      !validationOk &&
+      isVersionTwoEnvelope
+    ) {
+      message =
+        "The backup checksum could not be verified.";
+    } else if (
+      fileSelected &&
+      parseOk &&
+      validatorAvailable &&
+      !validationOk
+    ) {
+      message =
+        "The selected file is not a recognized Research Methods Studio project backup.";
+    } else if (
+      validationOk &&
+      isPrivacyCopy
+    ) {
+      message =
+        "This privacy-minimized copy is valid but cannot restore a complete project.";
+    } else if (
+      validationOk &&
+      legacy &&
+      restorable
+    ) {
+      message =
+        "This legacy backup is recognized and can be restored through the student site.";
+    } else if (
+      validationOk &&
+      restorable
+    ) {
+      message =
+        "This backup is valid and can be restored through the student site.";
+    } else if (
+      validationOk
+    ) {
+      message =
+        "This backup is recognized but cannot restore a complete project.";
+    }
+
+    return Object.freeze({
+      file:
+        Object.freeze({
+          name:
+            fileName,
+          size_bytes:
+            fileSize,
+          within_size_limit:
+            withinSizeLimit
+        }),
+      format:
+        Object.freeze({
+          recognized:
+            validationOk,
+          packet_type:
+            packetType,
+          version:
+            packetVersion,
+          mode,
+          legacy
+        }),
+      integrity:
+        Object.freeze({
+          parse_ok:
+            parseOk,
+          validator_available:
+            validatorAvailable,
+          validation_ok:
+            validationOk,
+          checksum_verified:
+            checksumVerified
+        }),
+      recovery:
+        Object.freeze({
+          restorable,
+          restore_location:
+            "student_site"
+        }),
+      privacy:
+        Object.freeze({
+          project_contents_exposed:
+            false,
+          raw_data_exposed:
+            false,
+          manuscript_exposed:
+            false,
+          source_notes_exposed:
+            false,
+          chat_transcripts_exposed:
+            false,
+          live_student_storage_accessed:
+            false,
+          backup_uploaded:
+            false
+        }),
+      message
+    });
+  }
+
   function deriveOverview(
     packets
   ) {
@@ -3807,6 +4097,7 @@ window.RMSTeacherWorkspaceData = (() => {
     deriveStudentInspector,
     deriveTeacherAnalytics,
     deriveTeacherChatControlsStatus,
+    deriveTeacherRecoveryInspection,
     createTeacherReviewDraft,
     validateTeacherReviewDraft,
     setTeacherDisplayName,

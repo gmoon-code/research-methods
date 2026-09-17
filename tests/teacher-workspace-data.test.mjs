@@ -5714,3 +5714,969 @@ test(
     );
   }
 );
+
+test(
+  "T7 exposes the pure teacher Recovery inspection derivation",
+  () => {
+    const data =
+      loadModule();
+
+    assert.equal(
+      typeof data
+        .deriveTeacherRecoveryInspection,
+      "function"
+    );
+  }
+);
+
+test(
+  "T7 returns a neutral zero-file Recovery inspection model",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection();
+
+    assert.equal(
+      result.file.name,
+      ""
+    );
+
+    assert.equal(
+      result.file
+        .size_bytes,
+      null
+    );
+
+    assert.equal(
+      result.file
+        .within_size_limit,
+      null
+    );
+
+    assert.equal(
+      result.format
+        .recognized,
+      false
+    );
+
+    assert.equal(
+      result.integrity
+        .parse_ok,
+      false
+    );
+
+    assert.equal(
+      result.recovery
+        .restorable,
+      false
+    );
+
+    assert.equal(
+      result.recovery
+        .restore_location,
+      "student_site"
+    );
+
+    assert.equal(
+      result.message,
+      "No backup is currently selected."
+    );
+  }
+);
+
+test(
+  "T7 copies safe file-size state without inventing file contents",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "class-backup.json",
+          file_size_bytes:
+            1048576
+        });
+
+    assert.equal(
+      result.file.name,
+      "class-backup.json"
+    );
+
+    assert.equal(
+      result.file
+        .size_bytes,
+      1048576
+    );
+
+    assert.equal(
+      result.file
+        .within_size_limit,
+      true
+    );
+
+    assert.equal(
+      "project"
+        in result,
+      false
+    );
+  }
+);
+
+test(
+  "T7 enforces the exact 25 MiB inspection boundary",
+  () => {
+    const data =
+      loadModule();
+
+    const atLimit =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "limit.json",
+          file_size_bytes:
+            26214400
+        });
+
+    const overLimit =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "too-large.json",
+          file_size_bytes:
+            26214401
+        });
+
+    assert.equal(
+      atLimit.file
+        .within_size_limit,
+      true
+    );
+
+    assert.equal(
+      overLimit.file
+        .within_size_limit,
+      false
+    );
+
+    assert.equal(
+      overLimit.message,
+      "The selected file is too large for Teacher Workspace inspection."
+    );
+  }
+);
+
+test(
+  "T7 maps a recognized version 2.0 full backup safely",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "project-full-backup.json",
+          file_size_bytes:
+            5000,
+          parse_success:
+            true,
+          validator_available:
+            true,
+          validation_success:
+            true,
+          restorable:
+            true,
+          backup_mode:
+            "full",
+          legacy:
+            false,
+          packet_type:
+            "rms_project_backup",
+          packet_version:
+            "2.0",
+          created_at:
+            "2026-09-17T05:00:00.000Z",
+          baseline_id:
+            "RMS-PILOT-BASELINE-v2.0",
+          checksum_fingerprint:
+            "abc123"
+        });
+
+    assert.equal(
+      result.format
+        .recognized,
+      true
+    );
+
+    assert.equal(
+      result.format
+        .packet_type,
+      "rms_project_backup"
+    );
+
+    assert.equal(
+      result.format
+        .version,
+      "2.0"
+    );
+
+    assert.equal(
+      result.format.mode,
+      "full"
+    );
+
+    assert.equal(
+      result.integrity
+        .checksum_verified,
+      true
+    );
+
+    assert.equal(
+      result.recovery
+        .restorable,
+      true
+    );
+
+    assert.equal(
+      result.message,
+      "This backup is valid and can be restored through the student site."
+    );
+  }
+);
+
+test(
+  "T7 maps a recognized version 2.0 privacy copy safely",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "privacy-copy.json",
+          file_size_bytes:
+            3000,
+          parse_success:
+            true,
+          validator_available:
+            true,
+          validation_success:
+            true,
+          restorable:
+            false,
+          backup_mode:
+            "privacy",
+          packet_type:
+            "rms_project_backup",
+          packet_version:
+            "2.0"
+        });
+
+    assert.equal(
+      result.format.mode,
+      "privacy"
+    );
+
+    assert.equal(
+      result.integrity
+        .checksum_verified,
+      true
+    );
+
+    assert.equal(
+      result.recovery
+        .restorable,
+      false
+    );
+
+    assert.equal(
+      result.message,
+      "This privacy-minimized copy is valid but cannot restore a complete project."
+    );
+  }
+);
+
+test(
+  "T7 never makes a privacy copy restorable even when input claims restorable",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "privacy-copy.json",
+          file_size_bytes:
+            3000,
+          parse_success:
+            true,
+          validator_available:
+            true,
+          validation_success:
+            true,
+          restorable:
+            true,
+          backup_mode:
+            "privacy",
+          packet_type:
+            "rms_project_backup",
+          packet_version:
+            "2.0"
+        });
+
+    assert.equal(
+      result.recovery
+        .restorable,
+      false
+    );
+  }
+);
+
+test(
+  "T7 labels a recognized legacy backup without inventing version metadata",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "legacy-project.json",
+          file_size_bytes:
+            2000,
+          parse_success:
+            true,
+          validator_available:
+            true,
+          validation_success:
+            true,
+          restorable:
+            true,
+          legacy:
+            true
+        });
+
+    assert.equal(
+      result.format
+        .recognized,
+      true
+    );
+
+    assert.equal(
+      result.format.legacy,
+      true
+    );
+
+    assert.equal(
+      result.recovery
+        .restorable,
+      true
+    );
+
+    assert.equal(
+      result.message,
+      "This legacy backup is recognized and can be restored through the student site."
+    );
+  }
+);
+
+test(
+  "T7 leaves legacy checksum verification unavailable",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "legacy.json",
+          file_size_bytes:
+            2000,
+          parse_success:
+            true,
+          validator_available:
+            true,
+          validation_success:
+            true,
+          restorable:
+            true,
+          legacy:
+            true,
+          checksum_fingerprint:
+            "should-not-create-verification"
+        });
+
+    assert.equal(
+      result.integrity
+        .checksum_verified,
+      null
+    );
+  }
+);
+
+test(
+  "T7 keeps malformed JSON non-restorable with a fixed safe message",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "broken.json",
+          file_size_bytes:
+            100,
+          parse_success:
+            false,
+          validator_available:
+            true,
+          validation_success:
+            false,
+          validator_error:
+            "C:\\private\\path\\secret.json"
+        });
+
+    assert.equal(
+      result.recovery
+        .restorable,
+      false
+    );
+
+    assert.equal(
+      result.message,
+      "The selected file is not valid JSON."
+    );
+
+    assert.equal(
+      result.message.includes(
+        "private"
+      ),
+      false
+    );
+  }
+);
+
+test(
+  "T7 keeps validator-unavailable inspection non-restorable",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "backup.json",
+          file_size_bytes:
+            1000,
+          parse_success:
+            true,
+          validator_available:
+            false,
+          validation_success:
+            true,
+          restorable:
+            true
+        });
+
+    assert.equal(
+      result.recovery
+        .restorable,
+      false
+    );
+
+    assert.equal(
+      result.message,
+      "Recovery inspection is unavailable because the existing backup validator did not load."
+    );
+  }
+);
+
+test(
+  "T7 reports failed version 2.0 validation as unverified checksum",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "corrupt.json",
+          file_size_bytes:
+            1000,
+          parse_success:
+            true,
+          validator_available:
+            true,
+          validation_success:
+            false,
+          restorable:
+            true,
+          packet_type:
+            "rms_project_backup",
+          packet_version:
+            "2.0"
+        });
+
+    assert.equal(
+      result.integrity
+        .checksum_verified,
+      false
+    );
+
+    assert.equal(
+      result.recovery
+        .restorable,
+      false
+    );
+
+    assert.equal(
+      result.message,
+      "The backup checksum could not be verified."
+    );
+  }
+);
+
+test(
+  "T7 restore location is always the student site",
+  () => {
+    const data =
+      loadModule();
+
+    for (
+      const input
+      of [
+        {},
+        {
+          file_name:
+            "a.json"
+        },
+        {
+          file_name:
+            "b.json",
+          parse_success:
+            true,
+          validator_available:
+            true,
+          validation_success:
+            true,
+          restorable:
+            true
+        }
+      ]
+    ) {
+      assert.equal(
+        data
+          .deriveTeacherRecoveryInspection(
+            input
+          )
+          .recovery
+          .restore_location,
+        "student_site"
+      );
+    }
+  }
+);
+
+test(
+  "T7 fixes every Recovery privacy exposure and access boundary to false",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "backup.json",
+          file_size_bytes:
+            1000,
+          parse_success:
+            true,
+          validator_available:
+            true,
+          validation_success:
+            true,
+          restorable:
+            true,
+          project_contents_exposed:
+            true,
+          raw_data_exposed:
+            true,
+          manuscript_exposed:
+            true,
+          source_notes_exposed:
+            true,
+          chat_transcripts_exposed:
+            true,
+          live_student_storage_accessed:
+            true,
+          backup_uploaded:
+            true
+        });
+
+    for (
+      const key
+      of [
+        "project_contents_exposed",
+        "raw_data_exposed",
+        "manuscript_exposed",
+        "source_notes_exposed",
+        "chat_transcripts_exposed",
+        "live_student_storage_accessed",
+        "backup_uploaded"
+      ]
+    ) {
+      assert.equal(
+        result.privacy[key],
+        false
+      );
+    }
+  }
+);
+
+test(
+  "T7 ignores arbitrary unapproved Recovery input fields",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "backup.json",
+          file_size_bytes:
+            100,
+          arbitrary_secret:
+            "do-not-copy",
+          network:
+            "upload",
+          storage:
+            "research_methods_studio_v1"
+        });
+
+    const serialized =
+      JSON.stringify(
+        result
+      );
+
+    assert.equal(
+      serialized.includes(
+        "do-not-copy"
+      ),
+      false
+    );
+
+    assert.equal(
+      serialized.includes(
+        "research_methods_studio_v1"
+      ),
+      false
+    );
+
+    assert.equal(
+      "network"
+        in result,
+      false
+    );
+
+    assert.equal(
+      "storage"
+        in result,
+      false
+    );
+  }
+);
+
+test(
+  "T7 ignores project objects supplied as unapproved input",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "backup.json",
+          file_size_bytes:
+            100,
+          project: {
+            rawData: [
+              {
+                participant:
+                  "SECRET-PARTICIPANT"
+              }
+            ],
+            manuscript:
+              "SECRET-MANUSCRIPT",
+            notes:
+              "SECRET-SOURCE-NOTE"
+          }
+        });
+
+    const serialized =
+      JSON.stringify(
+        result
+      );
+
+    assert.equal(
+      serialized.includes(
+        "SECRET-PARTICIPANT"
+      ),
+      false
+    );
+
+    assert.equal(
+      serialized.includes(
+        "SECRET-MANUSCRIPT"
+      ),
+      false
+    );
+
+    assert.equal(
+      serialized.includes(
+        "SECRET-SOURCE-NOTE"
+      ),
+      false
+    );
+  }
+);
+
+test(
+  "T7 Recovery inspection structures are recursively frozen at public boundaries",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "backup.json",
+          file_size_bytes:
+            100,
+          parse_success:
+            true,
+          validator_available:
+            true,
+          validation_success:
+            true,
+          restorable:
+            true
+        });
+
+    assert.equal(
+      Object.isFrozen(
+        result
+      ),
+      true
+    );
+
+    for (
+      const key
+      of [
+        "file",
+        "format",
+        "integrity",
+        "recovery",
+        "privacy"
+      ]
+    ) {
+      assert.equal(
+        Object.isFrozen(
+          result[key]
+        ),
+        true
+      );
+    }
+  }
+);
+
+test(
+  "T7 Recovery inspection derivation does not mutate its source input",
+  () => {
+    const data =
+      loadModule();
+
+    const input = {
+      file_name:
+        "backup.json",
+      file_size_bytes:
+        100,
+      parse_success:
+        true,
+      validator_available:
+        true,
+      validation_success:
+        true,
+      restorable:
+        true,
+      backup_mode:
+        "full",
+      packet_type:
+        "rms_project_backup",
+      packet_version:
+        "2.0",
+      project: {
+        hidden:
+          "value"
+      }
+    };
+
+    const before =
+      JSON.stringify(
+        input
+      );
+
+    data
+      .deriveTeacherRecoveryInspection(
+        input
+      );
+
+    assert.equal(
+      JSON.stringify(
+        input
+      ),
+      before
+    );
+  }
+);
+
+test(
+  "T7 Recovery inspection derivation is deterministic",
+  () => {
+    const data =
+      loadModule();
+
+    const input = {
+      file_name:
+        "backup.json",
+      file_size_bytes:
+        100,
+      parse_success:
+        true,
+      validator_available:
+        true,
+      validation_success:
+        true,
+      restorable:
+        true,
+      backup_mode:
+        "full",
+      packet_type:
+        "rms_project_backup",
+      packet_version:
+        "2.0"
+    };
+
+    const first =
+      JSON.stringify(
+        data
+          .deriveTeacherRecoveryInspection(
+            input
+          )
+      );
+
+    const second =
+      JSON.stringify(
+        data
+          .deriveTeacherRecoveryInspection(
+            input
+          )
+      );
+
+    assert.equal(
+      first,
+      second
+    );
+  }
+);
+
+test(
+  "T7 Recovery inspection remains browser storage packet and network independent",
+  () => {
+    const data =
+      loadModule();
+
+    const result =
+      data
+        .deriveTeacherRecoveryInspection({
+          file_name:
+            "backup.json",
+          file_size_bytes:
+            100,
+          parse_success:
+            true,
+          validator_available:
+            true,
+          validation_success:
+            true,
+          restorable:
+            true,
+          localStorage: {
+            secret:
+              true
+          },
+          sessionStorage: {
+            secret:
+              true
+          },
+          packets: [
+            "student"
+          ],
+          fetch:
+            "network"
+        });
+
+    assert.deepEqual(
+      Object.keys(
+        result
+      ),
+      [
+        "file",
+        "format",
+        "integrity",
+        "recovery",
+        "privacy",
+        "message"
+      ]
+    );
+
+    assert.equal(
+      "localStorage"
+        in result,
+      false
+    );
+
+    assert.equal(
+      "sessionStorage"
+        in result,
+      false
+    );
+
+    assert.equal(
+      "packets"
+        in result,
+      false
+    );
+
+    assert.equal(
+      "fetch"
+        in result,
+      false
+    );
+  }
+);
