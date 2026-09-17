@@ -5221,3 +5221,496 @@ test(
     );
   }
 );
+
+test(
+  "T6 exposes the pure teacher Chat Controls status derivation",
+  () => {
+    const data =
+      loadModule();
+
+    assert.equal(
+      typeof data
+        .deriveTeacherChatControlsStatus,
+      "function"
+    );
+  }
+);
+
+test(
+  "T6 keeps absent malformed and credential-bearing Chat endpoints unconfigured",
+  () => {
+    const data =
+      loadModule();
+
+    const values = [
+      undefined,
+      null,
+      "",
+      "not-a-url",
+      "https://user:secret@example.com/chat",
+      "ftp://example.com/chat"
+    ];
+
+    for (
+      const value
+      of values
+    ) {
+      const status =
+        data
+          .deriveTeacherChatControlsStatus({
+            research_chat_endpoint:
+              value
+          });
+
+      assert.equal(
+        status.service
+          .configured,
+        false
+      );
+
+      assert.equal(
+        status.service
+          .endpoint_origin,
+        ""
+      );
+    }
+  }
+);
+
+test(
+  "T6 reports only the safely parsed Research Chat endpoint origin",
+  () => {
+    const data =
+      loadModule();
+
+    const status =
+      data
+        .deriveTeacherChatControlsStatus({
+          research_chat_endpoint:
+            "https://rms-research-chat-free.gmoon-code.workers.dev/path?q=1#x"
+        });
+
+    assert.equal(
+      status.service
+        .configured,
+      true
+    );
+
+    assert.equal(
+      status.service
+        .endpoint_origin,
+      "https://rms-research-chat-free.gmoon-code.workers.dev"
+    );
+  }
+);
+
+test(
+  "T6 copies runtime edition and teacher-session status descriptively",
+  () => {
+    const data =
+      loadModule();
+
+    const active =
+      data
+        .deriveTeacherChatControlsStatus({
+          runtime_version:
+            " 2.16.0 ",
+          free_edition:
+            true,
+          teacher_session_active:
+            true
+        });
+
+    assert.equal(
+      active.service
+        .runtime_version,
+      "2.16.0"
+    );
+
+    assert.equal(
+      active.service
+        .free_edition,
+      true
+    );
+
+    assert.equal(
+      active.teacher_session
+        .active,
+      true
+    );
+
+    const inactive =
+      data
+        .deriveTeacherChatControlsStatus({
+          free_edition:
+            false,
+          teacher_session_active:
+            false
+        });
+
+    assert.equal(
+      inactive.service
+        .free_edition,
+      false
+    );
+
+    assert.equal(
+      inactive.teacher_session
+        .active,
+      false
+    );
+  }
+);
+
+test(
+  "T6 copies only explicit local Chat and class-code presence booleans",
+  () => {
+    const data =
+      loadModule();
+
+    const enabled =
+      data
+        .deriveTeacherChatControlsStatus({
+          local_chat_enabled:
+            true,
+          class_chat_code_present:
+            true
+        });
+
+    assert.equal(
+      enabled.local_preview
+        .chat_enabled,
+      true
+    );
+
+    assert.equal(
+      enabled.local_preview
+        .class_code_present,
+      true
+    );
+
+    assert.equal(
+      enabled.local_preview
+        .scope,
+      "browser_session_only"
+    );
+
+    const neutral =
+      data
+        .deriveTeacherChatControlsStatus({
+          local_chat_enabled:
+            "true",
+          class_chat_code_present:
+            1
+        });
+
+    assert.equal(
+      neutral.local_preview
+        .chat_enabled,
+      false
+    );
+
+    assert.equal(
+      neutral.local_preview
+        .class_code_present,
+      false
+    );
+  }
+);
+
+test(
+  "T6 fixes the teacher Chat privacy boundary in the public status model",
+  () => {
+    const data =
+      loadModule();
+
+    const status =
+      data
+        .deriveTeacherChatControlsStatus({
+          transcripts_exposed:
+            true,
+          project_context_teacher_controlled:
+            true,
+          endpoint_teacher_editable:
+            true,
+          classwide_policy_available:
+            true
+        });
+
+    assert.deepEqual(
+      {
+        ...status.privacy
+      },
+      {
+        transcripts_exposed:
+          false,
+        project_context_teacher_controlled:
+          false,
+        endpoint_teacher_editable:
+          false,
+        classwide_policy_available:
+          false
+      }
+    );
+  }
+);
+
+test(
+  "T6 Chat Controls status derivation ignores unapproved input fields",
+  () => {
+    const data =
+      loadModule();
+
+    const status =
+      data
+        .deriveTeacherChatControlsStatus({
+          runtime_version:
+            "2.16.0",
+          free_edition:
+            true,
+          research_chat_endpoint:
+            "https://example.com/chat",
+          teacher_session_active:
+            true,
+          local_chat_enabled:
+            true,
+          class_chat_code_present:
+            false,
+          student_alias:
+            "Student A",
+          project:
+            {
+              research_question:
+                "must not appear"
+            },
+          messages: [
+            "must not appear"
+          ],
+          access_code:
+            "secret",
+          teacher_token:
+            "secret"
+        });
+
+    const serialized =
+      JSON.stringify(
+        status
+      );
+
+    for (
+      const forbidden
+      of [
+        "Student A",
+        "must not appear",
+        "secret",
+        "student_alias",
+        "messages",
+        "access_code",
+        "teacher_token"
+      ]
+    ) {
+      assert.equal(
+        serialized.includes(
+          forbidden
+        ),
+        false,
+        forbidden
+      );
+    }
+  }
+);
+
+test(
+  "T6 Chat Controls status model is recursively frozen at public boundaries",
+  () => {
+    const data =
+      loadModule();
+
+    const status =
+      data
+        .deriveTeacherChatControlsStatus({
+          research_chat_endpoint:
+            "https://example.com/chat"
+        });
+
+    assert.equal(
+      Object.isFrozen(
+        status
+      ),
+      true
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        status.service
+      ),
+      true
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        status.teacher_session
+      ),
+      true
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        status.local_preview
+      ),
+      true
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        status.privacy
+      ),
+      true
+    );
+  }
+);
+
+test(
+  "T6 Chat Controls status derivation does not mutate its source input",
+  () => {
+    const data =
+      loadModule();
+
+    const input = {
+      runtime_version:
+        "2.16.0",
+      free_edition:
+        true,
+      research_chat_endpoint:
+        "https://example.com/chat",
+      teacher_session_active:
+        true,
+      local_chat_enabled:
+        false,
+      class_chat_code_present:
+        true
+    };
+
+    const before =
+      JSON.stringify(
+        input
+      );
+
+    data
+      .deriveTeacherChatControlsStatus(
+        input
+      );
+
+    assert.equal(
+      JSON.stringify(
+        input
+      ),
+      before
+    );
+  }
+);
+
+test(
+  "T6 Chat Controls status derivation is deterministic",
+  () => {
+    const data =
+      loadModule();
+
+    const input = {
+      runtime_version:
+        "2.16.0",
+      free_edition:
+        true,
+      research_chat_endpoint:
+        "https://example.com/path",
+      teacher_session_active:
+        true,
+      local_chat_enabled:
+        true,
+      class_chat_code_present:
+        true
+    };
+
+    const first =
+      JSON.stringify(
+        data
+          .deriveTeacherChatControlsStatus(
+            input
+          )
+      );
+
+    const second =
+      JSON.stringify(
+        data
+          .deriveTeacherChatControlsStatus(
+            input
+          )
+      );
+
+    assert.equal(
+      first,
+      second
+    );
+  }
+);
+
+test(
+  "T6 Chat Controls status derivation remains independent of packets browser storage and network state",
+  () => {
+    const data =
+      loadModule();
+
+    const status =
+      data
+        .deriveTeacherChatControlsStatus({
+          research_chat_endpoint:
+            "https://example.com/chat",
+          runtime_version:
+            "2.16.0",
+          free_edition:
+            true,
+          teacher_session_active:
+            true,
+          local_chat_enabled:
+            true,
+          class_chat_code_present:
+            false
+        });
+
+    assert.deepEqual(
+      Object.keys(
+        status
+      ),
+      [
+        "service",
+        "teacher_session",
+        "local_preview",
+        "privacy"
+      ]
+    );
+
+    assert.equal(
+      "project_count"
+        in status,
+      false
+    );
+
+    assert.equal(
+      "packets"
+        in status,
+      false
+    );
+
+    assert.equal(
+      "network"
+        in status,
+      false
+    );
+
+    assert.equal(
+      "storage"
+        in status,
+      false
+    );
+  }
+);

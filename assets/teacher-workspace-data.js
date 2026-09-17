@@ -1146,6 +1146,202 @@ window.RMSTeacherWorkspaceData = (() => {
     });
   }
 
+  function teacherChatEndpointOrigin(
+    value
+  ) {
+    if (
+      typeof value !== "string"
+    ) {
+      return "";
+    }
+
+    const text =
+      value.trim();
+
+    if (
+      !text ||
+      /\s/.test(text)
+    ) {
+      return "";
+    }
+
+    if (
+      typeof URL === "function"
+    ) {
+      try {
+        const parsed =
+          new URL(text);
+
+        if (
+          (
+            parsed.protocol !==
+              "https:" &&
+            parsed.protocol !==
+              "http:"
+          ) ||
+          parsed.username ||
+          parsed.password ||
+          !parsed.hostname
+        ) {
+          return "";
+        }
+
+        return parsed.origin;
+      } catch {
+        return "";
+      }
+    }
+
+    const match =
+      text.match(
+        /^(https?):\/\/([^/?#]+)(?:[/?#].*)?$/i
+      );
+
+    if (
+      !match ||
+      !match[2] ||
+      match[2].includes("@")
+    ) {
+      return "";
+    }
+
+    const authority =
+      match[2];
+
+    const authorityMatch =
+      authority.match(
+        /^(\[[0-9a-f:.]+\]|[a-z0-9.-]+)(?::([0-9]{1,5}))?$/i
+      );
+
+    if (
+      !authorityMatch
+    ) {
+      return "";
+    }
+
+    const portText =
+      authorityMatch[2] || "";
+
+    if (portText) {
+      const port =
+        Number(portText);
+
+      if (
+        !Number.isInteger(port) ||
+        port < 1 ||
+        port > 65535
+      ) {
+        return "";
+      }
+    }
+
+    const protocol =
+      match[1].toLowerCase();
+
+    const host =
+      authorityMatch[1]
+        .toLowerCase();
+
+    const defaultPort =
+      (
+        protocol === "https" &&
+        portText === "443"
+      ) ||
+      (
+        protocol === "http" &&
+        portText === "80"
+      );
+
+    const port =
+      portText &&
+      !defaultPort
+        ? `:${portText}`
+        : "";
+
+    return (
+      `${protocol}://${host}${port}`
+    );
+  }
+
+  function deriveTeacherChatControlsStatus(
+    input = {}
+  ) {
+    const source =
+      input &&
+      typeof input === "object" &&
+      !Array.isArray(input)
+        ? input
+        : {};
+
+    const endpointOrigin =
+      teacherChatEndpointOrigin(
+        source
+          .research_chat_endpoint
+      );
+
+    const service =
+      Object.freeze({
+        configured:
+          endpointOrigin !== "",
+        endpoint_origin:
+          endpointOrigin,
+        runtime_version:
+          typeof source
+            .runtime_version ===
+              "string"
+            ? source
+                .runtime_version
+                .trim()
+            : "",
+        free_edition:
+          source.free_edition ===
+          true
+      });
+
+    const teacherSession =
+      Object.freeze({
+        active:
+          source
+            .teacher_session_active ===
+          true
+      });
+
+    const localPreview =
+      Object.freeze({
+        chat_enabled:
+          source
+            .local_chat_enabled ===
+          true,
+        class_code_present:
+          source
+            .class_chat_code_present ===
+          true,
+        scope:
+          "browser_session_only"
+      });
+
+    const privacy =
+      Object.freeze({
+        transcripts_exposed:
+          false,
+        project_context_teacher_controlled:
+          false,
+        endpoint_teacher_editable:
+          false,
+        classwide_policy_available:
+          false
+      });
+
+    return Object.freeze({
+      service,
+      teacher_session:
+        teacherSession,
+      local_preview:
+        localPreview,
+      privacy
+    });
+  }
+
   function deriveOverview(
     packets
   ) {
@@ -3610,6 +3806,7 @@ window.RMSTeacherWorkspaceData = (() => {
     deriveReviewQueue,
     deriveStudentInspector,
     deriveTeacherAnalytics,
+    deriveTeacherChatControlsStatus,
     createTeacherReviewDraft,
     validateTeacherReviewDraft,
     setTeacherDisplayName,
