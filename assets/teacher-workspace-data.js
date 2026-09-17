@@ -828,6 +828,324 @@ window.RMSTeacherWorkspaceData = (() => {
       );
   }
 
+  const TEACHER_ANALYTICS_MILESTONE_IDS =
+    Object.freeze([
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5"
+    ]);
+
+  const TEACHER_ANALYTICS_MILESTONE_STATES =
+    Object.freeze([
+      "blocked",
+      "student_ready",
+      "awaiting_teacher",
+      "revision_requested",
+      "approved",
+      "complete"
+    ]);
+
+  function deterministicTextCompare(
+    left,
+    right
+  ) {
+    if (left < right) {
+      return -1;
+    }
+
+    if (left > right) {
+      return 1;
+    }
+
+    return 0;
+  }
+
+  function analyticsMilestoneState(
+    packet,
+    milestoneId
+  ) {
+    const matches =
+      packet.milestones.filter(
+        milestone =>
+          milestone.id ===
+          milestoneId
+      );
+
+    if (matches.length !== 1) {
+      return "other_or_missing";
+    }
+
+    const state =
+      matches[0].state;
+
+    return TEACHER_ANALYTICS_MILESTONE_STATES
+      .includes(state)
+      ? state
+      : "other_or_missing";
+  }
+
+  function analyticsProjectHasState(
+    packet,
+    state
+  ) {
+    return packet.milestones.some(
+      milestone =>
+        milestone.state ===
+        state
+    );
+  }
+
+  function deriveTeacherAnalytics(
+    packets
+  ) {
+    const valid =
+      normalizedPacketCollection(
+        packets
+      );
+
+    const projectCount =
+      valid.length;
+
+    const stageReadiness = [];
+
+    for (
+      let stage = 1;
+      stage <= 18;
+      stage += 1
+    ) {
+      let readyProjects = 0;
+
+      valid.forEach(packet => {
+        if (
+          packet.stage_ready[stage] ===
+          true
+        ) {
+          readyProjects += 1;
+        }
+      });
+
+      stageReadiness.push(
+        Object.freeze({
+          stage,
+          ready_projects:
+            readyProjects,
+          project_count:
+            projectCount
+        })
+      );
+    }
+
+    const milestoneStates =
+      TEACHER_ANALYTICS_MILESTONE_IDS
+        .map(milestoneId => {
+          const counts = {
+            blocked: 0,
+            student_ready: 0,
+            awaiting_teacher: 0,
+            revision_requested: 0,
+            approved: 0,
+            complete: 0,
+            other_or_missing: 0
+          };
+
+          valid.forEach(packet => {
+            const state =
+              analyticsMilestoneState(
+                packet,
+                milestoneId
+              );
+
+            counts[state] += 1;
+          });
+
+          return Object.freeze({
+            milestone_id:
+              milestoneId,
+            blocked:
+              counts.blocked,
+            student_ready:
+              counts.student_ready,
+            awaiting_teacher:
+              counts.awaiting_teacher,
+            revision_requested:
+              counts.revision_requested,
+            approved:
+              counts.approved,
+            complete:
+              counts.complete,
+            other_or_missing:
+              counts.other_or_missing,
+            project_count:
+              projectCount
+          });
+        });
+
+    const workflowCounts =
+      Object.freeze({
+        projects_awaiting_teacher:
+          valid.filter(
+            packet =>
+              analyticsProjectHasState(
+                packet,
+                "awaiting_teacher"
+              )
+          ).length,
+
+        projects_revision_requested:
+          valid.filter(
+            packet =>
+              analyticsProjectHasState(
+                packet,
+                "revision_requested"
+              )
+          ).length,
+
+        projects_with_blockers:
+          valid.filter(
+            projectHasBlockers
+          ).length,
+
+        ethics_teacher_review:
+          valid.filter(
+            packet =>
+              packet.methods
+                .ethicsStatus ===
+              "teacher_review"
+          ).length,
+
+        ethics_do_not_facilitate:
+          valid.filter(
+            packet =>
+              packet.methods
+                .ethicsStatus ===
+              "do_not_facilitate"
+          ).length,
+
+        locked_protocols:
+          valid.filter(
+            packet =>
+              packet.methods.locked ===
+              true
+          ).length,
+
+        projects_with_stored_analysis:
+          valid.filter(
+            packet =>
+              Number.isFinite(
+                packet.analysis
+                  .stored_runs
+              ) &&
+              packet.analysis
+                .stored_runs > 0
+          ).length
+      });
+
+    const sectionCounts =
+      new Map();
+
+    valid.forEach(packet => {
+      const trimmed =
+        packet.course_section.trim();
+
+      const section =
+        trimmed ||
+        "Unspecified";
+
+      sectionCounts.set(
+        section,
+        (
+          sectionCounts.get(
+            section
+          ) ||
+          0
+        ) +
+        1
+      );
+    });
+
+    const courseSections =
+      Array.from(
+        sectionCounts.entries()
+      )
+        .sort(
+          (
+            [left],
+            [right]
+          ) =>
+            deterministicTextCompare(
+              left,
+              right
+            )
+        )
+        .map(
+          (
+            [
+              courseSection,
+              count
+            ]
+          ) =>
+            Object.freeze({
+              course_section:
+                courseSection,
+              project_count:
+                count
+            })
+        );
+
+    const literatureStatus =
+      Object.freeze({
+        projects_with_included_sources:
+          valid.filter(
+            packet =>
+              Number.isFinite(
+                packet.sources
+                  .included
+              ) &&
+              packet.sources
+                .included > 0
+          ).length,
+
+        projects_with_verified_sources:
+          valid.filter(
+            packet =>
+              Number.isFinite(
+                packet.sources
+                  .verified
+              ) &&
+              packet.sources
+                .verified > 0
+          ).length
+      });
+
+    return Object.freeze({
+      project_count:
+        projectCount,
+
+      stage_readiness:
+        Object.freeze(
+          stageReadiness
+        ),
+
+      milestone_states:
+        Object.freeze(
+          milestoneStates
+        ),
+
+      workflow_counts:
+        workflowCounts,
+
+      course_sections:
+        Object.freeze(
+          courseSections
+        ),
+
+      literature_status:
+        literatureStatus
+    });
+  }
+
   function deriveOverview(
     packets
   ) {
@@ -3291,6 +3609,7 @@ window.RMSTeacherWorkspaceData = (() => {
     deriveOverview,
     deriveReviewQueue,
     deriveStudentInspector,
+    deriveTeacherAnalytics,
     createTeacherReviewDraft,
     validateTeacherReviewDraft,
     setTeacherDisplayName,

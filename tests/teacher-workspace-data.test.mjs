@@ -3938,3 +3938,1286 @@ test(
     }
   }
 );
+
+
+function analyticsMilestone(
+  id,
+  state,
+  blockers = []
+) {
+  return {
+    id,
+    title:
+      `${id} test milestone`,
+    state,
+    blockers,
+    warnings: [],
+    checkpoint: {
+      status: "",
+      requestedAt: "",
+      reviewedAt: "",
+      teacher: "",
+      comment: "",
+      conditions: []
+    }
+  };
+}
+
+function plainAnalytics(
+  value
+) {
+  return JSON.parse(
+    JSON.stringify(
+      value
+    )
+  );
+}
+
+test(
+  "T5 exposes the pure teacher analytics derivation",
+  () => {
+    const data =
+      loadModule();
+
+    assert.equal(
+      typeof data
+        .deriveTeacherAnalytics,
+      "function"
+    );
+  }
+);
+
+test(
+  "T5 returns the empty teacher analytics model",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics(
+          []
+        )
+      );
+
+    assert.equal(
+      analytics.project_count,
+      0
+    );
+
+    assert.equal(
+      analytics
+        .stage_readiness
+        .length,
+      18
+    );
+
+    assert.equal(
+      analytics
+        .milestone_states
+        .length,
+      5
+    );
+
+    assert.deepEqual(
+      analytics.course_sections,
+      []
+    );
+
+    assert.deepEqual(
+      analytics.workflow_counts,
+      {
+        projects_awaiting_teacher:
+          0,
+        projects_revision_requested:
+          0,
+        projects_with_blockers:
+          0,
+        ethics_teacher_review:
+          0,
+        ethics_do_not_facilitate:
+          0,
+        locked_protocols:
+          0,
+        projects_with_stored_analysis:
+          0
+      }
+    );
+
+    assert.deepEqual(
+      analytics.literature_status,
+      {
+        projects_with_included_sources:
+          0,
+        projects_with_verified_sources:
+          0
+      }
+    );
+  }
+);
+
+test(
+  "T5 stage readiness contains exactly stages 1 through 18 and counts only true",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          minimalPacket({
+            project_id:
+              "RMS-T5-STAGE-A",
+            stage_ready: {
+              1: true,
+              2: false,
+              3: "true",
+              18: true
+            }
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-STAGE-B",
+            stage_ready: {
+              1: true,
+              2: true,
+              18: false
+            }
+          })
+        ])
+      );
+
+    assert.deepEqual(
+      analytics
+        .stage_readiness
+        .map(
+          row =>
+            row.stage
+        ),
+      Array.from(
+        {
+          length: 18
+        },
+        (
+          _,
+          index
+        ) =>
+          index + 1
+      )
+    );
+
+    assert.deepEqual(
+      analytics
+        .stage_readiness
+        .slice(0, 3)
+        .map(
+          row => [
+            row.stage,
+            row.ready_projects,
+            row.project_count
+          ]
+        ),
+      [
+        [1, 2, 2],
+        [2, 1, 2],
+        [3, 0, 2]
+      ]
+    );
+
+    assert.equal(
+      analytics
+        .stage_readiness[17]
+        .ready_projects,
+      1
+    );
+  }
+);
+
+test(
+  "T5 missing stage information is not counted as ready",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          minimalPacket({
+            project_id:
+              "RMS-T5-MISSING-STAGE"
+          })
+        ])
+      );
+
+    for (
+      const row
+      of analytics.stage_readiness
+    ) {
+      assert.equal(
+        row.ready_projects,
+        0
+      );
+
+      assert.equal(
+        row.project_count,
+        1
+      );
+    }
+  }
+);
+
+test(
+  "T5 returns exactly M1 through M5 milestone distributions",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics(
+          []
+        )
+      );
+
+    assert.deepEqual(
+      analytics
+        .milestone_states
+        .map(
+          row =>
+            row.milestone_id
+        ),
+      [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5"
+      ]
+    );
+  }
+);
+
+test(
+  "T5 counts every canonical milestone state",
+  () => {
+    const data =
+      loadModule();
+
+    const states = [
+      "blocked",
+      "student_ready",
+      "awaiting_teacher",
+      "revision_requested",
+      "approved",
+      "complete"
+    ];
+
+    const packets =
+      states.map(
+        (
+          state,
+          index
+        ) =>
+          minimalPacket({
+            project_id:
+              `RMS-T5-STATE-${index}`,
+            milestones: [
+              analyticsMilestone(
+                "M1",
+                state
+              )
+            ]
+          })
+      );
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics(
+          packets
+        )
+      );
+
+    const m1 =
+      analytics
+        .milestone_states[0];
+
+    for (
+      const state
+      of states
+    ) {
+      assert.equal(
+        m1[state],
+        1,
+        state
+      );
+    }
+
+    assert.equal(
+      m1.other_or_missing,
+      0
+    );
+
+    assert.equal(
+      m1.project_count,
+      states.length
+    );
+  }
+);
+
+test(
+  "T5 maps unknown missing and duplicate milestone records to other_or_missing",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          minimalPacket({
+            project_id:
+              "RMS-T5-UNKNOWN",
+            milestones: [
+              analyticsMilestone(
+                "M1",
+                "mystery_state"
+              )
+            ]
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-MISSING",
+            milestones: []
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-DUPLICATE",
+            milestones: [
+              analyticsMilestone(
+                "M1",
+                "approved"
+              ),
+              analyticsMilestone(
+                "M1",
+                "complete"
+              )
+            ]
+          })
+        ])
+      );
+
+    const m1 =
+      analytics
+        .milestone_states[0];
+
+    assert.equal(
+      m1.other_or_missing,
+      3
+    );
+
+    assert.equal(
+      m1.approved,
+      0
+    );
+
+    assert.equal(
+      m1.complete,
+      0
+    );
+
+    assert.equal(
+      m1.project_count,
+      3
+    );
+  }
+);
+
+test(
+  "T5 makes every valid project contribute exactly once to every milestone distribution",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          minimalPacket({
+            project_id:
+              "RMS-T5-ONCE-A",
+            milestones: [
+              analyticsMilestone(
+                "M1",
+                "approved"
+              ),
+              analyticsMilestone(
+                "M3",
+                "awaiting_teacher"
+              )
+            ]
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-ONCE-B",
+            milestones: [
+              analyticsMilestone(
+                "M2",
+                "complete"
+              ),
+              analyticsMilestone(
+                "M5",
+                "revision_requested"
+              )
+            ]
+          })
+        ])
+      );
+
+    for (
+      const milestone
+      of analytics
+        .milestone_states
+    ) {
+      const sum = [
+        "blocked",
+        "student_ready",
+        "awaiting_teacher",
+        "revision_requested",
+        "approved",
+        "complete",
+        "other_or_missing"
+      ].reduce(
+        (
+          total,
+          key
+        ) =>
+          total +
+          milestone[key],
+        0
+      );
+
+      assert.equal(
+        sum,
+        2,
+        milestone.milestone_id
+      );
+
+      assert.equal(
+        milestone.project_count,
+        2
+      );
+    }
+  }
+);
+
+test(
+  "T5 workflow counts are project-level descriptive counts",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          minimalPacket({
+            project_id:
+              "RMS-T5-WORKFLOW-A",
+            milestones: [
+              analyticsMilestone(
+                "M1",
+                "awaiting_teacher",
+                [
+                  "Blocker A"
+                ]
+              ),
+              analyticsMilestone(
+                "M3",
+                "awaiting_teacher"
+              )
+            ],
+            methods: {
+              ethicsStatus:
+                "teacher_review",
+              locked:
+                true
+            },
+            analysis: {
+              stored_runs:
+                2
+            }
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-WORKFLOW-B",
+            milestones: [
+              analyticsMilestone(
+                "M2",
+                "revision_requested",
+                [
+                  "Blocker B"
+                ]
+              )
+            ],
+            methods: {
+              ethicsStatus:
+                "do_not_facilitate",
+              locked:
+                false
+            },
+            analysis: {
+              stored_runs:
+                0
+            }
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-WORKFLOW-C",
+            milestones: []
+          })
+        ])
+      );
+
+    assert.deepEqual(
+      analytics.workflow_counts,
+      {
+        projects_awaiting_teacher:
+          1,
+        projects_revision_requested:
+          1,
+        projects_with_blockers:
+          2,
+        ethics_teacher_review:
+          1,
+        ethics_do_not_facilitate:
+          1,
+        locked_protocols:
+          1,
+        projects_with_stored_analysis:
+          1
+      }
+    );
+  }
+);
+
+test(
+  "T5 ethics locked-protocol and analysis counts require exact affirmative evidence",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          minimalPacket({
+            project_id:
+              "RMS-T5-EXACT-A",
+            methods: {
+              ethicsStatus:
+                "Teacher_Review",
+              locked:
+                "true"
+            },
+            analysis: {
+              stored_runs:
+                "2"
+            }
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-EXACT-B",
+            methods: {
+              ethicsStatus:
+                "teacher_review",
+              locked:
+                true
+            },
+            analysis: {
+              stored_runs:
+                1
+            }
+          })
+        ])
+      );
+
+    assert.equal(
+      analytics
+        .workflow_counts
+        .ethics_teacher_review,
+      1
+    );
+
+    assert.equal(
+      analytics
+        .workflow_counts
+        .locked_protocols,
+      1
+    );
+
+    assert.equal(
+      analytics
+        .workflow_counts
+        .projects_with_stored_analysis,
+      1
+    );
+  }
+);
+
+test(
+  "T5 groups course sections with a neutral unspecified category",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          minimalPacket({
+            project_id:
+              "RMS-T5-SECTION-A",
+            course_section:
+              "Period 2"
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-SECTION-B",
+            course_section:
+              ""
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-SECTION-C",
+            course_section:
+              "   "
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-SECTION-D",
+            course_section:
+              "Period 2"
+          })
+        ])
+      );
+
+    assert.deepEqual(
+      analytics.course_sections,
+      [
+        {
+          course_section:
+            "Period 2",
+          project_count:
+            2
+        },
+        {
+          course_section:
+            "Unspecified",
+          project_count:
+            2
+        }
+      ]
+    );
+  }
+);
+
+test(
+  "T5 course-section ordering is deterministic and does not depend on input order",
+  () => {
+    const data =
+      loadModule();
+
+    const packets = [
+      minimalPacket({
+        project_id:
+          "RMS-T5-ORDER-Z",
+        course_section:
+          "Zeta"
+      }),
+      minimalPacket({
+        project_id:
+          "RMS-T5-ORDER-A",
+        course_section:
+          "Alpha"
+      }),
+      minimalPacket({
+        project_id:
+          "RMS-T5-ORDER-B",
+        course_section:
+          "Beta"
+      })
+    ];
+
+    const first =
+      plainAnalytics(
+        data.deriveTeacherAnalytics(
+          packets
+        )
+      );
+
+    const second =
+      plainAnalytics(
+        data.deriveTeacherAnalytics(
+          packets.slice().reverse()
+        )
+      );
+
+    assert.deepEqual(
+      first.course_sections,
+      [
+        {
+          course_section:
+            "Alpha",
+          project_count:
+            1
+        },
+        {
+          course_section:
+            "Beta",
+          project_count:
+            1
+        },
+        {
+          course_section:
+            "Zeta",
+          project_count:
+            1
+        }
+      ]
+    );
+
+    assert.deepEqual(
+      second.course_sections,
+      first.course_sections
+    );
+  }
+);
+
+test(
+  "T5 literature analytics report presence counts only",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          minimalPacket({
+            project_id:
+              "RMS-T5-LIT-A",
+            sources: {
+              included:
+                5,
+              verified:
+                3
+            }
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-LIT-B",
+            sources: {
+              included:
+                2,
+              verified:
+                0
+            }
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-LIT-C",
+            sources: {
+              included:
+                0,
+              verified:
+                0
+            }
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-LIT-D"
+          })
+        ])
+      );
+
+    assert.deepEqual(
+      analytics.literature_status,
+      {
+        projects_with_included_sources:
+          2,
+        projects_with_verified_sources:
+          1
+      }
+    );
+
+    assert.equal(
+      "mean_included_sources"
+        in analytics
+          .literature_status,
+      false
+    );
+  }
+);
+
+test(
+  "T5 analytics ignore methods diagnostic scores and labels",
+  () => {
+    const data =
+      loadModule();
+
+    const base = {
+      project_id:
+        "RMS-T5-METHOD-SCORE",
+      methods: {
+        ethicsStatus:
+          "",
+        locked:
+          false,
+        score:
+          1,
+        label:
+          "low",
+        critical:
+          9,
+        warning:
+          8
+      }
+    };
+
+    const changed = {
+      ...base,
+      methods: {
+        ...base.methods,
+        score:
+          999,
+        label:
+          "high",
+        critical:
+          0,
+        warning:
+          0
+      }
+    };
+
+    const first =
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          minimalPacket(
+            base
+          )
+        ])
+      );
+
+    const second =
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          minimalPacket(
+            changed
+          )
+        ])
+      );
+
+    assert.deepEqual(
+      second,
+      first
+    );
+  }
+);
+
+test(
+  "T5 analytics ignore competency snapshots and teacher competency ratings",
+  () => {
+    const data =
+      loadModule();
+
+    const firstPacket =
+      minimalPacket({
+        project_id:
+          "RMS-T5-COMPETENCY",
+        competency_snapshot: {
+          overall:
+            3,
+          dimensions: [
+            {
+              level: 3
+            }
+          ]
+        },
+        competency_ratings: [
+          {
+            rating: 3
+          }
+        ]
+      });
+
+    const secondPacket =
+      minimalPacket({
+        project_id:
+          "RMS-T5-COMPETENCY",
+        competency_snapshot: {
+          overall:
+            0
+        },
+        competency_ratings: [
+          {
+            rating: 0
+          }
+        ]
+      });
+
+    assert.deepEqual(
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          firstPacket
+        ])
+      ),
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          secondPacket
+        ])
+      )
+    );
+  }
+);
+
+test(
+  "T5 analytics ignore writing word counts and paper-audit values",
+  () => {
+    const data =
+      loadModule();
+
+    const first =
+      minimalPacket({
+        project_id:
+          "RMS-T5-WRITING",
+        writing: {
+          paper_audit: {
+            score:
+              1,
+            label:
+              "first"
+          },
+          section_words: {
+            introduction:
+              100,
+            methods:
+              200
+          }
+        }
+      });
+
+    const second =
+      minimalPacket({
+        project_id:
+          "RMS-T5-WRITING",
+        writing: {
+          paper_audit: {
+            score:
+              99,
+            label:
+              "second"
+          },
+          section_words: {
+            introduction:
+              9000,
+            methods:
+              8000
+          }
+        }
+      });
+
+    assert.deepEqual(
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          first
+        ])
+      ),
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          second
+        ])
+      )
+    );
+  }
+);
+
+test(
+  "T5 analytics expose no student ranking grading prediction or composite output",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          minimalPacket({
+            project_id:
+              "RMS-T5-NO-SCORE",
+            student_alias:
+              "Student A"
+          })
+        ])
+      );
+
+    const json =
+      JSON.stringify(
+        analytics
+      ).toLowerCase();
+
+    for (
+      const forbidden
+      of [
+        "student_alias",
+        "rank",
+        "leaderboard",
+        "grade",
+        "percentile",
+        "risk",
+        "prediction",
+        "probability",
+        "competency",
+        "mastery",
+        "proficiency",
+        "overall_score",
+        "progress_score",
+        "performance_score"
+      ]
+    ) {
+      assert.equal(
+        json.includes(
+          forbidden
+        ),
+        false,
+        forbidden
+      );
+    }
+  }
+);
+
+test(
+  "T5 analytics are deterministic for the same normalized packet collection",
+  () => {
+    const data =
+      loadModule();
+
+    const packets = [
+      minimalPacket({
+        project_id:
+          "RMS-T5-DETERMINISTIC-A",
+        course_section:
+          "A",
+        stage_ready: {
+          1: true,
+          7: true
+        }
+      }),
+      minimalPacket({
+        project_id:
+          "RMS-T5-DETERMINISTIC-B",
+        course_section:
+          "B",
+        milestones: [
+          analyticsMilestone(
+            "M4",
+            "approved"
+          )
+        ]
+      })
+    ];
+
+    const first =
+      plainAnalytics(
+        data.deriveTeacherAnalytics(
+          packets
+        )
+      );
+
+    const second =
+      plainAnalytics(
+        data.deriveTeacherAnalytics(
+          packets
+        )
+      );
+
+    assert.deepEqual(
+      second,
+      first
+    );
+  }
+);
+
+test(
+  "T5 analytics structures are recursively frozen at their public aggregate boundaries",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      data.deriveTeacherAnalytics([
+        minimalPacket({
+          project_id:
+            "RMS-T5-FROZEN",
+          course_section:
+            "Section A"
+        })
+      ]);
+
+    const values = [
+      analytics,
+      analytics.stage_readiness,
+      analytics.stage_readiness[0],
+      analytics.milestone_states,
+      analytics.milestone_states[0],
+      analytics.workflow_counts,
+      analytics.course_sections,
+      analytics.course_sections[0],
+      analytics.literature_status
+    ];
+
+    for (
+      const value
+      of values
+    ) {
+      assert.equal(
+        Object.isFrozen(
+          value
+        ),
+        true
+      );
+    }
+  }
+);
+
+test(
+  "T5 analytics do not mutate source packet arrays or packet content",
+  () => {
+    const data =
+      loadModule();
+
+    const packets = [
+      minimalPacket({
+        project_id:
+          "RMS-T5-NOMUTATE",
+        course_section:
+          "Original",
+        stage_ready: {
+          1: true
+        },
+        milestones: [
+          analyticsMilestone(
+            "M1",
+            "student_ready"
+          )
+        ]
+      })
+    ];
+
+    const before =
+      JSON.stringify(
+        packets
+      );
+
+    data.deriveTeacherAnalytics(
+      packets
+    );
+
+    assert.equal(
+      JSON.stringify(
+        packets
+      ),
+      before
+    );
+  }
+);
+
+test(
+  "T5 analytics reuse project-id deduplication and the later whole packet",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      plainAnalytics(
+        data.deriveTeacherAnalytics([
+          minimalPacket({
+            project_id:
+              "RMS-T5-DUPE-PROJECT",
+            course_section:
+              "First",
+            stage_ready: {
+              1: true
+            }
+          }),
+          minimalPacket({
+            project_id:
+              "RMS-T5-DUPE-PROJECT",
+            course_section:
+              "Second",
+            stage_ready: {
+              2: true
+            }
+          })
+        ])
+      );
+
+    assert.equal(
+      analytics.project_count,
+      1
+    );
+
+    assert.equal(
+      analytics
+        .stage_readiness[0]
+        .ready_projects,
+      0
+    );
+
+    assert.equal(
+      analytics
+        .stage_readiness[1]
+        .ready_projects,
+      1
+    );
+
+    assert.deepEqual(
+      analytics.course_sections,
+      [
+        {
+          course_section:
+            "Second",
+          project_count:
+            1
+        }
+      ]
+    );
+  }
+);
+
+test(
+  "T5 analytics remain browser-independent and do not call the student analytics engine",
+  () => {
+    const data =
+      loadModule();
+
+    const analytics =
+      data.deriveTeacherAnalytics([
+        minimalPacket({
+          project_id:
+            "RMS-T5-PURE"
+        })
+      ]);
+
+    assert.equal(
+      analytics.project_count,
+      1
+    );
+
+    assert.equal(
+      source.includes(
+        "window.RMSAnalytics"
+      ),
+      false
+    );
+
+    assert.equal(
+      source.includes(
+        "deriveTeacherAnalytics"
+      ),
+      true
+    );
+  }
+);
