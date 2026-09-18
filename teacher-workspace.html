@@ -1,0 +1,6327 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+  <meta
+    name="robots"
+    content="noindex, nofollow"
+  >
+  <title>Teacher Workspace | Research Methods Studio</title>
+
+  <style>
+    :root {
+      color-scheme: light;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      --page: #f5f7fb;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --text: #172033;
+      --muted: #667085;
+      --border: #d9e0ea;
+      --accent: #284b7a;
+      --accent-soft: #edf3fb;
+      --danger: #8f2d2d;
+      --focus: #1d70b8;
+      --radius: 14px;
+      --shadow:
+        0 12px 30px rgba(23, 32, 51, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--page);
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .auth-gate {
+      display: grid;
+      min-height: 100vh;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .auth-card {
+      width: min(520px, 100%);
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .auth-card h1 {
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+    }
+
+    .auth-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .workspace[hidden],
+    .auth-gate[hidden],
+    .workspace-panel[hidden] {
+      display: none !important;
+    }
+
+    .workspace {
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky;
+      z-index: 10;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 70px;
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 760;
+    }
+
+    .brand-subtitle {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .topbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .button {
+      min-height: 40px;
+      padding: 8px 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background: var(--surface-soft);
+    }
+
+    .button-danger {
+      border-color: #e5bcbc;
+      color: var(--danger);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 245px minmax(0, 1fr);
+      min-height: calc(100vh - 70px);
+    }
+
+    .sidebar {
+      padding: 22px 14px;
+      border-right: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .sidebar-label {
+      margin: 0 10px 10px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: grid;
+      gap: 5px;
+    }
+
+    .nav-button {
+      width: 100%;
+      padding: 11px 12px;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .nav-button:hover {
+      background: var(--surface-soft);
+    }
+
+    .nav-button[aria-current="page"] {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .content {
+      min-width: 0;
+      padding: 30px;
+    }
+
+    .content-inner {
+      width: min(1040px, 100%);
+      margin: 0 auto;
+    }
+
+    .workspace-header {
+      margin-bottom: 24px;
+    }
+
+    .workspace-header h1 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+    }
+
+    .workspace-header p {
+      max-width: 720px;
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .notice {
+      margin-bottom: 22px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .panel {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 5px 18px rgba(23, 32, 51, 0.045);
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 1.3rem;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .placeholder-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .placeholder-card {
+      min-height: 110px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .placeholder-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .placeholder-card span {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .import-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .file-control {
+      display: grid;
+      gap: 6px;
+      min-width: min(340px, 100%);
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .file-control input,
+    .queue-filter select {
+      min-height: 42px;
+      max-width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+    }
+
+    .file-control input:focus-visible,
+    .queue-filter select:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .import-report {
+      margin-top: 14px !important;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-soft);
+      white-space: pre-line;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(175px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .metric-card {
+      min-height: 105px;
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .metric-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .metric-card strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 1.65rem;
+      line-height: 1;
+    }
+
+    .queue-filter {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .queue-filter label {
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .result-count {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .item-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .project-card {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .project-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .project-card-title {
+      min-width: 0;
+    }
+
+    .project-card-title strong {
+      display: block;
+      overflow-wrap: anywhere;
+    }
+
+    .project-card-title span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      overflow-wrap: anywhere;
+    }
+
+    .project-card p {
+      margin-top: 10px;
+    }
+
+    .flag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .queue-flag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 8px;
+      border: 1px solid #bfd0e5;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .queue-flag-danger {
+      border-color: #e5bcbc;
+      background: #fff4f4;
+      color: var(--danger);
+    }
+
+    .flag-reason {
+      margin-top: 6px !important;
+      font-size: 0.88rem;
+    }
+
+    .empty-state {
+      margin-top: 18px !important;
+      padding: 18px;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .inspector {
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+    }
+
+    .inspector[hidden] {
+      display: none !important;
+    }
+
+    .inspector-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .inspector-head h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .inspector-head p {
+      margin-top: 5px;
+      font-size: 0.88rem;
+    }
+
+    .inspector-section {
+      padding: 18px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .inspector-section h3 {
+      margin: 0 0 12px;
+      font-size: 1.05rem;
+    }
+
+    .key-value-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(210px, 1fr));
+      gap: 10px;
+      margin: 0;
+    }
+
+    .key-value {
+      min-width: 0;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-soft);
+    }
+
+    .key-value dt {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .key-value dd {
+      margin: 5px 0 0;
+      overflow-wrap: anywhere;
+      line-height: 1.5;
+    }
+
+    .stage-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(68px, 1fr));
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .stage-chip {
+      padding: 8px 6px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-soft);
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.78rem;
+    }
+
+    .stage-chip[data-ready="true"] {
+      border-color: #b9d3c0;
+      background: #f2faf4;
+      color: #245c32;
+      font-weight: 700;
+    }
+
+    .milestone-card {
+      margin-top: 10px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-soft);
+    }
+
+    .milestone-card h4 {
+      margin: 0;
+      font-size: 0.96rem;
+    }
+
+    .milestone-card p {
+      margin-top: 7px;
+      font-size: 0.88rem;
+    }
+
+    .compact-list {
+      margin: 8px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .privacy-note {
+      margin-top: 12px !important;
+      padding: 10px 12px;
+      border-left: 3px solid var(--border);
+      background: var(--surface-soft);
+      font-size: 0.86rem;
+    }
+
+    .teacher-review-section {
+      margin-top: 18px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .teacher-review-section > h3 {
+      margin-top: 0;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .review-field {
+      display: grid;
+      gap: 6px;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .review-field input,
+    .review-field select,
+    .review-field textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 9px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-weight: 400;
+    }
+
+    .review-field textarea {
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    .review-field-wide {
+      grid-column: 1 / -1;
+    }
+
+    .review-card {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-soft);
+    }
+
+    .review-card h4 {
+      margin: 0 0 8px;
+      font-size: 0.96rem;
+    }
+
+    .review-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .review-status {
+      margin-top: 12px;
+      min-height: 1.4em;
+      font-size: 0.88rem;
+    }
+
+    .review-preview {
+      margin-top: 14px;
+      max-height: 360px;
+      overflow: auto;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-soft);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .review-separator {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .assignment-setup-form {
+      display: grid;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .assignment-field-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .assignment-field {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .assignment-field-wide {
+      grid-column: 1 / -1;
+    }
+
+    .assignment-field input,
+    .assignment-field textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 9px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-weight: 400;
+    }
+
+    .assignment-field textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .assignment-milestones {
+      margin: 0;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .assignment-milestones legend {
+      padding: 0 7px;
+      font-weight: 700;
+    }
+
+    .assignment-milestone-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .assignment-actions,
+    .assignment-import-actions,
+    .recovery-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .assignment-status {
+      min-height: 1.4em;
+      margin-top: 4px;
+      font-size: 0.88rem;
+    }
+
+    .assignment-status[data-error="true"] {
+      font-weight: 700;
+    }
+
+    .assignment-preview {
+      max-height: 380px;
+      overflow: auto;
+      margin: 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-soft);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .assignment-preview[hidden] {
+      display: none !important;
+    }
+
+    .chat-controls-section {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .chat-controls-section h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .chat-control-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .chat-control-copy {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .chat-control-copy h4 {
+      margin: 0 0 5px;
+      font-size: 0.98rem;
+    }
+
+    .chat-control-copy p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .chat-control-action {
+      flex: 0 0 auto;
+    }
+
+    .chat-control-action label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      font-weight: 700;
+    }
+
+    .chat-control-state {
+      margin: 10px 0 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 720px) {
+      .chat-control-row {
+        flex-direction: column;
+      }
+
+      .chat-control-action {
+        width: 100%;
+      }
+    }
+
+    .analytics-section {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .analytics-section h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .analytics-stage-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(120px, 1fr));
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .analytics-stage-card {
+      padding: 11px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-soft);
+      text-align: center;
+    }
+
+    .analytics-stage-card strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 1.1rem;
+    }
+
+    .analytics-stage-card span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.35;
+    }
+
+    .analytics-milestone-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .analytics-milestone-card {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .analytics-milestone-card h4 {
+      margin: 0 0 10px;
+      font-size: 0.95rem;
+    }
+
+    .analytics-state-list {
+      display: grid;
+      gap: 6px;
+      margin: 0;
+    }
+
+    .analytics-state-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 6px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .analytics-state-row:first-child {
+      border-top: 0;
+    }
+
+    .analytics-state-row dt {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .analytics-state-row dd {
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .analytics-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .analytics-list-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-soft);
+    }
+
+    .analytics-list-row span {
+      overflow-wrap: anywhere;
+    }
+
+    .analytics-list-row strong {
+      flex: 0 0 auto;
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        position: static;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .sidebar {
+        overflow-x: auto;
+        padding: 10px 14px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .sidebar-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      .nav {
+        display: flex;
+        width: max-content;
+        min-width: 100%;
+      }
+
+      .nav-button {
+        width: auto;
+        white-space: nowrap;
+      }
+
+      .content {
+        padding: 22px 16px 34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section
+    class="auth-gate"
+    id="authGate"
+    aria-live="polite"
+  >
+    <div class="auth-card">
+      <h1>Checking teacher access</h1>
+      <p>
+        Teacher tools remain locked until this browser session is
+        verified by the class service.
+      </p>
+    </div>
+  </section>
+
+  <div
+    class="workspace"
+    id="teacherWorkspace"
+    hidden
+  >
+    <header class="topbar">
+      <div class="brand">
+        <p class="brand-title">
+          Research Methods Studio
+        </p>
+        <p class="brand-subtitle">
+          Teacher Workspace
+        </p>
+      </div>
+
+      <div
+        class="topbar-actions"
+        aria-label="Teacher workspace actions"
+      >
+        <a
+          class="button"
+          href="./"
+          id="viewStudentSite"
+        >
+          View student site
+        </a>
+
+        <button
+          class="button button-danger"
+          type="button"
+          id="leaveTeacherMode"
+        >
+          Leave teacher mode
+        </button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside
+        class="sidebar"
+        aria-label="Teacher workspace sections"
+      >
+        <p class="sidebar-label">
+          Workspace
+        </p>
+
+        <nav
+          class="nav"
+          id="workspaceNav"
+        >
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="overview"
+            aria-current="page"
+          >
+            Overview
+          </button>
+
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="review-queue"
+          >
+            Review Queue
+          </button>
+
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="students"
+          >
+            Students
+          </button>
+
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="assignment-setup"
+          >
+            Assignment Setup
+          </button>
+
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="analytics"
+          >
+            Analytics
+          </button>
+
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="chat-controls"
+          >
+            Chat Controls
+          </button>
+
+          <button
+            class="nav-button"
+            type="button"
+            data-panel="recovery"
+          >
+            Recovery
+          </button>
+        </nav>
+      </aside>
+
+      <main
+        class="content"
+        id="mainContent"
+        tabindex="-1"
+      >
+        <div class="content-inner">
+          <div class="workspace-header">
+            <h1>Teacher Workspace</h1>
+            <p>
+              Review student research progress while keeping teacher
+              decisions separate from software-generated indicators.
+            </p>
+          </div>
+
+          <div
+            class="notice"
+            id="workspaceDataNotice"
+          >
+            Imported review packets stay in memory in this page only.
+            This workspace does not upload or persist packet contents.
+            Review packets omit raw dataset rows, full paper and source
+            text, full source notes, and Research Chat transcripts.
+          </div>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-overview"
+            data-workspace-panel="overview"
+          >
+            <h2>Overview</h2>
+            <p>
+              Import version 1.7 student review packets to build a
+              temporary class-level review view in this browser tab.
+            </p>
+
+            <div class="import-controls">
+              <label class="file-control">
+                <span>Import student review packets</span>
+                <input
+                  id="studentPacketFiles"
+                  type="file"
+                  multiple
+                  accept=".json,application/json"
+                  aria-describedby="workspaceDataNotice"
+                >
+              </label>
+
+              <button
+                class="button"
+                id="clearImportedPackets"
+                type="button"
+              >
+                Clear imported packets
+              </button>
+            </div>
+
+            <p
+              class="import-report"
+              id="importReport"
+              aria-live="polite"
+            >
+              No review packets are imported.
+            </p>
+
+            <div
+              class="metric-grid"
+              aria-label="Imported review packet summary"
+            >
+              <div class="metric-card">
+                <span>Imported projects</span>
+                <strong id="metricImportedProjects">0</strong>
+              </div>
+
+              <div class="metric-card">
+                <span>Checkpoints awaiting review</span>
+                <strong id="metricAwaitingReview">0</strong>
+              </div>
+
+              <div class="metric-card">
+                <span>Revision requests</span>
+                <strong id="metricRevisionRequests">0</strong>
+              </div>
+
+              <div class="metric-card">
+                <span>Projects with blockers</span>
+                <strong id="metricBlockers">0</strong>
+              </div>
+
+              <div class="metric-card">
+                <span>Ethics teacher review</span>
+                <strong id="metricEthicsReview">0</strong>
+              </div>
+
+              <div class="metric-card">
+                <span>Do not facilitate</span>
+                <strong id="metricEthicsStop">0</strong>
+              </div>
+
+              <div class="metric-card">
+                <span>Locked protocols</span>
+                <strong id="metricLockedProtocols">0</strong>
+              </div>
+
+              <div class="metric-card">
+                <span>Projects with analysis records</span>
+                <strong id="metricAnalysisRecords">0</strong>
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-review-queue"
+            data-workspace-panel="review-queue"
+            hidden
+          >
+            <h2>Review Queue</h2>
+            <p>
+              Queue flags come only from explicit evidence in imported
+              review packets. They are triage signals and do not create
+              grades, approvals, or student rankings.
+            </p>
+
+            <div class="queue-filter">
+              <label for="reviewQueueFilter">
+                Show
+              </label>
+
+              <select id="reviewQueueFilter">
+                <option value="all">All imported projects</option>
+                <option value="awaiting_review">Awaiting review</option>
+                <option value="revision_requested">Revision requested</option>
+                <option value="ethics_review">Ethics review</option>
+                <option value="do_not_facilitate">Do not facilitate</option>
+                <option value="blocked">Blocked</option>
+                <option value="no_immediate_action">No immediate teacher action</option>
+              </select>
+
+              <span
+                class="result-count"
+                id="reviewQueueCount"
+                aria-live="polite"
+              >
+                0 projects
+              </span>
+            </div>
+
+            <div
+              class="item-list"
+              id="reviewQueueList"
+            ></div>
+          </section>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-students"
+            data-workspace-panel="students"
+            hidden
+          >
+            <h2>Students</h2>
+            <p>
+              Inspect the information contained in each imported review
+              packet. The Inspector is read-only and does not contain
+              all student work.
+            </p>
+
+            <div
+              class="item-list"
+              id="studentList"
+            ></div>
+
+            <div
+              class="inspector"
+              id="studentInspector"
+              aria-live="polite"
+              hidden
+            ></div>
+          </section>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-assignment-setup"
+            data-workspace-panel="assignment-setup"
+            hidden
+          >
+            <h2>Assignment Setup</h2>
+            <p>
+              Create assignment context around the existing 18-stage
+              Research Journey. Assignment Setup does not change student
+              progress, milestone logic, checkpoints, grades, or teacher
+              review decisions.
+            </p>
+
+            <div class="notice">
+              Assignment Setup stays in memory in this page only. You may
+              preview, download, and later re-import an
+              rms_assignment_setup version 1.0 JSON file. Nothing here
+              is uploaded or written into student projects.
+            </div>
+
+            <div
+              class="assignment-setup-form"
+              id="assignmentSetupForm"
+            >
+              <div class="assignment-field-grid">
+                <label class="assignment-field">
+                  <span>Assignment ID</span>
+                  <input
+                    id="assignmentId"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="BIO-AR-01"
+                  >
+                </label>
+
+                <label class="assignment-field">
+                  <span>Assignment title</span>
+                  <input
+                    id="assignmentTitle"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="AP Biology Action Research"
+                  >
+                </label>
+
+                <label class="assignment-field">
+                  <span>Course / section</span>
+                  <input
+                    id="assignmentCourseSection"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Period 2"
+                  >
+                </label>
+
+                <label class="assignment-field">
+                  <span>Teacher display name</span>
+                  <input
+                    id="assignmentTeacherName"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Teacher name shown in this assignment file"
+                  >
+                </label>
+
+                <label
+                  class="assignment-field assignment-field-wide"
+                >
+                  <span>Student instructions</span>
+                  <textarea
+                    id="assignmentStudentInstructions"
+                    placeholder="Optional assignment-specific directions"
+                  ></textarea>
+                </label>
+
+                <label
+                  class="assignment-field assignment-field-wide"
+                >
+                  <span>Teacher notes</span>
+                  <textarea
+                    id="assignmentTeacherNotes"
+                    placeholder="Optional teacher-only notes"
+                  ></textarea>
+                </label>
+              </div>
+
+              <fieldset class="assignment-milestones">
+                <legend>Milestone due dates</legend>
+
+                <p class="privacy-note">
+                  Due dates are planning information only. They never
+                  block work, change milestone state, request revision,
+                  approve work, assign a grade, or change queue priority.
+                </p>
+
+                <div class="assignment-milestone-grid">
+                  <label class="assignment-field">
+                    <span>M1 ? Question Ready</span>
+                    <input
+                      id="assignmentDueM1"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="YYYY-MM-DD"
+                      autocomplete="off"
+                    >
+                  </label>
+
+                  <label class="assignment-field">
+                    <span>M2 ? Evidence Base Ready</span>
+                    <input
+                      id="assignmentDueM2"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="YYYY-MM-DD"
+                      autocomplete="off"
+                    >
+                  </label>
+
+                  <label class="assignment-field">
+                    <span>M3 ? Method Approved</span>
+                    <input
+                      id="assignmentDueM3"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="YYYY-MM-DD"
+                      autocomplete="off"
+                    >
+                  </label>
+
+                  <label class="assignment-field">
+                    <span>M4 ? Analysis Ready</span>
+                    <input
+                      id="assignmentDueM4"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="YYYY-MM-DD"
+                      autocomplete="off"
+                    >
+                  </label>
+
+                  <label class="assignment-field">
+                    <span>M5 ? Paper Ready for Final Review</span>
+                    <input
+                      id="assignmentDueM5"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="YYYY-MM-DD"
+                      autocomplete="off"
+                    >
+                  </label>
+                </div>
+              </fieldset>
+
+              <div class="assignment-import-actions">
+                <label class="file-control">
+                  <span>Import assignment setup JSON</span>
+                  <input
+                    id="assignmentSetupFile"
+                    type="file"
+                    accept=".json,application/json"
+                  >
+                </label>
+
+                <button
+                  class="button"
+                  id="clearAssignmentSetup"
+                  type="button"
+                >
+                  Clear assignment draft
+                </button>
+              </div>
+
+              <div class="assignment-actions">
+                <button
+                  class="button"
+                  id="previewAssignmentSetup"
+                  type="button"
+                >
+                  Preview assignment JSON
+                </button>
+
+                <button
+                  class="button"
+                  id="downloadAssignmentSetup"
+                  type="button"
+                  disabled
+                >
+                  Download assignment JSON
+                </button>
+              </div>
+
+              <p
+                class="assignment-status"
+                id="assignmentSetupStatus"
+                aria-live="polite"
+              >
+                Assignment draft is held only in this page session.
+              </p>
+
+              <pre
+                class="assignment-preview"
+                id="assignmentSetupPreview"
+                hidden
+              ></pre>
+            </div>
+          </section>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-analytics"
+            data-workspace-panel="analytics"
+            hidden
+          >
+            <h2>Analytics</h2>
+
+            <p>
+              Review descriptive workflow summaries from the
+              rms_student_review version 1.7 packets currently imported
+              into this page.
+            </p>
+
+            <div class="notice">
+              These counts describe packet-reported workflow status only.
+              They are not grades, rankings, predictions, measures of
+              student ability, or comparisons of research quality.
+            </div>
+
+            <div
+              class="metric-grid"
+              aria-label="Analytics denominator"
+            >
+              <div class="metric-card">
+                <span>Imported projects represented</span>
+                <strong id="analyticsProjectCount">0</strong>
+              </div>
+            </div>
+
+            <p
+              class="empty-state"
+              id="analyticsZeroState"
+            >
+              Import student review packets to generate local,
+              descriptive workflow analytics.
+            </p>
+
+            <div
+              id="analyticsContent"
+              hidden
+            >
+              <section class="analytics-section">
+                <h3>Workflow conditions</h3>
+
+                <p>
+                  Each count reports projects with explicit packet
+                  evidence for that condition.
+                </p>
+
+                <div class="metric-grid">
+                  <div class="metric-card">
+                    <span>Projects awaiting teacher review</span>
+                    <strong id="analyticsAwaitingTeacher">0</strong>
+                  </div>
+
+                  <div class="metric-card">
+                    <span>Projects with revision requested</span>
+                    <strong id="analyticsRevisionRequested">0</strong>
+                  </div>
+
+                  <div class="metric-card">
+                    <span>Projects with milestone blockers</span>
+                    <strong id="analyticsBlockers">0</strong>
+                  </div>
+
+                  <div class="metric-card">
+                    <span>Projects reporting ethics teacher review</span>
+                    <strong id="analyticsEthicsReview">0</strong>
+                  </div>
+
+                  <div class="metric-card">
+                    <span>Projects reporting do not facilitate</span>
+                    <strong id="analyticsEthicsStop">0</strong>
+                  </div>
+
+                  <div class="metric-card">
+                    <span>Projects reporting a locked protocol</span>
+                    <strong id="analyticsLockedProtocols">0</strong>
+                  </div>
+
+                  <div class="metric-card">
+                    <span>Projects with stored analysis records</span>
+                    <strong id="analyticsStoredAnalysis">0</strong>
+                  </div>
+                </div>
+              </section>
+
+              <section class="analytics-section">
+                <h3>Stage readiness</h3>
+
+                <p>
+                  Stage readiness is packet-reported workflow status.
+                  A project is counted as ready only when that stage is
+                  explicitly reported as ready.
+                </p>
+
+                <div
+                  class="analytics-stage-grid"
+                  id="analyticsStageReadiness"
+                  aria-label="Stage readiness counts for stages 1 through 18"
+                ></div>
+              </section>
+
+              <section class="analytics-section">
+                <h3>Milestone-state distributions</h3>
+
+                <p>
+                  Every imported project contributes once to each M1
+                  through M5 distribution. Unknown, missing, or
+                  noncanonical states remain Other or missing.
+                </p>
+
+                <div
+                  class="analytics-milestone-grid"
+                  id="analyticsMilestoneStates"
+                ></div>
+              </section>
+
+              <section class="analytics-section">
+                <h3>Course sections</h3>
+
+                <p>
+                  Course-section counts are organizational summaries
+                  only and are not comparisons between sections.
+                </p>
+
+                <div
+                  class="analytics-list"
+                  id="analyticsCourseSections"
+                ></div>
+              </section>
+
+              <section class="analytics-section">
+                <h3>Literature-status presence</h3>
+
+                <p>
+                  These counts report whether a project packet includes
+                  positive source counts. Larger source counts are not
+                  interpreted as stronger research.
+                </p>
+
+                <div class="metric-grid">
+                  <div class="metric-card">
+                    <span>Projects reporting included sources</span>
+                    <strong id="analyticsIncludedSources">0</strong>
+                  </div>
+
+                  <div class="metric-card">
+                    <span>Projects reporting verified sources</span>
+                    <strong id="analyticsVerifiedSources">0</strong>
+                  </div>
+                </div>
+              </section>
+
+              <p class="privacy-note">
+                Missing optional packet information remains unknown.
+                Analytics does not inspect raw dataset rows, full
+                manuscripts, full source notes, Research Chat
+                transcripts, or hidden student-project content.
+              </p>
+            </div>
+          </section>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-chat-controls"
+            data-workspace-panel="chat-controls"
+            hidden
+          >
+            <h2>Chat Controls</h2>
+
+            <p>
+              Review Research Chat configuration and manage the limited
+              preview controls available in this browser session.
+            </p>
+
+            <div class="notice">
+              These controls do not create or change a class-wide Chat
+              policy. Student Research Chat transcripts are not available
+              in Teacher Workspace.
+            </div>
+
+            <div
+              class="chat-controls-section"
+              aria-labelledby="chatServiceHeading"
+            >
+              <h3 id="chatServiceHeading">
+                Research Chat configuration
+              </h3>
+
+              <div
+                class="metric-grid"
+                aria-label="Research Chat configuration status"
+              >
+                <div class="metric-card">
+                  <span>Configuration</span>
+                  <strong id="chatServiceConfigured">
+                    Checking
+                  </strong>
+                </div>
+
+                <div class="metric-card">
+                  <span>Endpoint origin</span>
+                  <strong id="chatEndpointOrigin">
+                    Checking
+                  </strong>
+                </div>
+
+                <div class="metric-card">
+                  <span>Runtime release</span>
+                  <strong id="chatRuntimeVersion">
+                    Checking
+                  </strong>
+                </div>
+
+                <div class="metric-card">
+                  <span>Edition</span>
+                  <strong id="chatEdition">
+                    Checking
+                  </strong>
+                </div>
+              </div>
+
+              <p class="privacy-note">
+                Configuration status confirms only what this page is
+                configured to use. It does not perform a background
+                service-health request.
+              </p>
+            </div>
+
+            <div
+              class="chat-controls-section"
+              aria-labelledby="chatTeacherSessionHeading"
+            >
+              <h3 id="chatTeacherSessionHeading">
+                Teacher session
+              </h3>
+
+              <div class="metric-grid">
+                <div class="metric-card">
+                  <span>Signed teacher session</span>
+                  <strong id="chatTeacherSessionStatus">
+                    Checking
+                  </strong>
+                </div>
+              </div>
+
+              <p class="privacy-note">
+                Teacher access codes and signed session tokens are never
+                displayed in Chat Controls.
+              </p>
+            </div>
+
+            <div
+              class="chat-controls-section"
+              aria-labelledby="chatLocalPreviewHeading"
+            >
+              <h3 id="chatLocalPreviewHeading">
+                Current-browser Chat preview
+              </h3>
+
+              <div class="notice">
+                <strong>This browser session only.</strong>
+                These controls do not change another device and do not
+                apply settings to students as a class.
+              </div>
+
+              <div class="chat-control-row">
+                <div class="chat-control-copy">
+                  <h4>Research Chat availability</h4>
+                  <p>
+                    Use the existing Research Chat browser-session
+                    preference to preview Chat as enabled or disabled in
+                    this browser.
+                  </p>
+
+                  <p
+                    class="chat-control-state"
+                    id="chatLocalEnabledStatus"
+                    aria-live="polite"
+                  >
+                    Checking local preference
+                  </p>
+                </div>
+
+                <div class="chat-control-action">
+                  <label for="chatLocalEnabled">
+                    <input
+                      id="chatLocalEnabled"
+                      type="checkbox"
+                    >
+                    Enable Research Chat locally
+                  </label>
+                </div>
+              </div>
+
+              <div class="chat-control-row">
+                <div class="chat-control-copy">
+                  <h4>Student class Chat code</h4>
+                  <p>
+                    The code value is never shown. Only whether a class
+                    Chat code is present in this browser session is
+                    reported.
+                  </p>
+
+                  <p
+                    class="chat-control-state"
+                    id="chatClassCodeStatus"
+                    aria-live="polite"
+                  >
+                    Checking code presence
+                  </p>
+                </div>
+
+                <div class="chat-control-action">
+                  <button
+                    class="secondary"
+                    id="clearClassChatCode"
+                    type="button"
+                  >
+                    Clear class Chat code from this browser session
+                  </button>
+                </div>
+              </div>
+
+              <p class="privacy-note">
+                Clearing the student class Chat code does not sign the
+                teacher out and does not change the configured Research
+                Chat endpoint.
+              </p>
+            </div>
+
+            <div
+              class="chat-controls-section"
+              aria-labelledby="chatPrivacyHeading"
+            >
+              <h3 id="chatPrivacyHeading">
+                Student privacy and control boundaries
+              </h3>
+
+              <div class="notice">
+                Students keep control of
+                <strong>Use my current project context</strong>.
+                Teacher Workspace cannot force that setting on or off.
+              </div>
+
+              <ul>
+                <li>
+                  Student Research Chat questions, responses, conversation
+                  history, and transcript content are not exposed here.
+                </li>
+                <li>
+                  Chat Controls does not inspect raw datasets, full
+                  manuscripts, full source notes, or student project
+                  content.
+                </li>
+                <li>
+                  The Research Chat endpoint is owner-controlled and
+                  cannot be edited from Teacher Workspace.
+                </li>
+                <li>
+                  No class-wide Chat policy is available in this version.
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section
+            class="panel workspace-panel"
+            id="panel-recovery"
+            data-workspace-panel="recovery"
+            hidden
+          >
+            <h2>Recovery</h2>
+            <p>
+              Inspect one local Research Methods Studio project backup
+              before handing restoration back to the student site.
+              Teacher Workspace does not restore or replace the live
+              student project.
+            </p>
+
+            <div class="notice">
+              Backup inspection stays in this page only. The selected
+              file is not uploaded, and Teacher Workspace does not read
+              the live student project from browser storage. Full
+              project contents, raw datasets, manuscript text, source
+              notes, participant records, and Research Chat transcripts
+              are not displayed here.
+            </div>
+
+            <div class="detail-section">
+              <h3>Inspect a project backup</h3>
+
+              <div class="recovery-actions">
+                <label class="file-control">
+                  <span>Select project backup JSON</span>
+                  <input
+                    id="recoveryBackupFile"
+                    type="file"
+                    accept=".json,application/json"
+                  >
+                </label>
+
+                <button
+                  class="button"
+                  id="clearRecoveryInspection"
+                  type="button"
+                  disabled
+                >
+                  Clear inspection
+                </button>
+
+                <a
+                  class="button"
+                  id="openStudentRecovery"
+                  href="./"
+                  target="_blank"
+                  rel="noopener"
+                  hidden
+                >
+                  Open student recovery
+                </a>
+              </div>
+
+              <p
+                class="import-report"
+                id="recoveryInspectionStatus"
+                aria-live="polite"
+              >
+                No backup is currently selected.
+              </p>
+
+              <div
+                id="recoveryInspectionDetails"
+                hidden
+              >
+                <div
+                  class="metric-grid"
+                  aria-label="Recovery inspection status"
+                >
+                  <div class="metric-card">
+                    <span>Recognized backup</span>
+                    <strong id="recoveryRecognized">No</strong>
+                  </div>
+
+                  <div class="metric-card">
+                    <span>Checksum status</span>
+                    <strong id="recoveryChecksumStatus">Unavailable</strong>
+                  </div>
+
+                  <div class="metric-card">
+                    <span>Restore eligibility</span>
+                    <strong id="recoveryRestorable">No</strong>
+                  </div>
+                </div>
+
+                <div class="detail-section">
+                  <h3>Safe backup metadata</h3>
+
+                  <dl class="detail-list">
+                    <div>
+                      <dt>Local file</dt>
+                      <dd id="recoveryFileName">Unavailable</dd>
+                    </div>
+
+                    <div>
+                      <dt>File size</dt>
+                      <dd id="recoveryFileSize">Unavailable</dd>
+                    </div>
+
+                    <div>
+                      <dt>Format</dt>
+                      <dd id="recoveryFormat">Unavailable</dd>
+                    </div>
+
+                    <div>
+                      <dt>Backup mode</dt>
+                      <dd id="recoveryMode">Unavailable</dd>
+                    </div>
+
+                    <div>
+                      <dt>Created</dt>
+                      <dd id="recoveryCreatedAt">Unavailable</dd>
+                    </div>
+
+                    <div>
+                      <dt>Baseline identifier</dt>
+                      <dd id="recoveryBaselineId">Unavailable</dd>
+                    </div>
+
+                    <div>
+                      <dt>Checksum fingerprint</dt>
+                      <dd id="recoveryChecksumFingerprint">Unavailable</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+
+              <p class="privacy-note">
+                A valid full backup can be restored only through the
+                existing student-site recovery flow. A privacy-minimized
+                copy may be valid for inspection while remaining
+                intentionally non-restorable. Opening student recovery
+                does not transfer this selected file automatically.
+              </p>
+            </div>
+
+            <div class="detail-section">
+              <h3>Recovering Teacher Workspace files</h3>
+
+              <ul>
+                <li>
+                  <code>rms_student_review</code> version 1.7 files can
+                  be re-imported through Overview.
+                </li>
+                <li>
+                  <code>rms_teacher_feedback</code> version 1.7 files
+                  are downloadable teacher records. Recovery does not
+                  create a new feedback importer.
+                </li>
+                <li>
+                  <code>rms_assignment_setup</code> version 1.0 files
+                  can be re-imported through Assignment Setup.
+                </li>
+                <li>
+                  Imported review packets, unsaved teacher review drafts,
+                  and unsaved assignment changes exist only in page
+                  memory. Reloading the page cannot recreate work that
+                  was never downloaded.
+                </li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="./assets/runtime-config.js"></script>
+  <script src="./assets/teacher-session.js"></script>
+  <script src="./assets/ai-adapter.js"></script>
+  <script src="./assets/pilot.js"></script>
+  <script src="./assets/teacher-workspace-data.js"></script>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const gate =
+        document.getElementById("authGate");
+
+      const workspace =
+        document.getElementById(
+          "teacherWorkspace"
+        );
+
+      const leaveButton =
+        document.getElementById(
+          "leaveTeacherMode"
+        );
+
+      const mainContent =
+        document.getElementById(
+          "mainContent"
+        );
+
+      const navButtons = Array.from(
+        document.querySelectorAll(
+          "[data-panel]"
+        )
+      );
+
+      const panels = Array.from(
+        document.querySelectorAll(
+          "[data-workspace-panel]"
+        )
+      );
+
+      const packetFiles =
+        document.getElementById(
+          "studentPacketFiles"
+        );
+
+      const clearPacketsButton =
+        document.getElementById(
+          "clearImportedPackets"
+        );
+
+      const importReport =
+        document.getElementById(
+          "importReport"
+        );
+
+      const queueFilter =
+        document.getElementById(
+          "reviewQueueFilter"
+        );
+
+      const queueCount =
+        document.getElementById(
+          "reviewQueueCount"
+        );
+
+      const queueList =
+        document.getElementById(
+          "reviewQueueList"
+        );
+
+      const studentList =
+        document.getElementById(
+          "studentList"
+        );
+
+      const studentInspector =
+        document.getElementById(
+          "studentInspector"
+        );
+
+      const assignmentId =
+        document.getElementById(
+          "assignmentId"
+        );
+
+      const assignmentTitle =
+        document.getElementById(
+          "assignmentTitle"
+        );
+
+      const assignmentCourseSection =
+        document.getElementById(
+          "assignmentCourseSection"
+        );
+
+      const assignmentTeacherName =
+        document.getElementById(
+          "assignmentTeacherName"
+        );
+
+      const assignmentStudentInstructions =
+        document.getElementById(
+          "assignmentStudentInstructions"
+        );
+
+      const assignmentTeacherNotes =
+        document.getElementById(
+          "assignmentTeacherNotes"
+        );
+
+      const assignmentSetupFile =
+        document.getElementById(
+          "assignmentSetupFile"
+        );
+
+      const clearAssignmentSetupButton =
+        document.getElementById(
+          "clearAssignmentSetup"
+        );
+
+      const previewAssignmentSetupButton =
+        document.getElementById(
+          "previewAssignmentSetup"
+        );
+
+      const downloadAssignmentSetupButton =
+        document.getElementById(
+          "downloadAssignmentSetup"
+        );
+
+      const assignmentSetupStatus =
+        document.getElementById(
+          "assignmentSetupStatus"
+        );
+
+      const assignmentSetupPreview =
+        document.getElementById(
+          "assignmentSetupPreview"
+        );
+
+      const assignmentDueInputs =
+        Object.freeze({
+          M1:
+            document.getElementById(
+              "assignmentDueM1"
+            ),
+          M2:
+            document.getElementById(
+              "assignmentDueM2"
+            ),
+          M3:
+            document.getElementById(
+              "assignmentDueM3"
+            ),
+          M4:
+            document.getElementById(
+              "assignmentDueM4"
+            ),
+          M5:
+            document.getElementById(
+              "assignmentDueM5"
+            )
+        });
+
+      const analyticsProjectCount =
+        document.getElementById(
+          "analyticsProjectCount"
+        );
+
+      const analyticsZeroState =
+        document.getElementById(
+          "analyticsZeroState"
+        );
+
+      const analyticsContent =
+        document.getElementById(
+          "analyticsContent"
+        );
+
+      const analyticsStageReadiness =
+        document.getElementById(
+          "analyticsStageReadiness"
+        );
+
+      const analyticsMilestoneStates =
+        document.getElementById(
+          "analyticsMilestoneStates"
+        );
+
+      const analyticsCourseSections =
+        document.getElementById(
+          "analyticsCourseSections"
+        );
+
+      const analyticsMetricElements =
+        Object.freeze({
+          projects_awaiting_teacher:
+            document.getElementById(
+              "analyticsAwaitingTeacher"
+            ),
+
+          projects_revision_requested:
+            document.getElementById(
+              "analyticsRevisionRequested"
+            ),
+
+          projects_with_blockers:
+            document.getElementById(
+              "analyticsBlockers"
+            ),
+
+          ethics_teacher_review:
+            document.getElementById(
+              "analyticsEthicsReview"
+            ),
+
+          ethics_do_not_facilitate:
+            document.getElementById(
+              "analyticsEthicsStop"
+            ),
+
+          locked_protocols:
+            document.getElementById(
+              "analyticsLockedProtocols"
+            ),
+
+          projects_with_stored_analysis:
+            document.getElementById(
+              "analyticsStoredAnalysis"
+            )
+        });
+
+      const analyticsLiteratureElements =
+        Object.freeze({
+          projects_with_included_sources:
+            document.getElementById(
+              "analyticsIncludedSources"
+            ),
+
+          projects_with_verified_sources:
+            document.getElementById(
+              "analyticsVerifiedSources"
+            )
+        });
+
+      const metricElements =
+        Object.freeze({
+          importedProjects:
+            document.getElementById(
+              "metricImportedProjects"
+            ),
+          awaitingReviewCheckpoints:
+            document.getElementById(
+              "metricAwaitingReview"
+            ),
+          revisionRequestCheckpoints:
+            document.getElementById(
+              "metricRevisionRequests"
+            ),
+          projectsWithBlockers:
+            document.getElementById(
+              "metricBlockers"
+            ),
+          ethicsReviewProjects:
+            document.getElementById(
+              "metricEthicsReview"
+            ),
+          doNotFacilitateProjects:
+            document.getElementById(
+              "metricEthicsStop"
+            ),
+          lockedProtocols:
+            document.getElementById(
+              "metricLockedProtocols"
+            ),
+          projectsWithStoredAnalysis:
+            document.getElementById(
+              "metricAnalysisRecords"
+            )
+        });
+
+      let teacherData = null;
+      let dataUiInitialized = false;
+      let importedPackets = [];
+      let selectedProjectId = "";
+      let teacherReviewDraft = null;
+      let teacherReviewPacket = null;
+      let assignmentDraft = null;
+      let assignmentPreviewPacket = null;
+
+      function returnToTeacherEntry() {
+        location.replace("./teacher.html");
+      }
+
+      function activatePanel(panelId) {
+        for (const button of navButtons) {
+          const active =
+            button.dataset.panel === panelId;
+
+          if (active) {
+            button.setAttribute(
+              "aria-current",
+              "page"
+            );
+          } else {
+            button.removeAttribute(
+              "aria-current"
+            );
+          }
+        }
+
+        for (const panel of panels) {
+          panel.hidden =
+            panel.dataset.workspacePanel !==
+            panelId;
+        }
+
+        mainContent.focus({
+          preventScroll: true
+        });
+      }
+
+      function makeElement(
+        tag,
+        className = "",
+        text = ""
+      ) {
+        const element =
+          document.createElement(tag);
+
+        if (className) {
+          element.className =
+            className;
+        }
+
+        if (text !== "") {
+          element.textContent =
+            String(text);
+        }
+
+        return element;
+      }
+
+      function displayValue(value) {
+        if (
+          value === null ||
+          value === undefined ||
+          value === ""
+        ) {
+          return "Not provided in this review packet";
+        }
+
+        if (value === true) {
+          return "Yes";
+        }
+
+        if (value === false) {
+          return "No";
+        }
+
+        return String(value);
+      }
+
+      function appendKeyValue(
+        grid,
+        label,
+        value
+      ) {
+        const wrapper =
+          makeElement(
+            "div",
+            "key-value"
+          );
+
+        const term =
+          makeElement(
+            "dt",
+            "",
+            label
+          );
+
+        const description =
+          makeElement(
+            "dd",
+            "",
+            displayValue(value)
+          );
+
+        wrapper.append(
+          term,
+          description
+        );
+
+        grid.append(wrapper);
+      }
+
+      function buildKeyValueSection(
+        title,
+        entries,
+        notice = ""
+      ) {
+        const section =
+          makeElement(
+            "section",
+            "inspector-section"
+          );
+
+        section.append(
+          makeElement(
+            "h3",
+            "",
+            title
+          )
+        );
+
+        const grid =
+          makeElement(
+            "dl",
+            "key-value-grid"
+          );
+
+        for (
+          const [label, value]
+          of entries
+        ) {
+          appendKeyValue(
+            grid,
+            label,
+            value
+          );
+        }
+
+        section.append(grid);
+
+        if (notice) {
+          section.append(
+            makeElement(
+              "p",
+              "privacy-note",
+              notice
+            )
+          );
+        }
+
+        return section;
+      }
+
+      function dataLayerReady(data) {
+        return Boolean(
+          data &&
+          typeof data.upsertStudentPacket ===
+            "function" &&
+          typeof data.deriveOverview ===
+            "function" &&
+          typeof data.deriveReviewQueue ===
+            "function" &&
+          typeof data.deriveStudentInspector ===
+            "function" &&
+          typeof data.deriveTeacherAnalytics ===
+            "function" &&
+          typeof data.deriveTeacherChatControlsStatus ===
+            "function" &&
+          typeof data.deriveTeacherRecoveryInspection ===
+            "function" &&
+          typeof data.createTeacherReviewDraft ===
+            "function" &&
+          typeof data.validateTeacherReviewDraft ===
+            "function" &&
+          typeof data.setTeacherDisplayName ===
+            "function" &&
+          typeof data.upsertCheckpointDecision ===
+            "function" &&
+          typeof data.upsertTeacherFeedback ===
+            "function" &&
+          typeof data.hasExportableTeacherReview ===
+            "function" &&
+          typeof data.buildTeacherFeedbackPacket ===
+            "function" &&
+          typeof data.createAssignmentDraft ===
+            "function" &&
+          typeof data.validateAssignmentDraft ===
+            "function" &&
+          typeof data.updateAssignmentField ===
+            "function" &&
+          typeof data.updateAssignmentMilestoneDueDate ===
+            "function" &&
+          typeof data.validateAssignmentPacket ===
+            "function" &&
+          typeof data.assignmentDraftFromPacket ===
+            "function" &&
+          typeof data.buildAssignmentPacket ===
+            "function"
+        );
+      }
+
+      function showDataLayerFailure() {
+        const heading =
+          gate.querySelector("h1");
+
+        const detail =
+          gate.querySelector("p");
+
+        heading.textContent =
+          "Teacher tools unavailable";
+
+        detail.textContent =
+          "The local Teacher Workspace data tools did not load. Reload this page or return to teacher sign-in.";
+      }
+
+      function renderOverview() {
+        const overview =
+          teacherData.deriveOverview(
+            importedPackets
+          );
+
+        for (
+          const [
+            key,
+            element
+          ]
+          of Object.entries(
+            metricElements
+          )
+        ) {
+          element.textContent =
+            String(
+              overview[key] ?? 0
+            );
+        }
+      }
+
+      function analyticsStateLabel(
+        key
+      ) {
+        return {
+          blocked:
+            "Blocked",
+          student_ready:
+            "Student ready",
+          awaiting_teacher:
+            "Awaiting teacher",
+          revision_requested:
+            "Revision requested",
+          approved:
+            "Approved",
+          complete:
+            "Complete",
+          other_or_missing:
+            "Other or missing"
+        }[key] || key;
+      }
+
+      function renderAnalytics() {
+        const analytics =
+          teacherData
+            .deriveTeacherAnalytics(
+              importedPackets
+            );
+
+        analyticsProjectCount.textContent =
+          String(
+            analytics.project_count
+          );
+
+        analyticsStageReadiness
+          .replaceChildren();
+
+        analyticsMilestoneStates
+          .replaceChildren();
+
+        analyticsCourseSections
+          .replaceChildren();
+
+        if (
+          analytics.project_count ===
+          0
+        ) {
+          analyticsZeroState.hidden =
+            false;
+
+          analyticsContent.hidden =
+            true;
+
+          for (
+            const element
+            of Object.values(
+              analyticsMetricElements
+            )
+          ) {
+            element.textContent =
+              "0";
+          }
+
+          for (
+            const element
+            of Object.values(
+              analyticsLiteratureElements
+            )
+          ) {
+            element.textContent =
+              "0";
+          }
+
+          return;
+        }
+
+        analyticsZeroState.hidden =
+          true;
+
+        analyticsContent.hidden =
+          false;
+
+        for (
+          const [
+            key,
+            element
+          ]
+          of Object.entries(
+            analyticsMetricElements
+          )
+        ) {
+          element.textContent =
+            String(
+              analytics
+                .workflow_counts[
+                  key
+                ] ??
+              0
+            );
+        }
+
+        for (
+          const [
+            key,
+            element
+          ]
+          of Object.entries(
+            analyticsLiteratureElements
+          )
+        ) {
+          element.textContent =
+            String(
+              analytics
+                .literature_status[
+                  key
+                ] ??
+              0
+            );
+        }
+
+        for (
+          const row
+          of analytics
+            .stage_readiness
+        ) {
+          const card =
+            makeElement(
+              "div",
+              "analytics-stage-card"
+            );
+
+          card.append(
+            makeElement(
+              "div",
+              "",
+              `Stage ${row.stage}`
+            ),
+            makeElement(
+              "strong",
+              "",
+              `${row.ready_projects} of ${row.project_count}`
+            ),
+            makeElement(
+              "span",
+              "",
+              "reported ready"
+            )
+          );
+
+          analyticsStageReadiness.append(
+            card
+          );
+        }
+
+        const stateKeys = [
+          "blocked",
+          "student_ready",
+          "awaiting_teacher",
+          "revision_requested",
+          "approved",
+          "complete",
+          "other_or_missing"
+        ];
+
+        for (
+          const milestone
+          of analytics
+            .milestone_states
+        ) {
+          const card =
+            makeElement(
+              "section",
+              "analytics-milestone-card"
+            );
+
+          card.append(
+            makeElement(
+              "h4",
+              "",
+              milestone.milestone_id
+            )
+          );
+
+          const list =
+            makeElement(
+              "dl",
+              "analytics-state-list"
+            );
+
+          for (
+            const key
+            of stateKeys
+          ) {
+            const row =
+              makeElement(
+                "div",
+                "analytics-state-row"
+              );
+
+            row.append(
+              makeElement(
+                "dt",
+                "",
+                analyticsStateLabel(
+                  key
+                )
+              ),
+              makeElement(
+                "dd",
+                "",
+                milestone[key]
+              )
+            );
+
+            list.append(row);
+          }
+
+          card.append(list);
+
+          analyticsMilestoneStates.append(
+            card
+          );
+        }
+
+        for (
+          const section
+          of analytics.course_sections
+        ) {
+          const row =
+            makeElement(
+              "div",
+              "analytics-list-row"
+            );
+
+          row.append(
+            makeElement(
+              "span",
+              "",
+              section.course_section
+            ),
+            makeElement(
+              "strong",
+              "",
+              section.project_count
+            )
+          );
+
+          analyticsCourseSections.append(
+            row
+          );
+        }
+      }
+
+      function queueRows() {
+        return teacherData
+          .deriveReviewQueue(
+            importedPackets
+          );
+      }
+
+      function reviewField(
+        labelText,
+        control,
+        wide = false
+      ) {
+        const label =
+          makeElement(
+            "label",
+            wide
+              ? "review-field review-field-wide"
+              : "review-field"
+          );
+
+        label.append(
+          makeElement(
+            "span",
+            "",
+            labelText
+          ),
+          control
+        );
+
+        return label;
+      }
+
+      function reviewConditions(
+        value
+      ) {
+        return String(
+          value || ""
+        )
+          .split(/\r?\n/)
+          .map(
+            item =>
+              item.trim()
+          )
+          .filter(Boolean);
+      }
+
+      function reviewFilename(
+        projectId
+      ) {
+        const safe =
+          String(
+            projectId || "project"
+          )
+            .replace(
+              /[^A-Za-z0-9._-]+/g,
+              "-"
+            )
+            .replace(
+              /^-+|-+$/g,
+              ""
+            )
+            .slice(
+              0,
+              80
+            ) ||
+          "project";
+
+        return (
+          "rms-teacher-feedback-" +
+          safe +
+          ".json"
+        );
+      }
+
+      function downloadTeacherFeedback(
+        packet
+      ) {
+        const blob =
+          new Blob(
+            [
+              JSON.stringify(
+                packet,
+                null,
+                2
+              )
+            ],
+            {
+              type:
+                "application/json"
+            }
+          );
+
+        const url =
+          URL.createObjectURL(
+            blob
+          );
+
+        const link =
+          document.createElement(
+            "a"
+          );
+
+        link.href =
+          url;
+
+        link.download =
+          reviewFilename(
+            packet.project_id
+          );
+
+        link.rel =
+          "noopener";
+
+        document.body.append(
+          link
+        );
+
+        link.click();
+        link.remove();
+
+        URL.revokeObjectURL(
+          url
+        );
+      }
+
+      function ensureTeacherReviewDraft(
+        packet
+      ) {
+        if (
+          teacherReviewDraft &&
+          teacherReviewDraft.project_id ===
+            packet.project_id
+        ) {
+          return true;
+        }
+
+        const result =
+          teacherData
+            .createTeacherReviewDraft(
+              packet
+            );
+
+        if (!result.ok) {
+          teacherReviewDraft =
+            null;
+
+          teacherReviewPacket =
+            null;
+
+          return false;
+        }
+
+        teacherReviewDraft =
+          result.draft;
+
+        teacherReviewPacket =
+          null;
+
+        return true;
+      }
+
+      function replaceTeacherReviewDraft(
+        result
+      ) {
+        if (
+          !result ||
+          result.ok !== true ||
+          !result.draft
+        ) {
+          return false;
+        }
+
+        teacherReviewDraft =
+          result.draft;
+
+        teacherReviewPacket =
+          null;
+
+        return true;
+      }
+
+      function reviewStatusMessage(
+        section,
+        message,
+        isError = false
+      ) {
+        const status =
+          section.querySelector(
+            "[data-review-status]"
+          );
+
+        if (!status) {
+          return;
+        }
+
+        status.textContent =
+          message;
+
+        status.dataset.error =
+          isError
+            ? "true"
+            : "false";
+      }
+
+      function buildTeacherReviewSection(
+        packet,
+        inspector
+      ) {
+        const section =
+          makeElement(
+            "section",
+            "inspector-section teacher-review-section"
+          );
+
+        section.dataset.teacherReview =
+          "true";
+
+        section.append(
+          makeElement(
+            "h3",
+            "",
+            "Teacher review and feedback"
+          ),
+          makeElement(
+            "p",
+            "privacy-note",
+            "Imported student evidence above remains read-only. Teacher review drafts stay only in memory on this page until you export a feedback packet."
+          )
+        );
+
+        if (
+          !ensureTeacherReviewDraft(
+            packet
+          )
+        ) {
+          section.append(
+            makeElement(
+              "p",
+              "empty-state",
+              "A teacher review draft could not be created for this packet."
+            )
+          );
+
+          return section;
+        }
+
+        const identity =
+          makeElement(
+            "div",
+            "review-grid"
+          );
+
+        appendKeyValue(
+          identity,
+          "Project ID",
+          inspector.header.project_id
+        );
+
+        appendKeyValue(
+          identity,
+          "Student",
+          inspector.header.student_alias
+        );
+
+        appendKeyValue(
+          identity,
+          "Course section",
+          inspector.header.course_section
+        );
+
+        appendKeyValue(
+          identity,
+          "Project",
+          inspector.header.project_name
+        );
+
+        section.append(identity);
+
+        const teacherName =
+          document.createElement(
+            "input"
+          );
+
+        teacherName.type =
+          "text";
+
+        teacherName.value =
+          teacherReviewDraft.teacher;
+
+        teacherName.autocomplete =
+          "off";
+
+        teacherName.placeholder =
+          "Teacher display name";
+
+        teacherName.addEventListener(
+          "change",
+          () => {
+            const result =
+              teacherData
+                .setTeacherDisplayName(
+                  packet,
+                  teacherReviewDraft,
+                  teacherName.value
+                );
+
+            if (
+              replaceTeacherReviewDraft(
+                result
+              )
+            ) {
+              reviewStatusMessage(
+                section,
+                "Teacher display name saved in this page session."
+              );
+            } else {
+              reviewStatusMessage(
+                section,
+                result.errors.join(
+                  " "
+                ),
+                true
+              );
+            }
+          }
+        );
+
+        section.append(
+          reviewField(
+            "Teacher display name",
+            teacherName,
+            true
+          )
+        );
+
+        const decisionsHeading =
+          makeElement(
+            "div",
+            "review-separator"
+          );
+
+        decisionsHeading.append(
+          makeElement(
+            "h4",
+            "",
+            "Checkpoint decisions"
+          ),
+          makeElement(
+            "p",
+            "",
+            "Choose a decision explicitly. Packet blockers, warnings, and software diagnostics never choose a decision for you."
+          )
+        );
+
+        section.append(
+          decisionsHeading
+        );
+
+        for (
+          const milestone
+          of inspector.milestones
+        ) {
+          const card =
+            makeElement(
+              "div",
+              "review-card"
+            );
+
+          card.dataset.reviewCheckpoint =
+            milestone.id;
+
+          card.append(
+            makeElement(
+              "h4",
+              "",
+              `${milestone.id} ${milestone.title || ""}`.trim()
+            ),
+            makeElement(
+              "p",
+              "",
+              `Imported state: ${displayValue(milestone.state)}`
+            )
+          );
+
+          const current =
+            teacherReviewDraft
+              .checkpoints
+              .find(
+                item =>
+                  item.id ===
+                  milestone.id
+              );
+
+          const controls =
+            makeElement(
+              "div",
+              "review-grid"
+            );
+
+          const decision =
+            document.createElement(
+              "select"
+            );
+
+          const blankOption =
+            document.createElement(
+              "option"
+            );
+
+          blankOption.value =
+            "";
+
+          blankOption.textContent =
+            "Choose a decision";
+
+          decision.append(
+            blankOption
+          );
+
+          for (
+            const [
+              value,
+              text
+            ]
+            of [
+              [
+                "approved",
+                "Approved"
+              ],
+              [
+                "revision_requested",
+                "Revision requested"
+              ]
+            ]
+          ) {
+            const option =
+              document.createElement(
+                "option"
+              );
+
+            option.value =
+              value;
+
+            option.textContent =
+              text;
+
+            decision.append(
+              option
+            );
+          }
+
+          decision.value =
+            current?.status ||
+            "";
+
+          const comment =
+            document.createElement(
+              "textarea"
+            );
+
+          comment.value =
+            current?.comment ||
+            "";
+
+          comment.placeholder =
+            "Optional checkpoint comment";
+
+          const conditions =
+            document.createElement(
+              "textarea"
+            );
+
+          conditions.value =
+            (
+              current?.conditions ||
+              []
+            ).join("\n");
+
+          conditions.placeholder =
+            "One teacher-authored condition per line";
+
+          const saveDecision =
+            () => {
+              if (
+                !decision.value
+              ) {
+                if (current) {
+                  decision.value =
+                    current.status;
+
+                  reviewStatusMessage(
+                    section,
+                    "Use Discard review draft to clear an existing checkpoint decision.",
+                    true
+                  );
+                }
+
+                return;
+              }
+
+              const result =
+                teacherData
+                  .upsertCheckpointDecision(
+                    packet,
+                    teacherReviewDraft,
+                    {
+                      id:
+                        milestone.id,
+                      status:
+                        decision.value,
+                      comment:
+                        comment.value,
+                      conditions:
+                        reviewConditions(
+                          conditions.value
+                        )
+                    }
+                  );
+
+              if (
+                replaceTeacherReviewDraft(
+                  result
+                )
+              ) {
+                openInspector(
+                  packet
+                );
+              } else {
+                reviewStatusMessage(
+                  section,
+                  result.errors.join(
+                    " "
+                  ),
+                  true
+                );
+              }
+            };
+
+          decision.addEventListener(
+            "change",
+            saveDecision
+          );
+
+          comment.addEventListener(
+            "change",
+            saveDecision
+          );
+
+          conditions.addEventListener(
+            "change",
+            saveDecision
+          );
+
+          controls.append(
+            reviewField(
+              "Teacher decision",
+              decision
+            ),
+            reviewField(
+              "Checkpoint comment",
+              comment,
+              true
+            ),
+            reviewField(
+              "Revision conditions",
+              conditions,
+              true
+            )
+          );
+
+          card.append(
+            controls
+          );
+
+          section.append(
+            card
+          );
+        }
+
+        const general =
+          makeElement(
+            "div",
+            "review-separator"
+          );
+
+        general.append(
+          makeElement(
+            "h4",
+            "",
+            "General teacher feedback"
+          ),
+          makeElement(
+            "p",
+            "",
+            "This feedback is authored by the teacher. Software diagnostics are not copied into it."
+          )
+        );
+
+        const existingFeedback =
+          teacherReviewDraft
+            .feedback[0] ||
+          null;
+
+        const feedbackGrid =
+          makeElement(
+            "div",
+            "review-grid"
+          );
+
+        const milestoneSelect =
+          document.createElement(
+            "select"
+          );
+
+        const noMilestone =
+          document.createElement(
+            "option"
+          );
+
+        noMilestone.value =
+          "";
+
+        noMilestone.textContent =
+          "No milestone selected";
+
+        milestoneSelect.append(
+          noMilestone
+        );
+
+        for (
+          const milestone
+          of inspector.milestones
+        ) {
+          const option =
+            document.createElement(
+              "option"
+            );
+
+          option.value =
+            milestone.id;
+
+          option.textContent =
+            `${milestone.id} ${milestone.title || ""}`.trim();
+
+          milestoneSelect.append(
+            option
+          );
+        }
+
+        milestoneSelect.value =
+          existingFeedback
+            ?.milestone ||
+          "";
+
+        const stageInput =
+          document.createElement(
+            "input"
+          );
+
+        stageInput.type =
+          "text";
+
+        stageInput.value =
+          existingFeedback
+            ?.stage ||
+          "";
+
+        stageInput.placeholder =
+          "Optional stage";
+
+        const feedbackComment =
+          document.createElement(
+            "textarea"
+          );
+
+        feedbackComment.value =
+          existingFeedback
+            ?.comment ||
+          "";
+
+        feedbackComment.placeholder =
+          "Teacher-authored feedback";
+
+        feedbackGrid.append(
+          reviewField(
+            "Related milestone",
+            milestoneSelect
+          ),
+          reviewField(
+            "Related stage",
+            stageInput
+          ),
+          reviewField(
+            "Feedback comment",
+            feedbackComment,
+            true
+          )
+        );
+
+        general.append(
+          feedbackGrid
+        );
+
+        const saveFeedback =
+          makeElement(
+            "button",
+            "button",
+            existingFeedback
+              ? "Update general feedback"
+              : "Add general feedback"
+          );
+
+        saveFeedback.type =
+          "button";
+
+        saveFeedback.addEventListener(
+          "click",
+          () => {
+            const result =
+              teacherData
+                .upsertTeacherFeedback(
+                  packet,
+                  teacherReviewDraft,
+                  {
+                    milestone:
+                      milestoneSelect.value,
+                    stage:
+                      stageInput.value,
+                    comment:
+                      feedbackComment.value
+                  },
+                  existingFeedback
+                    ? 0
+                    : -1
+                );
+
+            if (
+              replaceTeacherReviewDraft(
+                result
+              )
+            ) {
+              openInspector(
+                packet
+              );
+            } else {
+              reviewStatusMessage(
+                section,
+                result.errors.join(
+                  " "
+                ),
+                true
+              );
+            }
+          }
+        );
+
+        general.append(
+          saveFeedback
+        );
+
+        section.append(
+          general
+        );
+
+        const actions =
+          makeElement(
+            "div",
+            "review-actions"
+          );
+
+        const previewButton =
+          makeElement(
+            "button",
+            "button",
+            "Preview feedback packet"
+          );
+
+        previewButton.type =
+          "button";
+
+        previewButton.disabled =
+          !teacherData
+            .hasExportableTeacherReview(
+              teacherReviewDraft
+            );
+
+        previewButton.addEventListener(
+          "click",
+          () => {
+            const result =
+              teacherData
+                .buildTeacherFeedbackPacket(
+                  packet,
+                  teacherReviewDraft
+                );
+
+            if (!result.ok) {
+              teacherReviewPacket =
+                null;
+
+              reviewStatusMessage(
+                section,
+                result.errors.join(
+                  " "
+                ),
+                true
+              );
+
+              return;
+            }
+
+            teacherReviewPacket =
+              result.packet;
+
+            openInspector(
+              packet
+            );
+          }
+        );
+
+        const downloadButton =
+          makeElement(
+            "button",
+            "button",
+            "Download feedback JSON"
+          );
+
+        downloadButton.type =
+          "button";
+
+        downloadButton.disabled =
+          !(
+            teacherReviewPacket &&
+            teacherReviewPacket
+              .project_id ===
+              packet.project_id
+          );
+
+        downloadButton.addEventListener(
+          "click",
+          () => {
+            if (
+              !teacherReviewPacket ||
+              teacherReviewPacket
+                .project_id !==
+                packet.project_id
+            ) {
+              reviewStatusMessage(
+                section,
+                "Preview the validated feedback packet before downloading.",
+                true
+              );
+
+              return;
+            }
+
+            downloadTeacherFeedback(
+              teacherReviewPacket
+            );
+
+            reviewStatusMessage(
+              section,
+              "Feedback JSON downloaded. Student work was not modified."
+            );
+          }
+        );
+
+        const discardButton =
+          makeElement(
+            "button",
+            "button",
+            "Discard review draft"
+          );
+
+        discardButton.type =
+          "button";
+
+        discardButton.addEventListener(
+          "click",
+          () => {
+            const hasWork =
+              teacherData
+                .hasExportableTeacherReview(
+                  teacherReviewDraft
+                );
+
+            if (
+              hasWork &&
+              !window.confirm(
+                "Discard the unsaved teacher review draft for this project?"
+              )
+            ) {
+              return;
+            }
+
+            const result =
+              teacherData
+                .createTeacherReviewDraft(
+                  packet
+                );
+
+            if (!result.ok) {
+              reviewStatusMessage(
+                section,
+                result.errors.join(
+                  " "
+                ),
+                true
+              );
+
+              return;
+            }
+
+            teacherReviewDraft =
+              result.draft;
+
+            teacherReviewPacket =
+              null;
+
+            openInspector(
+              packet
+            );
+          }
+        );
+
+        actions.append(
+          previewButton,
+          downloadButton,
+          discardButton
+        );
+
+        section.append(
+          actions
+        );
+
+        const status =
+          makeElement(
+            "p",
+            "review-status",
+            teacherData
+              .hasExportableTeacherReview(
+                teacherReviewDraft
+              )
+              ? "Unsaved teacher review work is held only in this page session."
+              : "No teacher review decision or feedback has been authored yet."
+          );
+
+        status.dataset.reviewStatus =
+          "true";
+
+        status.setAttribute(
+          "aria-live",
+          "polite"
+        );
+
+        section.append(
+          status
+        );
+
+        if (
+          teacherReviewPacket &&
+          teacherReviewPacket
+            .project_id ===
+            packet.project_id
+        ) {
+          section.append(
+            makeElement(
+              "p",
+              "privacy-note",
+              "Preview below is the validated version 1.7 feedback packet. Exporting it does not modify the student's project."
+            )
+          );
+
+          const preview =
+            makeElement(
+              "pre",
+              "review-preview"
+            );
+
+          preview.dataset.reviewPreview =
+            "true";
+
+          preview.textContent =
+            JSON.stringify(
+              teacherReviewPacket,
+              null,
+              2
+            );
+
+          section.append(
+            preview
+          );
+        }
+
+        return section;
+      }
+
+      function openInspector(packet) {
+        const incomingProjectId =
+          typeof packet?.project_id ===
+            "string"
+            ? packet.project_id
+            : "";
+
+        if (
+          teacherReviewDraft &&
+          teacherReviewDraft.project_id !==
+            incomingProjectId
+        ) {
+          const hasUnsavedReview =
+            teacherData
+              .hasExportableTeacherReview(
+                teacherReviewDraft
+              );
+
+          if (
+            hasUnsavedReview &&
+            !window.confirm(
+              "Discard the unsaved teacher review draft and switch projects?"
+            )
+          ) {
+            return false;
+          }
+
+          teacherReviewDraft =
+            null;
+
+          teacherReviewPacket =
+            null;
+        }
+
+        const result =
+          teacherData
+            .deriveStudentInspector(
+              packet
+            );
+
+        studentInspector.replaceChildren();
+
+        if (!result.ok) {
+          selectedProjectId = "";
+
+          studentInspector.append(
+            makeElement(
+              "p",
+              "empty-state",
+              "This review packet cannot be inspected."
+            )
+          );
+
+          studentInspector.hidden =
+            false;
+
+          return;
+        }
+
+        const inspector =
+          result.inspector;
+
+        selectedProjectId =
+          inspector.header.project_id;
+
+        ensureTeacherReviewDraft(
+          packet
+        );
+
+        const head =
+          makeElement(
+            "div",
+            "inspector-head"
+          );
+
+        const headingGroup =
+          makeElement("div");
+
+        const title =
+          inspector.header
+            .student_alias ||
+          inspector.header
+            .project_name ||
+          inspector.header
+            .project_id;
+
+        headingGroup.append(
+          makeElement(
+            "h3",
+            "",
+            title
+          ),
+          makeElement(
+            "p",
+            "",
+            `Project ID ${inspector.header.project_id}`
+          )
+        );
+
+        const closeButton =
+          makeElement(
+            "button",
+            "button",
+            "Close Inspector"
+          );
+
+        closeButton.type =
+          "button";
+
+        closeButton.addEventListener(
+          "click",
+          () => {
+            selectedProjectId = "";
+            studentInspector.hidden =
+              true;
+            studentInspector
+              .replaceChildren();
+          }
+        );
+
+        head.append(
+          headingGroup,
+          closeButton
+        );
+
+        studentInspector.append(
+          head,
+          makeElement(
+            "p",
+            "privacy-note",
+            inspector.notices.scope
+          )
+        );
+
+        studentInspector.append(
+          buildKeyValueSection(
+            "Project",
+            [
+              [
+                "Student alias",
+                inspector.header
+                  .student_alias
+              ],
+              [
+                "Project ID",
+                inspector.header
+                  .project_id
+              ],
+              [
+                "Course or section",
+                inspector.header
+                  .course_section
+              ],
+              [
+                "Project name",
+                inspector.header
+                  .project_name
+              ],
+              [
+                "Packet exported",
+                inspector.header
+                  .exported_at
+              ]
+            ],
+            inspector.notices
+              .missing_data
+          )
+        );
+
+        studentInspector.append(
+          buildKeyValueSection(
+            "Research overview",
+            [
+              [
+                "Context",
+                inspector.research
+                  .context
+              ],
+              [
+                "Topic",
+                inspector.research
+                  .topic
+              ],
+              [
+                "Research question",
+                inspector.research
+                  .research_question
+              ],
+              [
+                "Question type",
+                inspector.research
+                  .question_type
+              ],
+              [
+                "Design",
+                inspector.research
+                  .design
+              ]
+            ]
+          )
+        );
+
+        const progressSection =
+          makeElement(
+            "section",
+            "inspector-section"
+          );
+
+        progressSection.append(
+          makeElement(
+            "h3",
+            "",
+            "Stage progress"
+          ),
+          makeElement(
+            "p",
+            "",
+            `${inspector.stage_progress.ready_count} of ${inspector.stage_progress.total_stages} stages are marked ready.`
+          )
+        );
+
+        const stageGrid =
+          makeElement(
+            "div",
+            "stage-grid"
+          );
+
+        for (
+          const stage
+          of inspector
+            .stage_progress
+            .stages
+        ) {
+          const chip =
+            makeElement(
+              "div",
+              "stage-chip",
+              `Stage ${stage.stage}`
+            );
+
+          chip.dataset.ready =
+            String(stage.ready);
+
+          chip.title =
+            stage.ready
+              ? "Marked ready"
+              : "Not marked ready";
+
+          stageGrid.append(chip);
+        }
+
+        progressSection.append(
+          stageGrid,
+          makeElement(
+            "p",
+            "privacy-note",
+            inspector
+              .stage_progress
+              .interpretation
+          )
+        );
+
+        studentInspector.append(
+          progressSection
+        );
+
+        const milestonesSection =
+          makeElement(
+            "section",
+            "inspector-section"
+          );
+
+        milestonesSection.append(
+          makeElement(
+            "h3",
+            "",
+            "Milestones"
+          )
+        );
+
+        if (
+          inspector.milestones
+            .length === 0
+        ) {
+          milestonesSection.append(
+            makeElement(
+              "p",
+              "empty-state",
+              "No milestone records are included in this review packet."
+            )
+          );
+        }
+
+        for (
+          const milestone
+          of inspector.milestones
+        ) {
+          const card =
+            makeElement(
+              "div",
+              "milestone-card"
+            );
+
+          card.append(
+            makeElement(
+              "h4",
+              "",
+              `${milestone.id} ${milestone.title}`.trim()
+            ),
+            makeElement(
+              "p",
+              "",
+              `State ${displayValue(milestone.state)}`
+            )
+          );
+
+          if (
+            milestone.blockers
+              .length
+          ) {
+            card.append(
+              makeElement(
+                "p",
+                "",
+                "Blockers"
+              )
+            );
+
+            const list =
+              makeElement(
+                "ul",
+                "compact-list"
+              );
+
+            for (
+              const blocker
+              of milestone.blockers
+            ) {
+              list.append(
+                makeElement(
+                  "li",
+                  "",
+                  blocker
+                )
+              );
+            }
+
+            card.append(list);
+          }
+
+          if (
+            milestone.warnings
+              .length
+          ) {
+            card.append(
+              makeElement(
+                "p",
+                "",
+                "Warnings"
+              )
+            );
+
+            const list =
+              makeElement(
+                "ul",
+                "compact-list"
+              );
+
+            for (
+              const warning
+              of milestone.warnings
+            ) {
+              list.append(
+                makeElement(
+                  "li",
+                  "",
+                  warning
+                )
+              );
+            }
+
+            card.append(list);
+          }
+
+          const checkpoint =
+            makeElement(
+              "dl",
+              "key-value-grid"
+            );
+
+          for (
+            const [label, value]
+            of [
+              [
+                "Checkpoint status",
+                milestone.checkpoint
+                  .status
+              ],
+              [
+                "Requested",
+                milestone.checkpoint
+                  .requestedAt
+              ],
+              [
+                "Reviewed",
+                milestone.checkpoint
+                  .reviewedAt
+              ],
+              [
+                "Teacher",
+                milestone.checkpoint
+                  .teacher
+              ],
+              [
+                "Teacher comment",
+                milestone.checkpoint
+                  .comment
+              ],
+              [
+                "Conditions",
+                milestone.checkpoint
+                  .conditions.length
+                  ? milestone.checkpoint
+                      .conditions.join("; ")
+                  : ""
+              ]
+            ]
+          ) {
+            appendKeyValue(
+              checkpoint,
+              label,
+              value
+            );
+          }
+
+          card.append(checkpoint);
+
+          milestonesSection.append(
+            card
+          );
+        }
+
+        studentInspector.append(
+          milestonesSection
+        );
+
+        studentInspector.append(
+          buildKeyValueSection(
+            "Sources",
+            [
+              [
+                "Total sources",
+                inspector.sources.total
+              ],
+              [
+                "Included sources",
+                inspector.sources
+                  .included
+              ],
+              [
+                "Verified sources",
+                inspector.sources
+                  .verified
+              ],
+              [
+                "Themes",
+                inspector.sources
+                  .themes.length
+                  ? inspector.sources
+                      .themes.join("; ")
+                  : ""
+              ]
+            ],
+            inspector.sources.notice
+          )
+        );
+
+        studentInspector.append(
+          buildKeyValueSection(
+            "Methods diagnostics",
+            [
+              [
+                "Available",
+                inspector.methods
+                  .available
+              ],
+              [
+                "Diagnostic score",
+                inspector.methods.score
+              ],
+              [
+                "Diagnostic label",
+                inspector.methods.label
+              ],
+              [
+                "Critical issues",
+                inspector.methods
+                  .critical
+              ],
+              [
+                "Warnings",
+                inspector.methods
+                  .warning
+              ],
+              [
+                "Ethics status",
+                inspector.methods
+                  .ethicsStatus
+              ],
+              [
+                "Protocol locked",
+                inspector.methods.locked
+              ]
+            ],
+            inspector.methods.notice
+          )
+        );
+
+        studentInspector.append(
+          buildKeyValueSection(
+            "Analysis summary",
+            [
+              [
+                "Dataset file",
+                inspector.analysis
+                  .dataset_file
+              ],
+              [
+                "Imported rows",
+                inspector.analysis
+                  .imported_rows
+              ],
+              [
+                "Stored analysis records",
+                inspector.analysis
+                  .stored_runs
+              ],
+              [
+                "Primary estimand",
+                inspector.analysis
+                  .primary_estimand
+              ],
+              [
+                "Primary result",
+                inspector.analysis
+                  .primary_result
+              ]
+            ],
+            inspector.analysis.notice
+          )
+        );
+
+        const paperAudit =
+          inspector.writing
+            .paper_audit;
+
+        const sectionWordEntries =
+          Object.entries(
+            inspector.writing
+              .section_words
+          )
+          .map(
+            ([key, value]) => [
+              `Words in ${key}`,
+              value
+            ]
+          );
+
+        studentInspector.append(
+          buildKeyValueSection(
+            "Writing summary",
+            [
+              [
+                "Paper audit available",
+                paperAudit
+                  ? paperAudit.available
+                  : null
+              ],
+              [
+                "Paper audit score",
+                paperAudit
+                  ? paperAudit.score
+                  : null
+              ],
+              [
+                "Paper audit label",
+                paperAudit
+                  ? paperAudit.label
+                  : null
+              ],
+              ...sectionWordEntries
+            ],
+            inspector.writing.notice
+          )
+        );
+
+        const feedbackSection =
+          makeElement(
+            "section",
+            "inspector-section"
+          );
+
+        feedbackSection.append(
+          makeElement(
+            "h3",
+            "",
+            "Teacher feedback history"
+          ),
+          makeElement(
+            "p",
+            "privacy-note",
+            inspector
+              .teacher_feedback
+              .notice
+          )
+        );
+
+        if (
+          inspector
+            .teacher_feedback
+            .items.length === 0
+        ) {
+          feedbackSection.append(
+            makeElement(
+              "p",
+              "empty-state",
+              "No teacher feedback is included in this review packet."
+            )
+          );
+        }
+
+        for (
+          const item
+          of inspector
+            .teacher_feedback
+            .items
+        ) {
+          const card =
+            makeElement(
+              "div",
+              "milestone-card"
+            );
+
+          const label =
+            item.milestone ||
+            item.stage ||
+            "Feedback";
+
+          card.append(
+            makeElement(
+              "h4",
+              "",
+              label
+            ),
+            makeElement(
+              "p",
+              "",
+              item.comment ||
+              item.message ||
+              "No comment is included."
+            )
+          );
+
+          feedbackSection.append(
+            card
+          );
+        }
+
+        studentInspector.append(
+          feedbackSection,
+          buildTeacherReviewSection(
+            packet,
+            inspector
+          )
+        );
+
+        studentInspector.hidden =
+          false;
+      }
+
+      function createProjectCard(
+        row,
+        includeFlags
+      ) {
+        const card =
+          makeElement(
+            "article",
+            "project-card"
+          );
+
+        const head =
+          makeElement(
+            "div",
+            "project-card-head"
+          );
+
+        const titleGroup =
+          makeElement(
+            "div",
+            "project-card-title"
+          );
+
+        const title =
+          row.student_alias ||
+          row.project_name ||
+          row.project_id;
+
+        titleGroup.append(
+          makeElement(
+            "strong",
+            "",
+            title
+          ),
+          makeElement(
+            "span",
+            "",
+            `${row.course_section || "No section provided"} ? ${row.project_id}`
+          )
+        );
+
+        const inspectButton =
+          makeElement(
+            "button",
+            "button",
+            "Inspect"
+          );
+
+        inspectButton.type =
+          "button";
+
+        inspectButton.addEventListener(
+          "click",
+          () => {
+            activatePanel(
+              "students"
+            );
+
+            openInspector(
+              row.packet
+            );
+          }
+        );
+
+        head.append(
+          titleGroup,
+          inspectButton
+        );
+
+        card.append(head);
+
+        if (includeFlags) {
+          const flags =
+            makeElement(
+              "div",
+              "flag-list"
+            );
+
+          for (
+            const flag
+            of row.flags
+          ) {
+            const className =
+              flag.id ===
+                "do_not_facilitate"
+                ? "queue-flag queue-flag-danger"
+                : "queue-flag";
+
+            flags.append(
+              makeElement(
+                "span",
+                className,
+                flag.label
+              )
+            );
+          }
+
+          card.append(flags);
+
+          for (
+            const flag
+            of row.flags
+          ) {
+            card.append(
+              makeElement(
+                "p",
+                "flag-reason",
+                flag.reason
+              )
+            );
+          }
+        }
+
+        return card;
+      }
+
+      function renderReviewQueue() {
+        queueList.replaceChildren();
+
+        const allRows =
+          queueRows();
+
+        const filter =
+          queueFilter.value;
+
+        const rows =
+          filter === "all"
+            ? allRows
+            : allRows.filter(
+                row =>
+                  row.flags.some(
+                    flag =>
+                      flag.id ===
+                      filter
+                  )
+              );
+
+        queueCount.textContent =
+          `${rows.length} ${rows.length === 1 ? "project" : "projects"}`;
+
+        if (!rows.length) {
+          queueList.append(
+            makeElement(
+              "p",
+              "empty-state",
+              importedPackets.length
+                ? "No imported projects match this queue filter."
+                : "Import student review packets from Overview to populate the queue."
+            )
+          );
+
+          return;
+        }
+
+        for (const row of rows) {
+          queueList.append(
+            createProjectCard(
+              row,
+              true
+            )
+          );
+        }
+      }
+
+      function renderStudents() {
+        studentList.replaceChildren();
+
+        const rows =
+          queueRows();
+
+        if (!rows.length) {
+          studentList.append(
+            makeElement(
+              "p",
+              "empty-state",
+              "Import student review packets from Overview to inspect projects."
+            )
+          );
+
+          selectedProjectId = "";
+          studentInspector.hidden =
+            true;
+          studentInspector
+            .replaceChildren();
+
+          return;
+        }
+
+        for (const row of rows) {
+          studentList.append(
+            createProjectCard(
+              row,
+              false
+            )
+          );
+        }
+
+        if (selectedProjectId) {
+          const selected =
+            rows.find(
+              row =>
+                row.project_id ===
+                selectedProjectId
+            );
+
+          if (selected) {
+            openInspector(
+              selected.packet
+            );
+          } else {
+            selectedProjectId = "";
+            studentInspector.hidden =
+              true;
+            studentInspector
+              .replaceChildren();
+          }
+        }
+      }
+
+      let chatControlsBound =
+        false;
+
+      function chatControlElement(
+        id
+      ) {
+        return document.getElementById(
+          id
+        );
+      }
+
+      function currentChatControlsStatus() {
+        const runtime =
+          window.RMS_RUNTIME_CONFIG ||
+          {};
+
+        const chat =
+          window.RMSAI;
+
+        let chatConfig =
+          null;
+
+        if (
+          chat &&
+          typeof chat.getConfig ===
+            "function"
+        ) {
+          try {
+            chatConfig =
+              chat.getConfig();
+          } catch {
+            chatConfig =
+              null;
+          }
+        }
+
+        return teacherData
+          .deriveTeacherChatControlsStatus({
+            runtime_version:
+              typeof runtime.version ===
+                "string"
+                ? runtime.version
+                : "",
+            free_edition:
+              runtime.freeEdition ===
+              true,
+            research_chat_endpoint:
+              typeof runtime
+                .researchChatEndpoint ===
+                  "string"
+                ? runtime
+                    .researchChatEndpoint
+                : (
+                    typeof runtime
+                      .chatEndpoint ===
+                        "string"
+                      ? runtime.chatEndpoint
+                      : ""
+                  ),
+            teacher_session_active:
+              window
+                .RMSTeacherSession
+                ?.isActive?.() ===
+              true,
+            local_chat_enabled:
+              chatConfig?.enabled ===
+              true,
+            class_chat_code_present:
+              chatConfig
+                ?.accessCodeSet ===
+              true
+          });
+      }
+
+      function renderChatControls() {
+        const status =
+          currentChatControlsStatus();
+
+        const chat =
+          window.RMSAI;
+
+        const adapterAvailable =
+          Boolean(
+            chat &&
+            typeof chat.getConfig ===
+              "function" &&
+            typeof chat.setConfig ===
+              "function" &&
+            typeof chat.clearAccessCode ===
+              "function"
+          );
+
+        chatControlElement(
+          "chatServiceConfigured"
+        ).textContent =
+          status.service.configured
+            ? "Configured"
+            : "Not configured";
+
+        chatControlElement(
+          "chatEndpointOrigin"
+        ).textContent =
+          status.service
+            .endpoint_origin ||
+          "Unavailable";
+
+        chatControlElement(
+          "chatRuntimeVersion"
+        ).textContent =
+          status.service
+            .runtime_version ||
+          "Unavailable";
+
+        chatControlElement(
+          "chatEdition"
+        ).textContent =
+          status.service
+            .free_edition
+            ? "Free edition"
+            : "Other or unspecified";
+
+        chatControlElement(
+          "chatTeacherSessionStatus"
+        ).textContent =
+          status.teacher_session
+            .active
+            ? "Verified and active"
+            : "Not active";
+
+        const localToggle =
+          chatControlElement(
+            "chatLocalEnabled"
+          );
+
+        localToggle.checked =
+          status.local_preview
+            .chat_enabled;
+
+        localToggle.disabled =
+          !adapterAvailable;
+
+        chatControlElement(
+          "chatLocalEnabledStatus"
+        ).textContent =
+          adapterAvailable
+            ? (
+                status.local_preview
+                  .chat_enabled
+                  ? "Research Chat is enabled in this browser session."
+                  : "Research Chat is disabled in this browser session."
+              )
+            : "Local preview controls are unavailable because the Research Chat adapter did not load.";
+
+        const clearCodeButton =
+          chatControlElement(
+            "clearClassChatCode"
+          );
+
+        clearCodeButton.disabled =
+          !adapterAvailable ||
+          !status.local_preview
+            .class_code_present;
+
+        chatControlElement(
+          "chatClassCodeStatus"
+        ).textContent =
+          adapterAvailable
+            ? (
+                status.local_preview
+                  .class_code_present
+                  ? "A student class Chat code is present in this browser session."
+                  : "No student class Chat code is present in this browser session."
+              )
+            : "Class Chat code status is unavailable because the Research Chat adapter did not load.";
+      }
+
+      function bindChatControls() {
+        if (chatControlsBound) {
+          return;
+        }
+
+        const localToggle =
+          chatControlElement(
+            "chatLocalEnabled"
+          );
+
+        const clearCodeButton =
+          chatControlElement(
+            "clearClassChatCode"
+          );
+
+        localToggle.addEventListener(
+          "change",
+          event => {
+            const chat =
+              window.RMSAI;
+
+            if (
+              !chat ||
+              typeof chat.setConfig !==
+                "function"
+            ) {
+              renderChatControls();
+              return;
+            }
+
+            chat.setConfig({
+              enabled:
+                event.currentTarget
+                  .checked ===
+                true
+            });
+
+            renderChatControls();
+          }
+        );
+
+        clearCodeButton.addEventListener(
+          "click",
+          () => {
+            const chat =
+              window.RMSAI;
+
+            if (
+              !chat ||
+              typeof chat.clearAccessCode !==
+                "function"
+            ) {
+              renderChatControls();
+              return;
+            }
+
+            chat.clearAccessCode();
+
+            renderChatControls();
+          }
+        );
+
+        chatControlsBound =
+          true;
+      }
+
+      const RECOVERY_MAX_FILE_BYTES =
+        26214400;
+
+      let recoveryInspection =
+        null;
+
+      let recoveryBound =
+        false;
+
+      function recoveryElement(
+        id
+      ) {
+        return document.getElementById(
+          id
+        );
+      }
+
+      function recoveryFormatLabel(
+        status
+      ) {
+        if (
+          status.format.legacy
+        ) {
+          return "Legacy project backup";
+        }
+
+        if (
+          status.format.packet_type &&
+          status.format.version
+        ) {
+          return (
+            status.format.packet_type +
+            " " +
+            status.format.version
+          );
+        }
+
+        if (
+          status.format.packet_type
+        ) {
+          return status.format
+            .packet_type;
+        }
+
+        if (
+          status.format.version
+        ) {
+          return (
+            "Version " +
+            status.format.version
+          );
+        }
+
+        return status.format
+          .recognized
+          ? "Recognized backup"
+          : "Unavailable";
+      }
+
+      function renderRecoveryInspection() {
+        const status =
+          recoveryInspection;
+
+        const hasInspection =
+          Boolean(
+            status.file.name
+          ) ||
+          status.file
+            .size_bytes !==
+          null;
+
+        recoveryElement(
+          "recoveryInspectionStatus"
+        ).textContent =
+          status.message;
+
+        recoveryElement(
+          "recoveryInspectionDetails"
+        ).hidden =
+          !hasInspection;
+
+        recoveryElement(
+          "clearRecoveryInspection"
+        ).disabled =
+          !hasInspection;
+
+        recoveryElement(
+          "openStudentRecovery"
+        ).hidden =
+          !status.recovery
+            .restorable;
+
+        recoveryElement(
+          "recoveryRecognized"
+        ).textContent =
+          status.format
+            .recognized
+            ? "Yes"
+            : "No";
+
+        const checksum =
+          status.integrity
+            .checksum_verified;
+
+        recoveryElement(
+          "recoveryChecksumStatus"
+        ).textContent =
+          checksum ===
+            true
+            ? "Verified"
+            : (
+                checksum ===
+                  false
+                  ? "Not verified"
+                  : "Unavailable"
+              );
+
+        recoveryElement(
+          "recoveryRestorable"
+        ).textContent =
+          status.recovery
+            .restorable
+            ? "Student site"
+            : "No";
+
+        recoveryElement(
+          "recoveryFileName"
+        ).textContent =
+          status.file.name ||
+          "Unavailable";
+
+        recoveryElement(
+          "recoveryFileSize"
+        ).textContent =
+          status.file
+            .size_bytes ===
+          null
+            ? "Unavailable"
+            : (
+                String(
+                  status.file
+                    .size_bytes
+                ) +
+                " bytes"
+              );
+
+        recoveryElement(
+          "recoveryFormat"
+        ).textContent =
+          recoveryFormatLabel(
+            status
+          );
+
+        recoveryElement(
+          "recoveryMode"
+        ).textContent =
+          status.format.mode ||
+          "Unavailable";
+
+        recoveryElement(
+          "recoveryCreatedAt"
+        ).textContent =
+          status.format
+            .created_at ||
+          "Unavailable";
+
+        recoveryElement(
+          "recoveryBaselineId"
+        ).textContent =
+          status.format
+            .baseline_id ||
+          "Unavailable";
+
+        recoveryElement(
+          "recoveryChecksumFingerprint"
+        ).textContent =
+          status.integrity
+            .checksum_fingerprint ||
+          "Unavailable";
+      }
+
+      function clearRecoveryInspectionState() {
+        recoveryInspection =
+          teacherData
+            .deriveTeacherRecoveryInspection();
+
+        const fileInput =
+          recoveryElement(
+            "recoveryBackupFile"
+          );
+
+        if (fileInput) {
+          fileInput.value =
+            "";
+        }
+
+        renderRecoveryInspection();
+      }
+
+      async function inspectRecoveryFile(
+        file
+      ) {
+        if (!file) {
+          clearRecoveryInspectionState();
+          return;
+        }
+
+        const fileName =
+          typeof file.name ===
+            "string"
+            ? file.name
+            : "";
+
+        const fileSize =
+          typeof file.size ===
+            "number" &&
+          Number.isFinite(
+            file.size
+          )
+            ? file.size
+            : null;
+
+        const pilot =
+          window.RMSPilot;
+
+        const validatorAvailable =
+          Boolean(
+            pilot &&
+            typeof pilot.validateBackup ===
+              "function"
+          );
+
+        if (
+          fileSize !==
+            null &&
+          fileSize >
+            RECOVERY_MAX_FILE_BYTES
+        ) {
+          recoveryInspection =
+            teacherData
+              .deriveTeacherRecoveryInspection({
+                file_name:
+                  fileName,
+                file_size_bytes:
+                  fileSize,
+                parse_success:
+                  false,
+                validator_available:
+                  validatorAvailable,
+                validation_success:
+                  false,
+                restorable:
+                  false
+              });
+
+          recoveryElement(
+            "recoveryBackupFile"
+          ).value =
+            "";
+
+          renderRecoveryInspection();
+          return;
+        }
+
+        let raw =
+          "";
+
+        let parsed =
+          null;
+
+        try {
+          raw =
+            await file.text();
+
+          parsed =
+            JSON.parse(
+              raw
+            );
+        } catch {
+          recoveryInspection =
+            teacherData
+              .deriveTeacherRecoveryInspection({
+                file_name:
+                  fileName,
+                file_size_bytes:
+                  fileSize,
+                parse_success:
+                  false,
+                validator_available:
+                  validatorAvailable,
+                validation_success:
+                  false,
+                restorable:
+                  false
+              });
+
+          raw =
+            "";
+
+          parsed =
+            null;
+
+          recoveryElement(
+            "recoveryBackupFile"
+          ).value =
+            "";
+
+          renderRecoveryInspection();
+          return;
+        }
+
+        const envelope =
+          parsed &&
+          typeof parsed ===
+            "object" &&
+          !Array.isArray(
+            parsed
+          )
+            ? parsed
+            : {};
+
+        const packetType =
+          typeof envelope.packet_type ===
+            "string"
+            ? envelope.packet_type
+            : "";
+
+        const packetVersion =
+          typeof envelope.version ===
+            "string"
+            ? envelope.version
+            : "";
+
+        const backupMode =
+          typeof envelope.mode ===
+            "string"
+            ? envelope.mode
+            : "";
+
+        const createdAt =
+          typeof envelope.created_at ===
+            "string"
+            ? envelope.created_at
+            : "";
+
+        const baselineId =
+          typeof envelope.baseline_id ===
+            "string"
+            ? envelope.baseline_id
+            : "";
+
+        const checksumFingerprint =
+          typeof envelope.checksum_fingerprint ===
+            "string"
+            ? envelope.checksum_fingerprint
+            : "";
+
+        let validation =
+          null;
+
+        if (
+          validatorAvailable
+        ) {
+          try {
+            validation =
+              pilot.validateBackup(
+                parsed
+              );
+          } catch {
+            validation =
+              null;
+          }
+        }
+
+        recoveryInspection =
+          teacherData
+            .deriveTeacherRecoveryInspection({
+              file_name:
+                fileName,
+              file_size_bytes:
+                fileSize,
+              parse_success:
+                true,
+              validator_available:
+                validatorAvailable,
+              validation_success:
+                validation?.ok ===
+                true,
+              restorable:
+                validation
+                  ?.restorable ===
+                true,
+              backup_mode:
+                typeof validation?.mode ===
+                  "string"
+                  ? validation.mode
+                  : backupMode,
+              legacy:
+                validation?.legacy ===
+                true,
+              packet_type:
+                packetType,
+              packet_version:
+                packetVersion,
+              created_at:
+                createdAt,
+              baseline_id:
+                baselineId,
+              checksum_fingerprint:
+                checksumFingerprint
+            });
+
+        raw =
+          "";
+
+        parsed =
+          null;
+
+        validation =
+          null;
+
+        recoveryElement(
+          "recoveryBackupFile"
+        ).value =
+          "";
+
+        renderRecoveryInspection();
+      }
+
+      function bindRecovery() {
+        if (recoveryBound) {
+          return;
+        }
+
+        recoveryElement(
+          "recoveryBackupFile"
+        ).addEventListener(
+          "change",
+          event => {
+            const file =
+              event.currentTarget
+                .files?.[0] ||
+              null;
+
+            void inspectRecoveryFile(
+              file
+            );
+          }
+        );
+
+        recoveryElement(
+          "clearRecoveryInspection"
+        ).addEventListener(
+          "click",
+          () => {
+            clearRecoveryInspectionState();
+          }
+        );
+
+        recoveryBound =
+          true;
+      }
+
+      function renderAll() {
+        renderOverview();
+        renderReviewQueue();
+        renderStudents();
+        renderAnalytics();
+        bindChatControls();
+        renderChatControls();
+        bindRecovery();
+        renderRecoveryInspection();
+      }
+
+      async function importFiles(
+        files
+      ) {
+        const selected =
+          files.length;
+
+        let imported = 0;
+        let rejected = 0;
+        let replaced = 0;
+
+        const details = [];
+
+        for (const file of files) {
+          try {
+            const parsed =
+              JSON.parse(
+                await file.text()
+              );
+
+            const result =
+              teacherData
+                .upsertStudentPacket(
+                  importedPackets,
+                  parsed
+                );
+
+            if (!result.ok) {
+              rejected += 1;
+
+              const reason =
+                result.errors[0]
+                  ?.message ||
+                "The review packet was rejected.";
+
+              details.push(
+                `${file.name} was rejected. ${reason}`
+              );
+
+              continue;
+            }
+
+            importedPackets =
+              Array.from(
+                result.packets
+              );
+
+            imported += 1;
+
+            if (result.replaced) {
+              replaced += 1;
+              details.push(
+                `${file.name} updated an imported project.`
+              );
+            } else {
+              details.push(
+                `${file.name} was imported.`
+              );
+            }
+          } catch {
+            rejected += 1;
+
+            details.push(
+              `${file.name} was rejected. The file is not valid JSON.`
+            );
+          }
+        }
+
+        importReport.textContent =
+          [
+            `Selected ${selected}. Imported ${imported}. Rejected ${rejected}. Updated existing projects ${replaced}.`,
+            ...details
+          ].join("\n");
+
+        packetFiles.value = "";
+
+        renderAll();
+      }
+
+      function clearImportedPackets() {
+        importedPackets = [];
+        selectedProjectId = "";
+        teacherReviewDraft = null;
+        teacherReviewPacket = null;
+
+        importReport.textContent =
+          "Imported review packets were cleared from this page session.";
+
+        queueFilter.value =
+          "all";
+
+        studentInspector.hidden =
+          true;
+        studentInspector
+          .replaceChildren();
+
+        renderAll();
+      }
+
+      function assignmentStatus(
+        message,
+        isError = false
+      ) {
+        assignmentSetupStatus.textContent =
+          message;
+
+        assignmentSetupStatus.dataset.error =
+          isError
+            ? "true"
+            : "false";
+      }
+
+      function assignmentDraftHasContent() {
+        if (!assignmentDraft) {
+          return false;
+        }
+
+        const textValues = [
+          assignmentDraft.assignment_id,
+          assignmentDraft.title,
+          assignmentDraft.course_section,
+          assignmentDraft.teacher_display_name,
+          assignmentDraft.student_instructions,
+          assignmentDraft.teacher_notes
+        ];
+
+        if (
+          textValues.some(
+            value =>
+              Boolean(
+                String(
+                  value || ""
+                ).trim()
+              )
+          )
+        ) {
+          return true;
+        }
+
+        return Object.values(
+          assignmentDraft
+            .milestone_due_dates ||
+          {}
+        ).some(
+          value =>
+            Boolean(
+              String(
+                value || ""
+              ).trim()
+            )
+        );
+      }
+
+      function assignmentFilename(
+        assignmentId
+      ) {
+        const safe =
+          String(
+            assignmentId ||
+            "assignment"
+          )
+            .replace(
+              /[^A-Za-z0-9._-]+/g,
+              "-"
+            )
+            .replace(
+              /^-+|-+$/g,
+              ""
+            )
+            .slice(
+              0,
+              80
+            ) ||
+          "assignment";
+
+        return (
+          "rms-assignment-setup-" +
+          safe +
+          ".json"
+        );
+      }
+
+      function downloadAssignmentPacket(
+        packet
+      ) {
+        const blob =
+          new Blob(
+            [
+              JSON.stringify(
+                packet,
+                null,
+                2
+              )
+            ],
+            {
+              type:
+                "application/json"
+            }
+          );
+
+        const url =
+          URL.createObjectURL(
+            blob
+          );
+
+        const link =
+          document.createElement(
+            "a"
+          );
+
+        link.href =
+          url;
+
+        link.download =
+          assignmentFilename(
+            packet.assignment_id
+          );
+
+        link.rel =
+          "noopener";
+
+        document.body.append(
+          link
+        );
+
+        link.click();
+        link.remove();
+
+        URL.revokeObjectURL(
+          url
+        );
+      }
+
+      function invalidateAssignmentPreview() {
+        assignmentPreviewPacket =
+          null;
+
+        assignmentSetupPreview.textContent =
+          "";
+
+        assignmentSetupPreview.hidden =
+          true;
+
+        downloadAssignmentSetupButton.disabled =
+          true;
+      }
+
+      function renderAssignmentSetup() {
+        if (!assignmentDraft) {
+          return;
+        }
+
+        assignmentId.value =
+          assignmentDraft
+            .assignment_id;
+
+        assignmentTitle.value =
+          assignmentDraft.title;
+
+        assignmentCourseSection.value =
+          assignmentDraft
+            .course_section;
+
+        assignmentTeacherName.value =
+          assignmentDraft
+            .teacher_display_name;
+
+        assignmentStudentInstructions.value =
+          assignmentDraft
+            .student_instructions;
+
+        assignmentTeacherNotes.value =
+          assignmentDraft
+            .teacher_notes;
+
+        for (
+          const [
+            milestoneId,
+            input
+          ]
+          of Object.entries(
+            assignmentDueInputs
+          )
+        ) {
+          input.value =
+            assignmentDraft
+              .milestone_due_dates[
+                milestoneId
+              ] ||
+            "";
+        }
+
+        if (
+          assignmentPreviewPacket
+        ) {
+          assignmentSetupPreview.textContent =
+            JSON.stringify(
+              assignmentPreviewPacket,
+              null,
+              2
+            );
+
+          assignmentSetupPreview.hidden =
+            false;
+
+          downloadAssignmentSetupButton.disabled =
+            false;
+        } else {
+          assignmentSetupPreview.textContent =
+            "";
+
+          assignmentSetupPreview.hidden =
+            true;
+
+          downloadAssignmentSetupButton.disabled =
+            true;
+        }
+      }
+
+      function replaceAssignmentDraft(
+        result,
+        successMessage
+      ) {
+        if (
+          !result ||
+          result.ok !== true ||
+          !result.draft
+        ) {
+          assignmentStatus(
+            (
+              result?.errors ||
+              [
+                "Assignment Setup could not update this value."
+              ]
+            ).join(
+              " "
+            ),
+            true
+          );
+
+          return false;
+        }
+
+        assignmentDraft =
+          result.draft;
+
+        invalidateAssignmentPreview();
+        renderAssignmentSetup();
+
+        if (successMessage) {
+          assignmentStatus(
+            successMessage
+          );
+        }
+
+        return true;
+      }
+
+      function updateAssignmentTextField(
+        field,
+        value
+      ) {
+        const result =
+          teacherData
+            .updateAssignmentField(
+              assignmentDraft,
+              field,
+              value
+            );
+
+        replaceAssignmentDraft(
+          result,
+          "Assignment draft updated in this page session."
+        );
+      }
+
+      function updateAssignmentDueDate(
+        milestoneId,
+        input
+      ) {
+        const previous =
+          assignmentDraft
+            .milestone_due_dates[
+              milestoneId
+            ];
+
+        const result =
+          teacherData
+            .updateAssignmentMilestoneDueDate(
+              assignmentDraft,
+              milestoneId,
+              input.value.trim()
+            );
+
+        if (
+          !result ||
+          result.ok !== true
+        ) {
+          input.value =
+            previous;
+
+          assignmentStatus(
+            (
+              result?.errors ||
+              [
+                `${milestoneId} due date is invalid.`
+              ]
+            ).join(
+              " "
+            ),
+            true
+          );
+
+          return;
+        }
+
+        assignmentDraft =
+          result.draft;
+
+        invalidateAssignmentPreview();
+        renderAssignmentSetup();
+
+        assignmentStatus(
+          `${milestoneId} due date updated in this page session.`
+        );
+      }
+
+      async function importAssignmentSetupFile(
+        file
+      ) {
+        if (!file) {
+          return;
+        }
+
+        let parsed;
+
+        try {
+          parsed =
+            JSON.parse(
+              await file.text()
+            );
+        } catch {
+          assignmentStatus(
+            "The selected assignment file is not valid JSON.",
+            true
+          );
+
+          assignmentSetupFile.value =
+            "";
+
+          return;
+        }
+
+        const result =
+          teacherData
+            .assignmentDraftFromPacket(
+              parsed
+            );
+
+        if (!result.ok) {
+          assignmentStatus(
+            result.errors.join(
+              " "
+            ),
+            true
+          );
+
+          assignmentSetupFile.value =
+            "";
+
+          return;
+        }
+
+        if (
+          assignmentDraftHasContent() &&
+          !window.confirm(
+            "Replace the current in-memory assignment draft with the imported assignment setup?"
+          )
+        ) {
+          assignmentSetupFile.value =
+            "";
+
+          assignmentStatus(
+            "Assignment import was cancelled."
+          );
+
+          return;
+        }
+
+        assignmentDraft =
+          result.draft;
+
+        invalidateAssignmentPreview();
+        renderAssignmentSetup();
+
+        assignmentSetupFile.value =
+          "";
+
+        assignmentStatus(
+          "Assignment setup imported locally. Student projects were not modified."
+        );
+      }
+
+      function previewAssignmentSetup() {
+        const result =
+          teacherData
+            .buildAssignmentPacket(
+              assignmentDraft
+            );
+
+        if (!result.ok) {
+          assignmentPreviewPacket =
+            null;
+
+          invalidateAssignmentPreview();
+
+          assignmentStatus(
+            result.errors.join(
+              " "
+            ),
+            true
+          );
+
+          return;
+        }
+
+        assignmentPreviewPacket =
+          result.packet;
+
+        renderAssignmentSetup();
+
+        assignmentStatus(
+          "Validated rms_assignment_setup version 1.0 preview is ready."
+        );
+      }
+
+      function clearAssignmentSetup() {
+        if (
+          assignmentDraftHasContent() &&
+          !window.confirm(
+            "Clear the current in-memory assignment draft?"
+          )
+        ) {
+          return;
+        }
+
+        const result =
+          teacherData
+            .createAssignmentDraft();
+
+        if (!result.ok) {
+          assignmentStatus(
+            result.errors.join(
+              " "
+            ),
+            true
+          );
+
+          return;
+        }
+
+        assignmentDraft =
+          result.draft;
+
+        invalidateAssignmentPreview();
+        renderAssignmentSetup();
+
+        assignmentSetupFile.value =
+          "";
+
+        assignmentStatus(
+          "Assignment draft cleared from this page session."
+        );
+      }
+
+      function initializeAssignmentSetup() {
+        const result =
+          teacherData
+            .createAssignmentDraft();
+
+        if (!result.ok) {
+          assignmentStatus(
+            result.errors.join(
+              " "
+            ),
+            true
+          );
+
+          return false;
+        }
+
+        assignmentDraft =
+          result.draft;
+
+        assignmentPreviewPacket =
+          null;
+
+        const fieldBindings = [
+          [
+            assignmentId,
+            "assignment_id"
+          ],
+          [
+            assignmentTitle,
+            "title"
+          ],
+          [
+            assignmentCourseSection,
+            "course_section"
+          ],
+          [
+            assignmentTeacherName,
+            "teacher_display_name"
+          ],
+          [
+            assignmentStudentInstructions,
+            "student_instructions"
+          ],
+          [
+            assignmentTeacherNotes,
+            "teacher_notes"
+          ]
+        ];
+
+        for (
+          const [
+            element,
+            field
+          ]
+          of fieldBindings
+        ) {
+          element.addEventListener(
+            "change",
+            () => {
+              updateAssignmentTextField(
+                field,
+                element.value
+              );
+            }
+          );
+        }
+
+        for (
+          const [
+            milestoneId,
+            input
+          ]
+          of Object.entries(
+            assignmentDueInputs
+          )
+        ) {
+          input.addEventListener(
+            "change",
+            () => {
+              updateAssignmentDueDate(
+                milestoneId,
+                input
+              );
+            }
+          );
+        }
+
+        assignmentSetupFile.addEventListener(
+          "change",
+          () => {
+            const file =
+              assignmentSetupFile
+                .files?.[0];
+
+            if (file) {
+              void importAssignmentSetupFile(
+                file
+              );
+            }
+          }
+        );
+
+        clearAssignmentSetupButton
+          .addEventListener(
+            "click",
+            clearAssignmentSetup
+          );
+
+        previewAssignmentSetupButton
+          .addEventListener(
+            "click",
+            previewAssignmentSetup
+          );
+
+        downloadAssignmentSetupButton
+          .addEventListener(
+            "click",
+            () => {
+              if (
+                !assignmentPreviewPacket
+              ) {
+                assignmentStatus(
+                  "Preview the validated assignment JSON before downloading.",
+                  true
+                );
+
+                return;
+              }
+
+              downloadAssignmentPacket(
+                assignmentPreviewPacket
+              );
+
+              assignmentStatus(
+                "Assignment JSON downloaded locally. Student projects were not modified."
+              );
+            }
+          );
+
+        renderAssignmentSetup();
+
+        assignmentStatus(
+          "Assignment draft is held only in this page session."
+        );
+
+        return true;
+      }
+
+      function initializeDataWorkspace(
+        data
+      ) {
+        if (dataUiInitialized) {
+          return;
+        }
+
+        teacherData = data;
+
+        recoveryInspection =
+          teacherData
+            .deriveTeacherRecoveryInspection();
+
+        if (
+          !initializeAssignmentSetup()
+        ) {
+          return;
+        }
+
+        packetFiles.addEventListener(
+          "change",
+          () => {
+            const files =
+              Array.from(
+                packetFiles.files ||
+                []
+              );
+
+            if (!files.length) {
+              return;
+            }
+
+            void importFiles(files);
+          }
+        );
+
+        clearPacketsButton
+          .addEventListener(
+            "click",
+            clearImportedPackets
+          );
+
+        queueFilter
+          .addEventListener(
+            "change",
+            renderReviewQueue
+          );
+
+        dataUiInitialized = true;
+
+        renderAll();
+      }
+
+      for (const button of navButtons) {
+        button.addEventListener(
+          "click",
+          () => {
+            activatePanel(
+              button.dataset.panel
+            );
+          }
+        );
+      }
+
+      leaveButton.addEventListener(
+        "click",
+        () => {
+          const teacherSession =
+            window.RMSTeacherSession;
+
+          if (teacherSession) {
+            teacherSession.leave();
+          }
+
+          importedPackets = [];
+          selectedProjectId = "";
+          teacherReviewDraft = null;
+          teacherReviewPacket = null;
+          assignmentDraft = null;
+          assignmentPreviewPacket = null;
+
+          location.replace("./");
+        }
+      );
+
+      async function openWorkspace() {
+        const teacherSession =
+          window.RMSTeacherSession;
+
+        if (
+          !teacherSession ||
+          typeof teacherSession.verify !==
+            "function" ||
+          typeof teacherSession.isActive !==
+            "function"
+        ) {
+          returnToTeacherEntry();
+          return;
+        }
+
+        if (
+          !teacherSession.hasStoredSession()
+        ) {
+          returnToTeacherEntry();
+          return;
+        }
+
+        let verified = false;
+
+        try {
+          verified =
+            await teacherSession.verify();
+        } catch {
+          verified = false;
+        }
+
+        if (
+          !verified ||
+          !teacherSession.isActive()
+        ) {
+          returnToTeacherEntry();
+          return;
+        }
+
+        const dataLayer =
+          window.RMSTeacherWorkspaceData;
+
+        if (
+          !dataLayerReady(
+            dataLayer
+          )
+        ) {
+          showDataLayerFailure();
+          return;
+        }
+
+        initializeDataWorkspace(
+          dataLayer
+        );
+
+        gate.hidden = true;
+        workspace.hidden = false;
+      }
+
+      void openWorkspace();
+    })();
+  </script>
+</body>
+</html>

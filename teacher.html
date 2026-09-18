@@ -307,7 +307,7 @@
               "Access accepted. Opening teacher workspace..."
             );
 
-            location.replace("./");
+            location.replace("./teacher-workspace.html");
           } finally {
             busy(false);
           }
@@ -345,7 +345,7 @@
           .verify()
           .then(ok => {
             if (ok) {
-              location.replace("./");
+              location.replace("./teacher-workspace.html");
               return;
             }
 
