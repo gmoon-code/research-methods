@@ -253,6 +253,31 @@ test(
 );
 
 test(
+  "Student Research Journey keeps the action card readable and Close usable",
+  () => {
+    assert.match(
+      theme,
+      /\.journey-modal \.next-focus\{[\s\S]*color:#111 !important;[\s\S]*background:var\(--section-turquoise-soft\) !important;/
+    );
+
+    assert.match(
+      theme,
+      /\.journey-modal \.next-focus h4\{[\s\S]*color:#111 !important;[\s\S]*background:transparent !important;/
+    );
+
+    assert.match(
+      theme,
+      /\.journey-modal \.next-focus p\{[\s\S]*color:#333 !important;[\s\S]*opacity:1 !important;/
+    );
+
+    assert.match(
+      theme,
+      /\.journey-modal #closeJourney\{[\s\S]*min-width:72px;[\s\S]*white-space:nowrap;/
+    );
+  }
+);
+
+test(
   "future-stage preview uses an intentional read-only separator",
   () => {
     const separator =
