@@ -37,8 +37,18 @@ window.RMSAdminContentStudio = (() => {
     "span"
   ]);
 
+  const PHASES = new Set([
+    "discover",
+    "literature",
+    "design",
+    "analyze",
+    "write"
+  ]);
+
   function clone(value) {
-    return JSON.parse(JSON.stringify(value));
+    return JSON.parse(
+      JSON.stringify(value)
+    );
   }
 
   function deepFreeze(value) {
@@ -63,6 +73,18 @@ window.RMSAdminContentStudio = (() => {
     return typeof value === "string"
       ? value
       : "";
+  }
+
+  function expectedKey(stageId) {
+    return `curriculum.stage.${stageId}.guidance`;
+  }
+
+  function validStageId(stageId) {
+    return (
+      Number.isInteger(stageId) &&
+      stageId >= 1 &&
+      stageId <= 18
+    );
   }
 
   function validatePlain(
@@ -190,11 +212,11 @@ window.RMSAdminContentStudio = (() => {
       typeof value !== "object" ||
       Array.isArray(value)
     ) {
-      return Object.freeze({
+      return deepFreeze({
         ok: false,
-        errors: Object.freeze([
+        errors: [
           "Content value must be an object."
-        ])
+        ]
       });
     }
 
@@ -259,12 +281,19 @@ window.RMSAdminContentStudio = (() => {
       });
     }
 
+    if (!validStageId(record.stage_id)) {
+      errors.push(
+        "Stage identifier must be an integer from 1 through 18."
+      );
+    }
+
     if (
+      validStageId(record.stage_id) &&
       record.key !==
-      "curriculum.stage.1.guidance"
+        expectedKey(record.stage_id)
     ) {
       errors.push(
-        "Unsupported content key."
+        "Content key does not match the stage identifier."
       );
     }
 
@@ -277,9 +306,12 @@ window.RMSAdminContentStudio = (() => {
       );
     }
 
-    if (record.stage_id !== 1) {
+    if (
+      record.phase !== undefined &&
+      !PHASES.has(record.phase)
+    ) {
       errors.push(
-        "Stage identifier must remain 1."
+        "Unsupported research phase."
       );
     }
 
@@ -296,18 +328,39 @@ window.RMSAdminContentStudio = (() => {
     });
   }
 
-  function getRecord(
-    registry,
-    key
-  ) {
+  function listRecords(registry) {
     const records =
       Array.isArray(registry?.records)
         ? registry.records
         : [];
 
+    const accepted =
+      records
+        .filter(record =>
+          validateRecord(record).ok
+        )
+        .map(clone)
+        .sort(
+          (a, b) =>
+            a.stage_id -
+            b.stage_id
+        );
+
+    return deepFreeze(
+      accepted
+    );
+  }
+
+  function getRecord(
+    registry,
+    key
+  ) {
+    const records =
+      listRecords(registry);
+
     const record =
       records.find(
-        item => item?.key === key
+        item => item.key === key
       );
 
     return record
@@ -331,6 +384,12 @@ window.RMSAdminContentStudio = (() => {
       location: stringValue(
         record.location
       ),
+      phase: stringValue(
+        record.phase
+      ),
+      phase_label: stringValue(
+        record.phase_label
+      ),
       stage_id: record.stage_id,
       base_revision: stringValue(
         record.revision
@@ -353,6 +412,7 @@ window.RMSAdminContentStudio = (() => {
     }
 
     const next = clone(draft);
+
     next.value[field] =
       stringValue(value);
 
@@ -388,6 +448,7 @@ window.RMSAdminContentStudio = (() => {
     return validateRecord({
       key: draft?.key,
       type: draft?.type,
+      phase: draft?.phase,
       stage_id: draft?.stage_id,
       value: draft?.value
     });
@@ -409,6 +470,10 @@ window.RMSAdminContentStudio = (() => {
       ok: true,
       errors: [],
       model: {
+        stage_id: draft.stage_id,
+        phase: draft.phase,
+        phase_label:
+          draft.phase_label,
         title: draft.value.title,
         nav: draft.value.nav,
         purpose: draft.value.purpose,
@@ -454,6 +519,7 @@ window.RMSAdminContentStudio = (() => {
         version: "1.0",
         key: draft.key,
         type: draft.type,
+        phase: draft.phase,
         stage_id: draft.stage_id,
         base_revision:
           draft.base_revision,
@@ -464,11 +530,13 @@ window.RMSAdminContentStudio = (() => {
 
   return Object.freeze({
     VALUE_FIELDS,
+    listRecords,
     getRecord,
     createDraft,
     updateField,
     replaceValue,
     validateValue,
+    validateRecord,
     validateDraft,
     previewModel,
     hasChanges,
