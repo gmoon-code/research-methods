@@ -22,6 +22,11 @@ const app = readFileSync(
   "utf8"
 );
 
+const journeyUi = readFileSync(
+  "assets/journey-ui.js",
+  "utf8"
+);
+
 const theme = readFileSync(
   "assets/moon-notes-theme.css",
   "utf8"
@@ -183,6 +188,66 @@ test(
     assert.match(
       flow,
       /id\("leaveTeacherMode"\)\?\.[\s\S]{0,300}RMSTeacherSession\?\.leave\?\.\(\)[\s\S]{0,150}location\.href = "\.\/";/
+    );
+  }
+);
+
+test(
+  "More exposes the student teacher-review packet workflow",
+  () => {
+    const openMoreStart =
+      flow.indexOf(
+        "async function openMore()"
+      );
+
+    const teacherOnlyStart =
+      flow.indexOf(
+        "teacherMode\n            ?",
+        openMoreStart
+      );
+
+    assert.ok(
+      openMoreStart >= 0
+    );
+
+    assert.ok(
+      teacherOnlyStart > openMoreStart
+    );
+
+    const studentMoreMenu =
+      flow.slice(
+        openMoreStart,
+        teacherOnlyStart
+      );
+
+    assert.match(
+      studentMoreMenu,
+      /data-proxy-click="journeyBtn"/
+    );
+
+    assert.match(
+      studentMoreMenu,
+      /Teacher review & feedback/
+    );
+
+    assert.match(
+      studentMoreMenu,
+      /export a teacher review packet/
+    );
+
+    assert.match(
+      journeyUi,
+      /id="exportStudentPacket"/
+    );
+
+    assert.match(
+      journeyUi,
+      /Export teacher review packet/
+    );
+
+    assert.match(
+      journeyUi,
+      /J\.exportStudentPacket\(p\)/
     );
   }
 );

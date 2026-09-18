@@ -584,6 +584,20 @@ window.RMSStudentFlowUI = (() => {
 
           <button
             type="button"
+            data-proxy-click="journeyBtn"
+          >
+            <b>Teacher review & feedback</b>
+
+            <span>
+              View your research checkpoints,
+              export a teacher review packet,
+              and import feedback from your
+              teacher.
+            </span>
+          </button>
+
+          <button
+            type="button"
             data-proxy-click="resetProject"
             class="destructive-option"
           >
