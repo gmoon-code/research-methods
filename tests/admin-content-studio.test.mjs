@@ -235,7 +235,8 @@ test(
     );
 
     assert.deepEqual(
-      registry.records.map(
+      Array.from(
+        registry.records,
         record =>
           record.stage_id
       ),
@@ -334,7 +335,8 @@ test(
     );
 
     assert.deepEqual(
-      records.map(
+      Array.from(
+        records,
         record =>
           record.stage_id
       ),
