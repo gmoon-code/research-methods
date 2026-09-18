@@ -1,10 +1,10 @@
-# Start Here — Research Methods Studio v2.17.0 FREE
+# Start Here — Research Methods Studio v2.17.1 FREE
 
 This is the current application and release-verification entry point.
 
 ## 1. Current state
 
-The v2.17.0 static application is merged to `main`.
+The v2.17.1 static application is merged to `main`.
 
 The release adds the authenticated Teacher Workspace with seven integrated areas:
 
@@ -16,7 +16,7 @@ The release adds the authenticated Teacher Workspace with seven integrated areas
 - Chat Controls
 - Recovery
 
-The Cloudflare Research Chat backend was not changed or redeployed for v2.17.0. It remains on the validated v2.16.0 backend service contract.
+The Cloudflare Research Chat backend was not changed or redeployed for v2.17.1. It remains on the validated v2.16.0 backend service contract.
 
 ## 2. Verify the current static application
 
@@ -27,11 +27,11 @@ npm run test:research-chat
 npm run test:research-chat:browser
 ```
 
-The v2.17.0 merge was accepted only after the complete Teacher Workspace regression and integrated browser QA passed on the exact application tree later merged to `main`.
+The v2.17.1 merge was accepted only after the complete Teacher Workspace regression and integrated browser QA passed on the exact application tree later merged to `main`.
 
 ## 3. Release metadata and tagging
 
-A v2.17.0 tag must point only to a verified `main` commit whose static application metadata reports v2.17.0.
+A v2.17.1 tag must point only to a verified `main` commit whose static application metadata reports v2.17.1.
 
 Do not tag an earlier commit whose `package.json`, `assets/runtime-config.js`, README, or current guidance still identifies the static application as v2.16.0.
 

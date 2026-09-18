@@ -1,10 +1,10 @@
-# Research Methods Studio v2.17.0 FREE
+# Research Methods Studio v2.17.1 FREE
 
 Research Methods Studio is a static, student-facing research-methods workspace that guides students through an 18-stage research process while preserving their route, current Stage, current work, progress, and upcoming steps.
 
 ## Current release status
 
-- **Static application:** v2.17.0.
+- **Static application:** v2.17.1.
 - **Teacher Workspace:** authenticated and integrated across Overview, Review Queue, Students, Assignment Setup, Analytics, Chat Controls, and Recovery.
 - **Research Chat backend service:** the unchanged validated Cloudflare Workers AI service remains on its v2.16.0 backend contract.
 - **Research Chat hosting:** active on the validated Cloudflare Workers Free backend. `assets/runtime-config.js` contains the public production Worker endpoint.
@@ -37,7 +37,7 @@ Research Chat is optional. If the free AI allowance is unavailable or exhausted,
 
 Teachers enter through `teacher.html`. After server verification, the browser opens the authenticated Teacher Workspace.
 
-The v2.17.0 Teacher Workspace provides:
+The v2.17.1 Teacher Workspace provides:
 
 - Overview
 - Review Queue
@@ -97,4 +97,4 @@ Historical release engineering records remain under `docs/archive/`.
 
 Teacher authentication remains separate from the student class Chat code. The teacher access code is verified by the Cloudflare Worker. A successful login returns a signed session token with an eight-hour maximum lifetime. The token is scoped to browser `sessionStorage`, is verified by the Worker before teacher tools are shown, and is cleared when teacher mode is left.
 
-The former query-string or client-only teacher bypass is not part of v2.17.0.
+The former query-string or client-only teacher bypass is not part of v2.17.1.

@@ -2,9 +2,9 @@
 
 ## Current production boundary
 
-Research Methods Studio v2.17.0 FREE is the current static GitHub Pages application.
+Research Methods Studio v2.17.1 FREE is the current static GitHub Pages application.
 
-The optional Cloudflare Workers AI Research Chat backend was not changed for v2.17.0 and remains on its validated v2.16.0 backend service contract.
+The optional Cloudflare Workers AI Research Chat backend was not changed for v2.17.1 and remains on its validated v2.16.0 backend service contract.
 
 The repository is designed to be public. It must never contain real credentials or student/participant data.
 
@@ -58,7 +58,7 @@ The browser sends the teacher access code only to the Worker login route. The cr
 
 Successful login returns a signed teacher-session token. The token has an eight-hour maximum lifetime and is kept in `sessionStorage`. Teacher tools are shown only after `/teacher/session/verify` accepts the token. Tampered, expired, or incorrectly signed tokens fail closed.
 
-The legacy query-string teacher mode and former client-only `rms_teacher_mode_v1` flag are not accepted in v2.17.0.
+The legacy query-string teacher mode and former client-only `rms_teacher_mode_v1` flag are not accepted in v2.17.1.
 
 The public Worker URL is configuration, not a credential. None of the three secret values belongs in `assets/runtime-config.js`.
 
