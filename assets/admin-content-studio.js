@@ -123,7 +123,6 @@ window.RMSAdminContentStudio = (() => {
         .test(html) ||
       /\bon[a-z]+\s*=/i.test(html) ||
       /javascript\s*:/i.test(html) ||
-      /data\s*:/i.test(html) ||
       /src\s*=/i.test(html) ||
       /href\s*=/i.test(html)
     ) {
