@@ -72,48 +72,92 @@ function normalizeLineEndings(
   return value;
 }
 
-function stageOneFromCurriculum() {
-  const source =
-    readFileSync(
-      "assets/curriculum.js",
-      "utf8"
-    );
+function curriculumSource() {
+  return readFileSync(
+    "assets/curriculum.js",
+    "utf8"
+  );
+}
 
-  const start =
-    source.indexOf(
-      "    {\n      id:1,"
-    ) >= 0
-      ? source.indexOf(
-          "    {\n      id:1,"
-        )
-      : source.indexOf(
-          "    {\r\n      id:1,"
+function stageBlock(
+  source,
+  stageId
+) {
+  const lf =
+    `    {\n      id:${stageId},`;
+
+  const crlf =
+    `    {\r\n      id:${stageId},`;
+
+  let start =
+    source.indexOf(lf);
+
+  if (start < 0) {
+    start =
+      source.indexOf(crlf);
+  }
+
+  assert.ok(
+    start >= 0,
+    `Missing Stage ${stageId} start`
+  );
+
+  let end = -1;
+
+  if (stageId < 18) {
+    const nextLf =
+      `    {\n      id:${stageId + 1},`;
+
+    const nextCrLf =
+      `    {\r\n      id:${stageId + 1},`;
+
+    end =
+      source.indexOf(
+        nextLf,
+        start + 1
+      );
+
+    if (end < 0) {
+      end =
+        source.indexOf(
+          nextCrLf,
+          start + 1
         );
+    }
+  } else {
+    end =
+      source.indexOf(
+        "\n  ];",
+        start
+      );
 
-  const stageTwoLf =
-    source.indexOf(
-      "    {\n      id:2,",
-      start
-    );
+    if (end < 0) {
+      end =
+        source.indexOf(
+          "\r\n  ];",
+          start
+        );
+    }
+  }
 
-  const stageTwoCrLf =
-    source.indexOf(
-      "    {\r\n      id:2,",
-      start
-    );
+  assert.ok(
+    end > start,
+    `Missing Stage ${stageId} end`
+  );
 
-  const end =
-    stageTwoLf >= 0
-      ? stageTwoLf
-      : stageTwoCrLf;
+  return source.slice(
+    start,
+    end
+  );
+}
 
-  assert.ok(start >= 0);
-  assert.ok(end > start);
-
+function stageFromCurriculum(
+  stageId
+) {
   const block =
-    source.slice(
-      start,
-      end
+    stageBlock(
+      curriculumSource(),
+      stageId
     );
 
   function pick(
@@ -125,48 +169,55 @@ function stageOneFromCurriculum() {
 
     assert.ok(
       match,
-      `Missing Stage 1 ${label}`
+      `Missing Stage ${stageId} ${label}`
     );
 
     return match[1];
   }
 
   return {
-    title:
+    phase:
       pick(
-        /title:"([^"]+)"/,
-        "title"
+        /phase:"([^"]+)"/,
+        "phase"
       ),
-    nav:
-      pick(
-        /nav:"([^"]+)"/,
-        "nav"
-      ),
-    purpose:
-      pick(
-        /purpose:"([^"]+)"/,
-        "purpose"
-      ),
-    learn_html:
-      pick(
-        /learn:`([\s\S]*?)`,\r?\n      example:/,
-        "learn"
-      ),
-    example_html:
-      pick(
-        /example:`([\s\S]*?)`,\r?\n      warning:/,
-        "example"
-      ),
-    warning_html:
-      pick(
-        /warning:`([\s\S]*?)`,\r?\n      custom:/,
-        "warning"
-      )
+    value: {
+      title:
+        pick(
+          /title:"([^"]+)"/,
+          "title"
+        ),
+      nav:
+        pick(
+          /nav:"([^"]+)"/,
+          "nav"
+        ),
+      purpose:
+        pick(
+          /purpose:"([^"]+)"/,
+          "purpose"
+        ),
+      learn_html:
+        pick(
+          /learn:`([\s\S]*?)`,\r?\n      example:/,
+          "learn"
+        ),
+      example_html:
+        pick(
+          /example:`([\s\S]*?)`,\r?\n      warning:/,
+          "example"
+        ),
+      warning_html:
+        pick(
+          /warning:`([\s\S]*?)`,\r?\n      (?:custom:|sections:)/,
+          "warning"
+        )
+    }
   };
 }
 
 test(
-  "Content registry seeds Stage 1 guidance exactly from the current curriculum",
+  "Content registry contains exactly 18 ordered stage guidance records",
   () => {
     assert.equal(
       registry.schema_version,
@@ -174,82 +225,254 @@ test(
     );
 
     assert.equal(
+      registry.content_version,
+      "v3-content-foundation-2"
+    );
+
+    assert.equal(
       registry.records.length,
-      1
-    );
-
-    const record =
-      studio.getRecord(
-        registry,
-        "curriculum.stage.1.guidance"
-      );
-
-    assert.ok(record);
-
-    assert.equal(
-      record.type,
-      "stage_guidance"
-    );
-
-    assert.equal(
-      record.stage_id,
-      1
+      18
     );
 
     assert.deepEqual(
-      normalizeLineEndings(
-        JSON.parse(
-          JSON.stringify(
-            record.value
-          )
-        )
+      registry.records.map(
+        record =>
+          record.stage_id
       ),
-      normalizeLineEndings(
-        stageOneFromCurriculum()
+      Array.from(
+        { length: 18 },
+        (_, index) =>
+          index + 1
       )
     );
+
+    for (
+      const record
+      of registry.records
+    ) {
+      assert.equal(
+        record.key,
+        `curriculum.stage.${record.stage_id}.guidance`
+      );
+
+      assert.equal(
+        record.type,
+        "stage_guidance"
+      );
+
+      assert.equal(
+        record.revision,
+        "seed-v2.17.1"
+      );
+
+      assert.equal(
+        record.published,
+        true
+      );
+    }
   }
 );
 
 test(
-  "published Stage 1 seed passes Content Studio validation",
+  "all 18 registry records match the current curriculum guidance exactly",
   () => {
-    const record =
-      studio.getRecord(
-        registry,
-        "curriculum.stage.1.guidance"
+    for (
+      let stageId = 1;
+      stageId <= 18;
+      stageId += 1
+    ) {
+      const record =
+        studio.getRecord(
+          registry,
+          `curriculum.stage.${stageId}.guidance`
+        );
+
+      assert.ok(
+        record,
+        `Stage ${stageId}`
       );
 
-    const draft =
-      studio.createDraft(
-        record
+      const current =
+        stageFromCurriculum(
+          stageId
+        );
+
+      assert.equal(
+        record.phase,
+        current.phase,
+        `Stage ${stageId} phase`
       );
 
-    const validation =
-      studio.validateDraft(
-        draft
+      assert.deepEqual(
+        normalizeLineEndings(
+          JSON.parse(
+            JSON.stringify(
+              record.value
+            )
+          )
+        ),
+        normalizeLineEndings(
+          current.value
+        ),
+        `Stage ${stageId} content`
+      );
+    }
+  }
+);
+
+test(
+  "Content Studio lists valid records in deterministic stage order",
+  () => {
+    const records =
+      studio.listRecords(
+        registry
       );
 
     assert.equal(
-      validation.ok,
+      records.length,
+      18
+    );
+
+    assert.deepEqual(
+      records.map(
+        record =>
+          record.stage_id
+      ),
+      Array.from(
+        { length: 18 },
+        (_, index) =>
+          index + 1
+      )
+    );
+
+    assert.equal(
+      Object.isFrozen(
+        records
+      ),
       true
     );
 
-    assert.deepEqual(
-      [...validation.errors],
-      []
+    assert.equal(
+      Object.isFrozen(
+        records[0]
+      ),
+      true
     );
   }
 );
 
 test(
-  "field editing is immutable and does not mutate the registry seed",
+  "every published stage seed creates a valid draft",
+  () => {
+    for (
+      const record
+      of studio.listRecords(
+        registry
+      )
+    ) {
+      const validation =
+        studio.validateRecord(
+          record
+        );
+
+      assert.equal(
+        validation.ok,
+        true,
+        record.key
+      );
+
+      const draft =
+        studio.createDraft(
+          record
+        );
+
+      const draftValidation =
+        studio.validateDraft(
+          draft
+        );
+
+      assert.equal(
+        draftValidation.ok,
+        true,
+        record.key
+      );
+
+      assert.equal(
+        draft.stage_id,
+        record.stage_id
+      );
+
+      assert.equal(
+        draft.phase,
+        record.phase
+      );
+    }
+  }
+);
+
+test(
+  "record validation enforces stage range key identity type and phase",
   () => {
     const record =
       studio.getRecord(
         registry,
-        "curriculum.stage.1.guidance"
+        "curriculum.stage.4.guidance"
       );
+
+    const raw =
+      JSON.parse(
+        JSON.stringify(
+          record
+        )
+      );
+
+    for (
+      const mutation
+      of [
+        {
+          ...raw,
+          stage_id: 0
+        },
+        {
+          ...raw,
+          stage_id: 19
+        },
+        {
+          ...raw,
+          key:
+            "curriculum.stage.5.guidance"
+        },
+        {
+          ...raw,
+          type: "other"
+        },
+        {
+          ...raw,
+          phase: "unknown"
+        }
+      ]
+    ) {
+      assert.equal(
+        studio.validateRecord(
+          mutation
+        ).ok,
+        false
+      );
+    }
+  }
+);
+
+test(
+  "field editing is immutable and does not mutate any registry seed",
+  () => {
+    const record =
+      studio.getRecord(
+        registry,
+        "curriculum.stage.3.guidance"
+      );
+
+    const originalTitle =
+      record.value.title;
 
     const draft =
       studio.createDraft(
@@ -260,23 +483,23 @@ test(
       studio.updateField(
         draft,
         "title",
-        "A revised Stage 1 title"
+        "A revised Stage 3 title"
       );
 
     assert.equal(
       draft.value.title,
-      record.value.title
+      originalTitle
     );
 
     assert.equal(
       next.value.title,
-      "A revised Stage 1 title"
+      "A revised Stage 3 title"
     );
 
     assert.equal(
-      registry.records[0]
+      registry.records[2]
         .value.title,
-      record.value.title
+      originalTitle
     );
 
     assert.equal(
@@ -298,12 +521,79 @@ test(
 );
 
 test(
+  "drafts for different stages remain independent",
+  () => {
+    const stage2 =
+      studio.getRecord(
+        registry,
+        "curriculum.stage.2.guidance"
+      );
+
+    const stage17 =
+      studio.getRecord(
+        registry,
+        "curriculum.stage.17.guidance"
+      );
+
+    const draft2 =
+      studio.updateField(
+        studio.createDraft(
+          stage2
+        ),
+        "title",
+        "Stage 2 changed"
+      );
+
+    const draft17 =
+      studio.updateField(
+        studio.createDraft(
+          stage17
+        ),
+        "nav",
+        "Stage 17 changed"
+      );
+
+    assert.equal(
+      draft2.value.title,
+      "Stage 2 changed"
+    );
+
+    assert.equal(
+      draft2.value.nav,
+      stage2.value.nav
+    );
+
+    assert.equal(
+      draft17.value.title,
+      stage17.value.title
+    );
+
+    assert.equal(
+      draft17.value.nav,
+      "Stage 17 changed"
+    );
+
+    assert.equal(
+      stage2.value.title,
+      registry.records[1]
+        .value.title
+    );
+
+    assert.equal(
+      stage17.value.nav,
+      registry.records[16]
+        .value.nav
+    );
+  }
+);
+
+test(
   "full-block replacement requires exactly the six editable fields",
   () => {
     const record =
       studio.getRecord(
         registry,
-        "curriculum.stage.1.guidance"
+        "curriculum.stage.10.guidance"
       );
 
     const draft =
@@ -312,73 +602,62 @@ test(
       );
 
     const missing =
-      {
-        ...JSON.parse(
-          JSON.stringify(
-            record.value
-          )
+      JSON.parse(
+        JSON.stringify(
+          record.value
         )
-      };
+      );
 
     delete missing.warning_html;
 
-    const missingResult =
+    assert.equal(
       studio.replaceValue(
         draft,
         missing
-      );
-
-    assert.equal(
-      missingResult.ok,
+      ).ok,
       false
     );
 
-    const extra =
-      {
-        ...JSON.parse(
-          JSON.stringify(
-            record.value
-          )
-        ),
-        hidden_extra: "no"
-      };
+    const extra = {
+      ...JSON.parse(
+        JSON.stringify(
+          record.value
+        )
+      ),
+      hidden_extra: "no"
+    };
 
-    const extraResult =
+    assert.equal(
       studio.replaceValue(
         draft,
         extra
-      );
-
-    assert.equal(
-      extraResult.ok,
+      ).ok,
       false
     );
 
-    const complete =
-      {
-        ...JSON.parse(
-          JSON.stringify(
-            record.value
-          )
-        ),
-        title:
-          "Complete replacement title"
-      };
+    const complete = {
+      ...JSON.parse(
+        JSON.stringify(
+          record.value
+        )
+      ),
+      title:
+        "Complete replacement title"
+    };
 
-    const completeResult =
+    const result =
       studio.replaceValue(
         draft,
         complete
       );
 
     assert.equal(
-      completeResult.ok,
+      result.ok,
       true
     );
 
     assert.equal(
-      completeResult
-        .draft.value.title,
+      result.draft.value.title,
       "Complete replacement title"
     );
   }
@@ -390,7 +669,7 @@ test(
     const record =
       studio.getRecord(
         registry,
-        "curriculum.stage.1.guidance"
+        "curriculum.stage.6.guidance"
       );
 
     const dangerous = [
@@ -404,7 +683,10 @@ test(
       "<svg></svg>"
     ];
 
-    for (const markup of dangerous) {
+    for (
+      const markup
+      of dangerous
+    ) {
       const value =
         JSON.parse(
           JSON.stringify(
@@ -415,13 +697,10 @@ test(
       value.learn_html =
         markup;
 
-      const validation =
+      assert.equal(
         studio.validateValue(
           value
-        );
-
-      assert.equal(
-        validation.ok,
+        ).ok,
         false,
         markup
       );
@@ -430,7 +709,7 @@ test(
 );
 
 test(
-  "Content Studio accepts the restricted instructional markup used by Stage 1",
+  "Content Studio accepts restricted instructional markup",
   () => {
     const value = {
       title: "Title",
@@ -445,13 +724,10 @@ test(
         "<strong>Warning</strong><ol><li>Check scope.</li></ol>"
     };
 
-    const validation =
+    assert.equal(
       studio.validateValue(
         value
-      );
-
-    assert.equal(
-      validation.ok,
+      ).ok,
       true
     );
   }
@@ -463,7 +739,7 @@ test(
     const record =
       studio.getRecord(
         registry,
-        "curriculum.stage.1.guidance"
+        "curriculum.stage.12.guidance"
       );
 
     let draft =
@@ -511,18 +787,38 @@ test(
 );
 
 test(
-  "valid draft export is a content draft packet and never a publication packet",
+  "valid draft preview and export retain selected stage identity",
   () => {
     const record =
       studio.getRecord(
         registry,
-        "curriculum.stage.1.guidance"
+        "curriculum.stage.18.guidance"
       );
 
     const draft =
       studio.createDraft(
         record
       );
+
+    const preview =
+      studio.previewModel(
+        draft
+      );
+
+    assert.equal(
+      preview.ok,
+      true
+    );
+
+    assert.equal(
+      preview.model.stage_id,
+      18
+    );
+
+    assert.equal(
+      preview.model.phase,
+      "write"
+    );
 
     const exported =
       studio.exportEnvelope(
@@ -550,6 +846,16 @@ test(
     );
 
     assert.equal(
+      exported.packet.stage_id,
+      18
+    );
+
+    assert.equal(
+      exported.packet.phase,
+      "write"
+    );
+
+    assert.equal(
       Object.hasOwn(
         exported.packet,
         "published"
@@ -560,24 +866,81 @@ test(
 );
 
 test(
-  "Content Studio model introduces no network or persistence path",
+  "unknown content keys do not produce managed records",
   () => {
-    const data =
-      readFileSync(
-        "assets/admin-content-studio.js",
-        "utf8"
-      );
+    assert.equal(
+      studio.getRecord(
+        registry,
+        "curriculum.stage.99.guidance"
+      ),
+      null
+    );
 
+    assert.equal(
+      studio.getRecord(
+        registry,
+        "other.content"
+      ),
+      null
+    );
+  }
+);
+
+test(
+  "Content Studio browser source preserves separate session drafts and search",
+  () => {
     const ui =
       readFileSync(
         "assets/admin-content-studio-ui.js",
         "utf8"
       );
 
-    for (const source of [
-      data,
-      ui
-    ]) {
+    for (
+      const required
+      of [
+        "const drafts = new Map();",
+        "function renderBrowser()",
+        "function matchesSearch(",
+        "contentBrowserSearch",
+        "contentBrowserList",
+        "contentDirtyCount",
+        "Draft changed",
+        "records.length !== 18",
+        "drafts.set(",
+        "draftForRecord("
+      ]
+    ) {
+      assert.equal(
+        ui.includes(required),
+        true,
+        required
+      );
+    }
+  }
+);
+
+test(
+  "Content Studio model and browser introduce no network or persistence path",
+  () => {
+    const sources = [
+      readFileSync(
+        "assets/admin-content-studio.js",
+        "utf8"
+      ),
+      readFileSync(
+        "assets/admin-content-studio-ui.js",
+        "utf8"
+      ),
+      readFileSync(
+        "assets/content-registry.js",
+        "utf8"
+      )
+    ];
+
+    for (
+      const source
+      of sources
+    ) {
       assert.doesNotMatch(
         source,
         /\bfetch\s*\(/
