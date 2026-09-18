@@ -744,7 +744,8 @@
     }
 
     .assignment-actions,
-    .assignment-import-actions {
+    .assignment-import-actions,
+    .recovery-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -1896,9 +1897,163 @@
           >
             <h2>Recovery</h2>
             <p>
-              Reserved for a later milestone. This shell performs no
-              backup, restore, deletion, or destructive operations.
+              Inspect one local Research Methods Studio project backup
+              before handing restoration back to the student site.
+              Teacher Workspace does not restore or replace the live
+              student project.
             </p>
+
+            <div class="notice">
+              Backup inspection stays in this page only. The selected
+              file is not uploaded, and Teacher Workspace does not read
+              the live student project from browser storage. Full
+              project contents, raw datasets, manuscript text, source
+              notes, participant records, and Research Chat transcripts
+              are not displayed here.
+            </div>
+
+            <div class="detail-section">
+              <h3>Inspect a project backup</h3>
+
+              <div class="recovery-actions">
+                <label class="file-control">
+                  <span>Select project backup JSON</span>
+                  <input
+                    id="recoveryBackupFile"
+                    type="file"
+                    accept=".json,application/json"
+                  >
+                </label>
+
+                <button
+                  class="button"
+                  id="clearRecoveryInspection"
+                  type="button"
+                  disabled
+                >
+                  Clear inspection
+                </button>
+
+                <a
+                  class="button"
+                  id="openStudentRecovery"
+                  href="./"
+                  target="_blank"
+                  rel="noopener"
+                  hidden
+                >
+                  Open student recovery
+                </a>
+              </div>
+
+              <p
+                class="import-report"
+                id="recoveryInspectionStatus"
+                aria-live="polite"
+              >
+                No backup is currently selected.
+              </p>
+
+              <div
+                id="recoveryInspectionDetails"
+                hidden
+              >
+                <div
+                  class="metric-grid"
+                  aria-label="Recovery inspection status"
+                >
+                  <div class="metric-card">
+                    <span>Recognized backup</span>
+                    <strong id="recoveryRecognized">No</strong>
+                  </div>
+
+                  <div class="metric-card">
+                    <span>Checksum status</span>
+                    <strong id="recoveryChecksumStatus">Unavailable</strong>
+                  </div>
+
+                  <div class="metric-card">
+                    <span>Restore eligibility</span>
+                    <strong id="recoveryRestorable">No</strong>
+                  </div>
+                </div>
+
+                <div class="detail-section">
+                  <h3>Safe backup metadata</h3>
+
+                  <dl class="detail-list">
+                    <div>
+                      <dt>Local file</dt>
+                      <dd id="recoveryFileName">Unavailable</dd>
+                    </div>
+
+                    <div>
+                      <dt>File size</dt>
+                      <dd id="recoveryFileSize">Unavailable</dd>
+                    </div>
+
+                    <div>
+                      <dt>Format</dt>
+                      <dd id="recoveryFormat">Unavailable</dd>
+                    </div>
+
+                    <div>
+                      <dt>Backup mode</dt>
+                      <dd id="recoveryMode">Unavailable</dd>
+                    </div>
+
+                    <div>
+                      <dt>Created</dt>
+                      <dd id="recoveryCreatedAt">Unavailable</dd>
+                    </div>
+
+                    <div>
+                      <dt>Baseline identifier</dt>
+                      <dd id="recoveryBaselineId">Unavailable</dd>
+                    </div>
+
+                    <div>
+                      <dt>Checksum fingerprint</dt>
+                      <dd id="recoveryChecksumFingerprint">Unavailable</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+
+              <p class="privacy-note">
+                A valid full backup can be restored only through the
+                existing student-site recovery flow. A privacy-minimized
+                copy may be valid for inspection while remaining
+                intentionally non-restorable. Opening student recovery
+                does not transfer this selected file automatically.
+              </p>
+            </div>
+
+            <div class="detail-section">
+              <h3>Recovering Teacher Workspace files</h3>
+
+              <ul>
+                <li>
+                  <code>rms_student_review</code> version 1.7 files can
+                  be re-imported through Overview.
+                </li>
+                <li>
+                  <code>rms_teacher_feedback</code> version 1.7 files
+                  are downloadable teacher records. Recovery does not
+                  create a new feedback importer.
+                </li>
+                <li>
+                  <code>rms_assignment_setup</code> version 1.0 files
+                  can be re-imported through Assignment Setup.
+                </li>
+                <li>
+                  Imported review packets, unsaved teacher review drafts,
+                  and unsaved assignment changes exist only in page
+                  memory. Reloading the page cannot recreate work that
+                  was never downloaded.
+                </li>
+              </ul>
+            </div>
           </section>
         </div>
       </main>
@@ -1908,6 +2063,7 @@
   <script src="./assets/runtime-config.js"></script>
   <script src="./assets/teacher-session.js"></script>
   <script src="./assets/ai-adapter.js"></script>
+  <script src="./assets/pilot.js"></script>
   <script src="./assets/teacher-workspace-data.js"></script>
 
   <script>
@@ -2365,6 +2521,8 @@
           typeof data.deriveTeacherAnalytics ===
             "function" &&
           typeof data.deriveTeacherChatControlsStatus ===
+            "function" &&
+          typeof data.deriveTeacherRecoveryInspection ===
             "function" &&
           typeof data.createTeacherReviewDraft ===
             "function" &&
@@ -4822,6 +4980,469 @@
           true;
       }
 
+      const RECOVERY_MAX_FILE_BYTES =
+        26214400;
+
+      let recoveryInspection =
+        null;
+
+      let recoveryBound =
+        false;
+
+      function recoveryElement(
+        id
+      ) {
+        return document.getElementById(
+          id
+        );
+      }
+
+      function recoveryFormatLabel(
+        status
+      ) {
+        if (
+          status.format.legacy
+        ) {
+          return "Legacy project backup";
+        }
+
+        if (
+          status.format.packet_type &&
+          status.format.version
+        ) {
+          return (
+            status.format.packet_type +
+            " " +
+            status.format.version
+          );
+        }
+
+        if (
+          status.format.packet_type
+        ) {
+          return status.format
+            .packet_type;
+        }
+
+        if (
+          status.format.version
+        ) {
+          return (
+            "Version " +
+            status.format.version
+          );
+        }
+
+        return status.format
+          .recognized
+          ? "Recognized backup"
+          : "Unavailable";
+      }
+
+      function renderRecoveryInspection() {
+        const status =
+          recoveryInspection;
+
+        const hasInspection =
+          Boolean(
+            status.file.name
+          ) ||
+          status.file
+            .size_bytes !==
+          null;
+
+        recoveryElement(
+          "recoveryInspectionStatus"
+        ).textContent =
+          status.message;
+
+        recoveryElement(
+          "recoveryInspectionDetails"
+        ).hidden =
+          !hasInspection;
+
+        recoveryElement(
+          "clearRecoveryInspection"
+        ).disabled =
+          !hasInspection;
+
+        recoveryElement(
+          "openStudentRecovery"
+        ).hidden =
+          !status.recovery
+            .restorable;
+
+        recoveryElement(
+          "recoveryRecognized"
+        ).textContent =
+          status.format
+            .recognized
+            ? "Yes"
+            : "No";
+
+        const checksum =
+          status.integrity
+            .checksum_verified;
+
+        recoveryElement(
+          "recoveryChecksumStatus"
+        ).textContent =
+          checksum ===
+            true
+            ? "Verified"
+            : (
+                checksum ===
+                  false
+                  ? "Not verified"
+                  : "Unavailable"
+              );
+
+        recoveryElement(
+          "recoveryRestorable"
+        ).textContent =
+          status.recovery
+            .restorable
+            ? "Student site"
+            : "No";
+
+        recoveryElement(
+          "recoveryFileName"
+        ).textContent =
+          status.file.name ||
+          "Unavailable";
+
+        recoveryElement(
+          "recoveryFileSize"
+        ).textContent =
+          status.file
+            .size_bytes ===
+          null
+            ? "Unavailable"
+            : (
+                String(
+                  status.file
+                    .size_bytes
+                ) +
+                " bytes"
+              );
+
+        recoveryElement(
+          "recoveryFormat"
+        ).textContent =
+          recoveryFormatLabel(
+            status
+          );
+
+        recoveryElement(
+          "recoveryMode"
+        ).textContent =
+          status.format.mode ||
+          "Unavailable";
+
+        recoveryElement(
+          "recoveryCreatedAt"
+        ).textContent =
+          status.format
+            .created_at ||
+          "Unavailable";
+
+        recoveryElement(
+          "recoveryBaselineId"
+        ).textContent =
+          status.format
+            .baseline_id ||
+          "Unavailable";
+
+        recoveryElement(
+          "recoveryChecksumFingerprint"
+        ).textContent =
+          status.integrity
+            .checksum_fingerprint ||
+          "Unavailable";
+      }
+
+      function clearRecoveryInspectionState() {
+        recoveryInspection =
+          teacherData
+            .deriveTeacherRecoveryInspection();
+
+        const fileInput =
+          recoveryElement(
+            "recoveryBackupFile"
+          );
+
+        if (fileInput) {
+          fileInput.value =
+            "";
+        }
+
+        renderRecoveryInspection();
+      }
+
+      async function inspectRecoveryFile(
+        file
+      ) {
+        if (!file) {
+          clearRecoveryInspectionState();
+          return;
+        }
+
+        const fileName =
+          typeof file.name ===
+            "string"
+            ? file.name
+            : "";
+
+        const fileSize =
+          typeof file.size ===
+            "number" &&
+          Number.isFinite(
+            file.size
+          )
+            ? file.size
+            : null;
+
+        const pilot =
+          window.RMSPilot;
+
+        const validatorAvailable =
+          Boolean(
+            pilot &&
+            typeof pilot.validateBackup ===
+              "function"
+          );
+
+        if (
+          fileSize !==
+            null &&
+          fileSize >
+            RECOVERY_MAX_FILE_BYTES
+        ) {
+          recoveryInspection =
+            teacherData
+              .deriveTeacherRecoveryInspection({
+                file_name:
+                  fileName,
+                file_size_bytes:
+                  fileSize,
+                parse_success:
+                  false,
+                validator_available:
+                  validatorAvailable,
+                validation_success:
+                  false,
+                restorable:
+                  false
+              });
+
+          recoveryElement(
+            "recoveryBackupFile"
+          ).value =
+            "";
+
+          renderRecoveryInspection();
+          return;
+        }
+
+        let raw =
+          "";
+
+        let parsed =
+          null;
+
+        try {
+          raw =
+            await file.text();
+
+          parsed =
+            JSON.parse(
+              raw
+            );
+        } catch {
+          recoveryInspection =
+            teacherData
+              .deriveTeacherRecoveryInspection({
+                file_name:
+                  fileName,
+                file_size_bytes:
+                  fileSize,
+                parse_success:
+                  false,
+                validator_available:
+                  validatorAvailable,
+                validation_success:
+                  false,
+                restorable:
+                  false
+              });
+
+          raw =
+            "";
+
+          parsed =
+            null;
+
+          recoveryElement(
+            "recoveryBackupFile"
+          ).value =
+            "";
+
+          renderRecoveryInspection();
+          return;
+        }
+
+        const envelope =
+          parsed &&
+          typeof parsed ===
+            "object" &&
+          !Array.isArray(
+            parsed
+          )
+            ? parsed
+            : {};
+
+        const packetType =
+          typeof envelope.packet_type ===
+            "string"
+            ? envelope.packet_type
+            : "";
+
+        const packetVersion =
+          typeof envelope.version ===
+            "string"
+            ? envelope.version
+            : "";
+
+        const backupMode =
+          typeof envelope.mode ===
+            "string"
+            ? envelope.mode
+            : "";
+
+        const createdAt =
+          typeof envelope.created_at ===
+            "string"
+            ? envelope.created_at
+            : "";
+
+        const baselineId =
+          typeof envelope.baseline_id ===
+            "string"
+            ? envelope.baseline_id
+            : "";
+
+        const checksumFingerprint =
+          typeof envelope.checksum_fingerprint ===
+            "string"
+            ? envelope.checksum_fingerprint
+            : "";
+
+        let validation =
+          null;
+
+        if (
+          validatorAvailable
+        ) {
+          try {
+            validation =
+              pilot.validateBackup(
+                parsed
+              );
+          } catch {
+            validation =
+              null;
+          }
+        }
+
+        recoveryInspection =
+          teacherData
+            .deriveTeacherRecoveryInspection({
+              file_name:
+                fileName,
+              file_size_bytes:
+                fileSize,
+              parse_success:
+                true,
+              validator_available:
+                validatorAvailable,
+              validation_success:
+                validation?.ok ===
+                true,
+              restorable:
+                validation
+                  ?.restorable ===
+                true,
+              backup_mode:
+                typeof validation?.mode ===
+                  "string"
+                  ? validation.mode
+                  : backupMode,
+              legacy:
+                validation?.legacy ===
+                true,
+              packet_type:
+                packetType,
+              packet_version:
+                packetVersion,
+              created_at:
+                createdAt,
+              baseline_id:
+                baselineId,
+              checksum_fingerprint:
+                checksumFingerprint
+            });
+
+        raw =
+          "";
+
+        parsed =
+          null;
+
+        validation =
+          null;
+
+        recoveryElement(
+          "recoveryBackupFile"
+        ).value =
+          "";
+
+        renderRecoveryInspection();
+      }
+
+      function bindRecovery() {
+        if (recoveryBound) {
+          return;
+        }
+
+        recoveryElement(
+          "recoveryBackupFile"
+        ).addEventListener(
+          "change",
+          event => {
+            const file =
+              event.currentTarget
+                .files?.[0] ||
+              null;
+
+            void inspectRecoveryFile(
+              file
+            );
+          }
+        );
+
+        recoveryElement(
+          "clearRecoveryInspection"
+        ).addEventListener(
+          "click",
+          () => {
+            clearRecoveryInspectionState();
+          }
+        );
+
+        recoveryBound =
+          true;
+      }
+
       function renderAll() {
         renderOverview();
         renderReviewQueue();
@@ -4829,6 +5450,8 @@
         renderAnalytics();
         bindChatControls();
         renderChatControls();
+        bindRecovery();
+        renderRecoveryInspection();
       }
 
       async function importFiles(
@@ -5561,6 +6184,10 @@
         }
 
         teacherData = data;
+
+        recoveryInspection =
+          teacherData
+            .deriveTeacherRecoveryInspection();
 
         if (
           !initializeAssignmentSetup()

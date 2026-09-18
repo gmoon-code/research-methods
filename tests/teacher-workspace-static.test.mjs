@@ -156,6 +156,11 @@ test(
         "./assets/ai-adapter.js"
       );
 
+    const pilot =
+      workspace.indexOf(
+        "./assets/pilot.js"
+      );
+
     const data =
       workspace.indexOf(
         "./assets/teacher-workspace-data.js"
@@ -164,10 +169,12 @@ test(
     assert.ok(runtime >= 0);
     assert.ok(session >= 0);
     assert.ok(adapter >= 0);
+    assert.ok(pilot >= 0);
     assert.ok(data >= 0);
     assert.ok(runtime < session);
     assert.ok(session < adapter);
-    assert.ok(adapter < data);
+    assert.ok(adapter < pilot);
+    assert.ok(pilot < data);
 
     const externalScripts = [
       ...workspace.matchAll(
@@ -181,6 +188,7 @@ test(
         "./assets/runtime-config.js",
         "./assets/teacher-session.js",
         "./assets/ai-adapter.js",
+        "./assets/pilot.js",
         "./assets/teacher-workspace-data.js"
       ]
     );
@@ -402,7 +410,7 @@ test(
         ) ||
         []
       ).length,
-      1
+      0
     );
   }
 );
@@ -538,7 +546,7 @@ t3Test(
 );
 
 t3Test(
-  "T3 preserves seven primary areas and leaves later milestones reserved",
+  "T3 preserves its seven-area and competency boundaries after later milestones",
   () => {
     const primaryAreas =
       [
@@ -571,7 +579,7 @@ t3Test(
         ) ||
         []
       ).length,
-      1
+      0
     );
 
     t3Assert.equal(
@@ -749,7 +757,7 @@ test(
         ) ||
         []
       ).length,
-      1
+      0
     );
 
     assert.match(
@@ -767,9 +775,14 @@ test(
         /<section[^>]*id="panel-recovery"[\s\S]*?<\/section>/
       )?.[0] || "";
 
-    assert.match(
+    assert.doesNotMatch(
       recoveryPanel,
       /Reserved for a later milestone\./
+    );
+
+    assert.match(
+      recoveryPanel,
+      /id="recoveryBackupFile"/
     );
   }
 );
@@ -943,7 +956,7 @@ test(
 );
 
 test(
-  "T6 Chat Controls preserves seven areas and leaves only Recovery reserved",
+  "T6 Chat Controls preserves all seven workspace areas after T7",
   () => {
     const primaryAreas =
       [
@@ -969,47 +982,24 @@ test(
       );
     }
 
-    assert.equal(
-      (
-        workspace.match(
-          /Reserved for a later milestone\./g
-        ) || []
-      ).length,
-      1
-    );
-
     const chatPanel =
       workspace.match(
         /<section[^>]*id="panel-chat-controls"[\s\S]*?<\/section>/
       )?.[0] || "";
 
-    const recoveryPanel =
-      workspace.match(
-        /<section[^>]*id="panel-recovery"[\s\S]*?<\/section>/
-      )?.[0] || "";
-
     assert.notEqual(
       chatPanel,
       ""
     );
 
-    assert.notEqual(
-      recoveryPanel,
-      ""
-    );
-
-    assert.doesNotMatch(
-      chatPanel,
-      /Reserved for a later milestone\./
-    );
-
-    assert.match(
-      recoveryPanel,
-      /Reserved for a later milestone\./
+    assert.equal(
+      chatPanel.includes(
+        "Reserved for a later milestone."
+      ),
+      false
     );
   }
 );
-
 
 test(
   "T5 Analytics is included in every imported-packet render cycle",
@@ -1308,6 +1298,467 @@ test(
     assert.doesNotMatch(
       statusReader,
       /student_alias/
+    );
+  }
+);
+
+test(
+  "T7 Recovery initializes only after the Teacher Workspace data layer is assigned",
+  () => {
+    assert.match(
+      workspace,
+      /let recoveryInspection\s*=\s*null;/
+    );
+
+    assert.doesNotMatch(
+      workspace,
+      /let recoveryInspection\s*=\s*teacherData[\s\S]{0,100}deriveTeacherRecoveryInspection/
+    );
+
+    const initStart =
+      workspace.indexOf(
+        "function initializeDataWorkspace("
+      );
+
+    const initEnd =
+      workspace.indexOf(
+        "for (const button of navButtons)",
+        initStart
+      );
+
+    assert.ok(
+      initStart >= 0
+    );
+
+    assert.ok(
+      initEnd > initStart
+    );
+
+    const initLogic =
+      workspace.slice(
+        initStart,
+        initEnd
+      );
+
+    const assignment =
+      initLogic.indexOf(
+        "teacherData = data;"
+      );
+
+    const recovery =
+      initLogic.indexOf(
+        "deriveTeacherRecoveryInspection()"
+      );
+
+    const render =
+      initLogic.indexOf(
+        "renderAll();"
+      );
+
+    assert.ok(
+      assignment >= 0
+    );
+
+    assert.ok(
+      recovery > assignment
+    );
+
+    assert.ok(
+      render > recovery
+    );
+  }
+);
+
+test(
+  "T7 Recovery makes the seventh workspace area functional",
+  () => {
+    const recoveryPanel =
+      workspace.match(
+        /<section[^>]*id="panel-recovery"[\s\S]*?<\/section>/
+      )?.[0] || "";
+
+    assert.notEqual(
+      recoveryPanel,
+      ""
+    );
+
+    assert.equal(
+      (
+        workspace.match(
+          /Reserved for a later milestone\./g
+        ) || []
+      ).length,
+      0
+    );
+
+    assert.match(
+      recoveryPanel,
+      /id="recoveryBackupFile"/
+    );
+
+    assert.match(
+      recoveryPanel,
+      /id="clearRecoveryInspection"/
+    );
+
+    assert.match(
+      recoveryPanel,
+      /id="openStudentRecovery"/
+    );
+  }
+);
+
+test(
+  "T7 Recovery loads the existing project validator and pure inspection model",
+  () => {
+    assert.match(
+      workspace,
+      /<script src="\.\/assets\/pilot\.js"><\/script>/
+    );
+
+    assert.match(
+      workspace,
+      /deriveTeacherRecoveryInspection/
+    );
+
+    assert.match(
+      workspace,
+      /pilot\.validateBackup\(\s*parsed\s*\)/
+    );
+  }
+);
+
+test(
+  "T7 Recovery accepts one local JSON file and enforces the 25 MiB pre-read limit",
+  () => {
+    assert.match(
+      workspace,
+      /id="recoveryBackupFile"[\s\S]*type="file"[\s\S]*accept="\.json,application\/json"/
+    );
+
+    assert.match(
+      workspace,
+      /const RECOVERY_MAX_FILE_BYTES =\s*26214400/
+    );
+
+    const start =
+      workspace.indexOf(
+        "async function inspectRecoveryFile("
+      );
+
+    const end =
+      workspace.indexOf(
+        "function bindRecovery()",
+        start
+      );
+
+    assert.ok(
+      start >= 0
+    );
+
+    assert.ok(
+      end > start
+    );
+
+    const logic =
+      workspace.slice(
+        start,
+        end
+      );
+
+    const sizeCheck =
+      logic.indexOf(
+        "fileSize >"
+      );
+
+    const fileRead =
+      logic.indexOf(
+        "await file.text()"
+      );
+
+    assert.ok(
+      sizeCheck >= 0
+    );
+
+    assert.ok(
+      fileRead > sizeCheck
+    );
+  }
+);
+
+test(
+  "T7 Recovery never invokes student project storage or restore mutation APIs",
+  () => {
+    const start =
+      workspace.indexOf(
+        "const RECOVERY_MAX_FILE_BYTES"
+      );
+
+    const end =
+      workspace.indexOf(
+        "function renderAll()",
+        start
+      );
+
+    assert.ok(
+      start >= 0
+    );
+
+    assert.ok(
+      end > start
+    );
+
+    const recoveryLogic =
+      workspace.slice(
+        start,
+        end
+      );
+
+    for (
+      const forbidden
+      of [
+        "safeLoad(",
+        "safeSave(",
+        "clearProjectStorage(",
+        "applyRestore(",
+        "storageReport(",
+        "localStorage",
+        "sessionStorage",
+        "indexedDB",
+        "research_methods_studio_v1",
+        "XMLHttpRequest"
+      ]
+    ) {
+      assert.equal(
+        recoveryLogic.includes(
+          forbidden
+        ),
+        false,
+        forbidden
+      );
+    }
+
+    assert.doesNotMatch(
+      recoveryLogic,
+      /\bfetch\s*\(/
+    );
+  }
+);
+
+test(
+  "T7 Recovery renders selected-file metadata only through textContent",
+  () => {
+    const start =
+      workspace.indexOf(
+        "function renderRecoveryInspection()"
+      );
+
+    const end =
+      workspace.indexOf(
+        "function clearRecoveryInspectionState()",
+        start
+      );
+
+    assert.ok(
+      start >= 0
+    );
+
+    assert.ok(
+      end > start
+    );
+
+    const renderer =
+      workspace.slice(
+        start,
+        end
+      );
+
+    assert.match(
+      renderer,
+      /\.textContent\s*=/
+    );
+
+    assert.doesNotMatch(
+      renderer,
+      /\.innerHTML\s*=/
+    );
+
+    assert.doesNotMatch(
+      renderer,
+      /insertAdjacentHTML/
+    );
+  }
+);
+
+test(
+  "T7 Recovery never renders project contents",
+  () => {
+    const start =
+      workspace.indexOf(
+        "async function inspectRecoveryFile("
+      );
+
+    const end =
+      workspace.indexOf(
+        "function bindRecovery()",
+        start
+      );
+
+    const logic =
+      workspace.slice(
+        start,
+        end
+      );
+
+    assert.doesNotMatch(
+      logic,
+      /parsed\.project/
+    );
+
+    assert.doesNotMatch(
+      logic,
+      /validation\.project/
+    );
+
+    assert.doesNotMatch(
+      logic,
+      /rawData/
+    );
+
+    assert.doesNotMatch(
+      logic,
+      /writing\.sections/
+    );
+  }
+);
+
+test(
+  "T7 Recovery exposes only a student-site handoff for actual restoration",
+  () => {
+    const recoveryPanel =
+      workspace.match(
+        /<section[^>]*id="panel-recovery"[\s\S]*?<\/section>/
+      )?.[0] || "";
+
+    assert.match(
+      recoveryPanel,
+      /id="openStudentRecovery"[\s\S]*href="\.\/"[\s\S]*target="_blank"/
+    );
+
+    assert.match(
+      recoveryPanel,
+      /does not transfer this selected file automatically/
+    );
+
+    assert.match(
+      recoveryPanel,
+      /valid full backup can be restored only through the[\s\S]*existing student-site recovery flow/
+    );
+  }
+);
+
+test(
+  "T7 Recovery keeps privacy copies non-restorable in the UI path",
+  () => {
+    assert.match(
+      workspace,
+      /openStudentRecovery[\s\S]*hidden =[\s\S]*!status\.recovery[\s\S]*\.restorable/
+    );
+
+    assert.match(
+      workspace,
+      /privacy-minimized[\s\S]*intentionally non-restorable/
+    );
+  }
+);
+
+test(
+  "T7 Clear inspection resets only local Recovery inspection state",
+  () => {
+    const start =
+      workspace.indexOf(
+        "function clearRecoveryInspectionState()"
+      );
+
+    const end =
+      workspace.indexOf(
+        "async function inspectRecoveryFile(",
+        start
+      );
+
+    assert.ok(
+      start >= 0
+    );
+
+    assert.ok(
+      end > start
+    );
+
+    const clearLogic =
+      workspace.slice(
+        start,
+        end
+      );
+
+    assert.match(
+      clearLogic,
+      /deriveTeacherRecoveryInspection\(\)/
+    );
+
+    assert.match(
+      clearLogic,
+      /fileInput\.value\s*=\s*""/
+    );
+
+    for (
+      const forbidden
+      of [
+        "importedPackets",
+        "reviewDraft",
+        "assignmentDraft",
+        "RMSTeacherSession",
+        "RMSAI",
+        "localStorage",
+        "sessionStorage"
+      ]
+    ) {
+      assert.equal(
+        clearLogic.includes(
+          forbidden
+        ),
+        false,
+        forbidden
+      );
+    }
+  }
+);
+
+test(
+  "T7 Recovery explains transient Teacher Workspace recovery boundaries",
+  () => {
+    const recoveryPanel =
+      workspace.match(
+        /<section[^>]*id="panel-recovery"[\s\S]*?<\/section>/
+      )?.[0] || "";
+
+    assert.match(
+      recoveryPanel,
+      /rms_student_review/
+    );
+
+    assert.match(
+      recoveryPanel,
+      /rms_teacher_feedback/
+    );
+
+    assert.match(
+      recoveryPanel,
+      /rms_assignment_setup/
+    );
+
+    assert.match(
+      recoveryPanel,
+      /Reloading the page cannot recreate work that[\s\S]*was never downloaded/
     );
   }
 );
