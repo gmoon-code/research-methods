@@ -1748,3 +1748,107 @@ footer{
     width: 100%;
   }
 }
+
+/* =========================================================
+   v2.17.1 STUDENT RESEARCH JOURNEY POLISH
+   ========================================================= */
+
+.journey-modal{
+  width:min(1000px,96vw) !important;
+  max-height:92vh;
+  padding:22px !important;
+}
+
+.journey-modal .journey-head{
+  gap:20px;
+  align-items:flex-start;
+  margin-bottom:12px;
+}
+
+.journey-modal #closeJourney{
+  flex:0 0 auto;
+  min-width:72px;
+  white-space:nowrap;
+  justify-content:center !important;
+  text-align:center;
+}
+
+.journey-modal .journey-profile{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) 150px;
+  gap:12px;
+  margin:12px 0;
+}
+
+.journey-modal .journey-profile>div{
+  border-radius:4px;
+  padding:10px 12px;
+}
+
+.journey-modal .next-focus{
+  padding:12px 14px;
+  color:#111 !important;
+  background:var(--section-turquoise-soft) !important;
+  border:1px solid var(--section-turquoise-line);
+  border-left:5px solid var(--section-turquoise-line);
+  border-radius:5px;
+}
+
+.journey-modal .next-focus>span{
+  display:block;
+  margin:0 0 3px;
+  color:#315f79 !important;
+  opacity:1;
+  font-size:11px;
+  letter-spacing:.04em;
+}
+
+.journey-modal .next-focus h4{
+  display:block;
+  margin:0 !important;
+  padding:0 !important;
+  color:#111 !important;
+  background:transparent !important;
+  font-size:18px;
+  line-height:1.25;
+}
+
+.journey-modal .next-focus p{
+  margin:5px 0 10px !important;
+  color:#333 !important;
+  opacity:1 !important;
+  font-size:14px;
+  line-height:1.45;
+}
+
+.journey-modal .next-focus #goFocus{
+  width:auto;
+  min-width:120px;
+  justify-content:center !important;
+}
+
+.journey-modal .journey-progress{
+  gap:10px;
+  margin:10px 0 12px;
+}
+
+.journey-modal .journey-progress>div,
+.journey-modal .milestone-card{
+  border-radius:5px;
+}
+
+@media(max-width:720px){
+  .journey-modal{
+    width:100% !important;
+    max-height:95vh;
+    padding:16px !important;
+  }
+
+  .journey-modal .journey-profile,
+  .journey-modal .journey-progress{
+    grid-template-columns:1fr;
+  }
+
+  .journey-modal #closeJourney{
+    min-width:68px;
+  }
+}
