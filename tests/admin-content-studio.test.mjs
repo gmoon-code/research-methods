@@ -36,6 +36,42 @@ const registry =
 const studio =
   context.window.RMSAdminContentStudio;
 
+function normalizeLineEndings(
+  value
+) {
+  if (typeof value === "string") {
+    return value.replace(
+      /\r\n/g,
+      "\n"
+    );
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(
+      normalizeLineEndings
+    );
+  }
+
+  if (
+    value &&
+    typeof value === "object"
+  ) {
+    return Object.fromEntries(
+      Object.entries(value)
+        .map(
+          ([key, item]) => [
+            key,
+            normalizeLineEndings(
+              item
+            )
+          ]
+        )
+    );
+  }
+
+  return value;
+}
+
 function stageOneFromCurriculum() {
   const source =
     readFileSync(
@@ -161,12 +197,16 @@ test(
     );
 
     assert.deepEqual(
-      JSON.parse(
-        JSON.stringify(
-          record.value
+      normalizeLineEndings(
+        JSON.parse(
+          JSON.stringify(
+            record.value
+          )
         )
       ),
-      stageOneFromCurriculum()
+      normalizeLineEndings(
+        stageOneFromCurriculum()
+      )
     );
   }
 );
