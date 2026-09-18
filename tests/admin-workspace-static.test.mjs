@@ -175,3 +175,69 @@ test(
     );
   }
 );
+
+test(
+  "Content Studio wires the guarded Stage 1 editor and sandboxed preview",
+  () => {
+    for (
+      const required
+      of [
+        "./assets/content-registry.js",
+        "./assets/admin-content-studio.js",
+        "./assets/admin-content-studio-ui.js",
+        'id="contentTitle"',
+        'id="contentNav"',
+        'id="contentPurpose"',
+        'id="contentLearnHtml"',
+        'id="contentExampleHtml"',
+        'id="contentWarningHtml"',
+        'id="validateContentDraft"',
+        'id="previewContentDraft"',
+        'id="exportContentDraft"',
+        'id="resetContentDraft"',
+        'id="contentFullReplacement"',
+        'id="applyContentReplacement"',
+        'id="contentPreviewFrame"',
+        'sandbox=""',
+        "Publication boundary.",
+        "cannot publish to the public site yet"
+      ]
+    ) {
+      assert.equal(
+        admin.includes(required),
+        true,
+        required
+      );
+    }
+
+    const session =
+      admin.indexOf(
+        "./assets/teacher-session.js"
+      );
+
+    const registry =
+      admin.indexOf(
+        "./assets/content-registry.js"
+      );
+
+    const model =
+      admin.indexOf(
+        "./assets/admin-content-studio.js"
+      );
+
+    const ui =
+      admin.indexOf(
+        "./assets/admin-content-studio-ui.js"
+      );
+
+    assert.ok(session >= 0);
+    assert.ok(registry > session);
+    assert.ok(model > registry);
+    assert.ok(ui > model);
+
+    assert.match(
+      admin,
+      /RMSAdminContentStudioUI[\s\S]{0,80}mount/
+    );
+  }
+);
