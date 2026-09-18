@@ -107,6 +107,26 @@ window.RMSAdminContentStudioUI = (() => {
       : validation.errors.join(" ");
   }
 
+  function syncReplacementView() {
+    const replacement =
+      id("contentFullReplacement");
+
+    if (
+      !replacement ||
+      document.activeElement ===
+        replacement
+    ) {
+      return;
+    }
+
+    replacement.value =
+      JSON.stringify(
+        draft.value,
+        null,
+        2
+      );
+  }
+
   function updateFromField(
     field,
     value
@@ -146,6 +166,8 @@ window.RMSAdminContentStudioUI = (() => {
           ? "Draft differs from published seed"
           : "Matches published seed";
     }
+
+    syncReplacementView();
   }
 
   function previewSrcdoc(model) {
