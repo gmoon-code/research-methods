@@ -334,6 +334,203 @@
 
     .compatibility-card .button { margin-top: 14px; }
 
+    .content-studio-toolbar {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .content-record-meta {
+      min-width: 0;
+      padding: 12px 14px;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+    }
+
+    .content-record-meta span {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .content-record-meta strong {
+      display: block;
+      overflow-wrap: anywhere;
+      font-size: .88rem;
+    }
+
+    .content-studio-status {
+      margin-bottom: 16px;
+      padding: 11px 13px;
+      color: #31566c;
+      background: #f1f8fb;
+      border: 1px solid #c6dce8;
+      border-radius: 9px;
+      line-height: 1.45;
+    }
+
+    .content-studio-status[data-tone="error"] {
+      color: #7b2534;
+      background: #fff2f4;
+      border-color: #e4bcc5;
+    }
+
+    .content-studio-status[data-tone="warning"] {
+      color: #76570d;
+      background: #fff9e8;
+      border-color: #ead79f;
+    }
+
+    .content-studio-status[data-tone="ok"] {
+      color: #24593f;
+      background: #f1f9f4;
+      border-color: #bddcc9;
+    }
+
+    .content-editor-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .content-editor-card {
+      min-width: 0;
+      padding: 17px;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 11px;
+    }
+
+    .content-editor-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+
+    .content-editor-heading h3 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .content-form-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .content-form-grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .content-field,
+    .content-form-grid label {
+      display: grid;
+      gap: 6px;
+      margin-top: 13px;
+    }
+
+    .content-form-grid label {
+      margin-top: 0;
+    }
+
+    .content-field > span,
+    .content-form-grid label > span {
+      font-size: .84rem;
+      font-weight: 750;
+    }
+
+    .content-field small,
+    .content-editor-help {
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.45;
+    }
+
+    .content-field textarea,
+    .content-form-grid input,
+    .content-replacement textarea {
+      width: 100%;
+      padding: 9px 10px;
+      color: var(--text);
+      background: #fff;
+      border: 1px solid #bfc9d4;
+      border-radius: 7px;
+      font: inherit;
+    }
+
+    .content-field textarea,
+    .content-replacement textarea {
+      resize: vertical;
+      font-family:
+        ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        Consolas,
+        monospace;
+      font-size: .82rem;
+      line-height: 1.45;
+    }
+
+    .content-field textarea:focus,
+    .content-form-grid input:focus,
+    .content-replacement textarea:focus {
+      outline: 3px solid rgba(11, 110, 168, .18);
+      border-color: var(--focus);
+    }
+
+    .content-action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .content-preview-frame {
+      width: 100%;
+      min-height: 620px;
+      background: #fff;
+      border: 1px solid #c7d0da;
+      border-radius: 8px;
+    }
+
+    .content-preview-empty {
+      display: grid;
+      min-height: 260px;
+      place-items: center;
+      padding: 24px;
+      color: var(--muted);
+      background: #fff;
+      border: 1px dashed #c7d0da;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .content-replacement {
+      margin-top: 17px;
+      padding: 14px 16px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .content-replacement summary {
+      cursor: pointer;
+      font-weight: 750;
+    }
+
+    .content-replacement p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
     @media (max-width: 860px) {
       .layout { grid-template-columns: 1fr; }
 
@@ -503,32 +700,185 @@
           <section class="panel workspace-panel" data-admin-workspace-panel="content-studio" hidden>
             <h2>Content Studio</h2>
             <p>
-              Manage student-facing instructional content without manually
-              editing production HTML or JavaScript.
+              Edit a controlled copy of student-facing instructional content,
+              validate the draft, and preview it before any publication step.
             </p>
 
-            <div class="card-grid">
-              <div class="info-card">
-                <span class="eyebrow">Planned workflow</span>
-                <h3>Draft and preview</h3>
-                <p>Select content, edit a draft, validate it, and preview it through the student renderer.</p>
+            <div class="content-studio-toolbar">
+              <div class="content-record-meta">
+                <span>Managed record</span>
+                <strong id="contentRecordKey">Loading</strong>
               </div>
-              <div class="info-card">
-                <span class="eyebrow">Planned workflow</span>
-                <h3>Publish and version</h3>
-                <p>Publish only validated revisions and retain a clear revision history.</p>
+
+              <div class="content-record-meta">
+                <span>Published seed revision</span>
+                <strong id="contentRecordRevision">Loading</strong>
               </div>
-              <div class="info-card">
-                <span class="eyebrow">Planned workflow</span>
-                <h3>Rollback</h3>
-                <p>Restore a prior known-valid revision without rebuilding content manually.</p>
+
+              <div class="content-record-meta">
+                <span>Draft state</span>
+                <strong id="contentDraftState">Loading</strong>
               </div>
             </div>
 
+            <div
+              class="content-studio-status"
+              id="contentStudioStatus"
+              role="status"
+              aria-live="polite"
+            >
+              Loading Content Studio.
+            </div>
+
+            <div class="content-editor-layout">
+              <section class="content-editor-card" aria-labelledby="contentEditorHeading">
+                <div class="content-editor-heading">
+                  <div>
+                    <span class="eyebrow">Stage 1 guidance</span>
+                    <h3 id="contentEditorHeading">Edit the current draft</h3>
+                  </div>
+
+                  <span class="section-status">In memory only</span>
+                </div>
+
+                <div class="content-form-grid two">
+                  <label>
+                    <span>Stage title</span>
+                    <input
+                      id="contentTitle"
+                      type="text"
+                      maxlength="160"
+                    >
+                  </label>
+
+                  <label>
+                    <span>Navigation label</span>
+                    <input
+                      id="contentNav"
+                      type="text"
+                      maxlength="120"
+                    >
+                  </label>
+                </div>
+
+                <label class="content-field">
+                  <span>Purpose</span>
+                  <textarea
+                    id="contentPurpose"
+                    rows="4"
+                    maxlength="1200"
+                  ></textarea>
+                </label>
+
+                <label class="content-field">
+                  <span>Teaching content</span>
+                  <small>
+                    Restricted instructional HTML is supported for headings,
+                    paragraphs, lists, emphasis, and approved layout classes.
+                  </small>
+                  <textarea
+                    id="contentLearnHtml"
+                    rows="14"
+                    spellcheck="false"
+                  ></textarea>
+                </label>
+
+                <label class="content-field">
+                  <span>Example block</span>
+                  <textarea
+                    id="contentExampleHtml"
+                    rows="6"
+                    spellcheck="false"
+                  ></textarea>
+                </label>
+
+                <label class="content-field">
+                  <span>Warning block</span>
+                  <textarea
+                    id="contentWarningHtml"
+                    rows="6"
+                    spellcheck="false"
+                  ></textarea>
+                </label>
+
+                <div class="content-action-row">
+                  <button class="button" id="validateContentDraft" type="button">
+                    Validate draft
+                  </button>
+
+                  <button class="button" id="previewContentDraft" type="button">
+                    Preview draft
+                  </button>
+
+                  <button class="button" id="exportContentDraft" type="button">
+                    Export draft JSON
+                  </button>
+
+                  <button class="button" id="resetContentDraft" type="button">
+                    Reset draft
+                  </button>
+                </div>
+              </section>
+
+              <section class="content-editor-card" aria-labelledby="contentPreviewHeading">
+                <div class="content-editor-heading">
+                  <div>
+                    <span class="eyebrow">Safe preview</span>
+                    <h3 id="contentPreviewHeading">Student-facing content preview</h3>
+                  </div>
+
+                  <span class="section-status">Sandboxed</span>
+                </div>
+
+                <p class="content-editor-help">
+                  Preview renders only after the draft passes the Content Studio
+                  validator. The preview frame has no script, form, or network access.
+                </p>
+
+                <iframe
+                  id="contentPreviewFrame"
+                  class="content-preview-frame"
+                  title="Stage 1 draft preview"
+                  sandbox=""
+                  hidden
+                ></iframe>
+
+                <div class="content-preview-empty" id="contentPreviewEmpty">
+                  Select Preview draft to render the current validated draft.
+                </div>
+              </section>
+            </div>
+
+            <details class="content-replacement">
+              <summary>Replace the complete editable content block</summary>
+
+              <p>
+                Paste a full JSON object containing all six editable fields.
+                Content identity and stage number stay fixed.
+              </p>
+
+              <textarea
+                id="contentFullReplacement"
+                rows="18"
+                spellcheck="false"
+              ></textarea>
+
+              <div class="content-action-row">
+                <button
+                  class="button"
+                  id="applyContentReplacement"
+                  type="button"
+                >
+                  Replace complete draft block
+                </button>
+              </div>
+            </details>
+
             <div class="boundary">
-              <strong>Foundation boundary.</strong>
-              Content editing and publishing are not enabled in this shell yet.
-              The current public content remains unchanged.
+              <strong>Publication boundary.</strong>
+              Content Studio can edit, validate, preview, reset, and export this
+              Stage 1 draft. It cannot publish to the public site yet. Reloading
+              this Admin page discards the in-memory draft.
             </div>
           </section>
 
@@ -689,6 +1039,9 @@
 
   <script src="./assets/runtime-config.js"></script>
   <script src="./assets/teacher-session.js"></script>
+  <script src="./assets/content-registry.js"></script>
+  <script src="./assets/admin-content-studio.js"></script>
+  <script src="./assets/admin-content-studio-ui.js"></script>
 
   <script>
     (() => {
@@ -780,6 +1133,11 @@
         }
 
         renderRuntimeStatus();
+
+        window
+          .RMSAdminContentStudioUI
+          ?.mount?.();
+
         gate.hidden = true;
         workspace.hidden = false;
       }
