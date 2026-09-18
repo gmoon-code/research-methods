@@ -13,15 +13,24 @@ const workspace = readFileSync(
 );
 
 test(
-  "teacher entry routes authenticated sessions to the dedicated workspace",
+  "private entry routes authenticated sessions to Admin Workspace",
   () => {
-    const workspaceRedirect =
+    const adminRedirect =
+      /location\.replace\("\.\/admin-workspace\.html"\);/g;
+
+    assert.equal(
+      [...entry.matchAll(adminRedirect)].length,
+      2,
+      "teacher.html must contain exactly two authenticated Admin Workspace redirects"
+    );
+
+    const classroomRedirect =
       /location\.replace\("\.\/teacher-workspace\.html"\);/g;
 
     assert.equal(
-      [...entry.matchAll(workspaceRedirect)].length,
-      2,
-      "teacher.html must contain exactly two authenticated workspace redirects"
+      [...entry.matchAll(classroomRedirect)].length,
+      0,
+      "teacher.html must not bypass Admin Workspace for Classroom Tools"
     );
 
     const studentRedirect =
@@ -30,17 +39,17 @@ test(
     assert.equal(
       [...entry.matchAll(studentRedirect)].length,
       1,
-      "teacher.html must retain exactly one student-site redirect"
+      "teacher.html must retain exactly one public-site redirect"
     );
 
     assert.match(
       entry,
-      /Access accepted\. Opening teacher workspace\.\.\.[\s\S]{0,180}location\.replace\("\.\/teacher-workspace\.html"\);/
+      /Access accepted\. Opening Admin Workspace\.\.\.[\s\S]{0,180}location\.replace\("\.\/admin-workspace\.html"\);/
     );
 
     assert.match(
       entry,
-      /\.verify\(\)[\s\S]{0,180}if \(ok\) \{[\s\S]{0,120}location\.replace\("\.\/teacher-workspace\.html"\);/
+      /\.verify\(\)[\s\S]{0,180}if \(ok\) \{[\s\S]{0,120}location\.replace\("\.\/admin-workspace\.html"\);/
     );
 
     assert.match(
