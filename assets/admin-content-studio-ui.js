@@ -250,6 +250,13 @@ window.RMSAdminContentStudioUI = (() => {
 
     frame.hidden = false;
 
+    const empty =
+      id("contentPreviewEmpty");
+
+    if (empty) {
+      empty.hidden = true;
+    }
+
     setStatus(
       "Preview generated from the current in-memory draft.",
       "ok"
@@ -320,6 +327,13 @@ window.RMSAdminContentStudioUI = (() => {
     if (frame) {
       frame.hidden = true;
       frame.removeAttribute("srcdoc");
+    }
+
+    const empty =
+      id("contentPreviewEmpty");
+
+    if (empty) {
+      empty.hidden = false;
     }
 
     setStatus(
