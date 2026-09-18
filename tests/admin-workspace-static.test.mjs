@@ -177,7 +177,7 @@ test(
 );
 
 test(
-  "Content Studio wires the guarded Stage 1 editor and sandboxed preview",
+  "Content Studio wires the guarded all-stage browser editor and sandboxed preview",
   () => {
     for (
       const required
@@ -185,6 +185,16 @@ test(
         "./assets/content-registry.js",
         "./assets/admin-content-studio.js",
         "./assets/admin-content-studio-ui.js",
+        'id="contentBrowserSearch"',
+        'id="contentBrowserList"',
+        'id="contentBrowserCount"',
+        'id="contentDirtyCount"',
+        'id="contentRecordStage"',
+        'id="contentRecordPhase"',
+        'id="contentRecordKey"',
+        'id="contentRecordRevision"',
+        'id="contentDraftState"',
+        'id="contentEditorStageLabel"',
         'id="contentTitle"',
         'id="contentNav"',
         'id="contentPurpose"',
@@ -200,7 +210,9 @@ test(
         'id="contentPreviewFrame"',
         'sandbox=""',
         "Publication boundary.",
-        "cannot publish to the public site yet"
+        "browse all 18 stage-guidance records",
+        "cannot publish to the public site yet",
+        "discards every in-memory draft"
       ]
     ) {
       assert.equal(
