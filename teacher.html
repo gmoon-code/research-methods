@@ -14,7 +14,7 @@
   >
 
   <title>
-    Research Methods Studio - Teacher Access
+    Research Methods Studio - Admin Access
   </title>
 
   <style>
@@ -143,7 +143,7 @@
 <body>
   <main>
     <span class="kicker">
-      Teacher access
+      Admin access
     </span>
 
     <h1>
@@ -151,15 +151,15 @@
     </h1>
 
     <p>
-      Enter the teacher access code to open
-      teacher tools for this browser session.
+      Enter the administrator access code to open
+      the private Admin Workspace for this browser session.
     </p>
 
     <hr class="rule">
 
     <form id="teacherAccessForm">
       <label for="teacherAccessCode">
-        Teacher access code
+        Administrator access code
       </label>
 
       <input
@@ -202,7 +202,7 @@
 
     <p class="note">
       The access code is sent directly to
-      the secure class service for
+      the secure service for
       verification and is not saved by
       this page.
     </p>
@@ -295,7 +295,7 @@
             if (!result.ok) {
               message(
                 result.error ||
-                  "Teacher access was not accepted.",
+                  "Admin access was not accepted.",
                 true
               );
 
@@ -304,10 +304,10 @@
             }
 
             message(
-              "Access accepted. Opening teacher workspace..."
+              "Access accepted. Opening Admin Workspace..."
             );
 
-            location.replace("./teacher-workspace.html");
+            location.replace("./admin-workspace.html");
           } finally {
             busy(false);
           }
@@ -337,7 +337,7 @@
       ) {
         busy(true);
         message(
-          "Checking existing teacher session..."
+          "Checking existing admin session..."
         );
 
         window
@@ -345,7 +345,7 @@
           .verify()
           .then(ok => {
             if (ok) {
-              location.replace("./teacher-workspace.html");
+              location.replace("./admin-workspace.html");
               return;
             }
 
