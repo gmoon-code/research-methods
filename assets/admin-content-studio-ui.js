@@ -11,8 +11,11 @@ window.RMSAdminContentStudioUI = (() => {
   });
 
   let mounted = false;
+  let records = [];
+  let selectedKey = "";
   let record = null;
   let draft = null;
+  const drafts = new Map();
 
   function id(value) {
     return document.getElementById(
@@ -55,56 +58,85 @@ window.RMSAdminContentStudioUI = (() => {
       .RMSContentRegistry;
   }
 
-  function syncFields() {
-    if (!draft) return;
-
-    for (
-      const [field, elementId]
-      of Object.entries(FIELD_IDS)
-    ) {
-      const element = id(elementId);
-
-      if (element) {
-        element.value =
-          draft.value[field] || "";
-      }
-    }
-
-    const replacement =
-      id("contentFullReplacement");
-
-    if (replacement) {
-      replacement.value =
-        JSON.stringify(
-          draft.value,
-          null,
-          2
-        );
-    }
-
-    const dirty =
-      currentApi().hasChanges(
-        draft,
-        record
-      );
-
-    const dirtyState =
-      id("contentDraftState");
-
-    if (dirtyState) {
-      dirtyState.textContent =
-        dirty
-          ? "Draft differs from published seed"
-          : "Matches published seed";
-    }
+  function recordForKey(key) {
+    return records.find(
+      item => item.key === key
+    ) || null;
   }
 
-  function validationMessage(
-    validation
-  ) {
-    return validation.ok
-      ? "Draft is valid."
-      : validation.errors.join(" ");
+  function draftForRecord(nextRecord) {
+    if (!nextRecord) {
+      return null;
+    }
+
+    const existing =
+      drafts.get(
+        nextRecord.key
+      );
+
+    if (existing) {
+      return existing;
+    }
+
+    const created =
+      currentApi().createDraft(
+        nextRecord
+      );
+
+    drafts.set(
+      nextRecord.key,
+      created
+    );
+
+    return created;
+  }
+
+  function isDirty(nextRecord) {
+    if (!nextRecord) {
+      return false;
+    }
+
+    const nextDraft =
+      drafts.get(
+        nextRecord.key
+      );
+
+    if (!nextDraft) {
+      return false;
+    }
+
+    return currentApi().hasChanges(
+      nextDraft,
+      nextRecord
+    );
+  }
+
+  function dirtyCount() {
+    return records.reduce(
+      (count, item) =>
+        count +
+        (
+          isDirty(item)
+            ? 1
+            : 0
+        ),
+      0
+    );
+  }
+
+  function updateDirtySummary() {
+    const count =
+      dirtyCount();
+
+    const element =
+      id("contentDirtyCount");
+
+    if (element) {
+      element.textContent =
+        count === 1
+          ? "1 changed draft"
+          : `${count} changed drafts`;
+    }
   }
 
   function syncReplacementView() {
@@ -113,6 +145,7 @@ window.RMSAdminContentStudioUI = (() => {
 
     if (
       !replacement ||
+      !draft ||
       document.activeElement ===
         replacement
     ) {
@@ -127,16 +160,137 @@ window.RMSAdminContentStudioUI = (() => {
       );
   }
 
+  function clearPreview() {
+    const frame =
+      id("contentPreviewFrame");
+
+    if (frame) {
+      frame.hidden = true;
+      frame.removeAttribute(
+        "srcdoc"
+      );
+    }
+
+    const empty =
+      id("contentPreviewEmpty");
+
+    if (empty) {
+      empty.hidden = false;
+
+      empty.textContent =
+        record
+          ? `Select Preview draft to render Stage ${record.stage_id}.`
+          : "Select a content record to preview.";
+    }
+  }
+
+  function syncFields() {
+    if (
+      !record ||
+      !draft
+    ) {
+      return;
+    }
+
+    for (
+      const [field, elementId]
+      of Object.entries(FIELD_IDS)
+    ) {
+      const element =
+        id(elementId);
+
+      if (element) {
+        element.value =
+          draft.value[field] || "";
+      }
+    }
+
+    const key =
+      id("contentRecordKey");
+
+    if (key) {
+      key.textContent =
+        record.key;
+    }
+
+    const revision =
+      id("contentRecordRevision");
+
+    if (revision) {
+      revision.textContent =
+        record.revision;
+    }
+
+    const stage =
+      id("contentRecordStage");
+
+    if (stage) {
+      stage.textContent =
+        `Stage ${record.stage_id}`;
+    }
+
+    const phase =
+      id("contentRecordPhase");
+
+    if (phase) {
+      phase.textContent =
+        record.phase_label ||
+        record.phase ||
+        "Unspecified phase";
+    }
+
+    const editorLabel =
+      id("contentEditorStageLabel");
+
+    if (editorLabel) {
+      editorLabel.textContent =
+        `Stage ${record.stage_id} guidance`;
+    }
+
+    const dirtyState =
+      id("contentDraftState");
+
+    if (dirtyState) {
+      dirtyState.textContent =
+        isDirty(record)
+          ? "Draft differs from published seed"
+          : "Matches published seed";
+    }
+
+    syncReplacementView();
+    updateDirtySummary();
+  }
+
+  function validationMessage(
+    validation
+  ) {
+    return validation.ok
+      ? "Draft is valid."
+      : validation.errors.join(" ");
+  }
+
   function updateFromField(
     field,
     value
   ) {
+    if (
+      !record ||
+      !draft
+    ) {
+      return;
+    }
+
     draft =
       currentApi().updateField(
         draft,
         field,
         value
       );
+
+    drafts.set(
+      record.key,
+      draft
+    );
 
     const validation =
       currentApi().validateDraft(
@@ -145,7 +299,7 @@ window.RMSAdminContentStudioUI = (() => {
 
     setStatus(
       validation.ok
-        ? "Draft updated in memory."
+        ? `Stage ${record.stage_id} draft updated in memory.`
         : validationMessage(
             validation
           ),
@@ -154,20 +308,8 @@ window.RMSAdminContentStudioUI = (() => {
         : "warning"
     );
 
-    const dirtyState =
-      id("contentDraftState");
-
-    if (dirtyState) {
-      dirtyState.textContent =
-        currentApi().hasChanges(
-          draft,
-          record
-        )
-          ? "Draft differs from published seed"
-          : "Matches published seed";
-    }
-
-    syncReplacementView();
+    syncFields();
+    renderBrowser();
   }
 
   function previewSrcdoc(model) {
@@ -224,7 +366,12 @@ window.RMSAdminContentStudioUI = (() => {
 </head>
 <body>
   <div class="preview-kicker">
-    Stage 1 · ${escapeText(model.nav)}
+    Stage ${model.stage_id} ·
+    ${escapeText(
+      model.phase_label ||
+      model.phase ||
+      ""
+    )}
   </div>
   <h1>${escapeText(model.title)}</h1>
   <p class="purpose">
@@ -247,6 +394,8 @@ window.RMSAdminContentStudioUI = (() => {
   }
 
   function renderPreview() {
+    if (!draft) return;
+
     const result =
       currentApi().previewModel(
         draft
@@ -280,12 +429,19 @@ window.RMSAdminContentStudioUI = (() => {
     }
 
     setStatus(
-      "Preview generated from the current in-memory draft.",
+      `Stage ${record.stage_id} preview generated from the current in-memory draft.`,
       "ok"
     );
   }
 
   function applyReplacement() {
+    if (
+      !record ||
+      !draft
+    ) {
+      return;
+    }
+
     const source =
       id("contentFullReplacement");
 
@@ -319,18 +475,32 @@ window.RMSAdminContentStudioUI = (() => {
     }
 
     draft = result.draft;
+
+    drafts.set(
+      record.key,
+      draft
+    );
+
     syncFields();
+    renderBrowser();
 
     setStatus(
-      "The complete editable content block was replaced in memory.",
+      `Stage ${record.stage_id} complete editable content block was replaced in memory.`,
       "ok"
     );
   }
 
   function resetDraft() {
     if (
+      !record ||
+      !draft
+    ) {
+      return;
+    }
+
+    if (
       !window.confirm(
-        "Reset the in-memory draft to the published seed?"
+        `Reset the Stage ${record.stage_id} in-memory draft to the published seed?`
       )
     ) {
       return;
@@ -341,30 +511,29 @@ window.RMSAdminContentStudioUI = (() => {
         record
       );
 
+    drafts.set(
+      record.key,
+      draft
+    );
+
     syncFields();
-
-    const frame =
-      id("contentPreviewFrame");
-
-    if (frame) {
-      frame.hidden = true;
-      frame.removeAttribute("srcdoc");
-    }
-
-    const empty =
-      id("contentPreviewEmpty");
-
-    if (empty) {
-      empty.hidden = false;
-    }
+    clearPreview();
+    renderBrowser();
 
     setStatus(
-      "Draft reset to the published seed.",
+      `Stage ${record.stage_id} draft reset to the published seed.`,
       "ok"
     );
   }
 
   function exportDraft() {
+    if (
+      !record ||
+      !draft
+    ) {
+      return;
+    }
+
     const result =
       currentApi().exportEnvelope(
         draft
@@ -407,7 +576,7 @@ window.RMSAdminContentStudioUI = (() => {
 
     anchor.href = url;
     anchor.download =
-      "rms-content-stage-1-draft.json";
+      `rms-content-stage-${record.stage_id}-draft.json`;
 
     document.body.appendChild(
       anchor
@@ -425,9 +594,211 @@ window.RMSAdminContentStudioUI = (() => {
     );
 
     setStatus(
-      "Draft JSON exported. This did not publish anything.",
+      `Stage ${record.stage_id} draft JSON exported. Nothing was published.`,
       "ok"
     );
+  }
+
+  function selectRecord(key) {
+    const nextRecord =
+      recordForKey(key);
+
+    if (!nextRecord) {
+      return;
+    }
+
+    selectedKey =
+      nextRecord.key;
+
+    record =
+      nextRecord;
+
+    draft =
+      draftForRecord(
+        nextRecord
+      );
+
+    syncFields();
+    clearPreview();
+    renderBrowser();
+
+    setStatus(
+      `Stage ${record.stage_id} guidance loaded. Edits stay in memory.`,
+      "ok"
+    );
+  }
+
+  function browserSearchValue() {
+    return String(
+      id("contentBrowserSearch")
+        ?.value ||
+      ""
+    )
+      .trim()
+      .toLowerCase();
+  }
+
+  function matchesSearch(
+    nextRecord,
+    query
+  ) {
+    if (!query) {
+      return true;
+    }
+
+    const haystack = [
+      String(
+        nextRecord.stage_id
+      ),
+      nextRecord.value.title,
+      nextRecord.value.nav,
+      nextRecord.phase_label,
+      nextRecord.phase
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return haystack.includes(
+      query
+    );
+  }
+
+  function renderBrowser() {
+    const list =
+      id("contentBrowserList");
+
+    if (!list) return;
+
+    list.replaceChildren();
+
+    const query =
+      browserSearchValue();
+
+    const visible =
+      records.filter(
+        item =>
+          matchesSearch(
+            item,
+            query
+          )
+      );
+
+    const count =
+      id("contentBrowserCount");
+
+    if (count) {
+      count.textContent =
+        query
+          ? `${visible.length} of ${records.length} stages`
+          : `${records.length} stages`;
+    }
+
+    for (const nextRecord of visible) {
+      const button =
+        document.createElement(
+          "button"
+        );
+
+      button.type =
+        "button";
+
+      button.className =
+        "content-browser-item";
+
+      if (
+        nextRecord.key ===
+        selectedKey
+      ) {
+        button.setAttribute(
+          "aria-current",
+          "true"
+        );
+      }
+
+      const top =
+        document.createElement(
+          "span"
+        );
+
+      top.className =
+        "content-browser-stage";
+
+      top.textContent =
+        `Stage ${nextRecord.stage_id}`;
+
+      const title =
+        document.createElement(
+          "strong"
+        );
+
+      title.textContent =
+        nextRecord.value.title;
+
+      const phase =
+        document.createElement(
+          "small"
+        );
+
+      phase.textContent =
+        nextRecord.phase_label ||
+        nextRecord.phase ||
+        "";
+
+      button.append(
+        top,
+        title,
+        phase
+      );
+
+      if (isDirty(nextRecord)) {
+        const dirty =
+          document.createElement(
+            "span"
+          );
+
+        dirty.className =
+          "content-browser-dirty";
+
+        dirty.textContent =
+          "Draft changed";
+
+        button.appendChild(
+          dirty
+        );
+      }
+
+      button.addEventListener(
+        "click",
+        () => {
+          selectRecord(
+            nextRecord.key
+          );
+        }
+      );
+
+      list.appendChild(
+        button
+      );
+    }
+
+    if (visible.length === 0) {
+      const empty =
+        document.createElement(
+          "p"
+        );
+
+      empty.className =
+        "content-browser-no-results";
+
+      empty.textContent =
+        "No research stages match this search.";
+
+      list.appendChild(
+        empty
+      );
+    }
+
+    updateDirtySummary();
   }
 
   function mount() {
@@ -450,39 +821,19 @@ window.RMSAdminContentStudioUI = (() => {
       return false;
     }
 
-    record =
-      api.getRecord(
-        registry,
-        "curriculum.stage.1.guidance"
+    records =
+      api.listRecords(
+        registry
       );
 
-    if (!record) {
+    if (
+      records.length !== 18
+    ) {
       setStatus(
-        "The Stage 1 seed record is unavailable.",
+        "Content Studio expected 18 stage guidance records.",
         "error"
       );
       return false;
-    }
-
-    draft =
-      api.createDraft(
-        record
-      );
-
-    const key =
-      id("contentRecordKey");
-
-    if (key) {
-      key.textContent =
-        record.key;
-    }
-
-    const revision =
-      id("contentRecordRevision");
-
-    if (revision) {
-      revision.textContent =
-        record.revision;
     }
 
     for (
@@ -501,19 +852,29 @@ window.RMSAdminContentStudioUI = (() => {
         );
     }
 
+    id("contentBrowserSearch")
+      ?.addEventListener(
+        "input",
+        renderBrowser
+      );
+
     id("validateContentDraft")
       ?.addEventListener(
         "click",
         () => {
+          if (!draft) return;
+
           const validation =
             api.validateDraft(
               draft
             );
 
           setStatus(
-            validationMessage(
-              validation
-            ),
+            validation.ok
+              ? `Stage ${record.stage_id} draft is valid.`
+              : validationMessage(
+                  validation
+                ),
             validation.ok
               ? "ok"
               : "error"
@@ -545,11 +906,10 @@ window.RMSAdminContentStudioUI = (() => {
         exportDraft
       );
 
-    syncFields();
+    renderBrowser();
 
-    setStatus(
-      "Stage 1 guidance loaded from the published v2.17.1 seed. Edits stay in memory.",
-      "ok"
+    selectRecord(
+      records[0].key
     );
 
     mounted = true;
