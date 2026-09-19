@@ -6,7 +6,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "test:research-chat": "node --test tests/teacher-entry-static.test.mjs tests/admin-workspace-static.test.mjs tests/admin-content-studio.test.mjs tests/content-publication.test.mjs tests/content-store.test.mjs tests/content-api.test.mjs tests/teacher-auth.test.mjs tests/teacher-workspace-static.test.mjs tests/teacher-workspace-data.test.mjs tests/ai-helper-ui-ready-state.test.mjs tests/research-chat-backend.test.mjs tests/adapter-contract.test.mjs tests/configure-endpoint.test.mjs tests/cloudflare-worker.test.mjs tests/cloudflare-deploy-helper.test.mjs",
+    "test:research-chat": "node --test tests/teacher-entry-static.test.mjs tests/admin-workspace-static.test.mjs tests/admin-content-studio.test.mjs tests/content-publication.test.mjs tests/content-store.test.mjs tests/content-api.test.mjs tests/teacher-auth.test.mjs tests/teacher-workspace-static.test.mjs tests/teacher-workspace-data.test.mjs tests/ai-helper-ui-ready-state.test.mjs tests/research-chat-backend.test.mjs tests/adapter-contract.test.mjs tests/configure-endpoint.test.mjs tests/cloudflare-worker.test.mjs tests/cloudflare-deploy-helper.test.mjs tests/cloudflare-content-store-config.test.mjs tests/cloudflare-v3-deploy-helper.test.mjs",
     "test:research-chat:browser": "node tests/browser-smoke.mjs",
     "verify:complete": "python scripts/verify-complete-release-v2.16.0.py",
     "check:cloudflare": "node scripts/deploy-cloudflare-research-chat.mjs --check",
@@ -14,6 +14,9 @@
     "verify:public": "python scripts/verify-public-github-readiness-v2.16.0.py",
     "check:github-publication": "python scripts/prepare-github-publication-v2.16.0.py --check",
     "test:github-publication": "python tests/github-publication-helper-v216.py",
-    "publish:github-candidate": "python scripts/prepare-github-publication-v2.16.0.py"
+    "publish:github-candidate": "python scripts/prepare-github-publication-v2.16.0.py",
+    "check:cloudflare:v3": "node scripts/deploy-cloudflare-v3.mjs --check",
+    "deploy:cloudflare:v3": "node scripts/deploy-cloudflare-v3.mjs",
+    "test:production-content": "node scripts/test-production-content.mjs"
   }
 }
