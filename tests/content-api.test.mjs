@@ -8,8 +8,8 @@ import {
 } from "../backend/cloudflare-workers-ai/teacher-auth.mjs";
 
 import {
-  ContentReleaseCoordinator
-} from "../backend/cloudflare-workers-ai/content-durable-object.mjs";
+  createContentReleaseCoordinatorHandler
+} from "../backend/cloudflare-workers-ai/content-durable-object-handler.mjs";
 
 import {
   handleContentRequest,
@@ -23,7 +23,7 @@ import {
 
 import {
   createWorker
-} from "../backend/cloudflare-workers-ai/worker.mjs";
+} from "../backend/cloudflare-workers-ai/worker-core.mjs";
 
 const ORIGIN =
   "https://gmoon-code.github.io";
@@ -232,11 +232,8 @@ function fakeCoordinatorBinding(
   const calls = [];
 
   const object =
-    new ContentReleaseCoordinator(
-      {
-        storage
-      },
-      {}
+    createContentReleaseCoordinatorHandler(
+      storage
     );
 
   return {
