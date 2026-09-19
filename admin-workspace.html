@@ -665,6 +665,152 @@
       line-height: 1.5;
     }
 
+    .publication-card {
+      margin-top: 18px;
+      padding: 18px;
+      background: #f8fbfd;
+      border: 1px solid #bfd5e0;
+      border-radius: 11px;
+    }
+
+    .publication-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .publication-heading h3 {
+      margin: 0;
+      font-size: 1.08rem;
+    }
+
+    .publication-help {
+      max-width: 880px;
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .publication-status-grid {
+      margin-bottom: 14px;
+    }
+
+    .publication-status {
+      margin-top: 0;
+    }
+
+    .publication-connect,
+    .publication-summary {
+      display: grid;
+      gap: 7px;
+      margin-top: 14px;
+    }
+
+    .publication-connect label,
+    .publication-summary {
+      max-width: 720px;
+    }
+
+    .publication-connect label {
+      display: grid;
+      gap: 6px;
+    }
+
+    .publication-connect label > span,
+    .publication-summary > span {
+      font-size: .84rem;
+      font-weight: 750;
+    }
+
+    .publication-connect small,
+    .publication-summary small {
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.45;
+    }
+
+    .publication-connect input,
+    .publication-summary textarea {
+      width: 100%;
+      padding: 9px 10px;
+      color: var(--text);
+      background: #fff;
+      border: 1px solid #bfc9d4;
+      border-radius: 7px;
+      font: inherit;
+    }
+
+    .publication-summary textarea {
+      resize: vertical;
+    }
+
+    .publication-connect input:focus,
+    .publication-summary textarea:focus {
+      outline: 3px solid rgba(11, 110, 168, .18);
+      border-color: var(--focus);
+    }
+
+    .publication-primary {
+      font-weight: 800;
+    }
+
+    .publication-history {
+      margin-top: 20px;
+    }
+
+    .publication-history h4 {
+      margin: 0 0 10px;
+      font-size: .95rem;
+    }
+
+    .publication-revision-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .publication-revision {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .publication-revision > div {
+      display: grid;
+      min-width: 0;
+      gap: 3px;
+    }
+
+    .publication-revision strong,
+    .publication-revision span {
+      overflow-wrap: anywhere;
+    }
+
+    .publication-revision > div span {
+      color: var(--muted);
+      font-size: .78rem;
+      line-height: 1.4;
+    }
+
+    .publication-revision .section-status {
+      margin-top: 0;
+    }
+
+    .publication-empty {
+      margin: 0;
+      padding: 14px;
+      color: var(--muted);
+      background: #fff;
+      border: 1px dashed #c7d0da;
+      border-radius: 8px;
+    }
+
     @media (max-width: 860px) {
       .layout { grid-template-columns: 1fr; }
 
@@ -778,8 +924,8 @@
         </nav>
 
         <div class="sidebar-note">
-          v3 foundation shell. No new telemetry, research collection,
-          content publishing, or persistence is enabled in this milestone.
+          v3 Admin development. Isolated content publication is available.
+          Research collection remains off and the student runtime is unchanged.
         </div>
       </aside>
 
@@ -795,9 +941,10 @@
           </div>
 
           <div class="foundation-notice" id="foundationNotice">
-            This is the v3 foundation shell. The live student experience
-            remains local-first. No operational telemetry or research data
-            is collected by this shell.
+            The live student experience remains local-first. Content releases
+            can be managed on the isolated v3 backend, while students continue
+            using the bundled curriculum and existing production Worker.
+            No research data is collected by this Admin milestone.
           </div>
 
           <section class="panel workspace-panel" data-admin-workspace-panel="dashboard">
@@ -811,7 +958,7 @@
               </div>
               <div class="status-card">
                 <span>Content publishing</span>
-                <strong>Not enabled yet</strong>
+                <strong id="adminContentPublishingStatus">Isolated backend not connected</strong>
               </div>
               <div class="status-card">
                 <span>Operational collection</span>
@@ -830,8 +977,9 @@
                 <p>
                   All 18 stage-guidance records now support searchable
                   browsing, separate in-memory drafts, validation, sandboxed
-                  preview, full-block replacement, reset, and draft export.
-                  Publication remains disabled.
+                  preview, full-block replacement, reset, draft export, and
+                  authenticated publication to the isolated v3 backend.
+                  Students do not consume remote releases yet.
                 </p>
               </div>
               <div class="info-card">
@@ -858,7 +1006,8 @@
             <h2>Content Studio</h2>
             <p>
               Edit a controlled copy of student-facing instructional content,
-              validate the draft, and preview it before any publication step.
+              validate and preview it, then optionally publish a complete
+              18-stage release to the isolated v3 backend.
             </p>
 
             <section class="content-browser-card" aria-labelledby="contentBrowserHeading">
@@ -908,7 +1057,7 @@
               </div>
 
               <div class="content-record-meta">
-                <span>Published seed revision</span>
+                <span>Editing baseline revision</span>
                 <strong id="contentRecordRevision">Loading</strong>
               </div>
 
@@ -935,7 +1084,7 @@
                     <h3 id="contentEditorHeading">Edit the current draft</h3>
                   </div>
 
-                  <span class="section-status">In memory only</span>
+                  <span class="section-status">In-memory draft</span>
                 </div>
 
                 <div class="content-form-grid two">
@@ -1071,12 +1220,112 @@
               </div>
             </details>
 
+            <section class="publication-card" aria-labelledby="contentPublicationHeading">
+              <div class="publication-heading">
+                <div>
+                  <span class="eyebrow">Isolated v3 service</span>
+                  <h3 id="contentPublicationHeading">Publish and roll back content releases</h3>
+                </div>
+                <span class="section-status">Admin only</span>
+              </div>
+
+              <p class="publication-help">
+                This service stores versioned 18-stage guidance releases on the
+                isolated v3 backend. The public student application still uses
+                its bundled curriculum, so publishing here does not change what
+                students see yet.
+              </p>
+
+              <div class="status-grid publication-status-grid">
+                <div class="status-card">
+                  <span>Content service</span>
+                  <strong id="contentPublicationEndpoint">Reading configuration</strong>
+                </div>
+                <div class="status-card">
+                  <span>Publication session</span>
+                  <strong id="contentPublicationSessionState">Not connected</strong>
+                </div>
+                <div class="status-card">
+                  <span>Current release</span>
+                  <strong id="contentPublicationCurrent">Unknown</strong>
+                </div>
+                <div class="status-card">
+                  <span>Revision history</span>
+                  <strong id="contentPublicationHistoryCount">0 revisions</strong>
+                </div>
+              </div>
+
+              <div
+                class="content-studio-status publication-status"
+                id="contentPublicationStatus"
+                role="status"
+                aria-live="polite"
+              >
+                Connect the isolated publication service to load the current editing baseline.
+              </div>
+
+              <div class="publication-connect">
+                <label>
+                  <span>Publication access code</span>
+                  <input
+                    id="contentPublicationCode"
+                    type="password"
+                    autocomplete="current-password"
+                    minlength="16"
+                    maxlength="256"
+                  >
+                  <small>
+                    Used only to create a separate v3 publication session.
+                    The code is never saved by this page.
+                  </small>
+                </label>
+
+                <div class="content-action-row">
+                  <button class="button" id="connectContentPublication" type="button">
+                    Connect publication service
+                  </button>
+                  <button class="button" id="disconnectContentPublication" type="button" disabled>
+                    Disconnect
+                  </button>
+                  <button class="button" id="refreshContentPublication" type="button" disabled>
+                    Refresh current release
+                  </button>
+                </div>
+              </div>
+
+              <label class="publication-summary">
+                <span>Change summary</span>
+                <textarea
+                  id="contentChangeSummary"
+                  rows="3"
+                  maxlength="500"
+                  placeholder="Describe the content change or rollback reason"
+                ></textarea>
+                <small>
+                  Required for both publication and rollback. The summary is
+                  stored with revision metadata.
+                </small>
+              </label>
+
+              <div class="content-action-row">
+                <button class="button publication-primary" id="publishContentRelease" type="button" disabled>
+                  Publish complete 18-stage release
+                </button>
+              </div>
+
+              <div class="publication-history">
+                <h4>Revision history</h4>
+                <div id="contentRevisionList" class="publication-revision-list"></div>
+              </div>
+            </section>
+
             <div class="boundary">
               <strong>Publication boundary.</strong>
-              Content Studio can browse all 18 stage-guidance records and keep
-              separate in-memory drafts while this Admin page remains open.
-              It cannot publish to the public site yet. Reloading this Admin
-              page discards every in-memory draft.
+              Content Studio can publish versioned releases to the isolated
+              v3 backend after a separate Admin publication session is verified.
+              The public student site does not consume those releases yet.
+              In-memory drafts are discarded on reload, while published
+              revisions remain stored on the isolated backend.
             </div>
           </section>
 
@@ -1153,12 +1402,12 @@
                 <strong id="adminChatEndpoint">Reading local runtime configuration</strong>
               </div>
               <div class="status-card">
-                <span>Backend service contract</span>
-                <strong>Existing v2.16.0 contract</strong>
+                <span>Admin content endpoint</span>
+                <strong id="adminContentServiceEndpoint">Reading local runtime configuration</strong>
               </div>
               <div class="status-card">
-                <span>New Admin API</span>
-                <strong>None</strong>
+                <span>Backend service contracts</span>
+                <strong>v2.16 Research Chat + isolated v3 content API</strong>
               </div>
               <div class="status-card">
                 <span>Secrets exposed here</span>
@@ -1167,9 +1416,10 @@
             </div>
 
             <div class="boundary">
-              This shell reads only the public runtime configuration already
-              available to the student site. It does not call a new
-              service-health endpoint.
+              Endpoint origins come from owner-controlled public runtime
+              configuration. Content publication calls occur only after a
+              separate signed v3 Admin session is established. Secret values
+              are never rendered back into this workspace.
             </div>
           </section>
 
@@ -1187,9 +1437,9 @@
                 <p>The existing Classroom Tools workspace retains local backup inspection and student-site recovery handoff.</p>
               </div>
               <div class="info-card">
-                <span class="eyebrow">Planned capability</span>
+                <span class="eyebrow">Current capability</span>
                 <h3>Content rollback</h3>
-                <p>Content Studio history will later support restoring a prior known-valid revision.</p>
+                <p>Authenticated Content Studio history can restore a prior known-valid revision as a new release on the isolated v3 backend.</p>
               </div>
               <div class="info-card">
                 <span class="eyebrow">Planned capability</span>
@@ -1240,6 +1490,9 @@
   <script src="./assets/content-registry.js"></script>
   <script src="./assets/admin-content-studio.js"></script>
   <script src="./assets/admin-content-studio-ui.js"></script>
+  <script src="./assets/admin-content-service.js"></script>
+  <script src="./assets/admin-content-publication.js"></script>
+  <script src="./assets/admin-content-publication-ui.js"></script>
 
   <script>
     (() => {
@@ -1273,6 +1526,7 @@
       }
 
       leaveButton.addEventListener("click", () => {
+        window.RMSAdminContentService?.leave?.();
         window.RMSTeacherSession.leave();
         location.replace("./");
       });
@@ -1334,6 +1588,10 @@
 
         window
           .RMSAdminContentStudioUI
+          ?.mount?.();
+
+        window
+          .RMSAdminContentPublicationUI
           ?.mount?.();
 
         gate.hidden = true;
