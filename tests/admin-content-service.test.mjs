@@ -117,6 +117,32 @@ function loadService({
 }
 
 test(
+  "runtime configuration keeps public Chat on v2 and Admin content on isolated v3",
+  () => {
+    const runtime =
+      readFileSync(
+        "assets/runtime-config.js",
+        "utf8"
+      );
+
+    assert.match(
+      runtime,
+      /"researchChatEndpoint":\s*"https:\/\/rms-research-chat-free\.gmoon-code\.workers\.dev\/"/
+    );
+
+    assert.match(
+      runtime,
+      /"chatEndpoint":\s*"https:\/\/rms-research-chat-free\.gmoon-code\.workers\.dev\/"/
+    );
+
+    assert.match(
+      runtime,
+      /"adminContentEndpoint":\s*"https:\/\/rms-research-methods-v3\.gmoon-code\.workers\.dev\/"/
+    );
+  }
+);
+
+test(
   "Admin content service uses only the isolated v3 endpoint",
   () => {
     const {
