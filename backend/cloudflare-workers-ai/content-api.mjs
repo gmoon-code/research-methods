@@ -582,6 +582,126 @@ async function adminState(
   }
 }
 
+function safeRevisionMetadata(
+  value
+) {
+  if (
+    !value ||
+    typeof value !== "object" ||
+    Array.isArray(value)
+  ) {
+    return null;
+  }
+
+  const keys =
+    Object.keys(value).sort();
+
+  const expected =
+    [
+      "change_summary",
+      "content_hash",
+      "content_version",
+      "parent_release_id",
+      "published_at",
+      "release_id",
+      "rollback_source_release_id"
+    ];
+
+  if (
+    keys.length !==
+      expected.length ||
+    !keys.every(
+      (key, index) =>
+        key ===
+        expected[index]
+    )
+  ) {
+    return null;
+  }
+
+  const id =
+    String(
+      value.release_id || ""
+    ).trim();
+
+  const version =
+    String(
+      value.content_version || ""
+    ).trim();
+
+  const publishedAt =
+    String(
+      value.published_at || ""
+    ).trim();
+
+  const hash =
+    String(
+      value.content_hash || ""
+    ).trim();
+
+  const summary =
+    String(
+      value.change_summary || ""
+    ).trim();
+
+  const parent =
+    value.parent_release_id === null
+      ? null
+      : String(
+          value.parent_release_id || ""
+        ).trim();
+
+  const rollbackSource =
+    value.rollback_source_release_id === null
+      ? null
+      : String(
+          value.rollback_source_release_id || ""
+        ).trim();
+
+  if (
+    !/^[A-Za-z0-9_.:-]{1,160}$/
+      .test(id) ||
+    version !== id ||
+    !Number.isFinite(
+      Date.parse(publishedAt)
+    ) ||
+    !/^[a-f0-9]{64}$/i
+      .test(hash) ||
+    summary.length < 3 ||
+    summary.length > 500 ||
+    (
+      parent !== null &&
+      !/^[A-Za-z0-9_.:-]{1,160}$/
+        .test(parent)
+    ) ||
+    (
+      rollbackSource !== null &&
+      !/^[A-Za-z0-9_.:-]{1,160}$/
+        .test(rollbackSource)
+    )
+  ) {
+    return null;
+  }
+
+  return {
+    release_id: id,
+    content_version:
+      version,
+    published_at:
+      new Date(
+        publishedAt
+      ).toISOString(),
+    parent_release_id:
+      parent,
+    rollback_source_release_id:
+      rollbackSource,
+    content_hash:
+      hash.toLowerCase(),
+    change_summary:
+      summary
+  };
+}
+
 async function adminRevisions(
   request,
   env,
@@ -607,9 +727,16 @@ async function adminRevisions(
   }
 
   try {
-    const revisions =
+    const raw =
       await store
         .listRevisionMetadata();
+
+    const revisions =
+      raw
+        .map(
+          safeRevisionMetadata
+        )
+        .filter(Boolean);
 
     return json(
       request,
@@ -1076,6 +1203,18 @@ async function preflight(
     pathname ===
     PUBLIC_PATH;
 
+  const isReadOnlyAdmin =
+    pathname ===
+      ADMIN_STATE_PATH ||
+    pathname ===
+      ADMIN_REVISIONS_PATH;
+
+  const methods =
+    isPublic ||
+    isReadOnlyAdmin
+      ? "GET, OPTIONS"
+      : "POST, OPTIONS";
+
   return new Response(
     null,
     {
@@ -1086,9 +1225,7 @@ async function preflight(
           env,
           {
             "Access-Control-Allow-Methods":
-              isPublic
-                ? "GET, OPTIONS"
-                : "GET, POST, OPTIONS",
+              methods,
             "Access-Control-Allow-Headers":
               isPublic
                 ? "Content-Type"
@@ -1254,6 +1391,7 @@ export {
   contentPath,
   handleContentRequest,
   readJsonBody,
+  safeRevisionMetadata,
   sha256Hex,
   validRollbackBody
 };
