@@ -14,27 +14,27 @@
 
 :root{
   --moon-paper:#ffffff;
-  --moon-page:#fbfbfa;
-  --moon-ink:#111111;
-  --moon-muted:#575757;
-  --moon-rule:#d8d8d8;
-  --moon-rule-dark:#b7b7b7;
+  --moon-page:#f7f6f2;
+  --moon-ink:#202220;
+  --moon-muted:#60635f;
+  --moon-rule:#deddd7;
+  --moon-rule-dark:#b9b7af;
 
-  --section-yellow:#fff4a3;
-  --section-yellow-soft:#fffbe1;
-  --section-yellow-line:#d8c85d;
+  --section-yellow:#f3e7a1;
+  --section-yellow-soft:#fbf7df;
+  --section-yellow-line:#c3ad51;
 
-  --section-green:#d7efc5;
-  --section-green-soft:#f1faea;
-  --section-green-line:#8fb96e;
+  --section-green:#dcebd2;
+  --section-green-soft:#f1f7ed;
+  --section-green-line:#88a975;
 
-  --section-turquoise:#cceff0;
-  --section-turquoise-soft:#effafa;
-  --section-turquoise-line:#70bfc2;
+  --section-turquoise:#d1e9e7;
+  --section-turquoise-soft:#f0f7f6;
+  --section-turquoise-line:#78aaa7;
 
-  --section-pink:#f7d5e3;
-  --section-pink-soft:#fff1f7;
-  --section-pink-line:#d89db5;
+  --section-pink:#ecd9e1;
+  --section-pink-soft:#faf2f5;
+  --section-pink-line:#b7899e;
 
   --bg:var(--moon-page);
   --card:var(--moon-paper);
@@ -59,7 +59,7 @@
   --purplebg:var(--section-pink-soft);
 
   --shadow:none;
-  --radius:5px;
+  --radius:7px;
 }
 
 
@@ -1195,12 +1195,20 @@ th{
 .secondary,
 .ghost,
 .danger{
-  padding:10px 14px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  min-height:40px;
+  max-width:100%;
+  padding:9px 14px;
 
   border:1px solid var(--moon-ink);
-  border-radius:3px;
+  border-radius:6px;
 
+  box-sizing:border-box;
   font-weight:700;
+  line-height:1.2;
 }
 
 .primary,
@@ -1209,8 +1217,8 @@ th{
 #returnCurrentStage,
 .ai-helper-compose button.primary{
   color:#fff !important;
-  background:#111 !important;
-  border-color:#111 !important;
+  background:#27302d !important;
+  border-color:#27302d !important;
 }
 
 .primary:hover,
@@ -1219,8 +1227,8 @@ th{
 #returnCurrentStage:hover,
 .ai-helper-compose button.primary:hover{
   color:#fff !important;
-  background:#333 !important;
-  border-color:#333 !important;
+  background:#3b4541 !important;
+  border-color:#3b4541 !important;
 }
 
 .secondary,
@@ -1234,10 +1242,11 @@ button.danger{
 
 .secondary{
   background:var(--section-turquoise-soft);
+  border-color:var(--section-turquoise-line);
 }
 
 .ghost{
-  background:#fff;
+  background:var(--moon-paper);
   border-color:var(--moon-rule-dark);
 }
 
@@ -1257,7 +1266,8 @@ button.danger:hover{
 }
 
 .small{
-  padding:7px 10px;
+  min-height:34px;
+  padding:7px 11px;
   font-size:12px;
 }
 
@@ -1852,3 +1862,89 @@ footer{
     min-width:68px;
   }
 }
+
+/* =========================================================
+   v3.0.1 STUDENT UI POLISH
+   ========================================================= */
+
+.modal-backdrop{
+  background:rgba(32,34,32,.46) !important;
+}
+
+.modal{
+  background:var(--moon-paper) !important;
+  border-color:var(--moon-rule-dark) !important;
+  border-radius:8px !important;
+  box-shadow:0 18px 54px rgba(45,43,38,.14) !important;
+}
+
+.journey-head>div{
+  min-width:0;
+}
+
+.modal [id^="close"],
+.future-stage-preview [id^="close"]{
+  flex:0 0 auto !important;
+  width:auto !important;
+  min-width:66px !important;
+  max-width:100% !important;
+  white-space:nowrap !important;
+  line-height:1.2 !important;
+  text-align:center !important;
+}
+
+.more-menu-grid button,
+.help-choice-grid button,
+.onboarding-points>div{
+  color:var(--moon-ink) !important;
+  background:var(--moon-paper) !important;
+  border-color:var(--moon-rule) !important;
+  border-radius:7px !important;
+}
+
+.more-menu-grid button,
+.help-choice-grid button{
+  padding:13px !important;
+}
+
+.more-menu-grid button:hover,
+.help-choice-grid button:hover{
+  background:var(--section-turquoise-soft) !important;
+  border-color:var(--section-turquoise-line) !important;
+}
+
+.more-menu-grid span,
+.help-choice-grid span,
+.onboarding-points span{
+  color:var(--moon-muted) !important;
+}
+
+.destructive-option{
+  background:var(--section-pink-soft) !important;
+  border-color:var(--section-pink-line) !important;
+}
+
+.journey-kicker{
+  display:block;
+  margin-bottom:3px;
+  color:var(--moon-muted);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+
+.journey-modal .milestone-card{
+  border-radius:7px;
+}
+
+.journey-modal .stage-dots button{
+  border-radius:6px;
+}
+
+.journey-modal .stage-dots button.done{
+  color:#17311d;
+  background:var(--section-green);
+  border-color:var(--section-green-line);
+}
+
