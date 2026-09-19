@@ -8,9 +8,8 @@ import {
 } from "../backend/cloudflare-workers-ai/teacher-auth.mjs";
 
 import {
-  createRelease,
-  revisionMetadata
-} from "../backend/cloudflare-workers-ai/content-publication.mjs";
+  ContentReleaseCoordinator
+} from "../backend/cloudflare-workers-ai/content-durable-object.mjs";
 
 import {
   handleContentRequest,
@@ -119,70 +118,158 @@ function limiter(
   };
 }
 
-function fakeBinding() {
+function fakeStorage() {
   const data =
     new Map();
 
-  const calls = [];
-
   return {
     data,
-    calls,
 
     async get(key) {
-      calls.push({
-        op: "get",
-        key
-      });
-
       return data.has(key)
-        ? data.get(key)
-        : null;
+        ? structuredClone(
+            data.get(key)
+          )
+        : undefined;
     },
 
-    async put(key, value) {
-      calls.push({
-        op: "put",
-        key,
-        value
-      });
-
+    async put(
+      key,
+      value
+    ) {
       data.set(
         key,
-        String(value)
+        structuredClone(value)
       );
     },
 
     async list({
-      prefix = "",
-      limit = 1000
+      prefix = ""
     } = {}) {
+      return new Map(
+        [...data.entries()]
+          .filter(
+            ([key]) =>
+              key.startsWith(
+                prefix
+              )
+          )
+          .map(
+            ([key, value]) => [
+              key,
+              structuredClone(
+                value
+              )
+            ]
+          )
+      );
+    },
+
+    async transaction(
+      callback
+    ) {
+      const snapshot =
+        new Map(
+          [...data.entries()]
+            .map(
+              ([key, value]) => [
+                key,
+                structuredClone(
+                  value
+                )
+              ]
+            )
+        );
+
+      const transaction = {
+        async get(key) {
+          return snapshot.has(key)
+            ? structuredClone(
+                snapshot.get(key)
+              )
+            : undefined;
+        },
+
+        async put(
+          key,
+          value
+        ) {
+          snapshot.set(
+            key,
+            structuredClone(
+              value
+            )
+          );
+        }
+      };
+
+      const result =
+        await callback(
+          transaction
+        );
+
+      data.clear();
+
+      for (
+        const [key, value]
+        of snapshot
+      ) {
+        data.set(
+          key,
+          value
+        );
+      }
+
+      return result;
+    }
+  };
+}
+
+function fakeCoordinatorBinding(
+  storage =
+    fakeStorage()
+) {
+  const calls = [];
+
+  const object =
+    new ContentReleaseCoordinator(
+      {
+        storage
+      },
+      {}
+    );
+
+  return {
+    storage,
+    calls,
+    object,
+
+    getByName(name) {
       calls.push({
-        op: "list",
-        prefix,
-        limit
+        op:
+          "getByName",
+        name
       });
 
       return {
-        keys:
-          [...data.keys()]
-            .filter(
-              key =>
-                key.startsWith(
-                  prefix
-                )
-            )
-            .sort()
-            .slice(
-              0,
-              limit
-            )
-            .map(
-              name => ({
-                name
-              })
-            ),
-        list_complete: true
+        async fetch(request) {
+          const url =
+            new URL(
+              request.url
+            );
+
+          calls.push({
+            op: "fetch",
+            path:
+              url.pathname,
+            method:
+              request.method
+          });
+
+          return object.fetch(
+            request
+          );
+        }
       };
     }
   };
@@ -273,57 +360,21 @@ function request(
   );
 }
 
-function hash(
-  character = "a"
+async function publishThroughApi(
+  environment,
+  token,
+  body
 ) {
-  return character.repeat(64);
-}
-
-function seededRelease(
-  id = "release-001",
-  summary =
-    "Initial publication"
-) {
-  return createRelease({
-    candidate:
-      candidate(
-        null,
-        summary
-      ),
-    releaseId:
-      id,
-    nowIso:
-      "2026-09-19T00:00:00.000Z",
-    contentHash:
-      hash("a")
-  });
-}
-
-async function seedStore(
-  binding,
-  release
-) {
-  binding.data.set(
-    "content:current",
-    JSON.stringify(
-      release
-    )
-  );
-
-  binding.data.set(
-    `content:revision:${release.release_id}`,
-    JSON.stringify(
-      release
-    )
-  );
-
-  binding.data.set(
-    `content:history:0000000000001:${release.release_id}`,
-    JSON.stringify(
-      revisionMetadata(
-        release
-      )
-    )
+  return handleContentRequest(
+    request(
+      ADMIN_PUBLISH_PATH,
+      {
+        method: "POST",
+        token,
+        body
+      }
+    ),
+    environment
   );
 }
 
@@ -344,14 +395,14 @@ test(
 );
 
 test(
-  "content routes reject disallowed origins before storage or auth work",
+  "content routes reject disallowed origins before coordinator or auth work",
   async () => {
     const binding =
-      fakeBinding();
+      fakeCoordinatorBinding();
 
     const environment =
       baseEnv({
-        RMS_CONTENT_STORE:
+        RMS_CONTENT_COORDINATOR:
           binding
       });
 
@@ -447,7 +498,7 @@ test(
 );
 
 test(
-  "public content fails closed when storage is not configured",
+  "public content fails closed when coordinator binding is absent",
   async () => {
     const response =
       await handleContentRequest(
@@ -473,7 +524,7 @@ test(
   "public content reports no publication without inventing a release",
   async () => {
     const binding =
-      fakeBinding();
+      fakeCoordinatorBinding();
 
     const response =
       await handleContentRequest(
@@ -481,7 +532,7 @@ test(
           PUBLIC_PATH
         ),
         baseEnv({
-          RMS_CONTENT_STORE:
+          RMS_CONTENT_COORDINATOR:
             binding
         })
       );
@@ -504,14 +555,29 @@ test(
   "public content exposes only the safe release projection",
   async () => {
     const binding =
-      fakeBinding();
+      fakeCoordinatorBinding();
 
-    const release =
-      seededRelease();
+    const environment =
+      baseEnv({
+        RMS_CONTENT_COORDINATOR:
+          binding
+      });
 
-    await seedStore(
-      binding,
-      release
+    const token =
+      await adminToken(
+        environment
+      );
+
+    const published =
+      await publishThroughApi(
+        environment,
+        token,
+        candidate()
+      );
+
+    assert.equal(
+      published.status,
+      201
     );
 
     const response =
@@ -519,10 +585,7 @@ test(
         request(
           PUBLIC_PATH
         ),
-        baseEnv({
-          RMS_CONTENT_STORE:
-            binding
-        })
+        environment
       );
 
     assert.equal(
@@ -536,11 +599,6 @@ test(
     assert.equal(
       body.published,
       true
-    );
-
-    assert.equal(
-      body.release.release_id,
-      release.release_id
     );
 
     assert.equal(
@@ -565,7 +623,7 @@ test(
   "Admin content routes fail closed when session configuration is absent",
   async () => {
     const binding =
-      fakeBinding();
+      fakeCoordinatorBinding();
 
     const environment =
       baseEnv({
@@ -573,7 +631,7 @@ test(
           undefined,
         RMS_TEACHER_SESSION_SECRET:
           undefined,
-        RMS_CONTENT_STORE:
+        RMS_CONTENT_COORDINATOR:
           binding
       });
 
@@ -602,7 +660,7 @@ test(
 );
 
 test(
-  "Admin authentication happens before storage configuration disclosure",
+  "Admin authentication happens before coordinator configuration disclosure",
   async () => {
     const environment =
       baseEnv();
@@ -626,13 +684,13 @@ test(
 
     assert.doesNotMatch(
       await response.text(),
-      /storage|not configured/i
+      /coordinator|not configured/i
     );
   }
 );
 
 test(
-  "valid Admin session then fails closed when storage binding is absent",
+  "valid Admin session then fails closed when coordinator binding is absent",
   async () => {
     const environment =
       baseEnv();
@@ -666,14 +724,14 @@ test(
 );
 
 test(
-  "Admin state returns neutral unpublished state for an empty configured store",
+  "Admin state returns neutral unpublished state for empty coordinator",
   async () => {
     const binding =
-      fakeBinding();
+      fakeCoordinatorBinding();
 
     const environment =
       baseEnv({
-        RMS_CONTENT_STORE:
+        RMS_CONTENT_COORDINATOR:
           binding
       });
 
@@ -710,72 +768,7 @@ test(
 );
 
 test(
-  "Admin revisions filters malformed stored metadata",
-  async () => {
-    const binding =
-      fakeBinding();
-
-    const valid =
-      seededRelease();
-
-    await seedStore(
-      binding,
-      valid
-    );
-
-    binding.data.set(
-      "content:history:0000000000000:bad",
-      JSON.stringify({
-        release_id: "bad",
-        injected: "<script>"
-      })
-    );
-
-    const environment =
-      baseEnv({
-        RMS_CONTENT_STORE:
-          binding
-      });
-
-    const token =
-      await adminToken(
-        environment
-      );
-
-    const response =
-      await handleContentRequest(
-        request(
-          ADMIN_REVISIONS_PATH,
-          {
-            token
-          }
-        ),
-        environment
-      );
-
-    assert.equal(
-      response.status,
-      200
-    );
-
-    const body =
-      await response.json();
-
-    assert.equal(
-      body.revisions.length,
-      1
-    );
-
-    assert.equal(
-      body.revisions[0]
-        .release_id,
-      valid.release_id
-    );
-  }
-);
-
-test(
-  "publish rejects non-JSON malformed and invalid candidates before storage writes",
+  "publish rejects non-JSON malformed and invalid candidates before coordinator write path",
   async () => {
     for (
       const entry
@@ -807,11 +800,11 @@ test(
       ]
     ) {
       const binding =
-        fakeBinding();
+        fakeCoordinatorBinding();
 
       const environment =
         baseEnv({
-          RMS_CONTENT_STORE:
+          RMS_CONTENT_COORDINATOR:
             binding
         });
 
@@ -845,7 +838,10 @@ test(
         binding.calls
           .filter(
             call =>
-              call.op === "put"
+              call.op ===
+                "fetch" &&
+              call.path ===
+                "/publish"
           )
           .length,
         0
@@ -855,14 +851,14 @@ test(
 );
 
 test(
-  "publish enforces the request body size limit",
+  "publish enforces the request body size limit before coordinator call",
   async () => {
     const binding =
-      fakeBinding();
+      fakeCoordinatorBinding();
 
     const environment =
       baseEnv({
-        RMS_CONTENT_STORE:
+        RMS_CONTENT_COORDINATOR:
           binding
       });
 
@@ -896,7 +892,10 @@ test(
       binding.calls
         .filter(
           call =>
-            call.op === "put"
+            call.op ===
+              "fetch" &&
+            call.path ===
+              "/publish"
         )
         .length,
       0
@@ -905,14 +904,14 @@ test(
 );
 
 test(
-  "first publish writes immutable revision before current snapshot",
+  "first publish reaches the coordinator and creates a current release",
   async () => {
     const binding =
-      fakeBinding();
+      fakeCoordinatorBinding();
 
     const environment =
       baseEnv({
-        RMS_CONTENT_STORE:
+        RMS_CONTENT_COORDINATOR:
           binding
       });
 
@@ -922,17 +921,10 @@ test(
       );
 
     const response =
-      await handleContentRequest(
-        request(
-          ADMIN_PUBLISH_PATH,
-          {
-            method: "POST",
-            token,
-            body:
-              candidate()
-          }
-        ),
-        environment
+      await publishThroughApi(
+        environment,
+        token,
+        candidate()
       );
 
     assert.equal(
@@ -949,78 +941,46 @@ test(
     );
 
     assert.match(
-      body.current.release_id,
+      body.current
+        .release_id,
       /^rel_[0-9a-f-]+$/i
     );
 
-    const puts =
-      binding.calls.filter(
-        call =>
-          call.op === "put"
-      );
-
     assert.equal(
-      puts.length,
-      3
-    );
-
-    assert.equal(
-      puts[0].key.startsWith(
-        "content:revision:"
-      ),
+      binding.calls
+        .some(
+          call =>
+            call.op ===
+              "fetch" &&
+            call.path ===
+              "/publish"
+        ),
       true
-    );
-
-    assert.equal(
-      puts[1].key.startsWith(
-        "content:history:"
-      ),
-      true
-    );
-
-    assert.equal(
-      puts[2].key,
-      "content:current"
     );
 
     const current =
-      JSON.parse(
-        binding.data.get(
+      binding.storage.data
+        .get(
           "content:current"
-        )
-      );
+        );
 
     assert.equal(
       current.release_id,
-      body.current.release_id
-    );
-
-    assert.equal(
-      current.parent_release_id,
-      null
+      body.current
+        .release_id
     );
   }
 );
 
 test(
-  "publish detects stale current release before any write",
+  "stale publish conflict is returned from the authoritative coordinator",
   async () => {
     const binding =
-      fakeBinding();
-
-    const current =
-      seededRelease();
-
-    await seedStore(
-      binding,
-      current
-    );
-
-    binding.calls.length = 0;
+      fakeCoordinatorBinding();
 
     const environment =
       baseEnv({
-        RMS_CONTENT_STORE:
+        RMS_CONTENT_COORDINATOR:
           binding
       });
 
@@ -1029,81 +989,116 @@ test(
         environment
       );
 
-    const response =
-      await handleContentRequest(
-        request(
-          ADMIN_PUBLISH_PATH,
-          {
-            method: "POST",
-            token,
-            body:
-              candidate(
-                "release-old"
-              )
-          }
-        ),
-        environment
+    const first =
+      await publishThroughApi(
+        environment,
+        token,
+        candidate()
       );
 
     assert.equal(
-      response.status,
+      first.status,
+      201
+    );
+
+    const stale =
+      await publishThroughApi(
+        environment,
+        token,
+        candidate(
+          "release-old"
+        )
+      );
+
+    assert.equal(
+      stale.status,
       409
     );
 
     const body =
-      await response.json();
+      await stale.json();
 
     assert.equal(
       body.code,
       "CONTENT_CONFLICT"
     );
-
-    assert.equal(
-      body.current_release_id,
-      current.release_id
-    );
-
-    assert.equal(
-      binding.calls
-        .filter(
-          call =>
-            call.op === "put"
-        )
-        .length,
-      0
-    );
   }
 );
 
 test(
-  "publish from current release records the prior release as parent",
+  "second publish records the current release as parent",
   async () => {
     const binding =
-      fakeBinding();
+      fakeCoordinatorBinding();
 
-    const current =
-      seededRelease();
+    const environment =
+      baseEnv({
+        RMS_CONTENT_COORDINATOR:
+          binding
+      });
 
-    await seedStore(
-      binding,
-      current
-    );
+    const token =
+      await adminToken(
+        environment
+      );
 
-    binding.calls.length = 0;
+    const first =
+      await publishThroughApi(
+        environment,
+        token,
+        candidate()
+      );
+
+    const firstBody =
+      await first.json();
 
     const next =
       candidate(
-        current.release_id,
-        "Revise Stage 4 title"
+        firstBody.current
+          .release_id,
+        "Revise Stage 4"
       );
 
     next.records[3]
       .value.title =
         "Revised Stage 4";
 
+    const second =
+      await publishThroughApi(
+        environment,
+        token,
+        next
+      );
+
+    assert.equal(
+      second.status,
+      201
+    );
+
+    const current =
+      binding.storage.data
+        .get(
+          "content:current"
+        );
+
+    assert.equal(
+      current
+        .parent_release_id,
+      firstBody.current
+        .release_id
+    );
+  }
+);
+
+test(
+  "revision history is metadata-only",
+  async () => {
+    const binding =
+      fakeCoordinatorBinding();
+
     const environment =
       baseEnv({
-        RMS_CONTENT_STORE:
+        RMS_CONTENT_COORDINATOR:
           binding
       });
 
@@ -1112,14 +1107,18 @@ test(
         environment
       );
 
+    await publishThroughApi(
+      environment,
+      token,
+      candidate()
+    );
+
     const response =
       await handleContentRequest(
         request(
-          ADMIN_PUBLISH_PATH,
+          ADMIN_REVISIONS_PATH,
           {
-            method: "POST",
-            token,
-            body: next
+            token
           }
         ),
         environment
@@ -1127,48 +1126,36 @@ test(
 
     assert.equal(
       response.status,
-      201
+      200
     );
 
-    const stored =
-      JSON.parse(
-        binding.data.get(
-          "content:current"
-        )
-      );
+    const body =
+      await response.json();
 
     assert.equal(
-      stored.parent_release_id,
-      current.release_id
+      body.revisions.length,
+      1
     );
 
     assert.equal(
-      stored.records[3]
-        .value.title,
-      "Revised Stage 4"
+      Object.hasOwn(
+        body.revisions[0],
+        "records"
+      ),
+      false
     );
   }
 );
 
 test(
-  "rollback rejects missing target revision without writes",
+  "rollback rejects missing target revision without changing current release",
   async () => {
     const binding =
-      fakeBinding();
-
-    const current =
-      seededRelease();
-
-    await seedStore(
-      binding,
-      current
-    );
-
-    binding.calls.length = 0;
+      fakeCoordinatorBinding();
 
     const environment =
       baseEnv({
-        RMS_CONTENT_STORE:
+        RMS_CONTENT_COORDINATOR:
           binding
       });
 
@@ -1176,6 +1163,16 @@ test(
       await adminToken(
         environment
       );
+
+    const first =
+      await publishThroughApi(
+        environment,
+        token,
+        candidate()
+      );
+
+    const firstBody =
+      await first.json();
 
     const response =
       await handleContentRequest(
@@ -1186,7 +1183,8 @@ test(
             token,
             body: {
               expected_current_release_id:
-                current.release_id,
+                firstBody.current
+                  .release_id,
               target_release_id:
                 "release-missing",
               change_summary:
@@ -1203,13 +1201,13 @@ test(
     );
 
     assert.equal(
-      binding.calls
-        .filter(
-          call =>
-            call.op === "put"
+      binding.storage.data
+        .get(
+          "content:current"
         )
-        .length,
-      0
+        .release_id,
+      firstBody.current
+        .release_id
     );
   }
 );
@@ -1218,52 +1216,11 @@ test(
   "rollback republishes prior content as a new chronological release",
   async () => {
     const binding =
-      fakeBinding();
-
-    const target =
-      seededRelease(
-        "release-001",
-        "Initial publication"
-      );
-
-    await seedStore(
-      binding,
-      target
-    );
-
-    const changed =
-      candidate(
-        "release-001",
-        "Change Stage 5"
-      );
-
-    changed.records[4]
-      .value.title =
-        "Changed Stage 5";
-
-    const current =
-      createRelease({
-        candidate: changed,
-        releaseId:
-          "release-002",
-        nowIso:
-          "2026-09-19T01:00:00.000Z",
-        contentHash:
-          hash("b"),
-        parentReleaseId:
-          "release-001"
-      });
-
-    await seedStore(
-      binding,
-      current
-    );
-
-    binding.calls.length = 0;
+      fakeCoordinatorBinding();
 
     const environment =
       baseEnv({
-        RMS_CONTENT_STORE:
+        RMS_CONTENT_COORDINATOR:
           binding
       });
 
@@ -1272,7 +1229,38 @@ test(
         environment
       );
 
-    const response =
+    const first =
+      await publishThroughApi(
+        environment,
+        token,
+        candidate()
+      );
+
+    const firstBody =
+      await first.json();
+
+    const changed =
+      candidate(
+        firstBody.current
+          .release_id,
+        "Change Stage 5"
+      );
+
+    changed.records[4]
+      .value.title =
+        "Changed Stage 5";
+
+    const second =
+      await publishThroughApi(
+        environment,
+        token,
+        changed
+      );
+
+    const secondBody =
+      await second.json();
+
+    const rollback =
       await handleContentRequest(
         request(
           ADMIN_ROLLBACK_PATH,
@@ -1281,9 +1269,11 @@ test(
             token,
             body: {
               expected_current_release_id:
-                current.release_id,
+                secondBody.current
+                  .release_id,
               target_release_id:
-                target.release_id,
+                firstBody.current
+                  .release_id,
               change_summary:
                 "Restore initial guidance"
             }
@@ -1293,50 +1283,38 @@ test(
       );
 
     assert.equal(
-      response.status,
+      rollback.status,
       201
     );
 
-    const stored =
-      JSON.parse(
-        binding.data.get(
-          "content:current"
-        )
-      );
+    const rollbackBody =
+      await rollback.json();
 
-    assert.notEqual(
-      stored.release_id,
-      current.release_id
+    assert.equal(
+      rollbackBody.current
+        .parent_release_id,
+      secondBody.current
+        .release_id
     );
 
     assert.equal(
-      stored.parent_release_id,
-      current.release_id
-    );
-
-    assert.equal(
-      stored.rollback_source_release_id,
-      target.release_id
-    );
-
-    assert.equal(
-      stored.records[4]
-        .value.title,
-      target.records[4]
-        .value.title
+      rollbackBody.current
+        .rollback_source_release_id,
+      firstBody.current
+        .release_id
     );
   }
 );
 
 test(
-  "content Admin rate limit blocks requests before storage",
+  "content Admin rate limit blocks requests before coordinator access",
   async () => {
     const binding =
-      fakeBinding();
+      fakeCoordinatorBinding();
 
     const environment =
       baseEnv({
-        RMS_CONTENT_STORE:
+        RMS_CONTENT_COORDINATOR:
           binding,
         AUTH_RATE_LIMITER:
           limiter([false])
@@ -1374,13 +1352,13 @@ test(
   "real Worker routes content API before Research Chat inference",
   async () => {
     const binding =
-      fakeBinding();
+      fakeCoordinatorBinding();
 
     const aiCalls = [];
 
     const environment = {
       ...baseEnv({
-        RMS_CONTENT_STORE:
+        RMS_CONTENT_COORDINATOR:
           binding
       }),
       RMS_CHAT_ACCESS_CODE:
@@ -1388,7 +1366,9 @@ test(
       RMS_AI_MODEL:
         "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
       AI: {
-        async run(...args) {
+        async run(
+          ...args
+        ) {
           aiCalls.push(args);
 
           throw new Error(
