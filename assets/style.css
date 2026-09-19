@@ -107,7 +107,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:25px 0 50px}
 @media(max-width:900px){.paper-grid,.checklist-mini{grid-template-columns:1fr}.paper-scorecards{grid-template-columns:1fr 1fr}}
 
 
-/* v1.7 Student Journey & Teacher Dashboard */
+/* v1.7 Student Journey compatibility styles */
 .journey-modal{width:min(1050px,97vw);max-height:94vh;overflow:auto}.journey-head{display:flex;justify-content:space-between;gap:12px;align-items:start}.journey-head h3{margin:0 0 4px}.journey-head p{font-size:11px;line-height:1.5;color:var(--muted);margin:0}
 .journey-profile{display:grid;grid-template-columns:1fr 1fr 170px;gap:10px;align-items:end;margin:14px 0}.journey-profile>div{border:1px solid var(--line);border-radius:11px;padding:10px}.journey-profile>div span{display:block;font-size:9px;text-transform:uppercase;color:#7a8795;font-weight:900}.journey-profile>div b{font-size:11px}
 .next-focus{background:linear-gradient(145deg,#173f5b,#2d6d91);color:#fff;border-radius:16px;padding:16px}.next-focus>span{font-size:9px;text-transform:uppercase;letter-spacing:.08em;opacity:.75;font-weight:900}.next-focus h4{margin:4px 0}.next-focus p{font-size:11px;opacity:.86}.journey-progress{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.journey-progress>div{border:1px solid var(--line);border-radius:12px;padding:10px}.journey-progress b{display:block;font-size:18px}.journey-progress span{font-size:9px;text-transform:uppercase;color:#7b8794;font-weight:900}
@@ -684,8 +684,8 @@ body:not(.project-active) .student-top-actions>*:not(#saveStatus){display:none}
   .stage-bottom-nav{display:grid;grid-template-columns:1fr 1fr}.stage-bottom-nav .primary{width:100%}
 }
 
-/* Teacher/setup mode makes operational tools available only through More */
-body.teacher-mode .brand:after{content:" · Teacher mode";font-size:11px;font-weight:800;color:#6a7780}
+/* Private setup mode makes operational tools available only through More */
+body.teacher-mode .brand:after{content:" · Private mode";font-size:11px;font-weight:800;color:#6a7780}
 
 .recommended-path-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;background:#eef7fb;border:1px solid #c4dce7;border-radius:12px;padding:13px;margin:10px 0}.recommended-path-card span{font-size:10px;text-transform:uppercase;font-weight:900;color:#567487}.recommended-path-card h4{font-size:20px;margin:3px 0}.recommended-path-card p{font-size:13px!important;line-height:1.5!important;margin:4px 0}.recommended-path-card small{font-size:12px;line-height:1.4}
 .path-decision-help{border:1px solid #dfe6e9;border-radius:10px;padding:10px;margin:9px 0}.path-decision-help>b{font-size:13px}.path-decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}.path-decision-grid span{font-size:12px;line-height:1.4;background:#f8fafb;border-radius:8px;padding:7px}.path-decision-grid strong{display:block}
