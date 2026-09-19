@@ -4,6 +4,7 @@
 
 import { handleTeacherRequest } from './teacher-auth.mjs';
 import { handleContentRequest } from './content-api.mjs';
+import { ContentReleaseCoordinator } from './content-durable-object.mjs';
 
 import {
   VERSION,
@@ -119,6 +120,7 @@ export default worker;
 export {
   VERSION,
   RATE_LIMIT_MESSAGE,
+  ContentReleaseCoordinator,
   aiConfigured,
   allowedOrigin,
   applyRateLimits,
