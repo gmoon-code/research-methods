@@ -298,7 +298,7 @@
     return toolBlock+customBlock+exemplar;
   }
   function nextStageHTML(s){
-    if(s.id>=18)return '<div class="next-stage-card"><b>You reached the final stage.</b><p>Resolve the final audit and complete teacher review before submission.</p></div>';
+    if(s.id>=18)return '<div class="next-stage-card"><b>You reached the final stage.</b><p>Resolve the final audit and complete any submission requirements that apply to your project.</p></div>';
     const next=stage(s.id+1);
     return `<div class="next-stage-card"><b>Coming next · Stage ${next.id}</b><p>${esc(Flow.transitionFor(next.id).now)}</p></div>`;
   }
@@ -1440,7 +1440,6 @@
     window.scrollTo({top:0,behavior:"smooth"});
   });
 
-  if($("teacherBtn"))$("teacherBtn").onclick=()=>JourneyUI.openTeacherDashboard();
   if($("writingLab"))$("writingLab").onclick=()=>WritingLab.open(project,save,"intro");
   if($("dataLab"))$("dataLab").onclick=()=>DataLab.open(project,save,"import");
   if($("methodsLab"))$("methodsLab").onclick=()=>methodsWorkspace("design");
