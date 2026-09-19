@@ -1583,12 +1583,33 @@
     if($("projectContext"))$("projectContext").value=project.context||"";
   }
 
-  try{
-    renderAll();
-    bindCriticalButtons();
-  }catch(err){
-    console.error("Initial render failed",err);
-    bindCriticalButtons();
+  const initialRender=()=>{
+    try{
+      renderAll();
+      bindCriticalButtons();
+    }catch(err){
+      console.error("Initial render failed",err);
+      bindCriticalButtons();
+    }
+  };
+
+  const contentReady=
+    window.RMSPublicContentReady;
+
+  if(
+    contentReady &&
+    typeof contentReady.then==="function"
+  ){
+    contentReady
+      .catch(err=>{
+        console.warn(
+          "Public content startup gate fell back to bundled curriculum",
+          err
+        );
+      })
+      .then(initialRender);
+  }else{
+    initialRender();
   }
 
 })();
