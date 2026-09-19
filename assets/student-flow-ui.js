@@ -63,6 +63,8 @@ window.RMSStudentFlowUI = (() => {
           : "○";
   }
 
+  let routeModalExpandedPhase = null;
+
   function routeHTML(p, compact = false) {
     F.normalizeProject(p);
 
@@ -70,8 +72,13 @@ window.RMSStudentFlowUI = (() => {
       .map(ph => {
         const ps = F.phaseStatus(p, ph);
         const current = ph.steps.includes(Number(p.currentStage));
-        const expanded =
-          current || !!p.flow.expandedPhases?.[ph.id];
+        const expanded = compact
+          ? (
+              routeModalExpandedPhase
+                ? String(ph.id) === String(routeModalExpandedPhase)
+                : current
+            )
+          : current || !!p.flow.expandedPhases?.[ph.id];
 
         return `
           <section class="route-phase ${current ? "current" : ""}">
@@ -343,6 +350,10 @@ window.RMSStudentFlowUI = (() => {
     removeModal("routeBackdrop");
 
     const p = ctx.project;
+    const currentPhase = C.phases.find(
+      ph => ph.steps.includes(Number(p.currentStage))
+    );
+    routeModalExpandedPhase = currentPhase?.id ?? null;
 
     const wrap =
       document.createElement("div");
@@ -390,8 +401,12 @@ window.RMSStudentFlowUI = (() => {
           </span>
         </div>
 
+        <div class="route-modal-hint">
+          Current phase opens first. Select another phase to inspect its stages.
+        </div>
+
         <div id="routeModalList">
-          ${routeHTML(p)}
+          ${routeHTML(p, true)}
         </div>
       </div>
     `;
@@ -424,19 +439,29 @@ window.RMSStudentFlowUI = (() => {
 
           if (!p) return;
 
-          p.flow.expandedPhases[ph] =
-            !p.flow.expandedPhases[ph];
+          const inRouteModal =
+            scope.id === "routeBackdrop";
 
-          safeSave();
+          if (inRouteModal) {
+            routeModalExpandedPhase =
+              String(routeModalExpandedPhase) === String(ph)
+                ? null
+                : ph;
+          } else {
+            p.flow.expandedPhases[ph] =
+              !p.flow.expandedPhases[ph];
+
+            safeSave();
+          }
 
           const target =
-            scope.id === "routeBackdrop"
+            inRouteModal
               ? id("routeModalList")
               : id("phaseNav");
 
           if (target) {
             target.innerHTML =
-              routeHTML(p);
+              routeHTML(p, inRouteModal);
           }
 
           bindRoute(
