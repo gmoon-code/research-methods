@@ -137,6 +137,18 @@ function command(name) {
       : name;
 }
 
+function needsCommandShell(
+  executable
+) {
+  return (
+    process.platform ===
+      "win32" &&
+    /\.cmd$/i.test(
+      String(executable || "")
+    )
+  );
+}
+
 function runCapture(
   executable,
   args,
@@ -152,8 +164,9 @@ function runCapture(
       encoding: "utf8",
       windowsHide: true,
       shell:
-        process.platform ===
-        "win32"
+        needsCommandShell(
+          executable
+        )
     }
   );
 }
