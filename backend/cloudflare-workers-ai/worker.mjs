@@ -3,6 +3,7 @@
 // Required Worker secrets are RMS_CHAT_ACCESS_CODE, RMS_TEACHER_ACCESS_CODE, and RMS_TEACHER_SESSION_SECRET.
 
 import { handleTeacherRequest } from './teacher-auth.mjs';
+import { handleContentRequest } from './content-api.mjs';
 
 import {
   VERSION,
@@ -96,6 +97,13 @@ function createWorker() {
 
       if (teacherResponse) {
         return teacherResponse;
+      }
+
+      const contentResponse =
+        await handleContentRequest(request, env);
+
+      if (contentResponse) {
+        return contentResponse;
       }
 
       const limited = await applyRateLimits(request, env);
