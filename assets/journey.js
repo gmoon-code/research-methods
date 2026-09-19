@@ -15,15 +15,15 @@ window.RMSJourney = (() => {
   }
 
   const milestoneDefs=[
-    {id:"M1",title:"Question Ready",phase:"Discover",stages:[1,2,3,4],teacher:true,
+    {id:"M1",title:"Question Ready",phase:"Discover",stages:[1,2,3,4],teacher:false,
      description:"Interest, feasible topic, preliminary background scan, and a research question that is answerable with evidence."},
     {id:"M2",title:"Evidence Base Ready",phase:"Literature",stages:[5,6,7,8],teacher:false,
      description:"Search strategy, screened/evaluated sources, cross-study synthesis, and a defensible study rationale."},
-    {id:"M3",title:"Method Approved",phase:"Design",stages:[9,10,11,12],teacher:true,
+    {id:"M3",title:"Method Ready",phase:"Design",stages:[9,10,11,12],teacher:false,
      description:"Question-design alignment, variables/constructs, units, sampling, measurement, ethics, procedure, data dictionary, and a locked protocol."},
-    {id:"M4",title:"Analysis Ready",phase:"Evidence",stages:[13,14,15],teacher:true,
+    {id:"M4",title:"Analysis Ready",phase:"Evidence",stages:[13,14,15],teacher:false,
      description:"Raw-data integrity, descriptive exploration, justified analysis, assumption checks, and a stored primary Results record."},
-    {id:"M5",title:"Paper Ready for Final Review",phase:"Writing",stages:[16,17,18],teacher:true,
+    {id:"M5",title:"Paper Ready",phase:"Writing",stages:[16,17,18],teacher:false,
      description:"Discussion, closing sections, citation audit, and whole-paper alignment review."}
   ];
 
@@ -113,12 +113,7 @@ window.RMSJourney = (() => {
       if(ps.available && ps.score<70) warnings.push(`Whole-paper local alignment audit is ${ps.score}/100.`);
     }
 
-    let state="blocked";
-    if(blockers.length===0) state="student_ready";
-    if(def.teacher && cp.status==="submitted") state="awaiting_teacher";
-    if(def.teacher && cp.status==="revise") state="revision_requested";
-    if(def.teacher && cp.status==="approved" && blockers.length===0) state="approved";
-    if(!def.teacher && blockers.length===0) state="complete";
+    const state=blockers.length===0?"complete":"blocked";
 
     return {def,readyStages,totalStages:def.stages.length,blockers,warnings,checkpoint:cp,state};
   }
@@ -131,21 +126,16 @@ window.RMSJourney = (() => {
       stagesReady:Object.values(p.ready||{}).filter(Boolean).length,
       stagesTotal:18,
       milestones,
-      approved:milestones.filter(m=>["approved","complete"].includes(m.state)).length
+      approved:milestones.filter(m=>m.state==="complete").length
     };
   }
 
   function currentFocus(p){
     const ms=allMilestones(p);
     for(const m of ms){
-      if(m.state==="revision_requested") return {kind:"teacher_revision",milestone:m.def.id,title:`Revise ${m.def.title}`,detail:m.checkpoint.comment||"Teacher requested revision."};
-      if(m.state==="awaiting_teacher") return {kind:"waiting",milestone:m.def.id,title:`Awaiting review · ${m.def.title}`,detail:"Continue only with work that does not depend on this approval."};
       if(m.blockers.length){
         const firstStage=m.def.stages.find(s=>!p.ready?.[s]);
         return {kind:"work",milestone:m.def.id,stage:firstStage||m.def.stages[0],title:firstStage?`Complete Stage ${firstStage}`:`Resolve ${m.def.title}`,detail:m.blockers[0]};
-      }
-      if(m.def.teacher && m.checkpoint.status!=="approved"){
-        return {kind:"submit",milestone:m.def.id,title:`Submit ${m.def.title}`,detail:"Student requirements are complete. Send this checkpoint for teacher review."};
       }
     }
     return {kind:"complete",title:"Project pathway complete",detail:"Run the final paper audit, verify references against original sources, and follow course submission requirements."};
