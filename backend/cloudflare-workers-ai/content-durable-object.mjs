@@ -223,9 +223,14 @@ class ContentReleaseCoordinator {
               )
             );
 
+        const {
+          status,
+          ...bodyValue
+        } = result;
+
         return json(
-          result,
-          result.status
+          bodyValue,
+          status
         );
       }
 
@@ -261,9 +266,14 @@ class ContentReleaseCoordinator {
               serverMetadata()
             );
 
+        const {
+          status,
+          ...bodyValue
+        } = result;
+
         return json(
-          result,
-          result.status
+          bodyValue,
+          status
         );
       }
 
