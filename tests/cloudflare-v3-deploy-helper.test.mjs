@@ -39,6 +39,12 @@ const wrangler =
     )
   );
 
+const runtimeConfig =
+  readFileSync(
+    "assets/runtime-config.js",
+    "utf8"
+  );
+
 test(
   "v3 deployment helper passes offline preflight without Cloudflare access",
   () => {
@@ -77,6 +83,16 @@ test(
     assert.match(
       result.stdout,
       /no Workers KV content binding/i
+    );
+
+    assert.match(
+      result.stdout,
+      /isolated v3 Worker target: rms-research-methods-v3/
+    );
+
+    assert.match(
+      result.stdout,
+      /existing production Worker remains: rms-research-chat-free/
     );
   }
 );
@@ -173,11 +189,26 @@ test(
 );
 
 test(
-  "v3 helper deploys repository config directly and contains no KV provisioning path",
+  "v3 helper deploys an isolated Worker and contains no KV provisioning path",
   () => {
     assert.match(
       helper,
       /"wrangler",\s*"deploy"/
+    );
+
+    assert.match(
+      helper,
+      /"--name",[\s\S]{0,80}V3_WORKER_NAME/
+    );
+
+    assert.match(
+      helper,
+      /const V3_WORKER_NAME\s*=\s*"rms-research-methods-v3"/
+    );
+
+    assert.match(
+      helper,
+      /const EXISTING_PRODUCTION_WORKER\s*=\s*"rms-research-chat-free"/
     );
 
     assert.match(
@@ -203,6 +234,31 @@ test(
     assert.doesNotMatch(
       helper,
       /deploymentConfigFile|--update-config/
+    );
+
+    assert.doesNotMatch(
+      helper,
+      /configure-chat-endpoint\.mjs/
+    );
+
+    assert.match(
+      helper,
+      /public runtime-config\.js intentionally unchanged/
+    );
+
+    assert.equal(
+      wrangler.name,
+      "rms-research-chat-free"
+    );
+
+    assert.match(
+      runtimeConfig,
+      /rms-research-chat-free\.gmoon-code\.workers\.dev/
+    );
+
+    assert.doesNotMatch(
+      runtimeConfig,
+      /rms-research-methods-v3/
     );
   }
 );
