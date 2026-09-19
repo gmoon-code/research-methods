@@ -12,6 +12,11 @@ const page = readFileSync(
   "utf8"
 );
 
+const adminPage = readFileSync(
+  "admin-workspace.html",
+  "utf8"
+);
+
 const flow = readFileSync(
   "assets/student-flow-ui.js",
   "utf8"
@@ -128,6 +133,36 @@ test(
     assert.doesNotMatch(
       flow,
       /URLSearchParams[\s\S]{0,100}teacher/
+    );
+  }
+);
+
+test(
+  "authenticated private entry routes to Admin Workspace",
+  () => {
+    assert.match(
+      page,
+      /location\.replace\("\.\/admin-workspace\.html"\)/
+    );
+
+    assert.doesNotMatch(
+      page,
+      /location\.replace\("\.\/teacher-workspace\.html"\)/
+    );
+
+    assert.match(
+      page,
+      /Admin access/
+    );
+
+    assert.match(
+      adminPage,
+      /Admin Workspace/
+    );
+
+    assert.match(
+      adminPage,
+      /href="\.\/teacher-workspace\.html"/
     );
   }
 );

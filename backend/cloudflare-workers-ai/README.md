@@ -34,3 +34,29 @@ signed session token. `POST /teacher/session/verify` validates that token.
 Teacher sessions have an eight-hour maximum lifetime. Authentication is
 origin-restricted and rate-limited, and failures use generic responses that do
 not expose credential details.
+
+
+## v3 Admin content publication development path
+
+The v3 development branch adds a strongly ordered content-publication service behind the same Worker.
+
+Content publication uses the SQLite-backed `ContentReleaseCoordinator` Durable Object bound as `RMS_CONTENT_COORDINATOR`. The coordinator stores the authoritative current release and immutable revision history. Publication conflict checks and release writes are performed in one transaction.
+
+The repository configuration contains the Durable Object binding and class declaration. It contains no account-specific storage identifier.
+
+For the v3 development deployment path, run
+
+```bash
+npm run check:cloudflare:v3
+npm run deploy:cloudflare:v3
+```
+
+The v3 deployment helper keeps the existing application secrets temporary, deploys the Worker, and can run the production content canary before the Research Chat smoke test.
+
+The content canary publishes only content that is semantically identical to the current public release, or to the bundled 18-stage seed when no prior release exists. It creates a second identical revision and rolls back to the first revision, then verifies that public content is unchanged.
+
+The v3.0.0 application source tree now includes the verified public content startup loader. The live public site does not consume the remote content service until the v3.0.0 frontend cutover is completed.
+
+The public loader reads only `GET /content/public`, sends no Admin credentials, validates the complete 18-stage release defensively, and falls back to the bundled curriculum when the remote service is unavailable or does not complete inside the startup budget.
+
+The student Research Chat endpoint remains the existing `rms-research-chat-free` Worker. The isolated `rms-research-methods-v3` Worker provides the v3 Admin/public content service and has separately passed the Research Chat smoke contract.

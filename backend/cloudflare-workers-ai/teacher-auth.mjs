@@ -238,22 +238,42 @@ async function verifyTeacherToken(token, env) {
       return { ok: false };
     }
 
+    const supplied = base64UrlDecode(
+      encodedSignature
+    );
+
+    if (
+      base64UrlEncode(supplied) !==
+      encodedSignature
+    ) {
+      return { ok: false };
+    }
+
+    const payloadBytes =
+      base64UrlDecode(
+        encodedPayload
+      );
+
+    if (
+      base64UrlEncode(payloadBytes) !==
+      encodedPayload
+    ) {
+      return { ok: false };
+    }
+
     const expected = await sign(
       env.RMS_TEACHER_SESSION_SECRET,
       encodedPayload
-    );
-
-    const supplied = base64UrlDecode(
-      encodedSignature
     );
 
     if (!constantTimeEqual(expected, supplied)) {
       return { ok: false };
     }
 
-    const payloadText = new TextDecoder().decode(
-      base64UrlDecode(encodedPayload)
-    );
+    const payloadText =
+      new TextDecoder().decode(
+        payloadBytes
+      );
 
     const payload = JSON.parse(payloadText);
     const now = Math.floor(Date.now() / 1000);
