@@ -6,7 +6,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "test:research-chat": "node --test tests/teacher-entry-static.test.mjs tests/admin-workspace-static.test.mjs tests/admin-content-studio.test.mjs tests/content-publication.test.mjs tests/content-coordinator-core.test.mjs tests/content-durable-object.test.mjs tests/content-api.test.mjs tests/teacher-auth.test.mjs tests/teacher-workspace-static.test.mjs tests/teacher-workspace-data.test.mjs tests/ai-helper-ui-ready-state.test.mjs tests/research-chat-backend.test.mjs tests/adapter-contract.test.mjs tests/configure-endpoint.test.mjs tests/cloudflare-worker.test.mjs tests/cloudflare-deploy-helper.test.mjs tests/cloudflare-v3-deploy-helper.test.mjs",
+    "test:research-chat": "node --test tests/teacher-entry-static.test.mjs tests/admin-workspace-static.test.mjs tests/admin-content-studio.test.mjs tests/admin-content-publication.test.mjs tests/admin-content-service.test.mjs tests/admin-content-publication-ui.test.mjs tests/content-publication.test.mjs tests/content-coordinator-core.test.mjs tests/content-durable-object.test.mjs tests/content-api.test.mjs tests/teacher-auth.test.mjs tests/teacher-workspace-static.test.mjs tests/teacher-workspace-data.test.mjs tests/ai-helper-ui-ready-state.test.mjs tests/research-chat-backend.test.mjs tests/adapter-contract.test.mjs tests/configure-endpoint.test.mjs tests/cloudflare-worker.test.mjs tests/cloudflare-deploy-helper.test.mjs tests/cloudflare-v3-deploy-helper.test.mjs",
     "test:research-chat:browser": "node tests/browser-smoke.mjs",
     "verify:complete": "python scripts/verify-complete-release-v2.16.0.py",
     "check:cloudflare": "node scripts/deploy-cloudflare-research-chat.mjs --check",
