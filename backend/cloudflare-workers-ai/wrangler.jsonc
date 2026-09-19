@@ -3,7 +3,9 @@
   "name": "rms-research-chat-free",
   "main": "worker.mjs",
   "compatibility_date": "2026-09-09",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "vars": {
     "RMS_ALLOWED_ORIGINS": "https://gmoon-code.github.io",
     "RMS_AI_MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
@@ -22,17 +24,40 @@
     {
       "name": "AUTH_RATE_LIMITER",
       "namespace_id": "215001",
-      "simple": { "limit": 30, "period": 60 }
+      "simple": {
+        "limit": 30,
+        "period": 60
+      }
     },
     {
       "name": "SESSION_RATE_LIMITER",
       "namespace_id": "215002",
-      "simple": { "limit": 12, "period": 60 }
+      "simple": {
+        "limit": 12,
+        "period": 60
+      }
     },
     {
       "name": "CLASS_RATE_LIMITER",
       "namespace_id": "215003",
-      "simple": { "limit": 60, "period": 60 }
+      "simple": {
+        "limit": 60,
+        "period": 60
+      }
     }
-  ]
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "RMS_CONTENT_COORDINATOR",
+        "class_name": "ContentReleaseCoordinator"
+      }
+    ]
+  },
+  "exports": {
+    "ContentReleaseCoordinator": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    }
+  }
 }
