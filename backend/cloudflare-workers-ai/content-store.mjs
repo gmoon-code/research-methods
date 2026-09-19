@@ -37,13 +37,28 @@ function revisionKey(releaseId) {
 }
 
 function historyKey(release) {
-  return (
-    HISTORY_PREFIX +
-    encodeURIComponent(
+  const timestamp =
+    Date.parse(
       String(
         release.published_at
       )
-    ) +
+    );
+
+  if (!Number.isFinite(timestamp)) {
+    throw new Error(
+      "Published timestamp is invalid."
+    );
+  }
+
+  const reverseTime =
+    String(
+      9999999999999 -
+      timestamp
+    ).padStart(13, "0");
+
+  return (
+    HISTORY_PREFIX +
+    reverseTime +
     ":" +
     String(
       release.release_id
