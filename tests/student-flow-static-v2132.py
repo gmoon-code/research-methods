@@ -14,7 +14,7 @@ writing=(r/"assets/writing-lab-ui.js").read_text(encoding="utf-8")
 for token in ["id=\"routeBtn\"","data-open-research-snapshot","id=\"helpMenuBtn\"","id=\"moreMenuBtn\"","id=\"saveStatus\""]:
     assert token in idx,token
 assert "legacy-tool-hooks" in idx
-assert "Teacher Dashboard" in idx # hidden compatibility hook still exists
+assert "Teacher Dashboard" not in idx
 assert ".legacy-tool-hooks{display:none!important}" in css
 
 # New modules load in safe order.
