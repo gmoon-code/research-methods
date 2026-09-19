@@ -264,6 +264,36 @@ test(
 );
 
 test(
+  "v3 helper runs Windows cmd shims through the command shell",
+  () => {
+    const shellGuards =
+      helper.match(
+        /shell:\s*process\.platform\s*===\s*"win32"/g
+      ) || [];
+
+    assert.equal(
+      shellGuards.length,
+      2
+    );
+
+    assert.match(
+      helper,
+      /function command\(name\)[\s\S]*?process\.platform\s*===\s*"win32"[\s\S]*?\$\{name\}\.cmd/
+    );
+
+    assert.match(
+      helper,
+      /const npm\s*=\s*command\("npm"\)/
+    );
+
+    assert.match(
+      helper,
+      /const npx\s*=\s*command\("npx"\)/
+    );
+  }
+);
+
+test(
   "v3 helper keeps deployment secrets temporary and never requests an AI API key",
   () => {
     assert.match(
