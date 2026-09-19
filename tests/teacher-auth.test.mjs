@@ -10,7 +10,7 @@ import {
 
 import {
   createWorker
-} from "../backend/cloudflare-workers-ai/worker.mjs";
+} from "../backend/cloudflare-workers-ai/worker-core.mjs";
 
 const ORIGIN = "https://gmoon-code.github.io";
 const WORKER = "https://rms-research-chat-free.gmoon-code.workers.dev";
