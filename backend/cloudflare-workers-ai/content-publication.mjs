@@ -26,6 +26,19 @@ const CANDIDATE_FIELDS = Object.freeze([
   "records"
 ]);
 
+const RELEASE_FIELDS = Object.freeze([
+  "schema_version",
+  "content_version",
+  "release_id",
+  "created_at",
+  "published_at",
+  "parent_release_id",
+  "rollback_source_release_id",
+  "content_hash",
+  "change_summary",
+  "records"
+]);
+
 const PLAIN_LIMITS = Object.freeze({
   title: 160,
   nav: 120,
@@ -909,15 +922,24 @@ function validateStoredRelease(release) {
   const errors = [];
 
   if (
+    !objectKeysExact(
+      release,
+      RELEASE_FIELDS
+    )
+  ) {
+    errors.push(
+      "Stored release contains unsupported or missing fields."
+    );
+  }
+
+  if (
     !release ||
     typeof release !== "object" ||
     Array.isArray(release)
   ) {
     return deepFreeze({
       ok: false,
-      errors: [
-        "Stored release must be an object."
-      ]
+      errors
     });
   }
 
@@ -926,7 +948,12 @@ function validateStoredRelease(release) {
       release.release_id
     );
 
-  const timestamp =
+  const createdAt =
+    safeIso(
+      release.created_at
+    );
+
+  const publishedAt =
     safeIso(
       release.published_at
     );
@@ -936,21 +963,81 @@ function validateStoredRelease(release) {
       release.content_hash
     );
 
+  const parent =
+    release.parent_release_id ===
+      null
+      ? null
+      : safeReleaseId(
+          release.parent_release_id
+        );
+
+  const rollbackSource =
+    release.rollback_source_release_id ===
+      null
+      ? null
+      : safeReleaseId(
+          release.rollback_source_release_id
+        );
+
+  if (
+    release.schema_version !==
+    CONTENT_SCHEMA_VERSION
+  ) {
+    errors.push(
+      "Stored release schema version is invalid."
+    );
+  }
+
   if (!id) {
     errors.push(
       "Stored release identifier is invalid."
     );
   }
 
-  if (!timestamp) {
+  if (
+    id &&
+    release.content_version !== id
+  ) {
     errors.push(
-      "Stored release timestamp is invalid."
+      "Stored content version must match the release identifier."
+    );
+  }
+
+  if (!createdAt) {
+    errors.push(
+      "Stored release creation timestamp is invalid."
+    );
+  }
+
+  if (!publishedAt) {
+    errors.push(
+      "Stored release publication timestamp is invalid."
     );
   }
 
   if (!hash) {
     errors.push(
       "Stored content hash is invalid."
+    );
+  }
+
+  if (
+    release.parent_release_id !==
+      null &&
+    !parent
+  ) {
+    errors.push(
+      "Stored parent release identifier is invalid."
+    );
+  }
+
+  if (
+    release.rollback_source_release_id !==
+      null &&
+    !rollbackSource
+  ) {
+    errors.push(
+      "Stored rollback source release identifier is invalid."
     );
   }
 
