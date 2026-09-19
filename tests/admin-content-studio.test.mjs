@@ -986,7 +986,7 @@ test(
 
     assert.match(
       ui,
-      /drafts\.clear\(\)[\s\S]*baselineLabel/
+      /function replaceBaseline\([\s\S]*baselineLabel\s*=\s*String\([\s\S]*drafts\.clear\(\)/
     );
 
     assert.match(
