@@ -74,16 +74,21 @@ test(
 );
 
 test(
-  "Admin foundation shell enables no telemetry research collection or content publishing",
+  "Admin shell keeps research collection off while isolated content publication is explicit",
   () => {
     assert.match(
       admin,
-      /No operational telemetry or research data[\s\S]*collected by this shell/
+      /live student experience remains local-first/i
     );
 
     assert.match(
       admin,
-      /Content publishing[\s\S]*Not enabled yet/
+      /No research data is collected by this Admin milestone/
+    );
+
+    assert.match(
+      admin,
+      /Content publishing[\s\S]*adminContentPublishingStatus[\s\S]*Isolated backend not connected/
     );
 
     assert.match(
@@ -132,6 +137,10 @@ test(
     assert.match(admin, /window\.RMS_RUNTIME_CONFIG/);
     assert.match(admin, /safeEndpointOrigin/);
     assert.match(admin, /return url\.origin/);
+    assert.match(
+      admin,
+      /id="adminContentServiceEndpoint"/
+    );
 
     assert.match(
       admin,
@@ -177,7 +186,7 @@ test(
 );
 
 test(
-  "Content Studio wires the guarded all-stage browser editor and sandboxed preview",
+  "Content Studio wires guarded editing preview and isolated publication controls",
   () => {
     for (
       const required
@@ -185,6 +194,9 @@ test(
         "./assets/content-registry.js",
         "./assets/admin-content-studio.js",
         "./assets/admin-content-studio-ui.js",
+        "./assets/admin-content-service.js",
+        "./assets/admin-content-publication.js",
+        "./assets/admin-content-publication-ui.js",
         'id="contentBrowserSearch"',
         'id="contentBrowserList"',
         'id="contentBrowserCount"',
@@ -209,10 +221,16 @@ test(
         'id="applyContentReplacement"',
         'id="contentPreviewFrame"',
         'sandbox=""',
+        'id="contentPublicationCode"',
+        'id="connectContentPublication"',
+        'id="disconnectContentPublication"',
+        'id="refreshContentPublication"',
+        'id="contentChangeSummary"',
+        'id="publishContentRelease"',
+        'id="contentRevisionList"',
         "Publication boundary.",
-        "browse all 18 stage-guidance records",
-        "cannot publish to the public site yet",
-        "discards every in-memory draft"
+        "public student site does not consume those releases yet",
+        "In-memory drafts are discarded on reload"
       ]
     ) {
       assert.equal(
@@ -237,19 +255,47 @@ test(
         "./assets/admin-content-studio.js"
       );
 
-    const ui =
+    const editorUi =
       admin.indexOf(
         "./assets/admin-content-studio-ui.js"
+      );
+
+    const service =
+      admin.indexOf(
+        "./assets/admin-content-service.js"
+      );
+
+    const publication =
+      admin.indexOf(
+        "./assets/admin-content-publication.js"
+      );
+
+    const publicationUi =
+      admin.indexOf(
+        "./assets/admin-content-publication-ui.js"
       );
 
     assert.ok(session >= 0);
     assert.ok(registry > session);
     assert.ok(model > registry);
-    assert.ok(ui > model);
+    assert.ok(editorUi > model);
+    assert.ok(service > editorUi);
+    assert.ok(publication > service);
+    assert.ok(publicationUi > publication);
 
     assert.match(
       admin,
       /RMSAdminContentStudioUI[\s\S]{0,80}mount/
+    );
+
+    assert.match(
+      admin,
+      /RMSAdminContentPublicationUI[\s\S]{0,80}mount/
+    );
+
+    assert.match(
+      admin,
+      /RMSAdminContentService\?\.leave\?\.\(\)[\s\S]{0,100}RMSTeacherSession\.leave\(\)/
     );
   }
 );
