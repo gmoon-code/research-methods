@@ -247,6 +247,88 @@ test(
 );
 
 test(
+  "non-canonical Base64URL teacher-session signatures are rejected",
+  async () => {
+    const session =
+      await createTeacherToken(env());
+
+    const parts =
+      session.token.split(".");
+
+    assert.equal(parts.length, 2);
+
+    const signature =
+      parts[1];
+
+    const alphabet =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+
+    const last =
+      signature.at(-1);
+
+    const index =
+      alphabet.indexOf(last);
+
+    assert.ok(index >= 0);
+
+    assert.equal(
+      index % 4,
+      0
+    );
+
+    const equivalentLast =
+      alphabet[index + 1];
+
+    const nonCanonical =
+      `${parts[0]}.` +
+      `${signature.slice(0, -1)}` +
+      equivalentLast;
+
+    assert.notEqual(
+      nonCanonical,
+      session.token
+    );
+
+    const direct =
+      await verifyTeacherToken(
+        nonCanonical,
+        env()
+      );
+
+    assert.equal(
+      direct.ok,
+      false
+    );
+
+    const response =
+      await handleTeacherRequest(
+        request(
+          "/teacher/session/verify",
+          {
+            headers: {
+              "X-RMS-Teacher-Session":
+                nonCanonical
+            }
+          }
+        ),
+        env()
+      );
+
+    assert.equal(
+      response.status,
+      401
+    );
+
+    assert.deepEqual(
+      await response.json(),
+      {
+        ok: false
+      }
+    );
+  }
+);
+
+test(
   "teacher sessions expire after the configured lifetime",
   async () => {
     const realNow = Date.now;
