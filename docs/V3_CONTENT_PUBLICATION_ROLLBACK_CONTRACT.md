@@ -136,21 +136,29 @@ The current snapshot contains the complete validated release plus its release me
 
 Immutable history stores each published release separately.
 
-## Initial storage abstraction
+## Authoritative storage and coordination
 
-The Worker publication code must use a small storage interface rather than embedding provider-specific calls throughout route logic.
+The first Cloudflare implementation uses one SQLite-backed Durable Object named `ContentReleaseCoordinator`.
 
-The logical operations are
+The Worker binds it as `RMS_CONTENT_COORDINATOR`.
+
+All publication requests for this application route to one named coordinator instance. The coordinator owns the authoritative current release, immutable revision records, and revision metadata.
+
+SQLite-backed Durable Object storage is used because publication requires strongly ordered state transitions. Conflict checking and publication writes must not depend on eventually consistent reads.
+
+The coordinator exposes the logical operations
 
 - read current release
-- write current release
-- write immutable revision
-- read revision
+- read public current release
+- publish a complete validated release
+- roll back to an immutable revision
 - list revision metadata
 
-The first Cloudflare implementation may use a dedicated Worker storage binding.
+The Worker HTTP routes authenticate and validate request boundaries, then delegate authoritative release transitions to the coordinator.
 
-Storage credentials or namespace identifiers never appear in browser runtime configuration.
+No storage credential, database identifier, or namespace identifier appears in browser runtime configuration.
+
+The Durable Object binding and class declaration contain no account-specific storage identifier and can remain in repository configuration.
 
 A future storage-provider change must not alter the public release schema.
 
@@ -178,19 +186,19 @@ A publish request follows this order.
 
 If validation fails, no storage write occurs.
 
-If the immutable history write fails, the current snapshot must not change.
+The expected-current-release check, immutable revision write, revision-metadata write, and current-release write occur inside one coordinator storage transaction.
 
-If the current-snapshot write fails after the immutable revision succeeds, the failed revision remains non-current history and the prior current release remains authoritative.
+If any storage operation in that transaction fails, the transaction is rolled back and the prior current release remains authoritative. A partial publication must not remain in storage.
 
 ## Optimistic concurrency
 
 The Admin publish request includes the release ID that was current when the draft was prepared.
 
-When a current release exists, the server compares that expected release ID with the current release before publishing.
+The authoritative coordinator compares that expected release ID with the current release inside the same strongly consistent transaction that performs publication.
 
-A mismatch returns a conflict response and does not publish.
+A mismatch returns a conflict response and commits no publication writes.
 
-This prevents an older Admin page from silently overwriting a newer publication.
+This prevents an older Admin page from silently overwriting a newer publication, including when two Admin requests arrive close together.
 
 The Admin must refresh publication state and deliberately resolve the conflict.
 
@@ -473,7 +481,8 @@ Adding publication code to the repository does not make publication live.
 A live publication system requires all of the following
 
 - reviewed Worker route implementation
-- configured server-side content storage binding
+- configured SQLite-backed `ContentReleaseCoordinator` Durable Object binding
+- successful coordinator transaction regression tests
 - successful backend regression tests
 - successful Admin publication tests
 - successful public fallback tests
