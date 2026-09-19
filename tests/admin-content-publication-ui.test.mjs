@@ -71,6 +71,16 @@ test(
       source,
       /forceRebase/
     );
+
+    assert.match(
+      source,
+      /registry\(\)\?\.records/
+    );
+
+    assert.match(
+      source,
+      /editor\.replaceBaseline\([\s\S]*bundledRecords[\s\S]*"bundled seed"/
+    );
   }
 );
 
@@ -135,6 +145,16 @@ test(
     assert.match(
       source,
       /loadRemote\(\{[\s\S]*forceRebase:\s*true/
+    );
+
+    const synchronizedReads =
+      source.match(
+        /const synchronized\s*=\s*await loadRemote\(\{/g
+      ) || [];
+
+    assert.equal(
+      synchronizedReads.length,
+      2
     );
   }
 );
