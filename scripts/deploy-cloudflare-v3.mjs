@@ -370,6 +370,10 @@ async function packagePreflight() {
         WORKER_DIR,
         "worker.mjs"
       ),
+      join(
+        WORKER_DIR,
+        "worker-core.mjs"
+      ),
       BASE_CONFIG,
       join(
         WORKER_DIR,
@@ -382,6 +386,10 @@ async function packagePreflight() {
       join(
         WORKER_DIR,
         "content-durable-object.mjs"
+      ),
+      join(
+        WORKER_DIR,
+        "content-durable-object-handler.mjs"
       ),
       join(
         WORKER_DIR,
