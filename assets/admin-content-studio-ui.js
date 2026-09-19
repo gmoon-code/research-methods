@@ -15,6 +15,8 @@ window.RMSAdminContentStudioUI = (() => {
   let selectedKey = "";
   let record = null;
   let draft = null;
+  let baselineLabel =
+    "bundled seed";
   const drafts = new Map();
 
   function id(value) {
@@ -253,8 +255,8 @@ window.RMSAdminContentStudioUI = (() => {
     if (dirtyState) {
       dirtyState.textContent =
         isDirty(record)
-          ? "Draft differs from published seed"
-          : "Matches published seed";
+          ? `Draft differs from ${baselineLabel}`
+          : `Matches ${baselineLabel}`;
     }
 
     syncReplacementView();
@@ -500,7 +502,7 @@ window.RMSAdminContentStudioUI = (() => {
 
     if (
       !window.confirm(
-        `Reset the Stage ${record.stage_id} in-memory draft to the published seed?`
+        `Reset the Stage ${record.stage_id} in-memory draft to the ${baselineLabel}?`
       )
     ) {
       return;
@@ -521,7 +523,7 @@ window.RMSAdminContentStudioUI = (() => {
     renderBrowser();
 
     setStatus(
-      `Stage ${record.stage_id} draft reset to the published seed.`,
+      `Stage ${record.stage_id} draft reset to the ${baselineLabel}.`,
       "ok"
     );
   }
@@ -623,7 +625,7 @@ window.RMSAdminContentStudioUI = (() => {
     renderBrowser();
 
     setStatus(
-      `Stage ${record.stage_id} guidance loaded. Edits stay in memory.`,
+      `Stage ${record.stage_id} guidance loaded from the ${baselineLabel}. Edits stay in memory.`,
       "ok"
     );
   }
@@ -801,6 +803,108 @@ window.RMSAdminContentStudioUI = (() => {
     updateDirtySummary();
   }
 
+  function snapshotRecords() {
+    return records.map(
+      nextRecord => {
+        const copy =
+          JSON.parse(
+            JSON.stringify(
+              nextRecord
+            )
+          );
+
+        const nextDraft =
+          drafts.get(
+            nextRecord.key
+          );
+
+        if (nextDraft) {
+          copy.value =
+            JSON.parse(
+              JSON.stringify(
+                nextDraft.value
+              )
+            );
+        }
+
+        return copy;
+      }
+    );
+  }
+
+  function hasDirtyDrafts() {
+    return dirtyCount() > 0;
+  }
+
+  function replaceBaseline(
+    nextRecords,
+    sourceLabel
+  ) {
+    const api =
+      currentApi();
+
+    if (
+      !api ||
+      !Array.isArray(
+        nextRecords
+      )
+    ) {
+      return false;
+    }
+
+    const accepted =
+      api.listRecords({
+        records:
+          nextRecords
+      });
+
+    if (
+      accepted.length !==
+      18
+    ) {
+      return false;
+    }
+
+    const priorKey =
+      selectedKey;
+
+    records =
+      accepted;
+
+    baselineLabel =
+      String(
+        sourceLabel ||
+        "current baseline"
+      ).trim() ||
+      "current baseline";
+
+    drafts.clear();
+
+    selectedKey = "";
+    record = null;
+    draft = null;
+
+    renderBrowser();
+
+    const nextKey =
+      recordForKey(
+        priorKey
+      )
+        ?.key ||
+      records[0]?.key ||
+      "";
+
+    if (!nextKey) {
+      return false;
+    }
+
+    selectRecord(
+      nextKey
+    );
+
+    return true;
+  }
+
   function mount() {
     if (mounted) return true;
 
@@ -917,6 +1021,9 @@ window.RMSAdminContentStudioUI = (() => {
   }
 
   return Object.freeze({
-    mount
+    mount,
+    snapshotRecords,
+    hasDirtyDrafts,
+    replaceBaseline
   });
 })();
