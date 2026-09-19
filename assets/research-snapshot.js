@@ -205,7 +205,6 @@ window.RMSResearchSnapshot=(()=>{
    if(ws.schema.length){lines.push(`\n## Current data schema`);ws.schema.forEach(x=>lines.push(`\n**${x.name||"Unnamed column"}** — ${[x.type,x.unit].filter(Boolean).join(" · ")}${x.definition?`\n\n${x.definition}`:""}`))}
    if(ws.runs.length){lines.push(`\n## Stored analysis runs`);ws.runs.forEach(x=>lines.push(`\n**${x.id}${x.test?` · ${x.test}`:""}**\n\n${x.summary||"_No neutral summary stored_"}`))}
    if(ws.writing.length){lines.push(`\n## Writing Lab drafts`);ws.writing.forEach(x=>lines.push(`\n### ${x.section}\n\n${x.text}`))}
-   if(ws.feedback.length){lines.push(`\n## Teacher feedback`);ws.feedback.forEach(x=>lines.push(`\n- ${x.comment}`))}
    if(ws.crossPath?.length){lines.push(`\n## Earlier / cross-path responses`);ws.crossPath.forEach(x=>lines.push(`\n**Stage ${x.stage} · ${x.label}**\n\n${x.value}`))}
    if(ws.versionArchive?.length){
      lines.push(`\n## Earlier duplicate versions preserved during upgrade`);
