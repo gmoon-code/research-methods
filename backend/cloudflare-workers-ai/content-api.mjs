@@ -3,6 +3,7 @@ import {
 } from "../../api/research-chat.js";
 
 import {
+  configured as teacherAuthConfigured,
   verifyTeacherToken
 } from "./teacher-auth.mjs";
 
@@ -220,6 +221,22 @@ async function requireAdmin(
   env,
   kind
 ) {
+  if (!teacherAuthConfigured(env)) {
+    return {
+      ok: false,
+      response:
+        json(
+          request,
+          env,
+          {
+            error:
+              "Content administration service is not configured."
+          },
+          503
+        )
+    };
+  }
+
   const limited =
     await rateLimitAdmin(
       request,
