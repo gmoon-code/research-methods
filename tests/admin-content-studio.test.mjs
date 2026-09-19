@@ -954,7 +954,11 @@ test(
         "Draft changed",
         "records.length !== 18",
         "drafts.set(",
-        "draftForRecord("
+        "draftForRecord(",
+        "function snapshotRecords()",
+        "function hasDirtyDrafts()",
+        "function replaceBaseline(",
+        "baselineLabel"
       ]
     ) {
       assert.equal(
@@ -963,6 +967,42 @@ test(
         required
       );
     }
+  }
+);
+
+test(
+  "Content Studio publication bridge exposes only snapshot dirty-state and baseline replacement",
+  () => {
+    const ui =
+      readFileSync(
+        "assets/admin-content-studio-ui.js",
+        "utf8"
+      );
+
+    assert.match(
+      ui,
+      /return Object\.freeze\(\{[\s\S]*mount,[\s\S]*snapshotRecords,[\s\S]*hasDirtyDrafts,[\s\S]*replaceBaseline[\s\S]*\}\)/
+    );
+
+    assert.match(
+      ui,
+      /drafts\.clear\(\)[\s\S]*baselineLabel/
+    );
+
+    assert.match(
+      ui,
+      /api\.listRecords\(\{[\s\S]*records:[\s\S]*nextRecords/
+    );
+
+    assert.doesNotMatch(
+      ui,
+      /RMSAdminContentService/
+    );
+
+    assert.doesNotMatch(
+      ui,
+      /\/admin\/content\//
+    );
   }
 );
 
