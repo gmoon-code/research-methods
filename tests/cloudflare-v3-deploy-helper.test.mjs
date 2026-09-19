@@ -25,6 +25,12 @@ const worker =
     "utf8"
   );
 
+const workerCore =
+  readFileSync(
+    "backend/cloudflare-workers-ai/worker-core.mjs",
+    "utf8"
+  );
+
 const wrangler =
   JSON.parse(
     readFileSync(
@@ -128,7 +134,7 @@ test(
 );
 
 test(
-  "Worker exports the configured content Durable Object class",
+  "Worker exports the configured Durable Object and worker core routes content before Research Chat",
   () => {
     assert.match(
       worker,
@@ -141,17 +147,27 @@ test(
     );
 
     assert.match(
-      worker,
+      workerCore,
       /handleContentRequest/
     );
 
-    assert.ok(
-      worker.indexOf(
+    const contentIndex =
+      workerCore.indexOf(
         "handleContentRequest"
-      ) <
-      worker.indexOf(
+      );
+
+    const rateLimitIndex =
+      workerCore.indexOf(
         "applyRateLimits(request, env)"
-      )
+      );
+
+    assert.ok(
+      contentIndex >= 0
+    );
+
+    assert.ok(
+      rateLimitIndex >
+      contentIndex
     );
   }
 );
@@ -260,12 +276,12 @@ test(
   "v3 deployment invokes content canary before optional Research Chat smoke",
   () => {
     const contentIndex =
-      helper.indexOf(
+      helper.lastIndexOf(
         "test-production-content.mjs"
       );
 
     const chatIndex =
-      helper.indexOf(
+      helper.lastIndexOf(
         "test-production-chat.mjs"
       );
 
