@@ -187,8 +187,9 @@ function runInteractive(
         stdio: "inherit",
         windowsHide: true,
         shell:
-          process.platform ===
-          "win32"
+          needsCommandShell(
+            executable
+          )
       }
     );
 
