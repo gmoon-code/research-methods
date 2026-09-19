@@ -1948,3 +1948,160 @@ footer{
   border-color:var(--section-green-line);
 }
 
+/* Route modal stays compact while its stage list scrolls. */
+.route-modal{
+  width:min(680px,calc(100vw - 32px)) !important;
+  max-height:calc(100dvh - 32px) !important;
+  display:flex !important;
+  flex-direction:column;
+  overflow:hidden !important;
+  padding:18px !important;
+}
+
+.route-modal .journey-head{
+  flex:0 0 auto;
+  gap:20px;
+  margin-bottom:10px;
+}
+
+.route-modal .journey-head h3{
+  margin:1px 0 3px;
+  font-size:24px;
+  line-height:1.15;
+}
+
+.route-modal .journey-head p{
+  max-width:520px;
+  margin:0;
+  font-size:13px;
+  line-height:1.4;
+}
+
+.route-modal-progress{
+  flex:0 0 auto;
+  margin:0 0 8px !important;
+  padding:9px 11px !important;
+  background:var(--section-turquoise-soft) !important;
+  border:1px solid var(--section-turquoise-line) !important;
+  border-radius:7px !important;
+}
+
+.route-modal-hint{
+  flex:0 0 auto;
+  padding:0 2px 8px;
+  color:var(--moon-muted);
+  font-size:12px;
+  line-height:1.35;
+}
+
+#routeModalList{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  padding:1px 7px 2px 1px;
+  scrollbar-gutter:stable;
+}
+
+.route-modal .route-phase{
+  margin:0 0 8px;
+  overflow:hidden;
+  background:var(--moon-paper);
+  border:1px solid var(--moon-rule);
+  border-radius:7px;
+}
+
+.route-modal .route-phase.current{
+  border-color:var(--section-turquoise-line);
+}
+
+.route-modal .route-phase-head{
+  min-height:50px;
+  padding:9px 11px !important;
+  background:var(--moon-paper);
+}
+
+.route-modal .route-phase.current .route-phase-head{
+  background:var(--section-turquoise-soft);
+}
+
+.route-modal .route-phase-head>div{
+  gap:1px;
+}
+
+.route-modal .route-phase-head b{
+  font-size:13px;
+  line-height:1.25;
+}
+
+.route-modal .route-phase-head span{
+  font-size:11px;
+}
+
+.route-modal .route-phase-steps{
+  gap:5px;
+  padding:7px 8px 9px !important;
+  border-top:1px solid var(--moon-rule);
+}
+
+.route-modal .route-step{
+  min-height:48px;
+  padding:8px 9px !important;
+  background:#fff;
+  border:1px solid var(--moon-rule);
+  border-radius:6px;
+}
+
+.route-modal .route-step:hover{
+  background:#fafafa;
+}
+
+.route-modal .route-step.current{
+  background:var(--section-turquoise-soft);
+  border-color:var(--section-turquoise-line);
+}
+
+.route-modal .route-step.done{
+  color:#294d32;
+  background:var(--section-green-soft);
+  border-color:var(--section-green-line);
+}
+
+.route-modal .route-step.future{
+  color:#666b68;
+  background:#fff;
+}
+
+.route-modal .route-step-main b{
+  font-size:12.5px;
+  line-height:1.3;
+}
+
+.route-modal .route-step-main small{
+  margin-top:1px;
+  color:var(--moon-muted);
+  font-size:11px;
+  line-height:1.25;
+}
+
+@media(max-width:600px){
+  .route-modal{
+    width:calc(100vw - 16px) !important;
+    max-height:calc(100dvh - 16px) !important;
+    padding:14px !important;
+  }
+
+  .route-modal .journey-head{
+    gap:12px;
+  }
+
+  .route-modal .journey-head h3{
+    font-size:21px;
+  }
+
+  .route-modal-progress{
+    display:grid !important;
+    gap:2px !important;
+  }
+}
+
