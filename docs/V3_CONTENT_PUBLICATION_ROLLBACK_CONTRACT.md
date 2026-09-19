@@ -4,11 +4,11 @@
 
 This document defines the publication architecture that follows Content Studio milestone 2.
 
-The current public release remains v2.17.1.
+This contract was authored while the current public release remained v2.17.1.
 
-This contract does not enable publication by itself.
+The contract did not enable publication by itself. The later v3.0.0 release candidate implemented the authenticated publication service, immutable revision history, rollback workflow, defensive public loader, bounded bundled fallback, and the required pre-cutover verification gates.
 
-The v3 branch remains a development branch and draft pull request until later release gates pass.
+The v3 branch remains a development branch and draft pull request until the production cutover gate is deliberately completed.
 
 ## Current runtime facts
 
