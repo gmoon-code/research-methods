@@ -56,7 +56,7 @@ for token in ["At-a-glance research chain","Earlier or cross-path responses","Ea
 
 # Old global tool hooks are preserved for compatibility but hidden from student mode.
 assert "legacy-tool-hooks" in idx
-assert "Teacher Dashboard" in idx
+assert "Teacher Dashboard" not in idx
 assert "Teacher/setup tools are hidden in student mode" not in flowui
 assert "?mode=teacher" not in flowui
 
