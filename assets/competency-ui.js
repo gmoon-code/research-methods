@@ -16,7 +16,7 @@ window.RMSCompetencyUI = (() => {
   function overview(p){
     const s=C.snapshot(p),pm=C.processMetrics(p);
     return `<div class="competency-section">
-      <div class="competency-warning"><strong>Interpret these as learning evidence, not grades.</strong><br>The model is provisional and unvalidated. Independent evidence, supported performance, scaffold exposure, and teacher ratings remain separate.</div>
+      <div class="competency-warning"><strong>Interpret these as learning evidence, not grades.</strong><br>The model is provisional and unvalidated. Independent evidence, supported performance, and scaffold exposure remain separate.</div>
       <div class="competency-summary">
         <div><span>Independent evidence</span><b>${s.independentCompetencies}/${s.totalCompetencies}</b><small>competencies covered</small></div>
         <div><span>Mean independent</span><b>${s.independentMean??"—"}</b><small>0–3 where evidence exists</small></div>
@@ -30,7 +30,7 @@ window.RMSCompetencyUI = (() => {
         <p>${esc(x.definition)}</p>
         <div class="comp-metric"><span>Independent</span><b>${levelText(x.independentLevel)}</b>${levelBar(x.independentLevel)}</div>
         <div class="comp-metric"><span>Supported/current</span><b>${levelText(x.supportedLevel)}</b>${levelBar(x.supportedLevel)}</div>
-        <div class="comp-meta"><span>Independent coverage ${x.independentCoverage}/${x.opportunities}</span><span>Max scaffold ${x.supportMax}/5</span>${x.teacherRating?`<span>Teacher ${x.teacherRating.level}/3</span>`:""}</div>
+        <div class="comp-meta"><span>Independent coverage ${x.independentCoverage}/${x.opportunities}</span><span>Max scaffold ${x.supportMax}/5</span></div>
       </div>`).join("")}</div>
       <div class="process-box"><h4>Process evidence</h4><div class="process-grid">
         <div><b>${pm.eligibleIndependentCount}</b><span>eligible independent checkpoints</span></div>
@@ -38,7 +38,6 @@ window.RMSCompetencyUI = (() => {
         <div><b>${pm.supportEventCount}</b><span>support events</span></div>
         <div><b>${pm.positiveRevisionCycles}/${pm.revisionCycles}</b><span>positive revision cycles</span></div>
         <div><b>${pm.protocolVersions}</b><span>protocol versions</span></div>
-        <div><b>${pm.teacherFeedbackItems}</b><span>teacher feedback items</span></div>
       </div></div>
     </div>`;
   }
@@ -54,7 +53,6 @@ window.RMSCompetencyUI = (() => {
           <div><strong>Latest local review evidence</strong>${x.evidence.reviews.map(e=>`<div class="evidence-row">Stage ${e.stage} · ${e.score}/100 → level ${e.level}</div>`).join("")||'<div class="evidence-empty">No local review evidence.</div>'}</div>
           <div><strong>Support exposure</strong>${x.evidence.support.slice(-6).map(e=>`<div class="evidence-row">L${e.level} · Stage ${e.stage} · ${esc(e.source)}</div>`).join("")||'<div class="evidence-empty">No support events recorded.</div>'}</div>
         </div>
-        ${x.teacherRating?`<div class="teacher-rating"><strong>Latest teacher rating ${x.teacherRating.level}/3</strong><p>${esc(x.teacherRating.note||"No note")}</p><small>${esc(x.teacherRating.teacher||"")}</small></div>`:""}
       </div>`).join("")}</div>`;
   }
 
@@ -63,10 +61,9 @@ window.RMSCompetencyUI = (() => {
     const items=[
       ...p.competency.independentCheckpoints.map(x=>({...x,type:"Independent checkpoint",sort:x.time,levelText:x.level===null?"":`level ${x.level}`,detail:x.independentEligible?"Eligible independent evidence":`Captured after ${x.priorSupportCount} support event(s)`})),
       ...p.competency.reviewEvents.map(x=>({...x,type:x.kind==="local"?"Local review":"Chat review",sort:x.time,levelText:x.level===null?"":`level ${x.level}`,detail:x.score!==null?`${x.score}/100 · ${x.label}`:x.label})),
-      ...p.competency.supportEvents.map(x=>({...x,type:"Support",sort:x.time,levelText:`L${x.level}`,detail:`${x.source}${x.detail?` · ${x.detail}`:""}`})),
-      ...p.competency.teacherRatings.map(x=>({...x,type:"Teacher rating",sort:x.time,stage:"—",levelText:`${x.level}/3`,detail:`${C.model.competencies.find(c=>c.key===x.competency)?.name||x.competency}${x.note?` · ${x.note}`:""}`}))
+      ...p.competency.supportEvents.map(x=>({...x,type:"Support",sort:x.time,levelText:`L${x.level}`,detail:`${x.source}${x.detail?` · ${x.detail}`:""}`}))
     ].sort((a,b)=>new Date(b.sort)-new Date(a.sort));
-    return `<div class="competency-section"><h4>Learning-evidence timeline</h4><p>This timeline separates attempts, feedback, scaffold use, and teacher judgment so later analysis can distinguish performance from support.</p>
+    return `<div class="competency-section"><h4>Learning-evidence timeline</h4><p>This timeline separates attempts, local checks, and scaffold use so later analysis can distinguish performance from support.</p>
       <div class="timeline-list">${items.map(x=>`<div class="timeline-item"><div><span>${esc(x.type)}</span><b>${esc(x.levelText||"")}</b></div><p>${esc(x.detail||"")}</p><small>${x.stage!=="—"?`Stage ${esc(x.stage)} · `:""}${esc(new Date(x.sort).toLocaleString())}</small></div>`).join("")||'<p class="muted tiny">No learning-evidence events yet.</p>'}</div></div>`;
   }
 
@@ -83,7 +80,7 @@ window.RMSCompetencyUI = (() => {
     const wrap=document.createElement("div");wrap.className="modal-backdrop";wrap.id="competencyBackdrop";
     const tabs=[["overview","Overview"],["details","Competencies"],["timeline","Evidence timeline"],["rubric","Rubric & interpretation"]];
     const content=active==="overview"?overview(p):active==="details"?details(p):active==="timeline"?timeline(p):rubric();
-    wrap.innerHTML=`<div class="modal competency-modal"><div class="journey-head"><div><h3>Research Competency & Learning Analytics</h3><p>Track independent evidence, supported performance, scaffold use, revisions, and teacher-coded evidence without treating them as the same construct.</p></div><button class="ghost small" id="closeCompetency">Close</button></div>
+    wrap.innerHTML=`<div class="modal competency-modal"><div class="journey-head"><div><h3>Research Competency & Learning Analytics</h3><p>Track independent evidence, supported performance, scaffold use, and revisions without treating them as the same construct.</p></div><button class="ghost small" id="closeCompetency">Close</button></div>
       <div class="competency-tabs">${tabs.map(([k,l])=>`<button data-ctab="${k}" class="${active===k?"active":""}">${l}</button>`).join("")}</div>
       ${content}
       <div class="button-row"><button class="primary" id="exportCompetencyMD">Export learning-evidence report</button><button class="ghost" id="exportCompetencyJSON">Export analytics JSON</button></div>
