@@ -19,6 +19,12 @@ const canary =
     "utf8"
   );
 
+const worker =
+  readFileSync(
+    "backend/cloudflare-workers-ai/worker.mjs",
+    "utf8"
+  );
+
 const wrangler =
   JSON.parse(
     readFileSync(
@@ -59,78 +65,128 @@ test(
 
     assert.match(
       result.stdout,
-      /account-neutral/
+      /SQLite Durable Object binding/
+    );
+
+    assert.match(
+      result.stdout,
+      /no Workers KV content binding/i
     );
   }
 );
 
 test(
-  "repository Wrangler config contains no account-specific content KV binding",
+  "Wrangler config binds one SQLite content release Durable Object",
   () => {
-    assert.equal(
+    assert.deepEqual(
+      wrangler
+        .durable_objects
+        ?.bindings,
+      [
+        {
+          name:
+            "RMS_CONTENT_COORDINATOR",
+          class_name:
+            "ContentReleaseCoordinator"
+        }
+      ]
+    );
+
+    assert.deepEqual(
+      wrangler.exports
+        ?.ContentReleaseCoordinator,
+      {
+        type:
+          "durable-object",
+        storage:
+          "sqlite"
+      }
+    );
+
+    const kvBindings =
       Array.isArray(
         wrangler.kv_namespaces
       )
-        ? wrangler.kv_namespaces
-            .some(
-              item =>
-                item?.binding ===
-                "RMS_CONTENT_STORE"
-            )
-        : false,
-      false
-    );
+        ? wrangler
+            .kv_namespaces
+        : [];
 
-    assert.doesNotMatch(
-      JSON.stringify(
-        wrangler
+    assert.equal(
+      kvBindings.some(
+        item =>
+          /RMS_CONTENT/i
+            .test(
+              String(
+                item?.binding ||
+                ""
+              )
+            )
       ),
-      /[a-f0-9]{32}/i
+      false
     );
   }
 );
 
 test(
-  "v3 helper discovers or creates content KV only through a temporary deployment config",
+  "Worker exports the configured content Durable Object class",
+  () => {
+    assert.match(
+      worker,
+      /imports*{s*ContentReleaseCoordinators*}s*froms*['"]./content-durable-object.mjs['"]/
+    );
+
+    assert.match(
+      worker,
+      /exports*{[sS]*ContentReleaseCoordinator/
+    );
+
+    assert.match(
+      worker,
+      /handleContentRequest/
+    );
+
+    assert.ok(
+      worker.indexOf(
+        "handleContentRequest"
+      ) <
+      worker.indexOf(
+        "applyRateLimits(request, env)"
+      )
+    );
+  }
+);
+
+test(
+  "v3 helper deploys repository config directly and contains no KV provisioning path",
   () => {
     assert.match(
       helper,
-      /wrangler",s*"kv",s*"namespace",s*"list"/
+      /"wrangler",s*"deploy"/
     );
 
     assert.match(
       helper,
-      /"create",s*CONTENT_BINDING/
+      /RMS_CONTENT_COORDINATOR/
     );
 
     assert.match(
       helper,
-      /"--binding",s*CONTENT_BINDING/
-    );
-
-    assert.match(
-      helper,
-      /"--update-config"/
-    );
-
-    assert.match(
-      helper,
-      /deploymentConfigFile/
-    );
-
-    assert.match(
-      helper,
-      /withContentBinding/
-    );
-
-    assert.match(
-      helper,
-      /unlink(s*deploymentConfigFile/
+      /ContentReleaseCoordinator/
     );
 
     assert.doesNotMatch(
       helper,
-      /RMS_CONTENT_STORE["']?s*:s*["'][a-f0-9]{32}/i
+      /kv[sS]{0,40}namespace[sS]{0,40}(create|list)/i
+    );
+
+    assert.doesNotMatch(
+      helper,
+      /RMS_CONTENT_STORE/
+    );
+
+    assert.doesNotMatch(
+      helper,
+      /deploymentConfigFile|--update-config/
     );
   }
 );
@@ -176,7 +232,7 @@ test(
 );
 
 test(
-  "v3 deployment requires explicit free-plan intent before provisioning",
+  "v3 deployment requires explicit free-plan intent and identifies SQLite coordination",
   () => {
     assert.match(
       helper,
@@ -185,7 +241,7 @@ test(
 
     assert.match(
       helper,
-      /Workers KV/
+      /SQLite-backed Durable Object/
     );
 
     assert.match(
@@ -197,16 +253,11 @@ test(
       helper,
       /Confirm you intend to keep this deployment on Cloudflare Workers Free/
     );
-
-    assert.match(
-      helper,
-      /No existing RMS content store was found\. Create one now/
-    );
   }
 );
 
 test(
-  "v3 deployment invokes the production content canary before optional Chat smoke",
+  "v3 deployment invokes content canary before optional Research Chat smoke",
   () => {
     const contentIndex =
       helper.indexOf(
@@ -240,7 +291,7 @@ test(
 );
 
 test(
-  "production content canary authenticates and verifies publish publish rollback history",
+  "production content canary verifies publish publish rollback without semantic content change",
   () => {
     for (
       const required
@@ -269,7 +320,7 @@ test(
 
     const publishMatches =
       canary.match(
-        /"\/admin\/content\/publish"/g
+        /"/admin/content/publish"/g
       ) || [];
 
     assert.equal(
@@ -277,34 +328,25 @@ test(
       2
     );
 
-    assert.doesNotMatch(
-      canary,
-      /console\.log\([^\n]*(token|adminCode)/i
-    );
-  }
-);
-
-test(
-  "production content canary publishes only the existing public or bundled semantic baseline",
-  () => {
     assert.match(
       canary,
-      /sourceRecords\s*=\s*initialPublic\.release/
+      /sourceRecordss*=s*initialPublic.release/
     );
 
     assert.match(
       canary,
-      /sourceRecords\s*=\s*loadBundledRecords\(\)/
-    );
-
-    assert.match(
-      canary,
-      /canonicalStringify\(\s*sourceRecords/
+      /sourceRecordss*=s*loadBundledRecords()/
     );
 
     assert.match(
       canary,
       /Final public content differs from the semantic baseline after rollback/
+    );
+
+    assert.doesNotMatch(
+      canary,
+      /console.log([^
+]*(token|adminCode)/i
     );
   }
 );
