@@ -264,15 +264,20 @@ test(
 );
 
 test(
-  "v3 helper runs Windows cmd shims through the command shell",
+  "v3 helper uses the Windows shell only for cmd shims",
   () => {
-    const shellGuards =
+    assert.match(
+      helper,
+      /function needsCommandShell\([\s\S]*?process\.platform\s*===\s*"win32"[\s\S]*?\\\.cmd\$\/i\.test/
+    );
+
+    const shellCalls =
       helper.match(
-        /shell:\s*process\.platform\s*===\s*"win32"/g
+        /shell:\s*needsCommandShell\(\s*executable\s*\)/g
       ) || [];
 
     assert.equal(
-      shellGuards.length,
+      shellCalls.length,
       2
     );
 
@@ -289,6 +294,16 @@ test(
     assert.match(
       helper,
       /const npx\s*=\s*command\("npx"\)/
+    );
+
+    assert.match(
+      helper,
+      /runInteractive\(\s*process\.execPath/
+    );
+
+    assert.doesNotMatch(
+      helper,
+      /shell:\s*process\.platform\s*===\s*"win32"/
     );
   }
 );
