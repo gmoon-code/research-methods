@@ -546,7 +546,7 @@ window.RMSAdminContentPublicationUI = (() => {
       ) {
         const accepted =
           window.confirm(
-            "The isolated backend has no current publication. Keep the current in-memory drafts and use the bundled seed as the publication baseline?"
+            "The isolated backend has no current publication. Replace the current in-memory drafts with the bundled seed and synchronize the publication baseline?"
           );
 
         if (!accepted) {
@@ -557,8 +557,30 @@ window.RMSAdminContentPublicationUI = (() => {
         }
       }
 
-      baselineSynced =
-        true;
+      const bundledRecords =
+        Array.isArray(
+          registry()?.records
+        )
+          ? registry().records
+          : [];
+
+      if (
+        !editor.replaceBaseline(
+          bundledRecords,
+          "bundled seed"
+        )
+      ) {
+        baselineSynced =
+          false;
+
+        setStatus(
+          "Content Studio could not restore the bundled publication baseline.",
+          "error"
+        );
+
+        renderState();
+        return false;
+      }
     }
 
     const historyResult =
@@ -756,14 +778,17 @@ window.RMSAdminContentPublicationUI = (() => {
       summary.value = "";
     }
 
-    await loadRemote({
-      forceRebase: true
-    });
+    const synchronized =
+      await loadRemote({
+        forceRebase: true
+      });
 
-    setStatus(
-      "The complete 18-stage release was published to the isolated v3 backend and Content Studio was rebased to that release.",
-      "ok"
-    );
+    if (synchronized) {
+      setStatus(
+        "The complete 18-stage release was published to the isolated v3 backend and Content Studio was rebased to that release.",
+        "ok"
+      );
+    }
 
     setBusy(false);
   }
@@ -848,14 +873,17 @@ window.RMSAdminContentPublicationUI = (() => {
       summary.value = "";
     }
 
-    await loadRemote({
-      forceRebase: true
-    });
+    const synchronized =
+      await loadRemote({
+        forceRebase: true
+      });
 
-    setStatus(
-      "Rollback created a new current release and Content Studio was synchronized to it.",
-      "ok"
-    );
+    if (synchronized) {
+      setStatus(
+        "Rollback created a new current release and Content Studio was synchronized to it.",
+        "ok"
+      );
+    }
 
     setBusy(false);
   }
