@@ -253,12 +253,22 @@ test(
 
     assert.match(
       runtimeConfig,
-      /rms-research-chat-free\.gmoon-code\.workers\.dev/
+      /"researchChatEndpoint":\s*"https:\/\/rms-research-chat-free\.gmoon-code\.workers\.dev\/"/
+    );
+
+    assert.match(
+      runtimeConfig,
+      /"chatEndpoint":\s*"https:\/\/rms-research-chat-free\.gmoon-code\.workers\.dev\/"/
+    );
+
+    assert.match(
+      runtimeConfig,
+      /"adminContentEndpoint":\s*"https:\/\/rms-research-methods-v3\.gmoon-code\.workers\.dev\/"/
     );
 
     assert.doesNotMatch(
       runtimeConfig,
-      /rms-research-methods-v3/
+      /"(?:researchChatEndpoint|chatEndpoint)":\s*"https:\/\/rms-research-methods-v3\./
     );
   }
 );
