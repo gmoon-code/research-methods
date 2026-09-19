@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createWorker, rateLimitersConfigured, aiConfigured, VERSION } from '../backend/cloudflare-workers-ai/worker.mjs';
+import { createWorker, rateLimitersConfigured, aiConfigured, VERSION } from '../backend/cloudflare-workers-ai/worker-core.mjs';
 
 const ORIGIN = 'https://gmoon-code.github.io';
 const CODE = 'class-code-12345678';
