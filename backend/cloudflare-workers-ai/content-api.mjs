@@ -1125,29 +1125,29 @@ async function handleContentRequest(
     );
   }
 
-  const store =
-    storeFor(env);
-
-  if (!store) {
-    return json(
-      request,
-      env,
-      {
-        error:
-          "Content service is not configured."
-      },
-      503
-    );
-  }
-
   if (
     url.pathname ===
     PUBLIC_PATH
   ) {
+    const publicStore =
+      storeFor(env);
+
+    if (!publicStore) {
+      return json(
+        request,
+        env,
+        {
+          error:
+            "Content service is not configured."
+        },
+        503
+      );
+    }
+
     return publicContent(
       request,
       env,
-      store
+      publicStore
     );
   }
 
@@ -1162,6 +1162,21 @@ async function handleContentRequest(
 
   if (!admin.ok) {
     return admin.response;
+  }
+
+  const store =
+    storeFor(env);
+
+  if (!store) {
+    return json(
+      request,
+      env,
+      {
+        error:
+          "Content administration service is not configured."
+      },
+      503
+    );
   }
 
   if (
