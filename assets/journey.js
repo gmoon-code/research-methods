@@ -94,7 +94,7 @@ window.RMSJourney = (() => {
       if(m.available){
         if(m.critical>0) blockers.push(`${m.critical} critical Methods Lab issue(s) remain.`);
         if(m.ethicsStatus==="do_not_facilitate") blockers.push("Methods Lab ethics/safety status is DO NOT FACILITATE.");
-        if(m.ethicsStatus==="teacher_review") warnings.push("Teacher/institutional review is required for the proposed method.");
+        if(m.ethicsStatus==="teacher_review") warnings.push("Appropriate formal approval is required for the proposed method.");
         if(!m.locked) blockers.push("No protocol version is locked.");
       }else warnings.push("Methods Lab audit is unavailable.");
     }
