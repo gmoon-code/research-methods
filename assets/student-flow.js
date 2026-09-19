@@ -28,7 +28,7 @@ window.RMSStudentFlow=(()=>{
     15:{from:"Your primary analysis is defined and validated output is available.",now:"Report the findings without adding explanations that belong in the Discussion.",next:"You will interpret the findings, compare them with literature, and define limitations and implications."},
     16:{from:"You have reported the findings.",now:"Answer the research question, interpret the findings, consider alternatives, and state what the evidence cannot establish.",next:"You will write the conclusion and abstract using the same evidence and claim boundary."},
     17:{from:"Your Discussion has established the interpretation and limitations.",now:"Write the closing sections and a compact abstract that accurately represents the completed study.",next:"You will audit the entire paper for alignment, citations, and unfinished decisions."},
-    18:{from:"All major paper sections have been drafted.",now:"Audit the complete question → evidence → method → analysis → result → conclusion chain.",next:"Your project is ready for final teacher review and submission when the audit is resolved."}
+    18:{from:"All major paper sections have been drafted.",now:"Audit the complete question → evidence → method → analysis → result → conclusion chain.",next:"Your project is ready for final audit and submission when the remaining issues are resolved."}
   };
 
   const contextMap={
