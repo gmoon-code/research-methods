@@ -4,9 +4,9 @@
 
 This document defines the product, privacy, data, and implementation boundaries for the v3 Admin Workspace foundation.
 
-The frozen public baseline is Research Methods Studio v2.17.1.
+This contract was authored against the frozen Research Methods Studio v2.17.1 public baseline.
 
-The v3 work begins on a separate development branch. The v2.17.1 production tag and public release remain unchanged until a later release candidate passes its own acceptance gates.
+The v3.0.0 release candidate later implemented and passed the foundation, Content Studio publication, isolated backend, public-loader, and pre-cutover student integration gates defined by this development sequence. The v2.17.1 production tag remains an immutable recovery reference until and after v3 cutover.
 
 ## Product model
 
