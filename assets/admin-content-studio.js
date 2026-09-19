@@ -37,6 +37,10 @@ window.RMSAdminContentStudio = (() => {
     "span"
   ]);
 
+  const ALLOWED_CLASSES = new Set([
+    "concept-box"
+  ]);
+
   const PHASES = new Set([
     "discover",
     "literature",
@@ -192,12 +196,30 @@ window.RMSAdminContentStudio = (() => {
         continue;
       }
 
+      const classMatch =
+        attributes.match(
+          /^class\s*=\s*"([^"]+)"$/
+        );
+
+      const classes =
+        classMatch
+          ? classMatch[1]
+              .split(/\s+/)
+              .filter(Boolean)
+          : [];
+
       if (
-        !/^class\s*=\s*"[-_a-zA-Z0-9 ]+"$/
-          .test(attributes)
+        !classMatch ||
+        classes.length === 0 ||
+        classes.some(
+          className =>
+            !ALLOWED_CLASSES.has(
+              className
+            )
+        )
       ) {
         errors.push(
-          `${field} contains an unsupported attribute.`
+          `${field} contains an unsupported attribute or class.`
         );
         return;
       }
