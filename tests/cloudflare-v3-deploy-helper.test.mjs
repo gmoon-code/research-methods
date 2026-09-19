@@ -132,12 +132,12 @@ test(
   () => {
     assert.match(
       worker,
-      /imports*{s*ContentReleaseCoordinators*}s*froms*['"]./content-durable-object.mjs['"]/
+      /import\s*{\s*ContentReleaseCoordinator\s*}\s*from\s*['"]\.\/content-durable-object\.mjs['"]/
     );
 
     assert.match(
       worker,
-      /exports*{[sS]*ContentReleaseCoordinator/
+      /export\s*{[\s\S]*ContentReleaseCoordinator/
     );
 
     assert.match(
@@ -161,7 +161,7 @@ test(
   () => {
     assert.match(
       helper,
-      /"wrangler",s*"deploy"/
+      /"wrangler",\s*"deploy"/
     );
 
     assert.match(
@@ -176,7 +176,7 @@ test(
 
     assert.doesNotMatch(
       helper,
-      /kv[sS]{0,40}namespace[sS]{0,40}(create|list)/i
+      /kv[\s\S]{0,40}namespace[\s\S]{0,40}(create|list)/i
     );
 
     assert.doesNotMatch(
@@ -211,17 +211,17 @@ test(
 
     assert.match(
       helper,
-      /randomBytes(48)/
+      /randomBytes\(48\)/
     );
 
     assert.match(
       helper,
-      /mode:s*0o600/
+      /mode:\s*0o600/
     );
 
     assert.match(
       helper,
-      /await rm(s*tempDir/
+      /await rm\(\s*tempDir/
     );
 
     assert.doesNotMatch(
@@ -320,7 +320,7 @@ test(
 
     const publishMatches =
       canary.match(
-        /"/admin/content/publish"/g
+        /"\/admin\/content\/publish"/g
       ) || [];
 
     assert.equal(
@@ -330,12 +330,12 @@ test(
 
     assert.match(
       canary,
-      /sourceRecordss*=s*initialPublic.release/
+      /sourceRecords\s*=\s*initialPublic\.release/
     );
 
     assert.match(
       canary,
-      /sourceRecordss*=s*loadBundledRecords()/
+      /sourceRecords\s*=\s*loadBundledRecords\(\)/
     );
 
     assert.match(
@@ -345,8 +345,8 @@ test(
 
     assert.doesNotMatch(
       canary,
-      /console.log([^
-]*(token|adminCode)/i
+      /console\.log\([^\n]*(token|adminCode)/i
     );
   }
 );
+
