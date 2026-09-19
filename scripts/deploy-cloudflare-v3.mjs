@@ -150,7 +150,10 @@ function runCapture(
       cwd,
       env,
       encoding: "utf8",
-      windowsHide: true
+      windowsHide: true,
+      shell:
+        process.platform ===
+        "win32"
     }
   );
 }
@@ -169,7 +172,10 @@ function runInteractive(
         cwd,
         env,
         stdio: "inherit",
-        windowsHide: true
+        windowsHide: true,
+        shell:
+          process.platform ===
+          "win32"
       }
     );
 
