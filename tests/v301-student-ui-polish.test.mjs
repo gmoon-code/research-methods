@@ -63,8 +63,24 @@ test("close controls cannot collapse around their label", () => {
   assert.match(theme, /flex:0 0 auto !important/);
 });
 
+
+test("route modal is viewport-safe, internally scrollable, and uses a single-phase accordion", () => {
+  assert.match(flowUI, /routeModalExpandedPhase/);
+  assert.match(flowUI, /routeHTML\(p, true\)/);
+  assert.match(flowUI, /Current phase opens first\. Select another phase to inspect its stages\./);
+  assert.match(theme, /max-height:calc\(100dvh - 32px\) !important/);
+  assert.match(theme, /#routeModalList\{/);
+  assert.match(theme, /overflow-y:auto/);
+  assert.match(theme, /scrollbar-gutter:stable/);
+});
+
+test("student header shows only stage progress for an active project", () => {
+  assert.match(app, /project\.name\?`Stage \$\{project\.currentStage\} of 18`/);
+  assert.doesNotMatch(app, /project\.name\?`\$\{project\.name\} · Stage/);
+  assert.match(index, /<meta name="theme-color" content="#ffffff">/);
+});
 test("student palette uses the restrained v3.0.1 tokens", () => {
-  assert.match(theme, /--moon-page:#f7f6f2/);
+  assert.match(theme, /--moon-page:#ffffff/);
   assert.match(theme, /--section-yellow:#f3e7a1/);
   assert.match(theme, /--section-green:#dcebd2/);
   assert.match(theme, /--section-turquoise:#d1e9e7/);
