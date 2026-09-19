@@ -4,7 +4,6 @@ import {
   mkdtemp,
   readFile,
   rm,
-  unlink,
   writeFile
 } from "node:fs/promises";
 
@@ -31,15 +30,6 @@ import {
 } from "node:child_process";
 
 import readline from "node:readline/promises";
-
-import {
-  CONTENT_BINDING,
-  baseConfigIsAccountNeutral,
-  chooseExistingNamespace,
-  contentBindingId,
-  parseNamespaceListOutput,
-  withContentBinding
-} from "./cloudflare-content-store-config.mjs";
 
 const HERE =
   dirname(
@@ -75,6 +65,12 @@ const ORIGIN =
 
 const FREE_MODEL =
   "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
+
+const CONTENT_BINDING =
+  "RMS_CONTENT_COORDINATOR";
+
+const CONTENT_CLASS =
+  "ContentReleaseCoordinator";
 
 function fail(
   message,
@@ -349,15 +345,6 @@ function extractWorkerUrl(text) {
     : "";
 }
 
-async function readBaseConfig() {
-  return JSON.parse(
-    await readFile(
-      BASE_CONFIG,
-      "utf8"
-    )
-  );
-}
-
 async function packagePreflight() {
   const nodeMajor =
     Number(
@@ -394,12 +381,15 @@ async function packagePreflight() {
       ),
       join(
         WORKER_DIR,
-        "content-store.mjs"
+        "content-durable-object.mjs"
       ),
       join(
-        ROOT,
-        "scripts",
-        "cloudflare-content-store-config.mjs"
+        WORKER_DIR,
+        "content-coordinator-core.mjs"
+      ),
+      join(
+        WORKER_DIR,
+        "content-coordinator-client.mjs"
       ),
       join(
         ROOT,
@@ -427,17 +417,12 @@ async function packagePreflight() {
   }
 
   const config =
-    await readBaseConfig();
-
-  if (
-    !baseConfigIsAccountNeutral(
-      config
-    )
-  ) {
-    throw new Error(
-      "Repository wrangler.jsonc must not contain an account-specific RMS_CONTENT_STORE namespace ID."
+    JSON.parse(
+      await readFile(
+        BASE_CONFIG,
+        "utf8"
+      )
     );
-  }
 
   const requiredSecrets =
     new Set(
@@ -527,6 +512,69 @@ async function packagePreflight() {
     }
   }
 
+  const durableBindings =
+    Array.isArray(
+      config?.durable_objects
+        ?.bindings
+    )
+      ? config
+          .durable_objects
+          .bindings
+      : [];
+
+  const contentBinding =
+    durableBindings.find(
+      item =>
+        item?.name ===
+        CONTENT_BINDING
+    );
+
+  if (
+    !contentBinding ||
+    contentBinding.class_name !==
+      CONTENT_CLASS
+  ) {
+    throw new Error(
+      `wrangler.jsonc must bind ${CONTENT_BINDING} to ${CONTENT_CLASS}.`
+    );
+  }
+
+  const contentExport =
+    config?.exports
+      ?.[CONTENT_CLASS];
+
+  if (
+    contentExport?.type !==
+      "durable-object" ||
+    contentExport?.storage !==
+      "sqlite"
+  ) {
+    throw new Error(
+      `${CONTENT_CLASS} must be declared as a SQLite-backed Durable Object export.`
+    );
+  }
+
+  if (
+    Array.isArray(
+      config?.kv_namespaces
+    ) &&
+    config.kv_namespaces
+      .some(
+        item =>
+          /RMS_CONTENT/i
+            .test(
+              String(
+                item?.binding ||
+                ""
+              )
+            )
+      )
+  ) {
+    throw new Error(
+      "Content publication must not use Workers KV."
+    );
+  }
+
   const pkg =
     JSON.parse(
       await readFile(
@@ -564,11 +612,11 @@ async function packagePreflight() {
   );
 
   console.log(
-    "PASS repository Wrangler config remains account-neutral"
+    `PASS SQLite Durable Object binding: ${CONTENT_BINDING} -> ${CONTENT_CLASS}`
   );
 
   console.log(
-    `PASS content binding will be injected only into a temporary deployment config as ${CONTENT_BINDING}`
+    "PASS no Workers KV content binding"
   );
 
   console.log(
@@ -586,185 +634,6 @@ async function packagePreflight() {
   console.log(
     `PASS GitHub Pages origin: ${ORIGIN}`
   );
-}
-
-async function findContentNamespace(
-  npx,
-  config
-) {
-  const result =
-    runCapture(
-      npx,
-      [
-        "wrangler",
-        "kv",
-        "namespace",
-        "list"
-      ],
-      WORKER_DIR
-    );
-
-  if (result.status !== 0) {
-    process.stdout.write(
-      result.stdout || ""
-    );
-
-    process.stderr.write(
-      result.stderr || ""
-    );
-
-    throw new Error(
-      "Could not list Cloudflare KV namespaces."
-    );
-  }
-
-  const namespaces =
-    parseNamespaceListOutput(
-      `${result.stdout || ""}\n${result.stderr || ""}`
-    );
-
-  return chooseExistingNamespace(
-    namespaces,
-    config.name,
-    CONTENT_BINDING
-  );
-}
-
-async function prepareDeploymentConfig({
-  npx,
-  config,
-  deploymentConfigFile
-}) {
-  await writeFile(
-    deploymentConfigFile,
-    JSON.stringify(
-      config,
-      null,
-      2
-    ) + "\n",
-    {
-      encoding:
-        "utf8",
-      mode: 0o600
-    }
-  );
-
-  const existing =
-    await findContentNamespace(
-      npx,
-      config
-    );
-
-  if (existing) {
-    const deployConfig =
-      withContentBinding(
-        config,
-        existing.id
-      );
-
-    await writeFile(
-      deploymentConfigFile,
-      JSON.stringify(
-        deployConfig,
-        null,
-        2
-      ) + "\n",
-      {
-        encoding:
-          "utf8",
-        mode: 0o600
-      }
-    );
-
-    console.log(
-      `PASS existing Cloudflare KV content namespace selected: ${existing.title}`
-    );
-
-    return {
-      id:
-        existing.id,
-      created:
-        false
-    };
-  }
-
-  if (
-    !(
-      await yesNo(
-        "No existing RMS content store was found. Create one now on Cloudflare Workers Free.",
-        false
-      )
-    )
-  ) {
-    throw new Error(
-      "Deployment cancelled before creating the content store."
-    );
-  }
-
-  console.log(
-    "\nCreating Cloudflare KV namespace for versioned Content Studio releases..."
-  );
-
-  const created =
-    runCapture(
-      npx,
-      [
-        "wrangler",
-        "kv",
-        "namespace",
-        "create",
-        CONTENT_BINDING,
-        "--binding",
-        CONTENT_BINDING,
-        "--update-config",
-        "--config",
-        deploymentConfigFile
-      ],
-      WORKER_DIR
-    );
-
-  process.stdout.write(
-    created.stdout || ""
-  );
-
-  process.stderr.write(
-    created.stderr || ""
-  );
-
-  if (created.status !== 0) {
-    throw new Error(
-      "Cloudflare KV content namespace creation failed."
-    );
-  }
-
-  const updatedConfig =
-    JSON.parse(
-      await readFile(
-        deploymentConfigFile,
-        "utf8"
-      )
-    );
-
-  const id =
-    contentBindingId(
-      updatedConfig
-    );
-
-  if (!id) {
-    throw new Error(
-      "Cloudflare created the namespace but the temporary deployment config did not receive RMS_CONTENT_STORE."
-    );
-  }
-
-  console.log(
-    "PASS new Cloudflare KV content namespace created and bound in the temporary deployment config"
-  );
-
-  return {
-    id,
-    created:
-      true
-  };
 }
 
 async function main() {
@@ -794,7 +663,7 @@ async function main() {
   );
 
   console.log(
-    "The v3 content store uses Workers KV. Keep the deployment within the Cloudflare Workers Free KV limits."
+    "The content release coordinator uses a SQLite-backed Durable Object available on Workers Free."
   );
 
   if (
@@ -969,23 +838,7 @@ async function main() {
       "secrets.json"
     );
 
-  const deploymentConfigFile =
-    join(
-      WORKER_DIR,
-      `.wrangler-rms-v3-${randomBytes(8).toString("hex")}.jsonc`
-    );
-
   try {
-    const config =
-      await readBaseConfig();
-
-    const contentStore =
-      await prepareDeploymentConfig({
-        npx,
-        config,
-        deploymentConfigFile
-      });
-
     await writeFile(
       secretFile,
       JSON.stringify({
@@ -1004,7 +857,7 @@ async function main() {
     );
 
     console.log(
-      "\nDeploying the v3 Worker with the temporary content-store binding..."
+      "\nDeploying the v3 Worker with the SQLite content release coordinator..."
     );
 
     const deployed =
@@ -1014,8 +867,6 @@ async function main() {
           "wrangler",
           "deploy",
           "--strict",
-          "--config",
-          deploymentConfigFile,
           "--secrets-file",
           secretFile
         ],
@@ -1030,7 +881,9 @@ async function main() {
       deployed.stderr || ""
     );
 
-    if (deployed.status !== 0) {
+    if (
+      deployed.status !== 0
+    ) {
       throw new Error(
         "Cloudflare Worker deployment failed. runtime-config.js was not changed."
       );
@@ -1166,15 +1019,7 @@ async function main() {
     );
 
     console.log(
-      `Content KV binding: ${CONTENT_BINDING}`
-    );
-
-    console.log(
-      `Content KV namespace was ${contentStore.created ? "created" : "reused"} for this deployment.`
-    );
-
-    console.log(
-      "The namespace ID was used only in the temporary deployment config and was not written to repository configuration."
+      `Content coordinator: ${CONTENT_BINDING} -> ${CONTENT_CLASS} (SQLite)`
     );
 
     console.log(
@@ -1187,12 +1032,6 @@ async function main() {
         recursive: true,
         force: true
       }
-    ).catch(
-      () => {}
-    );
-
-    await unlink(
-      deploymentConfigFile
     ).catch(
       () => {}
     );
