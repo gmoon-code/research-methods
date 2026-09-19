@@ -128,7 +128,7 @@ window.RMSMethods = (() => {
     if(e.humanParticipants==="yes"){
       elevate("teacher_review");
       if(!present(e.consent)) issues.push(["critical","Consent/permission plan missing","Human-participant research generally requires an appropriate consent/permission route before collection."]);
-      if(e.minors==="yes" && !present(e.assent)) issues.push(["critical","Minor participant assent/permission plan missing","Student projects involving minors require teacher/institutional guidance on assent and parent/guardian permission requirements."]);
+      if(e.minors==="yes" && !present(e.assent)) issues.push(["critical","Minor participant assent/permission plan missing","Projects involving minors require appropriate institutional or supervisory guidance on assent and parent/guardian permission requirements."]);
       if(e.identifiable==="yes" && !present(e.deidentification)) issues.push(["critical","Identifiable data protection missing","Collect the least identifying information necessary and define access/storage/deidentification rules."]);
       if(e.sensitive==="yes") {elevate("teacher_review"); issues.push(["warning","Sensitive information","The project requires heightened privacy, necessity, and approval review."]); }
       if(e.intervention==="yes" && !present(e.authority)) issues.push(["critical","Authority to implement intervention not documented","A student cannot assume authority to assign classmates or alter school procedures."]);
@@ -189,7 +189,7 @@ window.RMSMethods = (() => {
     const score=Math.max(0,100-critical*15-warning*6-info*2);
     return {
       score,
-      label: critical ? "Not ready to collect" : warning ? "Revise before collection" : "Method plan ready for teacher review",
+      label: critical ? "Not ready to collect" : warning ? "Revise before collection" : "Method plan ready",
       critical,warning,info,sections,
       ethicsStatus:sections.ethics.status
     };
