@@ -75,7 +75,7 @@
     if(mobile){
       mobile.innerHTML=C.stages.map(s=>`<option value="${s.id}" ${project.currentStage===s.id?"selected":""}>${s.id}. ${esc(Paths.stageTitle(project,s.id,s.nav))}</option>`).join("");
     }
-    if($("projectHeaderName"))$("projectHeaderName").textContent=project.name?`${project.name} · Stage ${project.currentStage} of 18`:"Learn research by doing research";
+    if($("projectHeaderName"))$("projectHeaderName").textContent=project.name?`Stage ${project.currentStage} of 18`:"Learn research by doing research";
   }
 
   function snapshot(){
