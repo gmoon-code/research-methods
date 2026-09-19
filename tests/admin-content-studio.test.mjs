@@ -736,6 +736,51 @@ test(
 );
 
 test(
+  "Content Studio accepts only the approved instructional class",
+  () => {
+    const record =
+      studio.getRecord(
+        registry,
+        "curriculum.stage.1.guidance"
+      );
+
+    const valid =
+      JSON.parse(
+        JSON.stringify(
+          record.value
+        )
+      );
+
+    valid.learn_html =
+      '<div class="concept-box">Allowed</div>';
+
+    assert.equal(
+      studio.validateValue(
+        valid
+      ).ok,
+      true
+    );
+
+    const invalid =
+      JSON.parse(
+        JSON.stringify(
+          record.value
+        )
+      );
+
+    invalid.learn_html =
+      '<div class="other">Rejected</div>';
+
+    assert.equal(
+      studio.validateValue(
+        invalid
+      ).ok,
+      false
+    );
+  }
+);
+
+test(
   "invalid drafts cannot generate previews or export packets",
   () => {
     const record =
