@@ -72,6 +72,12 @@ const CONTENT_BINDING =
 const CONTENT_CLASS =
   "ContentReleaseCoordinator";
 
+const V3_WORKER_NAME =
+  "rms-research-methods-v3";
+
+const EXISTING_PRODUCTION_WORKER =
+  "rms-research-chat-free";
+
 function fail(
   message,
   code = 1
@@ -402,11 +408,6 @@ async function packagePreflight() {
       join(
         ROOT,
         "scripts",
-        "configure-chat-endpoint.mjs"
-      ),
-      join(
-        ROOT,
-        "scripts",
         "test-production-chat.mjs"
       ),
       join(
@@ -489,6 +490,24 @@ async function packagePreflight() {
   ) {
     throw new Error(
       `RMS_ALLOWED_ORIGINS must be exactly ${ORIGIN}.`
+    );
+  }
+
+  if (
+    config?.name !==
+    EXISTING_PRODUCTION_WORKER
+  ) {
+    throw new Error(
+      `Base Worker name must remain ${EXISTING_PRODUCTION_WORKER} so the v2 production target is explicit.`
+    );
+  }
+
+  if (
+    V3_WORKER_NAME ===
+    EXISTING_PRODUCTION_WORKER
+  ) {
+    throw new Error(
+      "The v3 validation Worker must be isolated from the current production Worker."
     );
   }
 
@@ -642,6 +661,14 @@ async function packagePreflight() {
   console.log(
     `PASS GitHub Pages origin: ${ORIGIN}`
   );
+
+  console.log(
+    `PASS isolated v3 Worker target: ${V3_WORKER_NAME}`
+  );
+
+  console.log(
+    `PASS existing production Worker remains: ${EXISTING_PRODUCTION_WORKER}`
+  );
 }
 
 async function main() {
@@ -672,6 +699,10 @@ async function main() {
 
   console.log(
     "The content release coordinator uses a SQLite-backed Durable Object available on Workers Free."
+  );
+
+  console.log(
+    `This deployment targets the isolated ${V3_WORKER_NAME} Worker. The existing ${EXISTING_PRODUCTION_WORKER} Worker and public runtime configuration will not be changed.`
   );
 
   if (
@@ -865,7 +896,7 @@ async function main() {
     );
 
     console.log(
-      "\nDeploying the v3 Worker with the SQLite content release coordinator..."
+      `\nDeploying isolated v3 Worker ${V3_WORKER_NAME} with the SQLite content release coordinator...`
     );
 
     const deployed =
@@ -874,6 +905,8 @@ async function main() {
         [
           "wrangler",
           "deploy",
+          "--name",
+          V3_WORKER_NAME,
           "--strict",
           "--secrets-file",
           secretFile
@@ -908,35 +941,28 @@ async function main() {
       );
     }
 
-    const configured =
-      runCapture(
-        process.execPath,
-        [
-          join(
-            ROOT,
-            "scripts",
-            "configure-chat-endpoint.mjs"
-          ),
-          endpoint
-        ],
-        ROOT
-      );
-
-    process.stdout.write(
-      configured.stdout || ""
-    );
-
-    process.stderr.write(
-      configured.stderr || ""
-    );
+    const endpointUrl =
+      new URL(endpoint);
 
     if (
-      configured.status !== 0
+      endpointUrl.protocol !==
+        "https:" ||
+      endpointUrl.hostname
+        .split(".")[0] !==
+        V3_WORKER_NAME
     ) {
       throw new Error(
-        "Worker deployed, but runtime-config.js could not be updated safely."
+        "Deployment returned an unexpected Worker endpoint. Public runtime configuration was not changed."
       );
     }
+
+    console.log(
+      "PASS isolated v3 Worker endpoint verified"
+    );
+
+    console.log(
+      "PASS public runtime-config.js intentionally unchanged"
+    );
 
     if (
       await yesNo(
@@ -1019,11 +1045,11 @@ async function main() {
     }
 
     console.log(
-      "\nCLOUDFLARE V3 DEPLOYMENT: COMPLETE"
+      "\nCLOUDFLARE V3 BACKEND VALIDATION: COMPLETE"
     );
 
     console.log(
-      `Worker endpoint: ${endpoint}`
+      `Isolated v3 Worker endpoint: ${endpoint}`
     );
 
     console.log(
@@ -1031,7 +1057,7 @@ async function main() {
     );
 
     console.log(
-      "The public student application still ignores remote content until the later public-loader milestone."
+      `The public student application still uses ${EXISTING_PRODUCTION_WORKER}. No live student cutover occurred.`
     );
   } finally {
     await rm(
