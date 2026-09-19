@@ -4,8 +4,8 @@ import { readFileSync } from "node:fs";
 import vm from "node:vm";
 
 import {
-  ContentReleaseCoordinator
-} from "../backend/cloudflare-workers-ai/content-durable-object.mjs";
+  createContentReleaseCoordinatorHandler
+} from "../backend/cloudflare-workers-ai/content-durable-object-handler.mjs";
 
 function registry() {
   const context = { window: {} };
@@ -77,14 +77,14 @@ async function call(object, path, { method = "GET", body } = {}) {
 }
 
 test("Durable Object begins with no publication", async () => {
-  const object = new ContentReleaseCoordinator({ storage: fakeStorage() }, {});
+  const object = createContentReleaseCoordinatorHandler(fakeStorage());
   const result = await call(object, "/public");
   assert.equal(result.response.status, 200);
   assert.deepEqual(result.body, { published: false });
 });
 
 test("Durable Object publishes and exposes a safe current release", async () => {
-  const object = new ContentReleaseCoordinator({ storage: fakeStorage() }, {});
+  const object = createContentReleaseCoordinatorHandler(fakeStorage());
   const published = await call(object, "/publish", { method: "POST", body: candidate() });
   assert.equal(published.response.status, 201);
   assert.equal(published.body.ok, true);
@@ -97,7 +97,7 @@ test("Durable Object publishes and exposes a safe current release", async () => 
 });
 
 test("Durable Object enforces stale publication conflict internally", async () => {
-  const object = new ContentReleaseCoordinator({ storage: fakeStorage() }, {});
+  const object = createContentReleaseCoordinatorHandler(fakeStorage());
   const first = await call(object, "/publish", { method: "POST", body: candidate() });
   const stale = await call(object, "/publish", {
     method: "POST",
@@ -111,7 +111,7 @@ test("Durable Object enforces stale publication conflict internally", async () =
 });
 
 test("Durable Object performs rollback and records rollback source", async () => {
-  const object = new ContentReleaseCoordinator({ storage: fakeStorage() }, {});
+  const object = createContentReleaseCoordinatorHandler(fakeStorage());
   const first = await call(object, "/publish", { method: "POST", body: candidate() });
 
   const secondCandidate = candidate(first.body.current.release_id, "Second revision");
@@ -133,7 +133,7 @@ test("Durable Object performs rollback and records rollback source", async () =>
 });
 
 test("Durable Object revision list remains metadata-only", async () => {
-  const object = new ContentReleaseCoordinator({ storage: fakeStorage() }, {});
+  const object = createContentReleaseCoordinatorHandler(fakeStorage());
   await call(object, "/publish", { method: "POST", body: candidate() });
   const revisions = await call(object, "/revisions");
   assert.equal(revisions.response.status, 200);
@@ -142,7 +142,7 @@ test("Durable Object revision list remains metadata-only", async () => {
 });
 
 test("Durable Object rejects malformed JSON and unknown internal operation", async () => {
-  const object = new ContentReleaseCoordinator({ storage: fakeStorage() }, {});
+  const object = createContentReleaseCoordinatorHandler(fakeStorage());
 
   const malformed = await object.fetch(
     new Request("https://rms-content.internal/publish", {
