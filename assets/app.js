@@ -791,8 +791,8 @@
   function methodsEthicsTab(){
     const e=project.methods.ethics||{}, r=PathCoach.methodSection(project,"ethics");
     const cls=r.status==="clear"?"ethics-clear":r.status==="teacher_review"?"ethics-review":"ethics-stop";
-    return `<div class="methods-section"><h4>Ethics, safety, privacy, and authority</h4><p>This educational screen helps identify when teacher, school, institutional, or other approval is needed. It does not provide formal ethics approval.</p>
-      <div class="concept-box ${cls}"><strong>Current route</strong><br>${esc(r.status.replaceAll("_"," "))}</div>
+    return `<div class="methods-section"><h4>Ethics, safety, privacy, and authority</h4><p>This educational screen helps identify when school, institutional, supervisory, or other formal approval may be needed. It does not provide formal ethics approval.</p>
+      <div class="concept-box ${cls}"><strong>Current route</strong><br>${esc(r.status==="teacher_review"?"approval required":r.status.replaceAll("_"," "))}</div>
       <section class="method-substep open"><div class="method-substep-head"><span>1</span><div><b>Quick screening</b><small>Identify participant, privacy, sensitivity, or intervention conditions that change the review route.</small></div></div>
         <div class="form-grid two">
           ${mInput("meHuman","Human participants or identifiable human records?",e.humanParticipants||"","select",["yes","no"])}
@@ -850,7 +850,7 @@
       ${Object.entries(r.sections).map(([name,x])=>`<div class="method-row"><div class="method-row-head"><b>${esc(name)}</b><span class="role-pill">${(x.issues||[]).length} issue(s)</span></div>${(x.issues||[]).slice(0,5).map(i=>`<div class="issue ${i[0]}"><b>${esc(i[1])}</b><p>${esc(i[2])}</p></div>`).join("")||'<p>No issue detected by current rule set.</p>'}</div>`).join("")}
       <div class="button-row"><button id="lockProtocol" class="primary" ${r.critical||r.ethicsStatus==="do_not_facilitate"?"disabled":""}>Lock protocol version</button><button id="downloadMethodPlan" class="ghost">Export method plan</button></div>
       ${r.critical?'<div class="gap-warning">Resolve critical methodological issues before locking the protocol.</div>':""}
-      ${r.ethicsStatus==="do_not_facilitate"?'<div class="coach-feedback bad">This route must not proceed as a student-facilitated intervention. Redesign toward a safe observational/literature route and obtain teacher review.</div>':""}
+      ${r.ethicsStatus==="do_not_facilitate"?'<div class="coach-feedback bad">This route must not proceed as a student-facilitated intervention. Redesign toward a safe observational/literature route and obtain the appropriate formal approval before proceeding.</div>':""}
       <h4 style="margin-top:16px">Protocol history</h4>${versions.slice().reverse().map((v,i)=>`<div class="protocol-card"><b>Version ${versions.length-i} · ${esc(new Date(v.lockedAt).toLocaleString())}</b><p>${esc(v.researchQuestion||"No question recorded")} · ${esc(v.designType||"No design recorded")}</p></div>`).join("")||'<p class="muted tiny">No locked protocol versions yet.</p>'}
     </div>`;
   }
@@ -1459,9 +1459,9 @@
     const wrap=document.createElement("div");
     wrap.className="modal-backdrop";
     wrap.innerHTML=`<div class="modal"><h3>Chat settings</h3>
-      <p>The Research Chat server address is controlled by the site owner in <code>assets/runtime-config.js</code>. Students and teachers cannot replace it from the browser. This FREE release uses the Cloudflare Workers AI binding and does not require a model-provider API key.</p>
+      <p>The Research Chat server address is controlled by the site owner in <code>assets/runtime-config.js</code>. It cannot be replaced from the browser. This FREE release uses the Cloudflare Workers AI binding and does not require a model-provider API key.</p>
       <div class="privacy-note"><b>Configured Chat endpoint</b><p><code>${esc(endpoint||"Not configured yet")}</code></p>${endpoint?"":`<p>Research Chat will remain unavailable until the site owner configures the public backend endpoint.</p>`}</div>
-      <label><span>Class Chat code for this browser session</span><input id="aiAccessCode" type="password" autocomplete="off" maxlength="256" placeholder="${c.accessCodeSet?"A class code is already set · enter a new code only to replace it":"Enter the teacher-provided class code"}"></label>
+      <label><span>Class Chat code for this browser session</span><input id="aiAccessCode" type="password" autocomplete="off" maxlength="256" placeholder="${c.accessCodeSet?"A class code is already set · enter a new code only to replace it":"Enter the administrator-provided access code"}"></label>
       <label style="margin-top:12px"><span>Enable Research Chat on this browser session</span><select id="aiEnabled"><option value="false" ${!c.enabled?"selected":""}>No · local guidance only</option><option value="true" ${c.enabled?"selected":""}>Yes</option></select></label>
       <div class="privacy-note"><b>Privacy reminder</b><p>The class code is kept only for this browser session and is not saved in the research-project backup. Questions and recent Chat messages go to the configured class service. Current project context is included only when the student leaves <b>Use my current project context</b> enabled, and the browser removes raw datasets and obvious identifying fields before transmission.</p></div>
       <div class="modal-actions"><button class="ghost" id="clearChatCode" ${c.accessCodeSet?"":"disabled"}>Clear class code</button><button class="ghost" id="testChat">Test connection</button><button class="ghost" id="closeAI">Cancel</button><button class="primary" id="saveAI">Save session settings</button></div></div>`;
