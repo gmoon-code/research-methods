@@ -586,13 +586,12 @@ window.RMSStudentFlowUI = (() => {
             type="button"
             data-proxy-click="journeyBtn"
           >
-            <b>Teacher review & feedback</b>
+            <b>My Research Journey</b>
 
             <span>
-              View your research checkpoints,
-              export a teacher review packet,
-              and import feedback from your
-              teacher.
+              See your milestones, completed
+              stages, unresolved work, and the
+              next best action.
             </span>
           </button>
 
@@ -619,7 +618,7 @@ window.RMSStudentFlowUI = (() => {
                 open
               >
                 <summary>
-                  Teacher / setup tools
+                  Private setup tools
                 </summary>
 
                 <div class="more-menu-grid">
@@ -637,23 +636,11 @@ window.RMSStudentFlowUI = (() => {
 
                   <button
                     type="button"
-                    data-proxy-click="teacherBtn"
-                  >
-                    <b>Teacher Dashboard</b>
-                    <span>
-                      Import review packets and
-                      manage feedback.
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
                     data-proxy-click="competencyBtn"
                   >
                     <b>Learning Analytics</b>
                     <span>
-                      Research/teacher-facing
-                      competency evidence.
+                      Private competency evidence.
                     </span>
                   </button>
 
@@ -671,7 +658,7 @@ window.RMSStudentFlowUI = (() => {
                     type="button"
                     id="leaveTeacherMode"
                   >
-                    <b>Leave teacher mode</b>
+                    <b>Leave private mode</b>
                     <span>
                       Return this browser session to the normal
                       student workspace.
