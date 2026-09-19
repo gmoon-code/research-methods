@@ -8,19 +8,16 @@ import {
 } from "./teacher-auth.mjs";
 
 import {
-  checkExpectedCurrentRelease,
-  contentHashInput,
-  createRelease,
-  createRollbackRelease,
-  publicReleaseProjection,
-  revisionMetadata,
-  validateCandidate,
-  validateStoredRelease
+  validateCandidate
 } from "./content-publication.mjs";
 
 import {
-  createContentStore
-} from "./content-store.mjs";
+  safeRollbackInput
+} from "./content-coordinator-core.mjs";
+
+import {
+  createContentCoordinatorClient
+} from "./content-coordinator-client.mjs";
 
 const PUBLIC_PATH =
   "/content/public";
@@ -136,9 +133,9 @@ function json(
   );
 }
 
-function storeFor(env) {
-  return createContentStore(
-    env?.RMS_CONTENT_STORE
+function clientFor(env) {
+  return createContentCoordinatorClient(
+    env?.RMS_CONTENT_COORDINATOR
   );
 }
 
@@ -221,7 +218,11 @@ async function requireAdmin(
   env,
   kind
 ) {
-  if (!teacherAuthConfigured(env)) {
+  if (
+    !teacherAuthConfigured(
+      env
+    )
+  ) {
     return {
       ok: false,
       response:
@@ -247,7 +248,8 @@ async function requireAdmin(
   if (limited) {
     return {
       ok: false,
-      response: limited
+      response:
+        limited
     };
   }
 
@@ -316,8 +318,11 @@ async function readJsonBody(
     );
 
   if (
-    Number.isFinite(declared) &&
-    declared > MAX_BODY_BYTES
+    Number.isFinite(
+      declared
+    ) &&
+    declared >
+      MAX_BODY_BYTES
   ) {
     return {
       ok: false,
@@ -342,7 +347,8 @@ async function readJsonBody(
   }
 
   if (
-    encoder.encode(text)
+    encoder
+      .encode(text)
       .byteLength >
     MAX_BODY_BYTES
   ) {
@@ -370,61 +376,6 @@ async function readJsonBody(
   }
 }
 
-async function sha256Hex(text) {
-  const digest =
-    new Uint8Array(
-      await crypto.subtle.digest(
-        "SHA-256",
-        encoder.encode(
-          String(text)
-        )
-      )
-    );
-
-  return [...digest]
-    .map(
-      byte =>
-        byte
-          .toString(16)
-          .padStart(2, "0")
-    )
-    .join("");
-}
-
-function newReleaseId() {
-  return (
-    "rel_" +
-    crypto.randomUUID()
-  );
-}
-
-function nowIso() {
-  return new Date()
-    .toISOString();
-}
-
-function conflictResponse(
-  request,
-  env,
-  conflict
-) {
-  return json(
-    request,
-    env,
-    {
-      error:
-        "Published content changed after this Admin draft was loaded.",
-      code:
-        "CONTENT_CONFLICT",
-      expected_release_id:
-        conflict.expected,
-      current_release_id:
-        conflict.actual
-    },
-    409
-  );
-}
-
 function storageFailure(
   request,
   env
@@ -440,10 +391,18 @@ function storageFailure(
   );
 }
 
+function validRollbackBody(
+  value
+) {
+  return safeRollbackInput(
+    value
+  );
+}
+
 async function publicContent(
   request,
   env,
-  store
+  client
 ) {
   if (
     request.method !==
@@ -465,10 +424,25 @@ async function publicContent(
   }
 
   try {
-    const current =
-      await store.readCurrent();
+    const result =
+      await client
+        .publicState();
 
-    if (!current) {
+    if (
+      result.status !==
+      200
+    ) {
+      return storageFailure(
+        request,
+        env
+      );
+    }
+
+    if (
+      result.value
+        .published ===
+        false
+    ) {
       return json(
         request,
         env,
@@ -479,12 +453,12 @@ async function publicContent(
       );
     }
 
-    const validation =
-      validateStoredRelease(
-        current
-      );
-
-    if (!validation.ok) {
+    if (
+      result.value
+        .published !==
+        true ||
+      !result.value.release
+    ) {
       return storageFailure(
         request,
         env
@@ -494,13 +468,7 @@ async function publicContent(
     return json(
       request,
       env,
-      {
-        published: true,
-        release:
-          publicReleaseProjection(
-            current
-          )
-      }
+      result.value
     );
   } catch {
     return storageFailure(
@@ -513,7 +481,7 @@ async function publicContent(
 async function adminState(
   request,
   env,
-  store
+  client
 ) {
   if (
     request.method !==
@@ -535,27 +503,73 @@ async function adminState(
   }
 
   try {
-    const current =
-      await store.readCurrent();
+    const result =
+      await client
+        .adminState();
 
-    if (!current) {
-      return json(
+    if (
+      result.status !==
+        200 ||
+      result.value
+        .configured !==
+        true
+    ) {
+      return storageFailure(
         request,
-        env,
-        {
-          configured: true,
-          published: false,
-          current: null
-        }
+        env
       );
     }
 
-    const validation =
-      validateStoredRelease(
-        current
-      );
+    return json(
+      request,
+      env,
+      result.value
+    );
+  } catch {
+    return storageFailure(
+      request,
+      env
+    );
+  }
+}
 
-    if (!validation.ok) {
+async function adminRevisions(
+  request,
+  env,
+  client
+) {
+  if (
+    request.method !==
+    "GET"
+  ) {
+    return json(
+      request,
+      env,
+      {
+        error:
+          "Method not allowed."
+      },
+      405,
+      {
+        "Allow":
+          "GET, OPTIONS"
+      }
+    );
+  }
+
+  try {
+    const result =
+      await client
+        .revisions();
+
+    if (
+      result.status !==
+        200 ||
+      !Array.isArray(
+        result.value
+          .revisions
+      )
+    ) {
       return storageFailure(
         request,
         env
@@ -566,183 +580,9 @@ async function adminState(
       request,
       env,
       {
-        configured: true,
-        published: true,
-        current:
-          revisionMetadata(
-            current
-          )
-      }
-    );
-  } catch {
-    return storageFailure(
-      request,
-      env
-    );
-  }
-}
-
-function safeRevisionMetadata(
-  value
-) {
-  if (
-    !value ||
-    typeof value !== "object" ||
-    Array.isArray(value)
-  ) {
-    return null;
-  }
-
-  const keys =
-    Object.keys(value).sort();
-
-  const expected =
-    [
-      "change_summary",
-      "content_hash",
-      "content_version",
-      "parent_release_id",
-      "published_at",
-      "release_id",
-      "rollback_source_release_id"
-    ];
-
-  if (
-    keys.length !==
-      expected.length ||
-    !keys.every(
-      (key, index) =>
-        key ===
-        expected[index]
-    )
-  ) {
-    return null;
-  }
-
-  const id =
-    String(
-      value.release_id || ""
-    ).trim();
-
-  const version =
-    String(
-      value.content_version || ""
-    ).trim();
-
-  const publishedAt =
-    String(
-      value.published_at || ""
-    ).trim();
-
-  const hash =
-    String(
-      value.content_hash || ""
-    ).trim();
-
-  const summary =
-    String(
-      value.change_summary || ""
-    ).trim();
-
-  const parent =
-    value.parent_release_id === null
-      ? null
-      : String(
-          value.parent_release_id || ""
-        ).trim();
-
-  const rollbackSource =
-    value.rollback_source_release_id === null
-      ? null
-      : String(
-          value.rollback_source_release_id || ""
-        ).trim();
-
-  if (
-    !/^[A-Za-z0-9_.:-]{1,160}$/
-      .test(id) ||
-    version !== id ||
-    !Number.isFinite(
-      Date.parse(publishedAt)
-    ) ||
-    !/^[a-f0-9]{64}$/i
-      .test(hash) ||
-    summary.length < 3 ||
-    summary.length > 500 ||
-    (
-      parent !== null &&
-      !/^[A-Za-z0-9_.:-]{1,160}$/
-        .test(parent)
-    ) ||
-    (
-      rollbackSource !== null &&
-      !/^[A-Za-z0-9_.:-]{1,160}$/
-        .test(rollbackSource)
-    )
-  ) {
-    return null;
-  }
-
-  return {
-    release_id: id,
-    content_version:
-      version,
-    published_at:
-      new Date(
-        publishedAt
-      ).toISOString(),
-    parent_release_id:
-      parent,
-    rollback_source_release_id:
-      rollbackSource,
-    content_hash:
-      hash.toLowerCase(),
-    change_summary:
-      summary
-  };
-}
-
-async function adminRevisions(
-  request,
-  env,
-  store
-) {
-  if (
-    request.method !==
-    "GET"
-  ) {
-    return json(
-      request,
-      env,
-      {
-        error:
-          "Method not allowed."
-      },
-      405,
-      {
-        "Allow":
-          "GET, OPTIONS"
-      }
-    );
-  }
-
-  try {
-    const raw =
-      await store
-        .listRevisionMetadata();
-
-    const revisions =
-      raw
-        .map(
-          safeRevisionMetadata
-        )
-        .filter(Boolean);
-
-    return json(
-      request,
-      env,
-      {
-        revisions
+        revisions:
+          result.value
+            .revisions
       }
     );
   } catch {
@@ -756,7 +596,7 @@ async function adminRevisions(
 async function adminPublish(
   request,
   env,
-  store
+  client
 ) {
   if (
     request.method !==
@@ -817,14 +657,17 @@ async function adminPublish(
   }
 
   try {
-    const current =
-      await store.readCurrent();
+    const result =
+      await client.publish(
+        validation.candidate
+      );
 
     if (
-      current &&
-      !validateStoredRelease(
-        current
-      ).ok
+      !Number.isInteger(
+        result.status
+      ) ||
+      result.status < 200 ||
+      result.status > 599
     ) {
       return storageFailure(
         request,
@@ -832,84 +675,13 @@ async function adminPublish(
       );
     }
 
-    const conflict =
-      checkExpectedCurrentRelease(
-        validation
-          .candidate
-          .expected_current_release_id,
-        current
-      );
-
-    if (!conflict.ok) {
-      return conflictResponse(
-        request,
-        env,
-        conflict
-      );
-    }
-
-    const hash =
-      await sha256Hex(
-        contentHashInput(
-          validation.candidate
-        )
-      );
-
-    const release =
-      createRelease({
-        candidate:
-          validation.candidate,
-        releaseId:
-          newReleaseId(),
-        nowIso:
-          nowIso(),
-        contentHash:
-          hash,
-        parentReleaseId:
-          current
-            ?.release_id ||
-          null
-      });
-
-    await store.writeRevision(
-      release,
-      revisionMetadata(
-        release
-      )
-    );
-
-    await store.writeCurrent(
-      release
-    );
-
     return json(
       request,
       env,
-      {
-        ok: true,
-        current:
-          revisionMetadata(
-            release
-          )
-      },
-      201
+      result.value,
+      result.status
     );
-  } catch (error) {
-    if (
-      error?.code ===
-      "REVISION_EXISTS"
-    ) {
-      return json(
-        request,
-        env,
-        {
-          error:
-            "Content release identifier collision. Try publishing again."
-        },
-        409
-      );
-    }
-
+  } catch {
     return storageFailure(
       request,
       env
@@ -917,81 +689,10 @@ async function adminPublish(
   }
 }
 
-function validRollbackBody(
-  value
-) {
-  if (
-    !value ||
-    typeof value !== "object" ||
-    Array.isArray(value)
-  ) {
-    return null;
-  }
-
-  const keys =
-    Object.keys(value)
-      .sort();
-
-  const expected =
-    [
-      "change_summary",
-      "expected_current_release_id",
-      "target_release_id"
-    ];
-
-  if (
-    keys.length !==
-      expected.length ||
-    !keys.every(
-      (key, index) =>
-        key ===
-        expected[index]
-    )
-  ) {
-    return null;
-  }
-
-  const expectedCurrent =
-    String(
-      value
-        .expected_current_release_id ||
-      ""
-    ).trim();
-
-  const target =
-    String(
-      value.target_release_id ||
-      ""
-    ).trim();
-
-  const summary =
-    String(
-      value.change_summary ||
-      ""
-    ).trim();
-
-  if (
-    !/^[A-Za-z0-9_.:-]{1,160}$/
-      .test(expectedCurrent) ||
-    !/^[A-Za-z0-9_.:-]{1,160}$/
-      .test(target) ||
-    summary.length < 3 ||
-    summary.length > 500
-  ) {
-    return null;
-  }
-
-  return {
-    expectedCurrent,
-    target,
-    summary
-  };
-}
-
 async function adminRollback(
   request,
   env,
-  store
+  client
 ) {
   if (
     request.method !==
@@ -1029,12 +730,11 @@ async function adminRollback(
     );
   }
 
-  const rollback =
-    validRollbackBody(
+  if (
+    !validRollbackBody(
       body.value
-    );
-
-  if (!rollback) {
+    )
+  ) {
     return json(
       request,
       env,
@@ -1047,129 +747,31 @@ async function adminRollback(
   }
 
   try {
-    const [
-      current,
-      target
-    ] =
-      await Promise.all([
-        store.readCurrent(),
-        store.readRevision(
-          rollback.target
-        )
-      ]);
+    const result =
+      await client.rollback(
+        body.value
+      );
 
     if (
-      !current ||
-      !validateStoredRelease(
-        current
-      ).ok
+      !Number.isInteger(
+        result.status
+      ) ||
+      result.status < 200 ||
+      result.status > 599
     ) {
       return storageFailure(
         request,
         env
       );
     }
-
-    if (!target) {
-      return json(
-        request,
-        env,
-        {
-          error:
-            "Requested content revision was not found."
-        },
-        404
-      );
-    }
-
-    if (
-      !validateStoredRelease(
-        target
-      ).ok
-    ) {
-      return storageFailure(
-        request,
-        env
-      );
-    }
-
-    const conflict =
-      checkExpectedCurrentRelease(
-        rollback
-          .expectedCurrent,
-        current
-      );
-
-    if (!conflict.ok) {
-      return conflictResponse(
-        request,
-        env,
-        conflict
-      );
-    }
-
-    const hash =
-      await sha256Hex(
-        contentHashInput(
-          target
-        )
-      );
-
-    const release =
-      createRollbackRelease({
-        currentRelease:
-          current,
-        targetRelease:
-          target,
-        releaseId:
-          newReleaseId(),
-        nowIso:
-          nowIso(),
-        contentHash:
-          hash,
-        changeSummary:
-          rollback.summary
-      });
-
-    await store.writeRevision(
-      release,
-      revisionMetadata(
-        release
-      )
-    );
-
-    await store.writeCurrent(
-      release
-    );
 
     return json(
       request,
       env,
-      {
-        ok: true,
-        current:
-          revisionMetadata(
-            release
-          )
-      },
-      201
+      result.value,
+      result.status
     );
-  } catch (error) {
-    if (
-      error?.code ===
-      "REVISION_EXISTS"
-    ) {
-      return json(
-        request,
-        env,
-        {
-          error:
-            "Content release identifier collision. Try rollback again."
-        },
-        409
-      );
-    }
-
+  } catch {
     return storageFailure(
       request,
       env
@@ -1247,7 +849,11 @@ async function handleContentRequest(
       request.url
     );
 
-  if (!contentPath(url.pathname)) {
+  if (
+    !contentPath(
+      url.pathname
+    )
+  ) {
     return null;
   }
 
@@ -1283,10 +889,10 @@ async function handleContentRequest(
     url.pathname ===
     PUBLIC_PATH
   ) {
-    const publicStore =
-      storeFor(env);
+    const publicClient =
+      clientFor(env);
 
-    if (!publicStore) {
+    if (!publicClient) {
       return json(
         request,
         env,
@@ -1301,7 +907,7 @@ async function handleContentRequest(
     return publicContent(
       request,
       env,
-      publicStore
+      publicClient
     );
   }
 
@@ -1318,10 +924,10 @@ async function handleContentRequest(
     return admin.response;
   }
 
-  const store =
-    storeFor(env);
+  const client =
+    clientFor(env);
 
-  if (!store) {
+  if (!client) {
     return json(
       request,
       env,
@@ -1340,7 +946,7 @@ async function handleContentRequest(
     return adminState(
       request,
       env,
-      store
+      client
     );
   }
 
@@ -1351,7 +957,7 @@ async function handleContentRequest(
     return adminRevisions(
       request,
       env,
-      store
+      client
     );
   }
 
@@ -1362,7 +968,7 @@ async function handleContentRequest(
     return adminPublish(
       request,
       env,
-      store
+      client
     );
   }
 
@@ -1373,7 +979,7 @@ async function handleContentRequest(
     return adminRollback(
       request,
       env,
-      store
+      client
     );
   }
 
@@ -1388,10 +994,9 @@ export {
   MAX_BODY_BYTES,
   PUBLIC_PATH,
   allowedOrigin,
+  clientFor,
   contentPath,
   handleContentRequest,
   readJsonBody,
-  safeRevisionMetadata,
-  sha256Hex,
   validRollbackBody
 };
