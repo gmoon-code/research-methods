@@ -229,7 +229,7 @@ window.RMSCompetency = (() => {
       `**Model:** v${MODEL.version} — provisional, unvalidated instructional analytics`,
       `**Generated:** ${s.generatedAt}`,"",
       "## Interpretation warning","",
-      "These indicators summarize evidence captured inside this software. They are not validated psychometric scores, grades, or proof of general research competence. Independent evidence, supported performance, support exposure, and teacher ratings should be interpreted separately.","",
+      "These indicators summarize evidence captured inside this software. They are not validated psychometric scores, grades, or proof of general research competence. Independent evidence, supported performance, and support exposure should be interpreted separately.","",
       "## Summary","",
       `- Competencies with independent evidence: ${s.independentCompetencies}/${s.totalCompetencies}`,
       `- Mean independent level where evidence exists: ${s.independentMean??"—"} / 3`,
@@ -244,8 +244,7 @@ window.RMSCompetency = (() => {
         x.definition,"",
         `- Independent level: ${x.independentLevel??"—"} / 3 (${x.independentCoverage}/${x.opportunities} mapped stage opportunities captured)`,
         `- Supported/current level: ${x.supportedLevel??"—"} / 3 (${x.supportedCoverage}/${x.opportunities} mapped stage opportunities reviewed)`,
-        `- Highest support level used: ${x.supportMax} / 5 across ${x.supportCount} support event(s)`,
-        `- Latest teacher rating: ${x.teacherRating?`${x.teacherRating.level}/3${x.teacherRating.note?` — ${x.teacherRating.note}`:""}`:"—"}`,"");
+        `- Highest support level used: ${x.supportMax} / 5 across ${x.supportCount} support event(s)`,"");
     });
     lines.push("## Process indicators","",
       `- Independent checkpoints saved: ${pm.independentCheckpointCount}`,
@@ -253,8 +252,7 @@ window.RMSCompetency = (() => {
       `- Checkpoints captured after prior support: ${pm.supportedFirstCount}`,
       `- Support events: ${pm.supportEventCount}`,
       `- Positive revision cycles: ${pm.positiveRevisionCycles}/${pm.revisionCycles}`,
-      `- Locked protocol versions: ${pm.protocolVersions}`,
-      `- Imported teacher feedback items: ${pm.teacherFeedbackItems}`,"");
+      `- Locked protocol versions: ${pm.protocolVersions}`,"");
     return lines.join("\n");
   }
 
