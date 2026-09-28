@@ -12,6 +12,7 @@ const journeyUI = read("assets/journey-ui.js");
 const snapshotUI = read("assets/research-snapshot-ui.js");
 const snapshot = read("assets/research-snapshot.js");
 const competencyUI = read("assets/competency-ui.js");
+const competencies = read("assets/competencies.js");
 const methods = read("assets/methods.js");
 const pathCoach = read("assets/path-coach.js");
 const guidance = read("assets/student-guidance.js");
@@ -79,6 +80,19 @@ test("student header shows only stage progress for an active project", () => {
   assert.doesNotMatch(app, /project\.name\?`\$\{project\.name\} · Stage/);
   assert.match(index, /<meta name="theme-color" content="#ffffff">/);
 });
+test("student utility dialogs remain usable within the viewport", () => {
+  assert.match(theme, /\.more-menu-modal,[\s\S]*\.student-onboarding\{[\s\S]*max-height:calc\(100dvh - 32px\) !important/);
+  assert.match(theme, /\.more-menu-modal,[\s\S]*overflow-y:auto !important/);
+  assert.match(theme, /@media\(max-width:600px\)[\s\S]*max-height:calc\(100dvh - 16px\) !important/);
+});
+
+test("learning analytics exports remain independent of legacy teacher feedback", () => {
+  assert.doesNotMatch(competencies, /Imported teacher feedback items|Latest teacher rating/);
+  assert.match(competencyUI, /safeSnapshot/);
+  assert.match(competencyUI, /delete safeSnapshot\.teacherMean/);
+  assert.doesNotMatch(competencyUI, /events:p\.competency/);
+});
+
 test("student palette uses the restrained v3.0.1 tokens", () => {
   assert.match(theme, /--moon-page:#ffffff/);
   assert.match(theme, /--section-yellow:#f3e7a1/);
