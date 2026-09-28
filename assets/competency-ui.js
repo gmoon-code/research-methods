@@ -90,7 +90,22 @@ window.RMSCompetencyUI = (() => {
     wrap.onclick=e=>{if(e.target===wrap)wrap.remove()};id("closeCompetency").onclick=()=>wrap.remove();
     document.querySelectorAll("[data-ctab]").forEach(b=>b.onclick=()=>rr(b.dataset.ctab));
     id("exportCompetencyMD").onclick=()=>window.RMSWordExport.fromMarkdown("research-competency-learning-evidence.doc",C.reportMarkdown(p),"Research Competency Learning Evidence");
-    id("exportCompetencyJSON").onclick=()=>dl("research-competency-learning-evidence.json",JSON.stringify({snapshot:C.snapshot(p),events:p.competency},null,2),"application/json");
+    id("exportCompetencyJSON").onclick=()=>{
+      const snapshot=C.snapshot(p);
+      const safeSnapshot={
+        ...snapshot,
+        profiles:(snapshot.profiles||[]).map(({teacherRating,...x})=>x)
+      };
+      delete safeSnapshot.teacherMean;
+      const events={
+        independentCheckpoints:[...(p.competency?.independentCheckpoints||[])],
+        reviewEvents:[...(p.competency?.reviewEvents||[])],
+        supportEvents:[...(p.competency?.supportEvents||[])],
+        reflections:[...(p.competency?.reflections||[])],
+        processEvents:[...(p.competency?.processEvents||[])]
+      };
+      dl("research-competency-learning-evidence.json",JSON.stringify({snapshot:safeSnapshot,events},null,2),"application/json");
+    };
   }
 
   return {open};
