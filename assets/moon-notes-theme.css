@@ -2105,3 +2105,31 @@ footer{
   }
 }
 
+/* =========================================================
+   SMALL STUDENT MODAL VIEWPORT SAFETY
+   ========================================================= */
+
+.more-menu-modal,
+.unified-help-modal,
+.future-stage-preview,
+.student-onboarding{
+  max-height:calc(100dvh - 32px) !important;
+  overflow-y:auto !important;
+  overscroll-behavior:contain;
+  scrollbar-gutter:stable;
+}
+
+.more-menu-modal{
+  width:min(720px,calc(100vw - 32px)) !important;
+}
+
+@media(max-width:600px){
+  .more-menu-modal,
+  .unified-help-modal,
+  .future-stage-preview,
+  .student-onboarding{
+    width:calc(100vw - 16px) !important;
+    max-height:calc(100dvh - 16px) !important;
+  }
+}
+
