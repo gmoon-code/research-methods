@@ -20,21 +20,21 @@
   --moon-rule:#d8d8d8;
   --moon-rule-dark:#b7b7b7;
 
-  --section-yellow:#fff4a3;
-  --section-yellow-soft:#fffbe1;
+  --section-yellow:#fff36d;
+  --section-yellow-soft:#fffbd1;
   --section-yellow-line:#d8c85d;
 
-  --section-green:#d7efc5;
-  --section-green-soft:#f1faea;
-  --section-green-line:#8fb96e;
+  --section-green:#8cff8a;
+  --section-green-soft:#eaffea;
+  --section-green-line:#72b96f;
 
-  --section-turquoise:#cceff0;
-  --section-turquoise-soft:#effafa;
-  --section-turquoise-line:#70bfc2;
+  --section-turquoise:#72e6e3;
+  --section-turquoise-soft:#e8fbfb;
+  --section-turquoise-line:#62bfc0;
 
-  --section-pink:#f7d5e3;
-  --section-pink-soft:#fff1f7;
-  --section-pink-line:#d89db5;
+  --section-pink:#ff8fd3;
+  --section-pink-soft:#fff0f8;
+  --section-pink-line:#d78db4;
 
   --bg:var(--moon-page);
   --card:var(--moon-paper);
@@ -44,7 +44,7 @@
 
   --blue:#111111;
   --blue2:var(--section-turquoise-soft);
-  --blue3:#c8f4f2;
+  --blue3:var(--section-turquoise-soft);
 
   --green:#205f31;
   --greenbg:var(--section-green-soft);
