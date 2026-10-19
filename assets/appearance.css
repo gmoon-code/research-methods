@@ -170,3 +170,55 @@ html[data-moon-theme="dark"] :is(.nav-step .nav-num,.stage-tabs button,.data-tab
 html[data-moon-theme="dark"] :is(.save-problem-banner b,.save-problem-banner span,.ai-helper-status,.stats-note){
  color:var(--moon-ink)!important
 }
+
+/* Source and citation links need their own high-contrast colours in dark mode. */
+html[data-moon-theme="dark"]{
+ --moon-link-ink:#9eeaf2;--moon-link-visited:#e3b5f9;
+ --moon-link-accent:#66f0f0;--moon-link-hover:#283e45;
+}
+html[data-moon-theme="dark"] :is(.app-shell :is(p,li,figcaption,td,dd) a,
+ .app-shell .ai-cites a,.app-shell .snapshot-jump a,.app-shell .source-card a,
+ .app-shell .citation-output a){
+ color:var(--moon-link-ink);
+ text-decoration-color:var(--moon-link-accent);
+}
+html[data-moon-theme="dark"] :is(.app-shell :is(p,li,figcaption,td,dd) a,
+ .app-shell .ai-cites a,.app-shell .snapshot-jump a,.app-shell .source-card a,
+ .app-shell .citation-output a):visited{
+ color:var(--moon-link-visited);
+ text-decoration-color:var(--moon-link-visited);
+}
+html[data-moon-theme="dark"] :is(.app-shell :is(p,li,figcaption,td,dd) a,
+ .app-shell .ai-cites a,.app-shell .snapshot-jump a,.app-shell .source-card a,
+ .app-shell .citation-output a):is(:hover,:focus-visible){
+ background:var(--moon-link-hover);color:#e3faff;text-decoration-color:currentColor
+}
+html[data-moon-theme="dark"] .app-shell a:focus-visible{
+ outline:2px solid var(--moon-link-accent);outline-offset:3px
+}
+html[data-moon-theme="dark"] .snapshot-jump{background:var(--moon-paper);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] .snapshot-jump a{
+ background:var(--moon-raised);border:1px solid var(--moon-rule-dark);border-radius:4px;
+}
+html[data-moon-theme="dark"] :is(.stage-preview-mode .preview-field::before,.stage-preview-banner,
+ .stage-preview-mode input:disabled,.stage-preview-mode textarea:disabled,.stage-preview-mode select:disabled){
+ background:var(--moon-raised);color:var(--moon-muted);border-color:var(--moon-rule)
+}
+html[data-moon-theme="dark"] :is(.save-problem-banner,.needs-review-banner,.ai-helper-status,
+ .stage-section-outline,.stage-header,.stage-orientation){
+ color:var(--moon-ink)
+}
+html[data-moon-theme="dark"] :is(.route-step[data-section-color] .route-step-main small,
+ .snap-item span,.stage-meta .stage-count,.rightbar-kicker:not([data-section-color]),
+ .sidebar-note,.stage-section-outline button.done>span){
+ color:var(--moon-muted)
+}
+/* Highlighter chips are always dark-on-bright. Muted dark panels are light-on-dark. */
+html[data-moon-theme="dark"] :is(.stage-header h2[data-section-color],
+ .route-phase-head[data-section-color] b,.route-step[data-section-color].current .route-step-main>b,
+ .stage-meta .phase-pill[data-section-color],.stage-section-outline[data-section-color] button.active>span){
+ color:#11161b!important;
+}
+html[data-moon-theme="dark"] :is(.pill,.coach-badge,.theme-chip){
+ background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule-dark)
+}
