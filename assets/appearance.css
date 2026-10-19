@@ -7,16 +7,16 @@
 @media print{.moon-appearance{display:none!important}}
 /* Research Methods Studio dark theme. Preserve phase colours and information hierarchy. */
 :root[data-moon-theme="dark"]{
- --moon-page:#11161b;--moon-paper:#1b2229;--moon-raised:#232c35;
- --moon-ink:#e8edf1;--moon-muted:#b5c0c8;
- --moon-rule:#39444e;--moon-rule-dark:#53616d;
- --section-yellow-soft:#34331e;--section-green-soft:#1b3826;
- --section-turquoise-soft:#19383c;--section-pink-soft:#3a2540;
+ --moon-page:#121212;--moon-paper:#1e1e1e;--moon-raised:#292929;
+ --moon-ink:#ececec;--moon-muted:#b8b8b8;
+ --moon-rule:#3d3d3d;--moon-rule-dark:#595959;
+ --section-yellow-soft:#282828;--section-green-soft:#282828;
+ --section-turquoise-soft:#282828;--section-pink-soft:#282828;
  --bg:var(--moon-page);--card:var(--moon-paper);--ink:var(--moon-ink);
  --muted:var(--moon-muted);--line:var(--moon-rule);
  --blue2:var(--section-turquoise-soft);--blue3:var(--section-turquoise-soft);
  --green:#9ceab0;--amber:#f6d888;--red:#f2abc9;--purple:#ddb8f0;
- --blue:#a9edf1;
+ --blue:#b8f2ce;
  --greenbg:var(--section-green-soft);--amberbg:var(--section-yellow-soft);
  --redbg:var(--section-pink-soft);--purplebg:var(--section-pink-soft);
  color-scheme:dark;
@@ -53,7 +53,7 @@ html[data-moon-theme="dark"] :is(.eyebrow,.rightbar-kicker,.hero-card-title,.pro
  .route-phase-head[data-section-color] b,.route-step[data-section-color].current .route-step-main>b,
  .stage-meta .phase-pill[data-section-color],.stage-header h2[data-section-color],
  #welcome[data-section-color] h2,#welcome[data-section-color] h3,#welcome[data-section-color] h4,
- .current-form-section[data-section-color]>h4){color:#11161b!important}
+ .current-form-section[data-section-color]>h4){color:#121212!important}
 html[data-moon-theme="dark"] :is(.hero-copy>p,.hero-card p,.welcome p,.stage-header .purpose,
  .snap-item b,.stage-context-head b,.path-stage-top b,.path-stage-top span,.stage-orientation p,
  .stage-preview-banner b,.journey-modal .next-focus p,.stage-work-intro p,.current-form-section>p){
@@ -70,7 +70,7 @@ html[data-moon-theme="dark"] :is(.route-step.current .route-step-icon[data-secti
  background:var(--section-soft);border-color:var(--section-line)
 }
 html[data-moon-theme="dark"] .route-step[data-section-color].current .route-step-main>b,
-html[data-moon-theme="dark"] .route-phase-head[data-section-color] b{color:#11161b}
+html[data-moon-theme="dark"] .route-phase-head[data-section-color] b{color:#121212}
 /* Fields and actions keep visual affordances, including visible active and disabled states. */
 html[data-moon-theme="dark"] :is(input,textarea,select,.current-form-section .guided-field input[data-field],
  .current-form-section .guided-field select[data-field]){
@@ -85,7 +85,7 @@ html[data-moon-theme="dark"] .stage-section-outline[data-section-color] button.a
  background:var(--section-soft);border-color:var(--section-line)
 }
 html[data-moon-theme="dark"] .stage-section-outline[data-section-color] button.active>span{
- background:var(--section-highlight);color:#11161b!important
+ background:var(--section-highlight);color:#121212!important
 }
 html[data-moon-theme="dark"] .stage-section-outline[data-section-color] button.done>span{
  background:var(--section-soft);color:var(--moon-ink)!important
@@ -108,7 +108,7 @@ html[data-moon-theme="dark"] :is(.secondary:hover,.ghost:hover,.danger:hover,but
 }
 html[data-moon-theme="dark"] :is(.secondary:disabled,.ghost:disabled,.danger:disabled,button.secondary:disabled,
  button.ghost:disabled,button.danger:disabled){
- color:var(--moon-muted)!important;background:#28313a!important;border-color:var(--moon-rule)!important
+ color:var(--moon-muted)!important;background:#303030!important;border-color:var(--moon-rule)!important
 }
 /* Readable tabular data, muted examples, and restrained status colours. */
 html[data-moon-theme="dark"] :is(table,thead,tbody,tr,th,td){border-color:var(--moon-rule);color:var(--moon-ink)}
@@ -173,8 +173,8 @@ html[data-moon-theme="dark"] :is(.save-problem-banner b,.save-problem-banner spa
 
 /* Source and citation links need their own high-contrast colours in dark mode. */
 html[data-moon-theme="dark"]{
- --moon-link-ink:#9eeaf2;--moon-link-visited:#e3b5f9;
- --moon-link-accent:#66f0f0;--moon-link-hover:#283e45;
+ --moon-link-ink:#b8f2ce;--moon-link-visited:#f0c8e5;
+ --moon-link-accent:#91dbaa;--moon-link-hover:#303030;
 }
 html[data-moon-theme="dark"] :is(.app-shell :is(p,li,figcaption,td,dd) a,
  .app-shell .ai-cites a,.app-shell .snapshot-jump a,.app-shell .source-card a,
@@ -191,7 +191,7 @@ html[data-moon-theme="dark"] :is(.app-shell :is(p,li,figcaption,td,dd) a,
 html[data-moon-theme="dark"] :is(.app-shell :is(p,li,figcaption,td,dd) a,
  .app-shell .ai-cites a,.app-shell .snapshot-jump a,.app-shell .source-card a,
  .app-shell .citation-output a):is(:hover,:focus-visible){
- background:var(--moon-link-hover);color:#e3faff;text-decoration-color:currentColor
+ background:var(--moon-link-hover);color:#ffffff;text-decoration-color:currentColor
 }
 html[data-moon-theme="dark"] .app-shell a:focus-visible{
  outline:2px solid var(--moon-link-accent);outline-offset:3px
@@ -217,7 +217,7 @@ html[data-moon-theme="dark"] :is(.route-step[data-section-color] .route-step-mai
 html[data-moon-theme="dark"] :is(.stage-header h2[data-section-color],
  .route-phase-head[data-section-color] b,.route-step[data-section-color].current .route-step-main>b,
  .stage-meta .phase-pill[data-section-color],.stage-section-outline[data-section-color] button.active>span){
- color:#11161b!important;
+ color:#121212!important;
 }
 html[data-moon-theme="dark"] :is(.pill,.coach-badge,.theme-chip){
  background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule-dark)
