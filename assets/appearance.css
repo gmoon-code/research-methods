@@ -76,3 +76,7 @@ html[data-moon-theme="dark"] .moon-appearance-label{color:var(--moon-muted)}
 @media(max-width:480px){
  .student-top-actions .moon-appearance-label{display:none}
 }
+
+html[data-moon-theme="dark"] :is(.ready-status.good,.oktxt,.status-inc){color:#81e7a0!important}
+html[data-moon-theme="dark"] :is(.stage-section-outline[data-section-color] button.active>span,.current-form-section[data-section-color]>h4){color:#101317!important}
+html[data-moon-theme="dark"] .ai-helper-launcher *{color:var(--moon-ink)!important}
