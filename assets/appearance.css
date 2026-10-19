@@ -145,3 +145,12 @@ html[data-moon-theme="dark"] .moon-appearance-select{background:var(--moon-raise
 @media(max-width:820px){.student-top-actions{gap:8px}.student-top-actions .moon-appearance{margin-left:auto}}
 @media(max-width:480px){.student-top-actions .moon-appearance-label{display:none}}
 @media print{:root[data-moon-theme="dark"]{--moon-page:#fff;--moon-paper:#fff;--moon-raised:#fff;--moon-ink:#111;--moon-muted:#575757;--moon-rule:#ddd;--moon-rule-dark:#aaa;color-scheme:light}}
+
+/* Preserve stage and phase accent borders after recolouring the card edges. */
+html[data-moon-theme="dark"] :is(.stage-card[data-section-color],.current-form-section[data-section-color],
+ .progress-card[data-section-color],.snapshot[data-section-color],#welcome[data-section-color]){
+ border-top-color:var(--section-line)
+}
+html[data-moon-theme="dark"] :is(.route-phase[data-section-color],.route-step[data-section-color].current,
+ .journey-modal .next-focus){border-left-color:var(--section-line,var(--section-turquoise-line))}
+html[data-moon-theme="dark"] .stage-header[data-section-color]{border-bottom-color:var(--section-line)}
