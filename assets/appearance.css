@@ -15,6 +15,8 @@
  --bg:var(--moon-page);--card:var(--moon-paper);--ink:var(--moon-ink);
  --muted:var(--moon-muted);--line:var(--moon-rule);
  --blue2:var(--section-turquoise-soft);--blue3:var(--section-turquoise-soft);
+ --green:#9ceab0;--amber:#f6d888;--red:#f2abc9;--purple:#ddb8f0;
+ --blue:#a9edf1;
  --greenbg:var(--section-green-soft);--amberbg:var(--section-yellow-soft);
  --redbg:var(--section-pink-soft);--purplebg:var(--section-pink-soft);
  color-scheme:dark;
