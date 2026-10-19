@@ -7,11 +7,11 @@
 @media print{.moon-appearance{display:none!important}}
 /* Research Methods Studio dark theme. Preserve phase colours and information hierarchy. */
 :root[data-moon-theme="dark"]{
- --moon-page:#121212;--moon-paper:#1e1e1e;--moon-raised:#292929;
+ --moon-page:#0f0f0f;--moon-paper:#161616;--moon-raised:#1c1c1c;
  --moon-ink:#ececec;--moon-muted:#b8b8b8;
- --moon-rule:#3d3d3d;--moon-rule-dark:#595959;
- --section-yellow-soft:#282828;--section-green-soft:#282828;
- --section-turquoise-soft:#282828;--section-pink-soft:#282828;
+ --moon-rule:#303030;--moon-rule-dark:#484848;
+ --section-yellow-soft:#1c1c1c;--section-green-soft:#1c1c1c;
+ --section-turquoise-soft:#1c1c1c;--section-pink-soft:#1c1c1c;
  --bg:var(--moon-page);--card:var(--moon-paper);--ink:var(--moon-ink);
  --muted:var(--moon-muted);--line:var(--moon-rule);
  --blue2:var(--section-turquoise-soft);--blue3:var(--section-turquoise-soft);
@@ -53,7 +53,7 @@ html[data-moon-theme="dark"] :is(.eyebrow,.rightbar-kicker,.hero-card-title,.pro
  .route-phase-head[data-section-color] b,.route-step[data-section-color].current .route-step-main>b,
  .stage-meta .phase-pill[data-section-color],.stage-header h2[data-section-color],
  #welcome[data-section-color] h2,#welcome[data-section-color] h3,#welcome[data-section-color] h4,
- .current-form-section[data-section-color]>h4){color:#121212!important}
+ .current-form-section[data-section-color]>h4){color:#0f0f0f!important}
 html[data-moon-theme="dark"] :is(.hero-copy>p,.hero-card p,.welcome p,.stage-header .purpose,
  .snap-item b,.stage-context-head b,.path-stage-top b,.path-stage-top span,.stage-orientation p,
  .stage-preview-banner b,.journey-modal .next-focus p,.stage-work-intro p,.current-form-section>p){
@@ -70,7 +70,7 @@ html[data-moon-theme="dark"] :is(.route-step.current .route-step-icon[data-secti
  background:var(--section-soft);border-color:var(--section-line)
 }
 html[data-moon-theme="dark"] .route-step[data-section-color].current .route-step-main>b,
-html[data-moon-theme="dark"] .route-phase-head[data-section-color] b{color:#121212}
+html[data-moon-theme="dark"] .route-phase-head[data-section-color] b{color:#0f0f0f}
 /* Fields and actions keep visual affordances, including visible active and disabled states. */
 html[data-moon-theme="dark"] :is(input,textarea,select,.current-form-section .guided-field input[data-field],
  .current-form-section .guided-field select[data-field]){
@@ -85,7 +85,7 @@ html[data-moon-theme="dark"] .stage-section-outline[data-section-color] button.a
  background:var(--section-soft);border-color:var(--section-line)
 }
 html[data-moon-theme="dark"] .stage-section-outline[data-section-color] button.active>span{
- background:var(--section-highlight);color:#121212!important
+ background:var(--section-highlight);color:#0f0f0f!important
 }
 html[data-moon-theme="dark"] .stage-section-outline[data-section-color] button.done>span{
  background:var(--section-soft);color:var(--moon-ink)!important
@@ -217,7 +217,7 @@ html[data-moon-theme="dark"] :is(.route-step[data-section-color] .route-step-mai
 html[data-moon-theme="dark"] :is(.stage-header h2[data-section-color],
  .route-phase-head[data-section-color] b,.route-step[data-section-color].current .route-step-main>b,
  .stage-meta .phase-pill[data-section-color],.stage-section-outline[data-section-color] button.active>span){
- color:#121212!important;
+ color:#0f0f0f!important;
 }
 html[data-moon-theme="dark"] :is(.pill,.coach-badge,.theme-chip){
  background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule-dark)
@@ -247,3 +247,42 @@ html[data-moon-theme="dark"] :is(.current-form-section .guided-field label,
 html[data-moon-theme="dark"] .current-form-section .guided-field label{
  color:var(--moon-ink)
 }
+
+/* Stage navigation and guidance need fewer full-panel fills. The working
+   form remains distinct and inputs retain visible affordances. */
+html[data-moon-theme="dark"] :is(
+ .sidebar,.rightbar,.progress-card,.snapshot,.route-phase-head,
+ .route-step,.route-step[data-section-color],.route-phase-head[data-section-color],
+ .stage-header,.stage-context-compact,.path-stage-banner,.stage-preview-banner,
+ .stage-work-intro,.welcome,.hero-card
+){
+ background:transparent;
+}
+html[data-moon-theme="dark"] :is(
+ .route-step[data-section-color],.route-phase-head[data-section-color],
+ .sidebar,.rightbar,.progress-card,.snapshot,.hero-card
+){border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(
+ .route-step.current[data-section-color],.route-step[data-section-color]:hover,
+ .stage-orientation>div.current,.stage-section-outline[data-section-color] button.active
+){
+ background:var(--moon-raised);
+ border-left-color:var(--section-line);
+}
+html[data-moon-theme="dark"] :is(
+ .stage-card,.current-form-section,.current-form-section[data-section-color],
+ .tab-panel,.form-section,.wizard,.wizard-result,.data-modal
+){background:var(--moon-paper);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.stage-card[data-section-color],
+ .current-form-section[data-section-color]){border-top-color:var(--section-line)}
+html[data-moon-theme="dark"] :is(.stage-section-outline[data-section-color] button,
+ .stage-section-outline[data-section-color] button.done:not(.active),
+ .route-step-icon[data-section-color]
+){background:transparent}
+html[data-moon-theme="dark"] :is(.current-form-section .guided-field input[data-field],
+ .current-form-section .guided-field select[data-field],textarea,input,select){
+ background:var(--moon-raised);
+ border-color:var(--moon-rule-dark);
+}
+html[data-moon-theme="dark"] :is(.ai-helper-msg.assistant,.ai-helper-quick,
+ .ai-helper-panel,.ai-helper-compose){background:var(--moon-paper)}
