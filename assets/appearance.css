@@ -156,3 +156,17 @@ html[data-moon-theme="dark"] :is(.stage-card[data-section-color],.current-form-s
 html[data-moon-theme="dark"] :is(.route-phase[data-section-color],.route-step[data-section-color].current,
  .journey-modal .next-focus){border-left-color:var(--section-line,var(--section-turquoise-line))}
 html[data-moon-theme="dark"] .stage-header[data-section-color]{border-bottom-color:var(--section-line)}
+
+/* Older route and tab components still appear in some research tools. */
+html[data-moon-theme="dark"] :is(.nav-step,.nav-step.active,.nav-step.done,.stage-tabs button,
+ .data-tabs button,.section-tab,.phase,.sidebar-note){color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.nav-step.active,.stage-tabs button.active,.data-tabs button.active){
+ background:var(--section-turquoise-soft);color:var(--moon-ink);border-color:var(--section-turquoise-line)
+}
+html[data-moon-theme="dark"] :is(.nav-step:hover,.stage-tabs button:hover,.data-tabs button:hover){
+ background:var(--moon-raised);color:var(--moon-ink)
+}
+html[data-moon-theme="dark"] :is(.nav-step .nav-num,.stage-tabs button,.data-tabs button){color:var(--moon-ink)}
+html[data-moon-theme="dark"] :is(.save-problem-banner b,.save-problem-banner span,.ai-helper-status,.stats-note){
+ color:var(--moon-ink)!important
+}
