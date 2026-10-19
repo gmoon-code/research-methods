@@ -222,3 +222,28 @@ html[data-moon-theme="dark"] :is(.stage-header h2[data-section-color],
 html[data-moon-theme="dark"] :is(.pill,.coach-badge,.theme-chip){
  background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule-dark)
 }
+
+/* Research guidance, feedback, and chat composer retained light-theme ink. */
+html[data-moon-theme="dark"] :is(.lesson p,.lesson li,.work p,.check p,.hero-rule,
+ .hero-copy>p,.alignment-chain b,.ai-helper-compose-bottom,
+ .ai-helper-compose-bottom *,.stats-note,.coach-msg p,.stage-preview-banner p){
+ color:var(--moon-ink)
+}
+html[data-moon-theme="dark"] :is(.alignment-chain b,.lesson .meta,.work .meta,
+ .check .meta,.stage-meta .stage-count){color:var(--moon-muted)}
+html[data-moon-theme="dark"] .alignment-chain span{
+ background:var(--section-yellow-soft);color:var(--moon-ink);
+ border:1px solid var(--moon-rule)
+}
+html[data-moon-theme="dark"] :is(.stage-tabs button[data-section-color],
+ .stage-tabs button[data-section-color]:hover){
+ color:var(--moon-ink);border-color:var(--moon-rule)
+}
+html[data-moon-theme="dark"] .stage-tabs button[data-section-color].active{
+ background:var(--section-soft);border-bottom-color:var(--section-line)
+}
+html[data-moon-theme="dark"] :is(.current-form-section .guided-field label,
+ .current-form-section .guided-field small,.field-compact-meta span){color:var(--moon-muted)}
+html[data-moon-theme="dark"] .current-form-section .guided-field label{
+ color:var(--moon-ink)
+}
