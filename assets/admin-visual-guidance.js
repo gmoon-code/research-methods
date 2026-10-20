@@ -17,6 +17,7 @@ window.RMSVisualGuidance=(()=>{
   let mounted=false;
   let lastStage="";
   let fromVisual=false;
+  let selectedBlock=null;
   const byId=id=>document.getElementById(id);
 
   function status(message,warning=false) {
@@ -51,11 +52,150 @@ window.RMSVisualGuidance=(()=>{
     return host;
   }
 
+  function blockStatus(message) {
+    const text=byId("visualBlockStatus");
+    if(text)text.textContent=message;
+  }
+
+  function activeBlock() {
+    if(!selectedBlock)return null;
+    const host=byId("visualGuidanceEditor")?.querySelector(
+      '[data-visual-field="'+selectedBlock.field+'"]');
+    if(!host||!RICH.has(selectedBlock.field))return null;
+    const block=host.children.item(selectedBlock.index);
+    return block?{host,block,field:selectedBlock.field}:null;
+  }
+
+  function blockControls() {
+    const active=activeBlock();
+    const hasBlock=!!active;
+    const index=selectedBlock?.index??0;
+    const list=hasBlock&&["UL","OL"].includes(active.block.tagName);
+    const enabled={
+      visualAddParagraph:hasBlock,
+      visualAddList:hasBlock,
+      visualAddListItem:!!list,
+      visualMoveBlockUp:hasBlock&&index>0,
+      visualMoveBlockDown:hasBlock&&index<active.host.children.length-1,
+      visualRemoveBlock:hasBlock&&active.host.children.length>1
+    };
+    for(const [id,canUse] of Object.entries(enabled)){
+      const button=byId(id);
+      if(button)button.disabled=!canUse;
+    }
+  }
+
+  function selectBlock(event){
+    const panel=byId("visualGuidanceEditor");
+    const host=event.target.closest(".visual-guidance-rich[data-visual-field]");
+    if(!panel||!host||!panel.contains(host))return;
+    let block=event.target;
+    while(block&&block.parentElement!==host)block=block.parentElement;
+    if(!block||block.parentElement!==host)return;
+    const index=[...host.children].indexOf(block);
+    if(index<0)return;
+    for(const mark of panel.querySelectorAll("[data-visual-selected]"))
+      mark.removeAttribute("data-visual-selected");
+    selectedBlock={field:host.dataset.visualField,index};
+    block.setAttribute("data-visual-selected","");
+    blockControls();
+    blockStatus("Selected "+selectedBlock.field.replace("_html","").replace("_"," ")+
+      " block "+(index+1)+" of "+host.children.length+
+      ". Use the controls to add, move, or remove it.");
+  }
+
+  function clearBlockSelection() {
+    selectedBlock=null;
+    for(const mark of byId("visualGuidanceEditor")?.querySelectorAll(
+      "[data-visual-selected]")||[])mark.removeAttribute("data-visual-selected");
+    blockControls();
+    blockStatus("Click a paragraph, heading, concept box, or list below to select a block.");
+  }
+
+  // The outline marker is editor-only metadata. Remove it from a detached
+  // clone before a value enters the authoritative schema-validated draft.
+  function cleanRichHtml(host){
+    const copy=host.cloneNode(true);
+    for(const mark of copy.querySelectorAll("[data-visual-selected]"))
+      mark.removeAttribute("data-visual-selected");
+    return copy.innerHTML;
+  }
+
+  function validRichChange(field,html){
+    const record={title:"Preview",nav:"Preview",purpose:"Preview",
+      learn_html:"<p>Preview</p>",example_html:"<p>Example</p>",
+      warning_html:"<p>Warning</p>"};
+    record[field]=html;
+    return window.RMSAdminContentStudio?.validateValue?.(record);
+  }
+
+  function editBlock(action){
+    const active=activeBlock();
+    if(!active){blockStatus("Choose a content block first.");return;}
+    const {host,block,field}=active;
+    const original=host.innerHTML;
+    const previousIndex=selectedBlock.index;
+    const text=byId("visualBlockText")?.value.trim()||"";
+    if(["paragraph","list","list-item"].includes(action)&&!text){
+      blockStatus("Enter text before inserting a paragraph or list item.");
+      byId("visualBlockText")?.focus();
+      return;
+    }
+    let nextIndex=previousIndex;
+    if(action==="paragraph"||action==="list"){
+      const next=document.createElement(action==="paragraph"?"p":"ul");
+      if(action==="paragraph")next.textContent=text;
+      else {
+        const li=document.createElement("li");
+        li.textContent=text;next.appendChild(li);
+      }
+      block.after(next);
+      nextIndex=previousIndex+1;
+    } else if(action==="list-item"){
+      if(!["UL","OL"].includes(block.tagName))return;
+      const li=document.createElement("li");li.textContent=text;
+      block.appendChild(li);
+    } else if(action==="up"){
+      if(previousIndex===0)return;
+      block.previousElementSibling.before(block);
+      nextIndex=previousIndex-1;
+    } else if(action==="down"){
+      if(previousIndex>=host.children.length-1)return;
+      block.nextElementSibling.after(block);
+      nextIndex=previousIndex+1;
+    } else if(action==="remove"){
+      if(host.children.length<=1)return;
+      block.remove();
+      nextIndex=Math.min(previousIndex,host.children.length-1);
+    } else return;
+    const proposed=cleanRichHtml(host);
+    const checked=validRichChange(field,proposed);
+    if(!checked?.ok){
+      host.innerHTML=original;
+      blockStatus("Change rejected. "+
+        (checked?.errors?.[0]||"The content format is not supported."));
+      blockControls();
+      return;
+    }
+    for(const mark of host.querySelectorAll("[data-visual-selected]"))
+      mark.removeAttribute("data-visual-selected");
+    selectedBlock={field,index:nextIndex};
+    const chosen=host.children.item(nextIndex);
+    chosen?.setAttribute("data-visual-selected","");
+    host.dispatchEvent(new Event("input",{bubbles:true}));
+    if(action==="paragraph"||action==="list"||action==="list-item")
+      byId("visualBlockText").value="";
+    blockControls();
+    blockStatus("Block updated in this stage's in-memory draft. "+
+      "Use Validate draft to review the complete guidance record.");
+  }
+
   function render(draft,record) {
     const panel=byId("visualGuidanceEditor");
     if(!panel||!draft?.value||!record)return;
     if(fromVisual||panel.contains(document.activeElement))return;
     const key=String(record.key||"");
+    if(lastStage!==key||selectedBlock)clearBlockSelection();
     lastStage=key;
     byId("visualGuidanceRecord").textContent=
       "Stage "+record.stage_id+" · "+(record.phase_label||record.phase||"");
@@ -101,7 +241,7 @@ window.RMSVisualGuidance=(()=>{
     const field=el.dataset.visualField;
     const input=byId(FIELD_TO_ID[field]);
     if(!input)return;
-    const value=RICH.has(field)?el.innerHTML:el.textContent;
+    const value=RICH.has(field)?cleanRichHtml(el):el.textContent;
     if(RICH.has(field)) {
       const api=window.RMSAdminContentStudio;
       const recordValue={title:"Preview",nav:"Preview",purpose:"Preview",
@@ -152,6 +292,18 @@ window.RMSVisualGuidance=(()=>{
     const panel=byId("visualGuidanceEditor");
     if(!panel||!window.RMSAdminContentStudio)return false;
     panel.addEventListener("input",updateValue);
+    panel.addEventListener("click",event=>{
+      if(event.target.closest(".visual-guidance-rich[data-visual-field]"))
+        selectBlock(event);
+    });
+    const commands={
+      visualAddParagraph:"paragraph",visualAddList:"list",
+      visualAddListItem:"list-item",visualMoveBlockUp:"up",
+      visualMoveBlockDown:"down",visualRemoveBlock:"remove"
+    };
+    for(const [id,action] of Object.entries(commands))
+      byId(id)?.addEventListener("click",()=>editBlock(action));
+    blockControls();
     const toolbar=panel.querySelector(".visual-guidance-toolbar");
     toolbar?.addEventListener("mousedown",event=>{
       if(event.target.closest("[data-guidance-format]"))event.preventDefault();
