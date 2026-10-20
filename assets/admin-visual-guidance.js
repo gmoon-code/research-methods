@@ -87,9 +87,11 @@ window.RMSVisualGuidance=(()=>{
 
   function selectBlock(event){
     const panel=byId("visualGuidanceEditor");
-    const host=event.target.closest(".visual-guidance-rich[data-visual-field]");
+    const target=event.target?.nodeType===Node.TEXT_NODE?
+      event.target.parentElement:event.target;
+    const host=target?.closest?.(".visual-guidance-rich[data-visual-field]");
     if(!panel||!host||!panel.contains(host))return;
-    let block=event.target;
+    let block=target===host?host.firstElementChild:target;
     while(block&&block.parentElement!==host)block=block.parentElement;
     if(!block||block.parentElement!==host)return;
     const index=[...host.children].indexOf(block);
@@ -295,6 +297,17 @@ window.RMSVisualGuidance=(()=>{
     panel.addEventListener("click",event=>{
       if(event.target.closest(".visual-guidance-rich[data-visual-field]"))
         selectBlock(event);
+    });
+    // A keyboard user can focus a rich-content region and select its first
+    // block, then move the caret through the document with arrow keys.
+    panel.addEventListener("focusin",event=>{
+      if(event.target.matches?.(".visual-guidance-rich[data-visual-field]"))
+        selectBlock({target:window.getSelection()?.anchorNode||event.target});
+    });
+    panel.addEventListener("keyup",event=>{
+      if(!event.target.matches?.(".visual-guidance-rich[data-visual-field]"))return;
+      if(["ArrowUp","ArrowDown","Home","End"].includes(event.key))
+        selectBlock({target:window.getSelection()?.anchorNode||event.target});
     });
     const commands={
       visualAddParagraph:"paragraph",visualAddList:"list",
