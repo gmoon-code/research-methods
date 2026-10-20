@@ -16,7 +16,7 @@ Select **Review wording changes** to inspect each old and proposed value. **Expo
 
 The export is **not** a curriculum release, content publication, hotpatch, or authenticated update. It is not consumed by the existing student application or v3 guidance service. A subsequent implementation would need explicit, reviewed change application, full student progress-compatibility verification, editorial review, and the existing release checks. A change to a student's visible field label or a completion criterion may affect their understanding of the task and requires pedagogical review even when its technical data key stays fixed.
 
-Keep the proposed JSON separately before closing the browser, since drafts are intentionally ephemeral.
+Keep the proposed JSON separately before closing the browser, since drafts are intentionally ephemeral. Use **Reopen saved proposal** to import a previous review packet in a new browser session. Import requires the exact source SHA-256 hash, validates every stage ID and original text path, rejects unknown or duplicated paths, and prompts before replacing current unsaved work. It will not apply a packet from a different curriculum release.
 
 ## Validation
 
