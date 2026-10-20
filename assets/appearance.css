@@ -429,3 +429,37 @@ html[data-moon-theme="dark"] :is(.stage-dots button:disabled,.exemplar-stage-gri
 html[data-moon-theme="dark"] :is(.snapshot-primary-tool,.student-top-actions .save-status){
  border-color:var(--moon-rule-dark)
 }
+
+/* Sticky controls and phase navigation were overlooked by the light-to-dark pass. */
+html[data-moon-theme="dark"] .stage-bottom-nav{
+ background:rgba(15,15,15,.97)!important;
+ color:var(--moon-ink);
+ border-top:1px solid var(--moon-rule);
+}
+html[data-moon-theme="dark"] .stage-tabs{
+ background:var(--moon-paper);border-bottom-color:var(--moon-rule);
+}
+html[data-moon-theme="dark"] .stage-tabs button[data-section-color].active{
+ background:var(--section-highlight)!important;
+ color:#101010!important;
+ border-bottom:3px solid var(--section-line)!important;
+}
+html[data-moon-theme="dark"] .stage-tabs button[data-section-color]:not(.active){
+ background:transparent;color:var(--moon-ink);
+}
+html[data-moon-theme="dark"] :is(.stage-bottom-nav .muted,.stage-bottom-nav small){
+ color:var(--moon-muted);
+}
+html[data-moon-theme="dark"] .coach-panel{
+ background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule);
+}
+html[data-moon-theme="dark"] :is(.ai-helper-conversation,.ai-helper-empty,
+ .ai-helper-context-row,.ai-helper-guard-note,.ai-helper-scaffold,
+ .ai-helper-compose-bottom){
+ background:var(--moon-paper);color:var(--moon-ink);
+ border-color:var(--moon-rule);
+}
+html[data-moon-theme="dark"] :is(.save-status,.snapshot-primary-tool,
+ #exitStagePreview,.progress-track,.current-context-strip){
+ transition:background-color .12s ease,border-color .12s ease,color .12s ease;
+}
