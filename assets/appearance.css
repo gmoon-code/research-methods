@@ -463,3 +463,27 @@ html[data-moon-theme="dark"] :is(.save-status,.snapshot-primary-tool,
  #exitStagePreview,.progress-track,.current-context-strip){
  transition:background-color .12s ease,border-color .12s ease,color .12s ease;
 }
+
+/* Text-only legacy component colours. The base stylesheet assigns dark
+   blue-grey ink to many labels without a background declaration. */
+html[data-moon-theme="dark"] :is(label span,.ready-item span,.align-row .a-label,.score-label span,.paper-map small,.pending-line,.process-grid span,.comp-detail-head span){color:var(--moon-muted)}
+html[data-moon-theme="dark"] :is(.teacher-rating small,.guide-kicker,.guide-plain,.stage-help-compact span,.path-choice small,.path-stage-top span,.path-readiness small,.no-dead-end span){color:var(--moon-muted)}
+html[data-moon-theme="dark"] :is(.rescue-level span,.rescue-field-list>button>span,.exemplar-inline-card span,.exemplar-stage-grid span,.exemplar-label,.exemplar-source-card span,.exemplar-project-head>span,.exemplar-project-card small){color:var(--moon-muted)}
+html[data-moon-theme="dark"] :is(.path-comparison-strip span,.rescue-level small,.rescue-field-list small,.exemplar-stage-grid small, .exemplar-card-foot span,.timeline-item small,.snap-item span,.phase-title,.micro,.path-stage-top span,.path-progress-line span,.current-context-strip span,.current-context-strip small,.response-cue span,.response-expectation small,.response-contrast small){color:var(--moon-muted)}
+html[data-moon-theme="dark"] :is(.snapshot-hero-meta span,.snapshot-metrics span,.snapshot-core-card span,.snapshot-stage>header span,.snapshot-stage-status small,.snapshot-field-label,.snapshot-workspace-block>.snapshot-section-head>span,.snapshot-source-list header span){color:var(--moon-muted)}
+html[data-moon-theme="dark"] :is(.snapshot-schema-list span,.snapshot-search-list small,.ai-helper-kicker,.ai-helper-context-row>span,.ai-helper-boundary span,.ai-helper-current,.ai-helper-compose-bottom>span,.route-phase-head span){color:var(--moon-muted)}
+html[data-moon-theme="dark"] :is(.route-step-main small,.stage-orientation span,.stage-context-item span,.field-compact-meta,.help-choice-grid span,.more-menu-grid span,.flow-transition span,.onboarding-points span,.recommended-path-card span){color:var(--moon-muted)}
+html[data-moon-theme="dark"] :is(.structured-field-head small,.method-substep small){color:var(--moon-muted)}
+
+html[data-moon-theme="dark"] :is(.hero-copy>p,.stage-header .purpose,.lesson p,.lesson li,.work p,.check p,.example-box p,.warning-box ul,.wizard-result dt,.coach-msg p,.coach-msg .next){color:var(--moon-ink)}
+html[data-moon-theme="dark"] :is(.history summary,.history-row,.ai-cites,.audit-summary p,.issue p,.protocol-card p,.column-card p,.run-card p){color:var(--moon-ink)}
+html[data-moon-theme="dark"] :is(.paper-map p,.milestone-card>p,.blocked-line,.competency-card>p,.competency-detail>p,.evidence-row,.timeline-item b,.timeline-item p){color:var(--moon-ink)}
+html[data-moon-theme="dark"] :is(.rating-row p,.protocol-grid p,.onboard-grid p,.pilot-readiness-head p,.pilot-check p,.guide-example b,.guide-terms p,.field-help-grid p,.field-help-grid li){color:var(--moon-ink)}
+html[data-moon-theme="dark"] :is(.lab-guide p,.choice-help p,.choice-help li,.glossary-entry p,.guide-walkthrough p,.guide-walkthrough li,.decision-prompt,.choice-option p,.novice-promise p,.pathway-principle p){color:var(--moon-ink)}
+html[data-moon-theme="dark"] :is(.path-choice p,.path-stage-banner>p,.path-readiness.ready-pass b,.rescue-stage-summary span,.exemplar-project-card p,.snapshot-section-head p,.snapshot-no-work,.ai-helper-privacy-note>b){color:var(--moon-ink)}
+html[data-moon-theme="dark"] :is(.verified-source,.route-step.done,.route-step.future,.stage-work-intro p,.current-form-section>p,.stage-tool-drawer>p,.lab-stepper-top span,body.teacher-mode .brand:after){color:var(--moon-ink)}
+html[data-moon-theme="dark"] :is(.source-pass>summary small,.lab-carry-forward span){color:var(--moon-ink)}
+
+html[data-moon-theme="dark"] #projectHeaderName{color:var(--moon-muted)!important}
+html[data-moon-theme="dark"] .verified-source{color:#9ceab0}
+html[data-moon-theme="dark"] :is(.blocked-line,.save-problem-banner b){color:#f2afbf}
