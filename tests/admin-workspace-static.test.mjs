@@ -165,9 +165,13 @@ test(
 );
 
 test(
-  "Admin shell has no student project ingestion path",
+  "Admin shell has no student project ingestion path and only accepts local review JSON",
   () => {
-    assert.doesNotMatch(admin, /type="file"/);
+    const fileFields=[...admin.matchAll(/<input\b[^>]*type="file"[^>]*>/g)]
+      .map(match=>match[0]);
+    assert.equal(fileFields.length,1,"Only the activity review JSON picker is allowed");
+    assert.match(fileFields[0],/id="activityImport"/);
+    assert.match(fileFields[0],/accept="\.json,application\/json"/);
     assert.doesNotMatch(admin, /studentPacketFiles/);
     assert.doesNotMatch(
       admin,
