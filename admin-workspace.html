@@ -627,6 +627,46 @@
       margin-top: 15px;
     }
 
+
+    /* Visual guidance authoring shares the existing six-field validated draft. */
+    .visual-guidance-card {
+      padding:18px 20px;
+      margin:0 0 22px;
+      border:1px solid var(--border);
+      border-top:4px solid #66f0f0;
+      background:var(--surface);
+      display:grid;
+      gap:15px;
+    }
+    .visual-guidance-header h4 {margin:0 0 6px;font-size:1.1rem;}
+    .visual-guidance-header p {margin:0 0 8px;color:var(--muted);font-size:.85rem;line-height:1.45;}
+    .visual-guidance-header small {display:block;color:var(--muted);}
+    .visual-guidance-field {display:grid;gap:6px;}
+    .visual-guidance-field label {font-size:.78rem;font-weight:800;color:#526174;}
+    .visual-guidance-field [contenteditable] {
+      padding:12px 13px;
+      min-height:42px;
+      line-height:1.55;
+      border:1px solid #ccd4db;
+      border-radius:5px;
+      background:#fff;
+      color:#172033;
+      overflow-wrap:anywhere;
+      cursor:text;
+    }
+    .visual-guidance-field [contenteditable]:focus {
+      outline:3px solid rgba(19,123,127,.2);
+      border-color:#23848c;
+    }
+    .visual-guidance-field h3[contenteditable] {margin:0;font-size:1.42rem;line-height:1.2;}
+    .visual-guidance-field p[contenteditable] {margin:0;}
+    .visual-guidance-rich {min-height:84px;}
+    .visual-guidance-rich>p:first-child,.visual-guidance-rich>h3:first-child {margin-top:0;}
+    .visual-guidance-rich>p:last-child {margin-bottom:0;}
+    .visual-guidance-rich .concept-box {background:#eff7f5;border-left:4px solid #66f566;padding:10px;}
+    .visual-guidance-status {margin:0;font-size:.8rem;color:#46616f;}
+    .visual-guidance-status[data-warning="true"] {color:#883c4b;}
+    @media(max-width:600px){.visual-guidance-card{padding:14px;}}
     .content-preview-frame {
       width: 100%;
       min-height: 620px;
@@ -1087,6 +1127,39 @@
                   <span class="section-status">In-memory draft</span>
                 </div>
 
+                <section class="visual-guidance-card" id="visualGuidanceEditor" aria-labelledby="visualGuidanceHeading">
+                  <div class="visual-guidance-header">
+                    <h4 id="visualGuidanceHeading">Edit guidance on the page</h4>
+                    <p>Click a title or a content block to edit it directly. The original Content Studio fields below update as you type.</p>
+                    <small id="visualGuidanceRecord">Selected stage</small>
+                  </div>
+                  <div class="visual-guidance-field">
+                    <label id="visualTitleLabel">Stage title</label>
+                    <h3 contenteditable="true" role="textbox" aria-labelledby="visualTitleLabel" aria-multiline="false" data-visual-field="title"></h3>
+                  </div>
+                  <div class="visual-guidance-field">
+                    <label id="visualNavLabel">Navigation label</label>
+                    <div class="visual-guidance-text" contenteditable="true" role="textbox" aria-labelledby="visualNavLabel" aria-multiline="false" data-visual-field="nav"></div>
+                  </div>
+                  <div class="visual-guidance-field">
+                    <label id="visualPurposeLabel">Purpose</label>
+                    <p class="visual-guidance-text" contenteditable="true" role="textbox" aria-labelledby="visualPurposeLabel" aria-multiline="false" data-visual-field="purpose"></p>
+                  </div>
+                  <div class="visual-guidance-field">
+                    <label id="visualLearnLabel">Teaching content</label>
+                    <div class="visual-guidance-rich" contenteditable="true" role="textbox" aria-labelledby="visualLearnLabel" aria-multiline="true" data-visual-field="learn_html"></div>
+                  </div>
+                  <div class="visual-guidance-field">
+                    <label id="visualExampleLabel">Example block</label>
+                    <div class="visual-guidance-rich" contenteditable="true" role="textbox" aria-labelledby="visualExampleLabel" aria-multiline="true" data-visual-field="example_html"></div>
+                  </div>
+                  <div class="visual-guidance-field">
+                    <label id="visualWarningLabel">Warning block</label>
+                    <div class="visual-guidance-rich" contenteditable="true" role="textbox" aria-labelledby="visualWarningLabel" aria-multiline="true" data-visual-field="warning_html"></div>
+                  </div>
+                  <p id="visualGuidanceStatus" class="visual-guidance-status" role="status" aria-live="polite"></p>
+                </section>
+
                 <div class="content-form-grid two">
                   <label>
                     <span>Stage title</span>
@@ -1489,6 +1562,7 @@
   <script src="./assets/teacher-session.js"></script>
   <script src="./assets/content-registry.js"></script>
   <script src="./assets/admin-content-studio.js"></script>
+  <script src="./assets/admin-visual-guidance.js"></script>
   <script src="./assets/admin-content-studio-ui.js"></script>
   <script src="./assets/admin-content-service.js"></script>
   <script src="./assets/admin-content-publication.js"></script>
