@@ -1,0 +1,49 @@
+name: Admin visual guidance smoke test
+
+on:
+  pull_request:
+    paths:
+      - "admin-workspace.html"
+      - "assets/admin-visual-guidance.js"
+      - "assets/admin-content-studio-ui.js"
+      - "tests/admin-visual-guidance-smoke.mjs"
+      - ".github/workflows/admin-visual-guidance.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  chromium:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Chromium for end-to-end editing tests
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Serve static admin files locally
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 >/tmp/studio-admin.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl --silent --fail http://127.0.0.1:8765/admin-workspace.html >/dev/null && break
+            sleep 1
+          done
+      - name: Test visual editing with isolated simulated session
+        env:
+          ADMIN_TEST_URL: http://127.0.0.1:8765
+        run: node tests/admin-visual-guidance-smoke.mjs
+      - name: Save editor screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: studio-visual-editor-screenshot
+          path: /tmp/visual-guidance-artifacts/
+          if-no-files-found: ignore
