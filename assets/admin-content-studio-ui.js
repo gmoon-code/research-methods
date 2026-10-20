@@ -261,6 +261,7 @@ window.RMSAdminContentStudioUI = (() => {
 
     syncReplacementView();
     updateDirtySummary();
+    window.RMSVisualGuidance?.render?.(draft,record);
   }
 
   function validationMessage(
@@ -1009,6 +1010,8 @@ window.RMSAdminContentStudioUI = (() => {
         "click",
         exportDraft
       );
+
+    window.RMSVisualGuidance?.mount?.();
 
     renderBrowser();
 
