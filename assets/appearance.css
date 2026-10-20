@@ -487,3 +487,8 @@ html[data-moon-theme="dark"] :is(.source-pass>summary small,.lab-carry-forward s
 html[data-moon-theme="dark"] #projectHeaderName{color:var(--moon-muted)!important}
 html[data-moon-theme="dark"] .verified-source{color:#9ceab0}
 html[data-moon-theme="dark"] :is(.blocked-line,.save-problem-banner b){color:#f2afbf}
+
+/* Fixed inline-label colours in the construct and procedure builders. */
+html[data-moon-theme="dark"] :is(.construct-row[style],.procedure-row[style]){
+ color:var(--moon-muted)!important;
+}
