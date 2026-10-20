@@ -1,6 +1,6 @@
 import {chromium} from "playwright";
 import assert from "node:assert/strict";
-import {mkdir} from "node:fs/promises";
+import {mkdir,readFile} from "node:fs/promises";
 
 const origin=process.env.ADMIN_TEST_URL||"http://127.0.0.1:8765";
 const browser=await chromium.launch({headless:true});
@@ -148,6 +148,67 @@ try {
   assert.notEqual(await page.locator("#contentTitle").inputValue(),"New visual draft title");
   assert.equal((await page.locator('[data-visual-field="title"]').textContent()).trim(),
     await page.locator("#contentTitle").inputValue());
+  // The curriculum activity author is proposal-only. Exercise visible
+  // wording edits, field-key preservation, validation and safe JSON export.
+  const activityBaseline=await page.evaluate(()=>JSON.stringify(window.RMSCurriculum.stages));
+  assert.equal(await page.locator("#activityStage option").count(),18);
+  assert.equal(await page.locator("#activityExport").isDisabled(),true);
+  await page.locator('[data-activity-path="s.0.f.0.label"]').click();
+  assert.match(await page.locator("#activitySelectedLabel").textContent(),/interest1 label/);
+  const revisedLabel="Three science areas I would like to explore further";
+  await page.locator("#activityEditText").fill(revisedLabel);
+  assert.equal(await page.locator('[data-activity-path="s.0.f.0.label"]').textContent(),revisedLabel);
+  assert.equal(await page.locator("#activityExport").isEnabled(),true);
+  await page.locator('[data-activity-path="c.0"]').click();
+  await page.locator("#activityEditText").fill("I explored several possible research directions before choosing one.");
+  await page.locator("#activityStage").selectOption("2");
+  assert.match(await page.locator("#activityStageHeading").textContent(),/Stage 2/);
+  assert.equal(await page.locator("#activityInspector").isHidden(),true);
+  await page.locator('[data-activity-path="s.0.desc"]').click();
+  await page.locator("#activityEditText").fill("Describe the scope of the possible investigation.");
+  await page.locator("#activityStage").selectOption("1");
+  assert.equal(await page.locator('[data-activity-path="s.0.f.0.label"]').textContent(),revisedLabel);
+  await page.locator("#activityStage").selectOption("2");
+  await page.locator('[data-activity-path="s.0.desc"]').click();
+  await page.locator("#activityEditText").fill("<img src=x onerror=alert(1)>");
+  assert.equal(await page.locator("#activityExport").isDisabled(),true,
+    "Unsafe markup must prevent activity-proposal export");
+  await page.locator("#activityRevertField").click();
+  assert.equal(await page.locator("#activityExport").isEnabled(),true);
+  await page.locator("#activityReview").click();
+  assert.match(await page.locator("#activityReviewValidation").textContent(),
+    /field types, counts, and choices are excluded/);
+  await page.locator("#activityReviewDialog form button").click();
+
+  const pendingActivity=page.waitForEvent("download");
+  await page.locator("#activityExport").click();
+  const packetDownload=await pendingActivity;
+  assert.equal(packetDownload.suggestedFilename(),"rms-activity-wording-review.json");
+  const proposal=JSON.parse(await readFile(await packetDownload.path(),"utf8"));
+  assert.equal(proposal.schema_version,"rms-activity-wording-proposal-v1");
+  assert.equal(proposal.source_file,"assets/curriculum.js");
+  assert.match(proposal.source_sha256,/^[a-f0-9]{64}$/);
+  assert.equal(proposal.live_publication,false);
+  assert.equal(proposal.review_required,true);
+  assert.equal(proposal.edits.length,3);
+  assert(proposal.edits.some(e=>e.stage_id===1&&e.path==="s.0.f.0.label"&&e.value===revisedLabel));
+  assert(proposal.edits.some(e=>e.stage_id===1&&e.path==="c.0"));
+  assert(proposal.edits.some(e=>e.stage_id===2&&e.path==="s.0.desc"));
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSCurriculum.stages)),
+    activityBaseline,"The editor must never mutate the student curriculum module");
+  const currentStageId=await page.evaluate(()=>window.RMSCurriculum.stages[0].sections[0].fields[0][0]);
+  assert.equal(currentStageId,"interest1","Stable student data keys must remain intact");
+  await page.locator("#activityStage").selectOption("6");
+  assert.match(await page.locator("#activityPreview").textContent(),/separate interactive activity/i);
+  assert(await page.locator('[data-activity-path^="c."]').count()>0);
+  await page.locator("#activityStage").selectOption("1");
+  page.once("dialog",dialog=>dialog.accept());
+  await page.locator("#activityReset").click();
+  assert.equal(await page.locator('[data-activity-path="s.0.f.0.label"]').textContent(),
+    "Three science or research areas I enjoy");
+  assert.equal(await page.locator("#activityReviewCount").textContent(),"1 proposed changes");
+  await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-activity-wording-preview.png",fullPage:true});
+
   await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-visual-guidance-desktop.png",fullPage:true});
   assert.deepEqual(errors,[],"Admin visual guidance should not produce runtime errors");
   console.log("PASS: admin mount, 18 stages, direct editing, source sync, safe paste and navigation");
