@@ -5,6 +5,8 @@ on:
     paths:
       - "admin-workspace.html"
       - "assets/admin-visual-guidance.js"
+      - "assets/admin-activity-authoring.js"
+      - "assets/curriculum.js"
       - "assets/admin-content-studio-ui.js"
       - "tests/admin-visual-guidance-smoke.mjs"
       - ".github/workflows/admin-visual-guidance.yml"
@@ -40,6 +42,8 @@ jobs:
         run: |
           node --test tests/admin-content-studio.test.mjs
           node --test tests/admin-content-publication.test.mjs
+          node --test tests/admin-workspace-static.test.mjs
+          node --check assets/admin-activity-authoring.js
       - name: Test visual editing with isolated simulated session
         env:
           ADMIN_TEST_URL: http://127.0.0.1:8765
