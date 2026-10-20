@@ -286,3 +286,63 @@ html[data-moon-theme="dark"] :is(.current-form-section .guided-field input[data-
 }
 html[data-moon-theme="dark"] :is(.ai-helper-msg.assistant,.ai-helper-quick,
  .ai-helper-panel,.ai-helper-compose){background:var(--moon-paper)}
+
+/* App header and future-stage preview: exact fixes for retained light styles. */
+html[data-moon-theme="dark"] .student-top-actions .save-status{
+ background:var(--moon-raised)!important;
+ color:var(--moon-muted)!important;
+ border:1px solid var(--moon-rule-dark)!important;
+ border-radius:4px;
+ padding:7px 10px;
+ font-size:12px;
+ font-weight:700;
+}
+html[data-moon-theme="dark"] .student-top-actions .save-status.save-error{
+ background:var(--moon-paper)!important;
+ color:#ffc0ce!important;
+ border-color:#bb647b!important;
+}
+html[data-moon-theme="dark"] .student-top-actions .snapshot-primary-tool{
+ background:var(--moon-paper)!important;
+ color:var(--moon-ink)!important;
+ border:1px solid var(--moon-rule-dark)!important;
+ font-weight:700;
+}
+html[data-moon-theme="dark"] .student-top-actions .snapshot-primary-tool:is(:hover,:focus-visible){
+ background:var(--moon-raised)!important;
+ border-color:var(--section-turquoise-line)!important;
+ color:var(--moon-ink)!important;
+}
+html[data-moon-theme="dark"] :is(#exitStagePreview,#returnCurrentStage){
+ background:var(--moon-raised)!important;
+ color:var(--moon-ink)!important;
+ border:1px solid var(--moon-rule-dark)!important;
+ min-height:42px;
+}
+html[data-moon-theme="dark"] :is(#exitStagePreview,#returnCurrentStage):is(:hover,:focus-visible){
+ background:var(--moon-paper)!important;
+ border-color:var(--section-turquoise-line)!important;
+ color:var(--moon-ink)!important;
+}
+html[data-moon-theme="dark"] .progress-track{
+ background:var(--moon-raised)!important;
+ border-color:var(--moon-rule)!important;
+}
+html[data-moon-theme="dark"] .progress-track[data-section-color]>div{
+ background:var(--section-line)!important;
+}
+html[data-moon-theme="dark"] .current-context-strip{
+ background:var(--moon-paper);
+ border-color:var(--moon-rule);
+}
+html[data-moon-theme="dark"] :is(.current-context-strip span,.current-context-strip small){
+ color:var(--moon-muted);
+}
+html[data-moon-theme="dark"] .current-context-strip b{color:var(--moon-ink)}
+html[data-moon-theme="dark"] .stage-guide{
+ background:var(--moon-paper);
+ color:var(--moon-ink);
+ border-color:var(--moon-rule);
+}
+html[data-moon-theme="dark"] .stage-guide :is(h3,p,li){color:var(--moon-ink)}
+html[data-moon-theme="dark"] .stage-guide .guide-kicker{color:var(--moon-muted)}
