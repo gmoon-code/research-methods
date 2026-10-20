@@ -709,6 +709,8 @@
     .activity-inspector small{color:var(--muted);display:block;margin:6px 0;}
     .activity-inspector #activityOriginal{font-size:.82rem;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;}
     .activity-empty{color:var(--muted);line-height:1.6;}
+    .activity-import-label{font-size:.82rem;align-self:center;font-weight:700;}
+    #activityImport{max-width:250px;min-width:150px;border:1px solid #b1bfbd;border-radius:3px;padding:7px;font-size:.78rem;background:#fff;}
     .activity-review-dialog{width:min(720px,92vw);max-height:82vh;overflow:auto;border:1px solid #b7c5c6;padding:22px;background:#fff;color:#222;}
     .activity-review-dialog::backdrop{background:#0007;}
     .activity-review-dialog form{text-align:right;margin-top:16px;}
@@ -1377,6 +1379,9 @@
               <div class="content-action-row">
                 <button id="activityReview" type="button" class="button">Review wording changes</button>
                 <button id="activityExport" type="button" class="button" disabled>Export review JSON</button>
+                <label class="activity-import-label" for="activityImport">Reopen saved proposal</label>
+                <input id="activityImport" type="file" accept=".json,application/json"
+                  aria-label="Import a saved activity wording review packet">
                 <button id="activityReset" type="button" class="button" disabled>Reset this stage</button>
               </div>
               <p class="content-editor-help">
