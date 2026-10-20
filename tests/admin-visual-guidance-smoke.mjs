@@ -201,6 +201,8 @@ try {
   assert.equal(currentStageId,"interest1","Stable student data keys must remain intact");
   const savedReviewBytes=await readFile(await packetDownload.path());
   await page.reload({waitUntil:"domcontentloaded"});
+  await page.locator("#adminWorkspace:not([hidden])").waitFor();
+  await page.locator('[data-admin-panel="content-studio"]').click();
   await page.locator('[data-activity-path="s.0.f.0.label"]').waitFor();
   assert.equal(await page.locator("#activityReviewCount").textContent(),"0 proposed changes",
     "Activity drafts must be explicitly exported before leaving the current session");
@@ -210,7 +212,8 @@ try {
     mimeType:"application/json",
     buffer:Buffer.from(JSON.stringify(mismatched))
   });
-  assert.match(await page.locator("#activityStatus").textContent(),/different curriculum version/);
+  await page.waitForFunction(()=>/different curriculum version/.test(
+    document.getElementById("activityStatus")?.textContent||""));
   assert.equal(await page.locator("#activityReviewCount").textContent(),"0 proposed changes");
   const altered={...proposal,edits:[...proposal.edits,{
     stage_id:1,path:"s.0.f.999.label",original:"",value:"Unsafe inserted field"
@@ -220,14 +223,16 @@ try {
     mimeType:"application/json",
     buffer:Buffer.from(JSON.stringify(altered))
   });
-  assert.match(await page.locator("#activityStatus").textContent(),/protected structure/);
+  await page.waitForFunction(()=>/protected structure/.test(
+    document.getElementById("activityStatus")?.textContent||""));
   assert.equal(await page.locator("#activityReviewCount").textContent(),"0 proposed changes");
   await page.locator("#activityImport").setInputFiles({
     name:"saved-review.json",
     mimeType:"application/json",
     buffer:savedReviewBytes
   });
-  assert.match(await page.locator("#activityStatus").textContent(),/Restored 3 wording proposals/);
+  await page.waitForFunction(()=>/Restored 3 wording proposals/.test(
+    document.getElementById("activityStatus")?.textContent||""));
   assert.equal(await page.locator("#activityReviewCount").textContent(),"3 proposed changes");
   assert.equal(await page.locator('[data-activity-path="s.0.f.0.label"]').textContent(),revisedLabel);
   await page.locator("#activityStage").selectOption("2");
