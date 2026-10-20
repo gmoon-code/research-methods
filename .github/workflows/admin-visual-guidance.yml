@@ -36,6 +36,10 @@ jobs:
             curl --silent --fail http://127.0.0.1:8765/admin-workspace.html >/dev/null && break
             sleep 1
           done
+      - name: Verify existing content-schema and publication contracts
+        run: |
+          node --test tests/admin-content-studio.test.mjs
+          node --test tests/admin-content-publication.test.mjs
       - name: Test visual editing with isolated simulated session
         env:
           ADMIN_TEST_URL: http://127.0.0.1:8765
