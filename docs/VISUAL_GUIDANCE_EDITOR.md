@@ -12,7 +12,7 @@ The existing authenticated Content Studio now includes an optional visual author
 6. Click an existing top-level teaching, example, or warning block to select it. Enter text and use **Add paragraph**, **Add bullet list**, or **Add list item**. The move and remove controls operate on the selected top-level block only.
 7. Use the existing preview, validation, staged publication, and rollback controls. No separate publishing route has been added.
 
-Block insertion, movement, and removal are limited to the three existing rich-content fields and are checked against the original six-field validator before they update the draft. Moving a block does not change the stage sequence or page navigation. The editor does not permit removing the final content block in a field. The selection outline is editor-only and is stripped before source synchronization.
+Block insertion, movement, and removal are limited to the three existing rich-content fields and are checked against the original six-field validator before they update the draft. Moving a block does not change the stage sequence or page navigation. The editor does not permit removing the final content block in a field. The selection outline is editor-only and is stripped before source synchronization. A keyboard user can focus the rich-content region and use the arrow keys to choose a block before activating the controls.
 
 Pasted HTML is rejected. Paste inserts plain text, and formatting buttons create limited, validated tags.
 
