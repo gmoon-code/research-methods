@@ -127,8 +127,22 @@ try {
   await content.locator(":scope > h3").first().click();
   assert.equal(await page.locator("#visualMoveBlockUp").isDisabled(),true,
     "The first block cannot move above the field boundary");
-
+  // Keyboard focus also establishes a block selection. Caret navigation must
+  // not require the teacher to use a mouse.
+  await content.evaluate(element=>{
+    element.focus();
+    const node=element.querySelector(":scope > p")?.firstChild;
+    if(!node)return;
+    const selection=window.getSelection(),range=document.createRange();
+    range.setStart(node,0);range.collapse(true);
+    selection.removeAllRanges();selection.addRange(range);
+    element.dispatchEvent(new KeyboardEvent("keyup",{key:"ArrowDown",bubbles:true}));
+  });
+  assert.equal(await page.locator("#visualAddParagraph").isEnabled(),true);
+  assert.match(await page.locator("#visualBlockStatus").textContent(),/Selected learn block/);
   await page.locator("#contentBrowserList button").nth(1).click();
+  assert.equal(await page.locator("#visualAddParagraph").isDisabled(),true,
+    "Block actions must reset when changing to a different stage");
   await page.locator("#visualGuidanceRecord").waitFor();
   assert.match(await page.locator("#visualGuidanceRecord").textContent(),/Stage 2/);
   assert.notEqual(await page.locator("#contentTitle").inputValue(),"New visual draft title");
