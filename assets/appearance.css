@@ -492,3 +492,11 @@ html[data-moon-theme="dark"] :is(.blocked-line,.save-problem-banner b){color:#f2
 html[data-moon-theme="dark"] :is(.construct-row[style],.procedure-row[style]){
  color:var(--moon-muted)!important;
 }
+
+/* Remaining neutral badges from early research-coach screens. */
+html[data-moon-theme="dark"] :is(.ai-status,.coach-badge){
+ background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule-dark);
+}
+html[data-moon-theme="dark"] .ai-status.on{
+ background:var(--moon-raised);color:#9ceab0;border-left:3px solid #75be92;
+}
