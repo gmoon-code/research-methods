@@ -346,3 +346,86 @@ html[data-moon-theme="dark"] .stage-guide{
 }
 html[data-moon-theme="dark"] .stage-guide :is(h3,p,li){color:var(--moon-ink)}
 html[data-moon-theme="dark"] .stage-guide .guide-kicker{color:var(--moon-muted)}
+
+/* Dark-mode coverage for legacy student tools. Each selector comes from a
+   light surface in assets/style.css. These groups leave scientific diagrams,
+   saturated phase highlights and application content untouched. */
+
+/* neutral surfaces: 134 source rules */
+html[data-moon-theme="dark"] :is(.hero-rule,.concept-box,input,textarea,select,.secondary,.ghost,th,.wizard,.wizard-result,.citation-output){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.coach-msg,.tool-card,.direction-item,.synth-matrix th:first-child,.synth-matrix td:first-child,.modal,.ai-summary,.search-entry,.screen-entry,.claim-entry,.outline-entry,.trapp-box,.matrix-cell-background){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.audit-summary,.issue,.measurement-row,.protocol-card,.dropzone,.quality-card,.column-card,.analysis-output,.stat-line){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.simple-chart,.run-card,.paper-map,.discussion-row,.checklist-mini,.paper-chain,.paper-chain span,.milestone-card,.checkpoint-comment){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.competency-card,.comp-head span,.competency-bar,.process-box,.process-grid>div,.comp-detail-head>div:last-child b,.evidence-columns>div,.teacher-rating,.timeline-item){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.transfer-task,.rater-task,.transfer-comp,.scenario,.transfer-rule,.locked-response,.transfer-cue,.onboard-grid>div,.guide-strong,.guide-examples,.guide-stuck){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.example-boundary,.guide-terms details,.field-avoid,.lab-guide,.guide-walkthrough,.decision-questions,.novice-promise,.pathway-principle,.pathway-footer){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.path-readiness,.no-dead-end,.rescue-attempt,.rescue-content,.rescue-reflect,.rescue-example.avoid,.rescue-frame,.rescue-integrity,.exemplar-inline-card){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.exemplar-disclaimer,.exemplar-rule,.exemplar-chain section,.exemplar-chain section.decision,.exemplar-chain section.rejected,.exemplar-chain section.forward,.exemplar-compare,.exemplar-integrity,.exemplar-files){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.paper-chain>div,.exemplar-project-card,.exemplar-project-card.recommended,.exemplar-project-head>b,.path-comparison-strip>div,.exemplar-rq,.current-context-strip,.response-cue,.response-cue>small){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.response-expectation,.response-contrast,.response-why,.response-expectation,.response-contrast.vague,.response-contrast.detailed,.response-why,.snapshot-metrics>div,.snapshot-core-card,.snapshot-empty-state,.snapshot-meaning){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.snapshot-workspace-block,.snapshot-source-list article,.snapshot-schema-list>div,.snapshot-analysis-run,.snapshot-writing,.snapshot-feedback,.snapshot-search-list article,.snapshot-method-detail,.ai-settings-note,.privacy-note){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.privacy-note,.save-problem-banner,.route-step.current,.route-step-icon,.route-step.done .route-step-icon,.current-form-section,.coach-panel,.check-primary-card,.destructive-option){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.teacher-mode-note,.flow-transition .current,.lab-stepper,.recommended-path-card,.path-decision-grid span,.source-three-pass-head>span,.source-pass,.source-pass>summary>span,.source-pass-note){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.source-save-row,.glossary-start,.lab-carry-forward>div,.structured-field-summary,.legacy-plan-note,.method-substep,.method-substep.open,.method-substep>summary>span,.method-substep-head>span){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule)}
+
+/* chips surfaces: 50 source rules */
+html[data-moon-theme="dark"] :is(.progress-card,.progress-track,.nav-num,.stage-tabs,.stage-tabs button.active,.pill,.score-circle,.lit-tabs button,.lit-scorecard){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.methods-tabs button,.role-pill,.audit-score,.method-scorecard,.data-tabs button,.dataset-meta span,.writing-tabs button,.stage-dots button,.competency-tabs button){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.comp-meta span,.transfer-tabs button,.transfer-progress span,.pilot-tabs button,.stage-guide,.glossary-modal label,.path-stage-banner,.path-progress-line span,.field-path-badge.optional){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.field-path-badge.cross,.tool-path-badge.core,.tool-path-badge.advanced,.parallel-tag,.rescue-stage-summary,.exemplar-stage-grid button,.exemplar-stage-grid button.viewed,.exemplar-stage-nav>div button,.exemplar-stage-nav>div button.viewed){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.snapshot-hero-meta,.snapshot-stage,.snapshot-stage>header,.route-modal-progress,.stage-orientation>div,.stage-orientation>div.current,.stage-context-compact,.stage-task-list span,.stage-example-compact){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.stage-section-outline button,.stage-section-outline button.done:not(.active),.stage-tool-drawer,.next-stage-card){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+
+/* interactive surfaces: 11 source rules */
+html[data-moon-theme="dark"] :is(.method-row,.choice-option,.path-choice,.path-choice.selected,.path-choice-head b,.rescue-level,.rescue-level.used,.rescue-field-list button,.flow-undo-toast button){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule-dark)}
+html[data-moon-theme="dark"] :is(.lab-route-list button,.lab-route-list button.done){background:var(--moon-paper);color:var(--moon-ink);border-color:var(--moon-rule-dark)}
+
+/* status surfaces: 57 source rules */
+html[data-moon-theme="dark"] :is(.matrix-cell-support,.matrix-cell-conflict,.matrix-cell-mixed,.project-flags span,.review-summary span,.competency-warning,.transfer-warning,.pilot-warning,.policy-note){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.stage-help-compact,.field-help,.field-help-grid>div,.choice-help,.decision-help,.tool-path-badge.supporting,.path-readiness.ready-pass,.coach-review-result .coach-msg.good,.progressive-help-button){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.rescue-example.good,.rescue-preview,.exemplar-path-warning,.response-contrast.good,.ai-helper-launch-icon,.ai-helper-panel,.ai-helper-head,.ai-helper-status,.ai-helper-status.online){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.ai-helper-status.offline,.ai-helper-status.blocked,.ai-helper-status.needs-code,.ai-helper-status.ready,.ai-helper-context-row,.ai-helper-privacy-note,.ai-helper-connect.offline,.ai-helper-connect.blocked,.ai-helper-connect.needs-code){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.ai-helper-connect.ready,.ai-helper-quick,.ai-helper-quick button,.ai-helper-conversation,.ai-helper-empty,.ai-helper-empty-icon,.ai-helper-boundary,.ai-helper-msg.assistant,.ai-helper-msg.error){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.ai-helper-scaffold,.ai-helper-scaffold.counts,.ai-helper-guard-note,.ai-helper-compose,.route-step.review,.route-step.review .route-step-icon,.needs-review-banner,.help-block.emphasis,.help-example.weak){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+html[data-moon-theme="dark"] :is(.help-example.strong,.help-choice-grid button,.more-menu-grid button,.future-preview-note){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule)}
+
+/* hover surfaces: 3 source rules */
+html[data-moon-theme="dark"] :is(.nav-step:hover,.progressive-help-button:hover,.progressive-help-button:focus-visible,.route-step:hover){background:var(--moon-raised);color:var(--moon-ink);border-color:var(--moon-rule-dark)}
+
+/* Preserve meaning after adapting pale status backgrounds to dark surfaces. */
+html[data-moon-theme="dark"] :is(.matrix-cell-support,.stat-good,.teacher-rating,
+ .path-readiness.ready-pass,.coach-review-result .coach-msg.good,
+ .ai-helper-status.online,.ai-helper-status.ready,.rescue-example.good,
+ .response-contrast.good,.stage-example-compact){
+ border-left:3px solid #75be92;color:var(--moon-ink)
+}
+html[data-moon-theme="dark"] :is(.matrix-cell-conflict,.journey-blockers,.field-avoid,
+ .ai-helper-status.blocked,.ai-helper-connect.blocked,.ai-helper-msg.error,
+ .rescue-example.avoid,.save-problem-banner){
+ border-left:3px solid #e594a8;color:var(--moon-ink)
+}
+html[data-moon-theme="dark"] :is(.matrix-cell-mixed,.competency-warning,.transfer-warning,
+ .policy-note,.pilot-warning,.no-dead-end,.ai-helper-status.offline,
+ .ai-helper-status.needs-code,.route-step.review,.rescue-reflect,.gap-warning){
+ border-left:3px solid #e4c36a;color:var(--moon-ink)
+}
+/* Selected and disabled controls remain distinguishable after the surface pass. */
+html[data-moon-theme="dark"] :is(.lit-tabs,.methods-tabs,.data-tabs,.writing-tabs,
+ .competency-tabs,.transfer-tabs,.pilot-tabs) button.active{
+ background:var(--moon-raised);border:1px solid var(--moon-rule-dark);
+ color:var(--moon-ink);box-shadow:inset 0 -3px 0 var(--section-turquoise-line)
+}
+html[data-moon-theme="dark"] :is(.path-choice.selected,.rescue-level.used,
+ .exemplar-stage-grid button.viewed,.exemplar-stage-nav>div button.viewed,
+ .lab-route-list button.done){
+ background:var(--moon-raised);border-color:#868686;color:var(--moon-ink)
+}
+html[data-moon-theme="dark"] :is(.stage-dots button:disabled,.exemplar-stage-grid button:disabled,
+ .rescue-level:disabled,.stage-preview-mode input:disabled,
+ .stage-preview-mode select:disabled,.stage-preview-mode textarea:disabled){
+ background:var(--moon-paper);color:var(--moon-muted);border-color:var(--moon-rule);
+ opacity:.85
+}
+html[data-moon-theme="dark"] :is(.snapshot-primary-tool,.student-top-actions .save-status){
+ border-color:var(--moon-rule-dark)
+}
