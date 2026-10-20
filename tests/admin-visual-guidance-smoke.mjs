@@ -175,6 +175,7 @@ try {
     "Unsafe markup must prevent activity-proposal export");
   await page.locator("#activityRevertField").click();
   assert.equal(await page.locator("#activityExport").isEnabled(),true);
+  await page.locator("#activityEditText").fill("Describe the scope of the possible investigation.");
   await page.locator("#activityReview").click();
   assert.match(await page.locator("#activityReviewValidation").textContent(),
     /field types, counts, and choices are excluded/);
