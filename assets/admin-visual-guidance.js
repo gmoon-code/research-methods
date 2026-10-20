@@ -79,12 +79,12 @@ window.RMSVisualGuidance=(()=>{
   }
 
   function insertPlainText(event,editable) {
+    event.preventDefault();
     const selection=window.getSelection();
     if(!selection||!selection.rangeCount)return;
     const range=selection.getRangeAt(0);
     if(!editable.contains(range.commonAncestorContainer))return;
     const text=event.clipboardData?.getData("text/plain")||"";
-    event.preventDefault();
     range.deleteContents();
     const node=document.createTextNode(text);
     range.insertNode(node);
