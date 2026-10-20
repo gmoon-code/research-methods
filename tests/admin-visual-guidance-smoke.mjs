@@ -81,6 +81,53 @@ try {
   assert.equal(await page.locator("#visualGuidanceEditor img").count(),0);
   assert((await page.locator("#contentExampleHtml").inputValue()).includes("Pasted as plain text"));
 
+  // The block inspector uses the existing guidance draft schema.
+  // Adding and moving blocks must update the authoritative source field
+  // without retaining any visual-editor selection attributes.
+  const content=page.locator('[data-visual-field="learn_html"]');
+  await content.locator(":scope > p").first().click();
+  assert.equal(await page.locator("#visualAddParagraph").isEnabled(),true);
+  assert.equal(await page.locator("#visualAddListItem").isDisabled(),true);
+  await page.locator("#visualBlockText").fill("A new structured paragraph for testing.");
+  await page.locator("#visualAddParagraph").click();
+  const newParagraph=content.locator(":scope > p")
+    .filter({hasText:"A new structured paragraph for testing."});
+  assert.equal(await newParagraph.count(),1);
+  assert.match(await page.locator("#contentLearnHtml").inputValue(),
+    /A new structured paragraph for testing/);
+  assert.equal(await page.locator("#visualMoveBlockUp").isEnabled(),true);
+  await page.locator("#visualMoveBlockUp").click();
+  assert.equal(await page.locator("#visualMoveBlockDown").isEnabled(),true);
+  const selectedText=await content.locator(":scope > [data-visual-selected]").textContent();
+  assert.match(selectedText,/A new structured paragraph for testing/);
+
+  await page.locator("#visualBlockText").fill("First new list item");
+  await page.locator("#visualAddList").click();
+  assert.equal(await content.locator(":scope > ul")
+    .filter({hasText:"First new list item"}).count(),1);
+  assert.equal(await page.locator("#visualAddListItem").isEnabled(),true);
+  await page.locator("#visualBlockText").fill("Second new list item");
+  await page.locator("#visualAddListItem").click();
+  assert.equal(await content.locator(":scope > ul[data-visual-selected] > li").count(),2);
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("data-visual-selected")), "Selection highlights must never enter the saved content");
+  await page.locator("#visualRemoveBlock").click();
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("First new list item")), "Removing a list must update the draft");
+  assert.match(await page.locator("#contentLearnHtml").inputValue(),
+    /A new structured paragraph for testing/);
+  assert.equal(await page.evaluate(()=>{
+    const fields=["title","nav","purpose","learn_html","example_html","warning_html"];
+    const ids=["contentTitle","contentNav","contentPurpose","contentLearnHtml",
+      "contentExampleHtml","contentWarningHtml"];
+    return window.RMSAdminContentStudio.validateValue(Object.fromEntries(
+      fields.map((key,i)=>[key,document.getElementById(ids[i]).value])
+    )).ok;
+  }),true,"After structural operations the unchanged production schema must still validate");
+  await content.locator(":scope > h3").first().click();
+  assert.equal(await page.locator("#visualMoveBlockUp").isDisabled(),true,
+    "The first block cannot move above the field boundary");
+
   await page.locator("#contentBrowserList button").nth(1).click();
   await page.locator("#visualGuidanceRecord").waitFor();
   assert.match(await page.locator("#visualGuidanceRecord").textContent(),/Stage 2/);
