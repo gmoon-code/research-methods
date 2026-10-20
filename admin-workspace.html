@@ -638,6 +638,10 @@
       display:grid;
       gap:15px;
     }
+    .visual-guidance-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:7px;border-top:1px solid #d7ddde;border-bottom:1px solid #d7ddde;padding:9px 0;}
+    .visual-guidance-toolbar button{background:#fff;border:1px solid #a5b4b5;border-radius:3px;padding:6px 10px;color:#1a2730;cursor:pointer;}
+    .visual-guidance-toolbar button:hover,.visual-guidance-toolbar button:focus-visible{background:#eaf4f1;border-color:#287b76;}
+    .visual-guidance-toolbar span{font-size:.76rem;color:#586a70;line-height:1.4;}
     .visual-guidance-header h4 {margin:0 0 6px;font-size:1.1rem;}
     .visual-guidance-header p {margin:0 0 8px;color:var(--muted);font-size:.85rem;line-height:1.45;}
     .visual-guidance-header small {display:block;color:var(--muted);}
@@ -1132,6 +1136,11 @@
                     <h4 id="visualGuidanceHeading">Edit guidance on the page</h4>
                     <p>Click a title or a content block to edit it directly. The original Content Studio fields below update as you type.</p>
                     <small id="visualGuidanceRecord">Selected stage</small>
+                  </div>
+                  <div class="visual-guidance-toolbar" role="toolbar" aria-label="Format selected guidance">
+                    <button type="button" data-guidance-format="strong" title="Bold selected narrative text"><strong>Bold</strong></button>
+                    <button type="button" data-guidance-format="em" title="Italicize selected narrative text"><em>Italic</em></button>
+                    <span>Select text within teaching content, an example, or a warning to apply formatting.</span>
                   </div>
                   <div class="visual-guidance-field">
                     <label id="visualTitleLabel">Stage title</label>
