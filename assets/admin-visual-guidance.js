@@ -35,12 +35,10 @@ window.RMSVisualGuidance=(()=>{
     if(!api||!api.validateValue)return null;
     // Validate using an allowed, complete record with this markup.
     const validation=api.validateValue({
-      title:"Preview",
-      nav:"Preview",
-      purpose:"Preview",
+      title:"Preview",nav:"Preview",purpose:"Preview",
       learn_html:html,
-      example_html:html,
-      warning_html:html
+      example_html:"<p>Example</p>",
+      warning_html:"<p>Warning</p>"
     });
     if(!validation.ok)return null;
     host.innerHTML=html;
@@ -80,11 +78,11 @@ window.RMSVisualGuidance=(()=>{
       "Click any text below to edit. Changes update the existing Content Studio fields.",invalid);
   }
 
-  function insertPlainText(event) {
+  function insertPlainText(event,editable) {
     const selection=window.getSelection();
     if(!selection||!selection.rangeCount)return;
     const range=selection.getRangeAt(0);
-    if(!event.currentTarget.contains(range.commonAncestorContainer))return;
+    if(!editable.contains(range.commonAncestorContainer))return;
     const text=event.clipboardData?.getData("text/plain")||"";
     event.preventDefault();
     range.deleteContents();
@@ -94,7 +92,7 @@ window.RMSVisualGuidance=(()=>{
     range.collapse(true);
     selection.removeAllRanges();
     selection.addRange(range);
-    event.currentTarget.dispatchEvent(new Event("input",{bubbles:true}));
+    editable.dispatchEvent(new Event("input",{bubbles:true}));
   }
 
   function updateValue(event) {
@@ -132,7 +130,7 @@ window.RMSVisualGuidance=(()=>{
       const editable=event.target.closest("[data-visual-field]");
       if(!editable)return;
       // Paste plain text only, no external rich HTML or event handlers.
-      insertPlainText({...event,currentTarget:editable});
+      insertPlainText(event,editable);
     });
     panel.addEventListener("keydown",event=>{
       const element=event.target.closest("[data-visual-field]");
@@ -140,12 +138,7 @@ window.RMSVisualGuidance=(()=>{
       if(!RICH.has(element.dataset.visualField)&&event.key==="Enter")
         event.preventDefault();
     });
-    byId("visualGuidanceRefresh")?.addEventListener("click",()=>{
-      const input=byId("contentLearnHtml");
-      if(input)input.dispatchEvent(new Event("change",{bubbles:true}));
-      status("Refresh from the current source fields using the Content Studio controls.");
-    });
-    mounted=true;
+     mounted=true;
     return true;
   }
   return Object.freeze({mount,render});
