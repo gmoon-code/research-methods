@@ -38,6 +38,36 @@ try {
   assert.equal((await page.locator('[data-visual-field="purpose"]').textContent()).trim(),
     "Updated purpose from source controls");
 
+  // A formatting click must preserve the selection and create only
+  // markup permitted by the existing six-field guidance validator.
+  await page.locator('[data-visual-field="learn_html"]').evaluate(element=>{
+    const walker=document.createTreeWalker(element,NodeFilter.SHOW_TEXT);
+    let current=walker.nextNode();
+    while(current&&!current.textContent.trim())current=walker.nextNode();
+    if(!current)throw new Error("No teaching text to format");
+    const start=current.textContent.search(/\\S/);
+    const range=document.createRange();
+    range.setStart(current,start);
+    range.setEnd(current,Math.min(current.length,start+Math.min(8,current.length-start)));
+    const selection=window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+  });
+  await page.locator('[data-guidance-format="strong"]').click();
+  assert.match(await page.locator("#contentLearnHtml").inputValue(),/<strong>/,
+    "Formatting must update the authoritative text field");
+  assert.equal(await page.evaluate(()=>{
+    const api=window.RMSAdminContentStudio;
+    return api.validateValue({
+      title:document.querySelector("#contentTitle").value,
+      nav:document.querySelector("#contentNav").value,
+      purpose:document.querySelector("#contentPurpose").value,
+      learn_html:document.querySelector("#contentLearnHtml").value,
+      example_html:document.querySelector("#contentExampleHtml").value,
+      warning_html:document.querySelector("#contentWarningHtml").value
+    }).ok;
+  }),true,"Formatting must remain valid under the production content schema");
+
   const rich=page.locator('[data-visual-field="example_html"]');
   await rich.click();
   await rich.evaluate(element=>{
