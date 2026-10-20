@@ -141,7 +141,10 @@ window.RMSActivityAuthoring=(()=>{
     inspector.hidden=!selectedEntry;
     if(selectedEntry){
       $("activitySelectedLabel").textContent=selectedEntry.name;
-      $("activityEditText").value=selectedEntry.value;
+      // Preserve caret position while the teacher edits in the inspector.
+      // Assigning textarea.value on every keystroke would jump the caret.
+      if(document.activeElement!==$("activityEditText"))
+        $("activityEditText").value=selectedEntry.value;
       $("activityEditText").maxLength=maxLengths[selectedEntry.type];
       $("activityOriginal").textContent=selectedEntry.text;
       $("activityFieldCounter").textContent=selectedEntry.value.length+" / "+maxLengths[selectedEntry.type];
