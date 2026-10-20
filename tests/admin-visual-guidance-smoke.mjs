@@ -199,6 +199,41 @@ try {
     activityBaseline,"The editor must never mutate the student curriculum module");
   const currentStageId=await page.evaluate(()=>window.RMSCurriculum.stages[0].sections[0].fields[0][0]);
   assert.equal(currentStageId,"interest1","Stable student data keys must remain intact");
+  const savedReviewBytes=await readFile(await packetDownload.path());
+  await page.reload({waitUntil:"domcontentloaded"});
+  await page.locator('[data-activity-path="s.0.f.0.label"]').waitFor();
+  assert.equal(await page.locator("#activityReviewCount").textContent(),"0 proposed changes",
+    "Activity drafts must be explicitly exported before leaving the current session");
+  const mismatched={...proposal,source_sha256:"0".repeat(64)};
+  await page.locator("#activityImport").setInputFiles({
+    name:"wrong-curriculum.json",
+    mimeType:"application/json",
+    buffer:Buffer.from(JSON.stringify(mismatched))
+  });
+  assert.match(await page.locator("#activityStatus").textContent(),/different curriculum version/);
+  assert.equal(await page.locator("#activityReviewCount").textContent(),"0 proposed changes");
+  const altered={...proposal,edits:[...proposal.edits,{
+    stage_id:1,path:"s.0.f.999.label",original:"",value:"Unsafe inserted field"
+  }]};
+  await page.locator("#activityImport").setInputFiles({
+    name:"altered-structure.json",
+    mimeType:"application/json",
+    buffer:Buffer.from(JSON.stringify(altered))
+  });
+  assert.match(await page.locator("#activityStatus").textContent(),/protected structure/);
+  assert.equal(await page.locator("#activityReviewCount").textContent(),"0 proposed changes");
+  await page.locator("#activityImport").setInputFiles({
+    name:"saved-review.json",
+    mimeType:"application/json",
+    buffer:savedReviewBytes
+  });
+  assert.match(await page.locator("#activityStatus").textContent(),/Restored 3 wording proposals/);
+  assert.equal(await page.locator("#activityReviewCount").textContent(),"3 proposed changes");
+  assert.equal(await page.locator('[data-activity-path="s.0.f.0.label"]').textContent(),revisedLabel);
+  await page.locator("#activityStage").selectOption("2");
+  assert.equal(await page.locator('[data-activity-path="s.0.desc"]').textContent(),
+    "Describe the scope of the possible investigation.");
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSCurriculum.stages)),activityBaseline);
   await page.locator("#activityStage").selectOption("6");
   assert.match(await page.locator("#activityPreview").textContent(),/separate interactive activity/i);
   assert(await page.locator('[data-activity-path^="c."]').count()>0);
