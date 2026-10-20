@@ -244,6 +244,55 @@ window.RMSActivityAuthoring=(()=>{
       status("Could not export. Use a secure local browser that supports SHA-256.");
     }finally{pending=false;status($("activityStatus").textContent);}
   }
+  async function importProposal(file){
+    if(!file)return;
+    pending=true;status("Checking the saved activity proposal…");
+    try{
+      if(file.size>300000)throw Error("The review packet exceeds 300 KB.");
+      const packet=JSON.parse(await file.text());
+      if(!packet||packet.schema_version!=="rms-activity-wording-proposal-v1"||
+         packet.source_file!=="assets/curriculum.js"||
+         packet.review_required!==true||packet.live_publication!==false||
+         !Array.isArray(packet.edits)||!packet.edits.length||packet.edits.length>300)
+        throw Error("This is not a supported activity wording review packet.");
+      const currentHash=await fingerprint();
+      if(packet.source_sha256!==currentHash)
+        throw Error("This review packet was created against a different curriculum version.");
+      const restored=new Map(),seen=new Set();
+      for(const edit of packet.edits){
+        if(!edit||!Number.isInteger(edit.stage_id)||
+           typeof edit.path!=="string"||typeof edit.original!=="string"||
+           typeof edit.value!=="string")
+          throw Error("A review packet entry has an invalid structure.");
+        const original=originals.get(edit.stage_id);
+        const entry=original&&entries(original).find(e=>e.path===edit.path);
+        const id=edit.stage_id+":"+edit.path;
+        if(!entry||seen.has(id)||entry.text!==edit.original||
+           !edit.value.trim()||edit.value.length>maxLengths[entry.type]||
+           /[<>]/.test(edit.value)||
+           /[\u0000-\u0008\u000B\u000C\u000E-\u001F]/.test(edit.value))
+          throw Error("A proposed edit changes protected structure or contains invalid text.");
+        seen.add(id);
+        if(edit.value===entry.text)continue;
+        if(!restored.has(edit.stage_id))restored.set(edit.stage_id,new Map());
+        restored.get(edit.stage_id).set(edit.path,edit.value);
+      }
+      if(allEdits().length&&
+         !window.confirm("Replace all current unsaved activity wording proposals with the imported packet?"))
+        return;
+      changes.clear();
+      for(const [id,edits] of restored)changes.set(id,edits);
+      selected="";renderPreview();
+      status("Restored "+allEdits().length+" wording proposals from this curriculum version. Nothing was published.");
+    }catch(error){
+      status("Import rejected. "+(error?.message||"File could not be read."));
+    }finally{
+      pending=false;
+      $("activityImport").value="";
+      // Keep the user-facing success/error status while refreshing enabled controls.
+      status($("activityStatus").textContent);
+    }
+  }
   function mount(){
     if(mounted)return true;
     if(!stages.length||!$("activityStage")||!$("activityPreview"))return false;
@@ -262,6 +311,9 @@ window.RMSActivityAuthoring=(()=>{
     $("activityReset").addEventListener("click",resetStage);
     $("activityReview").addEventListener("click",review);
     $("activityExport").addEventListener("click",()=>{void exportProposal();});
+    $("activityImport").addEventListener("change",event=>{
+      void importProposal(event.target.files?.[0]);
+    });
     renderPreview();status();
     mounted=true;return true;
   }
