@@ -680,6 +680,41 @@
     .visual-block-status {margin:0;font-size:.78rem;line-height:1.5;color:var(--muted);}
     .visual-guidance-rich > [data-visual-selected] {outline:2px solid #267e6d;outline-offset:3px;position:relative;}
     @media(max-width:600px){.visual-guidance-card{padding:14px;}}
+    .activity-authoring-panel{background:var(--surface,#fff);border:1px solid var(--border,#d7ddde);padding:20px;margin:24px 0;border-radius:5px;}
+    .activity-authoring-panel .content-editor-heading{margin-bottom:10px;}
+    .activity-authoring-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0;}
+    .activity-authoring-toolbar label{font-weight:700;font-size:.85rem;}
+    .activity-authoring-toolbar select{flex:1;min-width:230px;padding:10px;border:1px solid #9eaaae;border-radius:3px;color:var(--text,#182227);background:var(--surface,#fff);}
+    .activity-authoring-toolbar span{font-size:.8rem;color:var(--muted);}
+    .activity-authoring-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr);gap:15px;align-items:start;}
+    .activity-preview-shell{min-width:0;border:1px solid #d0d8d8;background:var(--surface,#fff);padding:15px;}
+    .activity-preview-shell>h4{font-size:1.15rem;margin:0 0 7px;}
+    .activity-preview{display:grid;gap:14px;max-height:720px;overflow:auto;padding:4px;}
+    .activity-section{border:1px solid #d7ddde;background:var(--surface,#fff);padding:12px;}
+    .activity-section>h4{margin:0 0 10px;}
+    .activity-section .activity-description{margin:0 0 12px;}
+    .activity-edit-target{display:block;width:100%;text-align:left;border:1px dashed transparent;border-radius:3px;background:transparent;color:inherit;cursor:text;padding:5px;font:inherit;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;}
+    .activity-edit-target:hover{border-color:#6eaaa0;background:#f1f7f5;}
+    .activity-edit-target[aria-current="true"]{border:2px solid #287f6e;background:#e9f6f2;}
+    .activity-field-preview{display:grid;gap:2px;padding:10px 0;border-top:1px solid #e4e8e8;}
+    .activity-field-label{font-weight:650;font-size:.94rem;}
+    .activity-field-preview small{color:var(--muted);font-size:.75rem;}
+    .activity-input-placeholder{border:1px solid #c4cece;border-radius:3px;background:#f8f9f9;padding:11px;color:#697577;font-size:.82rem;}
+    .activity-check-preview{display:flex;gap:8px;align-items:start;border-top:1px solid #edf0f0;}
+    .activity-check-preview>span{padding-top:7px;}
+    .activity-inspector{padding:16px;border:1px solid #cbd7d3;background:#fafcfb;min-width:0;}
+    .activity-inspector h4{margin:0 0 14px;}
+    .activity-inspector label,.activity-inspector h5{display:block;font-size:.84rem;font-weight:700;margin:10px 0 6px;}
+    .activity-inspector textarea{width:100%;box-sizing:border-box;line-height:1.5;padding:10px;color:#192729;background:#fff;border:1px solid #a2b4b1;}
+    .activity-inspector small{color:var(--muted);display:block;margin:6px 0;}
+    .activity-inspector #activityOriginal{font-size:.82rem;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;}
+    .activity-empty{color:var(--muted);line-height:1.6;}
+    .activity-review-dialog{width:min(720px,92vw);max-height:82vh;overflow:auto;border:1px solid #b7c5c6;padding:22px;background:#fff;color:#222;}
+    .activity-review-dialog::backdrop{background:#0007;}
+    .activity-review-dialog form{text-align:right;margin-top:16px;}
+    .activity-review-item{padding:12px 0;border-top:1px solid #d9e0e0;}
+    .activity-review-item p{font-size:.83rem;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;}
+    @media(max-width:850px){.activity-authoring-grid{grid-template-columns:1fr}.activity-preview{max-height:500px}.activity-authoring-panel{padding:14px;}}
     .content-preview-frame {
       width: 100%;
       min-height: 620px;
@@ -1302,6 +1337,62 @@
               </section>
             </div>
 
+            <section class="activity-authoring-panel" id="activityAuthoring" aria-labelledby="activityAuthoringTitle">
+              <div class="content-editor-heading">
+                <div>
+                  <span class="eyebrow">Development authoring · Review required</span>
+                  <h3 id="activityAuthoringTitle">Edit research activity wording</h3>
+                </div>
+                <span class="section-status">Local proposal only</span>
+              </div>
+              <p class="content-editor-help">
+                Revise section instructions, student field labels, and completion-check wording.
+                Field keys, input types, choice options, and saved student work stay untouched.
+                This editor exports a review packet. It cannot publish to the student site or isolated content service.
+              </p>
+              <div class="activity-authoring-toolbar">
+                <label for="activityStage">Research stage</label>
+                <select id="activityStage" aria-label="Choose a stage activity to edit"></select>
+                <span id="activityReviewCount">0 proposed changes</span>
+              </div>
+              <div class="activity-authoring-grid">
+                <section class="activity-preview-shell" aria-labelledby="activityStageHeading">
+                  <h4 id="activityStageHeading">Activity preview</h4>
+                  <p class="content-editor-help">Click a section heading, instruction, field label, or completion check to revise its wording.</p>
+                  <div id="activityPreview" class="activity-preview" aria-label="Editable activity wording"></div>
+                </section>
+                <aside id="activityInspector" class="activity-inspector" hidden aria-label="Selected activity text">
+                  <h4>Edit selected wording</h4>
+                  <label for="activityEditText" id="activitySelectedLabel">Selected field</label>
+                  <textarea id="activityEditText" rows="8" spellcheck="true"></textarea>
+                  <small id="activityFieldCounter"></small>
+                  <h5>Original wording</h5>
+                  <p id="activityOriginal"></p>
+                  <button id="activityRevertField" type="button" class="button">Revert field</button>
+                </aside>
+              </div>
+              <p id="activityStatus" class="content-editor-help" role="status" aria-live="polite">
+                Preparing the activity authoring preview.
+              </p>
+              <div class="content-action-row">
+                <button id="activityReview" type="button" class="button">Review wording changes</button>
+                <button id="activityExport" type="button" class="button" disabled>Export review JSON</button>
+                <button id="activityReset" type="button" class="button" disabled>Reset this stage</button>
+              </div>
+              <p class="content-editor-help">
+                Proposals are held in memory during this session and are not part of the guidance release.
+                Export them before closing the page. Applying them later requires a separate, validated
+                curriculum update and preservation checks for existing student projects.
+              </p>
+            </section>
+
+            <dialog id="activityReviewDialog" class="activity-review-dialog" aria-labelledby="activityReviewTitle">
+              <h3 id="activityReviewTitle">Review activity wording</h3>
+              <div id="activityReviewList"></div>
+              <p id="activityReviewValidation" role="status"></p>
+              <form method="dialog"><button class="button" type="submit">Close review</button></form>
+            </dialog>
+
             <details class="content-replacement">
               <summary>Replace the complete editable content block</summary>
 
@@ -1594,6 +1685,8 @@
 
   <script src="./assets/runtime-config.js"></script>
   <script src="./assets/teacher-session.js"></script>
+  <script src="./assets/curriculum.js"></script>
+  <script src="./assets/admin-activity-authoring.js"></script>
   <script src="./assets/content-registry.js"></script>
   <script src="./assets/admin-content-studio.js"></script>
   <script src="./assets/admin-visual-guidance.js"></script>
@@ -1696,6 +1789,10 @@
 
         window
           .RMSAdminContentStudioUI
+          ?.mount?.();
+
+        window
+          .RMSActivityAuthoring
           ?.mount?.();
 
         window
