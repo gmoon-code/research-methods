@@ -121,11 +121,45 @@ window.RMSVisualGuidance=(()=>{
     } finally {fromVisual=false;}
   }
 
+  function applyVisualFormat(tag) {
+    if(tag!=="strong"&&tag!=="em")return;
+    const selection=window.getSelection();
+    if(!selection||!selection.rangeCount||selection.isCollapsed){
+      status("Select part of a teaching paragraph, example, or warning first.",true);
+      return;
+    }
+    const range=selection.getRangeAt(0);
+    const host=[...document.querySelectorAll("#visualGuidanceEditor .visual-guidance-rich")]
+      .find(element=>element.contains(range.commonAncestorContainer));
+    if(!host){
+      status("Formatting is available inside teaching, example, and warning blocks.",true);
+      return;
+    }
+    const mark=document.createElement(tag);
+    try{
+      range.surroundContents(mark);
+    }catch{
+      status("Select text within a single paragraph, then apply formatting.",true);
+      return;
+    }
+    selection.removeAllRanges();
+    host.dispatchEvent(new Event("input",{bubbles:true}));
+    status("Formatting applied. The existing draft validator checks the updated content.");
+  }
+
   function mount() {
     if(mounted)return true;
     const panel=byId("visualGuidanceEditor");
     if(!panel||!window.RMSAdminContentStudio)return false;
     panel.addEventListener("input",updateValue);
+    const toolbar=panel.querySelector(".visual-guidance-toolbar");
+    toolbar?.addEventListener("mousedown",event=>{
+      if(event.target.closest("[data-guidance-format]"))event.preventDefault();
+    });
+    toolbar?.addEventListener("click",event=>{
+      const button=event.target.closest("[data-guidance-format]");
+      if(button)applyVisualFormat(button.dataset.guidanceFormat);
+    });
     panel.addEventListener("paste",event=>{
       const editable=event.target.closest("[data-visual-field]");
       if(!editable)return;
