@@ -45,7 +45,7 @@ try {
     let current=walker.nextNode();
     while(current&&!current.textContent.trim())current=walker.nextNode();
     if(!current)throw new Error("No teaching text to format");
-    const start=current.textContent.search(/\\S/);
+    const start=current.textContent.search(/\S/);
     const range=document.createRange();
     range.setStart(current,start);
     range.setEnd(current,Math.min(current.length,start+Math.min(8,current.length-start)));
