@@ -201,7 +201,7 @@ try {
   await page.locator('#activityPreview .inline-review-next').click();
   assert.equal(await page.locator('#activityPreview .inline-review-box')
     .getAttribute('data-inline-editing'),'s.0.desc');
-  assert.equal(await page.locator('#activityReviewCount').textContent(),'1 proposed changes');
+  assert.equal(await page.locator('#activityReviewCount').textContent(),'1 proposed change');
   const longPassage='First paragraph introduces a question and its context.\n\n'+
     'Second paragraph examines how a student might find relevant evidence.\n\n'+
     'Third paragraph asks what would support a careful explanation.';
@@ -222,7 +222,7 @@ try {
   assert.equal(await page.locator('#activityPreview .inline-review-target-select').inputValue(),
     's.0.desc','Invalid text must block moving to another wording item');
   await page.locator('#activityPreview .inline-review-input').press('Escape');
-  assert.equal(await page.locator('#activityReviewCount').textContent(),'1 proposed changes');
+  assert.equal(await page.locator('#activityReviewCount').textContent(),'1 proposed change');
   page.once('dialog',dialog=>dialog.accept());
   await page.locator('#activityReset').click();
   assert.equal(await page.locator('#activityReviewCount').textContent(),'0 proposed changes');
@@ -241,7 +241,7 @@ try {
   assert.equal(await page.locator('#activityEditText').inputValue(),
     'An activity title edited directly in context');
   assert.equal(await page.locator('#activityInspector').isVisible(),true);
-  assert.equal(await page.locator('#activityReviewCount').textContent(),'1 proposed changes');
+  assert.equal(await page.locator('#activityReviewCount').textContent(),'1 proposed change');
   await page.locator('#activityRevertField').click();
   assert.equal(await page.locator('#activityReviewCount').textContent(),'0 proposed changes');
   await page.locator('[data-activity-path="s.0.title"]').click();
@@ -266,7 +266,7 @@ try {
   await page.locator('#activityPreview .inline-review-save').click();
   assert.equal(await page.locator('[data-activity-path="s.0.title"]').textContent(),
     'Updated interest inventory heading');
-  assert.equal(await page.locator('#activityReviewCount').textContent(),'1 proposed changes');
+  assert.equal(await page.locator('#activityReviewCount').textContent(),'1 proposed change');
   assert.equal(await page.locator('#activityEditText').inputValue(),
     'Updated interest inventory heading');
   await activityQuick.click();
@@ -419,7 +419,7 @@ try {
   await page.locator("#activityReset").click();
   assert.equal(await page.locator('[data-activity-path="s.0.f.0.label"]').textContent(),
     "Three science or research areas I enjoy");
-  assert.equal(await page.locator("#activityReviewCount").textContent(),"1 proposed changes");
+  assert.equal(await page.locator("#activityReviewCount").textContent(),"1 proposed change");
   await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-activity-wording-preview.png",fullPage:true});
 
   // Specialised laboratory instruction authoring stays separate from the
@@ -463,7 +463,7 @@ try {
   await page.locator('#labGuidePreview .inline-review-input').press('Control+Enter');
   assert.equal(await page.locator('[data-lab-guide-path="labs.literature.search.title"]').textContent(),
     'Search journal articles and document the strategy');
-  assert.equal(await page.locator('#labGuideCount').textContent(),'1 proposed changes');
+  assert.equal(await page.locator('#labGuideCount').textContent(),'1 proposed change');
   await page.locator('[data-lab-guide-path="labs.literature.search.title"]').click();
   await page.locator('#labGuideRevert').click();
   assert.equal(await page.locator('#labGuideCount').textContent(),'0 proposed changes');
@@ -585,7 +585,7 @@ try {
   assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance)),labBaseline);
   page.once("dialog",dialog=>dialog.accept());
   await page.locator("#labGuideReset").click();
-  assert.equal(await page.locator("#labGuideCount").textContent(),"1 proposed changes");
+  assert.equal(await page.locator("#labGuideCount").textContent(),"1 proposed change");
   await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-lab-guidance-review.png",fullPage:true});
 
   // Stage Guide and per-field help review. All source maps and student
@@ -619,7 +619,7 @@ try {
   await page.locator('#studentGuidePreview .inline-review-save').click();
   assert.equal(await page.locator('[data-guide-path="stages.1.title"]').textContent(),
     'Research questions begin with student curiosity');
-  assert.equal(await page.locator('#studentGuideCount').textContent(),'1 proposed changes');
+  assert.equal(await page.locator('#studentGuideCount').textContent(),'1 proposed change');
   await page.locator('[data-guide-path="stages.1.title"]').click();
   await page.locator('#studentGuideRevert').click();
   assert.equal(await page.locator('#studentGuideCount').textContent(),'0 proposed changes');
