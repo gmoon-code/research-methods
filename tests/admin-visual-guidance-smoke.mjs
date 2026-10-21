@@ -354,6 +354,99 @@ try {
   assert.equal(await page.locator("#labGuideCount").textContent(),"1 proposed changes");
   await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-lab-guidance-review.png",fullPage:true});
 
+  // Stage Guide and per-field help review. All source maps and student
+  // field IDs must remain unchanged even when edits span different records.
+  const guideBaseline=await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance));
+  assert.equal(await page.locator("#studentGuideMode option").count(),2);
+  assert.equal(await page.locator("#studentGuideRecord option").count(),18);
+  assert.equal(await page.locator("#studentGuideExport").isDisabled(),true);
+  await page.locator('[data-guide-path="stages.1.plain"]').click();
+  assert.equal(await page.locator("#studentGuideInspector").isVisible(),true);
+  const newPlain="First, explore several research interests and consider available evidence.";
+  await page.locator("#studentGuideEdit").fill(newPlain);
+  assert.equal(await page.locator('[data-guide-path="stages.1.plain"]').textContent(),newPlain);
+  await page.locator('[data-guide-path="stages.1.walkthrough.thinking.0"]').click();
+  await page.locator("#studentGuideEdit").fill(
+    "Start by treating the observed pattern as a question rather than an established explanation.");
+  assert.equal(await page.locator("#studentGuideExport").isEnabled(),true);
+  await page.locator("#studentGuideMode").selectOption("field");
+  assert.equal(await page.locator("#studentGuideRecord option").count(),113);
+  await page.locator("#studentGuideFieldSearch").fill("interest1");
+  assert.equal(await page.locator("#studentGuideRecord option").count(),1);
+  await page.locator("#studentGuideRecord").selectOption("interest1");
+  await page.locator('[data-guide-path="fields.interest1.meaning"]').click();
+  const newMeaning="Name a science topic or observation you would like to explore in a study.";
+  await page.locator("#studentGuideEdit").fill(newMeaning);
+  assert.equal(await page.locator('[data-guide-path="fields.interest1.meaning"]').textContent(),
+    newMeaning);
+  await page.locator('[data-guide-path="fields.interest1.questions.0"]').click();
+  await page.locator("#studentGuideEdit").fill("Would I remain interested in this project?");
+  await page.locator("#studentGuideEdit").fill("<script>alert(1)</script>");
+  assert.equal(await page.locator("#studentGuideExport").isDisabled(),true,
+    "Untrusted HTML-like text must prevent review export");
+  await page.locator("#studentGuideRevert").click();
+  assert.equal(await page.locator("#studentGuideExport").isEnabled(),true);
+  await page.locator("#studentGuideReview").click();
+  assert.match(await page.locator("#studentGuideReviewValidation").textContent(),
+    /field IDs, and guidance arrays retain their structure/);
+  await page.locator("#studentGuideReviewDialog form button").click();
+  const guideDownloadPromise=page.waitForEvent("download");
+  await page.locator("#studentGuideExport").click();
+  const guideDownload=await guideDownloadPromise;
+  assert.equal(guideDownload.suggestedFilename(),"rms-student-guide-review.json");
+  const guideBytes=await readFile(await guideDownload.path());
+  const guidePacket=JSON.parse(guideBytes.toString("utf8"));
+  assert.equal(guidePacket.schema_version,"rms-student-guide-review-v1");
+  assert.equal(guidePacket.source_file,"assets/student-guidance.js");
+  assert.equal(guidePacket.live_publication,false);
+  assert.equal(guidePacket.review_required,true);
+  assert.match(guidePacket.source_sha256,/^[a-f0-9]{64}$/);
+  assert.equal(guidePacket.edits.length,3);
+  assert(guidePacket.edits.some(e=>e.path==="stages.1.plain"&&e.value===newPlain));
+  assert(guidePacket.edits.some(e=>e.path==="fields.interest1.meaning"&&e.value===newMeaning));
+  assert(guidePacket.edits.some(e=>e.path==="stages.1.walkthrough.thinking.0"));
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance)),guideBaseline);
+
+  await page.reload({waitUntil:"domcontentloaded"});
+  await page.locator("#adminWorkspace:not([hidden])").waitFor();
+  await page.locator('[data-admin-panel="content-studio"]').click();
+  await page.locator('[data-guide-path="stages.1.plain"]').waitFor();
+  assert.equal(await page.locator("#studentGuideCount").textContent(),"0 proposed changes");
+  const wrongGuide={...guidePacket,source_sha256:"0".repeat(64)};
+  await page.locator("#studentGuideImport").setInputFiles({
+    name:"old-guide.json",mimeType:"application/json",
+    buffer:Buffer.from(JSON.stringify(wrongGuide))
+  });
+  await page.waitForFunction(()=>/different Student Guide version/.test(
+    document.getElementById("studentGuideStatus")?.textContent||""));
+  assert.equal(await page.locator("#studentGuideCount").textContent(),"0 proposed changes");
+  const unsafeGuide={...guidePacket,edits:[...guidePacket.edits,{
+    path:"stages.1.terms.0",original:"variable",value:"Unsafe changed term mapping"
+  }]};
+  await page.locator("#studentGuideImport").setInputFiles({
+    name:"wrong-field.json",mimeType:"application/json",
+    buffer:Buffer.from(JSON.stringify(unsafeGuide))
+  });
+  await page.waitForFunction(()=>/unknown or altered help field/.test(
+    document.getElementById("studentGuideStatus")?.textContent||""));
+  assert.equal(await page.locator("#studentGuideCount").textContent(),"0 proposed changes");
+  await page.locator("#studentGuideImport").setInputFiles({
+    name:"review.json",mimeType:"application/json",buffer:guideBytes
+  });
+  await page.waitForFunction(()=>/Restored 3 Student Guide wording changes/.test(
+    document.getElementById("studentGuideStatus")?.textContent||""));
+  assert.equal(await page.locator("#studentGuideCount").textContent(),"3 proposed changes");
+  assert.equal(await page.locator('[data-guide-path="stages.1.plain"]').textContent(),newPlain);
+  await page.locator("#studentGuideMode").selectOption("field");
+  await page.locator("#studentGuideRecord").selectOption("interest1");
+  assert.equal(await page.locator('[data-guide-path="fields.interest1.meaning"]').textContent(),
+    newMeaning);
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance)),guideBaseline);
+  page.once("dialog",dialog=>dialog.accept());
+  await page.locator("#studentGuideReset").click();
+  assert.equal(await page.locator("#studentGuideCount").textContent(),"2 proposed changes");
+  await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-student-guide-editor.png",fullPage:true});
+
   await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-visual-guidance-desktop.png",fullPage:true});
   assert.deepEqual(errors,[],"Admin visual guidance should not produce runtime errors");
   console.log("PASS: admin mount, 18 stages, direct editing, source sync, safe paste and navigation");
