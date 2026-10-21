@@ -144,10 +144,12 @@ window.RMSLabGuidanceAuthoring=(()=>{
     renderPreview();showStatus();
   }
   function resetField(){
+    if(window.RMSInlineReviewEditor?.beforeContextChange?.()===false)return;
     const record=resolve(selected);
     if(record)edit(record.original);
   }
   function resetPanel(){
+    if(window.RMSInlineReviewEditor?.beforeContextChange?.()===false)return;
     const start="labs."+lab+"."+step+".";
     if(![...drafts.keys()].some(k=>k.startsWith(start)))return;
     if(!window.confirm("Discard proposed wording changes for this lab panel?"))return;
@@ -245,9 +247,19 @@ window.RMSLabGuidanceAuthoring=(()=>{
     }
     $("labGuideLab").value=lab;
     $("labGuideLab").addEventListener("change",event=>{
+      if(event.target.value===lab)return;
+      if(window.RMSInlineReviewEditor?.beforeContextChange?.()===false){
+        event.target.value=lab;
+        return;
+      }
       lab=event.target.value;switchPanel();
     });
     $("labGuideStep").addEventListener("change",event=>{
+      if(event.target.value===step)return;
+      if(window.RMSInlineReviewEditor?.beforeContextChange?.()===false){
+        event.target.value=step;
+        return;
+      }
       step=event.target.value;selected="";renderPreview();showStatus();
     });
     $("labGuideEditText").addEventListener("input",e=>edit(e.target.value));
