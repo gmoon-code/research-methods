@@ -147,6 +147,8 @@ window.RMSInlineReviewEditor=(()=>{
     edit.message.textContent=error||
       (changed?"Ready to save · review-only change":"No change yet");
     edit.message.dataset.invalid=String(!!error);
+    if(error)edit.textarea.setAttribute("aria-invalid","true");
+    else edit.textarea.removeAttribute("aria-invalid");
     edit.counter.textContent=edit.textarea.value.length+" / "+edit.limit;
     edit.previous.textContent=changed?"Save and previous":"Previous wording";
     edit.next.textContent=changed?"Save and next":"Next wording";
@@ -224,12 +226,22 @@ window.RMSInlineReviewEditor=(()=>{
     label.className="inline-review-label";
     const uid="inlineEditor"+(config.preview==="activityPreview"?"Activity":
       config.preview==="labGuidePreview"?"Lab":"Guide");
+    label.id=uid+"Label";
     label.htmlFor=uid;
-    label.textContent="Edit this wording directly";
+    const snippet=target.textContent.trim().replace(/\s+/g," ").slice(0,72);
+    label.textContent="Edit wording · "+(snippet||"Selected passage");
+    box.setAttribute("role","group");
+    box.setAttribute("aria-labelledby",label.id);
     const field=document.createElement("textarea");
     field.id=uid;field.className="inline-review-input";field.rows=3;
     field.maxLength=limit;
     field.value=source.value;
+    field.setAttribute("aria-describedby",uid+"Instructions "+uid+"Status");
+    const instructions=document.createElement("p");
+    instructions.id=uid+"Instructions";
+    instructions.className="inline-review-keyboard-hint";
+    instructions.textContent=
+      "Ctrl+Enter or Command+Enter saves. Escape cancels. Alt+Up and Alt+Down move between wording items.";
     const navigator=document.createElement("div");
     navigator.className="inline-review-navigator";
     const position=document.createElement("small");
@@ -274,11 +286,12 @@ window.RMSInlineReviewEditor=(()=>{
     inspectButton.type="button";inspectButton.className="button inline-review-inspect";
     inspectButton.textContent="Detailed inspector";
     const hint=document.createElement("p");
+    hint.id=uid+"Status";
     hint.className="inline-review-message";
     hint.setAttribute("role","status");
     hint.setAttribute("aria-live","polite");
     actions.append(saveButton,inspectButton,cancelButton,counter);
-    box.append(label,navigator,paragraphNav,field,actions,hint);
+    box.append(label,navigator,paragraphNav,field,instructions,actions,hint);
     // The editing form goes after the source text's parent, so headings,
     // paragraphs, checklist and field-label semantics remain intact.
     target.parentElement.after(box);
@@ -404,6 +417,16 @@ window.RMSInlineReviewEditor=(()=>{
           "Click a passage to select it in the detailed inspector. The pencil still opens an inline editor.";
       });
     }
+    // Moving to another major Admin area previously left a dirty inline
+    // edit hidden. Resolve it before changing the visible Admin panel.
+    document.addEventListener("click",event=>{
+      const nav=event.target.closest?.("button[data-admin-panel]");
+      if(!nav||!active)return;
+      if(!beforeContextChange()){
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    },true);
     // Actions that take snapshots or replace the underlying proposal must
     // first resolve any text still in the inline textarea.
     const reviewActions=new Set([
