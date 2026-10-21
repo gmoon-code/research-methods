@@ -97,6 +97,10 @@ window.RMSLabGuidanceAuthoring=(()=>{
       const key=path(lab,step,field);
       button.dataset.labGuidePath=key;
       button.textContent=value(key);
+      if(value(key)!==p[field]){
+        button.dataset.proposed="true";
+        button.setAttribute("aria-label","Proposed change · "+value(key));
+      }
       if(selected===key)button.setAttribute("aria-current","true");
       button.addEventListener("click",()=>choose(key));
       wrapper.appendChild(button);preview.appendChild(wrapper);
