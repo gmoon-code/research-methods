@@ -427,7 +427,7 @@ try {
   await page.locator('[data-content-view="laboratories"]').click();
   assert.equal(await page.locator('#labGuideAuthoring').isVisible(),true);
   assert.equal(await page.locator('#activityAuthoring').isHidden(),true);
-  assert.match(await page.locator("#activityEditorCount").textContent(),/proposed changes/);
+  assert.match(await page.locator("#activityEditorCount").textContent(),/proposed changes?/);
   const labBaseline=await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance));
   await page.locator(
     '[data-lab-guide-path="labs.literature.search.title"] + .inline-quick-edit'
