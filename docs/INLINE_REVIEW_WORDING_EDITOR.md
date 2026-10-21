@@ -4,9 +4,13 @@ The three review-only authoring areas, **Research activities**, **Lab instructio
 
 ## How to use it
 
-In Content Studio, open one of these areas and find the instruction or field text to revise. Select its pencil icon (accessible as **Edit this wording here**). An inline text box appears immediately under the selected content. Edit the plain text and choose **Save wording**. You can use **Ctrl+Enter** or **Command+Enter** to save through the same action, or **Escape** or **Cancel** to discard the uncommitted inline change.
+In Content Studio, open **Research activities**, **Lab instructions**, or **Student Guide**. **Click the actual displayed wording** to open its inline editor. This is the default editing mode. The adjacent pencil button provides the same direct-edit action for discoverability and keyboard access. Modify the text and choose **Save wording**, or press **Ctrl+Enter** or **Command+Enter**. **Escape** and **Cancel** discard the uncommitted inline change.
 
-Clicking the text itself continues to open the original inspector for users who prefer that workflow. Both editing approaches update the same local proposal data. You can still review, export, import, and reset proposed wording using the existing controls.
+You can change **How would you like to edit?** to **Open the detailed inspector**. In that mode, clicking displayed wording uses the original inspector, while the pencil still opens the inline editor. The editing-mode control appears only in the three supported review-only authoring areas. It is a local interface preference for the current page, not an account setting.
+
+Inside an inline editor, **Detailed inspector** opens the original inspector directly. If you've typed valid new wording, the action becomes **Save and open inspector**, preserving that proposal before switching views. After inline Save or Cancel, the preview takes the full width again and the duplicate inspector stays hidden. Explicitly requesting the inspector opens it.
+
+Both workflows update the same proposal model. You can still review, export, import, and reset proposed wording using the original controls.
 
 When switching records or workspaces, the interface checks for text that is still in the open inline editor. If that text differs from the current proposed wording, a confirmation appears. **Cancel** returns to the unfinished edit with its text and selection intact. **OK** discards only the uncommitted inline text and allows navigation. If the input has not changed, navigation closes it without prompting.
 
