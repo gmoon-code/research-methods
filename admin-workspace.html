@@ -709,6 +709,15 @@
     .activity-inspector small{color:var(--muted);display:block;margin:6px 0;}
     .activity-inspector #activityOriginal{font-size:.82rem;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;}
     .activity-empty{color:var(--muted);line-height:1.6;}
+    .lab-guide-edit-line{margin:0 0 12px;line-height:1.5;}
+    .lab-guide-edit-line h4{margin:0;}
+    .lab-guide-edit-line .activity-edit-target{white-space:pre-wrap;}
+    .lab-guide-locked{border:1px solid #d6e2dd;background:#f5faf7;
+      padding:12px;color:#36554e;font-size:.82rem;line-height:1.5;}
+    .lab-guide-locked p{margin:4px 0 0;}
+    #labGuideLab,#labGuideStep{max-width:270px;}
+    #labGuideImport{max-width:240px;min-width:150px;border:1px solid #b1bfbd;
+      border-radius:3px;padding:7px;font-size:.78rem;background:#fff;}
     .activity-import-label{font-size:.82rem;align-self:center;font-weight:700;}
     #activityImport{max-width:250px;min-width:150px;border:1px solid #b1bfbd;border-radius:3px;padding:7px;font-size:.78rem;background:#fff;}
     .activity-review-dialog{width:min(720px,92vw);max-height:82vh;overflow:auto;border:1px solid #b7c5c6;padding:22px;background:#fff;color:#222;}
@@ -1398,6 +1407,68 @@
               <form method="dialog"><button class="button" type="submit">Close review</button></form>
             </dialog>
 
+            <section class="activity-authoring-panel" id="labGuideAuthoring" aria-labelledby="labGuideHeading">
+              <div class="content-editor-heading">
+                <div>
+                  <span class="eyebrow">Specialised student tools · Review only</span>
+                  <h3 id="labGuideHeading">Edit laboratory instructions</h3>
+                </div>
+                <span class="section-status">Local proposal only</span>
+              </div>
+              <p class="content-editor-help">
+                Edit explanatory titles and instructions in the Literature, Methods,
+                Data, and Writing Labs. Linked research terms and decision keys are
+                protected. Review packets are saved locally and cannot publish or
+                alter student projects.
+              </p>
+              <div class="activity-authoring-toolbar">
+                <label for="labGuideLab">Laboratory</label>
+                <select id="labGuideLab"></select>
+                <label for="labGuideStep">Instruction panel</label>
+                <select id="labGuideStep"></select>
+                <span id="labGuideCount">0 proposed changes</span>
+              </div>
+              <div class="activity-authoring-grid">
+                <section class="activity-preview-shell" aria-labelledby="labGuidePreviewTitle">
+                  <h4 id="labGuidePreviewTitle">Student guidance preview</h4>
+                  <p class="content-editor-help">Select a heading or explanation to edit its wording.</p>
+                  <div id="labGuidePreview" class="activity-preview"
+                    aria-label="Editable laboratory instructional wording"></div>
+                </section>
+                <aside id="labGuideInspector" class="activity-inspector" hidden
+                  aria-label="Selected laboratory instruction">
+                  <h4>Edit selected instruction</h4>
+                  <label for="labGuideEditText" id="labGuideSelectedLabel">Selected wording</label>
+                  <textarea id="labGuideEditText" rows="9"></textarea>
+                  <small id="labGuideCharacterCount"></small>
+                  <h5>Original wording</h5>
+                  <p id="labGuideOriginal"></p>
+                  <button id="labGuideRevert" type="button" class="button">Revert instruction</button>
+                </aside>
+              </div>
+              <p id="labGuideStatus" role="status" aria-live="polite" class="content-editor-help"></p>
+              <div class="content-action-row">
+                <button id="labGuideReview" type="button" class="button">Review lab changes</button>
+                <button id="labGuideExport" type="button" class="button" disabled>Export lab review JSON</button>
+                <label class="activity-import-label" for="labGuideImport">Reopen lab review</label>
+                <input id="labGuideImport" type="file" accept=".json,application/json"
+                  aria-label="Import a saved laboratory instruction review packet">
+                <button id="labGuideReset" type="button" class="button" disabled>Reset selected panel</button>
+              </div>
+              <p class="content-editor-help">
+                Export before closing the browser. A proposed wording change must be
+                reviewed and applied through a separate validated curriculum update.
+                It is not part of the current Content Studio publication release.
+              </p>
+            </section>
+            <dialog id="labGuideReviewDialog" class="activity-review-dialog"
+              aria-labelledby="labGuideReviewHeading">
+              <h3 id="labGuideReviewHeading">Review laboratory wording</h3>
+              <div id="labGuideReviewList"></div>
+              <p id="labGuideReviewValidation" role="status"></p>
+              <form method="dialog"><button class="button" type="submit">Close review</button></form>
+            </dialog>
+
             <details class="content-replacement">
               <summary>Replace the complete editable content block</summary>
 
@@ -1691,7 +1762,9 @@
   <script src="./assets/runtime-config.js"></script>
   <script src="./assets/teacher-session.js"></script>
   <script src="./assets/curriculum.js"></script>
+  <script src="./assets/student-guidance.js"></script>
   <script src="./assets/admin-activity-authoring.js"></script>
+  <script src="./assets/admin-lab-guidance-authoring.js"></script>
   <script src="./assets/content-registry.js"></script>
   <script src="./assets/admin-content-studio.js"></script>
   <script src="./assets/admin-visual-guidance.js"></script>
@@ -1798,6 +1871,10 @@
 
         window
           .RMSActivityAuthoring
+          ?.mount?.();
+
+        window
+          .RMSLabGuidanceAuthoring
           ?.mount?.();
 
         window
