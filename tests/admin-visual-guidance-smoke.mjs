@@ -33,6 +33,25 @@ try {
   assert.equal(await page.locator('#labGuideAuthoring').isHidden(),true);
   assert.equal(await page.locator('#studentGuideAuthoring').isHidden(),true);
   assert.equal(await page.locator('.publication-card').isHidden(),true);
+  // Keyboard-only browsing must permit arrow/Home/End movement across area
+  // links without unexpectedly changing the currently visible workspace.
+  const navGuidance=page.locator('[data-content-view="guidance"]');
+  await navGuidance.focus();
+  await navGuidance.press("ArrowRight");
+  assert.equal(await page.locator('[data-content-view="activities"]').evaluate(
+    node=>document.activeElement===node),true);
+  assert.equal(await page.locator('#activityAuthoring').isHidden(),true);
+  await page.keyboard.press("End");
+  assert.equal(await page.locator('[data-content-view="publication"]').evaluate(
+    node=>document.activeElement===node),true);
+  await page.keyboard.press("Home");
+  assert.equal(await navGuidance.evaluate(node=>document.activeElement===node),true);
+  await page.keyboard.press("ArrowLeft");
+  assert.equal(await page.locator('[data-content-view="publication"]').evaluate(
+    node=>document.activeElement===node),true);
+  assert.equal(await page.locator('#contentAuthoringNav').getAttribute('aria-describedby'),
+    'contentAuthoringNavHelp');
+  await navGuidance.focus();
   assert.equal(await page.locator('#contentBrowserList button').count(),18);
   assert.equal(await page.locator("#visualGuidanceEditor [data-visual-field]").count(),6);
   const originalTitle=await page.locator("#contentTitle").inputValue();
@@ -176,7 +195,13 @@ try {
   assert.match(await page.locator('#contentViewHeading').textContent(),/Research activities/);
   await page.locator('[data-content-view="guidance"]').click();
   assert.equal(await page.locator("#contentTitle").inputValue(),await page.locator('[data-visual-field="title"]').textContent());
-  await page.locator('[data-content-view="activities"]').click();
+  const activityLink=page.locator('[data-content-view="activities"]');
+  await activityLink.focus();
+  await page.keyboard.press("Enter");
+  assert.equal(await page.locator('#contentViewHeading').evaluate(
+    node=>document.activeElement===node),true,
+  'Enter should focus the newly opened workspace heading for screen readers');
+  assert.equal(await page.locator('#activityAuthoring').isVisible(),true);
   const activityBaseline=await page.evaluate(()=>JSON.stringify(window.RMSCurriculum.stages));
   // Navigate editable sections using the visible text sequence, without
   // changing stage IDs, form definitions, or unsaved content.
@@ -259,10 +284,30 @@ try {
   await activityQuick.click();
   assert.equal(await page.locator('#activityPreview .inline-review-input').isVisible(),true);
   assert.equal(await page.locator('#activityPreview [data-activity-path="s.0.title"]').isHidden(),true);
-  await page.locator('#activityPreview .inline-review-input').fill('<img src=x onerror=alert(1)>');
+  const inlineField=page.locator('#activityPreview .inline-review-input');
+  const inlineSemantics=await inlineField.evaluate(field=>({
+    labelled:!!document.querySelector('label[for="'+field.id+'"]'),
+    describedBy:(field.getAttribute('aria-describedby')||'').split(/\s+/).every(
+      id=>!!document.getElementById(id)),
+    group:field.closest('[role="group"]')?.getAttribute('aria-labelledby')
+  }));
+  assert.equal(inlineSemantics.labelled,true);
+  assert.equal(inlineSemantics.describedBy,true);
+  assert.equal(inlineSemantics.group,'inlineEditorActivityLabel');
+  await inlineField.fill('<img src=x onerror=alert(1)>');
+  assert.equal(await inlineField.getAttribute('aria-invalid'),'true');
   assert.equal(await page.locator('#activityPreview .inline-review-save').isDisabled(),true);
   await page.locator('#activityPreview .inline-review-input').fill('Updated interest inventory heading');
   assert.equal(await page.locator('#activityPreview .inline-review-save').isEnabled(),true);
+  assert.equal(await inlineField.getAttribute('aria-invalid'),null);
+  // Tab should reach the Save control with a meaningful name, then
+  // Shift+Tab should return to the textbox without losing its draft.
+  await inlineField.focus();
+  await page.keyboard.press('Tab');
+  assert.equal(await page.locator('#activityPreview .inline-review-save').evaluate(
+    node=>document.activeElement===node),true);
+  await page.keyboard.press('Shift+Tab');
+  assert.equal(await inlineField.evaluate(node=>document.activeElement===node),true);
   await page.locator('#activityPreview .inline-review-save').click();
   assert.equal(await page.locator('[data-activity-path="s.0.title"]').textContent(),
     'Updated interest inventory heading');
@@ -290,6 +335,12 @@ try {
     'Unfinished activity introduction');
   assert.equal(await page.locator('#activityReviewCount').textContent(),'0 proposed changes');
   // Switching workspaces is protected by the same guard.
+  page.once('dialog',dialog=>dialog.dismiss());
+  await page.locator('[data-admin-panel="settings"]').click();
+  assert.equal(await page.locator('#contentStudioPanel').isVisible(),true,
+    'Declining to discard a pending edit must block leaving Content Studio');
+  assert.equal(await page.locator('#activityPreview .inline-review-input').inputValue(),
+    'Unfinished activity introduction');
   page.once('dialog',dialog=>dialog.dismiss());
   await page.locator('[data-content-view="laboratories"]').click();
   assert.equal(await page.locator('#activityAuthoring').isVisible(),true);
@@ -434,6 +485,14 @@ try {
   ).click();
   assert.equal(await page.locator('#labGuidePreview .inline-review-position').textContent(),
     'Wording 1 of 2');
+  await page.locator('#labGuidePreview .inline-review-input').press('Alt+ArrowDown');
+  assert.equal(await page.locator('#labGuidePreview .inline-review-box')
+    .getAttribute('data-inline-editing'),'labs.literature.search.text',
+    'Alt+Down must navigate to the next editable item');
+  await page.locator('#labGuidePreview .inline-review-input').press('Alt+ArrowUp');
+  assert.equal(await page.locator('#labGuidePreview .inline-review-box')
+    .getAttribute('data-inline-editing'),'labs.literature.search.title',
+    'Alt+Up must navigate to the previous editable item');
   await page.locator('#labGuidePreview .inline-review-next').click();
   assert.equal(await page.locator('#labGuidePreview .inline-review-box')
     .getAttribute('data-inline-editing'),'labs.literature.search.text');
