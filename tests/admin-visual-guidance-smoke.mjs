@@ -43,6 +43,9 @@ try {
   assert.equal(await page.locator("#contentTitle").inputValue(),"New visual draft title");
   assert.match(await page.locator("#contentStudioStatus").textContent(),/draft updated/);
   assert.equal(await page.locator("#contentDraftState").textContent()!=="Matches bundled seed",true);
+  await page.waitForFunction(()=>/changed draft/.test(
+    document.getElementById("guidanceEditorCount")?.textContent||""));
+  assert.match(await page.locator("#contentViewStatus").textContent(),/changed draft/);
 
   const sourcePurpose=page.locator("#contentPurpose");
   await sourcePurpose.fill("Updated purpose from source controls");
@@ -257,6 +260,8 @@ try {
   await page.waitForFunction(()=>/Restored 3 wording proposals/.test(
     document.getElementById("activityStatus")?.textContent||""));
   assert.equal(await page.locator("#activityReviewCount").textContent(),"3 proposed changes");
+  await page.waitForFunction(()=>document.getElementById("activityEditorCount")
+    ?.textContent==="3 proposed changes");
   assert.equal(await page.locator('[data-activity-path="s.0.f.0.label"]').textContent(),revisedLabel);
   await page.locator("#activityStage").selectOption("2");
   assert.equal(await page.locator('[data-activity-path="s.0.desc"]').textContent(),
@@ -370,6 +375,8 @@ try {
   await page.waitForFunction(()=>/Restored 2 laboratory wording proposals/.test(
     document.getElementById("labGuideStatus")?.textContent||""));
   assert.equal(await page.locator("#labGuideCount").textContent(),"2 proposed changes");
+  await page.waitForFunction(()=>document.getElementById("labEditorCount")
+    ?.textContent==="2 proposed changes");
   assert.equal(await page.locator('[data-lab-guide-path="labs.literature.search.text"]').textContent(),
     newSearchText);
   await page.locator("#labGuideLab").selectOption("methods");
@@ -468,6 +475,8 @@ try {
   await page.waitForFunction(()=>/Restored 3 Student Guide wording changes/.test(
     document.getElementById("studentGuideStatus")?.textContent||""));
   assert.equal(await page.locator("#studentGuideCount").textContent(),"3 proposed changes");
+  await page.waitForFunction(()=>document.getElementById("studentEditorCount")
+    ?.textContent==="3 proposed changes");
   assert.equal(await page.locator('[data-guide-path="stages.1.plain"]').textContent(),newPlain);
   await page.locator("#studentGuideMode").selectOption("field");
   await page.locator("#studentGuideRecord").selectOption("interest1");
@@ -491,6 +500,21 @@ try {
   await page.locator('[data-content-view="guidance"]').click();
   assert.equal(await page.locator('#visualGuidanceEditor').isVisible(),true);
   await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-visual-guidance-desktop.png",fullPage:true});
+  // A copied editing-area URL should still require teacher verification and
+  // automatically select the matching Content Studio area after that check.
+  await page.goto(origin+"/admin-workspace.html#studentGuideAuthoring",
+    {waitUntil:"domcontentloaded"});
+  await page.locator("#adminWorkspace:not([hidden])").waitFor();
+  assert.equal(await page.locator('#contentStudioPanel').isVisible(),true);
+  assert.equal(await page.locator('#studentGuideAuthoring').isVisible(),true);
+  assert.equal(await page.locator('[data-content-view="student-guide"][aria-current="page"]').count(),1);
+  assert.equal(await page.locator('#visualGuidanceEditor').isHidden(),true);
+  await page.locator('[data-admin-panel="settings"]').click();
+  assert.equal(await page.locator('#contentStudioPanel').isHidden(),true);
+  await page.evaluate(()=>{window.location.hash="#activityAuthoring";});
+  assert.equal(await page.locator('#contentStudioPanel').isVisible(),true);
+  assert.equal(await page.locator('#activityAuthoring').isVisible(),true);
+  assert.equal(await page.locator('[data-content-view="activities"][aria-current="page"]').count(),1);
   assert.deepEqual(errors,[],"Admin visual guidance should not produce runtime errors");
   console.log("PASS: admin mount, 18 stages, direct editing, source sync, safe paste and navigation");
 }finally{
