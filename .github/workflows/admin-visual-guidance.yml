@@ -53,6 +53,7 @@ jobs:
           node --check assets/admin-student-guide-authoring.js
           node --check assets/admin-content-workspace-navigation.js
           node --check assets/admin-inline-review-editor.js
+          node --check tests/admin-visual-guidance-smoke.mjs
       - name: Test visual editing with isolated simulated session
         env:
           ADMIN_TEST_URL: http://127.0.0.1:8765
