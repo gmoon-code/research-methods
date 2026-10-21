@@ -142,13 +142,15 @@ test(
   () => {
     assert.match(
       page,
-      /location\.replace\("\.\/admin-workspace\.html"\)/
+      /location\.replace\(adminDestination\(\)\)/
     );
 
     assert.doesNotMatch(
       page,
       /location\.replace\("\.\/teacher-workspace\.html"\)/
     );
+    assert.match(page,/location\.hash === "#visualGuidanceEditor"/);
+    assert.match(page,/return "\.\/admin-workspace\.html" \+ requestedArea/);
 
     assert.match(
       page,
