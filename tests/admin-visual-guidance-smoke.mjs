@@ -202,6 +202,29 @@ try {
   await page.locator('#activityRevertField').click();
   assert.equal(await page.locator('#activityReviewCount').textContent(),'0 proposed changes');
 
+  // A cancelled stage switch retains the exact uncommitted text and option.
+  await activityQuick.click();
+  await page.locator('#activityPreview .inline-review-input')
+    .fill('Unfinished activity introduction');
+  page.once('dialog',dialog=>dialog.dismiss());
+  await page.locator('#activityStage').selectOption('2');
+  assert.equal(await page.locator('#activityStage').inputValue(),'1');
+  assert.equal(await page.locator('#activityPreview .inline-review-input').inputValue(),
+    'Unfinished activity introduction');
+  assert.equal(await page.locator('#activityReviewCount').textContent(),'0 proposed changes');
+  // Switching workspaces is protected by the same guard.
+  page.once('dialog',dialog=>dialog.dismiss());
+  await page.locator('[data-content-view="laboratories"]').click();
+  assert.equal(await page.locator('#activityAuthoring').isVisible(),true);
+  assert.equal(await page.locator('#labGuideAuthoring').isHidden(),true);
+  assert.equal(await page.locator('#activityPreview .inline-review-input').inputValue(),
+    'Unfinished activity introduction');
+  page.once('dialog',dialog=>dialog.accept());
+  await page.locator('[data-content-view="laboratories"]').click();
+  assert.equal(await page.locator('#labGuideAuthoring').isVisible(),true);
+  assert.equal(await page.locator('#activityPreview .inline-review-box').count(),0);
+  await page.locator('[data-content-view="activities"]').click();
+
   assert.equal(await page.locator("#activityStage option").count(),18);
   assert.equal(await page.locator("#activityExport").isDisabled(),true);
   await page.locator('[data-activity-path="s.0.f.0.label"]').click();
@@ -322,6 +345,18 @@ try {
   assert.equal(await page.locator('#labGuideCount').textContent(),'1 proposed changes');
   await page.locator('#labGuideRevert').click();
   assert.equal(await page.locator('#labGuideCount').textContent(),'0 proposed changes');
+  await labQuick.click();
+  await page.locator('#labGuidePreview .inline-review-input')
+    .fill('An unfinished search record heading');
+  page.once('dialog',dialog=>dialog.dismiss());
+  await page.locator('#labGuideLab').selectOption('methods');
+  assert.equal(await page.locator('#labGuideLab').inputValue(),'literature');
+  assert.equal(await page.locator('#labGuidePreview .inline-review-input').inputValue(),
+    'An unfinished search record heading');
+  page.once('dialog',dialog=>dialog.accept());
+  await page.locator('#labGuideStep').selectOption('sources');
+  assert.equal(await page.locator('#labGuideStep').inputValue(),'sources');
+  assert.equal(await page.locator('#labGuidePreview .inline-review-box').count(),0);
 
   assert.equal(await page.locator("#labGuideLab option").count(),4);
   assert.equal(await page.evaluate(()=>{
@@ -444,6 +479,19 @@ try {
   assert.equal(await page.locator('#studentGuideCount').textContent(),'1 proposed changes');
   await page.locator('#studentGuideRevert').click();
   assert.equal(await page.locator('#studentGuideCount').textContent(),'0 proposed changes');
+  await guideQuick.click();
+  await page.locator('#studentGuidePreview .inline-review-input')
+    .fill('Unfinished stage-guide wording');
+  page.once('dialog',dialog=>dialog.dismiss());
+  await page.locator('#studentGuideRecord').selectOption('2');
+  assert.equal(await page.locator('#studentGuideRecord').inputValue(),'1');
+  assert.equal(await page.locator('#studentGuidePreview .inline-review-input').inputValue(),
+    'Unfinished stage-guide wording');
+  page.once('dialog',dialog=>dialog.accept());
+  await page.locator('#studentGuideMode').selectOption('field');
+  assert.equal(await page.locator('#studentGuideMode').inputValue(),'field');
+  assert.equal(await page.locator('#studentGuidePreview .inline-review-box').count(),0);
+  await page.locator('#studentGuideMode').selectOption('stage');
 
   assert.equal(await page.locator("#studentGuideMode option").count(),2);
   assert.equal(await page.locator("#studentGuideRecord option").count(),18);
