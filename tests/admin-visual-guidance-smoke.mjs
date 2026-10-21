@@ -593,8 +593,14 @@ try {
   ).click();
   const guideTotal=await page.locator('#studentGuidePreview .activity-edit-target').count();
   assert(guideTotal>10,'Stage Guide should expose separate editing targets');
-  assert.match(await page.locator('#studentGuidePreview .inline-review-position').textContent(),
-    new RegExp('^Wording 1 of '+guideTotal+'
+  assert.equal(await page.locator('#studentGuidePreview .inline-review-position').textContent(),
+    'Wording 1 of '+guideTotal);
+  await page.locator('#studentGuidePreview .inline-review-target-select')
+    .selectOption('stages.1.walkthrough.situation');
+  assert.equal(await page.locator('#studentGuidePreview .inline-review-box')
+    .getAttribute('data-inline-editing'),'stages.1.walkthrough.situation');
+  await page.locator('#studentGuidePreview .inline-review-input').press('Escape');
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance)),guideBaseline);
   await page.locator('[data-guide-path="stages.1.title"]').click();
   assert.equal(await page.locator('#studentGuidePreview .inline-review-input').isVisible(),true);
   await page.locator('#studentGuidePreview .inline-review-input').press('Escape');
