@@ -226,6 +226,7 @@ try {
   assert.equal(await page.locator('#activityPreview .inline-review-box').count(),0);
   assert.equal(await page.locator('[data-activity-path="s.0.title"]').textContent(),
     'Updated interest inventory heading');
+  await page.locator('[data-activity-path="s.0.title"]').click();
   await page.locator('#activityRevertField').click();
   assert.equal(await page.locator('#activityReviewCount').textContent(),'0 proposed changes');
 
@@ -397,6 +398,7 @@ try {
   assert.equal(await page.locator('[data-lab-guide-path="labs.literature.search.title"]').textContent(),
     'Search journal articles and document the strategy');
   assert.equal(await page.locator('#labGuideCount').textContent(),'1 proposed changes');
+  await page.locator('[data-lab-guide-path="labs.literature.search.title"]').click();
   await page.locator('#labGuideRevert').click();
   assert.equal(await page.locator('#labGuideCount').textContent(),'0 proposed changes');
   await labQuick.click();
@@ -538,6 +540,7 @@ try {
   assert.equal(await page.locator('[data-guide-path="stages.1.title"]').textContent(),
     'Research questions begin with student curiosity');
   assert.equal(await page.locator('#studentGuideCount').textContent(),'1 proposed changes');
+  await page.locator('[data-guide-path="stages.1.title"]').click();
   await page.locator('#studentGuideRevert').click();
   assert.equal(await page.locator('#studentGuideCount').textContent(),'0 proposed changes');
   await guideQuick.click();
