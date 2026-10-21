@@ -8,6 +8,7 @@ on:
       - "assets/admin-activity-authoring.js"
       - "assets/admin-lab-guidance-authoring.js"
       - "assets/admin-student-guide-authoring.js"
+      - "assets/admin-content-workspace-navigation.js"
       - "assets/student-guidance.js"
       - "assets/curriculum.js"
       - "assets/admin-content-studio-ui.js"
