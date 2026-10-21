@@ -27,6 +27,91 @@ window.RMSInlineReviewEditor=(()=>{
   const targetFor=(root,config,path)=>[...root.querySelectorAll(
     ".activity-edit-target["+config.attribute+"]")].find(el=>
       el.getAttribute(config.attribute)===path);
+  // Read the preview in DOM order. These are the existing allowlisted
+  // authoring paths, never arbitrary HTML nodes or student response fields.
+  function recordTargets(root,config){
+    return [...root.querySelectorAll(".activity-edit-target["+config.attribute+"]")];
+  }
+  function passageRanges(value){
+    const groups=[];
+    const separator=/\n[ \t]*\n/g;
+    let start=0,match;
+    while((match=separator.exec(value))){
+      if(value.slice(start,match.index).trim())
+        groups.push({start,end:match.index});
+      start=separator.lastIndex;
+    }
+    if(value.slice(start).trim())groups.push({start,end:value.length});
+    const parts=[];
+    for(const group of groups){
+      let at=group.start;
+      while(group.end-at>460){
+        // Prefer a sentence boundary. If none is available, use whitespace.
+        const upper=Math.min(at+400,group.end);
+        let cut=-1;
+        for(let i=upper;i>=at+200;i--){
+          if(/\s/.test(value[i]||"")&&/[.!?。！？”’)"']/.test(value[i-1]||"")){
+            cut=i;break;
+          }
+        }
+        if(cut<0){
+          for(let i=upper;i>=at+200;i--){
+            if(/\s/.test(value[i]||"")){cut=i;break;}
+          }
+        }
+        if(cut<0)cut=upper;
+        parts.push({start:at,end:cut});
+        at=cut;
+      }
+      if(value.slice(at,group.end).trim())parts.push({start:at,end:group.end});
+    }
+    return parts.filter(part=>value.slice(part.start,part.end).trim());
+  }
+  function updateParts(edit){
+    const parts=passageRanges(edit.textarea.value);
+    const jump=edit.paragraphSelect;
+    const previous=jump.value;
+    jump.replaceChildren();
+    parts.forEach((part,i)=>{
+      const option=document.createElement("option");
+      option.value=String(i);
+      option.textContent="Part "+(i+1)+" · "+
+        edit.textarea.value.slice(part.start,part.end)
+          .trim().replace(/\s+/g," ").slice(0,74);
+      jump.appendChild(option);
+    });
+    edit.parts=parts;
+    edit.paragraphNav.hidden=parts.length<2;
+    jump.value=Number(previous)<parts.length?previous:"0";
+    edit.paragraphDescription.textContent=parts.length>1?
+      parts.length+" reading sections · Jump selects text without changing it.":
+      "";
+  }
+  function updatePosition(edit){
+    const items=recordTargets(edit.root,edit.config);
+    const selectedIndex=items.findIndex(item=>
+      item.getAttribute(edit.config.attribute)===edit.path);
+    edit.position.textContent="Wording "+(selectedIndex+1)+" of "+items.length;
+    edit.previous.disabled=selectedIndex<=0;
+    edit.next.disabled=selectedIndex>=items.length-1;
+    const chooser=edit.targetSelect;
+    chooser.replaceChildren();
+    items.forEach((item,i)=>{
+      const option=document.createElement("option");
+      option.value=item.getAttribute(edit.config.attribute);
+      const snippet=item.textContent.trim().replace(/\s+/g," ").slice(0,70);
+      option.textContent=(i+1)+". "+(snippet||"Untitled wording");
+      chooser.appendChild(option);
+    });
+    chooser.value=edit.path;
+  }
+  function jumpToPart(edit,index){
+    const part=edit.parts[Number(index)];
+    if(!part)return;
+    const input=edit.textarea;
+    input.focus({preventScroll:true});
+    input.setSelectionRange(part.start,part.end);
+  }
   function closeEditor({focus=false}={}){
     if(!active)return;
     const edit=active;
@@ -63,6 +148,19 @@ window.RMSInlineReviewEditor=(()=>{
       (changed?"Ready to save · review-only change":"No change yet");
     edit.message.dataset.invalid=String(!!error);
     edit.counter.textContent=edit.textarea.value.length+" / "+edit.limit;
+    edit.previous.textContent=changed?"Save and previous":"Previous wording";
+    edit.next.textContent=changed?"Save and next":"Next wording";
+    if(error){
+      edit.previous.disabled=true;
+      edit.next.disabled=true;
+    }else{
+      const items=recordTargets(edit.root,edit.config);
+      const pos=items.findIndex(item=>
+        item.getAttribute(edit.config.attribute)===edit.path);
+      edit.previous.disabled=pos<=0;
+      edit.next.disabled=pos>=items.length-1;
+    }
+    updateParts(edit);
   }
   function save(){
     if(!active)return;
@@ -79,6 +177,30 @@ window.RMSInlineReviewEditor=(()=>{
     if(inspector)inspector.hidden=true;
     const replacement=targetFor(edit.root,edit.config,edit.path);
     if(replacement)replacement.focus({preventScroll:true});
+  }
+  function goTo(path){
+    if(!active||!path)return;
+    const edit=active;
+    if(path===edit.path)return;
+    if(!targetFor(edit.root,edit.config,path))return;
+    if(textIssue(edit.textarea.value,edit.limit)){
+      syncStatus(edit);
+      edit.targetSelect.value=edit.path;
+      edit.textarea.focus({preventScroll:true});
+      return;
+    }
+    if(edit.textarea.value!==edit.start)save();
+    else closeEditor();
+    begin(edit.root,edit.config,path);
+  }
+  function moveBy(offset){
+    if(!active)return;
+    const edit=active;
+    const targets=recordTargets(edit.root,edit.config);
+    const index=targets.findIndex(item=>
+      item.getAttribute(edit.config.attribute)===edit.path);
+    const target=targets[index+offset];
+    if(target)goTo(target.getAttribute(edit.config.attribute));
   }
   function begin(root,config,path){
     if(!beforeContextChange())return;
@@ -108,6 +230,36 @@ window.RMSInlineReviewEditor=(()=>{
     field.id=uid;field.className="inline-review-input";field.rows=3;
     field.maxLength=limit;
     field.value=source.value;
+    const navigator=document.createElement("div");
+    navigator.className="inline-review-navigator";
+    const position=document.createElement("small");
+    position.className="inline-review-position";
+    const previous=document.createElement("button");
+    previous.type="button";previous.className="button inline-review-prev";
+    previous.textContent="Previous wording";
+    const next=document.createElement("button");
+    next.type="button";next.className="button inline-review-next";
+    next.textContent="Next wording";
+    const targetLabel=document.createElement("label");
+    targetLabel.className="inline-review-jump-label";
+    targetLabel.textContent="Jump to wording";
+    const targetSelect=document.createElement("select");
+    targetSelect.className="inline-review-target-select";
+    targetSelect.setAttribute("aria-label","Jump to another editable wording item");
+    targetLabel.appendChild(targetSelect);
+    navigator.append(position,previous,next,targetLabel);
+    const paragraphNav=document.createElement("div");
+    paragraphNav.className="inline-review-parts";
+    paragraphNav.hidden=true;
+    const paragraphLabel=document.createElement("label");
+    paragraphLabel.textContent="Select a paragraph or reading section";
+    const paragraphSelect=document.createElement("select");
+    paragraphSelect.className="inline-review-part-select";
+    paragraphSelect.setAttribute("aria-label","Jump to a paragraph or reading section");
+    paragraphLabel.appendChild(paragraphSelect);
+    const paragraphDescription=document.createElement("small");
+    paragraphDescription.className="inline-review-part-description";
+    paragraphNav.append(paragraphLabel,paragraphDescription);
     const actions=document.createElement("div");
     actions.className="inline-review-actions";
     const counter=document.createElement("small");
@@ -126,7 +278,7 @@ window.RMSInlineReviewEditor=(()=>{
     hint.setAttribute("role","status");
     hint.setAttribute("aria-live","polite");
     actions.append(saveButton,inspectButton,cancelButton,counter);
-    box.append(label,field,actions,hint);
+    box.append(label,navigator,paragraphNav,field,actions,hint);
     // The editing form goes after the source text's parent, so headings,
     // paragraphs, checklist and field-label semantics remain intact.
     target.parentElement.after(box);
@@ -134,8 +286,16 @@ window.RMSInlineReviewEditor=(()=>{
     trigger.hidden=true;
     active={
       root,config,path,form:box,target,trigger,textarea:field,
-      save:saveButton,message:hint,counter,limit,start:field.value
+      save:saveButton,message:hint,counter,limit,start:field.value,
+      position,previous,next,targetSelect,paragraphNav,
+      paragraphSelect,paragraphDescription,parts:[]
     };
+    previous.addEventListener("click",()=>moveBy(-1));
+    next.addEventListener("click",()=>moveBy(1));
+    targetSelect.addEventListener("change",()=>goTo(targetSelect.value));
+    paragraphSelect.addEventListener("change",()=>{
+      if(active?.textarea===field)jumpToPart(active,paragraphSelect.value);
+    });
     field.addEventListener("input",()=>{
       if(active?.textarea===field){
         syncStatus(active);
@@ -145,7 +305,11 @@ window.RMSInlineReviewEditor=(()=>{
     });
     field.addEventListener("keydown",event=>{
       if(event.key==="Escape"){event.preventDefault();closeEditor({focus:true});}
-      else if(event.key==="Enter"&&(event.ctrlKey||event.metaKey)){
+      else if(event.altKey&&!event.ctrlKey&&!event.metaKey&&event.key==="ArrowDown"){
+        event.preventDefault();moveBy(1);
+      }else if(event.altKey&&!event.ctrlKey&&!event.metaKey&&event.key==="ArrowUp"){
+        event.preventDefault();moveBy(-1);
+      }else if(event.key==="Enter"&&(event.ctrlKey||event.metaKey)){
         event.preventDefault();save();
       }
     });
@@ -165,6 +329,7 @@ window.RMSInlineReviewEditor=(()=>{
         byId(edit.config.inspector)?.focus({preventScroll:true});
       }
     });
+    updatePosition(active);
     syncStatus(active);
     field.focus({preventScroll:true});
     field.setSelectionRange(field.value.length,field.value.length);
