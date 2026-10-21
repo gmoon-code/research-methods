@@ -169,9 +169,10 @@ test(
   () => {
     const fileFields=[...admin.matchAll(/<input\b[^>]*type="file"[^>]*>/g)]
       .map(match=>match[0]);
-    assert.equal(fileFields.length,2,"Only the two reviewed authoring JSON pickers are allowed");
+    assert.equal(fileFields.length,3,"Only the three reviewed authoring JSON pickers are allowed");
     assert(fileFields.some(markup=>/id="activityImport"/.test(markup)));
     assert(fileFields.some(markup=>/id="labGuideImport"/.test(markup)));
+    assert(fileFields.some(markup=>/id="studentGuideImport"/.test(markup)));
     for(const markup of fileFields){
       assert.match(markup,/accept="\.json,application\/json"/);
     }
