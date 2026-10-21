@@ -178,6 +178,55 @@ try {
   assert.equal(await page.locator("#contentTitle").inputValue(),await page.locator('[data-visual-field="title"]').textContent());
   await page.locator('[data-content-view="activities"]').click();
   const activityBaseline=await page.evaluate(()=>JSON.stringify(window.RMSCurriculum.stages));
+  // Navigate editable sections using the visible text sequence, without
+  // changing stage IDs, form definitions, or unsaved content.
+  await page.locator(
+    '#activityPreview [data-activity-path="s.0.title"] + .inline-quick-edit'
+  ).click();
+  assert.match(await page.locator('#activityPreview .inline-review-position').textContent(),
+    /^Wording 1 of /);
+  assert.equal(await page.locator('#activityPreview .inline-review-prev').isDisabled(),true);
+  assert.equal(await page.locator('#activityPreview .inline-review-next').isEnabled(),true);
+  await page.locator('#activityPreview .inline-review-next').click();
+  assert.equal(await page.locator('#activityPreview .inline-review-box')
+    .getAttribute('data-inline-editing'),'s.0.desc');
+  await page.locator('#activityPreview .inline-review-target-select')
+    .selectOption('s.0.title');
+  assert.equal(await page.locator('#activityPreview .inline-review-box')
+    .getAttribute('data-inline-editing'),'s.0.title');
+  await page.locator('#activityPreview .inline-review-input')
+    .fill('Research areas to consider before choosing a project');
+  assert.match(await page.locator('#activityPreview .inline-review-next').textContent(),
+    /Save and next/);
+  await page.locator('#activityPreview .inline-review-next').click();
+  assert.equal(await page.locator('#activityPreview .inline-review-box')
+    .getAttribute('data-inline-editing'),'s.0.desc');
+  assert.equal(await page.locator('#activityReviewCount').textContent(),'1 proposed changes');
+  const longPassage='First paragraph introduces a question and its context.\n\n'+
+    'Second paragraph examines how a student might find relevant evidence.\n\n'+
+    'Third paragraph asks what would support a careful explanation.';
+  await page.locator('#activityPreview .inline-review-input').fill(longPassage);
+  assert.equal(await page.locator('#activityPreview .inline-review-parts').isVisible(),true);
+  assert.equal(await page.locator('#activityPreview .inline-review-part-select option').count(),3);
+  await page.locator('#activityPreview .inline-review-part-select').selectOption('1');
+  const selectedPart=await page.locator('#activityPreview .inline-review-input')
+    .evaluate(field=>field.value.slice(field.selectionStart,field.selectionEnd).trim());
+  assert.equal(selectedPart,
+    'Second paragraph examines how a student might find relevant evidence.');
+  assert.equal(await page.locator('#activityPreview .inline-review-input').inputValue(),longPassage,
+    'Selecting a paragraph must not modify its source text');
+  await page.locator('#activityPreview .inline-review-input').fill('<unsafe>');
+  assert.equal(await page.locator('#activityPreview .inline-review-next').isDisabled(),true);
+  await page.locator('#activityPreview .inline-review-target-select')
+    .selectOption('s.0.title');
+  assert.equal(await page.locator('#activityPreview .inline-review-target-select').inputValue(),
+    's.0.desc','Invalid text must block moving to another wording item');
+  await page.locator('#activityPreview .inline-review-input').press('Escape');
+  assert.equal(await page.locator('#activityReviewCount').textContent(),'1 proposed changes');
+  page.once('dialog',dialog=>dialog.accept());
+  await page.locator('#activityReset').click();
+  assert.equal(await page.locator('#activityReviewCount').textContent(),'0 proposed changes');
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSCurriculum.stages)),activityBaseline);
   // Direct editing is the default in each review-only workspace; clicking
   // displayed text opens its editor without using the pencil.
   assert.equal(await page.locator("#reviewEditingPreference").isVisible(),true);
@@ -376,6 +425,19 @@ try {
   assert.equal(await page.locator('#activityAuthoring').isHidden(),true);
   assert.match(await page.locator("#activityEditorCount").textContent(),/proposed changes/);
   const labBaseline=await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance));
+  await page.locator(
+    '[data-lab-guide-path="labs.literature.search.title"] + .inline-quick-edit'
+  ).click();
+  assert.equal(await page.locator('#labGuidePreview .inline-review-position').textContent(),
+    'Wording 1 of 2');
+  await page.locator('#labGuidePreview .inline-review-next').click();
+  assert.equal(await page.locator('#labGuidePreview .inline-review-box')
+    .getAttribute('data-inline-editing'),'labs.literature.search.text');
+  await page.locator('#labGuidePreview .inline-review-prev').click();
+  assert.equal(await page.locator('#labGuidePreview .inline-review-box')
+    .getAttribute('data-inline-editing'),'labs.literature.search.title');
+  await page.locator('#labGuidePreview .inline-review-input').press('Escape');
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance)),labBaseline);
   assert.equal(await page.locator('#reviewEditingPreference').isVisible(),true);
   await page.locator('#reviewEditingMode').selectOption('direct');
   await page.locator('[data-lab-guide-path="labs.literature.search.title"]').click();
@@ -526,6 +588,201 @@ try {
   assert.equal(await page.locator('#studentGuideAuthoring').isVisible(),true);
   assert.equal(await page.locator('#labGuideAuthoring').isHidden(),true);
   const guideBaseline=await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance));
+  await page.locator(
+    '[data-guide-path="stages.1.title"] + .inline-quick-edit'
+  ).click();
+  const guideTotal=await page.locator('#studentGuidePreview .activity-edit-target').count();
+  assert(guideTotal>10,'Stage Guide should expose separate editing targets');
+  assert.match(await page.locator('#studentGuidePreview .inline-review-position').textContent(),
+    new RegExp('^Wording 1 of '+guideTotal+'
+  await page.locator('[data-guide-path="stages.1.title"]').click();
+  assert.equal(await page.locator('#studentGuidePreview .inline-review-input').isVisible(),true);
+  await page.locator('#studentGuidePreview .inline-review-input').press('Escape');
+  await page.locator('#reviewEditingMode').selectOption('inspector');
+  const guideQuick=page.locator(
+    '[data-guide-path="stages.1.title"] + .inline-quick-edit');
+  await guideQuick.click();
+  await page.locator('#studentGuidePreview .inline-review-input').fill(
+    'Research questions begin with student curiosity');
+  await page.locator('#studentGuidePreview .inline-review-save').click();
+  assert.equal(await page.locator('[data-guide-path="stages.1.title"]').textContent(),
+    'Research questions begin with student curiosity');
+  assert.equal(await page.locator('#studentGuideCount').textContent(),'1 proposed changes');
+  await page.locator('[data-guide-path="stages.1.title"]').click();
+  await page.locator('#studentGuideRevert').click();
+  assert.equal(await page.locator('#studentGuideCount').textContent(),'0 proposed changes');
+  await guideQuick.click();
+  await page.locator('#studentGuidePreview .inline-review-input')
+    .fill('Unfinished stage-guide wording');
+  page.once('dialog',dialog=>dialog.dismiss());
+  await page.locator('#studentGuideRecord').selectOption('2');
+  assert.equal(await page.locator('#studentGuideRecord').inputValue(),'1');
+  assert.equal(await page.locator('#studentGuidePreview .inline-review-input').inputValue(),
+    'Unfinished stage-guide wording');
+  page.once('dialog',dialog=>dialog.accept());
+  await page.locator('#studentGuideMode').selectOption('field');
+  assert.equal(await page.locator('#studentGuideMode').inputValue(),'field');
+  assert.equal(await page.locator('#studentGuidePreview .inline-review-box').count(),0);
+  await page.locator('#studentGuideMode').selectOption('stage');
+
+  assert.equal(await page.locator("#studentGuideMode option").count(),2);
+  assert.equal(await page.locator("#studentGuideRecord option").count(),18);
+  assert.equal(await page.locator("#studentGuideExport").isDisabled(),true);
+  await page.locator('[data-guide-path="stages.1.plain"]').click();
+  assert.equal(await page.locator("#studentGuideInspector").isVisible(),true);
+  const newPlain="First, explore several research interests and consider available evidence.";
+  await page.locator("#studentGuideEdit").fill(newPlain);
+  assert.equal(await page.locator('[data-guide-path="stages.1.plain"]').textContent(),newPlain);
+  await page.locator('[data-guide-path="stages.1.walkthrough.thinking.0"]').click();
+  await page.locator("#studentGuideEdit").fill(
+    "Start by treating the observed pattern as a question rather than an established explanation.");
+  assert.equal(await page.locator("#studentGuideExport").isEnabled(),true);
+  await page.locator("#studentGuideMode").selectOption("field");
+  assert.equal(await page.locator("#studentGuideRecord option").count(),113);
+  await page.locator("#studentGuideFieldSearch").fill("interest1");
+  assert.equal(await page.locator("#studentGuideRecord option").count(),1);
+  await page.locator("#studentGuideRecord").selectOption("interest1");
+  await page.locator('[data-guide-path="fields.interest1.meaning"]').click();
+  const newMeaning="Name a science topic or observation you would like to explore in a study.";
+  await page.locator("#studentGuideEdit").fill(newMeaning);
+  assert.equal(await page.locator('[data-guide-path="fields.interest1.meaning"]').textContent(),
+    newMeaning);
+  await page.locator('[data-guide-path="fields.interest1.questions.0"]').click();
+  await page.locator("#studentGuideEdit").fill("Would I remain interested in this project?");
+  await page.locator("#studentGuideEdit").fill("<script>alert(1)</script>");
+  assert.equal(await page.locator("#studentGuideExport").isDisabled(),true,
+    "Untrusted HTML-like text must prevent review export");
+  await page.locator("#studentGuideRevert").click();
+  assert.equal(await page.locator("#studentGuideExport").isEnabled(),true);
+  await page.locator("#studentGuideReview").click();
+  assert.match(await page.locator("#studentGuideReviewValidation").textContent(),
+    /field IDs, and guidance arrays retain their structure/);
+  await page.locator("#studentGuideReviewDialog form button").click();
+  const guideDownloadPromise=page.waitForEvent("download");
+  await page.locator("#studentGuideExport").click();
+  const guideDownload=await guideDownloadPromise;
+  assert.equal(guideDownload.suggestedFilename(),"rms-student-guide-review.json");
+  const guideBytes=await readFile(await guideDownload.path());
+  const guidePacket=JSON.parse(guideBytes.toString("utf8"));
+  assert.equal(guidePacket.schema_version,"rms-student-guide-review-v1");
+  assert.equal(guidePacket.source_file,"assets/student-guidance.js");
+  assert.equal(guidePacket.live_publication,false);
+  assert.equal(guidePacket.review_required,true);
+  assert.match(guidePacket.source_sha256,/^[a-f0-9]{64}$/);
+  assert.equal(guidePacket.edits.length,3);
+  assert(guidePacket.edits.some(e=>e.path==="stages.1.plain"&&e.value===newPlain));
+  assert(guidePacket.edits.some(e=>e.path==="fields.interest1.meaning"&&e.value===newMeaning));
+  assert(guidePacket.edits.some(e=>e.path==="stages.1.walkthrough.thinking.0"));
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance)),guideBaseline);
+
+  await page.reload({waitUntil:"domcontentloaded"});
+  await page.locator("#adminWorkspace:not([hidden])").waitFor();
+  await page.locator('[data-admin-panel="content-studio"]').click();
+  await page.locator('[data-content-view="student-guide"]').click();
+  await page.locator('[data-guide-path="stages.1.plain"]').waitFor();
+  assert.equal(await page.locator("#studentGuideCount").textContent(),"0 proposed changes");
+  const wrongGuide={...guidePacket,source_sha256:"0".repeat(64)};
+  await page.locator("#studentGuideImport").setInputFiles({
+    name:"old-guide.json",mimeType:"application/json",
+    buffer:Buffer.from(JSON.stringify(wrongGuide))
+  });
+  await page.waitForFunction(()=>/different Student Guide version/.test(
+    document.getElementById("studentGuideStatus")?.textContent||""));
+  assert.equal(await page.locator("#studentGuideCount").textContent(),"0 proposed changes");
+  const unsafeGuide={...guidePacket,edits:[...guidePacket.edits,{
+    path:"stages.1.terms.0",original:"variable",value:"Unsafe changed term mapping"
+  }]};
+  await page.locator("#studentGuideImport").setInputFiles({
+    name:"wrong-field.json",mimeType:"application/json",
+    buffer:Buffer.from(JSON.stringify(unsafeGuide))
+  });
+  await page.waitForFunction(()=>/unknown or altered help field/.test(
+    document.getElementById("studentGuideStatus")?.textContent||""));
+  assert.equal(await page.locator("#studentGuideCount").textContent(),"0 proposed changes");
+  await page.locator("#studentGuideImport").setInputFiles({
+    name:"review.json",mimeType:"application/json",buffer:guideBytes
+  });
+  await page.waitForFunction(()=>/Restored 3 Student Guide wording changes/.test(
+    document.getElementById("studentGuideStatus")?.textContent||""));
+  assert.equal(await page.locator("#studentGuideCount").textContent(),"3 proposed changes");
+  await page.waitForFunction(()=>document.getElementById("studentEditorCount")
+    ?.textContent==="3 proposed changes");
+  assert.equal(await page.locator('[data-guide-path="stages.1.plain"]').textContent(),newPlain);
+  await page.locator("#studentGuideMode").selectOption("field");
+  await page.locator("#studentGuideRecord").selectOption("interest1");
+  assert.equal(await page.locator('[data-guide-path="fields.interest1.meaning"]').textContent(),
+    newMeaning);
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance)),guideBaseline);
+  page.once("dialog",dialog=>dialog.accept());
+  await page.locator("#studentGuideReset").click();
+  assert.equal(await page.locator("#studentGuideCount").textContent(),"2 proposed changes");
+  await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-student-guide-editor.png",fullPage:true});
+
+  // Publication remains isolated from all review-only proposals.
+  await page.locator('[data-content-view="publication"]').click();
+  assert.equal(await page.locator(".publication-card").isVisible(),true);
+  assert.equal(await page.locator('#reviewEditingPreference').isHidden(),true);
+  assert.equal(await page.locator('#studentGuideAuthoring').isHidden(),true);
+  assert.match(await page.locator("#contentViewDescription").textContent(),
+    /Review-only proposals cannot publish here/);
+  assert.equal(await page.locator("#publishContentRelease").isDisabled(),true);
+  assert.equal(await page.locator('[data-content-view="publication"][aria-current="page"]').count(),1);
+  await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-content-studio-publication.png",fullPage:true});
+  await page.locator('[data-content-view="guidance"]').click();
+  assert.equal(await page.locator('#visualGuidanceEditor').isVisible(),true);
+  // Visual editing is the default; keep advanced raw fields closed.
+  await page.locator("#contentSourceFallback").evaluate(el=>el.open=false);
+  await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-visual-guidance-desktop.png",fullPage:true});
+  // A copied editing-area URL should still require teacher verification and
+  // automatically select the matching Content Studio area after that check.
+  await page.goto(origin+"/admin-workspace.html#studentGuideAuthoring",
+    {waitUntil:"domcontentloaded"});
+  await page.locator("#adminWorkspace:not([hidden])").waitFor();
+  assert.equal(await page.locator('#contentStudioPanel').isVisible(),true);
+  assert.equal(await page.locator('#studentGuideAuthoring').isVisible(),true);
+  assert.equal(await page.locator('[data-content-view="student-guide"][aria-current="page"]').count(),1);
+  assert.equal(await page.locator('#visualGuidanceEditor').isHidden(),true);
+  await page.locator('[data-admin-panel="settings"]').click();
+  assert.equal(await page.locator('#contentStudioPanel').isHidden(),true);
+  await page.evaluate(()=>{window.location.hash="#activityAuthoring";});
+  assert.equal(await page.locator('#contentStudioPanel').isVisible(),true);
+  assert.equal(await page.locator('#activityAuthoring').isVisible(),true);
+  assert.equal(await page.locator('[data-content-view="activities"][aria-current="page"]').count(),1);
+
+  // Mobile viewport uses a two-column workspace switcher. The regular
+  // Admin sections and the active editor remain independently reachable.
+  await page.setViewportSize({width:390,height:844});
+  await page.locator('[data-content-view="student-guide"]').click();
+  assert.equal(await page.locator('#studentGuideAuthoring').isVisible(),true);
+  assert.equal(await page.locator('#labGuideAuthoring').isHidden(),true);
+  assert.equal(await page.locator('.content-authoring-nav a').count(),5);
+  const mobile=await page.locator("#contentAuthoringNav").evaluate(el=>{
+    const bounds=el.getBoundingClientRect();
+    const panel=el.closest("#contentStudioPanel").getBoundingClientRect();
+    return {
+      columns:getComputedStyle(el).gridTemplateColumns.trim().split(/\s+/).length,
+      navRight:bounds.right,panelRight:panel.right
+    };
+  });
+  assert.equal(mobile.columns,2,"Narrow viewports should use a two-column editor switcher");
+  assert(mobile.navRight<=mobile.panelRight+2,
+    "Mobile workspace navigation must remain within its Admin panel");
+  await page.locator('[data-content-view="publication"]').click();
+  assert.equal(await page.locator('.publication-card').isVisible(),true);
+  await page.screenshot({
+    path:"/tmp/visual-guidance-artifacts/admin-content-studio-mobile.png",fullPage:true
+  });
+  assert.deepEqual(errors,[],"Admin visual guidance should not produce runtime errors");
+  console.log("PASS: admin mount, 18 stages, direct editing, source sync, safe paste and navigation");
+}finally{
+  await browser.close();
+}));
+  await page.locator('#studentGuidePreview .inline-review-target-select')
+    .selectOption('stages.1.walkthrough.situation');
+  assert.equal(await page.locator('#studentGuidePreview .inline-review-box')
+    .getAttribute('data-inline-editing'),'stages.1.walkthrough.situation');
+  await page.locator('#studentGuidePreview .inline-review-input').press('Escape');
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance)),guideBaseline);
   await page.locator('#reviewEditingMode').selectOption('direct');
   await page.locator('[data-guide-path="stages.1.title"]').click();
   assert.equal(await page.locator('#studentGuidePreview .inline-review-input').isVisible(),true);
