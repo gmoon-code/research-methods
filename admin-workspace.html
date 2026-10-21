@@ -776,6 +776,13 @@
     .inline-review-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
     .inline-review-counter{margin-left:auto;font-size:.75rem;color:var(--muted);}
     .inline-review-message{font-size:.82rem;color:var(--muted);margin:0;line-height:1.5;}
+    .inline-review-keyboard-hint{
+      font-size:.76rem;color:var(--muted);line-height:1.5;margin:0;
+    }
+    .visually-hidden{
+      position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;
+      overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+    }
     .inline-review-message[data-invalid="true"]{color:#a02439;}
     .inline-review-save:disabled{opacity:.45;cursor:not-allowed;}
     @media(hover:none){.inline-quick-edit{opacity:1;}}
@@ -1306,7 +1313,7 @@
               publication service. Research activities, laboratory instructions,
               and Student Guide wording export review-only proposals.
             </p>
-            <nav class="content-authoring-nav" id="contentAuthoringNav" aria-label="Content Studio editing areas">
+            <nav class="content-authoring-nav" id="contentAuthoringNav" aria-label="Content Studio editing areas" aria-describedby="contentAuthoringNavHelp">
               <a href="#visualGuidanceEditor" data-content-view="guidance" aria-current="page"><strong>Stage guidance</strong>
                 <small>18 stages · Validated drafts</small>
                 <span class="content-authoring-state" id="guidanceEditorCount">0 changed drafts</span></a>
@@ -1323,6 +1330,10 @@
                 <small>Authenticated v3 service only</small>
                 <span class="content-authoring-state" id="publicationEditorState">Not connected</span></a>
             </nav>
+            <p id="contentAuthoringNavHelp" class="visually-hidden">
+              All five editing areas are accessible with Tab. Use Left and Right arrow keys, Home, or End
+              while focused on an area link to move between them. Press Enter to open an area.
+            </p>
             <div class="content-active-workspace">
               <div>
                 <span class="eyebrow">Current editing area</span>
