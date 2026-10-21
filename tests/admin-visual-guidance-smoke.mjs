@@ -28,7 +28,12 @@ try {
     "#visualGuidanceEditor","#activityAuthoring","#labGuideAuthoring",
     "#studentGuideAuthoring","#contentPublicationHeading"
   ]);
-  assert.equal(await page.locator("#contentBrowserList button").count(),18);
+  assert.equal(await page.locator('[data-content-view="guidance"][aria-current="page"]').count(),1);
+  assert.equal(await page.locator('#activityAuthoring').isHidden(),true);
+  assert.equal(await page.locator('#labGuideAuthoring').isHidden(),true);
+  assert.equal(await page.locator('#studentGuideAuthoring').isHidden(),true);
+  assert.equal(await page.locator('.publication-card').isHidden(),true);
+  assert.equal(await page.locator('#contentBrowserList button').count(),18);
   assert.equal(await page.locator("#visualGuidanceEditor [data-visual-field]").count(),6);
   const originalTitle=await page.locator("#contentTitle").inputValue();
   assert(originalTitle.trim(),"Stage title should be present");
@@ -156,6 +161,17 @@ try {
     await page.locator("#contentTitle").inputValue());
   // The curriculum activity author is proposal-only. Exercise visible
   // wording edits, field-key preservation, validation and safe JSON export.
+  // Switching workspaces must preserve the stage-guidance draft in memory
+  // and show only the selected editing area.
+  await page.locator('[data-content-view="activities"]').click();
+  assert.equal(await page.locator('#activityAuthoring').isVisible(),true);
+  assert.equal(await page.locator('#visualGuidanceEditor').isHidden(),true);
+  assert.equal(await page.locator('#contentBrowserList').isHidden(),true);
+  assert.equal(await page.locator('[data-content-view="activities"][aria-current="page"]').count(),1);
+  assert.match(await page.locator('#contentViewHeading').textContent(),/Research activities/);
+  await page.locator('[data-content-view="guidance"]').click();
+  assert.equal(await page.locator("#contentTitle").inputValue(),await page.locator('[data-visual-field="title"]').textContent());
+  await page.locator('[data-content-view="activities"]').click();
   const activityBaseline=await page.evaluate(()=>JSON.stringify(window.RMSCurriculum.stages));
   assert.equal(await page.locator("#activityStage option").count(),18);
   assert.equal(await page.locator("#activityExport").isDisabled(),true);
@@ -209,6 +225,7 @@ try {
   await page.reload({waitUntil:"domcontentloaded"});
   await page.locator("#adminWorkspace:not([hidden])").waitFor();
   await page.locator('[data-admin-panel="content-studio"]').click();
+  await page.locator('[data-content-view="activities"]').click();
   await page.locator('[data-activity-path="s.0.f.0.label"]').waitFor();
   assert.equal(await page.locator("#activityReviewCount").textContent(),"0 proposed changes",
     "Activity drafts must be explicitly exported before leaving the current session");
@@ -258,6 +275,10 @@ try {
 
   // Specialised laboratory instruction authoring stays separate from the
   // four interactive student tools and their saved project structure.
+  await page.locator('[data-content-view="laboratories"]').click();
+  assert.equal(await page.locator('#labGuideAuthoring').isVisible(),true);
+  assert.equal(await page.locator('#activityAuthoring').isHidden(),true);
+  assert.match(await page.locator("#activityEditorCount").textContent(),/proposed changes/);
   const labBaseline=await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance));
   assert.equal(await page.locator("#labGuideLab option").count(),4);
   assert.equal(await page.evaluate(()=>{
@@ -321,6 +342,7 @@ try {
   await page.reload({waitUntil:"domcontentloaded"});
   await page.locator("#adminWorkspace:not([hidden])").waitFor();
   await page.locator('[data-admin-panel="content-studio"]').click();
+  await page.locator('[data-content-view="laboratories"]').click();
   await page.locator('[data-lab-guide-path="labs.literature.search.text"]').waitFor();
   assert.equal(await page.locator("#labGuideCount").textContent(),"0 proposed changes");
   const badVersion={...labReview,source_sha256:"0".repeat(64)};
@@ -362,6 +384,9 @@ try {
 
   // Stage Guide and per-field help review. All source maps and student
   // field IDs must remain unchanged even when edits span different records.
+  await page.locator('[data-content-view="student-guide"]').click();
+  assert.equal(await page.locator('#studentGuideAuthoring').isVisible(),true);
+  assert.equal(await page.locator('#labGuideAuthoring').isHidden(),true);
   const guideBaseline=await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance));
   assert.equal(await page.locator("#studentGuideMode option").count(),2);
   assert.equal(await page.locator("#studentGuideRecord option").count(),18);
@@ -416,6 +441,7 @@ try {
   await page.reload({waitUntil:"domcontentloaded"});
   await page.locator("#adminWorkspace:not([hidden])").waitFor();
   await page.locator('[data-admin-panel="content-studio"]').click();
+  await page.locator('[data-content-view="student-guide"]').click();
   await page.locator('[data-guide-path="stages.1.plain"]').waitFor();
   assert.equal(await page.locator("#studentGuideCount").textContent(),"0 proposed changes");
   const wrongGuide={...guidePacket,source_sha256:"0".repeat(64)};
@@ -453,6 +479,17 @@ try {
   assert.equal(await page.locator("#studentGuideCount").textContent(),"2 proposed changes");
   await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-student-guide-editor.png",fullPage:true});
 
+  // Publication remains isolated from all review-only proposals.
+  await page.locator('[data-content-view="publication"]').click();
+  assert.equal(await page.locator(".publication-card").isVisible(),true);
+  assert.equal(await page.locator('#studentGuideAuthoring').isHidden(),true);
+  assert.match(await page.locator("#contentViewDescription").textContent(),
+    /Review-only proposals cannot publish here/);
+  assert.equal(await page.locator("#publishContentRelease").isDisabled(),true);
+  assert.equal(await page.locator('[data-content-view="publication"][aria-current="page"]').count(),1);
+  await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-content-studio-publication.png",fullPage:true});
+  await page.locator('[data-content-view="guidance"]').click();
+  assert.equal(await page.locator('#visualGuidanceEditor').isVisible(),true);
   await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-visual-guidance-desktop.png",fullPage:true});
   assert.deepEqual(errors,[],"Admin visual guidance should not produce runtime errors");
   console.log("PASS: admin mount, 18 stages, direct editing, source sync, safe paste and navigation");
