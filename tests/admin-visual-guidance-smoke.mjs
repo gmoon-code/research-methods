@@ -863,6 +863,15 @@ try {
     };
   });
   assert.equal(mobile.columns,2,"Narrow viewports should use a two-column editor switcher");
+  const mobileChrome=await page.evaluate(()=>({
+    topbarPosition:getComputedStyle(document.querySelector(".topbar")).position,
+    sidebarTop:getComputedStyle(document.querySelector(".sidebar")).top,
+    sidebarPosition:getComputedStyle(document.querySelector(".sidebar")).position
+  }));
+  assert.equal(mobileChrome.topbarPosition,"static");
+  assert.equal(mobileChrome.sidebarPosition,"sticky");
+  assert.equal(mobileChrome.sidebarTop,"0px",
+    "Mobile Admin navigation must not leave a sticky offset below the nonsticky topbar");
   const mobilePreview=await page.locator('#studentGuidePreview').evaluate(el=>({
     maxHeight:getComputedStyle(el).maxHeight,
     overflow:getComputedStyle(el).overflowY,
