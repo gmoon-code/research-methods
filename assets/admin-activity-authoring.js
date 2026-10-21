@@ -83,6 +83,10 @@ window.RMSActivityAuthoring=(()=>{
     node.className="activity-edit-target";
     node.dataset.activityPath=entry.path;
     node.textContent=text;
+    if(entry.value!==entry.text){
+      node.dataset.proposed="true";
+      node.setAttribute("aria-label","Proposed change · "+text);
+    }
     if(selected===entry.path)node.setAttribute("aria-current","true");
     node.addEventListener("click",()=>select(entry.path));
     return node;
