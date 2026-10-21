@@ -51,6 +51,9 @@ window.RMSAdminContentWorkspaceNavigation=(()=>{
       return false;
     }
     selected=chosen.key;
+    const preference=byId("reviewEditingPreference");
+    if(preference)preference.hidden=
+      !["activities","laboratories","student-guide"].includes(chosen.key);
     for(const item of byId("contentStudioPanel").querySelectorAll("[data-editor-workspace]")){
       item.hidden=item.dataset.editorWorkspace!==chosen.key;
     }
