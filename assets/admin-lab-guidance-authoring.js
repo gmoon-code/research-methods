@@ -66,7 +66,7 @@ window.RMSLabGuidanceAuthoring=(()=>{
     $("labGuideExport").disabled=pending||!check.ok||!check.edits.length;
     $("labGuideReset").disabled=pending||!
       edited().some(e=>e.path.startsWith("labs."+lab+"."+step+"."));
-    $("labGuideCount").textContent=check.edits.length+" proposed changes";
+    $("labGuideCount").textContent=check.edits.length+" proposed change"+(check.edits.length===1?"":"s");
   }
   function choose(p){
     if(!resolve(p))return;
