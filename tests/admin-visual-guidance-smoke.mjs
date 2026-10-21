@@ -25,6 +25,23 @@ try {
   assert.equal(new URL(page.url()).hash,"#visualGuidanceEditor");
   await page.locator("#visualGuidanceEditor [data-visual-field=title]").waitFor();
 
+  // Cross-site editors should be discoverable in Content Studio while
+  // remaining independent of this authenticated Admin session.
+  const crossEditorDisclosure=page.locator('.cross-site-editor-switcher');
+  assert.equal(await crossEditorDisclosure.isVisible(),true);
+  await crossEditorDisclosure.locator('summary').click();
+  const externalEditorLinks=await crossEditorDisclosure.locator('nav a').evaluateAll(
+    links=>links.map(link=>({
+      pathname:new URL(link.href).pathname,
+      target:link.target,
+      noopener:link.rel.split(/\s+/).includes('noopener')
+    }))
+  );
+  assert.deepEqual(externalEditorLinks,[
+    {pathname:'/editor.html',target:'_blank',noopener:true},
+    {pathname:'/memory-palace-u1-8/editor.html',target:'_blank',noopener:true}
+  ]);
+  await crossEditorDisclosure.locator('summary').click();
   assert.equal(await page.locator(".content-authoring-nav a").count(),5);
   assert.deepEqual(await page.locator(".content-authoring-nav a").evaluateAll(links=>
     links.map(a=>a.getAttribute("href"))),[
