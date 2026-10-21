@@ -749,6 +749,22 @@
       .review-editing-preference{display:grid;gap:10px;}
       .review-editing-preference select{min-width:0;width:100%;}
     }
+    .inline-review-navigator{display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+      padding:8px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .inline-review-position{font-size:.8rem;font-weight:750;color:var(--muted);margin-right:auto;}
+    .inline-review-jump-label{display:grid;gap:5px;min-width:min(220px,100%);
+      flex:1 1 220px;color:var(--muted);font-size:.74rem;font-weight:700;}
+    .inline-review-target-select,.inline-review-part-select{
+      display:block;width:100%;min-width:0;border:1px solid var(--border);
+      background:var(--surface);color:var(--text);border-radius:6px;
+      padding:9px 10px;font:inherit;font-size:.82rem;}
+    .inline-review-target-select:focus-visible,.inline-review-part-select:focus-visible{
+      outline:3px solid var(--focus);outline-offset:2px;}
+    .inline-review-parts{display:grid;gap:5px;border:1px solid var(--border);
+      border-radius:7px;padding:10px 12px;background:var(--surface);}
+    .inline-review-parts[hidden]{display:none!important;}
+    .inline-review-parts label{display:grid;gap:6px;font-size:.78rem;font-weight:750;}
+    .inline-review-part-description{font-size:.73rem;color:var(--muted);line-height:1.4;}
     .inline-review-box{display:grid;gap:9px;margin:8px 0 16px;padding:13px;
       border:1px solid var(--accent);border-radius:7px;background:var(--surface-soft);
       color:var(--text);min-width:0;}
