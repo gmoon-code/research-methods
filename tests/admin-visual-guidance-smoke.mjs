@@ -770,6 +770,11 @@ try {
   assert.equal(await page.locator('#studentGuideAuthoring').isVisible(),true);
   assert.equal(await page.locator('#labGuideAuthoring').isHidden(),true);
   assert.equal(await page.locator('.content-authoring-nav a').count(),5);
+  assert.equal(await page.locator('.foundation-notice-short').isVisible(),true);
+  assert.equal(await page.locator('.foundation-notice-full').isHidden(),true);
+  assert.equal(await page.locator('.workspace-header p').isHidden(),true);
+  assert.match(await page.locator('.foundation-notice-short').textContent(),
+    /Research collection remains off/);
   const mobile=await page.locator("#contentAuthoringNav").evaluate(el=>{
     const bounds=el.getBoundingClientRect();
     const panel=el.closest("#contentStudioPanel").getBoundingClientRect();
@@ -815,6 +820,11 @@ try {
   await page.screenshot({
     path:"/tmp/visual-guidance-artifacts/admin-content-studio-mobile.png",fullPage:true
   });
+  await page.locator('[data-admin-panel="dashboard"]').click();
+  assert.equal(await page.locator('.foundation-notice-full').isVisible(),true,
+    'Other Admin areas must retain their full privacy and publication notice');
+  assert.equal(await page.locator('.foundation-notice-short').isHidden(),true);
+  assert.equal(await page.locator('.workspace-header p').isVisible(),true);
   assert.deepEqual(errors,[],"Admin visual guidance should not produce runtime errors");
   console.log("PASS: admin mount, 18 stages, direct editing, source sync, safe paste and navigation");
  }finally{
