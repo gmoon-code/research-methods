@@ -15,11 +15,14 @@ try {
   // replaces the network response, never repository production code.
   await page.route("**/assets/teacher-session.js",route=>route.fulfill({
     status:200,contentType:"application/javascript",
-    body:"window.RMSTeacherSession={verify:async()=>true,isActive:()=>true,leave:()=>{}};"
+    body:"window.RMSTeacherSession={verify:async()=>true,isActive:()=>true,hasStoredSession:()=>true,login:async()=>({ok:true}),leave:()=>{}};"
   }));
-  await page.goto(origin+"/admin-workspace.html",{waitUntil:"domcontentloaded"});
+  // Public GitHub Pages editor.html must use the existing sign-in entry,
+  // then retain the allowlisted Content Studio area after authentication.
+  await page.goto(origin+"/editor.html",{waitUntil:"domcontentloaded"});
   await page.locator("#adminWorkspace:not([hidden])").waitFor();
-  await page.locator('[data-admin-panel="content-studio"]').click();
+  await page.locator("#contentStudioPanel:not([hidden])").waitFor();
+  assert.equal(new URL(page.url()).hash,"#visualGuidanceEditor");
   await page.locator("#visualGuidanceEditor [data-visual-field=title]").waitFor();
 
   assert.equal(await page.locator(".content-authoring-nav a").count(),5);
