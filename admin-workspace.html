@@ -1160,6 +1160,9 @@
         align-items: flex-start;
         flex-direction: column;
       }
+      /* The topbar is not sticky at this width. Keep the compact Admin
+         navigation at the viewport edge without a vacant 72px offset. */
+      .sidebar { top: 0; }
 
       .data-domain-grid { grid-template-columns: 1fr; }
 
