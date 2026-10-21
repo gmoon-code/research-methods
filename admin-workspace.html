@@ -2050,6 +2050,12 @@
 
         gate.hidden = true;
         workspace.hidden = false;
+
+        // Deep links to an editing area should open Content Studio after
+        // authentication without making the guarded workspace public.
+        if (window.RMSAdminContentWorkspaceNavigation?.hasLinkHash?.()) {
+          setPanel("content-studio");
+        }
       }
 
       void boot();
