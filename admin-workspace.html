@@ -718,6 +718,17 @@
     #labGuideLab,#labGuideStep{max-width:270px;}
     #labGuideImport{max-width:240px;min-width:150px;border:1px solid #b1bfbd;
       border-radius:3px;padding:7px;font-size:.78rem;background:#fff;}
+    .student-guide-toolbar select{max-width:360px;}
+    .student-guide-toolbar #studentGuideRecord{min-width:min(340px,100%);flex:2;}
+    .student-guide-toolbar #studentGuideFieldSearch{padding:9px;border:1px solid #a2b4b1;
+      color:#1b292b;background:#fff;border-radius:3px;min-width:160px;flex:1;}
+    .student-guide-preview-group{display:grid;gap:8px;padding:12px;
+      border:1px solid #d2dfda;background:var(--surface,#fff);}
+    .student-guide-preview-group h5{font-size:.83rem;color:var(--muted);margin:0 0 3px;}
+    .student-guide-preview-line{display:grid;gap:2px;}
+    .student-guide-preview-line small{font-size:.75rem;color:var(--muted);}
+    .student-guide-protected{font-size:.8rem;line-height:1.5;padding:12px;
+      border-left:3px solid #758b85;background:#f6f8f7;color:#36554e;}
     .activity-import-label{font-size:.82rem;align-self:center;font-weight:700;}
     #activityImport{max-width:250px;min-width:150px;border:1px solid #b1bfbd;border-radius:3px;padding:7px;font-size:.78rem;background:#fff;}
     .activity-review-dialog{width:min(720px,92vw);max-height:82vh;overflow:auto;border:1px solid #b7c5c6;padding:22px;background:#fff;color:#222;}
@@ -1469,6 +1480,80 @@
               <form method="dialog"><button class="button" type="submit">Close review</button></form>
             </dialog>
 
+            <section class="activity-authoring-panel" id="studentGuideAuthoring"
+              aria-labelledby="studentGuideHeading">
+              <div class="content-editor-heading">
+                <div>
+                  <span class="eyebrow">Student explanations · Review only</span>
+                  <h3 id="studentGuideHeading">Edit the Student Guide and field help</h3>
+                </div>
+                <span class="section-status">Local proposal only</span>
+              </div>
+              <p class="content-editor-help">
+                Revise the explanations, examples, and step-by-step help used in
+                all 18 research stages and 113 student response fields.
+                Research-term links, field identities, choice guidance and student
+                answers stay unchanged. This editor only exports review packets.
+              </p>
+              <div class="activity-authoring-toolbar student-guide-toolbar">
+                <label for="studentGuideMode">Edit</label>
+                <select id="studentGuideMode" aria-label="Select Student Guide help type">
+                  <option value="stage">Stage explanations · 18 records</option>
+                  <option value="field">Individual field help · 113 records</option>
+                </select>
+                <label for="studentGuideRecord">Help record</label>
+                <select id="studentGuideRecord" aria-label="Select a stage or field guide"></select>
+                <input id="studentGuideFieldSearch" type="search"
+                  placeholder="Find field by name or ID" aria-label="Find a student response field" hidden>
+                <span id="studentGuideCount">0 proposed changes</span>
+              </div>
+              <div class="activity-authoring-grid">
+                <section class="activity-preview-shell" aria-labelledby="studentGuidePreviewTitle">
+                  <h4 id="studentGuidePreviewTitle">Instruction preview</h4>
+                  <p class="content-editor-help">
+                    Click a description, example, or suggested step to edit its text.
+                    The record structure and help links are protected.
+                  </p>
+                  <div id="studentGuidePreview" class="activity-preview"
+                    aria-label="Student Guide wording preview"></div>
+                </section>
+                <aside id="studentGuideInspector" class="activity-inspector" hidden
+                  aria-label="Selected Student Guide explanation">
+                  <h4>Edit selected explanation</h4>
+                  <label for="studentGuideEdit" id="studentGuideSelected">Selected help text</label>
+                  <textarea id="studentGuideEdit" rows="8"></textarea>
+                  <small id="studentGuideCharacters"></small>
+                  <h5>Original wording</h5>
+                  <p id="studentGuideOriginal"></p>
+                  <button id="studentGuideRevert" type="button" class="button">Revert wording</button>
+                </aside>
+              </div>
+              <p id="studentGuideStatus" role="status" aria-live="polite"
+                class="content-editor-help">Preparing the Student Guide preview.</p>
+              <div class="content-action-row">
+                <button id="studentGuideReview" type="button" class="button">Review Guide changes</button>
+                <button id="studentGuideExport" type="button" class="button" disabled>
+                  Export Guide review JSON
+                </button>
+                <label class="activity-import-label" for="studentGuideImport">Reopen Guide review</label>
+                <input id="studentGuideImport" type="file" accept=".json,application/json"
+                  aria-label="Import a saved Student Guide review packet">
+                <button id="studentGuideReset" type="button" class="button" disabled>Reset selected record</button>
+              </div>
+              <p class="content-editor-help">
+                Local proposals can be reviewed and exported for a controlled
+                future curriculum update. They do not change the public student
+                site or the existing guidance publication release.
+              </p>
+            </section>
+            <dialog id="studentGuideReviewDialog" class="activity-review-dialog"
+              aria-labelledby="studentGuideReviewTitle">
+              <h3 id="studentGuideReviewTitle">Review Student Guide wording</h3>
+              <div id="studentGuideReviewList"></div>
+              <p id="studentGuideReviewValidation" role="status"></p>
+              <form method="dialog"><button class="button" type="submit">Close review</button></form>
+            </dialog>
+
             <details class="content-replacement">
               <summary>Replace the complete editable content block</summary>
 
@@ -1765,6 +1850,7 @@
   <script src="./assets/student-guidance.js"></script>
   <script src="./assets/admin-activity-authoring.js"></script>
   <script src="./assets/admin-lab-guidance-authoring.js"></script>
+  <script src="./assets/admin-student-guide-authoring.js"></script>
   <script src="./assets/content-registry.js"></script>
   <script src="./assets/admin-content-studio.js"></script>
   <script src="./assets/admin-visual-guidance.js"></script>
@@ -1875,6 +1961,10 @@
 
         window
           .RMSLabGuidanceAuthoring
+          ?.mount?.();
+
+        window
+          .RMSStudentGuideAuthoring
           ?.mount?.();
 
         window
