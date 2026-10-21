@@ -1,0 +1,167 @@
+/* Shared inline, plain-text authoring for the three proposal-only editors.
+ * The existing inspector remains the authoritative draft and validator.
+ * This module never touches student projects, remote APIs or publication.
+ */
+window.RMSInlineReviewEditor=(()=>{
+  "use strict";
+  const editors=[
+    {preview:"activityPreview",attribute:"data-activity-path",inspector:"activityEditText"},
+    {preview:"labGuidePreview",attribute:"data-lab-guide-path",inspector:"labGuideEditText"},
+    {preview:"studentGuidePreview",attribute:"data-guide-path",inspector:"studentGuideEdit"}
+  ];
+  let mounted=false, active=null;
+  const byId=id=>document.getElementById(id);
+  const textIssue=(value,limit)=>{
+    if(!value.trim())return "Text cannot be empty.";
+    if(value.length>limit)return "Maximum length is "+limit+" characters.";
+    if(/[<>]/.test(value))return "HTML and angle brackets are not supported.";
+    if(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(value))
+      return "Control characters are not supported.";
+    return "";
+  };
+  const targetFor=(root,config,path)=>[...root.querySelectorAll(
+    ".activity-edit-target["+config.attribute+"]")].find(el=>
+      el.getAttribute(config.attribute)===path);
+  function closeEditor({focus=false}={}){
+    if(!active)return;
+    const edit=active;
+    active=null;
+    edit.form.remove();
+    edit.target.hidden=false;
+    edit.trigger.hidden=false;
+    if(focus&&edit.trigger.isConnected)edit.trigger.focus({preventScroll:true});
+  }
+  function syncStatus(edit){
+    const error=textIssue(edit.textarea.value,edit.limit);
+    const changed=edit.textarea.value!==edit.start;
+    edit.save.disabled=!!error||!changed;
+    edit.message.textContent=error||
+      (changed?"Ready to save · review-only change":"No change yet");
+    edit.message.dataset.invalid=String(!!error);
+    edit.counter.textContent=edit.textarea.value.length+" / "+edit.limit;
+  }
+  function save(){
+    if(!active)return;
+    const edit=active;
+    const issue=textIssue(edit.textarea.value,edit.limit);
+    if(issue){syncStatus(edit);return;}
+    const source=byId(edit.config.inspector);
+    if(!source)return;
+    const value=edit.textarea.value;
+    closeEditor();
+    source.value=value;
+    source.dispatchEvent(new Event("input",{bubbles:true}));
+    const replacement=targetFor(edit.root,edit.config,edit.path);
+    if(replacement)replacement.focus({preventScroll:true});
+  }
+  function begin(root,config,path){
+    if(active){
+      const dirty=active.textarea.value!==active.start;
+      if(dirty&&!window.confirm("Discard the unsaved in-place wording change?"))
+        return;
+      closeEditor();
+    }
+    let target=targetFor(root,config,path);
+    if(!target)return;
+    // Use the original selection handler to establish the exact record and
+    // inspector identity. Its render recreates this preview's button nodes.
+    target.click();
+    target=targetFor(root,config,path);
+    const source=byId(config.inspector);
+    if(!target||!source)return;
+    // Scans also run after the author's original renderer rebuilds a preview.
+    enrich(root,config);
+    const trigger=target.nextElementSibling;
+    if(!trigger?.classList.contains("inline-quick-edit"))return;
+    const limit=Number(source.maxLength)>0?source.maxLength:2400;
+    const box=document.createElement("div");
+    box.className="inline-review-box";
+    box.dataset.inlineEditing=path;
+    const label=document.createElement("label");
+    label.className="inline-review-label";
+    const uid="inlineEditor"+(config.preview==="activityPreview"?"Activity":
+      config.preview==="labGuidePreview"?"Lab":"Guide");
+    label.htmlFor=uid;
+    label.textContent="Edit this wording directly";
+    const field=document.createElement("textarea");
+    field.id=uid;field.className="inline-review-input";field.rows=3;
+    field.maxLength=limit;
+    field.value=source.value;
+    const actions=document.createElement("div");
+    actions.className="inline-review-actions";
+    const counter=document.createElement("small");
+    counter.className="inline-review-counter";
+    const saveButton=document.createElement("button");
+    saveButton.type="button";saveButton.className="button inline-review-save";
+    saveButton.textContent="Save wording";
+    const cancelButton=document.createElement("button");
+    cancelButton.type="button";cancelButton.className="button inline-review-cancel";
+    cancelButton.textContent="Cancel";
+    const hint=document.createElement("p");
+    hint.className="inline-review-message";
+    hint.setAttribute("role","status");
+    hint.setAttribute("aria-live","polite");
+    actions.append(saveButton,cancelButton,counter);
+    box.append(label,field,actions,hint);
+    // The editing form goes after the source text's parent, so headings,
+    // paragraphs, checklist and field-label semantics remain intact.
+    target.parentElement.after(box);
+    target.hidden=true;
+    trigger.hidden=true;
+    active={
+      root,config,path,form:box,target,trigger,textarea:field,
+      save:saveButton,message:hint,counter,limit,start:field.value
+    };
+    field.addEventListener("input",()=>syncStatus(active));
+    field.addEventListener("keydown",event=>{
+      if(event.key==="Escape"){event.preventDefault();closeEditor({focus:true});}
+      else if(event.key==="Enter"&&(event.ctrlKey||event.metaKey)){
+        event.preventDefault();save();
+      }
+    });
+    saveButton.addEventListener("click",save);
+    cancelButton.addEventListener("click",()=>closeEditor({focus:true}));
+    syncStatus(active);
+    field.focus({preventScroll:true});
+    field.setSelectionRange(field.value.length,field.value.length);
+  }
+  function enrich(root,config){
+    if(active&&active.root===root&&!root.contains(active.form))
+      active=null; // An editor's owning stage/panel has changed.
+    for(const target of root.querySelectorAll(
+      ".activity-edit-target["+config.attribute+"]")){
+      if(target.nextElementSibling?.classList.contains("inline-quick-edit"))
+        continue;
+      const path=target.getAttribute(config.attribute);
+      const parent=target.parentElement;
+      if(!path||!parent)continue;
+      parent.classList.add("inline-edit-host");
+      const quick=document.createElement("button");
+      quick.type="button";
+      quick.className="inline-quick-edit";
+      quick.dataset.inlinePath=path;
+      quick.setAttribute("aria-label","Edit this wording here");
+      quick.title="Edit this wording in place";
+      quick.textContent="✎";
+      target.after(quick);
+    }
+  }
+  function mount(){
+    if(mounted)return true;
+    if(!editors.every(e=>byId(e.preview)&&byId(e.inspector)))return false;
+    for(const config of editors){
+      const root=byId(config.preview);
+      const obs=new MutationObserver(()=>enrich(root,config));
+      obs.observe(root,{subtree:true,childList:true});
+      root.addEventListener("click",event=>{
+        const quick=event.target.closest?.(".inline-quick-edit");
+        if(!quick||!root.contains(quick))return;
+        event.preventDefault();
+        begin(root,config,quick.dataset.inlinePath);
+      });
+      enrich(root,config);
+    }
+    mounted=true;return true;
+  }
+  return Object.freeze({mount,isEditing:()=>!!active});
+})();
