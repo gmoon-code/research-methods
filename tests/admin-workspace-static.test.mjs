@@ -6,6 +6,14 @@ const admin = readFileSync(
   "admin-workspace.html",
   "utf8"
 );
+const editorEntry = readFileSync("editor.html","utf8");
+
+test("GitHub Pages editor entry routes through the existing verified sign-in",()=>{
+  assert.match(editorEntry,/http-equiv="refresh" content="0;url=\.\/teacher\.html"/);
+  assert.match(editorEntry,/href="\.\/teacher\.html"/);
+  assert.doesNotMatch(editorEntry,/teacherAccessCode|RMS_TEACHER_ACCESS_CODE|\/api\/admin\//);
+  assert.doesNotMatch(editorEntry,/<script\b/i);
+});
 
 test(
   "Admin Workspace uses the existing verified private session",
