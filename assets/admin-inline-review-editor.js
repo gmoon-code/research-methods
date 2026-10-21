@@ -181,6 +181,32 @@ window.RMSInlineReviewEditor=(()=>{
       });
       enrich(root,config);
     }
+    // Actions that take snapshots or replace the underlying proposal must
+    // first resolve any text still in the inline textarea.
+    const reviewActions=new Set([
+      "activityReview","activityExport","activityReset",
+      "labGuideReview","labGuideExport","labGuideReset",
+      "studentGuideReview","studentGuideExport","studentGuideReset"
+    ]);
+    const importInputs=new Set([
+      "activityImport","labGuideImport","studentGuideImport"
+    ]);
+    document.addEventListener("click",event=>{
+      const button=event.target.closest?.("button");
+      if(!button||!reviewActions.has(button.id))return;
+      if(!beforeContextChange()){
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    },true);
+    document.addEventListener("change",event=>{
+      if(!importInputs.has(event.target?.id))return;
+      if(!beforeContextChange()){
+        event.target.value="";
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+    },true);
     // Handle leaving the entire tab, including reload, without discarding
     // partially typed inline text. Existing saved review proposals are
     // independently subject to their explicit export requirement.
