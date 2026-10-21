@@ -47,6 +47,8 @@ try {
     document.getElementById("guidanceEditorCount")?.textContent||""));
   assert.match(await page.locator("#contentViewStatus").textContent(),/changed draft/);
 
+  await page.locator("#contentSourceFallback summary").click();
+  assert.equal(await page.locator("#contentSourceFallback").getAttribute("open"),"");
   const sourcePurpose=page.locator("#contentPurpose");
   await sourcePurpose.fill("Updated purpose from source controls");
   assert.equal((await page.locator('[data-visual-field="purpose"]').textContent()).trim(),
@@ -357,6 +359,8 @@ try {
   await page.locator('#labGuideStep').selectOption('sources');
   assert.equal(await page.locator('#labGuideStep').inputValue(),'sources');
   assert.equal(await page.locator('#labGuidePreview .inline-review-box').count(),0);
+  // The rest of the existing test edits the original Search panel.
+  await page.locator('#labGuideStep').selectOption('search');
 
   assert.equal(await page.locator("#labGuideLab option").count(),4);
   assert.equal(await page.evaluate(()=>{
@@ -597,6 +601,8 @@ try {
   await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-content-studio-publication.png",fullPage:true});
   await page.locator('[data-content-view="guidance"]').click();
   assert.equal(await page.locator('#visualGuidanceEditor').isVisible(),true);
+  // Visual editing is the default; keep advanced raw fields closed.
+  await page.locator("#contentSourceFallback").evaluate(el=>el.open=false);
   await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-visual-guidance-desktop.png",fullPage:true});
   // A copied editing-area URL should still require teacher verification and
   // automatically select the matching Content Studio area after that check.
