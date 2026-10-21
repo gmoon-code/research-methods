@@ -22,6 +22,12 @@ try {
   await page.locator('[data-admin-panel="content-studio"]').click();
   await page.locator("#visualGuidanceEditor [data-visual-field=title]").waitFor();
 
+  assert.equal(await page.locator(".content-authoring-nav a").count(),5);
+  assert.deepEqual(await page.locator(".content-authoring-nav a").evaluateAll(links=>
+    links.map(a=>a.getAttribute("href"))),[
+    "#visualGuidanceEditor","#activityAuthoring","#labGuideAuthoring",
+    "#studentGuideAuthoring","#contentPublicationHeading"
+  ]);
   assert.equal(await page.locator("#contentBrowserList button").count(),18);
   assert.equal(await page.locator("#visualGuidanceEditor [data-visual-field]").count(),6);
   const originalTitle=await page.locator("#contentTitle").inputValue();
