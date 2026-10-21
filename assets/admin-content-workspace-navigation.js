@@ -59,7 +59,7 @@ window.RMSAdminContentWorkspaceNavigation=(()=>{
     if(focus){
       // The current heading names the selected workspace to screen readers.
       byId("contentViewHeading").focus({preventScroll:true});
-      nav.scrollIntoView({block:"start",behavior:"instant"});
+      nav.scrollIntoView({block:"start",behavior:"auto"});
     }
     return true;
   }
