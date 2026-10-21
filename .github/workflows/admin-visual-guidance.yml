@@ -9,6 +9,7 @@ on:
       - "assets/admin-lab-guidance-authoring.js"
       - "assets/admin-student-guide-authoring.js"
       - "assets/admin-content-workspace-navigation.js"
+      - "assets/admin-inline-review-editor.js"
       - "assets/student-guidance.js"
       - "assets/curriculum.js"
       - "assets/admin-content-studio-ui.js"
@@ -51,6 +52,7 @@ jobs:
           node --check assets/admin-lab-guidance-authoring.js
           node --check assets/admin-student-guide-authoring.js
           node --check assets/admin-content-workspace-navigation.js
+          node --check assets/admin-inline-review-editor.js
       - name: Test visual editing with isolated simulated session
         env:
           ADMIN_TEST_URL: http://127.0.0.1:8765
