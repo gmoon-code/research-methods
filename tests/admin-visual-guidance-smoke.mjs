@@ -323,6 +323,10 @@ try {
   const revisedLabel="Three science areas I would like to explore further";
   await page.locator("#activityEditText").fill(revisedLabel);
   assert.equal(await page.locator('[data-activity-path="s.0.f.0.label"]').textContent(),revisedLabel);
+  assert.equal(await page.locator('[data-activity-path="s.0.f.0.label"]').getAttribute('data-proposed'),
+    'true',"Edited activity fields need a clearly visible proposed state");
+  assert.match(await page.locator('[data-activity-path="s.0.f.0.label"]').getAttribute('aria-label'),
+    /Proposed change/);
   assert.equal(await page.locator("#activityExport").isEnabled(),true);
   await page.locator('[data-activity-path="c.0"]').click();
   await page.locator("#activityEditText").fill("I explored several possible research directions before choosing one.");
@@ -489,6 +493,8 @@ try {
   await page.locator("#labGuideEditText").fill(newSearchText);
   assert.equal(await page.locator('[data-lab-guide-path="labs.literature.search.text"]').textContent(),
     newSearchText);
+  assert.equal(await page.locator('[data-lab-guide-path="labs.literature.search.text"]').getAttribute('data-proposed'),
+    'true');
   assert.equal(await page.locator("#labGuideExport").isEnabled(),true);
   await page.locator("#labGuideLab").selectOption("methods");
   assert(await page.locator("#labGuideStep option").count()>=9);
@@ -639,6 +645,8 @@ try {
   const newPlain="First, explore several research interests and consider available evidence.";
   await page.locator("#studentGuideEdit").fill(newPlain);
   assert.equal(await page.locator('[data-guide-path="stages.1.plain"]').textContent(),newPlain);
+  assert.equal(await page.locator('[data-guide-path="stages.1.plain"]').getAttribute('data-proposed'),
+    'true');
   await page.locator('[data-guide-path="stages.1.walkthrough.thinking.0"]').click();
   await page.locator("#studentGuideEdit").fill(
     "Start by treating the observed pattern as a question rather than an established explanation.");
@@ -771,8 +779,35 @@ try {
     };
   });
   assert.equal(mobile.columns,2,"Narrow viewports should use a two-column editor switcher");
+  const mobilePreview=await page.locator('#studentGuidePreview').evaluate(el=>({
+    maxHeight:getComputedStyle(el).maxHeight,
+    overflow:getComputedStyle(el).overflowY,
+    viewport:window.innerWidth,
+    documentWidth:document.documentElement.scrollWidth
+  }));
+  assert.equal(mobilePreview.maxHeight,'none',
+    'Small screens should scroll normally through the Student Guide preview');
+  assert.notEqual(mobilePreview.overflow,'auto',
+    'The mobile editor must not trap scrolling inside the preview');
+  assert(mobilePreview.documentWidth<=mobilePreview.viewport+1,
+    'The Admin Workspace must not produce horizontal page overflow on mobile');
   assert(mobile.navRight<=mobile.panelRight+2,
     "Mobile workspace navigation must remain within its Admin panel");
+  await page.locator('#reviewEditingMode').selectOption('direct');
+  const accessiblePencil=page.locator(
+    '#studentGuidePreview [data-guide-path="stages.1.title"] + .inline-quick-edit');
+  assert.match(await accessiblePencil.getAttribute('aria-label'),/^Edit /);
+  const touchSize=await accessiblePencil.evaluate(el=>({
+    width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height
+  }));
+  assert(touchSize.width>=40&&touchSize.height>=40,
+    'Pencil controls must have practical touch targets');
+  await page.locator('[data-guide-path="stages.1.title"]').click();
+  assert.equal(await page.locator('#studentGuidePreview .inline-review-input').isVisible(),true);
+  await page.screenshot({
+    path:"/tmp/visual-guidance-artifacts/admin-inline-edit-mobile.png",fullPage:true
+  });
+  await page.locator('#studentGuidePreview .inline-review-input').press('Escape');
   await page.locator('[data-content-view="publication"]').click();
   assert.equal(await page.locator('.publication-card').isVisible(),true);
   await page.screenshot({
