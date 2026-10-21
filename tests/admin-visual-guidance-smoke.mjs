@@ -250,6 +250,110 @@ try {
   assert.equal(await page.locator("#activityReviewCount").textContent(),"1 proposed changes");
   await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-activity-wording-preview.png",fullPage:true});
 
+  // Specialised laboratory instruction authoring stays separate from the
+  // four interactive student tools and their saved project structure.
+  const labBaseline=await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance));
+  assert.equal(await page.locator("#labGuideLab option").count(),4);
+  assert.equal(await page.evaluate(()=>{
+    const labs=window.RMSStudentGuidance.labs;
+    return Object.values(labs).reduce((sum,steps)=>sum+Object.keys(steps).length,0);
+  }),32);
+  assert.equal(await page.locator("#labGuideExport").isDisabled(),true);
+  await page.locator('[data-lab-guide-path="labs.literature.search.text"]').click();
+  const newSearchText="Record the search database, query, date, filters, and result counts.";
+  await page.locator("#labGuideEditText").fill(newSearchText);
+  assert.equal(await page.locator('[data-lab-guide-path="labs.literature.search.text"]').textContent(),
+    newSearchText);
+  assert.equal(await page.locator("#labGuideExport").isEnabled(),true);
+  await page.locator("#labGuideLab").selectOption("methods");
+  assert(await page.locator("#labGuideStep option").count()>=9);
+  await page.locator("#labGuideStep").selectOption("ethics");
+  assert.match(await page.locator("#labGuidePreview").textContent(),/decision keys/i);
+  assert.equal(await page.locator("#labGuideInspector").isHidden(),true);
+  await page.locator('[data-lab-guide-path="labs.methods.ethics.title"]').click();
+  const newEthicsTitle="Ethics and approval · Plan before recruitment";
+  await page.locator("#labGuideEditText").fill(newEthicsTitle);
+  assert.equal(await page.locator('[data-lab-guide-path="labs.methods.ethics.title"]').textContent(),
+    newEthicsTitle);
+  await page.locator("#labGuideLab").selectOption("data");
+  assert.equal(await page.locator("#labGuideStep option").count(),7);
+  await page.locator("#labGuideLab").selectOption("writing");
+  assert.equal(await page.locator("#labGuideStep option").count(),8);
+  await page.locator("#labGuideLab").selectOption("methods");
+  await page.locator("#labGuideStep").selectOption("ethics");
+  await page.locator('[data-lab-guide-path="labs.methods.ethics.title"]').click();
+  await page.locator("#labGuideEditText").fill("<svg onload=alert(1)>");
+  assert.equal(await page.locator("#labGuideExport").isDisabled(),true,
+    "Unsupported active markup must block laboratory packet export");
+  await page.locator("#labGuideRevert").click();
+  assert.equal(await page.locator("#labGuideEditText").inputValue(),
+    await page.evaluate(()=>window.RMSStudentGuidance.labs.methods.ethics.title));
+  await page.locator("#labGuideEditText").fill(newEthicsTitle);
+  assert.equal(await page.locator("#labGuideExport").isEnabled(),true);
+  await page.locator("#labGuideReview").click();
+  assert.match(await page.locator("#labGuideReviewValidation").textContent(),
+    /decision keys remain protected/);
+  await page.locator("#labGuideReviewDialog form button").click();
+
+  const labDownloadPromise=page.waitForEvent("download");
+  await page.locator("#labGuideExport").click();
+  const labDownload=await labDownloadPromise;
+  assert.equal(labDownload.suggestedFilename(),"rms-lab-guidance-review.json");
+  const labReviewBytes=await readFile(await labDownload.path());
+  const labReview=JSON.parse(labReviewBytes.toString("utf8"));
+  assert.equal(labReview.schema_version,"rms-lab-guidance-review-v1");
+  assert.equal(labReview.source_file,"assets/student-guidance.js");
+  assert.equal(labReview.live_publication,false);
+  assert.equal(labReview.review_required,true);
+  assert.match(labReview.source_sha256,/^[a-f0-9]{64}$/);
+  assert.equal(labReview.edits.length,2);
+  assert(labReview.edits.some(e=>e.path==="labs.literature.search.text"&&e.value===newSearchText));
+  assert(labReview.edits.some(e=>e.path==="labs.methods.ethics.title"&&e.value===newEthicsTitle));
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance)),labBaseline,
+    "Editing student lab instructions must not mutate the student guidance module");
+
+  await page.reload({waitUntil:"domcontentloaded"});
+  await page.locator("#adminWorkspace:not([hidden])").waitFor();
+  await page.locator('[data-admin-panel="content-studio"]').click();
+  await page.locator('[data-lab-guide-path="labs.literature.search.text"]').waitFor();
+  assert.equal(await page.locator("#labGuideCount").textContent(),"0 proposed changes");
+  const badVersion={...labReview,source_sha256:"0".repeat(64)};
+  await page.locator("#labGuideImport").setInputFiles({
+    name:"invalid-version.json",mimeType:"application/json",
+    buffer:Buffer.from(JSON.stringify(badVersion))
+  });
+  await page.waitForFunction(()=>/different Student Guide version/.test(
+    document.getElementById("labGuideStatus")?.textContent||""));
+  assert.equal(await page.locator("#labGuideCount").textContent(),"0 proposed changes");
+  const badPath={...labReview,edits:[...labReview.edits,{
+    path:"labs.methods.ethics.decisionKeys",
+    original:"",value:"malicious logic change"
+  }]};
+  await page.locator("#labGuideImport").setInputFiles({
+    name:"invalid-field.json",mimeType:"application/json",
+    buffer:Buffer.from(JSON.stringify(badPath))
+  });
+  await page.waitForFunction(()=>/unknown or altered instruction/.test(
+    document.getElementById("labGuideStatus")?.textContent||""));
+  assert.equal(await page.locator("#labGuideCount").textContent(),"0 proposed changes");
+  await page.locator("#labGuideImport").setInputFiles({
+    name:"lab-guidance-review.json",mimeType:"application/json",buffer:labReviewBytes
+  });
+  await page.waitForFunction(()=>/Restored 2 laboratory wording proposals/.test(
+    document.getElementById("labGuideStatus")?.textContent||""));
+  assert.equal(await page.locator("#labGuideCount").textContent(),"2 proposed changes");
+  assert.equal(await page.locator('[data-lab-guide-path="labs.literature.search.text"]').textContent(),
+    newSearchText);
+  await page.locator("#labGuideLab").selectOption("methods");
+  await page.locator("#labGuideStep").selectOption("ethics");
+  assert.equal(await page.locator('[data-lab-guide-path="labs.methods.ethics.title"]').textContent(),
+    newEthicsTitle);
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance)),labBaseline);
+  page.once("dialog",dialog=>dialog.accept());
+  await page.locator("#labGuideReset").click();
+  assert.equal(await page.locator("#labGuideCount").textContent(),"1 proposed changes");
+  await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-lab-guidance-review.png",fullPage:true});
+
   await page.screenshot({path:"/tmp/visual-guidance-artifacts/admin-visual-guidance-desktop.png",fullPage:true});
   assert.deepEqual(errors,[],"Admin visual guidance should not produce runtime errors");
   console.log("PASS: admin mount, 18 stages, direct editing, source sync, safe paste and navigation");
