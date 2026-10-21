@@ -42,6 +42,14 @@ window.RMSAdminContentWorkspaceNavigation=(()=>{
     const chosen=area(key);
     const nav=byId("contentAuthoringNav");
     if(!chosen||!nav||!byId("contentStudioPanel"))return false;
+    if(chosen.key!==selected&&
+       window.RMSInlineReviewEditor?.beforeContextChange?.()===false){
+      // A hashchange may have come from browser history or a copied link.
+      // Restore the current area's URL when a pending edit blocks it.
+      if(window.location.hash!=="#"+area(selected).anchor)
+        window.history.replaceState(null,"","#"+area(selected).anchor);
+      return false;
+    }
     selected=chosen.key;
     for(const item of byId("contentStudioPanel").querySelectorAll("[data-editor-workspace]")){
       item.hidden=item.dataset.editorWorkspace!==chosen.key;
