@@ -793,6 +793,8 @@ try {
     'The Admin Workspace must not produce horizontal page overflow on mobile');
   assert(mobile.navRight<=mobile.panelRight+2,
     "Mobile workspace navigation must remain within its Admin panel");
+  await page.locator('#studentGuideMode').selectOption('stage');
+  await page.locator('#studentGuideRecord').selectOption('1');
   await page.locator('#reviewEditingMode').selectOption('direct');
   const accessiblePencil=page.locator(
     '#studentGuidePreview [data-guide-path="stages.1.title"] + .inline-quick-edit');
