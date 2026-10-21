@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - "admin-workspace.html"
+      - "editor.html"
+      - "teacher.html"
       - "assets/admin-visual-guidance.js"
       - "assets/admin-activity-authoring.js"
       - "assets/admin-lab-guidance-authoring.js"
@@ -47,6 +49,7 @@ jobs:
           done
       - name: Verify existing content-schema and publication contracts
         run: |
+          node --test tests/teacher-entry-static.test.mjs
           node --test tests/admin-content-studio.test.mjs
           node --test tests/admin-content-publication.test.mjs
           node --test tests/admin-workspace-static.test.mjs
