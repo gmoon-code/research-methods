@@ -227,6 +227,20 @@ try {
   assert.equal(await page.locator('#activityPreview .inline-review-box').count(),0);
   await page.locator('[data-content-view="activities"]').click();
 
+  // Review must not ignore text that is still waiting in the inline editor.
+  await activityQuick.click();
+  await page.locator('#activityPreview .inline-review-input')
+    .fill('Draft pending review that has not been saved');
+  page.once('dialog',dialog=>dialog.dismiss());
+  await page.locator('#activityReview').click();
+  assert.equal(await page.locator('#activityReviewDialog').isHidden(),true);
+  assert.equal(await page.locator('#activityPreview .inline-review-input').inputValue(),
+    'Draft pending review that has not been saved');
+  page.once('dialog',dialog=>dialog.accept());
+  await page.locator('#activityReview').click();
+  assert.equal(await page.locator('#activityPreview .inline-review-box').count(),0);
+  await page.locator('#activityReviewDialog form button').click();
+
   assert.equal(await page.locator("#activityStage option").count(),18);
   assert.equal(await page.locator("#activityExport").isDisabled(),true);
   await page.locator('[data-activity-path="s.0.f.0.label"]').click();
@@ -336,9 +350,16 @@ try {
   assert.equal(await page.locator('#activityAuthoring').isHidden(),true);
   assert.match(await page.locator("#activityEditorCount").textContent(),/proposed changes/);
   const labBaseline=await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance));
+  // Empty inspector space should be reclaimed by a full-width preview.
+  const gridColumns=()=>page.locator('#labGuideAuthoring .activity-authoring-grid')
+    .evaluate(element=>getComputedStyle(element).gridTemplateColumns.trim().split(/\s+/).length);
+  assert.equal(await gridColumns(),1,
+    "A laboratory preview with no selected inspector must not keep an empty second column");
   const labQuick=page.locator(
     '[data-lab-guide-path="labs.literature.search.title"] + .inline-quick-edit');
   await labQuick.click();
+  assert.equal(await gridColumns(),1,
+    "Inline editing should remain full-width while its duplicate inspector is hidden");
   await page.locator('#labGuidePreview .inline-review-input').fill(
     'Search journal articles and document the strategy');
   await page.locator('#labGuidePreview .inline-review-input').press('Control+Enter');
