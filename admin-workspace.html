@@ -731,6 +731,24 @@
     .inline-edit-host:hover>.inline-quick-edit,
     .inline-edit-host:focus-within>.inline-quick-edit,
     .inline-quick-edit:focus-visible{opacity:1;border-color:var(--accent);}
+    .review-editing-preference{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      margin:0 0 16px;padding:12px 15px;background:var(--surface);
+      border:1px solid var(--border);border-radius:8px;
+    }
+    .review-editing-preference[hidden]{display:none!important;}
+    .review-editing-preference label{font-size:.85rem;font-weight:750;color:var(--text);}
+    .review-editing-preference p{margin:4px 0 0;font-size:.77rem;line-height:1.45;color:var(--muted);}
+    .review-editing-preference select{
+      flex:0 0 auto;max-width:100%;min-width:210px;
+      padding:9px 12px;background:var(--surface);color:var(--text);
+      border:1px solid var(--border);border-radius:7px;font:inherit;
+    }
+    .review-editing-preference select:focus-visible{outline:3px solid var(--focus);outline-offset:2px;}
+    @media(max-width:700px){
+      .review-editing-preference{display:grid;gap:10px;}
+      .review-editing-preference select{min-width:0;width:100%;}
+    }
     .inline-review-box{display:grid;gap:9px;margin:8px 0 16px;padding:13px;
       border:1px solid var(--accent);border-radius:7px;background:var(--surface-soft);
       color:var(--text);min-width:0;}
@@ -1241,6 +1259,16 @@
               </div>
               <span class="content-view-state" id="contentViewStatus" role="status" aria-live="polite">0 changed drafts</span>
             </div>
+            <div id="reviewEditingPreference" class="review-editing-preference" hidden>
+              <div>
+                <label for="reviewEditingMode">How would you like to edit?</label>
+                <p id="reviewEditingHint">Click any passage to edit the wording where it appears. Use the detailed inspector when you need it.</p>
+              </div>
+              <select id="reviewEditingMode" aria-describedby="reviewEditingHint">
+                <option value="direct">Edit directly on the page</option>
+                <option value="inspector">Open the detailed inspector</option>
+              </select>
+            </div>
 
             <section data-editor-workspace="guidance" class="content-browser-card" aria-labelledby="contentBrowserHeading">
               <div class="content-browser-head">
@@ -1509,7 +1537,7 @@
               <div class="activity-authoring-grid">
                 <section class="activity-preview-shell" aria-labelledby="activityStageHeading">
                   <h4 id="activityStageHeading">Activity preview</h4>
-                  <p class="content-editor-help">Use the pencil beside any heading, instruction, field label, or check to edit directly, or click the text to use the inspector.</p>
+                  <p class="content-editor-help">Click a heading, instruction, field label, or completion check to edit it in place. You can also choose the detailed inspector above.</p>
                   <div id="activityPreview" class="activity-preview" aria-label="Editable activity wording"></div>
                 </section>
                 <aside id="activityInspector" class="activity-inspector" hidden aria-label="Selected activity text">
@@ -1571,7 +1599,7 @@
               <div class="activity-authoring-grid">
                 <section class="activity-preview-shell" aria-labelledby="labGuidePreviewTitle">
                   <h4 id="labGuidePreviewTitle">Student guidance preview</h4>
-                  <p class="content-editor-help">Select the pencil to edit in place, or click the wording to use the inspector.</p>
+                  <p class="content-editor-help">Click the instruction itself to edit it in place, or use the detailed inspector option above.</p>
                   <div id="labGuidePreview" class="activity-preview"
                     aria-label="Editable laboratory instructional wording"></div>
                 </section>
@@ -1640,7 +1668,7 @@
                 <section class="activity-preview-shell" aria-labelledby="studentGuidePreviewTitle">
                   <h4 id="studentGuidePreviewTitle">Instruction preview</h4>
                   <p class="content-editor-help">
-                    Use the pencil beside any explanation, example, or step to edit in place, or click the text to use the inspector.
+                    Click an explanation, example, or suggested step to edit it in place, or use the detailed inspector option above.
                     The record structure and help links are protected.
                   </p>
                   <div id="studentGuidePreview" class="activity-preview"
