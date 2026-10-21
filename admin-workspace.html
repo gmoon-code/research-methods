@@ -822,6 +822,34 @@
       color:#1b292b;background:#fff;border-radius:3px;min-width:160px;flex:1;}
     /* One authoring workspace at a time, without unmounting its drafts. */
     [data-editor-workspace][hidden]{display:none!important;}
+    .cross-site-editor-switcher{
+      margin:0 0 12px;border:1px solid var(--border);background:var(--surface);
+      border-radius:8px;padding:8px 13px;color:var(--text);
+    }
+    .cross-site-editor-switcher summary{
+      cursor:pointer;font-size:.82rem;font-weight:650;line-height:1.5;
+    }
+    .cross-site-editor-switcher summary:focus-visible{
+      outline:3px solid var(--focus);outline-offset:3px;
+    }
+    .cross-site-editor-switcher nav{
+      display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;
+    }
+    .cross-site-editor-switcher nav a{
+      border:1px solid var(--border);border-radius:6px;
+      padding:8px 12px;font-size:.83rem;line-height:1.4;
+      color:var(--text);text-decoration:none;background:var(--surface-soft);
+    }
+    .cross-site-editor-switcher nav a:hover{border-color:var(--accent);}
+    .cross-site-editor-switcher .cross-editor-detail{
+      display:block;font-size:.73rem;color:var(--muted);
+    }
+    .cross-site-editor-switcher p{
+      margin:9px 0 2px;font-size:.75rem;color:var(--muted);
+    }
+    @media(max-width:620px){
+      .cross-site-editor-switcher nav{display:grid;}
+    }
     .content-authoring-nav{position:sticky;top:72px;z-index:8;
       display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;
       margin:16px 0 14px;padding:8px;background:var(--surface);
@@ -1316,6 +1344,14 @@
               publication service. Research activities, laboratory instructions,
               and Student Guide wording export review-only proposals.
             </p>
+            <details class="cross-site-editor-switcher">
+              <summary>Other website editors <span aria-hidden="true">↗</span></summary>
+              <nav aria-label="Other website editors">
+                <a href="../editor.html" target="_blank" rel="noopener noreferrer">Ye Eun Moon <span class="cross-editor-detail">Academic website editor</span></a>
+                <a href="../memory-palace-u1-8/editor.html" target="_blank" rel="noopener noreferrer">AP Biology Story Method <span class="cross-editor-detail">Browser-local narrative editor</span></a>
+              </nav>
+              <p>Other editors open in a new tab. Your current Content Studio drafts remain open here.</p>
+            </details>
             <nav class="content-authoring-nav" id="contentAuthoringNav" aria-label="Content Studio editing areas" aria-describedby="contentAuthoringNavHelp">
               <a href="#visualGuidanceEditor" data-content-view="guidance" aria-current="page"><strong>Stage guidance</strong>
                 <small>18 stages · Validated drafts</small>
