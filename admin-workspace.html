@@ -722,6 +722,17 @@
     .student-guide-toolbar #studentGuideRecord{min-width:min(340px,100%);flex:2;}
     .student-guide-toolbar #studentGuideFieldSearch{padding:9px;border:1px solid #a2b4b1;
       color:#1b292b;background:#fff;border-radius:3px;min-width:160px;flex:1;}
+    .content-authoring-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:8px;margin:18px 0 22px;}
+    .content-authoring-nav a{display:grid;align-content:start;gap:4px;min-width:0;
+      padding:12px 14px;background:var(--surface,#fff);border:1px solid #cad7d4;
+      border-radius:5px;text-decoration:none;color:#205d55;line-height:1.35;}
+    .content-authoring-nav a strong{font-size:.85rem;font-weight:750;}
+    .content-authoring-nav a small{font-size:.73rem;color:#49615d;}
+    .content-authoring-nav a:hover{background:#edf7f3;border-color:#398779;}
+    .content-authoring-nav a:focus-visible{outline:3px solid #358b78;outline-offset:2px;}
+    #visualGuidanceEditor,#activityAuthoring,#labGuideAuthoring,#studentGuideAuthoring,
+    #contentPublicationHeading{scroll-margin-top:18px;}
     .student-guide-preview-group{display:grid;gap:8px;padding:12px;
       border:1px solid #d2dfda;background:var(--surface,#fff);}
     .student-guide-preview-group h5{font-size:.83rem;color:var(--muted);margin:0 0 3px;}
@@ -1112,13 +1123,26 @@
             </div>
           </section>
 
-          <section class="panel workspace-panel" data-admin-workspace-panel="content-studio" hidden>
+          <section class="panel workspace-panel" id="contentStudioPanel"
+            data-admin-workspace-panel="content-studio" hidden>
             <h2>Content Studio</h2>
             <p>
-              Edit a controlled copy of student-facing instructional content,
-              validate and preview it, then optionally publish a complete
-              18-stage release to the isolated v3 backend.
+              Review and edit instructional wording in dedicated visual workspaces.
+              Stage-guidance drafts use the existing isolated v3 publication service.
+              Activity, laboratory, and Student Guide edits export review-only files.
             </p>
+            <nav class="content-authoring-nav" aria-label="Content Studio editing areas">
+              <a href="#visualGuidanceEditor"><strong>Stage guidance</strong>
+                <small>18 stages · Validated drafts</small></a>
+              <a href="#activityAuthoring"><strong>Research activities</strong>
+                <small>Instructions and field labels</small></a>
+              <a href="#labGuideAuthoring"><strong>Lab instructions</strong>
+                <small>32 panels · Review only</small></a>
+              <a href="#studentGuideAuthoring"><strong>Student Guide</strong>
+                <small>18 stages and 113 fields</small></a>
+              <a href="#contentPublicationHeading"><strong>Guidance publication</strong>
+                <small>Authenticated v3 service only</small></a>
+            </nav>
 
             <section class="content-browser-card" aria-labelledby="contentBrowserHeading">
               <div class="content-browser-head">
