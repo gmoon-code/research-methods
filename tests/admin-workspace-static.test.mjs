@@ -6,6 +6,14 @@ const admin = readFileSync(
   "admin-workspace.html",
   "utf8"
 );
+const editorEntry = readFileSync("editor.html","utf8");
+
+test("GitHub Pages editor entry routes through the existing verified sign-in",()=>{
+  assert.match(editorEntry,/http-equiv="refresh" content="0;url=\.\/teacher\.html#visualGuidanceEditor"/);
+  assert.match(editorEntry,/href="\.\/teacher\.html#visualGuidanceEditor"/);
+  assert.doesNotMatch(editorEntry,/teacherAccessCode|RMS_TEACHER_ACCESS_CODE|\/api\/admin\//);
+  assert.doesNotMatch(editorEntry,/<script\b/i);
+});
 
 test(
   "Admin Workspace uses the existing verified private session",
@@ -165,9 +173,17 @@ test(
 );
 
 test(
-  "Admin shell has no student project ingestion path",
+  "Admin shell has no student project ingestion path and only accepts local review JSON",
   () => {
-    assert.doesNotMatch(admin, /type="file"/);
+    const fileFields=[...admin.matchAll(/<input\b[^>]*type="file"[^>]*>/g)]
+      .map(match=>match[0]);
+    assert.equal(fileFields.length,3,"Only the three reviewed authoring JSON pickers are allowed");
+    assert(fileFields.some(markup=>/id="activityImport"/.test(markup)));
+    assert(fileFields.some(markup=>/id="labGuideImport"/.test(markup)));
+    assert(fileFields.some(markup=>/id="studentGuideImport"/.test(markup)));
+    for(const markup of fileFields){
+      assert.match(markup,/accept="\.json,application\/json"/);
+    }
     assert.doesNotMatch(admin, /studentPacketFiles/);
     assert.doesNotMatch(
       admin,
@@ -197,6 +213,29 @@ test(
         "./assets/admin-content-service.js",
         "./assets/admin-content-publication.js",
         "./assets/admin-content-publication-ui.js",
+        'id="contentStudioPanel"',
+        'aria-label="Content Studio editing areas"',
+        'href="#visualGuidanceEditor"',
+        'href="#activityAuthoring"',
+        'href="#labGuideAuthoring"',
+        'href="#studentGuideAuthoring"',
+        'href="#contentPublicationHeading"',
+        'id="contentAuthoringNav"',
+        'id="contentViewHeading"',
+        'id="contentViewDescription"',
+        'id="contentViewStatus"',
+        'id="reviewEditingPreference"',
+        'id="reviewEditingMode"',
+        'id="reviewEditingHint"',
+        'value="direct"',
+        'value="inspector"',
+        './assets/admin-inline-review-editor.js',
+        'data-editor-workspace="guidance"',
+        'data-editor-workspace="activities"',
+        'data-editor-workspace="laboratories"',
+        'data-editor-workspace="student-guide"',
+        'data-editor-workspace="publication"',
+        './assets/admin-content-workspace-navigation.js',
         'id="contentBrowserSearch"',
         'id="contentBrowserList"',
         'id="contentBrowserCount"',

@@ -627,6 +627,311 @@
       margin-top: 15px;
     }
 
+
+    /* Visual guidance authoring shares the existing six-field validated draft. */
+    .visual-guidance-card {
+      padding:18px 20px;
+      margin:0 0 22px;
+      border:1px solid var(--border);
+      border-top:4px solid #66f0f0;
+      background:var(--surface);
+      display:grid;
+      gap:15px;
+    }
+    .visual-guidance-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:7px;border-top:1px solid #d7ddde;border-bottom:1px solid #d7ddde;padding:9px 0;}
+    .visual-guidance-toolbar button{background:#fff;border:1px solid #a5b4b5;border-radius:3px;padding:6px 10px;color:#1a2730;cursor:pointer;}
+    .visual-guidance-toolbar button:hover,.visual-guidance-toolbar button:focus-visible{background:#eaf4f1;border-color:#287b76;}
+    .visual-guidance-toolbar span{font-size:.76rem;color:#586a70;line-height:1.4;}
+    .visual-guidance-header h4 {margin:0 0 6px;font-size:1.1rem;}
+    .visual-guidance-header p {margin:0 0 8px;color:var(--muted);font-size:.85rem;line-height:1.45;}
+    .visual-guidance-header small {display:block;color:var(--muted);}
+    .visual-guidance-field {display:grid;gap:6px;}
+    .visual-guidance-field label {font-size:.78rem;font-weight:800;color:#526174;}
+    .visual-guidance-field [contenteditable] {
+      padding:12px 13px;
+      min-height:42px;
+      line-height:1.55;
+      border:1px solid #ccd4db;
+      border-radius:5px;
+      background:#fff;
+      color:#172033;
+      overflow-wrap:anywhere;
+      cursor:text;
+    }
+    .visual-guidance-field [contenteditable]:focus {
+      outline:3px solid rgba(19,123,127,.2);
+      border-color:#23848c;
+    }
+    .visual-guidance-field h3[contenteditable] {margin:0;font-size:1.42rem;line-height:1.2;}
+    .visual-guidance-field p[contenteditable] {margin:0;}
+    .visual-guidance-rich {min-height:84px;}
+    .visual-guidance-rich>p:first-child,.visual-guidance-rich>h3:first-child {margin-top:0;}
+    .visual-guidance-rich>p:last-child {margin-bottom:0;}
+    .visual-guidance-rich .concept-box {background:#eff7f5;border-left:4px solid #66f566;padding:10px;}
+    .visual-guidance-status {margin:0;font-size:.8rem;color:#46616f;}
+    .visual-guidance-status[data-warning="true"] {color:#883c4b;}
+    .visual-block-tools {display:grid;gap:8px;padding:12px 0 14px;border-bottom:1px solid #d7ddde;}
+    .visual-block-tools label {font-size:.8rem;font-weight:700;color:var(--muted);}
+    .visual-block-tools input {width:100%;padding:9px 11px;border:1px solid #a5b4b5;border-radius:3px;background:var(--surface,#fff);color:var(--text,#162326);font:inherit;}
+    .visual-block-actions {display:flex;gap:7px;flex-wrap:wrap;}
+    .visual-block-actions button {background:var(--surface,#fff);color:var(--text,#162326);border:1px solid #a5b4b5;border-radius:3px;padding:7px 10px;font-size:.82rem;cursor:pointer;}
+    .visual-block-actions button:hover:not(:disabled),.visual-block-actions button:focus-visible {border-color:#287b76;background:#edf7f3;}
+    .visual-block-actions button:disabled {opacity:.48;cursor:not-allowed;}
+    .visual-block-status {margin:0;font-size:.78rem;line-height:1.5;color:var(--muted);}
+    .visual-guidance-rich > [data-visual-selected] {outline:2px solid #267e6d;outline-offset:3px;position:relative;}
+    @media(max-width:600px){.visual-guidance-card{padding:14px;}}
+    .activity-authoring-panel{background:var(--surface,#fff);border:1px solid var(--border,#d7ddde);padding:20px;margin:24px 0;border-radius:5px;}
+    .activity-authoring-panel .content-editor-heading{margin-bottom:10px;}
+    .activity-authoring-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0;}
+    .activity-authoring-toolbar label{font-weight:700;font-size:.85rem;}
+    .activity-authoring-toolbar select{flex:1;min-width:230px;padding:10px;border:1px solid #9eaaae;border-radius:3px;color:var(--text,#182227);background:var(--surface,#fff);}
+    .activity-authoring-toolbar span{font-size:.8rem;color:var(--muted);}
+    .activity-authoring-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr);gap:15px;align-items:start;}
+    /* Avoid an empty second column when the inspector is absent; direct
+       inline editing can use the full preview width. */
+    .activity-authoring-grid:has(>.activity-inspector[hidden]),
+    .activity-authoring-grid:has(.inline-review-box){
+      grid-template-columns:minmax(0,1fr);
+    }
+    .activity-authoring-grid:has(.inline-review-box)>.activity-inspector{
+      display:none;
+    }
+    .activity-authoring-grid:has(>.activity-inspector[hidden])>.activity-preview-shell,
+    .activity-authoring-grid:has(.inline-review-box)>.activity-preview-shell{
+      width:100%;max-width:880px;
+    }
+    .content-source-fallback{margin:15px 0 6px;padding:13px;
+      border:1px solid var(--border);border-radius:8px;background:var(--surface);}
+    .content-source-fallback>summary{cursor:pointer;color:var(--text);
+      font-size:.85rem;font-weight:750;padding:2px 0;}
+    .content-source-fallback>summary:focus-visible{outline:3px solid var(--focus);}
+    .content-source-fallback>p{font-size:.8rem;color:var(--muted);
+      margin:10px 0 15px;line-height:1.55;}
+    .content-source-fallback .content-field{margin-top:12px;}
+    .content-source-fallback:not([open]){margin-bottom:14px;}
+    .activity-preview-shell{min-width:0;border:1px solid #d0d8d8;background:var(--surface,#fff);padding:15px;}
+    .activity-preview-shell>h4{font-size:1.15rem;margin:0 0 7px;}
+    .activity-preview{display:grid;gap:14px;max-height:720px;overflow:auto;padding:4px;}
+    .activity-section{border:1px solid #d7ddde;background:var(--surface,#fff);padding:12px;}
+    .activity-section>h4{margin:0 0 10px;}
+    .activity-section .activity-description{margin:0 0 12px;}
+    .activity-edit-target{display:block;width:100%;text-align:left;border:1px dashed transparent;border-radius:3px;background:transparent;color:inherit;cursor:text;padding:5px;font:inherit;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;}
+    .activity-edit-target:hover{border-color:var(--accent);background:var(--accent-soft);}
+    /* Inline wording control is adjacent to source text and never wraps a button. */
+    .inline-edit-host{position:relative;}
+    .inline-edit-host>.activity-edit-target{padding-right:52px;}
+    .inline-edit-host>.activity-edit-target[hidden],
+    .inline-edit-host>.inline-quick-edit[hidden]{display:none!important;}
+    .inline-quick-edit{
+      position:absolute;top:4px;right:4px;display:inline-grid;place-items:center;
+      width:42px;height:42px;border:1px solid var(--border);border-radius:7px;
+      background:var(--surface);color:var(--text);
+      font-size:1.1rem;line-height:1;cursor:pointer;opacity:.82;
+    }
+    .inline-edit-host:hover>.inline-quick-edit,
+    .inline-edit-host:focus-within>.inline-quick-edit,
+    .inline-quick-edit:focus-visible{opacity:1;border-color:var(--accent);}
+    .review-editing-preference{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      margin:0 0 16px;padding:12px 15px;background:var(--surface);
+      border:1px solid var(--border);border-radius:8px;
+    }
+    .review-editing-preference[hidden]{display:none!important;}
+    .review-editing-preference label{font-size:.85rem;font-weight:750;color:var(--text);}
+    .review-editing-preference p{margin:4px 0 0;font-size:.77rem;line-height:1.45;color:var(--muted);}
+    .review-editing-preference select{
+      flex:0 0 auto;max-width:100%;min-width:210px;
+      padding:9px 12px;background:var(--surface);color:var(--text);
+      border:1px solid var(--border);border-radius:7px;font:inherit;
+    }
+    .review-editing-preference select:focus-visible{outline:3px solid var(--focus);outline-offset:2px;}
+    @media(max-width:700px){
+      .review-editing-preference{display:grid;gap:10px;}
+      .review-editing-preference select{min-width:0;width:100%;}
+    }
+    .inline-review-navigator{display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+      padding:8px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .inline-review-position{font-size:.8rem;font-weight:750;color:var(--muted);margin-right:auto;}
+    .inline-review-jump-label{display:grid;gap:5px;min-width:min(220px,100%);
+      flex:1 1 220px;color:var(--muted);font-size:.74rem;font-weight:700;}
+    .inline-review-target-select,.inline-review-part-select{
+      display:block;width:100%;min-width:0;border:1px solid var(--border);
+      background:var(--surface);color:var(--text);border-radius:6px;
+      padding:9px 10px;font:inherit;font-size:.82rem;}
+    .inline-review-target-select:focus-visible,.inline-review-part-select:focus-visible{
+      outline:3px solid var(--focus);outline-offset:2px;}
+    .inline-review-parts{display:grid;gap:5px;border:1px solid var(--border);
+      border-radius:7px;padding:10px 12px;background:var(--surface);}
+    .inline-review-parts[hidden]{display:none!important;}
+    .inline-review-parts label{display:grid;gap:6px;font-size:.78rem;font-weight:750;}
+    .inline-review-part-description{font-size:.73rem;color:var(--muted);line-height:1.4;}
+    .inline-review-box{display:grid;gap:9px;margin:8px 0 16px;padding:13px;
+      border:1px solid var(--accent);border-radius:7px;background:var(--surface-soft);
+      color:var(--text);min-width:0;}
+    .inline-review-label{font-size:.88rem;font-weight:750;}
+    .inline-review-input{width:100%;min-height:83px;padding:10px 11px;
+      border:1px solid var(--border);border-radius:5px;resize:vertical;
+      background:var(--surface);color:var(--text);font:inherit;line-height:1.5;}
+    .inline-review-input:focus-visible{outline:3px solid var(--focus);outline-offset:2px;}
+    .inline-review-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+    .inline-review-counter{margin-left:auto;font-size:.75rem;color:var(--muted);}
+    .inline-review-message{font-size:.82rem;color:var(--muted);margin:0;line-height:1.5;}
+    .inline-review-keyboard-hint{
+      font-size:.76rem;color:var(--muted);line-height:1.5;margin:0;
+    }
+    .visually-hidden{
+      position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;
+      overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+    }
+    .inline-review-message[data-invalid="true"]{color:#a02439;}
+    .inline-review-save:disabled{opacity:.45;cursor:not-allowed;}
+    @media(hover:none){.inline-quick-edit{opacity:1;}}
+
+    .activity-edit-target[aria-current="true"]{
+      outline:2px solid var(--accent);outline-offset:1px;background:var(--accent-soft);}
+    .activity-edit-target[data-proposed="true"]{
+      border-left:4px solid var(--good);padding-left:10px;
+      background:var(--good-soft);}
+    .activity-edit-target[data-proposed="true"]:focus-visible{
+      outline:3px solid var(--focus);outline-offset:2px;}
+    .activity-field-preview{display:grid;gap:2px;padding:10px 0;border-top:1px solid #e4e8e8;}
+    .activity-field-label{font-weight:650;font-size:.94rem;}
+    .activity-field-preview small{color:var(--muted);font-size:.75rem;}
+    .activity-input-placeholder{border:1px solid #c4cece;border-radius:3px;background:#f8f9f9;padding:11px;color:#697577;font-size:.82rem;}
+    .activity-check-preview{display:flex;gap:8px;align-items:start;border-top:1px solid #edf0f0;}
+    .activity-check-preview>span{padding-top:7px;}
+    .activity-inspector{padding:16px;border:1px solid #cbd7d3;background:#fafcfb;min-width:0;}
+    .activity-inspector h4{margin:0 0 14px;}
+    .activity-inspector label,.activity-inspector h5{display:block;font-size:.84rem;font-weight:700;margin:10px 0 6px;}
+    .activity-inspector textarea{width:100%;box-sizing:border-box;line-height:1.5;padding:10px;color:#192729;background:#fff;border:1px solid #a2b4b1;}
+    .activity-inspector small{color:var(--muted);display:block;margin:6px 0;}
+    .activity-inspector #activityOriginal{font-size:.82rem;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;}
+    .activity-empty{color:var(--muted);line-height:1.6;}
+    .lab-guide-edit-line{margin:0 0 12px;line-height:1.5;}
+    .lab-guide-edit-line h4{margin:0;}
+    .lab-guide-edit-line .activity-edit-target{white-space:pre-wrap;}
+    .lab-guide-locked{border:1px solid #d6e2dd;background:#f5faf7;
+      padding:12px;color:#36554e;font-size:.82rem;line-height:1.5;}
+    .lab-guide-locked p{margin:4px 0 0;}
+    #labGuideLab,#labGuideStep{max-width:270px;}
+    #labGuideImport{max-width:240px;min-width:150px;border:1px solid #b1bfbd;
+      border-radius:3px;padding:7px;font-size:.78rem;background:#fff;}
+    .student-guide-toolbar select{max-width:360px;}
+    .student-guide-toolbar #studentGuideRecord{min-width:min(340px,100%);flex:2;}
+    .student-guide-toolbar #studentGuideFieldSearch{padding:9px;border:1px solid #a2b4b1;
+      color:#1b292b;background:#fff;border-radius:3px;min-width:160px;flex:1;}
+    /* One authoring workspace at a time, without unmounting its drafts. */
+    [data-editor-workspace][hidden]{display:none!important;}
+    .cross-site-editor-switcher{
+      margin:0 0 12px;border:1px solid var(--border);background:var(--surface);
+      border-radius:8px;padding:8px 13px;color:var(--text);
+    }
+    .cross-site-editor-switcher summary{
+      cursor:pointer;font-size:.82rem;font-weight:650;line-height:1.5;
+    }
+    .cross-site-editor-switcher summary:focus-visible{
+      outline:3px solid var(--focus);outline-offset:3px;
+    }
+    .cross-site-editor-switcher nav{
+      display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;
+    }
+    .cross-site-editor-switcher nav a{
+      border:1px solid var(--border);border-radius:6px;
+      padding:8px 12px;font-size:.83rem;line-height:1.4;
+      color:var(--text);text-decoration:none;background:var(--surface-soft);
+    }
+    .cross-site-editor-switcher nav a:hover{border-color:var(--accent);}
+    .cross-site-editor-switcher .cross-editor-detail{
+      display:block;font-size:.73rem;color:var(--muted);
+    }
+    .cross-site-editor-switcher p{
+      margin:9px 0 2px;font-size:.75rem;color:var(--muted);
+    }
+    @media(max-width:620px){
+      .cross-site-editor-switcher nav{display:grid;}
+    }
+    .content-authoring-nav{position:sticky;top:72px;z-index:8;
+      display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;
+      margin:16px 0 14px;padding:8px;background:var(--surface);
+      border:1px solid var(--border);border-radius:10px;
+      scroll-margin-top:84px;}
+    .content-authoring-nav a{display:grid;align-content:start;gap:4px;
+      min-width:0;min-height:82px;padding:10px 11px;
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:7px;text-decoration:none;color:var(--text);line-height:1.35;}
+    .content-authoring-nav a strong{font-size:.82rem;font-weight:750;}
+    .content-authoring-nav a small{font-size:.72rem;color:var(--muted);}
+    .content-authoring-nav .content-authoring-state{
+      font-size:.71rem;color:var(--muted);font-weight:650;overflow-wrap:anywhere;}
+    .content-authoring-nav a[aria-current="page"]{
+      border-color:var(--accent);background:var(--accent-soft);}
+    .content-authoring-nav a[aria-current="page"] strong{color:var(--accent);}
+    .content-authoring-nav a:hover:not([aria-current="page"]){
+      background:var(--surface-soft);border-color:var(--accent);}
+    .content-authoring-nav a:focus-visible{outline:3px solid var(--focus);outline-offset:2px;}
+    .content-active-workspace{display:flex;align-items:center;justify-content:space-between;
+      gap:14px;margin:0 0 16px;padding:14px 17px;
+      background:var(--surface-soft);border:1px solid var(--border);
+      border-radius:9px;}
+    .content-active-workspace h3{margin:0 0 5px;font-size:1.03rem;}
+    #contentViewHeading:focus-visible{
+      outline:3px solid var(--focus);outline-offset:4px;border-radius:3px;
+    }
+    .content-active-workspace .eyebrow{margin-bottom:4px;}
+    .content-active-workspace p{margin:0;color:var(--muted);font-size:.83rem;line-height:1.5;}
+    .content-view-state{flex-shrink:0;color:var(--muted);font-weight:700;
+      font-size:.78rem;text-align:right;}
+    [data-editor-workspace].activity-authoring-panel{
+      margin:0;padding:18px;border-radius:9px;}
+    .content-browser-list{max-height:210px;}
+    #visualGuidanceEditor,#activityAuthoring,#labGuideAuthoring,#studentGuideAuthoring,
+    #contentPublicationHeading{scroll-margin-top:18px;}
+    @media(max-width:1020px){
+      .content-authoring-nav{grid-template-columns:repeat(3,minmax(0,1fr));position:static;}
+      .content-authoring-nav a{min-height:83px;}
+    }
+    @media(max-width:620px){
+      .content-authoring-nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+      .content-authoring-nav a{padding:9px;min-height:80px;}
+      .content-active-workspace{display:block;}
+      .content-view-state{display:block;text-align:left;margin-top:8px;}
+    }
+    .student-guide-preview-group{display:grid;gap:8px;padding:12px;
+      border:1px solid #d2dfda;background:var(--surface,#fff);}
+    .student-guide-preview-group h5{font-size:.83rem;color:var(--muted);margin:0 0 3px;}
+    .student-guide-preview-line{display:grid;gap:2px;}
+    .student-guide-preview-line small{font-size:.75rem;color:var(--muted);}
+    .student-guide-protected{font-size:.8rem;line-height:1.5;padding:12px;
+      border-left:3px solid #758b85;background:#f6f8f7;color:#36554e;}
+    .activity-import-label{font-size:.82rem;align-self:center;font-weight:700;}
+    #activityImport{max-width:250px;min-width:150px;border:1px solid #b1bfbd;border-radius:3px;padding:7px;font-size:.78rem;background:#fff;}
+    .activity-review-dialog{width:min(720px,92vw);max-height:82vh;overflow:auto;border:1px solid #b7c5c6;padding:22px;background:#fff;color:#222;}
+    .activity-review-dialog::backdrop{background:#0007;}
+    .activity-review-dialog form{text-align:right;margin-top:16px;}
+    .activity-review-item{padding:12px 0;border-top:1px solid #d9e0e0;}
+    .activity-review-item p{font-size:.83rem;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;}
+    @media(max-width:850px){
+      .activity-authoring-grid{grid-template-columns:1fr;}
+      /* On touch and narrow layouts, avoid a nested scroll trap. */
+      .activity-preview{max-height:none;overflow:visible;}
+      .activity-authoring-panel{padding:14px;}
+      .inline-review-navigator{gap:10px;}
+      .inline-review-navigator>.button{min-height:44px;}
+      .inline-review-target-select,.inline-review-part-select{min-height:44px;}
+      .inline-review-actions>.button{min-height:44px;}
+      .activity-authoring-toolbar select,
+      .student-guide-toolbar #studentGuideRecord{min-width:0;width:100%;flex:1 1 100%;}
+      .student-guide-toolbar #studentGuideFieldSearch{min-width:0;width:100%;flex:1 1 100%;}
+      .activity-preview-shell{padding:12px;}
+    }
+    @media(max-width:620px){
+      .activity-review-dialog{padding:14px;width:calc(100vw - 20px);max-width:calc(100vw - 20px);}
+      .activity-preview{padding:0;}
+      .activity-section,.student-guide-preview-group{padding:10px;}
+      .content-action-row button{min-height:44px;}
+      .activity-edit-target{min-height:44px;}
+      .content-authoring-nav a{min-height:74px;}
+    }
     .content-preview-frame {
       width: 100%;
       min-height: 620px;
@@ -855,6 +1160,9 @@
         align-items: flex-start;
         flex-direction: column;
       }
+      /* The topbar is not sticky at this width. Keep the compact Admin
+         navigation at the viewport edge without a vacant 72px offset. */
+      .sidebar { top: 0; }
 
       .data-domain-grid { grid-template-columns: 1fr; }
 
@@ -873,6 +1181,29 @@
       }
 
       .panel { padding: 18px; }
+    }
+    .foundation-notice-short{display:none;}
+    /* Content Studio has its own publication boundary and context.
+       Minimise repeated shell information on a phone while retaining the
+       complete notice on other Admin screens and on larger displays. */
+    @media(max-width:620px){
+      #mainContent:has(#contentStudioPanel:not([hidden])) .workspace-header{
+        margin-bottom:10px;}
+      #mainContent:has(#contentStudioPanel:not([hidden])) .workspace-header h1{
+        font-size:1.2rem;}
+      #mainContent:has(#contentStudioPanel:not([hidden])) .workspace-header p{
+        display:none;}
+      #mainContent:has(#contentStudioPanel:not([hidden])) .foundation-notice{
+        margin-bottom:12px;padding:10px 12px;font-size:.79rem;line-height:1.45;}
+      #mainContent:has(#contentStudioPanel:not([hidden])) .foundation-notice-full{
+        display:none;}
+      #mainContent:has(#contentStudioPanel:not([hidden])) .foundation-notice-short{
+        display:block;}
+      #contentStudioPanel>p{line-height:1.45;font-size:.85rem;}
+      #contentStudioPanel .content-active-workspace{
+        padding:10px 12px;margin-bottom:12px;}
+      #contentStudioPanel .content-active-workspace p{display:none;}
+      #contentStudioPanel .content-view-state{margin-top:4px;}
     }
   </style>
 </head>
@@ -941,10 +1272,16 @@
           </div>
 
           <div class="foundation-notice" id="foundationNotice">
-            The live student experience remains local-first. Content releases
-            can be managed on the isolated v3 backend, while students continue
-            using the bundled curriculum and existing production Worker.
-            No research data is collected by this Admin milestone.
+            <span class="foundation-notice-full">
+              The live student experience remains local-first. Content releases
+              can be managed on the isolated v3 backend, while students continue
+              using the bundled curriculum and existing production Worker.
+              No research data is collected by this Admin milestone.
+            </span>
+            <span class="foundation-notice-short">
+              Student site unchanged. Research collection remains off.
+              Only approved stage guidance can use the isolated release service.
+            </span>
           </div>
 
           <section class="panel workspace-panel" data-admin-workspace-panel="dashboard">
@@ -1002,15 +1339,65 @@
             </div>
           </section>
 
-          <section class="panel workspace-panel" data-admin-workspace-panel="content-studio" hidden>
+          <section class="panel workspace-panel" id="contentStudioPanel"
+            data-admin-workspace-panel="content-studio" hidden>
             <h2>Content Studio</h2>
             <p>
-              Edit a controlled copy of student-facing instructional content,
-              validate and preview it, then optionally publish a complete
-              18-stage release to the isolated v3 backend.
+              Choose an editing area below. Stage guidance uses a separate
+              publication service. Research activities, laboratory instructions,
+              and Student Guide wording export review-only proposals.
             </p>
+            <details class="cross-site-editor-switcher">
+              <summary>Other website editors <span aria-hidden="true">↗</span></summary>
+              <nav aria-label="Other website editors">
+                <a href="../editor.html" target="_blank" rel="noopener noreferrer">Ye Eun Moon <span class="cross-editor-detail">Academic website editor</span></a>
+                <a href="../memory-palace-u1-8/editor.html" target="_blank" rel="noopener noreferrer">AP Biology Story Method <span class="cross-editor-detail">Browser-local narrative editor</span></a>
+              </nav>
+              <p>Other editors open in a new tab. Your current Content Studio drafts remain open here.
+                <a href="../editors.html" target="_blank" rel="noopener noreferrer">All website editors <span aria-hidden="true">↗</span></a>
+              </p>
+            </details>
+            <nav class="content-authoring-nav" id="contentAuthoringNav" aria-label="Content Studio editing areas" aria-describedby="contentAuthoringNavHelp">
+              <a href="#visualGuidanceEditor" data-content-view="guidance" aria-current="page"><strong>Stage guidance</strong>
+                <small>18 stages · Validated drafts</small>
+                <span class="content-authoring-state" id="guidanceEditorCount">0 changed drafts</span></a>
+              <a href="#activityAuthoring" data-content-view="activities"><strong>Research activities</strong>
+                <small>Instructions and field labels</small>
+                <span class="content-authoring-state" id="activityEditorCount">0 proposed changes</span></a>
+              <a href="#labGuideAuthoring" data-content-view="laboratories"><strong>Lab instructions</strong>
+                <small>32 panels · Review only</small>
+                <span class="content-authoring-state" id="labEditorCount">0 proposed changes</span></a>
+              <a href="#studentGuideAuthoring" data-content-view="student-guide"><strong>Student Guide</strong>
+                <small>18 stages and 113 fields</small>
+                <span class="content-authoring-state" id="studentEditorCount">0 proposed changes</span></a>
+              <a href="#contentPublicationHeading" data-content-view="publication"><strong>Guidance publication</strong>
+                <small>Authenticated v3 service only</small>
+                <span class="content-authoring-state" id="publicationEditorState">Not connected</span></a>
+            </nav>
+            <p id="contentAuthoringNavHelp" class="visually-hidden">
+              All five editing areas are accessible with Tab. Use Left and Right arrow keys, Home, or End
+              while focused on an area link to move between them. Press Enter to open an area.
+            </p>
+            <div class="content-active-workspace">
+              <div>
+                <span class="eyebrow">Current editing area</span>
+                <h3 id="contentViewHeading" tabindex="-1">Stage guidance</h3>
+                <p id="contentViewDescription">Edit the 18 validated guidance drafts. These alone can be included in the isolated v3 publication release.</p>
+              </div>
+              <span class="content-view-state" id="contentViewStatus" role="status" aria-live="polite">0 changed drafts</span>
+            </div>
+            <div id="reviewEditingPreference" class="review-editing-preference" hidden>
+              <div>
+                <label for="reviewEditingMode">How would you like to edit?</label>
+                <p id="reviewEditingHint">Click any passage to edit the wording where it appears. Use the detailed inspector when you need it.</p>
+              </div>
+              <select id="reviewEditingMode" aria-describedby="reviewEditingHint">
+                <option value="direct">Edit directly on the page</option>
+                <option value="inspector">Open the detailed inspector</option>
+              </select>
+            </div>
 
-            <section class="content-browser-card" aria-labelledby="contentBrowserHeading">
+            <section data-editor-workspace="guidance" class="content-browser-card" aria-labelledby="contentBrowserHeading">
               <div class="content-browser-head">
                 <div>
                   <span class="eyebrow">Content browser</span>
@@ -1040,7 +1427,7 @@
               ></div>
             </section>
 
-            <div class="content-studio-toolbar">
+            <div data-editor-workspace="guidance" class="content-studio-toolbar">
               <div class="content-record-meta">
                 <span>Selected stage</span>
                 <strong id="contentRecordStage">Loading</strong>
@@ -1068,6 +1455,7 @@
             </div>
 
             <div
+              data-editor-workspace="guidance"
               class="content-studio-status"
               id="contentStudioStatus"
               role="status"
@@ -1076,7 +1464,7 @@
               Loading Content Studio.
             </div>
 
-            <div class="content-editor-layout">
+            <div data-editor-workspace="guidance" class="content-editor-layout">
               <section class="content-editor-card" aria-labelledby="contentEditorHeading">
                 <div class="content-editor-heading">
                   <div>
@@ -1087,6 +1475,64 @@
                   <span class="section-status">In-memory draft</span>
                 </div>
 
+                <section class="visual-guidance-card" id="visualGuidanceEditor" aria-labelledby="visualGuidanceHeading">
+                  <div class="visual-guidance-header">
+                    <h4 id="visualGuidanceHeading">Edit guidance on the page</h4>
+                    <p>Click a title or a content block to edit it directly. The original Content Studio fields below update as you type.</p>
+                    <small id="visualGuidanceRecord">Selected stage</small>
+                  </div>
+                  <div class="visual-guidance-toolbar" role="toolbar" aria-label="Format selected guidance">
+                    <button type="button" data-guidance-format="strong" title="Bold selected narrative text"><strong>Bold</strong></button>
+                    <button type="button" data-guidance-format="em" title="Italicize selected narrative text"><em>Italic</em></button>
+                    <span>Select text within teaching content, an example, or a warning to apply formatting.</span>
+                  </div>
+                  <div class="visual-block-tools" aria-label="Arrange selected content blocks">
+                    <label for="visualBlockText">Create a content block</label>
+                    <input id="visualBlockText" type="text" maxlength="1200" autocomplete="off"
+                      placeholder="Write text for a new paragraph or list item">
+                    <div class="visual-block-actions">
+                      <button id="visualAddParagraph" type="button" disabled>Add paragraph</button>
+                      <button id="visualAddList" type="button" disabled>Add bullet list</button>
+                      <button id="visualAddListItem" type="button" disabled>Add list item</button>
+                      <button id="visualMoveBlockUp" type="button" disabled>Move up</button>
+                      <button id="visualMoveBlockDown" type="button" disabled>Move down</button>
+                      <button id="visualRemoveBlock" type="button" disabled>Remove block</button>
+                    </div>
+                    <p id="visualBlockStatus" class="visual-block-status" role="status" aria-live="polite">
+                      Click a paragraph, heading, concept box, or list below to select a block.
+                    </p>
+                  </div>
+                  <div class="visual-guidance-field">
+                    <label id="visualTitleLabel">Stage title</label>
+                    <h3 contenteditable="true" role="textbox" aria-labelledby="visualTitleLabel" aria-multiline="false" data-visual-field="title"></h3>
+                  </div>
+                  <div class="visual-guidance-field">
+                    <label id="visualNavLabel">Navigation label</label>
+                    <div class="visual-guidance-text" contenteditable="true" role="textbox" aria-labelledby="visualNavLabel" aria-multiline="false" data-visual-field="nav"></div>
+                  </div>
+                  <div class="visual-guidance-field">
+                    <label id="visualPurposeLabel">Purpose</label>
+                    <p class="visual-guidance-text" contenteditable="true" role="textbox" aria-labelledby="visualPurposeLabel" aria-multiline="false" data-visual-field="purpose"></p>
+                  </div>
+                  <div class="visual-guidance-field">
+                    <label id="visualLearnLabel">Teaching content</label>
+                    <div class="visual-guidance-rich" contenteditable="true" role="textbox" aria-labelledby="visualLearnLabel" aria-multiline="true" data-visual-field="learn_html"></div>
+                  </div>
+                  <div class="visual-guidance-field">
+                    <label id="visualExampleLabel">Example block</label>
+                    <div class="visual-guidance-rich" contenteditable="true" role="textbox" aria-labelledby="visualExampleLabel" aria-multiline="true" data-visual-field="example_html"></div>
+                  </div>
+                  <div class="visual-guidance-field">
+                    <label id="visualWarningLabel">Warning block</label>
+                    <div class="visual-guidance-rich" contenteditable="true" role="textbox" aria-labelledby="visualWarningLabel" aria-multiline="true" data-visual-field="warning_html"></div>
+                  </div>
+                  <p id="visualGuidanceStatus" class="visual-guidance-status" role="status" aria-live="polite"></p>
+                </section>
+
+                <details class="content-source-fallback" id="contentSourceFallback">
+                  <summary>Advanced · Edit the underlying guidance fields</summary>
+                  <p>These fields are the validated source for the visual editor.
+                    Open them when you need precise HTML or plain-text control.</p>
                 <div class="content-form-grid two">
                   <label>
                     <span>Stage title</span>
@@ -1147,6 +1593,8 @@
                   ></textarea>
                 </label>
 
+                </details>
+
                 <div class="content-action-row">
                   <button class="button" id="validateContentDraft" type="button">
                     Validate draft
@@ -1195,7 +1643,202 @@
               </section>
             </div>
 
-            <details class="content-replacement">
+            <section data-editor-workspace="activities" class="activity-authoring-panel" id="activityAuthoring" aria-labelledby="activityAuthoringTitle">
+              <div class="content-editor-heading">
+                <div>
+                  <span class="eyebrow">Development authoring · Review required</span>
+                  <h3 id="activityAuthoringTitle">Edit research activity wording</h3>
+                </div>
+                <span class="section-status">Local proposal only</span>
+              </div>
+              <p class="content-editor-help">
+                Revise section instructions, student field labels, and completion-check wording.
+                Field keys, input types, choice options, and saved student work stay untouched.
+                This editor exports a review packet. It cannot publish to the student site or isolated content service.
+              </p>
+              <div class="activity-authoring-toolbar">
+                <label for="activityStage">Research stage</label>
+                <select id="activityStage" aria-label="Choose a stage activity to edit"></select>
+                <span id="activityReviewCount">0 proposed changes</span>
+              </div>
+              <div class="activity-authoring-grid">
+                <section class="activity-preview-shell" aria-labelledby="activityStageHeading">
+                  <h4 id="activityStageHeading">Activity preview</h4>
+                  <p class="content-editor-help">Click a heading, instruction, field label, or completion check to edit it in place. You can also choose the detailed inspector above.</p>
+                  <div id="activityPreview" class="activity-preview" aria-label="Editable activity wording"></div>
+                </section>
+                <aside id="activityInspector" class="activity-inspector" hidden aria-label="Selected activity text">
+                  <h4>Edit selected wording</h4>
+                  <label for="activityEditText" id="activitySelectedLabel">Selected field</label>
+                  <textarea id="activityEditText" rows="8" spellcheck="true"></textarea>
+                  <small id="activityFieldCounter"></small>
+                  <h5>Original wording</h5>
+                  <p id="activityOriginal"></p>
+                  <button id="activityRevertField" type="button" class="button">Revert field</button>
+                </aside>
+              </div>
+              <p id="activityStatus" class="content-editor-help" role="status" aria-live="polite">
+                Preparing the activity authoring preview.
+              </p>
+              <div class="content-action-row">
+                <button id="activityReview" type="button" class="button">Review wording changes</button>
+                <button id="activityExport" type="button" class="button" disabled>Export review JSON</button>
+                <label class="activity-import-label" for="activityImport">Reopen saved proposal</label>
+                <input id="activityImport" type="file" accept=".json,application/json"
+                  aria-label="Import a saved activity wording review packet">
+                <button id="activityReset" type="button" class="button" disabled>Reset this stage</button>
+              </div>
+              <p class="content-editor-help">
+                Proposals are held in memory during this session and are not part of the guidance release.
+                Export them before closing the page. Applying them later requires a separate, validated
+                curriculum update and preservation checks for existing student projects.
+              </p>
+            </section>
+
+            <dialog id="activityReviewDialog" class="activity-review-dialog" aria-labelledby="activityReviewTitle">
+              <h3 id="activityReviewTitle">Review activity wording</h3>
+              <div id="activityReviewList"></div>
+              <p id="activityReviewValidation" role="status"></p>
+              <form method="dialog"><button class="button" type="submit">Close review</button></form>
+            </dialog>
+
+            <section data-editor-workspace="laboratories" class="activity-authoring-panel" id="labGuideAuthoring" aria-labelledby="labGuideHeading">
+              <div class="content-editor-heading">
+                <div>
+                  <span class="eyebrow">Specialised student tools · Review only</span>
+                  <h3 id="labGuideHeading">Edit laboratory instructions</h3>
+                </div>
+                <span class="section-status">Local proposal only</span>
+              </div>
+              <p class="content-editor-help">
+                Edit explanatory titles and instructions in the Literature, Methods,
+                Data, and Writing Labs. Linked research terms and decision keys are
+                protected. Review packets are saved locally and cannot publish or
+                alter student projects.
+              </p>
+              <div class="activity-authoring-toolbar">
+                <label for="labGuideLab">Laboratory</label>
+                <select id="labGuideLab"></select>
+                <label for="labGuideStep">Instruction panel</label>
+                <select id="labGuideStep"></select>
+                <span id="labGuideCount">0 proposed changes</span>
+              </div>
+              <div class="activity-authoring-grid">
+                <section class="activity-preview-shell" aria-labelledby="labGuidePreviewTitle">
+                  <h4 id="labGuidePreviewTitle">Student guidance preview</h4>
+                  <p class="content-editor-help">Click the instruction itself to edit it in place, or use the detailed inspector option above.</p>
+                  <div id="labGuidePreview" class="activity-preview"
+                    aria-label="Editable laboratory instructional wording"></div>
+                </section>
+                <aside id="labGuideInspector" class="activity-inspector" hidden
+                  aria-label="Selected laboratory instruction">
+                  <h4>Edit selected instruction</h4>
+                  <label for="labGuideEditText" id="labGuideSelectedLabel">Selected wording</label>
+                  <textarea id="labGuideEditText" rows="9"></textarea>
+                  <small id="labGuideCharacterCount"></small>
+                  <h5>Original wording</h5>
+                  <p id="labGuideOriginal"></p>
+                  <button id="labGuideRevert" type="button" class="button">Revert instruction</button>
+                </aside>
+              </div>
+              <p id="labGuideStatus" role="status" aria-live="polite" class="content-editor-help"></p>
+              <div class="content-action-row">
+                <button id="labGuideReview" type="button" class="button">Review lab changes</button>
+                <button id="labGuideExport" type="button" class="button" disabled>Export lab review JSON</button>
+                <label class="activity-import-label" for="labGuideImport">Reopen lab review</label>
+                <input id="labGuideImport" type="file" accept=".json,application/json"
+                  aria-label="Import a saved laboratory instruction review packet">
+                <button id="labGuideReset" type="button" class="button" disabled>Reset selected panel</button>
+              </div>
+              <p class="content-editor-help">
+                Export before closing the browser. A proposed wording change must be
+                reviewed and applied through a separate validated curriculum update.
+                It is not part of the current Content Studio publication release.
+              </p>
+            </section>
+            <dialog id="labGuideReviewDialog" class="activity-review-dialog"
+              aria-labelledby="labGuideReviewHeading">
+              <h3 id="labGuideReviewHeading">Review laboratory wording</h3>
+              <div id="labGuideReviewList"></div>
+              <p id="labGuideReviewValidation" role="status"></p>
+              <form method="dialog"><button class="button" type="submit">Close review</button></form>
+            </dialog>
+
+            <section data-editor-workspace="student-guide" class="activity-authoring-panel" id="studentGuideAuthoring"
+              aria-labelledby="studentGuideHeading">
+              <div class="content-editor-heading">
+                <div>
+                  <span class="eyebrow">Student explanations · Review only</span>
+                  <h3 id="studentGuideHeading">Edit the Student Guide and field help</h3>
+                </div>
+                <span class="section-status">Local proposal only</span>
+              </div>
+              <p class="content-editor-help">
+                Revise the explanations, examples, and step-by-step help used in
+                all 18 research stages and 113 student response fields.
+                Research-term links, field identities, choice guidance and student
+                answers stay unchanged. This editor only exports review packets.
+              </p>
+              <div class="activity-authoring-toolbar student-guide-toolbar">
+                <label for="studentGuideMode">Edit</label>
+                <select id="studentGuideMode" aria-label="Select Student Guide help type">
+                  <option value="stage">Stage explanations · 18 records</option>
+                  <option value="field">Individual field help · 113 records</option>
+                </select>
+                <label for="studentGuideRecord">Help record</label>
+                <select id="studentGuideRecord" aria-label="Select a stage or field guide"></select>
+                <input id="studentGuideFieldSearch" type="search"
+                  placeholder="Find field by name or ID" aria-label="Find a student response field" hidden>
+                <span id="studentGuideCount">0 proposed changes</span>
+              </div>
+              <div class="activity-authoring-grid">
+                <section class="activity-preview-shell" aria-labelledby="studentGuidePreviewTitle">
+                  <h4 id="studentGuidePreviewTitle">Instruction preview</h4>
+                  <p class="content-editor-help">
+                    Click an explanation, example, or suggested step to edit it in place, or use the detailed inspector option above.
+                    The record structure and help links are protected.
+                  </p>
+                  <div id="studentGuidePreview" class="activity-preview"
+                    aria-label="Student Guide wording preview"></div>
+                </section>
+                <aside id="studentGuideInspector" class="activity-inspector" hidden
+                  aria-label="Selected Student Guide explanation">
+                  <h4>Edit selected explanation</h4>
+                  <label for="studentGuideEdit" id="studentGuideSelected">Selected help text</label>
+                  <textarea id="studentGuideEdit" rows="8"></textarea>
+                  <small id="studentGuideCharacters"></small>
+                  <h5>Original wording</h5>
+                  <p id="studentGuideOriginal"></p>
+                  <button id="studentGuideRevert" type="button" class="button">Revert wording</button>
+                </aside>
+              </div>
+              <p id="studentGuideStatus" role="status" aria-live="polite"
+                class="content-editor-help">Preparing the Student Guide preview.</p>
+              <div class="content-action-row">
+                <button id="studentGuideReview" type="button" class="button">Review Guide changes</button>
+                <button id="studentGuideExport" type="button" class="button" disabled>
+                  Export Guide review JSON
+                </button>
+                <label class="activity-import-label" for="studentGuideImport">Reopen Guide review</label>
+                <input id="studentGuideImport" type="file" accept=".json,application/json"
+                  aria-label="Import a saved Student Guide review packet">
+                <button id="studentGuideReset" type="button" class="button" disabled>Reset selected record</button>
+              </div>
+              <p class="content-editor-help">
+                Local proposals can be reviewed and exported for a controlled
+                future curriculum update. They do not change the public student
+                site or the existing guidance publication release.
+              </p>
+            </section>
+            <dialog id="studentGuideReviewDialog" class="activity-review-dialog"
+              aria-labelledby="studentGuideReviewTitle">
+              <h3 id="studentGuideReviewTitle">Review Student Guide wording</h3>
+              <div id="studentGuideReviewList"></div>
+              <p id="studentGuideReviewValidation" role="status"></p>
+              <form method="dialog"><button class="button" type="submit">Close review</button></form>
+            </dialog>
+
+            <details data-editor-workspace="guidance" class="content-replacement">
               <summary>Replace the complete editable content block</summary>
 
               <p>
@@ -1220,7 +1863,7 @@
               </div>
             </details>
 
-            <section class="publication-card" aria-labelledby="contentPublicationHeading">
+            <section data-editor-workspace="publication" class="publication-card" aria-labelledby="contentPublicationHeading">
               <div class="publication-heading">
                 <div>
                   <span class="eyebrow">Isolated v3 service</span>
@@ -1319,7 +1962,7 @@
               </div>
             </section>
 
-            <div class="boundary">
+            <div data-editor-workspace="publication" class="boundary">
               <strong>Publication boundary.</strong>
               Content Studio can publish versioned releases to the isolated
               v3 backend after a separate Admin publication session is verified.
@@ -1487,8 +2130,16 @@
 
   <script src="./assets/runtime-config.js"></script>
   <script src="./assets/teacher-session.js"></script>
+  <script src="./assets/curriculum.js"></script>
+  <script src="./assets/student-guidance.js"></script>
+  <script src="./assets/admin-activity-authoring.js"></script>
+  <script src="./assets/admin-lab-guidance-authoring.js"></script>
+  <script src="./assets/admin-student-guide-authoring.js"></script>
+  <script src="./assets/admin-inline-review-editor.js"></script>
+  <script src="./assets/admin-content-workspace-navigation.js"></script>
   <script src="./assets/content-registry.js"></script>
   <script src="./assets/admin-content-studio.js"></script>
+  <script src="./assets/admin-visual-guidance.js"></script>
   <script src="./assets/admin-content-studio-ui.js"></script>
   <script src="./assets/admin-content-service.js"></script>
   <script src="./assets/admin-content-publication.js"></script>
@@ -1591,11 +2242,37 @@
           ?.mount?.();
 
         window
+          .RMSActivityAuthoring
+          ?.mount?.();
+
+        window
+          .RMSLabGuidanceAuthoring
+          ?.mount?.();
+
+        window
+          .RMSStudentGuideAuthoring
+          ?.mount?.();
+
+        window
+          .RMSInlineReviewEditor
+          ?.mount?.();
+
+        window
           .RMSAdminContentPublicationUI
+          ?.mount?.();
+
+        window
+          .RMSAdminContentWorkspaceNavigation
           ?.mount?.();
 
         gate.hidden = true;
         workspace.hidden = false;
+
+        // Deep links to an editing area should open Content Studio after
+        // authentication without making the guarded workspace public.
+        if (window.RMSAdminContentWorkspaceNavigation?.hasLinkHash?.()) {
+          setPanel("content-studio");
+        }
       }
 
       void boot();
