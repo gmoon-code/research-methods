@@ -116,6 +116,10 @@ window.RMSStudentGuideAuthoring=(()=>{
     button.type="button";button.className="activity-edit-target";
     button.dataset.guidePath=entry.path;
     button.textContent=currentValue(entry.path);
+    if(currentValue(entry.path)!==entry.text){
+      button.dataset.proposed="true";
+      button.setAttribute("aria-label","Proposed change · "+currentValue(entry.path));
+    }
     if(entry.path===chosen)button.setAttribute("aria-current","true");
     button.addEventListener("click",()=>select(entry.path));
     const kind=document.createElement("small");
