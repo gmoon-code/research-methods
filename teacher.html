@@ -245,6 +245,17 @@
           "returnStudent"
         );
 
+      function adminDestination() {
+        // Keep only the editor's published, allowlisted fragment after
+        // successful authentication. Arbitrary URLs and redirects are never
+        // read from query parameters or user-controlled storage.
+        const requestedArea =
+          location.hash === "#visualGuidanceEditor"
+            ? "#visualGuidanceEditor"
+            : "";
+        return "./admin-workspace.html" + requestedArea;
+      }
+
       function message(
         text,
         isError = false
@@ -307,7 +318,7 @@
               "Access accepted. Opening Admin Workspace..."
             );
 
-            location.replace("./admin-workspace.html");
+            location.replace(adminDestination());
           } finally {
             busy(false);
           }
@@ -345,7 +356,7 @@
           .verify()
           .then(ok => {
             if (ok) {
-              location.replace("./admin-workspace.html");
+              location.replace(adminDestination());
               return;
             }
 
