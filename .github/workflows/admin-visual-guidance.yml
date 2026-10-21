@@ -48,6 +48,7 @@ jobs:
           node --test tests/admin-workspace-static.test.mjs
           node --check assets/admin-activity-authoring.js
           node --check assets/admin-lab-guidance-authoring.js
+          node --check assets/admin-student-guide-authoring.js
       - name: Test visual editing with isolated simulated session
         env:
           ADMIN_TEST_URL: http://127.0.0.1:8765
