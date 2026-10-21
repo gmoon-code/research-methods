@@ -9,8 +9,8 @@ const admin = readFileSync(
 const editorEntry = readFileSync("editor.html","utf8");
 
 test("GitHub Pages editor entry routes through the existing verified sign-in",()=>{
-  assert.match(editorEntry,/http-equiv="refresh" content="0;url=\.\/teacher\.html"/);
-  assert.match(editorEntry,/href="\.\/teacher\.html"/);
+  assert.match(editorEntry,/http-equiv="refresh" content="0;url=\.\/teacher\.html#visualGuidanceEditor"/);
+  assert.match(editorEntry,/href="\.\/teacher\.html#visualGuidanceEditor"/);
   assert.doesNotMatch(editorEntry,/teacherAccessCode|RMS_TEACHER_ACCESS_CODE|\/api\/admin\//);
   assert.doesNotMatch(editorEntry,/<script\b/i);
 });
