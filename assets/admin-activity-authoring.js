@@ -166,7 +166,7 @@ window.RMSActivityAuthoring=(()=>{
     const validation=inspect();
     $("activityExport").disabled=pending||!validation.ok||!validation.edits.length;
     $("activityReset").disabled=pending||!changes.get(current)?.size;
-    $("activityReviewCount").textContent=validation.edits.length+" proposed changes";
+    $("activityReviewCount").textContent=validation.edits.length+" proposed change"+(validation.edits.length===1?"":"s");
   }
   function select(path){
     if(!editable().some(e=>e.path===path))return;
