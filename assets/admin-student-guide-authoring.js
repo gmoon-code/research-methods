@@ -90,7 +90,7 @@ window.RMSStudentGuideAuthoring=(()=>{
     id("studentGuideStatus").textContent=message||
       result.errors[0]||
       (result.edits.length+" proposed Student Guide changes · Local only");
-    id("studentGuideCount").textContent=result.edits.length+" proposed changes";
+    id("studentGuideCount").textContent=result.edits.length+" proposed change"+(result.edits.length===1?"":"s");
     id("studentGuideExport").disabled=pending||!result.ok||!result.edits.length;
     id("studentGuideReset").disabled=pending||
       !recordEntries().some(x=>edits.has(x.path));
