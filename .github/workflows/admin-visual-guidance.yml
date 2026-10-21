@@ -6,6 +6,8 @@ on:
       - "admin-workspace.html"
       - "assets/admin-visual-guidance.js"
       - "assets/admin-activity-authoring.js"
+      - "assets/admin-lab-guidance-authoring.js"
+      - "assets/student-guidance.js"
       - "assets/curriculum.js"
       - "assets/admin-content-studio-ui.js"
       - "tests/admin-visual-guidance-smoke.mjs"
@@ -44,6 +46,7 @@ jobs:
           node --test tests/admin-content-publication.test.mjs
           node --test tests/admin-workspace-static.test.mjs
           node --check assets/admin-activity-authoring.js
+          node --check assets/admin-lab-guidance-authoring.js
       - name: Test visual editing with isolated simulated session
         env:
           ADMIN_TEST_URL: http://127.0.0.1:8765
