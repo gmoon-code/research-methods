@@ -41,6 +41,11 @@ try {
     {pathname:'/editor.html',target:'_blank',noopener:true},
     {pathname:'/memory-palace-u1-8/editor.html',target:'_blank',noopener:true}
   ]);
+  const hubLink=crossEditorDisclosure.locator('a[href="../editors.html"]');
+  assert.equal(await hubLink.count(),1);
+  assert.equal(await hubLink.getAttribute('target'),'_blank');
+  assert.match(await hubLink.getAttribute('rel'),/noopener/);
+  assert.equal(await hubLink.evaluate(link=>new URL(link.href).pathname),'/editors.html');
   await crossEditorDisclosure.locator('summary').click();
   assert.equal(await page.locator(".content-authoring-nav a").count(),5);
   assert.deepEqual(await page.locator(".content-authoring-nav a").evaluateAll(links=>
