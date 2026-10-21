@@ -182,10 +182,12 @@ window.RMSActivityAuthoring=(()=>{
     renderPreview();status();
   }
   function resetField(){
+    if(window.RMSInlineReviewEditor?.beforeContextChange?.()===false)return;
     const original=entries(currentStage()).find(e=>e.path===selected);
     if(original)edit(original.text);
   }
   function resetStage(){
+    if(window.RMSInlineReviewEditor?.beforeContextChange?.()===false)return;
     if(!changes.get(current)?.size)return;
     if(!window.confirm("Discard the activity wording proposals for Stage "+current+"?"))return;
     changes.delete(current);selected="";renderPreview();status();
@@ -304,6 +306,11 @@ window.RMSActivityAuthoring=(()=>{
     }
     selector.value=String(current);
     selector.addEventListener("change",()=>{
+      if(Number(selector.value)===current)return;
+      if(window.RMSInlineReviewEditor?.beforeContextChange?.()===false){
+        selector.value=String(current);
+        return;
+      }
       current=Number(selector.value);selected="";renderPreview();status();
     });
     $("activityEditText").addEventListener("input",event=>edit(event.target.value));
