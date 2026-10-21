@@ -86,6 +86,23 @@ window.RMSAdminContentWorkspaceNavigation=(()=>{
         show(key,{focus:true,updateHash:true});
       });
     }
+    // Native links remain fully tabbable. Optional arrow keys provide a
+    // quicker way to scan the five authoring areas without selecting one.
+    // Enter on the focused link performs the normal activation.
+    nav.addEventListener("keydown",event=>{
+      if(!["ArrowLeft","ArrowRight","Home","End"].includes(event.key))return;
+      if(!event.target.matches?.("a[data-content-view]"))return;
+      const links=[...nav.querySelectorAll("a[data-content-view]")];
+      const index=links.indexOf(event.target);
+      if(index<0)return;
+      let next=index;
+      if(event.key==="Home")next=0;
+      else if(event.key==="End")next=links.length-1;
+      else if(event.key==="ArrowRight")next=(index+1)%links.length;
+      else if(event.key==="ArrowLeft")next=(index-1+links.length)%links.length;
+      event.preventDefault();
+      links[next].focus();
+    });
     observer=new MutationObserver(()=>updateIndicators());
     for(const areaItem of AREAS){
       const el=byId(areaItem.source);
