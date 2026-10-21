@@ -515,6 +515,30 @@ try {
   assert.equal(await page.locator('#contentStudioPanel').isVisible(),true);
   assert.equal(await page.locator('#activityAuthoring').isVisible(),true);
   assert.equal(await page.locator('[data-content-view="activities"][aria-current="page"]').count(),1);
+
+  // Mobile viewport uses a two-column workspace switcher. The regular
+  // Admin sections and the active editor remain independently reachable.
+  await page.setViewportSize({width:390,height:844});
+  await page.locator('[data-content-view="student-guide"]').click();
+  assert.equal(await page.locator('#studentGuideAuthoring').isVisible(),true);
+  assert.equal(await page.locator('#labGuideAuthoring').isHidden(),true);
+  assert.equal(await page.locator('.content-authoring-nav a').count(),5);
+  const mobile=await page.locator("#contentAuthoringNav").evaluate(el=>{
+    const bounds=el.getBoundingClientRect();
+    const panel=el.closest("#contentStudioPanel").getBoundingClientRect();
+    return {
+      columns:getComputedStyle(el).gridTemplateColumns.trim().split(/\\s+/).length,
+      navRight:bounds.right,panelRight:panel.right
+    };
+  });
+  assert.equal(mobile.columns,2,"Narrow viewports should use a two-column editor switcher");
+  assert(mobile.navRight<=mobile.panelRight+2,
+    "Mobile workspace navigation must remain within its Admin panel");
+  await page.locator('[data-content-view="publication"]').click();
+  assert.equal(await page.locator('.publication-card').isVisible(),true);
+  await page.screenshot({
+    path:"/tmp/visual-guidance-artifacts/admin-content-studio-mobile.png",fullPage:true
+  });
   assert.deepEqual(errors,[],"Admin visual guidance should not produce runtime errors");
   console.log("PASS: admin mount, 18 stages, direct editing, source sync, safe paste and navigation");
 }finally{
