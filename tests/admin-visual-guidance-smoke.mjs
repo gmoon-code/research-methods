@@ -178,6 +178,31 @@ try {
   assert.equal(await page.locator("#contentTitle").inputValue(),await page.locator('[data-visual-field="title"]').textContent());
   await page.locator('[data-content-view="activities"]').click();
   const activityBaseline=await page.evaluate(()=>JSON.stringify(window.RMSCurriculum.stages));
+  // Direct editing is the default in each review-only workspace; clicking
+  // displayed text opens its editor without using the pencil.
+  assert.equal(await page.locator("#reviewEditingPreference").isVisible(),true);
+  assert.equal(await page.locator("#reviewEditingMode").inputValue(),"direct");
+  await page.locator('[data-activity-path="s.0.title"]').click();
+  assert.equal(await page.locator('#activityPreview .inline-review-input').isVisible(),true);
+  assert.equal(await page.locator('#activityInspector').isHidden(),true);
+  await page.locator('#activityPreview .inline-review-input')
+    .fill('An activity title edited directly in context');
+  await page.locator('#activityPreview .inline-review-inspect').click();
+  assert.equal(await page.locator('#activityPreview .inline-review-input').count(),0);
+  assert.equal(await page.locator('#activityEditText').inputValue(),
+    'An activity title edited directly in context');
+  assert.equal(await page.locator('#activityInspector').isVisible(),true);
+  assert.equal(await page.locator('#activityReviewCount').textContent(),'1 proposed changes');
+  await page.locator('#activityRevertField').click();
+  assert.equal(await page.locator('#activityReviewCount').textContent(),'0 proposed changes');
+  await page.locator('[data-activity-path="s.0.title"]').click();
+  await page.locator('#activityPreview .inline-review-input').press("Escape");
+  assert.equal(await page.locator('#activityPreview .inline-review-box').count(),0);
+  await page.locator('#reviewEditingMode').selectOption("inspector");
+  assert.equal(await page.locator("#reviewEditingMode").inputValue(),"inspector");
+  await page.locator('[data-activity-path="s.0.f.0.label"]').click();
+  assert.equal(await page.locator('#activityInspector').isVisible(),true);
+  assert.equal(await page.locator('#activityPreview .inline-review-input').count(),0);
   // One-click pencil edits in the visible student activity, with inline
   // validation, inspector synchronisation, and an explicit cancel path.
   const activityQuick=page.locator(
@@ -350,6 +375,12 @@ try {
   assert.equal(await page.locator('#activityAuthoring').isHidden(),true);
   assert.match(await page.locator("#activityEditorCount").textContent(),/proposed changes/);
   const labBaseline=await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance));
+  assert.equal(await page.locator('#reviewEditingPreference').isVisible(),true);
+  await page.locator('#reviewEditingMode').selectOption('direct');
+  await page.locator('[data-lab-guide-path="labs.literature.search.title"]').click();
+  assert.equal(await page.locator('#labGuidePreview .inline-review-input').isVisible(),true);
+  await page.locator('#labGuidePreview .inline-review-input').press('Escape');
+  await page.locator('#reviewEditingMode').selectOption('inspector');
   // Empty inspector space should be reclaimed by a full-width preview.
   const gridColumns=()=>page.locator('#labGuideAuthoring .activity-authoring-grid')
     .evaluate(element=>getComputedStyle(element).gridTemplateColumns.trim().split(/\s+/).length);
@@ -493,6 +524,11 @@ try {
   assert.equal(await page.locator('#studentGuideAuthoring').isVisible(),true);
   assert.equal(await page.locator('#labGuideAuthoring').isHidden(),true);
   const guideBaseline=await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance));
+  await page.locator('#reviewEditingMode').selectOption('direct');
+  await page.locator('[data-guide-path="stages.1.title"]').click();
+  assert.equal(await page.locator('#studentGuidePreview .inline-review-input').isVisible(),true);
+  await page.locator('#studentGuidePreview .inline-review-input').press('Escape');
+  await page.locator('#reviewEditingMode').selectOption('inspector');
   const guideQuick=page.locator(
     '[data-guide-path="stages.1.title"] + .inline-quick-edit');
   await guideQuick.click();
@@ -614,6 +650,7 @@ try {
   // Publication remains isolated from all review-only proposals.
   await page.locator('[data-content-view="publication"]').click();
   assert.equal(await page.locator(".publication-card").isVisible(),true);
+  assert.equal(await page.locator('#reviewEditingPreference').isHidden(),true);
   assert.equal(await page.locator('#studentGuideAuthoring').isHidden(),true);
   assert.match(await page.locator("#contentViewDescription").textContent(),
     /Review-only proposals cannot publish here/);
