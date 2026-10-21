@@ -34,6 +34,10 @@ window.RMSInlineReviewEditor=(()=>{
     edit.form.remove();
     edit.target.hidden=false;
     edit.trigger.hidden=false;
+    // Inline editing does not leave a duplicate inspector visible after
+    // Save or Cancel. The explicit "Detailed inspector" action can reopen it.
+    const inspector=byId(edit.config.inspector)?.closest(".activity-inspector");
+    if(inspector)inspector.hidden=true;
     if(focus&&edit.trigger.isConnected)edit.trigger.focus({preventScroll:true});
   }
   function beforeContextChange(){
@@ -71,6 +75,8 @@ window.RMSInlineReviewEditor=(()=>{
     closeEditor();
     source.value=value;
     source.dispatchEvent(new Event("input",{bubbles:true}));
+    const inspector=source.closest(".activity-inspector");
+    if(inspector)inspector.hidden=true;
     const replacement=targetFor(edit.root,edit.config,edit.path);
     if(replacement)replacement.focus({preventScroll:true});
   }
