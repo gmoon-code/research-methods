@@ -172,6 +172,11 @@ window.RMSStudentGuideAuthoring=(()=>{
     preview();status();
   }
   function updateRecord(){
+    if(id("studentGuideRecord").value===recordId)return;
+    if(window.RMSInlineReviewEditor?.beforeContextChange?.()===false){
+      id("studentGuideRecord").value=recordId;
+      return;
+    }
     chosen="";
     recordId=id("studentGuideRecord").value;
     preview();status();
@@ -230,10 +235,12 @@ window.RMSStudentGuideAuthoring=(()=>{
     id("studentGuideReviewDialog").showModal();
   }
   function resetField(){
+    if(window.RMSInlineReviewEditor?.beforeContextChange?.()===false)return;
     const entry=entries.get(chosen);
     if(entry)edit(entry.text);
   }
   function resetRecord(){
+    if(window.RMSInlineReviewEditor?.beforeContextChange?.()===false)return;
     const paths=recordEntries().filter(x=>edits.has(x.path));
     if(!paths.length)return;
     if(!window.confirm("Discard proposed wording changes for this help record?"))return;
@@ -310,6 +317,11 @@ window.RMSStudentGuideAuthoring=(()=>{
     if(mounted)return true;
     if(!id("studentGuideMode")||!id("studentGuidePreview")||!entries.size)return false;
     id("studentGuideMode").addEventListener("change",e=>{
+      if(e.target.value===mode)return;
+      if(window.RMSInlineReviewEditor?.beforeContextChange?.()===false){
+        e.target.value=mode;
+        return;
+      }
       mode=e.target.value;
       recordId=mode==="stage"?"1":Object.keys(fieldRecords)[0];
       id("studentGuideFieldSearch").hidden=mode!=="field";
@@ -317,6 +329,11 @@ window.RMSStudentGuideAuthoring=(()=>{
       renderOptions();
     });
     id("studentGuideFieldSearch").addEventListener("input",e=>{
+      if(e.target.value===fieldFilter)return;
+      if(window.RMSInlineReviewEditor?.beforeContextChange?.()===false){
+        e.target.value=fieldFilter;
+        return;
+      }
       fieldFilter=e.target.value;renderOptions();
     });
     id("studentGuideRecord").addEventListener("change",updateRecord);
