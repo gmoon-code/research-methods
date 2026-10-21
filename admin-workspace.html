@@ -687,6 +687,28 @@
     .activity-authoring-toolbar select{flex:1;min-width:230px;padding:10px;border:1px solid #9eaaae;border-radius:3px;color:var(--text,#182227);background:var(--surface,#fff);}
     .activity-authoring-toolbar span{font-size:.8rem;color:var(--muted);}
     .activity-authoring-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr);gap:15px;align-items:start;}
+    /* Avoid an empty second column when the inspector is absent; direct
+       inline editing can use the full preview width. */
+    .activity-authoring-grid:has(>.activity-inspector[hidden]),
+    .activity-authoring-grid:has(.inline-review-box){
+      grid-template-columns:minmax(0,1fr);
+    }
+    .activity-authoring-grid:has(.inline-review-box)>.activity-inspector{
+      display:none;
+    }
+    .activity-authoring-grid:has(>.activity-inspector[hidden])>.activity-preview-shell,
+    .activity-authoring-grid:has(.inline-review-box)>.activity-preview-shell{
+      width:100%;max-width:880px;
+    }
+    .content-source-fallback{margin:15px 0 6px;padding:13px;
+      border:1px solid var(--border);border-radius:8px;background:var(--surface);}
+    .content-source-fallback>summary{cursor:pointer;color:var(--text);
+      font-size:.85rem;font-weight:750;padding:2px 0;}
+    .content-source-fallback>summary:focus-visible{outline:3px solid var(--focus);}
+    .content-source-fallback>p{font-size:.8rem;color:var(--muted);
+      margin:10px 0 15px;line-height:1.55;}
+    .content-source-fallback .content-field{margin-top:12px;}
+    .content-source-fallback:not([open]){margin-bottom:14px;}
     .activity-preview-shell{min-width:0;border:1px solid #d0d8d8;background:var(--surface,#fff);padding:15px;}
     .activity-preview-shell>h4{font-size:1.15rem;margin:0 0 7px;}
     .activity-preview{display:grid;gap:14px;max-height:720px;overflow:auto;padding:4px;}
@@ -1352,6 +1374,10 @@
                   <p id="visualGuidanceStatus" class="visual-guidance-status" role="status" aria-live="polite"></p>
                 </section>
 
+                <details class="content-source-fallback" id="contentSourceFallback">
+                  <summary>Advanced · Edit the underlying guidance fields</summary>
+                  <p>These fields are the validated source for the visual editor.
+                    Open them when you need precise HTML or plain-text control.</p>
                 <div class="content-form-grid two">
                   <label>
                     <span>Stage title</span>
@@ -1411,6 +1437,8 @@
                     spellcheck="false"
                   ></textarea>
                 </label>
+
+                </details>
 
                 <div class="content-action-row">
                   <button class="button" id="validateContentDraft" type="button">
