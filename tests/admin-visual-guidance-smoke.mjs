@@ -527,7 +527,7 @@ try {
     const bounds=el.getBoundingClientRect();
     const panel=el.closest("#contentStudioPanel").getBoundingClientRect();
     return {
-      columns:getComputedStyle(el).gridTemplateColumns.trim().split(/\\s+/).length,
+      columns:getComputedStyle(el).gridTemplateColumns.trim().split(/\s+/).length,
       navRight:bounds.right,panelRight:panel.right
     };
   });
