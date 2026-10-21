@@ -12,6 +12,16 @@ Inside an inline editor, **Detailed inspector** opens the original inspector dir
 
 Both workflows update the same proposal model. You can still review, export, import, and reset proposed wording using the original controls.
 
+## Editing long passages and moving through a record
+
+Each inline editor now indicates **Wording N of M** for the selected record. **Previous wording** and **Next wording** move through the existing editable items in the order in which they appear. The **Jump to wording** selector opens a specific heading, instruction, field label, worked example, or help text without scrolling through the entire record.
+
+When an inline passage contains a valid unsaved change, the movement controls become **Save and previous** and **Save and next**. The same action saves through the existing authoring model and opens the adjacent wording item. If the text is empty or contains disallowed markup, movement is blocked until the value is corrected or the editor is cancelled. The drop-down uses the same validation and saves a valid change before navigating.
+
+Keyboard users can use **Alt+Up** and **Alt+Down** while focused inside the inline text box to move to the previous or next item. The regular **Ctrl+Enter**, **Command+Enter**, and **Escape** shortcuts remain available.
+
+A longer passage with multiple paragraphs or reading sections displays **Select a paragraph or reading section**. Choosing a section selects its exact range in the text box, so it can be edited directly. Existing paragraph breaks determine the initial sections; an especially long continuous paragraph is subdivided at nearby sentence or whitespace boundaries for easier navigation. This control changes only the text selection and never changes, restructures, or truncates the underlying wording. The same protected review-packet format and source-hash validation remain in place.
+
 When switching records or workspaces, the interface checks for text that is still in the open inline editor. If that text differs from the current proposed wording, a confirmation appears. **Cancel** returns to the unfinished edit with its text and selection intact. **OK** discards only the uncommitted inline text and allows navigation. If the input has not changed, navigation closes it without prompting.
 
 The same guard applies when changing a research stage, laboratory and panel, Student Guide stage or field, choosing a different visible text block, reviewing/exporting proposals, importing a packet, or resetting proposals. Cancelled selector changes restore the previously selected record. Reloading or closing the tab with unfinished inline wording triggers the browser's unsaved-changes prompt. A complete review proposal still needs an explicit JSON export to survive a page reload.
