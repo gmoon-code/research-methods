@@ -31,6 +31,21 @@ window.RMSInlineReviewEditor=(()=>{
     edit.trigger.hidden=false;
     if(focus&&edit.trigger.isConnected)edit.trigger.focus({preventScroll:true});
   }
+  function beforeContextChange(){
+    if(!active)return true;
+    // Changing a stage, record, or workspace must never silently destroy
+    // text that has not yet reached the existing validated proposal model.
+    if(active.textarea.value!==active.start &&
+       !window.confirm(
+         "This in-place edit has not been saved. Discard this wording and continue? " +
+         "Choose Cancel to return to the editor and save your wording."
+       )){
+      active.textarea.focus({preventScroll:true});
+      return false;
+    }
+    closeEditor();
+    return true;
+  }
   function syncStatus(edit){
     const error=textIssue(edit.textarea.value,edit.limit);
     const changed=edit.textarea.value!==edit.start;
@@ -55,12 +70,7 @@ window.RMSInlineReviewEditor=(()=>{
     if(replacement)replacement.focus({preventScroll:true});
   }
   function begin(root,config,path){
-    if(active){
-      const dirty=active.textarea.value!==active.start;
-      if(dirty&&!window.confirm("Discard the unsaved in-place wording change?"))
-        return;
-      closeEditor();
-    }
+    if(!beforeContextChange())return;
     let target=targetFor(root,config,path);
     if(!target)return;
     // Use the original selection handler to establish the exact record and
@@ -112,7 +122,7 @@ window.RMSInlineReviewEditor=(()=>{
       root,config,path,form:box,target,trigger,textarea:field,
       save:saveButton,message:hint,counter,limit,start:field.value
     };
-    field.addEventListener("input",()=>syncStatus(active));
+    field.addEventListener("input",()=>{if(active?.textarea===field)syncStatus(active);});
     field.addEventListener("keydown",event=>{
       if(event.key==="Escape"){event.preventDefault();closeEditor({focus:true});}
       else if(event.key==="Enter"&&(event.ctrlKey||event.metaKey)){
@@ -153,6 +163,16 @@ window.RMSInlineReviewEditor=(()=>{
       const root=byId(config.preview);
       const obs=new MutationObserver(()=>enrich(root,config));
       obs.observe(root,{subtree:true,childList:true});
+      // Text selection uses the original inspector handler. Intercept before
+      // that handler rerenders the preview and discards an open inline form.
+      root.addEventListener("click",event=>{
+        const target=event.target.closest?.(".activity-edit-target");
+        if(!target||!root.contains(target)||!active)return;
+        if(!beforeContextChange()){
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        }
+      },true);
       root.addEventListener("click",event=>{
         const quick=event.target.closest?.(".inline-quick-edit");
         if(!quick||!root.contains(quick))return;
@@ -161,7 +181,16 @@ window.RMSInlineReviewEditor=(()=>{
       });
       enrich(root,config);
     }
+    // Handle leaving the entire tab, including reload, without discarding
+    // partially typed inline text. Existing saved review proposals are
+    // independently subject to their explicit export requirement.
+    window.addEventListener("beforeunload",event=>{
+      if(active&&active.textarea.value!==active.start){
+        event.preventDefault();
+        event.returnValue="";
+      }
+    });
     mounted=true;return true;
   }
-  return Object.freeze({mount,isEditing:()=>!!active});
+  return Object.freeze({mount,beforeContextChange,isEditing:()=>!!active});
 })();
