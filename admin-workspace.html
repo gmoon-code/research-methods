@@ -722,17 +722,51 @@
     .student-guide-toolbar #studentGuideRecord{min-width:min(340px,100%);flex:2;}
     .student-guide-toolbar #studentGuideFieldSearch{padding:9px;border:1px solid #a2b4b1;
       color:#1b292b;background:#fff;border-radius:3px;min-width:160px;flex:1;}
-    .content-authoring-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-      gap:8px;margin:18px 0 22px;}
-    .content-authoring-nav a{display:grid;align-content:start;gap:4px;min-width:0;
-      padding:12px 14px;background:var(--surface,#fff);border:1px solid #cad7d4;
-      border-radius:5px;text-decoration:none;color:#205d55;line-height:1.35;}
-    .content-authoring-nav a strong{font-size:.85rem;font-weight:750;}
-    .content-authoring-nav a small{font-size:.73rem;color:#49615d;}
-    .content-authoring-nav a:hover{background:#edf7f3;border-color:#398779;}
-    .content-authoring-nav a:focus-visible{outline:3px solid #358b78;outline-offset:2px;}
+    /* One authoring workspace at a time, without unmounting its drafts. */
+    [data-editor-workspace][hidden]{display:none!important;}
+    .content-authoring-nav{position:sticky;top:72px;z-index:8;
+      display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;
+      margin:16px 0 14px;padding:8px;background:var(--surface);
+      border:1px solid var(--border);border-radius:10px;
+      scroll-margin-top:84px;}
+    .content-authoring-nav a{display:grid;align-content:start;gap:4px;
+      min-width:0;min-height:94px;padding:10px 11px;
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:7px;text-decoration:none;color:var(--text);line-height:1.35;}
+    .content-authoring-nav a strong{font-size:.82rem;font-weight:750;}
+    .content-authoring-nav a small{font-size:.72rem;color:var(--muted);}
+    .content-authoring-nav .content-authoring-state{
+      font-size:.71rem;color:var(--muted);font-weight:650;overflow-wrap:anywhere;}
+    .content-authoring-nav a[aria-current="page"]{
+      border-color:var(--accent);background:var(--accent-soft);}
+    .content-authoring-nav a[aria-current="page"] strong{color:var(--accent);}
+    .content-authoring-nav a:hover:not([aria-current="page"]){
+      background:var(--surface-soft);border-color:var(--accent);}
+    .content-authoring-nav a:focus-visible{outline:3px solid var(--focus);outline-offset:2px;}
+    .content-active-workspace{display:flex;align-items:center;justify-content:space-between;
+      gap:14px;margin:0 0 16px;padding:14px 17px;
+      background:var(--surface-soft);border:1px solid var(--border);
+      border-radius:9px;}
+    .content-active-workspace h3{margin:0 0 5px;font-size:1.03rem;}
+    .content-active-workspace .eyebrow{margin-bottom:4px;}
+    .content-active-workspace p{margin:0;color:var(--muted);font-size:.83rem;line-height:1.5;}
+    .content-view-state{flex-shrink:0;color:var(--muted);font-weight:700;
+      font-size:.78rem;text-align:right;}
+    [data-editor-workspace].activity-authoring-panel{
+      margin:0;padding:18px;border-radius:9px;}
+    .content-browser-list{max-height:210px;}
     #visualGuidanceEditor,#activityAuthoring,#labGuideAuthoring,#studentGuideAuthoring,
     #contentPublicationHeading{scroll-margin-top:18px;}
+    @media(max-width:1020px){
+      .content-authoring-nav{grid-template-columns:repeat(3,minmax(0,1fr));position:static;}
+      .content-authoring-nav a{min-height:83px;}
+    }
+    @media(max-width:620px){
+      .content-authoring-nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+      .content-authoring-nav a{padding:9px;min-height:80px;}
+      .content-active-workspace{display:block;}
+      .content-view-state{display:block;text-align:left;margin-top:8px;}
+    }
     .student-guide-preview-group{display:grid;gap:8px;padding:12px;
       border:1px solid #d2dfda;background:var(--surface,#fff);}
     .student-guide-preview-group h5{font-size:.83rem;color:var(--muted);margin:0 0 3px;}
@@ -1131,20 +1165,33 @@
               Stage-guidance drafts use the existing isolated v3 publication service.
               Activity, laboratory, and Student Guide edits export review-only files.
             </p>
-            <nav class="content-authoring-nav" aria-label="Content Studio editing areas">
-              <a href="#visualGuidanceEditor"><strong>Stage guidance</strong>
-                <small>18 stages · Validated drafts</small></a>
-              <a href="#activityAuthoring"><strong>Research activities</strong>
-                <small>Instructions and field labels</small></a>
-              <a href="#labGuideAuthoring"><strong>Lab instructions</strong>
-                <small>32 panels · Review only</small></a>
-              <a href="#studentGuideAuthoring"><strong>Student Guide</strong>
-                <small>18 stages and 113 fields</small></a>
-              <a href="#contentPublicationHeading"><strong>Guidance publication</strong>
-                <small>Authenticated v3 service only</small></a>
+            <nav class="content-authoring-nav" id="contentAuthoringNav" aria-label="Content Studio editing areas">
+              <a href="#visualGuidanceEditor" data-content-view="guidance" aria-current="page"><strong>Stage guidance</strong>
+                <small>18 stages · Validated drafts</small>
+                <span class="content-authoring-state" id="guidanceEditorCount">0 changed drafts</span></a>
+              <a href="#activityAuthoring" data-content-view="activities"><strong>Research activities</strong>
+                <small>Instructions and field labels</small>
+                <span class="content-authoring-state" id="activityEditorCount">0 proposed changes</span></a>
+              <a href="#labGuideAuthoring" data-content-view="laboratories"><strong>Lab instructions</strong>
+                <small>32 panels · Review only</small>
+                <span class="content-authoring-state" id="labEditorCount">0 proposed changes</span></a>
+              <a href="#studentGuideAuthoring" data-content-view="student-guide"><strong>Student Guide</strong>
+                <small>18 stages and 113 fields</small>
+                <span class="content-authoring-state" id="studentEditorCount">0 proposed changes</span></a>
+              <a href="#contentPublicationHeading" data-content-view="publication"><strong>Guidance publication</strong>
+                <small>Authenticated v3 service only</small>
+                <span class="content-authoring-state" id="publicationEditorState">Not connected</span></a>
             </nav>
+            <div class="content-active-workspace">
+              <div>
+                <span class="eyebrow">Current editing area</span>
+                <h3 id="contentViewHeading" tabindex="-1">Stage guidance</h3>
+                <p id="contentViewDescription">Edit the 18 validated guidance drafts. These alone can be included in the isolated v3 publication release.</p>
+              </div>
+              <span class="content-view-state" id="contentViewStatus" role="status" aria-live="polite">0 changed drafts</span>
+            </div>
 
-            <section class="content-browser-card" aria-labelledby="contentBrowserHeading">
+            <section data-editor-workspace="guidance" class="content-browser-card" aria-labelledby="contentBrowserHeading">
               <div class="content-browser-head">
                 <div>
                   <span class="eyebrow">Content browser</span>
@@ -1174,7 +1221,7 @@
               ></div>
             </section>
 
-            <div class="content-studio-toolbar">
+            <div data-editor-workspace="guidance" class="content-studio-toolbar">
               <div class="content-record-meta">
                 <span>Selected stage</span>
                 <strong id="contentRecordStage">Loading</strong>
@@ -1202,6 +1249,7 @@
             </div>
 
             <div
+              data-editor-workspace="guidance"
               class="content-studio-status"
               id="contentStudioStatus"
               role="status"
@@ -1210,7 +1258,7 @@
               Loading Content Studio.
             </div>
 
-            <div class="content-editor-layout">
+            <div data-editor-workspace="guidance" class="content-editor-layout">
               <section class="content-editor-card" aria-labelledby="contentEditorHeading">
                 <div class="content-editor-heading">
                   <div>
@@ -1383,7 +1431,7 @@
               </section>
             </div>
 
-            <section class="activity-authoring-panel" id="activityAuthoring" aria-labelledby="activityAuthoringTitle">
+            <section data-editor-workspace="activities" class="activity-authoring-panel" id="activityAuthoring" aria-labelledby="activityAuthoringTitle">
               <div class="content-editor-heading">
                 <div>
                   <span class="eyebrow">Development authoring · Review required</span>
@@ -1442,7 +1490,7 @@
               <form method="dialog"><button class="button" type="submit">Close review</button></form>
             </dialog>
 
-            <section class="activity-authoring-panel" id="labGuideAuthoring" aria-labelledby="labGuideHeading">
+            <section data-editor-workspace="laboratories" class="activity-authoring-panel" id="labGuideAuthoring" aria-labelledby="labGuideHeading">
               <div class="content-editor-heading">
                 <div>
                   <span class="eyebrow">Specialised student tools · Review only</span>
@@ -1504,7 +1552,7 @@
               <form method="dialog"><button class="button" type="submit">Close review</button></form>
             </dialog>
 
-            <section class="activity-authoring-panel" id="studentGuideAuthoring"
+            <section data-editor-workspace="student-guide" class="activity-authoring-panel" id="studentGuideAuthoring"
               aria-labelledby="studentGuideHeading">
               <div class="content-editor-heading">
                 <div>
@@ -1578,7 +1626,7 @@
               <form method="dialog"><button class="button" type="submit">Close review</button></form>
             </dialog>
 
-            <details class="content-replacement">
+            <details data-editor-workspace="guidance" class="content-replacement">
               <summary>Replace the complete editable content block</summary>
 
               <p>
@@ -1603,7 +1651,7 @@
               </div>
             </details>
 
-            <section class="publication-card" aria-labelledby="contentPublicationHeading">
+            <section data-editor-workspace="publication" class="publication-card" aria-labelledby="contentPublicationHeading">
               <div class="publication-heading">
                 <div>
                   <span class="eyebrow">Isolated v3 service</span>
@@ -1702,7 +1750,7 @@
               </div>
             </section>
 
-            <div class="boundary">
+            <div data-editor-workspace="publication" class="boundary">
               <strong>Publication boundary.</strong>
               Content Studio can publish versioned releases to the isolated
               v3 backend after a separate Admin publication session is verified.
@@ -1875,6 +1923,7 @@
   <script src="./assets/admin-activity-authoring.js"></script>
   <script src="./assets/admin-lab-guidance-authoring.js"></script>
   <script src="./assets/admin-student-guide-authoring.js"></script>
+  <script src="./assets/admin-content-workspace-navigation.js"></script>
   <script src="./assets/content-registry.js"></script>
   <script src="./assets/admin-content-studio.js"></script>
   <script src="./assets/admin-visual-guidance.js"></script>
@@ -1993,6 +2042,10 @@
 
         window
           .RMSAdminContentPublicationUI
+          ?.mount?.();
+
+        window
+          .RMSAdminContentWorkspaceNavigation
           ?.mount?.();
 
         gate.hidden = true;
