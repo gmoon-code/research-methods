@@ -9,7 +9,12 @@ window.RMSInlineReviewEditor=(()=>{
     {preview:"labGuidePreview",attribute:"data-lab-guide-path",inspector:"labGuideEditText"},
     {preview:"studentGuidePreview",attribute:"data-guide-path",inspector:"studentGuideEdit"}
   ];
-  let mounted=false, active=null;
+  let mounted=false, active=null,internalSelection=false;
+  let editingMode="direct";
+  function selectInspectorTarget(target){
+    internalSelection=true;
+    try{target.click();}finally{internalSelection=false;}
+  }
   const byId=id=>document.getElementById(id);
   const textIssue=(value,limit)=>{
     if(!value.trim())return "Text cannot be empty.";
@@ -75,7 +80,7 @@ window.RMSInlineReviewEditor=(()=>{
     if(!target)return;
     // Use the original selection handler to establish the exact record and
     // inspector identity. Its render recreates this preview's button nodes.
-    target.click();
+    selectInspectorTarget(target);
     target=targetFor(root,config,path);
     const source=byId(config.inspector);
     if(!target||!source)return;
@@ -107,11 +112,14 @@ window.RMSInlineReviewEditor=(()=>{
     const cancelButton=document.createElement("button");
     cancelButton.type="button";cancelButton.className="button inline-review-cancel";
     cancelButton.textContent="Cancel";
+    const inspectButton=document.createElement("button");
+    inspectButton.type="button";inspectButton.className="button inline-review-inspect";
+    inspectButton.textContent="Detailed inspector";
     const hint=document.createElement("p");
     hint.className="inline-review-message";
     hint.setAttribute("role","status");
     hint.setAttribute("aria-live","polite");
-    actions.append(saveButton,cancelButton,counter);
+    actions.append(saveButton,inspectButton,cancelButton,counter);
     box.append(label,field,actions,hint);
     // The editing form goes after the source text's parent, so headings,
     // paragraphs, checklist and field-label semantics remain intact.
@@ -122,7 +130,13 @@ window.RMSInlineReviewEditor=(()=>{
       root,config,path,form:box,target,trigger,textarea:field,
       save:saveButton,message:hint,counter,limit,start:field.value
     };
-    field.addEventListener("input",()=>{if(active?.textarea===field)syncStatus(active);});
+    field.addEventListener("input",()=>{
+      if(active?.textarea===field){
+        syncStatus(active);
+        inspectButton.textContent=
+          field.value===active.start?"Detailed inspector":"Save and open inspector";
+      }
+    });
     field.addEventListener("keydown",event=>{
       if(event.key==="Escape"){event.preventDefault();closeEditor({focus:true});}
       else if(event.key==="Enter"&&(event.ctrlKey||event.metaKey)){
@@ -131,6 +145,20 @@ window.RMSInlineReviewEditor=(()=>{
     });
     saveButton.addEventListener("click",save);
     cancelButton.addEventListener("click",()=>closeEditor({focus:true}));
+    inspectButton.addEventListener("click",()=>{
+      const edit=active;
+      if(!edit)return;
+      if(textIssue(edit.textarea.value,edit.limit)){
+        syncStatus(edit);return;
+      }
+      if(edit.textarea.value!==edit.start)save();
+      else closeEditor();
+      const target=targetFor(edit.root,edit.config,edit.path);
+      if(target){
+        selectInspectorTarget(target);
+        byId(edit.config.inspector)?.focus({preventScroll:true});
+      }
+    });
     syncStatus(active);
     field.focus({preventScroll:true});
     field.setSelectionRange(field.value.length,field.value.length);
@@ -163,12 +191,19 @@ window.RMSInlineReviewEditor=(()=>{
       const root=byId(config.preview);
       const obs=new MutationObserver(()=>enrich(root,config));
       obs.observe(root,{subtree:true,childList:true});
-      // Text selection uses the original inspector handler. Intercept before
-      // that handler rerenders the preview and discards an open inline form.
+      // Text is directly editable by default. Preserve the original
+      // inspector selection for the opt-in detailed mode and internal sync.
       root.addEventListener("click",event=>{
         const target=event.target.closest?.(".activity-edit-target");
-        if(!target||!root.contains(target)||!active)return;
-        if(!beforeContextChange()){
+        if(!target||!root.contains(target)||internalSelection)return;
+        if(editingMode==="direct"){
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          const path=target.getAttribute(config.attribute);
+          if(path)begin(root,config,path);
+          return;
+        }
+        if(active&&!beforeContextChange()){
           event.preventDefault();
           event.stopImmediatePropagation();
         }
@@ -180,6 +215,20 @@ window.RMSInlineReviewEditor=(()=>{
         begin(root,config,quick.dataset.inlinePath);
       });
       enrich(root,config);
+    }
+    const choice=byId("reviewEditingMode");
+    if(choice){
+      choice.value="direct";
+      choice.addEventListener("change",()=>{
+        const next=choice.value;
+        if(!["direct","inspector"].includes(next)){choice.value=editingMode;return;}
+        if(next===editingMode)return;
+        if(!beforeContextChange()){choice.value=editingMode;return;}
+        editingMode=next;
+        byId("reviewEditingHint").textContent=next==="direct"?
+          "Click any passage to edit it where it appears. Use the detailed inspector when you need it.":
+          "Click a passage to select it in the detailed inspector. The pencil still opens an inline editor.";
+      });
     }
     // Actions that take snapshots or replace the underlying proposal must
     // first resolve any text still in the inline textarea.
@@ -218,5 +267,5 @@ window.RMSInlineReviewEditor=(()=>{
     });
     mounted=true;return true;
   }
-  return Object.freeze({mount,beforeContextChange,isEditing:()=>!!active});
+  return Object.freeze({mount,beforeContextChange,isEditing:()=>!!active,mode:()=>editingMode});
 })();
