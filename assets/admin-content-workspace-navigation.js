@@ -82,7 +82,11 @@ window.RMSAdminContentWorkspaceNavigation=(()=>{
     }
     window.addEventListener("hashchange",()=>{
       const key=fromHash();
-      if(key)show(key,{focus:!byId("contentStudioPanel").hidden});
+      if(!key)return;
+      const panel=byId("contentStudioPanel");
+      if(panel.hidden)
+        document.querySelector('[data-admin-panel="content-studio"]')?.click();
+      show(key,{focus:true});
     });
     show(fromHash()||"guidance");
     mounted=true;
