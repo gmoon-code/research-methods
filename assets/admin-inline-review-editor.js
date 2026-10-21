@@ -349,7 +349,10 @@ window.RMSInlineReviewEditor=(()=>{
       quick.type="button";
       quick.className="inline-quick-edit";
       quick.dataset.inlinePath=path;
-      quick.setAttribute("aria-label","Edit this wording here");
+      const snippet=target.textContent.trim().replace(/\s+/g," ").slice(0,68);
+      const phrase=(target.dataset.proposed==="true"?"Edit revised ":"Edit ")+
+        (snippet||"this wording");
+      quick.setAttribute("aria-label",phrase);
       quick.title="Edit this wording in place";
       quick.textContent="✎";
       target.after(quick);
