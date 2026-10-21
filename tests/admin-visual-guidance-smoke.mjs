@@ -176,6 +176,32 @@ try {
   assert.equal(await page.locator("#contentTitle").inputValue(),await page.locator('[data-visual-field="title"]').textContent());
   await page.locator('[data-content-view="activities"]').click();
   const activityBaseline=await page.evaluate(()=>JSON.stringify(window.RMSCurriculum.stages));
+  // One-click pencil edits in the visible student activity, with inline
+  // validation, inspector synchronisation, and an explicit cancel path.
+  const activityQuick=page.locator(
+    '#activityPreview [data-activity-path="s.0.title"] + .inline-quick-edit');
+  await activityQuick.click();
+  assert.equal(await page.locator('#activityPreview .inline-review-input').isVisible(),true);
+  assert.equal(await page.locator('#activityPreview [data-activity-path="s.0.title"]').isHidden(),true);
+  await page.locator('#activityPreview .inline-review-input').fill('<img src=x onerror=alert(1)>');
+  assert.equal(await page.locator('#activityPreview .inline-review-save').isDisabled(),true);
+  await page.locator('#activityPreview .inline-review-input').fill('Updated interest inventory heading');
+  assert.equal(await page.locator('#activityPreview .inline-review-save').isEnabled(),true);
+  await page.locator('#activityPreview .inline-review-save').click();
+  assert.equal(await page.locator('[data-activity-path="s.0.title"]').textContent(),
+    'Updated interest inventory heading');
+  assert.equal(await page.locator('#activityReviewCount').textContent(),'1 proposed changes');
+  assert.equal(await page.locator('#activityEditText').inputValue(),
+    'Updated interest inventory heading');
+  await activityQuick.click();
+  await page.locator('#activityPreview .inline-review-input').fill('Discard this unsaved change');
+  await page.locator('#activityPreview .inline-review-input').press('Escape');
+  assert.equal(await page.locator('#activityPreview .inline-review-box').count(),0);
+  assert.equal(await page.locator('[data-activity-path="s.0.title"]').textContent(),
+    'Updated interest inventory heading');
+  await page.locator('#activityRevertField').click();
+  assert.equal(await page.locator('#activityReviewCount').textContent(),'0 proposed changes');
+
   assert.equal(await page.locator("#activityStage option").count(),18);
   assert.equal(await page.locator("#activityExport").isDisabled(),true);
   await page.locator('[data-activity-path="s.0.f.0.label"]').click();
@@ -285,6 +311,18 @@ try {
   assert.equal(await page.locator('#activityAuthoring').isHidden(),true);
   assert.match(await page.locator("#activityEditorCount").textContent(),/proposed changes/);
   const labBaseline=await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance));
+  const labQuick=page.locator(
+    '[data-lab-guide-path="labs.literature.search.title"] + .inline-quick-edit');
+  await labQuick.click();
+  await page.locator('#labGuidePreview .inline-review-input').fill(
+    'Search journal articles and document the strategy');
+  await page.locator('#labGuidePreview .inline-review-input').press('Control+Enter');
+  assert.equal(await page.locator('[data-lab-guide-path="labs.literature.search.title"]').textContent(),
+    'Search journal articles and document the strategy');
+  assert.equal(await page.locator('#labGuideCount').textContent(),'1 proposed changes');
+  await page.locator('#labGuideRevert').click();
+  assert.equal(await page.locator('#labGuideCount').textContent(),'0 proposed changes');
+
   assert.equal(await page.locator("#labGuideLab option").count(),4);
   assert.equal(await page.evaluate(()=>{
     const labs=window.RMSStudentGuidance.labs;
@@ -395,6 +433,18 @@ try {
   assert.equal(await page.locator('#studentGuideAuthoring').isVisible(),true);
   assert.equal(await page.locator('#labGuideAuthoring').isHidden(),true);
   const guideBaseline=await page.evaluate(()=>JSON.stringify(window.RMSStudentGuidance));
+  const guideQuick=page.locator(
+    '[data-guide-path="stages.1.title"] + .inline-quick-edit');
+  await guideQuick.click();
+  await page.locator('#studentGuidePreview .inline-review-input').fill(
+    'Research questions begin with student curiosity');
+  await page.locator('#studentGuidePreview .inline-review-save').click();
+  assert.equal(await page.locator('[data-guide-path="stages.1.title"]').textContent(),
+    'Research questions begin with student curiosity');
+  assert.equal(await page.locator('#studentGuideCount').textContent(),'1 proposed changes');
+  await page.locator('#studentGuideRevert').click();
+  assert.equal(await page.locator('#studentGuideCount').textContent(),'0 proposed changes');
+
   assert.equal(await page.locator("#studentGuideMode option").count(),2);
   assert.equal(await page.locator("#studentGuideRecord option").count(),18);
   assert.equal(await page.locator("#studentGuideExport").isDisabled(),true);
