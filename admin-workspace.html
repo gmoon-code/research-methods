@@ -1141,6 +1141,29 @@
 
       .panel { padding: 18px; }
     }
+    .foundation-notice-short{display:none;}
+    /* Content Studio has its own publication boundary and context.
+       Minimise repeated shell information on a phone while retaining the
+       complete notice on other Admin screens and on larger displays. */
+    @media(max-width:620px){
+      #mainContent:has(#contentStudioPanel:not([hidden])) .workspace-header{
+        margin-bottom:10px;}
+      #mainContent:has(#contentStudioPanel:not([hidden])) .workspace-header h1{
+        font-size:1.2rem;}
+      #mainContent:has(#contentStudioPanel:not([hidden])) .workspace-header p{
+        display:none;}
+      #mainContent:has(#contentStudioPanel:not([hidden])) .foundation-notice{
+        margin-bottom:12px;padding:10px 12px;font-size:.79rem;line-height:1.45;}
+      #mainContent:has(#contentStudioPanel:not([hidden])) .foundation-notice-full{
+        display:none;}
+      #mainContent:has(#contentStudioPanel:not([hidden])) .foundation-notice-short{
+        display:block;}
+      #contentStudioPanel>p{line-height:1.45;font-size:.85rem;}
+      #contentStudioPanel .content-active-workspace{
+        padding:10px 12px;margin-bottom:12px;}
+      #contentStudioPanel .content-active-workspace p{display:none;}
+      #contentStudioPanel .content-view-state{margin-top:4px;}
+    }
   </style>
 </head>
 
@@ -1208,10 +1231,16 @@
           </div>
 
           <div class="foundation-notice" id="foundationNotice">
-            The live student experience remains local-first. Content releases
-            can be managed on the isolated v3 backend, while students continue
-            using the bundled curriculum and existing production Worker.
-            No research data is collected by this Admin milestone.
+            <span class="foundation-notice-full">
+              The live student experience remains local-first. Content releases
+              can be managed on the isolated v3 backend, while students continue
+              using the bundled curriculum and existing production Worker.
+              No research data is collected by this Admin milestone.
+            </span>
+            <span class="foundation-notice-short">
+              Student site unchanged. Research collection remains off.
+              Only approved stage guidance can use the isolated release service.
+            </span>
           </div>
 
           <section class="panel workspace-panel" data-admin-workspace-panel="dashboard">
@@ -1273,9 +1302,9 @@
             data-admin-workspace-panel="content-studio" hidden>
             <h2>Content Studio</h2>
             <p>
-              Review and edit instructional wording in dedicated visual workspaces.
-              Stage-guidance drafts use the existing isolated v3 publication service.
-              Activity, laboratory, and Student Guide edits export review-only files.
+              Choose an editing area below. Stage guidance uses a separate
+              publication service. Research activities, laboratory instructions,
+              and Student Guide wording export review-only proposals.
             </p>
             <nav class="content-authoring-nav" id="contentAuthoringNav" aria-label="Content Studio editing areas">
               <a href="#visualGuidanceEditor" data-content-view="guidance" aria-current="page"><strong>Stage guidance</strong>
