@@ -21,6 +21,11 @@ on:
       - ".github/workflows/admin-visual-guidance.yml"
   workflow_dispatch:
 
+# A newer editor revision supersedes stale Chromium runs for the same PR.
+concurrency:
+  group: admin-visual-guidance-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
