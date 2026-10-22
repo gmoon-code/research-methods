@@ -672,7 +672,7 @@
     .visual-guidance-status[data-warning="true"] {color:#883c4b;}
     .visual-block-tools {display:grid;gap:8px;padding:12px 0 14px;border-bottom:1px solid #d7ddde;}
     .visual-block-tools label {font-size:.8rem;font-weight:700;color:var(--muted);}
-    .visual-block-tools input {width:100%;padding:9px 11px;border:1px solid #a5b4b5;border-radius:3px;background:var(--surface,#fff);color:var(--text,#162326);font:inherit;}
+    .visual-block-tools textarea {box-sizing:border-box;width:100%;min-height:70px;resize:vertical;padding:9px 11px;border:1px solid #a5b4b5;border-radius:3px;background:var(--surface,#fff);color:var(--text,#162326);font:inherit;}
     .visual-block-actions {display:flex;gap:7px;flex-wrap:wrap;}
     .visual-block-actions button {background:var(--surface,#fff);color:var(--text,#162326);border:1px solid #a5b4b5;border-radius:3px;padding:7px 10px;font-size:.82rem;cursor:pointer;}
     .visual-block-actions button:hover:not(:disabled),.visual-block-actions button:focus-visible {border-color:#287b76;background:#edf7f3;}
@@ -1488,12 +1488,14 @@
                   </div>
                   <div class="visual-block-tools" aria-label="Arrange selected content blocks">
                     <label for="visualBlockText">Create a content block</label>
-                    <input id="visualBlockText" type="text" maxlength="1200" autocomplete="off"
-                      placeholder="Write text for a new paragraph or list item">
+                    <textarea id="visualBlockText" rows="3" maxlength="1200"
+                      placeholder="Write new text. For lists, put each item on its own line."></textarea>
                     <div class="visual-block-actions">
                       <button id="visualAddHeading" type="button" disabled>Add section heading</button>
                        <button id="visualAddParagraph" type="button" disabled>Add paragraph</button>
                       <button id="visualAddList" type="button" disabled>Add bullet list</button>
+                      <button id="visualAddOrderedList" type="button" disabled>Add numbered list</button>
+                      <button id="visualAddConcept" type="button" disabled>Add concept box</button>
                       <button id="visualAddListItem" type="button" disabled>Add list item</button>
                       <button id="visualDuplicateBlock" type="button" disabled>Duplicate selected block</button>
                        <button id="visualMoveBlockUp" type="button" disabled>Move up</button>

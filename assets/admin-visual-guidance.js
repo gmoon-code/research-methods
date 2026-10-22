@@ -76,6 +76,8 @@ window.RMSVisualGuidance=(()=>{
       visualAddParagraph:hasBlock,
       visualAddHeading:hasBlock,
       visualAddList:hasBlock,
+      visualAddOrderedList:hasBlock,
+      visualAddConcept:hasBlock,
       visualAddListItem:!!list,
       visualDuplicateBlock:hasBlock,
       visualMoveBlockUp:hasBlock&&index>0,
@@ -675,6 +677,7 @@ window.RMSVisualGuidance=(()=>{
     });
     const commands={
       visualAddParagraph:"paragraph",visualAddHeading:"heading",visualAddList:"list",
+      visualAddOrderedList:"ordered-list",visualAddConcept:"concept",
       visualAddListItem:"list-item",visualDuplicateBlock:"duplicate",
       visualMoveBlockUp:"up",
       visualMoveBlockDown:"down",visualRemoveBlock:"remove"

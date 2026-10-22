@@ -353,6 +353,23 @@ try {
   await page.locator("#visualRemoveBlock").click();
   assert(!((await page.locator("#contentLearnHtml").inputValue())
     .includes("First new list item")), "Removing a list must update the draft");
+
+  // The detailed inspector uses a multiline composer and shares the same
+  // numbered-list/concept-box actions and production validation.
+  await page.locator("#visualBlockText").fill("Identify evidence\nDocument uncertainty");
+  await page.locator("#visualAddOrderedList").click();
+  assert.deepEqual(await content.locator(
+    ":scope > ol[data-visual-selected] > li").allTextContents(),
+    ["Identify evidence","Document uncertainty"]);
+  assert.match(await page.locator("#contentLearnHtml").inputValue(),
+    /<ol><li>Identify evidence<\/li><li>Document uncertainty<\/li><\/ol>/);
+  await page.locator("#visualRemoveBlock").click();
+  await page.locator("#visualBlockText").fill("Discuss the scope of the explanation.");
+  await page.locator("#visualAddConcept").click();
+  assert.equal(await content.locator(
+    ":scope > div.concept-box[data-visual-selected] > p").textContent(),
+    "Discuss the scope of the explanation.");
+  await page.locator("#visualRemoveBlock").click();
   assert.match(await page.locator("#contentLearnHtml").inputValue(),
     /A new structured paragraph for testing/);
   assert.equal(await page.evaluate(()=>{

@@ -40,3 +40,7 @@ The on-page **+ Text** composer creates bulleted (`ul`) or numbered (`ol`) lists
 ## Placement near an existing block
 
 The on-page composer defaults to **After selected block** and also offers **Before selected block** for paragraphs, headings, lists and concept boxes. Insertion immediately selects the newly created block, and the original block retains its markup. The in-list **Item in selected list** action continues to append to that list, so the position selector is hidden for that case. The six-field validator runs on every proposed insertion and blocks invalid changes before source synchronization. A browser regression checks the DOM and source order of a newly inserted block before its selected neighbour.
+
+## Detailed inspector parity
+
+The expanded block inspector uses a resizable multiline text area, allowing teachers to create an entire bulleted or numbered list with one list item per line. Its controls include **Add numbered list** and **Add concept box**, using the same schema-validated insertion functions as the on-page quick composer. This is an editing interface improvement only; no student content or publication mechanism is modified.
