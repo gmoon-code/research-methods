@@ -52,3 +52,5 @@ The guidance panel includes **Undo block** and **Redo block** controls. They rev
 ## Reorder and remove individual list items
 
 Click a specific item inside a bulleted or numbered list in the on-page guidance editor. The selected item receives a dashed editor-only outline and the contextual actions offer **Item ↑**, **Item ↓**, and **Delete item**. The detailed block inspector offers equivalent **Item up**, **Item down**, and **Remove item** controls. These operations retain the list type, stay within the selected list and pass the existing six-field validator before updating the draft. The final list item cannot be removed, preventing an empty list. Undo block and Redo block preserve and restore item order. Selection metadata is stripped from saved or exported HTML, and switching stages clears the selection.
+
+The contextual and detailed list item controls also offer **Copy item** or **Duplicate item**. This duplicates one selected list item immediately after its original, then selects the new item. The duplicate uses the current list's formatting and stays within the same list; validation and Undo/Redo protections are unchanged.

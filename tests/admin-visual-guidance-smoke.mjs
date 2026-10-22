@@ -375,6 +375,16 @@ try {
   assert.deepEqual(await content.locator(":scope > ul > li").allTextContents(),
     ["First new list item"]);
   await content.locator(":scope > ul > li").first().click();
+  assert.equal(await page.locator("#visualDuplicateListItem").isEnabled(),true);
+  await quick.getByRole("button",{name:"Duplicate selected list item"}).click();
+  assert.deepEqual(await content.locator(":scope > ul > li").allTextContents(),
+    ["First new list item","First new list item"]);
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("data-visual-selected-item")));
+  await page.locator("#visualUndoBlock").click();
+  assert.deepEqual(await content.locator(":scope > ul > li").allTextContents(),
+    ["First new list item"]);
+  await content.locator(":scope > ul > li").first().click();
   assert.equal(await page.locator("#visualRemoveListItem").isDisabled(),true,
     "The last list item must be protected from removal");
   await page.locator("#visualRemoveBlock").click();

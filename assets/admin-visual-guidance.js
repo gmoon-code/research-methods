@@ -141,6 +141,7 @@ window.RMSVisualGuidance=(()=>{
       visualMoveBlockUp:hasBlock&&index>0,
       visualMoveBlockDown:hasBlock&&index<active.host.children.length-1,
       visualRemoveBlock:hasBlock&&active.host.children.length>1,
+      visualDuplicateListItem:!!list&&selectedListIndex!==null,
       visualMoveListItemUp:!!list&&selectedListIndex!==null&&selectedListIndex>0,
       visualMoveListItemDown:!!list&&selectedListIndex!==null&&selectedListIndex<active.block.children.length-1,
       visualRemoveListItem:!!list&&selectedListIndex!==null&&active.block.children.length>1
@@ -330,6 +331,7 @@ window.RMSVisualGuidance=(()=>{
       add("↓","Move selected guidance block down","down",index<host.children.length-1);
       add("Remove","Remove selected guidance block","remove",host.children.length>1);
       if(["UL","OL"].includes(active.block.tagName)&&selectedListIndex!==null){
+        add("Copy item","Duplicate selected list item","item-copy");
         add("Item ↑","Move selected list item up","item-up",selectedListIndex>0);
         add("Item ↓","Move selected list item down","item-down",
           selectedListIndex<active.block.children.length-1);
@@ -566,7 +568,13 @@ window.RMSVisualGuidance=(()=>{
     const before=byId(FIELD_TO_ID[field])?.value;
     const original=host.innerHTML;
     let nextIndex=index;
-    if(action==="item-up"){item.previousElementSibling.before(item);nextIndex--;}
+    if(action==="item-copy"){
+      const duplicate=item.cloneNode(true);
+      duplicate.removeAttribute("data-visual-selected-item");
+      item.after(duplicate);
+      nextIndex++;
+    }
+    else if(action==="item-up"){item.previousElementSibling.before(item);nextIndex--;}
     else if(action==="item-down"){item.nextElementSibling.after(item);nextIndex++;}
     else if(action==="item-remove"){item.remove();nextIndex=Math.min(index,block.children.length-1);}
     else return false;
@@ -830,6 +838,7 @@ window.RMSVisualGuidance=(()=>{
       visualAddListItem:"list-item",visualDuplicateBlock:"duplicate",
       visualMoveBlockUp:"up",
       visualMoveBlockDown:"down",visualRemoveBlock:"remove",
+      visualDuplicateListItem:"item-copy",
       visualMoveListItemUp:"item-up",visualMoveListItemDown:"item-down",
       visualRemoveListItem:"item-remove"
     };
