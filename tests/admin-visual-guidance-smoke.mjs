@@ -160,6 +160,19 @@ try {
   assert.equal(await page.locator("#visualMoveBlockDown").isEnabled(),true);
   const selectedText=await content.locator(":scope > [data-visual-selected]").textContent();
   assert.match(selectedText,/A new structured paragraph for testing/);
+  assert.equal(await page.locator("#visualDuplicateBlock").isEnabled(),true);
+  await page.locator("#visualDuplicateBlock").click();
+  assert.equal(await newParagraph.count(),2,
+    "Duplicating a paragraph should preserve the existing content and create a separate block");
+  assert.equal(await page.locator("#contentLearnHtml").inputValue()===
+    await content.evaluate(element=>Array.from(element.children)
+      .map(node=>{const copy=node.cloneNode(true);copy.removeAttribute("data-visual-selected");return copy.outerHTML}).join("")),true,
+    "Duplicated blocks must synchronize with the original validated content field");
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("data-visual-selected")),"The duplicated copy cannot retain inspector selection markers");
+  await page.locator("#visualRemoveBlock").click();
+  assert.equal(await newParagraph.count(),1,
+    "Remove should delete the selected duplicate while keeping the original");
 
   await page.locator("#visualBlockText").fill("First new list item");
   await page.locator("#visualAddList").click();
@@ -203,6 +216,8 @@ try {
   await page.locator("#contentBrowserList button").nth(1).click();
   assert.equal(await page.locator("#visualAddParagraph").isDisabled(),true,
     "Block actions must reset when changing to a different stage");
+  assert.equal(await page.locator("#visualDuplicateBlock").isDisabled(),true,
+    "A block from a previous stage cannot be duplicated after changing stages");
   await page.locator("#visualGuidanceRecord").waitFor();
   assert.match(await page.locator("#visualGuidanceRecord").textContent(),/Stage 2/);
   assert.notEqual(await page.locator("#contentTitle").inputValue(),"New visual draft title");
