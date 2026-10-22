@@ -160,7 +160,7 @@ try {
     el=>document.activeElement===el),true,
     "In-place Add must focus its native block-type chooser");
   assert.equal(await composer.getByLabel("Block type").inputValue(),"paragraph");
-  assert.equal(await composer.getByRole("option").count(),3);
+  assert.equal(await composer.getByRole("option").count(),4);
   assert.equal(await page.locator("#visualAddParagraph").isEnabled(),true);
   assert.equal(await page.locator("#visualAddListItem").isDisabled(),true);
   // A cancelled addition leaves the stage's original HTML untouched.
@@ -261,6 +261,29 @@ try {
   assert.equal((await page.locator("#contentLearnHtml").inputValue())
     .includes("New guidance subsection"),false,
     "Removing the selected heading must restore the prior content");
+
+  // An on-page concept box uses the exact same schema validation as
+  // existing paragraph/heading/list insertion, without active editor markers.
+  await content.locator(":scope > [data-visual-selected]").click();
+  await quick.getByRole("button",{
+    name:"Enter text for a new paragraph next to the selected block"
+  }).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByLabel("Block type").selectOption("concept");
+  await composer.getByLabel("Block text").fill(
+    "Clarify what evidence would support the inference.");
+  await composer.getByRole("button",{name:"Add block"}).click();
+  assert.equal(await composer.count(),0);
+  const concept=content.locator(":scope > div.concept-box")
+    .filter({hasText:"Clarify what evidence would support the inference."});
+  assert.equal(await concept.count(),1);
+  assert.equal(await concept.locator(":scope > p").count(),1);
+  assert.match(await page.locator("#contentLearnHtml").inputValue(),
+    /<div class="concept-box"><p>Clarify what evidence would support the inference\.<\/p><\/div>/);
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("data-visual-selected")));
+  await page.locator("#visualRemoveBlock").click();
+  assert.equal(await concept.count(),0);
 
   await page.locator("#visualBlockText").fill("First new list item");
   await page.locator("#visualAddList").click();
