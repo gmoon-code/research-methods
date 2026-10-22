@@ -285,6 +285,42 @@ try {
   await page.locator("#visualRemoveBlock").click();
   assert.equal(await concept.count(),0);
 
+  // The on-page composer accepts complete multi-item lists. Numbered items
+  // retain their order, empty lines are ignored and draft HTML is escaped.
+  await content.locator(":scope > [data-visual-selected]").click();
+  await quick.getByRole("button",{
+    name:"Enter text for a new paragraph next to the selected block"
+  }).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByLabel("Block type").selectOption("ordered-list");
+  assert.equal(await composer.getByText(
+    "Each non-empty line becomes a separate list item.").isVisible(),true);
+  await composer.getByLabel("Block text").fill(
+    "Define the question\n\nCompare signals & noise\nExplain the finding");
+  await composer.getByRole("button",{name:"Add block"}).click();
+  assert.equal(await composer.count(),0);
+  const ordered=content.locator(":scope > ol[data-visual-selected]");
+  assert.deepEqual(await ordered.locator(":scope > li").allTextContents(),[
+    "Define the question","Compare signals & noise","Explain the finding"]);
+  assert.match(await page.locator("#contentLearnHtml").inputValue(),
+    /<ol><li>Define the question<\/li><li>Compare signals &amp; noise<\/li><li>Explain the finding<\/li><\/ol>/);
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("data-visual-selected")));
+  await page.locator("#visualRemoveBlock").click();
+
+  // Existing bullet list insertion also accepts several lines in the composer.
+  await content.locator(":scope > [data-visual-selected]").click();
+  await quick.getByRole("button",{
+    name:"Enter text for a new paragraph next to the selected block"
+  }).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByLabel("Block type").selectOption("list");
+  await composer.getByLabel("Block text").fill("Source A\nSource B");
+  await composer.getByRole("button",{name:"Add block"}).click();
+  assert.deepEqual(await content.locator(
+    ":scope > ul[data-visual-selected] > li").allTextContents(),["Source A","Source B"]);
+  await page.locator("#visualRemoveBlock").click();
+
   await page.locator("#visualBlockText").fill("First new list item");
   await page.locator("#visualAddList").click();
   assert.equal(await content.locator(":scope > ul")

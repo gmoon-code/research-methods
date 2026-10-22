@@ -320,7 +320,8 @@ window.RMSVisualGuidance=(()=>{
     const choice=document.createElement("select");
     choice.id="visualGuidanceInlineKind";
     const kinds=[["paragraph","Paragraph"],["heading","Section heading"],
-      ["list","Bullet list"],["concept","Concept box"]];
+      ["list","Bullet list"],["ordered-list","Numbered list"],
+      ["concept","Concept box"]];
     if(["UL","OL"].includes(active.block.tagName))
       kinds.push(["list-item","Item in selected list"]);
     for(const [id,label] of kinds){
@@ -340,6 +341,14 @@ window.RMSVisualGuidance=(()=>{
       "padding:8px;border:1px solid #9bbbae;border-radius:6px;"+
       "font:inherit;color:#183f30;background:#fff";
     textLabel.append(textarea);
+    const hint=document.createElement("p");
+    hint.style.cssText="margin:0;color:#426052;font-size:12px;line-height:1.4";
+    hint.textContent="Each non-empty line becomes a separate list item.";
+    hint.hidden=true;
+    choice.addEventListener("change",()=>{
+      hint.hidden=!["list","ordered-list"].includes(choice.value);
+      positionInlineComposer();
+    });
     const feedback=document.createElement("p");
     feedback.setAttribute("role","status");
     feedback.setAttribute("aria-live","polite");
@@ -385,7 +394,7 @@ window.RMSVisualGuidance=(()=>{
       }
     });
     row.append(closeBtn,addBtn);
-    dialog.append(title,choiceLabel,textLabel,feedback,row);
+    dialog.append(title,choiceLabel,textLabel,hint,feedback,row);
     document.body.append(dialog);
     positionInlineComposer();
     choice.focus({preventScroll:true});
@@ -439,24 +448,29 @@ window.RMSVisualGuidance=(()=>{
     const original=host.innerHTML;
     const previousIndex=selectedBlock.index;
     const text=byId("visualBlockText")?.value.trim()||"";
-    if(["paragraph","heading","list","list-item","concept"].includes(action)&&!text){
+    if(["paragraph","heading","list","ordered-list","list-item","concept"].includes(action)&&!text){
       blockStatus("Enter text before inserting a paragraph or list item.");
       byId("visualBlockText")?.focus();
       return false;
     }
     let nextIndex=previousIndex;
-    if(action==="paragraph"||action==="heading"||action==="list"||action==="concept"){
+    if(["paragraph","heading","list","ordered-list","concept"].includes(action)){
       const next=document.createElement(action==="paragraph"?"p":
-        action==="heading"?"h3":action==="concept"?"div":"ul");
+        action==="heading"?"h3":action==="concept"?"div":
+        action==="ordered-list"?"ol":"ul");
       if(action==="concept"){
         next.className="concept-box";
         const paragraph=document.createElement("p");
         paragraph.textContent=text;
         next.append(paragraph);
-      }else if(action!=="list")next.textContent=text;
+      }else if(action!=="list"&&action!=="ordered-list")next.textContent=text;
       else {
-        const li=document.createElement("li");
-        li.textContent=text;next.appendChild(li);
+        // New lines let teachers author a complete list in one operation.
+        // Text nodes escape HTML; schema validation still approves the result.
+        for(const itemText of text.split(/\r?\n/).map(line=>line.trim()).filter(Boolean)){
+          const li=document.createElement("li");
+          li.textContent=itemText;next.appendChild(li);
+        }
       }
       block.after(next);
       nextIndex=previousIndex+1;
@@ -500,7 +514,7 @@ window.RMSVisualGuidance=(()=>{
     const chosen=host.children.item(nextIndex);
     chosen?.setAttribute("data-visual-selected","");
     host.dispatchEvent(new Event("input",{bubbles:true}));
-    if(["paragraph","heading","list","list-item","concept"].includes(action))
+    if(["paragraph","heading","list","ordered-list","list-item","concept"].includes(action))
       byId("visualBlockText").value="";
     blockControls();
     positionDragHandle();
