@@ -200,7 +200,10 @@ try {
   assert(!((await page.locator("#contentLearnHtml").inputValue())
     .includes("visualGuidanceQuickToolbar")),
     "Floating quick actions must never be included in the authoritative source HTML");
-  await content.locator(":scope > [data-visual-selected]").click();
+  // Duplicate automatically selects the newly created copy. Remove that
+  // copy directly without a redundant click that can hit another block.
+  assert.match(await content.locator(":scope > [data-visual-selected]").textContent(),
+    /A new structured paragraph for testing/);
   await quick.waitFor({state:"visible"});
   await quick.getByRole("button",{name:"Remove selected guidance block"}).click();
   assert.equal(await newParagraph.count(),1,
