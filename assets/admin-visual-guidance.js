@@ -201,7 +201,7 @@ window.RMSVisualGuidance=(()=>{
     }
     const blockBox=active.block.getBoundingClientRect();
     const viewport=window.innerWidth;
-    grip.hidden=blockBox.bottom<0||blockBox.top>window.innerHeight;
+    grip.style.display=blockBox.bottom<0||blockBox.top>window.innerHeight?"none":"grid";
     grip.style.left=Math.max(0,Math.min(viewport-32,blockBox.left-37))+"px";
     grip.style.top=Math.max(0,Math.min(window.innerHeight-32,blockBox.top+4))+"px";
   }
