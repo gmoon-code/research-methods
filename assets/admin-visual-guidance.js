@@ -99,6 +99,7 @@ window.RMSVisualGuidance=(()=>{
     if(!block||block.parentElement!==host)return;
     const index=[...host.children].indexOf(block);
     if(index<0)return;
+    byId("visualGuidanceInlineComposer")?.remove();
     for(const mark of panel.querySelectorAll("[data-visual-selected]"))
       mark.removeAttribute("data-visual-selected");
     selectedBlock={field:host.dataset.visualField,index};
@@ -118,6 +119,7 @@ window.RMSVisualGuidance=(()=>{
     blockControls();
     byId("visualGuidanceMoveHandle")?.remove();
     byId("visualGuidanceQuickToolbar")?.remove();
+    byId("visualGuidanceInlineComposer")?.remove();
     blockStatus("Click a paragraph, heading, concept box, or list below to select a block.");
   }
 
@@ -237,10 +239,8 @@ window.RMSVisualGuidance=(()=>{
         button.addEventListener("click",event=>{
           event.preventDefault();event.stopPropagation();
           if(button.disabled)return;
-          if(action==="add"){
-            byId("visualBlockText")?.focus();
-            blockStatus("Enter the paragraph text, then choose Add paragraph in the block controls.");
-          }else editBlock(action);
+          if(action==="add")openInlineComposer();
+          else editBlock(action);
         });
         bar.append(button);
       };
@@ -274,6 +274,121 @@ window.RMSVisualGuidance=(()=>{
     }
     bar.style.left=Math.max(5,Math.min(maxLeft,left))+"px";
     bar.style.top=Math.max(5,Math.min(maxTop,top))+"px";
+  }
+
+  // Composer actions use the same validated insertion routine as the
+  // full Content Studio block tools. The overlay is outside all contenteditable
+  // fields and can never enter stage HTML or publication proposals.
+  function positionInlineComposer(){
+    const panel=byId("visualGuidanceInlineComposer");
+    const active=activeBlock();
+    if(!panel||!active)return;
+    const toolbar=byId("visualGuidanceQuickToolbar"),view=window;
+    const pivot=(toolbar&&toolbar.style.display!=="none"?
+      toolbar:active.block).getBoundingClientRect();
+    const width=panel.getBoundingClientRect().width||300;
+    const height=panel.getBoundingClientRect().height||240;
+    const maxLeft=Math.max(5,view.innerWidth-width-5);
+    const maxTop=Math.max(5,view.innerHeight-height-5);
+    const left=Math.max(5,Math.min(maxLeft,pivot.left));
+    const after=pivot.bottom+7,before=pivot.top-height-7;
+    panel.style.left=left+"px";
+    panel.style.top=Math.max(5,Math.min(maxTop,
+      after+height<=view.innerHeight-5?after:
+      before>=5?before:maxTop))+"px";
+  }
+  function openInlineComposer(){
+    const active=activeBlock();
+    if(!active)return;
+    byId("visualGuidanceInlineComposer")?.remove();
+    const selected={...selectedBlock};
+    const dialog=document.createElement("section");
+    dialog.id="visualGuidanceInlineComposer";
+    dialog.setAttribute("role","dialog");
+    dialog.setAttribute("aria-label","Add guidance block here");
+    dialog.setAttribute("aria-modal","false");
+    dialog.style.cssText="position:fixed;z-index:10001;display:grid;gap:8px;"+
+      "width:min(312px,calc(100vw - 10px));max-height:calc(100vh - 10px);"+
+      "overflow:auto;box-sizing:border-box;padding:13px;border:1px solid #9bbbae;"+
+      "border-radius:10px;background:#fff;color:#183f30;box-shadow:0 8px 24px #0004;"+
+      "font:14px/1.4 system-ui,sans-serif";
+    const title=document.createElement("strong");
+    title.textContent="Add after selected block";
+    const choiceLabel=document.createElement("label");
+    choiceLabel.textContent="Block type";
+    choiceLabel.style.cssText="font-weight:600;display:grid;gap:4px";
+    const choice=document.createElement("select");
+    choice.id="visualGuidanceInlineKind";
+    const kinds=[["paragraph","Paragraph"],["heading","Section heading"],
+      ["list","Bullet list"]];
+    if(["UL","OL"].includes(active.block.tagName))
+      kinds.push(["list-item","Item in selected list"]);
+    for(const [id,label] of kinds){
+      const option=document.createElement("option");
+      option.value=id;option.textContent=label;choice.append(option);
+    }
+    choice.style.cssText="padding:8px;width:100%;border:1px solid #9bbbae;"+
+      "border-radius:6px;background:#fff;color:#183f30;font:inherit";
+    choiceLabel.append(choice);
+    const textLabel=document.createElement("label");
+    textLabel.textContent="Block text";
+    textLabel.style.cssText="font-weight:600;display:grid;gap:4px";
+    const textarea=document.createElement("textarea");
+    textarea.id="visualGuidanceInlineText";
+    textarea.rows=3;textarea.maxLength=1200;
+    textarea.style.cssText="box-sizing:border-box;width:100%;resize:vertical;"+
+      "padding:8px;border:1px solid #9bbbae;border-radius:6px;"+
+      "font:inherit;color:#183f30;background:#fff";
+    textLabel.append(textarea);
+    const feedback=document.createElement("p");
+    feedback.setAttribute("role","status");
+    feedback.setAttribute("aria-live","polite");
+    feedback.style.cssText="margin:0;font-size:12px;line-height:1.4";
+    const row=document.createElement("div");
+    row.style.cssText="display:flex;justify-content:flex-end;gap:7px";
+    const closeBtn=document.createElement("button");
+    closeBtn.type="button";closeBtn.textContent="Cancel";
+    const addBtn=document.createElement("button");
+    addBtn.type="button";addBtn.textContent="Add block";
+    for(const button of [closeBtn,addBtn]){
+      button.style.cssText="padding:8px 10px;min-height:36px;"+
+        "border:1px solid #9bbbae;border-radius:6px;"+
+        "background:"+(button===addBtn?"#e5f2e9":"#fff")+
+        ";color:#183f30;font:600 13px system-ui;cursor:pointer";
+    }
+    const dismiss=()=>{
+      dialog.remove();
+      byId("visualGuidanceQuickToolbar")?.querySelector(
+        'button[aria-label="Enter text for a new paragraph next to the selected block"]')
+        ?.focus({preventScroll:true});
+    };
+    closeBtn.addEventListener("click",dismiss);
+    const submit=()=>{
+      if(!activeBlock()||selected.field!==selectedBlock.field||
+         selected.index!==selectedBlock.index){
+        feedback.textContent="Selection changed. Choose a guidance block again.";
+        return;
+      }
+      const text=textarea.value.trim();
+      if(!text){feedback.textContent="Write some text before adding a block.";return;}
+      byId("visualBlockText").value=text;
+      const accepted=editBlock(choice.value);
+      if(accepted===true)dismiss();
+      else feedback.textContent=byId("visualBlockStatus")?.textContent||
+        "The content block was not accepted by the guidance validator.";
+    };
+    addBtn.addEventListener("click",submit);
+    dialog.addEventListener("keydown",event=>{
+      if(event.key==="Escape"){event.preventDefault();event.stopPropagation();dismiss();}
+      else if((event.ctrlKey||event.metaKey)&&event.key==="Enter"){
+        event.preventDefault();event.stopPropagation();submit();
+      }
+    });
+    row.append(closeBtn,addBtn);
+    dialog.append(title,choiceLabel,textLabel,feedback,row);
+    document.body.append(dialog);
+    positionInlineComposer();
+    choice.focus({preventScroll:true});
   }
 
   function clearGuidanceDropMarks(){
@@ -319,7 +434,7 @@ window.RMSVisualGuidance=(()=>{
 
   function editBlock(action){
     const active=activeBlock();
-    if(!active){blockStatus("Choose a content block first.");return;}
+    if(!active){blockStatus("Choose a content block first.");return false;}
     const {host,block,field}=active;
     const original=host.innerHTML;
     const previousIndex=selectedBlock.index;
@@ -327,7 +442,7 @@ window.RMSVisualGuidance=(()=>{
     if(["paragraph","heading","list","list-item"].includes(action)&&!text){
       blockStatus("Enter text before inserting a paragraph or list item.");
       byId("visualBlockText")?.focus();
-      return;
+      return false;
     }
     let nextIndex=previousIndex;
     if(action==="paragraph"||action==="heading"||action==="list"){
@@ -371,7 +486,7 @@ window.RMSVisualGuidance=(()=>{
       blockStatus("Change rejected. "+
         (checked?.errors?.[0]||"The content format is not supported."));
       blockControls();
-      return;
+      return false;
     }
     for(const mark of host.querySelectorAll("[data-visual-selected]"))
       mark.removeAttribute("data-visual-selected");
@@ -386,6 +501,7 @@ window.RMSVisualGuidance=(()=>{
     positionQuickToolbar(true);
     blockStatus("Block updated in this stage's in-memory draft. "+
       "Use Validate draft to review the complete guidance record.");
+    return true;
   }
 
   function render(draft,record) {
@@ -530,8 +646,10 @@ window.RMSVisualGuidance=(()=>{
     });
     document.addEventListener("scroll",positionDragHandle,true);
     document.addEventListener("scroll",()=>positionQuickToolbar(),true);
+    document.addEventListener("scroll",()=>positionInlineComposer(),true);
     window.addEventListener("resize",positionDragHandle);
     window.addEventListener("resize",()=>positionQuickToolbar());
+    window.addEventListener("resize",()=>positionInlineComposer());
     panel.addEventListener("paste",event=>{
       const editable=event.target.closest("[data-visual-field]");
       if(!editable)return;
