@@ -18,6 +18,7 @@ window.RMSVisualGuidance=(()=>{
   let lastStage="";
   let fromVisual=false;
   let selectedBlock=null;
+  let selectedListIndex=null;
   let dragPointer=null;
   let blockMutation=false;
   const blockHistory=[];
@@ -139,7 +140,10 @@ window.RMSVisualGuidance=(()=>{
       visualDuplicateBlock:hasBlock,
       visualMoveBlockUp:hasBlock&&index>0,
       visualMoveBlockDown:hasBlock&&index<active.host.children.length-1,
-      visualRemoveBlock:hasBlock&&active.host.children.length>1
+      visualRemoveBlock:hasBlock&&active.host.children.length>1,
+      visualMoveListItemUp:!!list&&selectedListIndex!==null&&selectedListIndex>0,
+      visualMoveListItemDown:!!list&&selectedListIndex!==null&&selectedListIndex<active.block.children.length-1,
+      visualRemoveListItem:!!list&&selectedListIndex!==null&&active.block.children.length>1
     };
     for(const [id,canUse] of Object.entries(enabled)){
       const button=byId(id);
@@ -159,22 +163,35 @@ window.RMSVisualGuidance=(()=>{
     const index=[...host.children].indexOf(block);
     if(index<0)return;
     byId("visualGuidanceInlineComposer")?.remove();
-    for(const mark of panel.querySelectorAll("[data-visual-selected]"))
+    for(const mark of panel.querySelectorAll("[data-visual-selected],[data-visual-selected-item]")){
       mark.removeAttribute("data-visual-selected");
+      mark.removeAttribute("data-visual-selected-item");
+    }
     selectedBlock={field:host.dataset.visualField,index};
+    const li=target?.closest?.("li");
+    selectedListIndex=["UL","OL"].includes(block.tagName)&&li?.parentElement===block?
+      [...block.children].indexOf(li):null;
     block.setAttribute("data-visual-selected","");
+    if(selectedListIndex!==null)block.children[selectedListIndex]
+      ?.setAttribute("data-visual-selected-item","");
     blockControls();
     positionDragHandle();
     positionQuickToolbar(true);
     blockStatus("Selected "+selectedBlock.field.replace("_html","").replace("_"," ")+
       " block "+(index+1)+" of "+host.children.length+
-      ". Use the controls to add, move, or remove it.");
+      (selectedListIndex===null?". Use the controls to add, move, or remove it.":
+       ", list item "+(selectedListIndex+1)+" of "+block.children.length+
+       ". Move or remove the list item using the contextual controls."));
   }
 
   function clearBlockSelection() {
     selectedBlock=null;
+    selectedListIndex=null;
     for(const mark of byId("visualGuidanceEditor")?.querySelectorAll(
-      "[data-visual-selected]")||[])mark.removeAttribute("data-visual-selected");
+      "[data-visual-selected],[data-visual-selected-item]")||[]){
+      mark.removeAttribute("data-visual-selected");
+      mark.removeAttribute("data-visual-selected-item");
+    }
     blockControls();
     byId("visualGuidanceMoveHandle")?.remove();
     byId("visualGuidanceQuickToolbar")?.remove();
@@ -186,8 +203,10 @@ window.RMSVisualGuidance=(()=>{
   // clone before a value enters the authoritative schema-validated draft.
   function cleanRichHtml(host){
     const copy=host.cloneNode(true);
-    for(const mark of copy.querySelectorAll("[data-visual-selected]"))
+    for(const mark of copy.querySelectorAll("[data-visual-selected],[data-visual-selected-item]")){
       mark.removeAttribute("data-visual-selected");
+      mark.removeAttribute("data-visual-selected-item");
+    }
     return copy.innerHTML;
   }
 
@@ -299,6 +318,7 @@ window.RMSVisualGuidance=(()=>{
           event.preventDefault();event.stopPropagation();
           if(button.disabled)return;
           if(action==="add")openInlineComposer();
+          else if(action.startsWith("item-"))editSelectedListItem(action);
           else editBlock(action);
         });
         bar.append(button);
@@ -309,9 +329,18 @@ window.RMSVisualGuidance=(()=>{
       add("↑","Move selected guidance block up","up",index>0);
       add("↓","Move selected guidance block down","down",index<host.children.length-1);
       add("Remove","Remove selected guidance block","remove",host.children.length>1);
+      if(["UL","OL"].includes(active.block.tagName)&&selectedListIndex!==null){
+        add("Item ↑","Move selected list item up","item-up",selectedListIndex>0);
+        add("Item ↓","Move selected list item down","item-down",
+          selectedListIndex<active.block.children.length-1);
+        add("Delete item","Remove selected list item","item-remove",
+          active.block.children.length>1);
+      }
       document.body.append(bar);
     }
-    const box=active.block.getBoundingClientRect();
+    const focus=selectedListIndex!==null?
+      active.block.children.item(selectedListIndex):active.block;
+    const box=(focus||active.block).getBoundingClientRect();
     if(box.bottom<0||box.top>window.innerHeight||
       !byId("visualGuidanceEditor")?.getClientRects().length){
       bar.style.display="none";return;
@@ -523,6 +552,43 @@ window.RMSVisualGuidance=(()=>{
     return true;
   }
 
+  function editSelectedListItem(action){
+    const active=activeBlock();
+    if(!active||!["UL","OL"].includes(active.block.tagName)||
+       selectedListIndex===null)return false;
+    const {host,block,field}=active;
+    const item=block.children.item(selectedListIndex);
+    if(!item||item.tagName!=="LI")return false;
+    const index=selectedListIndex;
+    if(action==="item-up"&&index===0)return false;
+    if(action==="item-down"&&index===block.children.length-1)return false;
+    if(action==="item-remove"&&block.children.length<2)return false;
+    const before=byId(FIELD_TO_ID[field])?.value;
+    const original=host.innerHTML;
+    let nextIndex=index;
+    if(action==="item-up"){item.previousElementSibling.before(item);nextIndex--;}
+    else if(action==="item-down"){item.nextElementSibling.after(item);nextIndex++;}
+    else if(action==="item-remove"){item.remove();nextIndex=Math.min(index,block.children.length-1);}
+    else return false;
+    const validation=validRichChange(field,cleanRichHtml(host));
+    if(!validation?.ok){
+      host.innerHTML=original;
+      blockStatus("List item change rejected. "+
+        (validation?.errors?.[0]||"The guidance format is not supported."));
+      return false;
+    }
+    for(const mark of block.querySelectorAll("[data-visual-selected-item]"))
+      mark.removeAttribute("data-visual-selected-item");
+    selectedListIndex=nextIndex;
+    block.children.item(nextIndex)?.setAttribute("data-visual-selected-item","");
+    submitBlockMutation(host);
+    recordBlockAction(field,before);
+    blockControls();
+    positionQuickToolbar(true);
+    blockStatus("List item updated in this stage's validated guidance draft.");
+    return true;
+  }
+
   function editBlock(action,placement="after"){
     const active=activeBlock();
     if(!active){blockStatus("Choose a content block first.");return false;}
@@ -570,8 +636,10 @@ window.RMSVisualGuidance=(()=>{
       // Clone only the selected content subtree. Validation below checks that
       // the resulting HTML still satisfies the published six-field schema.
       const copy=block.cloneNode(true);
-      for(const mark of [copy,...copy.querySelectorAll("[data-visual-selected]")])
+      for(const mark of [copy,...copy.querySelectorAll("[data-visual-selected],[data-visual-selected-item]")]){
         mark.removeAttribute("data-visual-selected");
+        mark.removeAttribute("data-visual-selected-item");
+      }
       block.after(copy);
       nextIndex=previousIndex+1;
     } else if(action==="up"){
@@ -596,11 +664,18 @@ window.RMSVisualGuidance=(()=>{
       blockControls();
       return false;
     }
-    for(const mark of host.querySelectorAll("[data-visual-selected]"))
+    for(const mark of host.querySelectorAll("[data-visual-selected],[data-visual-selected-item]")){
       mark.removeAttribute("data-visual-selected");
+      mark.removeAttribute("data-visual-selected-item");
+    }
     selectedBlock={field,index:nextIndex};
     const chosen=host.children.item(nextIndex);
     chosen?.setAttribute("data-visual-selected","");
+    selectedListIndex=null;
+    if(action==="list-item"){
+      selectedListIndex=block.children.length-1;
+      block.children.item(selectedListIndex)?.setAttribute("data-visual-selected-item","");
+    }
     submitBlockMutation(host);
     recordBlockAction(field,sourceBefore);
     if(["paragraph","heading","list","ordered-list","list-item","concept"].includes(action))
@@ -754,10 +829,13 @@ window.RMSVisualGuidance=(()=>{
       visualAddOrderedList:"ordered-list",visualAddConcept:"concept",
       visualAddListItem:"list-item",visualDuplicateBlock:"duplicate",
       visualMoveBlockUp:"up",
-      visualMoveBlockDown:"down",visualRemoveBlock:"remove"
+      visualMoveBlockDown:"down",visualRemoveBlock:"remove",
+      visualMoveListItemUp:"item-up",visualMoveListItemDown:"item-down",
+      visualRemoveListItem:"item-remove"
     };
     for(const [id,action] of Object.entries(commands))
-      byId(id)?.addEventListener("click",()=>editBlock(action));
+      byId(id)?.addEventListener("click",()=>
+        action.startsWith("item-")?editSelectedListItem(action):editBlock(action));
     blockControls();
     const toolbar=panel.querySelector(".visual-guidance-toolbar");
     toolbar?.addEventListener("mousedown",event=>{

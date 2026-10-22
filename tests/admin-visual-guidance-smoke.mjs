@@ -350,6 +350,33 @@ try {
   assert.equal(await content.locator(":scope > ul[data-visual-selected] > li").count(),2);
   assert(!((await page.locator("#contentLearnHtml").inputValue())
     .includes("data-visual-selected")), "Selection highlights must never enter the saved content");
+  // Select an individual list item directly in the preview. The validated
+  // contextual controls rearrange the item inside its original list.
+  const itemList=content.locator(":scope > ul[data-visual-selected]");
+  await itemList.locator(":scope > li").nth(1).click();
+  assert.equal(await page.locator("#visualMoveListItemUp").isEnabled(),true);
+  assert.equal(await page.locator("#visualMoveListItemDown").isDisabled(),true);
+  assert.equal(await quick.getByRole("button",{name:"Move selected list item up"}).isVisible(),true);
+  const listBeforeMove=await page.locator("#contentLearnHtml").inputValue();
+  await quick.getByRole("button",{name:"Move selected list item up"}).click();
+  assert.deepEqual(await itemList.locator(":scope > li").allTextContents(),
+    ["Second new list item","First new list item"]);
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("data-visual-selected-item")),
+    "List item selection markers must never enter saved source");
+  await page.locator("#visualUndoBlock").click();
+  assert.equal(await page.locator("#contentLearnHtml").inputValue(),listBeforeMove,
+    "Undo must restore the original order of the two list items");
+  await page.locator("#visualRedoBlock").click();
+  assert.deepEqual(await content.locator(":scope > ul > li").allTextContents(),
+    ["Second new list item","First new list item"]);
+  await content.locator(":scope > ul > li").first().click();
+  await quick.getByRole("button",{name:"Remove selected list item"}).click();
+  assert.deepEqual(await content.locator(":scope > ul > li").allTextContents(),
+    ["First new list item"]);
+  await content.locator(":scope > ul > li").first().click();
+  assert.equal(await page.locator("#visualRemoveListItem").isDisabled(),true,
+    "The last list item must be protected from removal");
   await page.locator("#visualRemoveBlock").click();
   assert(!((await page.locator("#contentLearnHtml").inputValue())
     .includes("First new list item")), "Removing a list must update the draft");
