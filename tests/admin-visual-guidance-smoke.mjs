@@ -189,7 +189,9 @@ try {
   await quick.waitFor({state:"visible"});
   await quick.getByRole("button",{name:"Remove selected guidance block"}).click();
   assert.equal(await newParagraph.count(),1,
-    "Remove should delete the selected duplicate while keeping the original");
+    "Remove should delete the selected duplicate while keeping the original. Status: "+
+      await page.locator("#visualBlockStatus").textContent()+
+      "; selected count: "+await content.locator(":scope > [data-visual-selected]").count());
 
   // Drag a newly inserted block past its visible neighbour. Both are short,
   // adjacent pieces of content, so the target remains in the viewport.
