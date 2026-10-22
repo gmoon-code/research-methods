@@ -9,10 +9,10 @@ The existing authenticated Content Studio now includes an optional visual author
 3. Click its visible title, navigation label, purpose, teaching content, example, or warning.
 4. Edit text directly. The source field updates immediately, and the same draft validator reports any unsupported markup.
 5. Within teaching content, examples, and warnings, select text and use **Bold** or **Italic**. These insert `<strong>` and `<em>`, which the existing content schema permits.
-6. Click an existing top-level teaching, example, or warning block to select it. Enter text and use **Add paragraph**, **Add bullet list**, or **Add list item**. The move and remove controls operate on the selected top-level block only.
+6. Click an existing top-level teaching, example, or warning block to select it. Enter text and use **Add section heading**, **Add paragraph**, **Add bullet list**, or **Add list item**. You can duplicate a selected block, move it up or down, or remove it. A visible ⠿ drag grip beside the selected block provides pointer-based rearrangement within the same teaching, example, or warning field. Keyboard users retain the Move up and Move down buttons.
 7. Use the existing preview, validation, staged publication, and rollback controls. No separate publishing route has been added.
 
-Block insertion, movement, and removal are limited to the three existing rich-content fields and are checked against the original six-field validator before they update the draft. Moving a block does not change the stage sequence or page navigation. The editor does not permit removing the final content block in a field. The selection outline is editor-only and is stripped before source synchronization. A keyboard user can focus the rich-content region and use the arrow keys to choose a block before activating the controls.
+Block insertion, movement, and removal are limited to the three existing rich-content fields and are checked against the original six-field validator before they update the draft. Moving a block does not change the stage sequence or page navigation. The editor does not permit removing the final content block in a field. The selection outline and temporary drag-target indicators are editor-only and are stripped before source synchronization. Dragging across fields or stages is unavailable; every proposed move is checked by the existing production schema validator before the Content Studio draft updates. A keyboard user can focus the rich-content region and use the arrow keys to choose a block before activating the controls.
 
 Pasted HTML is rejected. Paste inserts plain text, and formatting buttons create limited, validated tags.
 
@@ -20,6 +20,6 @@ The visual editor does not add, delete, or reorder stages or change field schema
 
 ## Tests
 
-The new `tests/admin-visual-guidance-smoke.mjs` exercises visual edits using a **simulated session only inside the test browser**. It verifies all 18 stages, bidirectional field synchronization, safe paste, selection formatting, schema validation, and stage switching.
+The new `tests/admin-visual-guidance-smoke.mjs` exercises visual edits using a **simulated session only inside the test browser**. It verifies all 18 stages, bidirectional field synchronization, safe paste, selection formatting, heading insertion, duplication, pointer-based block movement, schema validation, and stage switching.
 
 The original Admin Workspace's authentication and publication system must still be verified with a real authorized account before deployment. This feature is on a draft pull request and is not merged into the public site.
