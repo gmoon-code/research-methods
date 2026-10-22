@@ -365,6 +365,7 @@ window.RMSVisualGuidance=(()=>{
     choice.addEventListener("change",()=>{
       hint.hidden=!["list","ordered-list"].includes(choice.value);
       placementLabel.hidden=choice.value==="list-item";
+      placementLabel.style.display=placementLabel.hidden?"none":"grid";
       if(placementLabel.hidden)placement.value="after";
       title.textContent="Add "+placement.value+" selected block";
       positionInlineComposer();
