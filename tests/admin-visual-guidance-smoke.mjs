@@ -377,30 +377,11 @@ try {
   await quick.getByRole("button",{name:"Remove selected list item"}).click();
   assert.deepEqual(await workingUl.locator(":scope > li").allTextContents(),
     ["First new list item"]);
-  await page.evaluate(()=>{
-    window.__listSelectionEvents=[];
-    const panel=document.querySelector("#visualGuidanceEditor");
-    for(const type of ["pointerdown","focusin","click","pointerup"])
-      panel.addEventListener(type,event=>{
-        window.__listSelectionEvents.push({
-          type,target:event.target.tagName,
-          label:(event.target.textContent||"").trim().slice(0,35),
-          anchor:window.getSelection()?.anchorNode?.parentElement?.tagName
-        });
-      },true);
-  });
   await workingUl.locator(":scope > li").first().click();
-  const listSelectionDiagnostic=await page.evaluate(()=>({
-    events:window.__listSelectionEvents,
-    selectedBlock:document.querySelector("#visualGuidanceEditor [data-visual-selected]")?.tagName,
-    selectedListItem:document.querySelector("#visualGuidanceEditor [data-visual-selected-item]")?.textContent,
-    status:document.querySelector("#visualBlockStatus")?.textContent,
-    duplicateDisabled:document.querySelector("#visualDuplicateListItem")?.disabled,
-    selectedListCount:document.querySelectorAll("#visualGuidanceEditor [data-visual-selected-item]").length
-  }));
+  assert.equal(await workingUl.locator(":scope > li[data-visual-selected-item]").count(),1,
+    "Pointer selection must remain on the list item when the contenteditable region receives focus");
   assert.equal(await page.locator("#visualDuplicateListItem").isEnabled(),true,
-    "The remaining list item must be selected for duplication. "+
-    JSON.stringify(listSelectionDiagnostic));
+    "The remaining list item must be selected for duplication");
   await quick.getByRole("button",{name:"Duplicate selected list item"}).click();
   assert.deepEqual(await workingUl.locator(":scope > li").allTextContents(),
     ["First new list item","First new list item"]);

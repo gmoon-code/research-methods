@@ -19,6 +19,7 @@ window.RMSVisualGuidance=(()=>{
   let fromVisual=false;
   let selectedBlock=null;
   let selectedListIndex=null;
+  let pointerSelectingRich=false;
   let dragPointer=null;
   let blockMutation=false;
   const blockHistory=[];
@@ -808,6 +809,16 @@ window.RMSVisualGuidance=(()=>{
       '[data-visual-drop-target="after"]{box-shadow:0 4px 0 #2b8060!important;}';
     document.head.appendChild(dragStyles);
     panel.addEventListener("input",updateValue);
+    // A pointer press in a rich-content block will trigger a focusin on its
+    // parent editable region before click. Let the click select the exact
+    // target; rebuilding block controls during focusin can detach the LI and
+    // redirect pointerup/click to the host, selecting the first heading.
+    panel.addEventListener("pointerdown",event=>{
+      pointerSelectingRich=!!event.target.closest?.(
+        ".visual-guidance-rich[data-visual-field]");
+    },true);
+    panel.addEventListener("pointerup",()=>{pointerSelectingRich=false;},true);
+    panel.addEventListener("pointercancel",()=>{pointerSelectingRich=false;},true);
     // Advanced-source edits supersede any saved block-action snapshots.
     for(const id of Object.values(FIELD_TO_ID)){
       byId(id)?.addEventListener("input",()=>{
@@ -824,6 +835,7 @@ window.RMSVisualGuidance=(()=>{
     // A keyboard user can focus a rich-content region and select its first
     // block, then move the caret through the document with arrow keys.
     panel.addEventListener("focusin",event=>{
+      if(pointerSelectingRich)return;
       if(event.target.matches?.(".visual-guidance-rich[data-visual-field]"))
         selectBlock({target:window.getSelection()?.anchorNode||event.target});
     });
