@@ -75,6 +75,7 @@ window.RMSVisualGuidance=(()=>{
       visualAddParagraph:hasBlock,
       visualAddList:hasBlock,
       visualAddListItem:!!list,
+      visualDuplicateBlock:hasBlock,
       visualMoveBlockUp:hasBlock&&index>0,
       visualMoveBlockDown:hasBlock&&index<active.host.children.length-1,
       visualRemoveBlock:hasBlock&&active.host.children.length>1
@@ -157,6 +158,14 @@ window.RMSVisualGuidance=(()=>{
       if(!["UL","OL"].includes(block.tagName))return;
       const li=document.createElement("li");li.textContent=text;
       block.appendChild(li);
+    } else if(action==="duplicate"){
+      // Clone only the selected content subtree. Validation below checks that
+      // the resulting HTML still satisfies the published six-field schema.
+      const copy=block.cloneNode(true);
+      for(const mark of [copy,...copy.querySelectorAll("[data-visual-selected]")])
+        mark.removeAttribute("data-visual-selected");
+      block.after(copy);
+      nextIndex=previousIndex+1;
     } else if(action==="up"){
       if(previousIndex===0)return;
       block.previousElementSibling.before(block);
@@ -311,7 +320,8 @@ window.RMSVisualGuidance=(()=>{
     });
     const commands={
       visualAddParagraph:"paragraph",visualAddList:"list",
-      visualAddListItem:"list-item",visualMoveBlockUp:"up",
+      visualAddListItem:"list-item",visualDuplicateBlock:"duplicate",
+      visualMoveBlockUp:"up",
       visualMoveBlockDown:"down",visualRemoveBlock:"remove"
     };
     for(const [id,action] of Object.entries(commands))
