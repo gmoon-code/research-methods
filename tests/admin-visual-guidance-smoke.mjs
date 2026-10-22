@@ -154,13 +154,28 @@ try {
     "First paragraph must be able to move above the heading when selected");
   assert.equal(await quick.getByRole("button",{name:"Duplicate selected guidance block"}).isEnabled(),true);
   await quick.getByRole("button",{name:"Enter text for a new paragraph next to the selected block"}).click();
-  assert.equal(await page.locator("#visualBlockText").evaluate(
+  let composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.waitFor({state:"visible"});
+  assert.equal(await composer.getByLabel("Block type").evaluate(
     el=>document.activeElement===el),true,
-    "Inline Add Text must focus the existing validated paragraph authoring field");
+    "In-place Add must focus its native block-type chooser");
+  assert.equal(await composer.getByLabel("Block type").inputValue(),"paragraph");
+  assert.equal(await composer.getByRole("option").count(),3);
   assert.equal(await page.locator("#visualAddParagraph").isEnabled(),true);
   assert.equal(await page.locator("#visualAddListItem").isDisabled(),true);
-  await page.locator("#visualBlockText").fill("A new structured paragraph for testing.");
-  await page.locator("#visualAddParagraph").click();
+  // A cancelled addition leaves the stage's original HTML untouched.
+  const beforeCancel=await page.locator("#contentLearnHtml").inputValue();
+  await composer.getByLabel("Block text").fill("Discard this temporary writing.");
+  await composer.getByLabel("Block text").press("Escape");
+  assert.equal(await composer.count(),0);
+  assert.equal(await page.locator("#contentLearnHtml").inputValue(),beforeCancel);
+  await quick.getByRole("button",{name:"Enter text for a new paragraph next to the selected block"}).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByRole("button",{name:"Add block"}).click();
+  assert.match(await composer.getByRole("status").textContent(),/Write some text/);
+  await composer.getByLabel("Block text").fill("A new structured paragraph for testing.");
+  await composer.getByRole("button",{name:"Add block"}).click();
+  assert.equal(await composer.count(),0);
   const newParagraph=content.locator(":scope > p")
     .filter({hasText:"A new structured paragraph for testing."});
   assert.equal(await newParagraph.count(),1);
@@ -224,8 +239,15 @@ try {
     !authoritative.includes("visualGuidanceMoveHandle"),
     "Drag overlays must never enter the stage content HTML");
 
-  await page.locator("#visualBlockText").fill("New guidance subsection");
-  await page.locator("#visualAddHeading").click();
+  // Insert a heading directly from the on-page composer using the same
+  // validator as the long-form block controls.
+  await content.locator(":scope > [data-visual-selected]").click();
+  await quick.getByRole("button",{name:"Enter text for a new paragraph next to the selected block"}).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByLabel("Block type").selectOption("heading");
+  await composer.getByLabel("Block text").fill("New guidance subsection");
+  await composer.getByLabel("Block text").press("Control+Enter");
+  assert.equal(await composer.count(),0);
   assert.equal(await content.locator(":scope > h3")
     .filter({hasText:"New guidance subsection"}).count(),1,
     "Section headings should be created inside the selected guidance field");
