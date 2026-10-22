@@ -378,7 +378,16 @@ try {
   assert.deepEqual(await workingUl.locator(":scope > li").allTextContents(),
     ["First new list item"]);
   await workingUl.locator(":scope > li").first().click();
-  assert.equal(await page.locator("#visualDuplicateListItem").isEnabled(),true);
+  const listSelectionDiagnostic=await page.evaluate(()=>({
+    selectedBlock:document.querySelector("#visualGuidanceEditor [data-visual-selected]")?.tagName,
+    selectedListItem:document.querySelector("#visualGuidanceEditor [data-visual-selected-item]")?.textContent,
+    status:document.querySelector("#visualBlockStatus")?.textContent,
+    duplicateDisabled:document.querySelector("#visualDuplicateListItem")?.disabled,
+    selectedListCount:document.querySelectorAll("#visualGuidanceEditor [data-visual-selected-item]").length
+  }));
+  assert.equal(await page.locator("#visualDuplicateListItem").isEnabled(),true,
+    "The remaining list item must be selected for duplication. "+
+    JSON.stringify(listSelectionDiagnostic));
   await quick.getByRole("button",{name:"Duplicate selected list item"}).click();
   assert.deepEqual(await workingUl.locator(":scope > li").allTextContents(),
     ["First new list item","First new list item"]);
