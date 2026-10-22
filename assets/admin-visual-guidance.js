@@ -416,6 +416,12 @@ window.RMSVisualGuidance=(()=>{
     if(mounted)return true;
     const panel=byId("visualGuidanceEditor");
     if(!panel||!window.RMSAdminContentStudio)return false;
+    const dragStyles=document.createElement("style");
+    dragStyles.id="rms-guidance-drag-feedback";
+    dragStyles.textContent=
+      '[data-visual-drop-target="before"]{box-shadow:0 -4px 0 #2b8060!important;}'+
+      '[data-visual-drop-target="after"]{box-shadow:0 4px 0 #2b8060!important;}';
+    document.head.appendChild(dragStyles);
     panel.addEventListener("input",updateValue);
     panel.addEventListener("click",event=>{
       if(event.target.closest(".visual-guidance-rich[data-visual-field]"))
