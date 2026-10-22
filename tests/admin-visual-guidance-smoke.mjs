@@ -173,6 +173,29 @@ try {
   assert.equal(await newParagraph.count(),1,
     "Remove should delete the selected duplicate while keeping the original");
 
+  // A dedicated pointer grip moves a complete source-validated teaching block.
+  const allParagraphs=content.locator(":scope > p");
+  assert(await allParagraphs.count()>=2,"Expected at least two teaching paragraphs");
+  const lastParagraph=allParagraphs.last();
+  const draggedText=(await lastParagraph.textContent()).trim();
+  await lastParagraph.click();
+  const grip=page.locator("#visualGuidanceMoveHandle");
+  await grip.waitFor({state:"visible"});
+  const firstBox=await allParagraphs.first().boundingBox();
+  const gripBox=await grip.boundingBox();
+  assert(firstBox&&gripBox,"The selected block must have a visible drag handle");
+  await page.mouse.move(gripBox.x+gripBox.width/2,gripBox.y+gripBox.height/2);
+  await page.mouse.down();
+  await page.mouse.move(firstBox.x+Math.max(25,firstBox.width/4),firstBox.y+5,{steps:7});
+  await page.mouse.up();
+  assert.equal((await allParagraphs.first().textContent()).trim(),draggedText,
+    "Dragging above the first paragraph should update the visible block order");
+  const authoritative=await page.locator("#contentLearnHtml").inputValue();
+  assert(authoritative.indexOf(draggedText)>=0,"Moved text must remain in the authoritative field");
+  assert(!authoritative.includes("data-visual-drop-target")&&
+    !authoritative.includes("visualGuidanceMoveHandle"),
+    "Drag overlays must never enter the stage's content HTML");
+
   await page.locator("#visualBlockText").fill("New guidance subsection");
   await page.locator("#visualAddHeading").click();
   assert.equal(await content.locator(":scope > h3")
