@@ -105,6 +105,7 @@ window.RMSVisualGuidance=(()=>{
     block.setAttribute("data-visual-selected","");
     blockControls();
     positionDragHandle();
+    positionQuickToolbar(true);
     blockStatus("Selected "+selectedBlock.field.replace("_html","").replace("_"," ")+
       " block "+(index+1)+" of "+host.children.length+
       ". Use the controls to add, move, or remove it.");
@@ -116,6 +117,7 @@ window.RMSVisualGuidance=(()=>{
       "[data-visual-selected]")||[])mark.removeAttribute("data-visual-selected");
     blockControls();
     byId("visualGuidanceMoveHandle")?.remove();
+    byId("visualGuidanceQuickToolbar")?.remove();
     blockStatus("Click a paragraph, heading, concept box, or list below to select a block.");
   }
 
@@ -205,6 +207,75 @@ window.RMSVisualGuidance=(()=>{
     grip.style.left=Math.max(0,Math.min(viewport-32,blockBox.left-37))+"px";
     grip.style.top=Math.max(0,Math.min(window.innerHeight-32,blockBox.top+4))+"px";
   }
+  // This toolbar is kept outside all editable guidance fields. Every action
+  // delegates to the existing validated six-field draft operation.
+  function positionQuickToolbar(rebuild=false){
+    let bar=byId("visualGuidanceQuickToolbar");
+    const active=activeBlock();
+    if(!active||!active.block.isConnected||
+       byId("visualGuidanceEditor")?.closest("[hidden]")){
+      bar?.remove();return;
+    }
+    if(rebuild||!bar){
+      bar?.remove();
+      bar=document.createElement("div");
+      bar.id="visualGuidanceQuickToolbar";
+      bar.setAttribute("role","toolbar");
+      bar.setAttribute("aria-label","Selected guidance block actions");
+      bar.style.cssText="position:fixed;z-index:9998;display:flex;align-items:center;"+
+        "flex-wrap:wrap;gap:4px;padding:5px;max-width:min(260px,calc(100vw - 12px));"+
+        "border:1px solid #9bbbae;border-radius:8px;background:#fff;color:#183f30;"+
+        "box-shadow:0 3px 14px #0003;font:600 12px/1.3 system-ui";
+      const add=(label,description,action,enabled=true)=>{
+        const button=document.createElement("button");
+        button.type="button";button.textContent=label;
+        button.setAttribute("aria-label",description);
+        button.disabled=!enabled;
+        button.style.cssText="min-height:32px;padding:5px 7px;"+
+          "border:1px solid #a4bdaf;border-radius:5px;background:#eff7f1;"+
+          "color:inherit;font:inherit;cursor:pointer";
+        button.addEventListener("click",event=>{
+          event.preventDefault();event.stopPropagation();
+          if(button.disabled)return;
+          if(action==="add"){
+            byId("visualBlockText")?.focus();
+            blockStatus("Enter the paragraph text, then choose Add paragraph in the block controls.");
+          }else editBlock(action);
+        });
+        bar.append(button);
+      };
+      const {host}=active,index=selectedBlock.index;
+      add("+ Text","Enter text for a new paragraph next to the selected block","add");
+      add("Copy","Duplicate selected guidance block","duplicate");
+      add("↑","Move selected guidance block up","up",index>0);
+      add("↓","Move selected guidance block down","down",index<host.children.length-1);
+      add("Remove","Remove selected guidance block","remove",host.children.length>1);
+      document.body.append(bar);
+    }
+    const box=active.block.getBoundingClientRect();
+    if(box.bottom<0||box.top>window.innerHeight||
+      !byId("visualGuidanceEditor")?.getClientRects().length){
+      bar.style.display="none";return;
+    }
+    bar.style.display="flex";
+    const width=bar.getBoundingClientRect().width||235;
+    const height=bar.getBoundingClientRect().height||42;
+    const maxLeft=Math.max(5,window.innerWidth-width-5);
+    const maxTop=Math.max(5,window.innerHeight-height-5);
+    let left,top;
+    if(box.right+width+8<window.innerWidth-5){
+      left=box.right+7;top=box.top;
+    }else if(box.left-width-8>5){
+      left=box.left-width-7;top=box.top;
+    }else if(box.top-height-9>5){
+      left=box.left;top=box.top-height-8;
+    }else{
+      left=box.right-width;top=box.top+Math.min(box.height+7,60);
+    }
+    bar.style.left=Math.max(5,Math.min(maxLeft,left))+"px";
+    bar.style.top=Math.max(5,Math.min(maxTop,top))+"px";
+  }
+
   function clearGuidanceDropMarks(){
     for(const node of document.querySelectorAll("[data-visual-drop-target]"))
       node.removeAttribute("data-visual-drop-target");
@@ -241,6 +312,7 @@ window.RMSVisualGuidance=(()=>{
     source.setAttribute("data-visual-selected","");
     host.dispatchEvent(new Event("input",{bubbles:true}));
     blockControls();
+    positionQuickToolbar(true);
     blockStatus("Content block moved. The existing draft validator has approved the new order.");
     return true;
   }
@@ -311,6 +383,7 @@ window.RMSVisualGuidance=(()=>{
       byId("visualBlockText").value="";
     blockControls();
     positionDragHandle();
+    positionQuickToolbar(true);
     blockStatus("Block updated in this stage's in-memory draft. "+
       "Use Validate draft to review the complete guidance record.");
   }
@@ -456,7 +529,9 @@ window.RMSVisualGuidance=(()=>{
       if(button)applyVisualFormat(button.dataset.guidanceFormat);
     });
     document.addEventListener("scroll",positionDragHandle,true);
+    document.addEventListener("scroll",()=>positionQuickToolbar(),true);
     window.addEventListener("resize",positionDragHandle);
+    window.addEventListener("resize",()=>positionQuickToolbar());
     panel.addEventListener("paste",event=>{
       const editable=event.target.closest("[data-visual-field]");
       if(!editable)return;
