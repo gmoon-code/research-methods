@@ -331,6 +331,23 @@ window.RMSVisualGuidance=(()=>{
     choice.style.cssText="padding:8px;width:100%;border:1px solid #9bbbae;"+
       "border-radius:6px;background:#fff;color:#183f30;font:inherit";
     choiceLabel.append(choice);
+    const placementLabel=document.createElement("label");
+    placementLabel.textContent="Insert position";
+    placementLabel.style.cssText="font-weight:600;display:grid;gap:4px";
+    const placement=document.createElement("select");
+    placement.id="visualGuidanceInlinePosition";
+    for(const [id,label] of [["after","After selected block"],
+                              ["before","Before selected block"]]){
+      const option=document.createElement("option");
+      option.value=id;option.textContent=label;placement.append(option);
+    }
+    placement.style.cssText="padding:8px;width:100%;border:1px solid #9bbbae;"+
+      "border-radius:6px;background:#fff;color:#183f30;font:inherit";
+    placementLabel.append(placement);
+    placement.addEventListener("change",()=>{
+      title.textContent="Add "+placement.value+" selected block";
+      positionInlineComposer();
+    });
     const textLabel=document.createElement("label");
     textLabel.textContent="Block text";
     textLabel.style.cssText="font-weight:600;display:grid;gap:4px";
@@ -347,6 +364,9 @@ window.RMSVisualGuidance=(()=>{
     hint.hidden=true;
     choice.addEventListener("change",()=>{
       hint.hidden=!["list","ordered-list"].includes(choice.value);
+      placementLabel.hidden=choice.value==="list-item";
+      if(placementLabel.hidden)placement.value="after";
+      title.textContent="Add "+placement.value+" selected block";
       positionInlineComposer();
     });
     const feedback=document.createElement("p");
@@ -381,7 +401,7 @@ window.RMSVisualGuidance=(()=>{
       const text=textarea.value.trim();
       if(!text){feedback.textContent="Write some text before adding a block.";return;}
       byId("visualBlockText").value=text;
-      const accepted=editBlock(choice.value);
+      const accepted=editBlock(choice.value,placement.value);
       if(accepted===true)dismiss();
       else feedback.textContent=byId("visualBlockStatus")?.textContent||
         "The content block was not accepted by the guidance validator.";
@@ -394,7 +414,7 @@ window.RMSVisualGuidance=(()=>{
       }
     });
     row.append(closeBtn,addBtn);
-    dialog.append(title,choiceLabel,textLabel,hint,feedback,row);
+    dialog.append(title,choiceLabel,placementLabel,textLabel,hint,feedback,row);
     document.body.append(dialog);
     positionInlineComposer();
     choice.focus({preventScroll:true});
@@ -441,7 +461,7 @@ window.RMSVisualGuidance=(()=>{
     return true;
   }
 
-  function editBlock(action){
+  function editBlock(action,placement="after"){
     const active=activeBlock();
     if(!active){blockStatus("Choose a content block first.");return false;}
     const {host,block,field}=active;
@@ -472,8 +492,13 @@ window.RMSVisualGuidance=(()=>{
           li.textContent=itemText;next.appendChild(li);
         }
       }
-      block.after(next);
-      nextIndex=previousIndex+1;
+      if(placement==="before"){
+        block.before(next);
+        nextIndex=previousIndex;
+      }else {
+        block.after(next);
+        nextIndex=previousIndex+1;
+      }
     } else if(action==="list-item"){
       if(!["UL","OL"].includes(block.tagName))return;
       const li=document.createElement("li");li.textContent=text;

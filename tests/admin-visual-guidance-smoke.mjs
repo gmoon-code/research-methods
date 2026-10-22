@@ -308,6 +308,25 @@ try {
     .includes("data-visual-selected")));
   await page.locator("#visualRemoveBlock").click();
 
+  // Insert before an existing block without creating it below and moving it.
+  const originalSelected=content.locator(":scope > [data-visual-selected]");
+  const nextBlockText=await originalSelected.textContent();
+  await originalSelected.click();
+  await quick.getByRole("button",{
+    name:"Enter text for a new paragraph next to the selected block"
+  }).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByLabel("Insert position").selectOption("before");
+  await composer.getByLabel("Block text").fill("Place this before the selected guidance block.");
+  await composer.getByRole("button",{name:"Add block"}).click();
+  const before=content.locator(":scope > p[data-visual-selected]");
+  assert.equal(await before.count(),1);
+  assert.equal(await before.evaluate(el=>el.nextElementSibling?.textContent),
+    nextBlockText,"Before insertion must precede the original selected block");
+  assert((await page.locator("#contentLearnHtml").inputValue()).includes(
+    "Place this before the selected guidance block."));
+  await page.locator("#visualRemoveBlock").click();
+
   // Existing bullet list insertion also accepts several lines in the composer.
   await content.locator(":scope > [data-visual-selected]").click();
   await quick.getByRole("button",{
