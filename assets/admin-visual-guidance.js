@@ -320,7 +320,7 @@ window.RMSVisualGuidance=(()=>{
     const choice=document.createElement("select");
     choice.id="visualGuidanceInlineKind";
     const kinds=[["paragraph","Paragraph"],["heading","Section heading"],
-      ["list","Bullet list"]];
+      ["list","Bullet list"],["concept","Concept box"]];
     if(["UL","OL"].includes(active.block.tagName))
       kinds.push(["list-item","Item in selected list"]);
     for(const [id,label] of kinds){
@@ -439,15 +439,21 @@ window.RMSVisualGuidance=(()=>{
     const original=host.innerHTML;
     const previousIndex=selectedBlock.index;
     const text=byId("visualBlockText")?.value.trim()||"";
-    if(["paragraph","heading","list","list-item"].includes(action)&&!text){
+    if(["paragraph","heading","list","list-item","concept"].includes(action)&&!text){
       blockStatus("Enter text before inserting a paragraph or list item.");
       byId("visualBlockText")?.focus();
       return false;
     }
     let nextIndex=previousIndex;
-    if(action==="paragraph"||action==="heading"||action==="list"){
-      const next=document.createElement(action==="paragraph"?"p":action==="heading"?"h3":"ul");
-      if(action!=="list")next.textContent=text;
+    if(action==="paragraph"||action==="heading"||action==="list"||action==="concept"){
+      const next=document.createElement(action==="paragraph"?"p":
+        action==="heading"?"h3":action==="concept"?"div":"ul");
+      if(action==="concept"){
+        next.className="concept-box";
+        const paragraph=document.createElement("p");
+        paragraph.textContent=text;
+        next.append(paragraph);
+      }else if(action!=="list")next.textContent=text;
       else {
         const li=document.createElement("li");
         li.textContent=text;next.appendChild(li);
@@ -494,7 +500,7 @@ window.RMSVisualGuidance=(()=>{
     const chosen=host.children.item(nextIndex);
     chosen?.setAttribute("data-visual-selected","");
     host.dispatchEvent(new Event("input",{bubbles:true}));
-    if(action==="paragraph"||action==="heading"||action==="list"||action==="list-item")
+    if(["paragraph","heading","list","list-item","concept"].includes(action))
       byId("visualBlockText").value="";
     blockControls();
     positionDragHandle();
