@@ -146,6 +146,17 @@ try {
   // without retaining any visual-editor selection attributes.
   const content=page.locator('[data-visual-field="learn_html"]');
   await content.locator(":scope > p").first().click();
+  const quick=page.locator("#visualGuidanceQuickToolbar");
+  await quick.waitFor({state:"visible"});
+  assert.equal(await quick.getAttribute("role"),"toolbar");
+  assert.equal(await quick.getAttribute("aria-label"),"Selected guidance block actions");
+  assert.equal(await quick.getByRole("button",{name:"Move selected guidance block up"}).isDisabled(),false,
+    "First paragraph must be able to move above the heading when selected");
+  assert.equal(await quick.getByRole("button",{name:"Duplicate selected guidance block"}).isEnabled(),true);
+  await quick.getByRole("button",{name:"Enter text for a new paragraph next to the selected block"}).click();
+  assert.equal(await page.locator("#visualBlockText").evaluate(
+    el=>document.activeElement===el),true,
+    "Inline Add Text must focus the existing validated paragraph authoring field");
   assert.equal(await page.locator("#visualAddParagraph").isEnabled(),true);
   assert.equal(await page.locator("#visualAddListItem").isDisabled(),true);
   await page.locator("#visualBlockText").fill("A new structured paragraph for testing.");
@@ -161,7 +172,7 @@ try {
   const selectedText=await content.locator(":scope > [data-visual-selected]").textContent();
   assert.match(selectedText,/A new structured paragraph for testing/);
   assert.equal(await page.locator("#visualDuplicateBlock").isEnabled(),true);
-  await page.locator("#visualDuplicateBlock").click();
+  await quick.getByRole("button",{name:"Duplicate selected guidance block"}).click();
   assert.equal(await newParagraph.count(),2,
     "Duplicating a paragraph should preserve the existing content and create a separate block");
   assert.equal(((await page.locator("#contentLearnHtml").inputValue())
@@ -169,7 +180,10 @@ try {
     "The authoritative Content Studio field must receive both copies");
   assert(!((await page.locator("#contentLearnHtml").inputValue())
     .includes("data-visual-selected")),"The duplicated copy cannot retain inspector selection markers");
-  await page.locator("#visualRemoveBlock").click();
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("visualGuidanceQuickToolbar")),
+    "Floating quick actions must never be included in the authoritative source HTML");
+  await quick.getByRole("button",{name:"Remove selected guidance block"}).click();
   assert.equal(await newParagraph.count(),1,
     "Remove should delete the selected duplicate while keeping the original");
 
@@ -261,6 +275,8 @@ try {
     "Block actions must reset when changing to a different stage");
   assert.equal(await page.locator("#visualDuplicateBlock").isDisabled(),true,
     "A block from a previous stage cannot be duplicated after changing stages");
+  assert.equal(await quick.count(),0,
+    "The in-page actions must be removed when a different stage is selected");
   await page.locator("#visualGuidanceRecord").waitFor();
   assert.match(await page.locator("#visualGuidanceRecord").textContent(),/Stage 2/);
   assert.notEqual(await page.locator("#contentTitle").inputValue(),"New visual draft title");
