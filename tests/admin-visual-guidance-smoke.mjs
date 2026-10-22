@@ -368,23 +368,26 @@ try {
   assert.equal(await page.locator("#contentLearnHtml").inputValue(),listBeforeMove,
     "Undo must restore the original order of the two list items");
   await page.locator("#visualRedoBlock").click();
-  assert.deepEqual(await content.locator(":scope > ul > li").allTextContents(),
+  // The seed guidance also contains a bullet list. Target the new list
+  // by its unique item text so its source neighbours do not affect assertions.
+  const workingUl=content.locator(":scope > ul").filter({hasText:"First new list item"});
+  assert.deepEqual(await workingUl.locator(":scope > li").allTextContents(),
     ["Second new list item","First new list item"]);
-  await content.locator(":scope > ul > li").first().click();
+  await workingUl.locator(":scope > li").first().click();
   await quick.getByRole("button",{name:"Remove selected list item"}).click();
-  assert.deepEqual(await content.locator(":scope > ul > li").allTextContents(),
+  assert.deepEqual(await workingUl.locator(":scope > li").allTextContents(),
     ["First new list item"]);
-  await content.locator(":scope > ul > li").first().click();
+  await workingUl.locator(":scope > li").first().click();
   assert.equal(await page.locator("#visualDuplicateListItem").isEnabled(),true);
   await quick.getByRole("button",{name:"Duplicate selected list item"}).click();
-  assert.deepEqual(await content.locator(":scope > ul > li").allTextContents(),
+  assert.deepEqual(await workingUl.locator(":scope > li").allTextContents(),
     ["First new list item","First new list item"]);
   assert(!((await page.locator("#contentLearnHtml").inputValue())
     .includes("data-visual-selected-item")));
   await page.locator("#visualUndoBlock").click();
-  assert.deepEqual(await content.locator(":scope > ul > li").allTextContents(),
+  assert.deepEqual(await workingUl.locator(":scope > li").allTextContents(),
     ["First new list item"]);
-  await content.locator(":scope > ul > li").first().click();
+  await workingUl.locator(":scope > li").first().click();
   assert.equal(await page.locator("#visualRemoveListItem").isDisabled(),true,
     "The last list item must be protected from removal");
   await page.locator("#visualRemoveBlock").click();
@@ -407,7 +410,8 @@ try {
     "Undo block must restore source markup from before the list insertion");
   assert.equal(await page.locator("#visualRedoBlock").isEnabled(),true);
   await page.locator("#visualRedoBlock").click();
-  assert.deepEqual(await content.locator(":scope > ol > li").allTextContents(),
+  const workingOl=content.locator(":scope > ol").filter({hasText:"Document uncertainty"});
+  assert.deepEqual(await workingOl.locator(":scope > li").allTextContents(),
     ["Identify evidence","Document uncertainty"]);
   await content.locator(":scope > ol").filter({hasText:"Document uncertainty"}).click();
   await page.locator("#visualRemoveBlock").click();
