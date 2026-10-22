@@ -164,7 +164,7 @@ try {
   await page.locator("#visualDuplicateBlock").click();
   assert.equal(await newParagraph.count(),2,
     "Duplicating a paragraph should preserve the existing content and create a separate block");
-  assert.equal((await page.locator("#contentLearnHtml").inputValue()
+  assert.equal(((await page.locator("#contentLearnHtml").inputValue())
     .match(/A new structured paragraph for testing/g)||[]).length,2,
     "The authoritative Content Studio field must receive both copies");
   assert(!((await page.locator("#contentLearnHtml").inputValue())
