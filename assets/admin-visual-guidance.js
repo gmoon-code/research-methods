@@ -392,7 +392,7 @@ window.RMSVisualGuidance=(()=>{
     const active=activeBlock();
     if(!active)return;
     byId("visualGuidanceInlineComposer")?.remove();
-    const selected={...selectedBlock};
+    const selected={...selectedBlock,itemIndex:selectedListIndex};
     const dialog=document.createElement("section");
     dialog.id="visualGuidanceInlineComposer";
     dialog.setAttribute("role","dialog");
@@ -435,10 +435,20 @@ window.RMSVisualGuidance=(()=>{
     placement.style.cssText="padding:8px;width:100%;border:1px solid #9bbbae;"+
       "border-radius:6px;background:#fff;color:#183f30;font:inherit";
     placementLabel.append(placement);
-    placement.addEventListener("change",()=>{
-      title.textContent="Add "+placement.value+" selected block";
+    const updatePlacement=()=>{
+      const item=choice.value==="list-item";
+      const relativeItem=item&&selected.itemIndex!==null;
+      placementLabel.hidden=item&&!relativeItem;
+      placementLabel.style.display=placementLabel.hidden?"none":"grid";
+      if(placementLabel.hidden)placement.value="after";
+      for(const option of placement.options)
+        option.textContent=(option.value==="before"?"Before":"After")+
+          " selected "+(relativeItem?"list item":"block");
+      title.textContent=placementLabel.hidden?"Add to selected list":
+        "Add "+placement.value+" selected "+(relativeItem?"list item":"block");
       positionInlineComposer();
-    });
+    };
+    placement.addEventListener("change",updatePlacement);
     const textLabel=document.createElement("label");
     textLabel.textContent="Block text";
     textLabel.style.cssText="font-weight:600;display:grid;gap:4px";
@@ -455,11 +465,7 @@ window.RMSVisualGuidance=(()=>{
     hint.hidden=true;
     choice.addEventListener("change",()=>{
       hint.hidden=!["list","ordered-list"].includes(choice.value);
-      placementLabel.hidden=choice.value==="list-item";
-      placementLabel.style.display=placementLabel.hidden?"none":"grid";
-      if(placementLabel.hidden)placement.value="after";
-      title.textContent="Add "+placement.value+" selected block";
-      positionInlineComposer();
+      updatePlacement();
     });
     const feedback=document.createElement("p");
     feedback.setAttribute("role","status");
@@ -486,7 +492,8 @@ window.RMSVisualGuidance=(()=>{
     closeBtn.addEventListener("click",dismiss);
     const submit=()=>{
       if(!activeBlock()||selected.field!==selectedBlock.field||
-         selected.index!==selectedBlock.index){
+         selected.index!==selectedBlock.index||
+         (choice.value==="list-item"&&selected.itemIndex!==selectedListIndex)){
         feedback.textContent="Selection changed. Choose a guidance block again.";
         return;
       }
@@ -612,6 +619,7 @@ window.RMSVisualGuidance=(()=>{
       return false;
     }
     let nextIndex=previousIndex;
+    let addedListItem=null;
     if(["paragraph","heading","list","ordered-list","concept"].includes(action)){
       const next=document.createElement(action==="paragraph"?"p":
         action==="heading"?"h3":action==="concept"?"div":
@@ -638,9 +646,13 @@ window.RMSVisualGuidance=(()=>{
         nextIndex=previousIndex+1;
       }
     } else if(action==="list-item"){
-      if(!["UL","OL"].includes(block.tagName))return;
+      if(!["UL","OL"].includes(block.tagName))return false;
       const li=document.createElement("li");li.textContent=text;
-      block.appendChild(li);
+      addedListItem=li;
+      const anchor=selectedListIndex===null?null:block.children.item(selectedListIndex);
+      if(anchor&&placement==="before")anchor.before(li);
+      else if(anchor)anchor.after(li);
+      else block.appendChild(li);
     } else if(action==="duplicate"){
       // Clone only the selected content subtree. Validation below checks that
       // the resulting HTML still satisfies the published six-field schema.
@@ -682,7 +694,9 @@ window.RMSVisualGuidance=(()=>{
     chosen?.setAttribute("data-visual-selected","");
     selectedListIndex=null;
     if(action==="list-item"){
-      selectedListIndex=block.children.length-1;
+      // Track the created node, since several list items can share text.
+      selectedListIndex=addedListItem?
+        [...block.children].indexOf(addedListItem):block.children.length-1;
       block.children.item(selectedListIndex)?.setAttribute("data-visual-selected-item","");
     }
     submitBlockMutation(host);

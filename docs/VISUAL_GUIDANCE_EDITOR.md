@@ -58,3 +58,7 @@ The contextual and detailed list item controls also offer **Copy item** or **Dup
 ### Pointer selection and keyboard focus
 
 When the teacher clicks a list item, the visual editor waits for the click to choose the block before updating the contextual controls. Keyboard focus still selects content through the existing focus and arrow-key handlers. This avoids rebuilding the floating controls between pointer-down and pointer-up, which previously redirected clicks from a list item to the containing editor region. The regression test includes selecting the sole remaining list item after an Undo/Redo and removal sequence.
+
+## Place a new item next to the selected list item
+
+Inside a bulleted or numbered list, select the item that should serve as the insertion point. Choose the contextual **+ Text** menu, select **Item in selected list**, and use **Insert position** to place a new item immediately before or after it. If only the list container is selected, the original append-to-end behaviour remains available. The new item becomes selected for immediate editing, and the list type, existing item order, schema validation and structural Undo/Redo are retained. The browser regression covers inserting between two items, source synchronization, selection highlighting and Undo restoration.

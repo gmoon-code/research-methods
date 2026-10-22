@@ -348,6 +348,29 @@ try {
   await page.locator("#visualBlockText").fill("Second new list item");
   await page.locator("#visualAddListItem").click();
   assert.equal(await content.locator(":scope > ul[data-visual-selected] > li").count(),2);
+
+  // Adding a list item from the preview supports insertion immediately
+  // before the selected item, preserving order without extra movements.
+  await content.locator(":scope > ul[data-visual-selected] > li").nth(1).click();
+  await quick.getByRole("button",{
+    name:"Enter text for a new paragraph next to the selected block"
+  }).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByLabel("Block type").selectOption("list-item");
+  assert.equal(await composer.getByLabel("Insert position").isVisible(),true);
+  await composer.getByLabel("Insert position").selectOption("before");
+  await composer.getByLabel("Block text").fill("Inserted between the original items");
+  await composer.getByRole("button",{name:"Add block"}).click();
+  assert.deepEqual(await content.locator(":scope > ul[data-visual-selected] > li").allTextContents(),
+    ["First new list item","Inserted between the original items","Second new list item"]);
+  assert.equal(await content.locator(
+    ":scope > ul[data-visual-selected] > li[data-visual-selected-item]").textContent(),
+    "Inserted between the original items");
+  await page.locator("#visualUndoBlock").click();
+  const restoredList=content.locator(":scope > ul").filter({hasText:"First new list item"});
+  assert.deepEqual(await restoredList.locator(":scope > li").allTextContents(),
+    ["First new list item","Second new list item"]);
+  await restoredList.locator(":scope > li").nth(1).click();
   assert(!((await page.locator("#contentLearnHtml").inputValue())
     .includes("data-visual-selected")), "Selection highlights must never enter the saved content");
   // Select an individual list item directly in the preview. The validated
