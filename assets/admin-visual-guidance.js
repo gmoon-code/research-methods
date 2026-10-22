@@ -73,6 +73,7 @@ window.RMSVisualGuidance=(()=>{
     const list=hasBlock&&["UL","OL"].includes(active.block.tagName);
     const enabled={
       visualAddParagraph:hasBlock,
+      visualAddHeading:hasBlock,
       visualAddList:hasBlock,
       visualAddListItem:!!list,
       visualDuplicateBlock:hasBlock,
@@ -139,15 +140,15 @@ window.RMSVisualGuidance=(()=>{
     const original=host.innerHTML;
     const previousIndex=selectedBlock.index;
     const text=byId("visualBlockText")?.value.trim()||"";
-    if(["paragraph","list","list-item"].includes(action)&&!text){
+    if(["paragraph","heading","list","list-item"].includes(action)&&!text){
       blockStatus("Enter text before inserting a paragraph or list item.");
       byId("visualBlockText")?.focus();
       return;
     }
     let nextIndex=previousIndex;
-    if(action==="paragraph"||action==="list"){
-      const next=document.createElement(action==="paragraph"?"p":"ul");
-      if(action==="paragraph")next.textContent=text;
+    if(action==="paragraph"||action==="heading"||action==="list"){
+      const next=document.createElement(action==="paragraph"?"p":action==="heading"?"h3":"ul");
+      if(action!=="list")next.textContent=text;
       else {
         const li=document.createElement("li");
         li.textContent=text;next.appendChild(li);
@@ -194,7 +195,7 @@ window.RMSVisualGuidance=(()=>{
     const chosen=host.children.item(nextIndex);
     chosen?.setAttribute("data-visual-selected","");
     host.dispatchEvent(new Event("input",{bubbles:true}));
-    if(action==="paragraph"||action==="list"||action==="list-item")
+    if(action==="paragraph"||action==="heading"||action==="list"||action==="list-item")
       byId("visualBlockText").value="";
     blockControls();
     blockStatus("Block updated in this stage's in-memory draft. "+
@@ -319,7 +320,7 @@ window.RMSVisualGuidance=(()=>{
         selectBlock({target:window.getSelection()?.anchorNode||event.target});
     });
     const commands={
-      visualAddParagraph:"paragraph",visualAddList:"list",
+      visualAddParagraph:"paragraph",visualAddHeading:"heading",visualAddList:"list",
       visualAddListItem:"list-item",visualDuplicateBlock:"duplicate",
       visualMoveBlockUp:"up",
       visualMoveBlockDown:"down",visualRemoveBlock:"remove"
