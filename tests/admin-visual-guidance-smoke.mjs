@@ -173,6 +173,19 @@ try {
   assert.equal(await newParagraph.count(),1,
     "Remove should delete the selected duplicate while keeping the original");
 
+  await page.locator("#visualBlockText").fill("New guidance subsection");
+  await page.locator("#visualAddHeading").click();
+  assert.equal(await content.locator(":scope > h3")
+    .filter({hasText:"New guidance subsection"}).count(),1,
+    "Section headings should be created inside the selected guidance field");
+  assert.match(await page.locator("#contentLearnHtml").inputValue(),
+    /<h3>New guidance subsection<\/h3>/,
+    "New headings must synchronize with the existing schema-validated draft");
+  await page.locator("#visualRemoveBlock").click();
+  assert.equal((await page.locator("#contentLearnHtml").inputValue())
+    .includes("New guidance subsection"),false,
+    "Removing the selected heading must restore the prior content");
+
   await page.locator("#visualBlockText").fill("First new list item");
   await page.locator("#visualAddList").click();
   assert.equal(await content.locator(":scope > ul")
