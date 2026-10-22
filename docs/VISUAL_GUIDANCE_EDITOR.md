@@ -44,3 +44,7 @@ The on-page composer defaults to **After selected block** and also offers **Befo
 ## Detailed inspector parity
 
 The expanded block inspector uses a resizable multiline text area, allowing teachers to create an entire bulleted or numbered list with one list item per line. Its controls include **Add numbered list** and **Add concept box**, using the same schema-validated insertion functions as the on-page quick composer. This is an editing interface improvement only; no student content or publication mechanism is modified.
+
+## Undo and redo of block operations
+
+The guidance panel includes **Undo block** and **Redo block** controls. They reverse validated structural operations such as adding, duplicating, moving or removing a top-level guidance block, including a new list item. At most 30 recent operations are retained for the selected stage during this editing session. These buttons affect only guidance block structure, not character-by-character text edits. Editing text or the underlying Content Studio source fields clears structural history, protecting subsequent changes from being silently overwritten. Changing stages clears history as well. Before applying a recorded snapshot, the editor checks that its source still matches the expected version and that the replacement passes the unchanged six-field schema. This history remains local and does not alter publication or the public site.

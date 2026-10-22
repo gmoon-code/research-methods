@@ -19,7 +19,64 @@ window.RMSVisualGuidance=(()=>{
   let fromVisual=false;
   let selectedBlock=null;
   let dragPointer=null;
+  let blockMutation=false;
+  const blockHistory=[];
+  const blockRedo=[];
   const byId=id=>document.getElementById(id);
+
+  function updateBlockHistoryControls(){
+    const undo=byId("visualUndoBlock"),redo=byId("visualRedoBlock");
+    if(undo)undo.disabled=!blockHistory.length;
+    if(redo)redo.disabled=!blockRedo.length;
+  }
+  function clearBlockHistory(){
+    if(!blockHistory.length&&!blockRedo.length)return;
+    blockHistory.length=0;blockRedo.length=0;
+    updateBlockHistoryControls();
+  }
+  function recordBlockAction(field,before){
+    const after=byId(FIELD_TO_ID[field])?.value;
+    if(typeof after!=="string"||before===after)return;
+    blockHistory.push({field,before,after});
+    if(blockHistory.length>30)blockHistory.shift();
+    blockRedo.length=0;
+    updateBlockHistoryControls();
+  }
+  function submitBlockMutation(host){
+    blockMutation=true;
+    try{host.dispatchEvent(new Event("input",{bubbles:true}));}
+    finally{blockMutation=false;}
+  }
+  function applyBlockHistory(direction){
+    const from=direction==="undo"?blockHistory:blockRedo;
+    const to=direction==="undo"?blockRedo:blockHistory;
+    const entry=from.at(-1);
+    if(!entry)return false;
+    const input=byId(FIELD_TO_ID[entry.field]);
+    const current=direction==="undo"?entry.after:entry.before;
+    const target=direction==="undo"?entry.before:entry.after;
+    const host=byId("visualGuidanceEditor")?.querySelector(
+      '[data-visual-field="'+entry.field+'"]');
+    const safe=safeMarkup(target);
+    if(!input||!host||input.value!==current||!safe){
+      clearBlockHistory();
+      blockStatus("Block history is no longer current. Select a block to continue editing.");
+      return false;
+    }
+    clearBlockSelection();
+    host.replaceChildren(...[...safe.childNodes].map(node=>
+      document.importNode(node,true)));
+    from.pop();to.push(entry);
+    fromVisual=true;
+    try{
+      input.value=target;
+      input.dispatchEvent(new Event("input",{bubbles:true}));
+    }finally{fromVisual=false;}
+    updateBlockHistoryControls();
+    blockStatus(direction==="undo"?"Block action undone.":"Block action redone.");
+    status("The restored guidance was checked by the existing content validator.");
+    return true;
+  }
 
   function status(message,warning=false) {
     const element=byId("visualGuidanceStatus");
@@ -444,6 +501,7 @@ window.RMSVisualGuidance=(()=>{
     const source=host?.children[sourceIndex],target=host?.children[targetIndex];
     if(!source||!target||source===target)return false;
     const original=host.innerHTML;
+    const sourceBefore=byId(FIELD_TO_ID[field])?.value;
     if(after)target.after(source);else target.before(source);
     const selected=[...host.children].indexOf(source);
     const proposed=cleanRichHtml(host);
@@ -457,7 +515,8 @@ window.RMSVisualGuidance=(()=>{
       mark.removeAttribute("data-visual-selected");
     selectedBlock={field,index:selected};
     source.setAttribute("data-visual-selected","");
-    host.dispatchEvent(new Event("input",{bubbles:true}));
+    submitBlockMutation(host);
+    recordBlockAction(field,sourceBefore);
     blockControls();
     positionQuickToolbar(true);
     blockStatus("Content block moved. The existing draft validator has approved the new order.");
@@ -469,6 +528,7 @@ window.RMSVisualGuidance=(()=>{
     if(!active){blockStatus("Choose a content block first.");return false;}
     const {host,block,field}=active;
     const original=host.innerHTML;
+    const sourceBefore=byId(FIELD_TO_ID[field])?.value;
     const previousIndex=selectedBlock.index;
     const text=byId("visualBlockText")?.value.trim()||"";
     if(["paragraph","heading","list","ordered-list","list-item","concept"].includes(action)&&!text){
@@ -541,7 +601,8 @@ window.RMSVisualGuidance=(()=>{
     selectedBlock={field,index:nextIndex};
     const chosen=host.children.item(nextIndex);
     chosen?.setAttribute("data-visual-selected","");
-    host.dispatchEvent(new Event("input",{bubbles:true}));
+    submitBlockMutation(host);
+    recordBlockAction(field,sourceBefore);
     if(["paragraph","heading","list","ordered-list","list-item","concept"].includes(action))
       byId("visualBlockText").value="";
     blockControls();
@@ -557,7 +618,10 @@ window.RMSVisualGuidance=(()=>{
     if(!panel||!draft?.value||!record)return;
     if(fromVisual||panel.contains(document.activeElement))return;
     const key=String(record.key||"");
-    if(lastStage!==key||selectedBlock)clearBlockSelection();
+    if(lastStage!==key){
+      clearBlockSelection();
+      clearBlockHistory();
+    }else if(selectedBlock)clearBlockSelection();
     lastStage=key;
     byId("visualGuidanceRecord").textContent=
       "Stage "+record.stage_id+" · "+(record.phase_label||record.phase||"");
@@ -601,6 +665,7 @@ window.RMSVisualGuidance=(()=>{
     const el=event.target.closest("[data-visual-field]");
     if(!el||!byId("visualGuidanceEditor").contains(el))return;
     const field=el.dataset.visualField;
+    if(!blockMutation)clearBlockHistory();
     const input=byId(FIELD_TO_ID[field]);
     if(!input)return;
     const value=RICH.has(field)?cleanRichHtml(el):el.textContent;
@@ -660,6 +725,15 @@ window.RMSVisualGuidance=(()=>{
       '[data-visual-drop-target="after"]{box-shadow:0 4px 0 #2b8060!important;}';
     document.head.appendChild(dragStyles);
     panel.addEventListener("input",updateValue);
+    // Advanced-source edits supersede any saved block-action snapshots.
+    for(const id of Object.values(FIELD_TO_ID)){
+      byId(id)?.addEventListener("input",()=>{
+        if(!fromVisual)clearBlockHistory();
+      });
+    }
+    byId("visualUndoBlock")?.addEventListener("click",()=>applyBlockHistory("undo"));
+    byId("visualRedoBlock")?.addEventListener("click",()=>applyBlockHistory("redo"));
+    updateBlockHistoryControls();
     panel.addEventListener("click",event=>{
       if(event.target.closest(".visual-guidance-rich[data-visual-field]"))
         selectBlock(event);

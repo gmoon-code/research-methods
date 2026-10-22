@@ -356,6 +356,7 @@ try {
 
   // The detailed inspector uses a multiline composer and shares the same
   // numbered-list/concept-box actions and production validation.
+  const beforeInspectorList=await page.locator("#contentLearnHtml").inputValue();
   await page.locator("#visualBlockText").fill("Identify evidence\nDocument uncertainty");
   await page.locator("#visualAddOrderedList").click();
   assert.deepEqual(await content.locator(
@@ -363,6 +364,15 @@ try {
     ["Identify evidence","Document uncertainty"]);
   assert.match(await page.locator("#contentLearnHtml").inputValue(),
     /<ol><li>Identify evidence<\/li><li>Document uncertainty<\/li><\/ol>/);
+  assert.equal(await page.locator("#visualUndoBlock").isEnabled(),true);
+  await page.locator("#visualUndoBlock").click();
+  assert.equal(await page.locator("#contentLearnHtml").inputValue(),beforeInspectorList,
+    "Undo block must restore source markup from before the list insertion");
+  assert.equal(await page.locator("#visualRedoBlock").isEnabled(),true);
+  await page.locator("#visualRedoBlock").click();
+  assert.deepEqual(await content.locator(":scope > ol > li").allTextContents(),
+    ["Identify evidence","Document uncertainty"]);
+  await content.locator(":scope > ol").filter({hasText:"Document uncertainty"}).click();
   await page.locator("#visualRemoveBlock").click();
   await page.locator("#visualBlockText").fill("Discuss the scope of the explanation.");
   await page.locator("#visualAddConcept").click();
@@ -401,6 +411,8 @@ try {
     "Block actions must reset when changing to a different stage");
   assert.equal(await page.locator("#visualDuplicateBlock").isDisabled(),true,
     "A block from a previous stage cannot be duplicated after changing stages");
+  assert.equal(await page.locator("#visualUndoBlock").isDisabled(),true,
+    "Block undo history must never cross stage boundaries");
   assert.equal(await quick.count(),0,
     "The in-page actions must be removed when a different stage is selected");
   await page.locator("#visualGuidanceRecord").waitFor();
