@@ -160,7 +160,7 @@ try {
     el=>document.activeElement===el),true,
     "In-place Add must focus its native block-type chooser");
   assert.equal(await composer.getByLabel("Block type").inputValue(),"paragraph");
-  assert.equal(await composer.getByRole("option").count(),4);
+  assert.equal(await composer.getByRole("option").count(),5);
   assert.equal(await page.locator("#visualAddParagraph").isEnabled(),true);
   assert.equal(await page.locator("#visualAddListItem").isDisabled(),true);
   // A cancelled addition leaves the stage's original HTML untouched.
