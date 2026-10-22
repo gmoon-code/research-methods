@@ -172,6 +172,8 @@ try {
   const selectedText=await content.locator(":scope > [data-visual-selected]").textContent();
   assert.match(selectedText,/A new structured paragraph for testing/);
   assert.equal(await page.locator("#visualDuplicateBlock").isEnabled(),true);
+  await content.locator(":scope > [data-visual-selected]").click();
+  await quick.waitFor({state:"visible"});
   await quick.getByRole("button",{name:"Duplicate selected guidance block"}).click();
   assert.equal(await newParagraph.count(),2,
     "Duplicating a paragraph should preserve the existing content and create a separate block");
@@ -183,6 +185,8 @@ try {
   assert(!((await page.locator("#contentLearnHtml").inputValue())
     .includes("visualGuidanceQuickToolbar")),
     "Floating quick actions must never be included in the authoritative source HTML");
+  await content.locator(":scope > [data-visual-selected]").click();
+  await quick.waitFor({state:"visible"});
   await quick.getByRole("button",{name:"Remove selected guidance block"}).click();
   assert.equal(await newParagraph.count(),1,
     "Remove should delete the selected duplicate while keeping the original");
