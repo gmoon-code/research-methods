@@ -18,6 +18,7 @@ window.RMSVisualGuidance=(()=>{
   let lastStage="";
   let fromVisual=false;
   let selectedBlock=null;
+  let dragPointer=null;
   const byId=id=>document.getElementById(id);
 
   function status(message,warning=false) {
@@ -103,6 +104,7 @@ window.RMSVisualGuidance=(()=>{
     selectedBlock={field:host.dataset.visualField,index};
     block.setAttribute("data-visual-selected","");
     blockControls();
+    positionDragHandle();
     blockStatus("Selected "+selectedBlock.field.replace("_html","").replace("_"," ")+
       " block "+(index+1)+" of "+host.children.length+
       ". Use the controls to add, move, or remove it.");
@@ -113,6 +115,7 @@ window.RMSVisualGuidance=(()=>{
     for(const mark of byId("visualGuidanceEditor")?.querySelectorAll(
       "[data-visual-selected]")||[])mark.removeAttribute("data-visual-selected");
     blockControls();
+    byId("visualGuidanceMoveHandle")?.remove();
     blockStatus("Click a paragraph, heading, concept box, or list below to select a block.");
   }
 
@@ -131,6 +134,115 @@ window.RMSVisualGuidance=(()=>{
       warning_html:"<p>Warning</p>"};
     record[field]=html;
     return window.RMSAdminContentStudio?.validateValue?.(record);
+  }
+
+
+  // Dragging a whole rich-content block uses the same production schema
+  // validator as the accessible Move up and Move down toolbar controls.
+  function positionDragHandle(){
+    const active=activeBlock(),handle=byId("visualGuidanceMoveHandle");
+    if(dragPointer)return;
+    if(!active||active.host.children.length<2){
+      handle?.remove();return;
+    }
+    const grip=handle||document.createElement("button");
+    if(!handle){
+      grip.id="visualGuidanceMoveHandle";grip.type="button";
+      grip.textContent="⠿";
+      grip.title="Drag this content block to change its order";
+      grip.setAttribute("aria-label","Drag selected guidance block; use Move up and Move down for keyboard navigation");
+      grip.style.cssText="position:fixed;z-index:9999;width:32px;height:32px;display:grid;place-items:center;border:2px solid #27654f;border-radius:6px;background:#fff;color:#164d39;cursor:grab;touch-action:none;box-shadow:0 2px 7px #0003;font:700 22px/1 system-ui";
+      grip.addEventListener("click",event=>event.stopPropagation());
+      grip.addEventListener("pointerdown",event=>{
+        if(event.button!==0||dragPointer)return;
+        const selected=activeBlock();
+        if(!selected||selected.host.children.length<2)return;
+        event.preventDefault();event.stopPropagation();
+        const box=grip.getBoundingClientRect();
+        dragPointer={id:event.pointerId,field:selected.field,index:selectedBlock.index,
+          x:event.clientX,y:event.clientY,left:box.left,top:box.top};
+        grip.setPointerCapture(event.pointerId);
+        grip.style.cursor="grabbing";
+      });
+      grip.addEventListener("pointermove",event=>{
+        const drag=dragPointer;
+        if(!drag||drag.id!==event.pointerId)return;
+        event.preventDefault();
+        grip.style.left=(drag.left+event.clientX-drag.x)+"px";
+        grip.style.top=(drag.top+event.clientY-drag.y)+"px";
+        clearGuidanceDropMarks();
+        const target=guidanceDropTarget(event.clientX,event.clientY,drag.field,grip);
+        if(target){
+          const box=target.getBoundingClientRect();
+          target.setAttribute("data-visual-drop-target",
+            event.clientY>=box.top+box.height/2?"after":"before");
+        }
+      });
+      const finish=event=>{
+        const drag=dragPointer;
+        if(!drag||drag.id!==event.pointerId)return;
+        event.preventDefault();event.stopPropagation();
+        const target=event.type==="pointerup"?
+          guidanceDropTarget(event.clientX,event.clientY,drag.field,grip):null;
+        const box=target?.getBoundingClientRect();
+        const index=target?[...target.parentElement.children].indexOf(target):-1;
+        const after=!!box&&event.clientY>=box.top+box.height/2;
+        dragPointer=null;
+        if(grip.hasPointerCapture(event.pointerId))grip.releasePointerCapture(event.pointerId);
+        grip.style.cursor="grab";
+        clearGuidanceDropMarks();
+        if(index>=0&&index!==drag.index)
+          moveGuidanceBlock(drag.field,drag.index,index,after);
+        positionDragHandle();
+      };
+      grip.addEventListener("pointerup",finish);
+      grip.addEventListener("pointercancel",finish);
+      document.body.appendChild(grip);
+    }
+    const blockBox=active.block.getBoundingClientRect();
+    const viewport=window.innerWidth;
+    grip.hidden=blockBox.bottom<0||blockBox.top>window.innerHeight;
+    grip.style.left=Math.max(0,Math.min(viewport-32,blockBox.left-37))+"px";
+    grip.style.top=Math.max(0,Math.min(window.innerHeight-32,blockBox.top+4))+"px";
+  }
+  function clearGuidanceDropMarks(){
+    for(const node of document.querySelectorAll("[data-visual-drop-target]"))
+      node.removeAttribute("data-visual-drop-target");
+  }
+  function guidanceDropTarget(x,y,field,grip){
+    const prev=grip.style.pointerEvents;
+    grip.style.pointerEvents="none";
+    const hit=document.elementFromPoint(x,y);
+    grip.style.pointerEvents=prev;
+    const host=byId("visualGuidanceEditor")?.querySelector(
+      '[data-visual-field="'+field+'"]');
+    let target=hit;
+    while(target&&target.parentElement!==host)target=target.parentElement;
+    return target?.parentElement===host?target:null;
+  }
+  function moveGuidanceBlock(field,sourceIndex,targetIndex,after){
+    const host=byId("visualGuidanceEditor")?.querySelector(
+      '[data-visual-field="'+field+'"]');
+    const source=host?.children[sourceIndex],target=host?.children[targetIndex];
+    if(!source||!target||source===target)return false;
+    const original=host.innerHTML;
+    if(after)target.after(source);else target.before(source);
+    const selected=[...host.children].indexOf(source);
+    const proposed=cleanRichHtml(host);
+    const validation=validRichChange(field,proposed);
+    if(!validation?.ok){
+      host.innerHTML=original;
+      blockStatus("Move rejected. "+(validation?.errors?.[0]||"Invalid guidance markup."));
+      return false;
+    }
+    for(const mark of host.querySelectorAll("[data-visual-selected]"))
+      mark.removeAttribute("data-visual-selected");
+    selectedBlock={field,index:selected};
+    source.setAttribute("data-visual-selected","");
+    host.dispatchEvent(new Event("input",{bubbles:true}));
+    blockControls();
+    blockStatus("Content block moved. The existing draft validator has approved the new order.");
+    return true;
   }
 
   function editBlock(action){
@@ -198,6 +310,7 @@ window.RMSVisualGuidance=(()=>{
     if(action==="paragraph"||action==="heading"||action==="list"||action==="list-item")
       byId("visualBlockText").value="";
     blockControls();
+    positionDragHandle();
     blockStatus("Block updated in this stage's in-memory draft. "+
       "Use Validate draft to review the complete guidance record.");
   }
@@ -336,6 +449,8 @@ window.RMSVisualGuidance=(()=>{
       const button=event.target.closest("[data-guidance-format]");
       if(button)applyVisualFormat(button.dataset.guidanceFormat);
     });
+    document.addEventListener("scroll",positionDragHandle,true);
+    window.addEventListener("resize",positionDragHandle);
     panel.addEventListener("paste",event=>{
       const editable=event.target.closest("[data-visual-field]");
       if(!editable)return;
