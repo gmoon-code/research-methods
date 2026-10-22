@@ -382,6 +382,14 @@ try {
   await page.locator("#visualRemoveBlock").click();
   assert.match(await page.locator("#contentLearnHtml").inputValue(),
     /A new structured paragraph for testing/);
+  // Source-field editing invalidates prior block snapshots, preventing an
+  // Undo click from silently overwriting changes made outside the canvas.
+  assert.equal(await page.locator("#visualUndoBlock").isEnabled(),true);
+  await sourcePurpose.fill("Updated purpose after structural edits");
+  assert.equal(await page.locator("#visualUndoBlock").isDisabled(),true);
+  assert.equal(await page.locator("#visualRedoBlock").isDisabled(),true);
+  assert.equal((await page.locator('[data-visual-field="purpose"]').textContent()).trim(),
+    "Updated purpose after structural edits");
   assert.equal(await page.evaluate(()=>{
     const fields=["title","nav","purpose","learn_html","example_html","warning_html"];
     const ids=["contentTitle","contentNav","contentPurpose","contentLearnHtml",
