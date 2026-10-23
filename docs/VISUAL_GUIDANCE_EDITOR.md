@@ -62,3 +62,7 @@ When the teacher clicks a list item, the visual editor waits for the click to ch
 ## Place a new item next to the selected list item
 
 Inside a bulleted or numbered list, select the item that should serve as the insertion point. Choose the contextual **+ Text** menu, select **Item in selected list**, and use **Insert position** to place a new item immediately before or after it. If only the list container is selected, the original append-to-end behaviour remains available. The new item becomes selected for immediate editing, and the list type, existing item order, schema validation and structural Undo/Redo are retained. The browser regression covers inserting between two items, source synchronization, selection highlighting and Undo restoration.
+
+## Additional signed-out release smoke test
+
+The separate `tests/admin-anonymous-entry-smoke.mjs` Chromium test checks the public editor bookmark, direct Admin Workspace deep links, an expired local token, and a plausible but unverified local token. External network calls are blocked in every test context, and the browser must return to the sign-in page without revealing the Admin Workspace. The test uses no access codes, privileged tokens or publication operations. This **negative authentication check** supplements the simulated signed-in editor tests and does not replace the pending real authorised teacher login review.
