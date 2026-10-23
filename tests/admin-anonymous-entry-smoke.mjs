@@ -40,6 +40,7 @@ try{
   // signed backend verification to reveal the workspace.
   await unsigned.close();
   const expired=await contextWithNoExternalNetwork(()=>{
+    if(window!==window.top)return; // Sandboxed child frames cannot use sessionStorage.
     sessionStorage.setItem("rms_teacher_session_token_v1","local.invalid");
     sessionStorage.setItem("rms_teacher_session_expires_v1",
       "2000-01-01T00:00:00.000Z");
@@ -54,6 +55,7 @@ try{
   // Even a plausible unexpired local token has no authority: an external
   // verification call is blocked and the workspace fails closed.
   const unverified=await contextWithNoExternalNetwork(()=>{
+    if(window!==window.top)return; // Only prime the top-level teacher session.
     sessionStorage.setItem("rms_teacher_session_token_v1","local.invalid");
     sessionStorage.setItem("rms_teacher_session_expires_v1",
       "2099-01-01T00:00:00.000Z");
