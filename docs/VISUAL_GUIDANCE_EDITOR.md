@@ -66,3 +66,7 @@ Inside a bulleted or numbered list, select the item that should serve as the ins
 ## Additional signed-out release smoke test
 
 The separate `tests/admin-anonymous-entry-smoke.mjs` Chromium test checks the public editor bookmark, direct Admin Workspace deep links, an expired local token, and a plausible but unverified local token. External network calls are blocked in every test context, and the browser must return to the sign-in page without revealing the Admin Workspace. The test uses no access codes, privileged tokens or publication operations. This **negative authentication check** supplements the simulated signed-in editor tests and does not replace the pending real authorised teacher login review.
+
+## Live anonymous-route acceptance check
+
+The Chromium smoke-test workflow also runs the same **negative authentication test** against the current public GitHub Pages origin `https://gmoon-code.github.io/research-methods`. It checks the live editor bookmark, direct Admin Workspace URL, expired stored session and unverified token. It intercepts and blocks requests to any other origin, including the Cloudflare Worker, and neither sends access codes nor performs content updates. It is a useful deployed-route security check, while still **not** establishing that a real authorised administrator can log in successfully. The latter remains a private owner acceptance step before the Stage 2 merge.

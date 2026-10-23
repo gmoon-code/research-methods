@@ -75,6 +75,10 @@ jobs:
           node tests/admin-anonymous-entry-smoke.mjs
           node tests/admin-visual-guidance-smoke.mjs
           node --test tests/admin-local-preview.test.mjs
+      - name: Verify deployed teacher sign-in stays gated (no credentials or backend calls)
+        env:
+          ADMIN_TEST_URL: https://gmoon-code.github.io/research-methods
+        run: node tests/admin-anonymous-entry-smoke.mjs
       - name: Save editor screenshots
         if: always()
         uses: actions/upload-artifact@v4
