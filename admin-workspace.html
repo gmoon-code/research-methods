@@ -672,13 +672,14 @@
     .visual-guidance-status[data-warning="true"] {color:#883c4b;}
     .visual-block-tools {display:grid;gap:8px;padding:12px 0 14px;border-bottom:1px solid #d7ddde;}
     .visual-block-tools label {font-size:.8rem;font-weight:700;color:var(--muted);}
-    .visual-block-tools input {width:100%;padding:9px 11px;border:1px solid #a5b4b5;border-radius:3px;background:var(--surface,#fff);color:var(--text,#162326);font:inherit;}
+    .visual-block-tools textarea {box-sizing:border-box;width:100%;min-height:70px;resize:vertical;padding:9px 11px;border:1px solid #a5b4b5;border-radius:3px;background:var(--surface,#fff);color:var(--text,#162326);font:inherit;}
     .visual-block-actions {display:flex;gap:7px;flex-wrap:wrap;}
     .visual-block-actions button {background:var(--surface,#fff);color:var(--text,#162326);border:1px solid #a5b4b5;border-radius:3px;padding:7px 10px;font-size:.82rem;cursor:pointer;}
     .visual-block-actions button:hover:not(:disabled),.visual-block-actions button:focus-visible {border-color:#287b76;background:#edf7f3;}
     .visual-block-actions button:disabled {opacity:.48;cursor:not-allowed;}
     .visual-block-status {margin:0;font-size:.78rem;line-height:1.5;color:var(--muted);}
     .visual-guidance-rich > [data-visual-selected] {outline:2px solid #267e6d;outline-offset:3px;position:relative;}
+    .visual-guidance-rich [data-visual-selected-item] {outline:2px dashed #267e6d;outline-offset:2px;}
     @media(max-width:600px){.visual-guidance-card{padding:14px;}}
     .activity-authoring-panel{background:var(--surface,#fff);border:1px solid var(--border,#d7ddde);padding:20px;margin:24px 0;border-radius:5px;}
     .activity-authoring-panel .content-editor-heading{margin-bottom:10px;}
@@ -1485,16 +1486,26 @@
                     <button type="button" data-guidance-format="strong" title="Bold selected narrative text"><strong>Bold</strong></button>
                     <button type="button" data-guidance-format="em" title="Italicize selected narrative text"><em>Italic</em></button>
                     <span>Select text within teaching content, an example, or a warning to apply formatting.</span>
+                    <button type="button" id="visualUndoBlock" disabled title="Undo the last guidance block operation">Undo block</button>
+                    <button type="button" id="visualRedoBlock" disabled title="Redo an undone guidance block operation">Redo block</button>
                   </div>
                   <div class="visual-block-tools" aria-label="Arrange selected content blocks">
                     <label for="visualBlockText">Create a content block</label>
-                    <input id="visualBlockText" type="text" maxlength="1200" autocomplete="off"
-                      placeholder="Write text for a new paragraph or list item">
+                    <textarea id="visualBlockText" rows="3" maxlength="1200"
+                      placeholder="Write new text. For lists, put each item on its own line."></textarea>
                     <div class="visual-block-actions">
-                      <button id="visualAddParagraph" type="button" disabled>Add paragraph</button>
+                      <button id="visualAddHeading" type="button" disabled>Add section heading</button>
+                       <button id="visualAddParagraph" type="button" disabled>Add paragraph</button>
                       <button id="visualAddList" type="button" disabled>Add bullet list</button>
+                      <button id="visualAddOrderedList" type="button" disabled>Add numbered list</button>
+                      <button id="visualAddConcept" type="button" disabled>Add concept box</button>
                       <button id="visualAddListItem" type="button" disabled>Add list item</button>
-                      <button id="visualMoveBlockUp" type="button" disabled>Move up</button>
+                      <button id="visualDuplicateListItem" type="button" disabled>Duplicate item</button>
+                      <button id="visualMoveListItemUp" type="button" disabled>Item up</button>
+                      <button id="visualMoveListItemDown" type="button" disabled>Item down</button>
+                      <button id="visualRemoveListItem" type="button" disabled>Remove item</button>
+                      <button id="visualDuplicateBlock" type="button" disabled>Duplicate selected block</button>
+                       <button id="visualMoveBlockUp" type="button" disabled>Move up</button>
                       <button id="visualMoveBlockDown" type="button" disabled>Move down</button>
                       <button id="visualRemoveBlock" type="button" disabled>Remove block</button>
                     </div>

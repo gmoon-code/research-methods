@@ -16,10 +16,16 @@ on:
       - "assets/curriculum.js"
       - "assets/admin-content-studio-ui.js"
       - "tests/admin-visual-guidance-smoke.mjs"
+      - "tests/admin-anonymous-entry-smoke.mjs"
       - "tests/admin-local-preview.test.mjs"
       - "scripts/preview-admin-locally.mjs"
       - ".github/workflows/admin-visual-guidance.yml"
   workflow_dispatch:
+
+# A newer editor revision supersedes stale Chromium runs for the same PR.
+concurrency:
+  group: admin-visual-guidance-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -59,14 +65,20 @@ jobs:
           node --check assets/admin-content-workspace-navigation.js
           node --check assets/admin-inline-review-editor.js
           node --check tests/admin-visual-guidance-smoke.mjs
+          node --check tests/admin-anonymous-entry-smoke.mjs
           node --check tests/admin-local-preview.test.mjs
           node --check scripts/preview-admin-locally.mjs
       - name: Test visual editing with isolated simulated session
         env:
           ADMIN_TEST_URL: http://127.0.0.1:8765
         run: |
+          node tests/admin-anonymous-entry-smoke.mjs
           node tests/admin-visual-guidance-smoke.mjs
           node --test tests/admin-local-preview.test.mjs
+      - name: Verify deployed teacher sign-in stays gated (no credentials or backend calls)
+        env:
+          ADMIN_TEST_URL: https://gmoon-code.github.io/research-methods
+        run: node tests/admin-anonymous-entry-smoke.mjs
       - name: Save editor screenshots
         if: always()
         uses: actions/upload-artifact@v4

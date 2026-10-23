@@ -146,10 +146,36 @@ try {
   // without retaining any visual-editor selection attributes.
   const content=page.locator('[data-visual-field="learn_html"]');
   await content.locator(":scope > p").first().click();
+  const quick=page.locator("#visualGuidanceQuickToolbar");
+  await quick.waitFor({state:"visible"});
+  assert.equal(await quick.getAttribute("role"),"toolbar");
+  assert.equal(await quick.getAttribute("aria-label"),"Selected guidance block actions");
+  assert.equal(await quick.getByRole("button",{name:"Move selected guidance block up"}).isDisabled(),false,
+    "First paragraph must be able to move above the heading when selected");
+  assert.equal(await quick.getByRole("button",{name:"Duplicate selected guidance block"}).isEnabled(),true);
+  await quick.getByRole("button",{name:"Enter text for a new paragraph next to the selected block"}).click();
+  let composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.waitFor({state:"visible"});
+  assert.equal(await composer.getByLabel("Block type").evaluate(
+    el=>document.activeElement===el),true,
+    "In-place Add must focus its native block-type chooser");
+  assert.equal(await composer.getByLabel("Block type").inputValue(),"paragraph");
+  assert.equal(await composer.getByLabel("Block type").locator("option").count(),5);
   assert.equal(await page.locator("#visualAddParagraph").isEnabled(),true);
   assert.equal(await page.locator("#visualAddListItem").isDisabled(),true);
-  await page.locator("#visualBlockText").fill("A new structured paragraph for testing.");
-  await page.locator("#visualAddParagraph").click();
+  // A cancelled addition leaves the stage's original HTML untouched.
+  const beforeCancel=await page.locator("#contentLearnHtml").inputValue();
+  await composer.getByLabel("Block text").fill("Discard this temporary writing.");
+  await composer.getByLabel("Block text").press("Escape");
+  assert.equal(await composer.count(),0);
+  assert.equal(await page.locator("#contentLearnHtml").inputValue(),beforeCancel);
+  await quick.getByRole("button",{name:"Enter text for a new paragraph next to the selected block"}).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByRole("button",{name:"Add block"}).click();
+  assert.match(await composer.getByRole("status").textContent(),/Write some text/);
+  await composer.getByLabel("Block text").fill("A new structured paragraph for testing.");
+  await composer.getByRole("button",{name:"Add block"}).click();
+  assert.equal(await composer.count(),0);
   const newParagraph=content.locator(":scope > p")
     .filter({hasText:"A new structured paragraph for testing."});
   assert.equal(await newParagraph.count(),1);
@@ -160,6 +186,159 @@ try {
   assert.equal(await page.locator("#visualMoveBlockDown").isEnabled(),true);
   const selectedText=await content.locator(":scope > [data-visual-selected]").textContent();
   assert.match(selectedText,/A new structured paragraph for testing/);
+  assert.equal(await page.locator("#visualDuplicateBlock").isEnabled(),true);
+  await content.locator(":scope > [data-visual-selected]").click();
+  await quick.waitFor({state:"visible"});
+  await quick.getByRole("button",{name:"Duplicate selected guidance block"}).click();
+  assert.equal(await newParagraph.count(),2,
+    "Duplicating a paragraph should preserve the existing content and create a separate block");
+  assert.equal(((await page.locator("#contentLearnHtml").inputValue())
+    .match(/A new structured paragraph for testing/g)||[]).length,2,
+    "The authoritative Content Studio field must receive both copies");
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("data-visual-selected")),"The duplicated copy cannot retain inspector selection markers");
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("visualGuidanceQuickToolbar")),
+    "Floating quick actions must never be included in the authoritative source HTML");
+  // Duplicate automatically selects the newly created copy. Remove that
+  // copy directly without a redundant click that can hit another block.
+  assert.match(await content.locator(":scope > [data-visual-selected]").textContent(),
+    /A new structured paragraph for testing/);
+  await quick.waitFor({state:"visible"});
+  await quick.getByRole("button",{name:"Remove selected guidance block"}).click();
+  assert.equal(await newParagraph.count(),1,
+    "Remove should delete the selected duplicate while keeping the original. Status: "+
+      await page.locator("#visualBlockStatus").textContent()+
+      "; selected count: "+await content.locator(":scope > [data-visual-selected]").count());
+
+  // Drag a newly inserted block past its visible neighbour. Both are short,
+  // adjacent pieces of content, so the target remains in the viewport.
+  await newParagraph.click();
+  await page.locator("#visualBlockText").fill("Another paragraph to reposition.");
+  await page.locator("#visualAddParagraph").click();
+  const dragged=content.locator(":scope > p")
+    .filter({hasText:"Another paragraph to reposition."});
+  const targetParagraph=content.locator(":scope > p")
+    .filter({hasText:"A new structured paragraph for testing."});
+  await targetParagraph.scrollIntoViewIfNeeded();
+  await dragged.click();
+  const grip=page.locator("#visualGuidanceMoveHandle");
+  await grip.waitFor({state:"visible"});
+  const firstBox=await targetParagraph.boundingBox();
+  const gripBox=await grip.boundingBox();
+  assert(firstBox&&gripBox,"The selected block must have a visible drag handle");
+  await page.mouse.move(gripBox.x+gripBox.width/2,gripBox.y+gripBox.height/2);
+  await page.mouse.down();
+  await page.mouse.move(firstBox.x+Math.max(25,firstBox.width/4),firstBox.y+5,{steps:7});
+  await page.mouse.up();
+  const paragraphs=await content.locator(":scope > p").allTextContents();
+  assert(paragraphs.indexOf("Another paragraph to reposition.")<
+    paragraphs.indexOf("A new structured paragraph for testing."),
+    "Dragging above the neighbour must reorder its top-level content blocks");
+  const authoritative=await page.locator("#contentLearnHtml").inputValue();
+  assert(authoritative.indexOf("Another paragraph to reposition.")>=0,
+    "Moved text must remain in the authoritative guidance field");
+  assert(!authoritative.includes("data-visual-drop-target")&&
+    !authoritative.includes("visualGuidanceMoveHandle"),
+    "Drag overlays must never enter the stage content HTML");
+
+  // Insert a heading directly from the on-page composer using the same
+  // validator as the long-form block controls.
+  await content.locator(":scope > [data-visual-selected]").click();
+  await quick.getByRole("button",{name:"Enter text for a new paragraph next to the selected block"}).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByLabel("Block type").selectOption("heading");
+  await composer.getByLabel("Block text").fill("New guidance subsection");
+  await composer.getByLabel("Block text").press("Control+Enter");
+  assert.equal(await composer.count(),0);
+  assert.equal(await content.locator(":scope > h3")
+    .filter({hasText:"New guidance subsection"}).count(),1,
+    "Section headings should be created inside the selected guidance field");
+  assert.match(await page.locator("#contentLearnHtml").inputValue(),
+    /<h3>New guidance subsection<\/h3>/,
+    "New headings must synchronize with the existing schema-validated draft");
+  await page.locator("#visualRemoveBlock").click();
+  assert.equal((await page.locator("#contentLearnHtml").inputValue())
+    .includes("New guidance subsection"),false,
+    "Removing the selected heading must restore the prior content");
+
+  // An on-page concept box uses the exact same schema validation as
+  // existing paragraph/heading/list insertion, without active editor markers.
+  await content.locator(":scope > [data-visual-selected]").click();
+  await quick.getByRole("button",{
+    name:"Enter text for a new paragraph next to the selected block"
+  }).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByLabel("Block type").selectOption("concept");
+  await composer.getByLabel("Block text").fill(
+    "Clarify what evidence would support the inference.");
+  await composer.getByRole("button",{name:"Add block"}).click();
+  assert.equal(await composer.count(),0);
+  const concept=content.locator(":scope > div.concept-box")
+    .filter({hasText:"Clarify what evidence would support the inference."});
+  assert.equal(await concept.count(),1);
+  assert.equal(await concept.locator(":scope > p").count(),1);
+  assert.match(await page.locator("#contentLearnHtml").inputValue(),
+    /<div class="concept-box"><p>Clarify what evidence would support the inference\.<\/p><\/div>/);
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("data-visual-selected")));
+  await page.locator("#visualRemoveBlock").click();
+  assert.equal(await concept.count(),0);
+
+  // The on-page composer accepts complete multi-item lists. Numbered items
+  // retain their order, empty lines are ignored and draft HTML is escaped.
+  await content.locator(":scope > [data-visual-selected]").click();
+  await quick.getByRole("button",{
+    name:"Enter text for a new paragraph next to the selected block"
+  }).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByLabel("Block type").selectOption("ordered-list");
+  assert.equal(await composer.getByText(
+    "Each non-empty line becomes a separate list item.").isVisible(),true);
+  await composer.getByLabel("Block text").fill(
+    "Define the question\n\nCompare signals & noise\nExplain the finding");
+  await composer.getByRole("button",{name:"Add block"}).click();
+  assert.equal(await composer.count(),0);
+  const ordered=content.locator(":scope > ol[data-visual-selected]");
+  assert.deepEqual(await ordered.locator(":scope > li").allTextContents(),[
+    "Define the question","Compare signals & noise","Explain the finding"]);
+  assert.match(await page.locator("#contentLearnHtml").inputValue(),
+    /<ol><li>Define the question<\/li><li>Compare signals &amp; noise<\/li><li>Explain the finding<\/li><\/ol>/);
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("data-visual-selected")));
+  await page.locator("#visualRemoveBlock").click();
+
+  // Insert before an existing block without creating it below and moving it.
+  const originalSelected=content.locator(":scope > [data-visual-selected]");
+  const nextBlockText=await originalSelected.textContent();
+  await originalSelected.click();
+  await quick.getByRole("button",{
+    name:"Enter text for a new paragraph next to the selected block"
+  }).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByLabel("Insert position").selectOption("before");
+  await composer.getByLabel("Block text").fill("Place this before the selected guidance block.");
+  await composer.getByRole("button",{name:"Add block"}).click();
+  const before=content.locator(":scope > p[data-visual-selected]");
+  assert.equal(await before.count(),1);
+  assert.equal(await before.evaluate(el=>el.nextElementSibling?.textContent),
+    nextBlockText,"Before insertion must precede the original selected block");
+  assert((await page.locator("#contentLearnHtml").inputValue()).includes(
+    "Place this before the selected guidance block."));
+  await page.locator("#visualRemoveBlock").click();
+
+  // Existing bullet list insertion also accepts several lines in the composer.
+  await content.locator(":scope > [data-visual-selected]").click();
+  await quick.getByRole("button",{
+    name:"Enter text for a new paragraph next to the selected block"
+  }).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByLabel("Block type").selectOption("list");
+  await composer.getByLabel("Block text").fill("Source A\nSource B");
+  await composer.getByRole("button",{name:"Add block"}).click();
+  assert.deepEqual(await content.locator(
+    ":scope > ul[data-visual-selected] > li").allTextContents(),["Source A","Source B"]);
+  await page.locator("#visualRemoveBlock").click();
 
   await page.locator("#visualBlockText").fill("First new list item");
   await page.locator("#visualAddList").click();
@@ -169,13 +348,115 @@ try {
   await page.locator("#visualBlockText").fill("Second new list item");
   await page.locator("#visualAddListItem").click();
   assert.equal(await content.locator(":scope > ul[data-visual-selected] > li").count(),2);
+
+  // Adding a list item from the preview supports insertion immediately
+  // before the selected item, preserving order without extra movements.
+  await content.locator(":scope > ul[data-visual-selected] > li").nth(1).click();
+  await quick.getByRole("button",{
+    name:"Enter text for a new paragraph next to the selected block"
+  }).click();
+  composer=page.getByRole("dialog",{name:"Add guidance block here"});
+  await composer.getByLabel("Block type").selectOption("list-item");
+  assert.equal(await composer.getByLabel("Insert position").isVisible(),true);
+  await composer.getByLabel("Insert position").selectOption("before");
+  await composer.getByLabel("Block text").fill("Inserted between the original items");
+  await composer.getByRole("button",{name:"Add block"}).click();
+  assert.deepEqual(await content.locator(":scope > ul[data-visual-selected] > li").allTextContents(),
+    ["First new list item","Inserted between the original items","Second new list item"]);
+  assert.equal(await content.locator(
+    ":scope > ul[data-visual-selected] > li[data-visual-selected-item]").textContent(),
+    "Inserted between the original items");
+  await page.locator("#visualUndoBlock").click();
+  const restoredList=content.locator(":scope > ul").filter({hasText:"First new list item"});
+  assert.deepEqual(await restoredList.locator(":scope > li").allTextContents(),
+    ["First new list item","Second new list item"]);
+  await restoredList.locator(":scope > li").nth(1).click();
   assert(!((await page.locator("#contentLearnHtml").inputValue())
     .includes("data-visual-selected")), "Selection highlights must never enter the saved content");
+  // Select an individual list item directly in the preview. The validated
+  // contextual controls rearrange the item inside its original list.
+  const itemList=content.locator(":scope > ul[data-visual-selected]");
+  await itemList.locator(":scope > li").nth(1).click();
+  assert.equal(await page.locator("#visualMoveListItemUp").isEnabled(),true);
+  assert.equal(await page.locator("#visualMoveListItemDown").isDisabled(),true);
+  assert.equal(await quick.getByRole("button",{name:"Move selected list item up"}).isVisible(),true);
+  const listBeforeMove=await page.locator("#contentLearnHtml").inputValue();
+  await quick.getByRole("button",{name:"Move selected list item up"}).click();
+  assert.deepEqual(await itemList.locator(":scope > li").allTextContents(),
+    ["Second new list item","First new list item"]);
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("data-visual-selected-item")),
+    "List item selection markers must never enter saved source");
+  await page.locator("#visualUndoBlock").click();
+  assert.equal(await page.locator("#contentLearnHtml").inputValue(),listBeforeMove,
+    "Undo must restore the original order of the two list items");
+  await page.locator("#visualRedoBlock").click();
+  // The seed guidance also contains a bullet list. Target the new list
+  // by its unique item text so its source neighbours do not affect assertions.
+  const workingUl=content.locator(":scope > ul").filter({hasText:"First new list item"});
+  assert.deepEqual(await workingUl.locator(":scope > li").allTextContents(),
+    ["Second new list item","First new list item"]);
+  await workingUl.locator(":scope > li").first().click();
+  await quick.getByRole("button",{name:"Remove selected list item"}).click();
+  assert.deepEqual(await workingUl.locator(":scope > li").allTextContents(),
+    ["First new list item"]);
+  await workingUl.locator(":scope > li").first().click();
+  assert.equal(await workingUl.locator(":scope > li[data-visual-selected-item]").count(),1,
+    "Pointer selection must remain on the list item when the contenteditable region receives focus");
+  assert.equal(await page.locator("#visualDuplicateListItem").isEnabled(),true,
+    "The remaining list item must be selected for duplication");
+  await quick.getByRole("button",{name:"Duplicate selected list item"}).click();
+  assert.deepEqual(await workingUl.locator(":scope > li").allTextContents(),
+    ["First new list item","First new list item"]);
+  assert(!((await page.locator("#contentLearnHtml").inputValue())
+    .includes("data-visual-selected-item")));
+  await page.locator("#visualUndoBlock").click();
+  assert.deepEqual(await workingUl.locator(":scope > li").allTextContents(),
+    ["First new list item"]);
+  await workingUl.locator(":scope > li").first().click();
+  assert.equal(await page.locator("#visualRemoveListItem").isDisabled(),true,
+    "The last list item must be protected from removal");
   await page.locator("#visualRemoveBlock").click();
   assert(!((await page.locator("#contentLearnHtml").inputValue())
     .includes("First new list item")), "Removing a list must update the draft");
+
+  // The detailed inspector uses a multiline composer and shares the same
+  // numbered-list/concept-box actions and production validation.
+  const beforeInspectorList=await page.locator("#contentLearnHtml").inputValue();
+  await page.locator("#visualBlockText").fill("Identify evidence\nDocument uncertainty");
+  await page.locator("#visualAddOrderedList").click();
+  assert.deepEqual(await content.locator(
+    ":scope > ol[data-visual-selected] > li").allTextContents(),
+    ["Identify evidence","Document uncertainty"]);
+  assert.match(await page.locator("#contentLearnHtml").inputValue(),
+    /<ol><li>Identify evidence<\/li><li>Document uncertainty<\/li><\/ol>/);
+  assert.equal(await page.locator("#visualUndoBlock").isEnabled(),true);
+  await page.locator("#visualUndoBlock").click();
+  assert.equal(await page.locator("#contentLearnHtml").inputValue(),beforeInspectorList,
+    "Undo block must restore source markup from before the list insertion");
+  assert.equal(await page.locator("#visualRedoBlock").isEnabled(),true);
+  await page.locator("#visualRedoBlock").click();
+  const workingOl=content.locator(":scope > ol").filter({hasText:"Document uncertainty"});
+  assert.deepEqual(await workingOl.locator(":scope > li").allTextContents(),
+    ["Identify evidence","Document uncertainty"]);
+  await content.locator(":scope > ol").filter({hasText:"Document uncertainty"}).click();
+  await page.locator("#visualRemoveBlock").click();
+  await page.locator("#visualBlockText").fill("Discuss the scope of the explanation.");
+  await page.locator("#visualAddConcept").click();
+  assert.equal(await content.locator(
+    ":scope > div.concept-box[data-visual-selected] > p").textContent(),
+    "Discuss the scope of the explanation.");
+  await page.locator("#visualRemoveBlock").click();
   assert.match(await page.locator("#contentLearnHtml").inputValue(),
     /A new structured paragraph for testing/);
+  // Source-field editing invalidates prior block snapshots, preventing an
+  // Undo click from silently overwriting changes made outside the canvas.
+  assert.equal(await page.locator("#visualUndoBlock").isEnabled(),true);
+  await sourcePurpose.fill("Updated purpose after structural edits");
+  assert.equal(await page.locator("#visualUndoBlock").isDisabled(),true);
+  assert.equal(await page.locator("#visualRedoBlock").isDisabled(),true);
+  assert.equal((await page.locator('[data-visual-field="purpose"]').textContent()).trim(),
+    "Updated purpose after structural edits");
   assert.equal(await page.evaluate(()=>{
     const fields=["title","nav","purpose","learn_html","example_html","warning_html"];
     const ids=["contentTitle","contentNav","contentPurpose","contentLearnHtml",
@@ -203,6 +484,12 @@ try {
   await page.locator("#contentBrowserList button").nth(1).click();
   assert.equal(await page.locator("#visualAddParagraph").isDisabled(),true,
     "Block actions must reset when changing to a different stage");
+  assert.equal(await page.locator("#visualDuplicateBlock").isDisabled(),true,
+    "A block from a previous stage cannot be duplicated after changing stages");
+  assert.equal(await page.locator("#visualUndoBlock").isDisabled(),true,
+    "Block undo history must never cross stage boundaries");
+  assert.equal(await quick.count(),0,
+    "The in-page actions must be removed when a different stage is selected");
   await page.locator("#visualGuidanceRecord").waitFor();
   assert.match(await page.locator("#visualGuidanceRecord").textContent(),/Stage 2/);
   assert.notEqual(await page.locator("#contentTitle").inputValue(),"New visual draft title");
