@@ -24,7 +24,7 @@ window.RMSCurriculum = (() => {
           <li>What science topics make you keep reading after class?</li>
           <li>What real-world problems feel unresolved or poorly understood?</li>
           <li>What claims do people repeat that you would like to check with evidence?</li>
-          <li>What patterns have you noticed in school, nature, technology, health, behavior, or your community?</li>
+          <li>What patterns have you noticed in school, nature, technology, health, behaviour, or your community?</li>
           <li>What tools, datasets, organisms, materials, or settings can you realistically access?</li>
         </ul>`,
       example:`<strong>Example</strong><p>Broad interest: memory. Observation: I remember vocabulary differently depending on how I study. Possible research direction: compare study procedures using delayed recall.</p>`,
@@ -118,7 +118,7 @@ window.RMSCurriculum = (() => {
         </ul>
         <div class="concept-box"><strong>Wording matters</strong><br>Observational questions should usually use terms such as association, relationship, difference, pattern, or prediction. Causal words such as effect, causes, increases, reduces, or leads to require a design that can support causal inference.</div>
         <p>The question should identify the outcome or phenomenon, the comparison or predictor when relevant, and the population/system/context when that boundary matters.</p>`,
-      example:`<strong>Refinement example</strong><p>Weak: Does music help people study? Better experimental question: How does instrumental background music compared with silence affect reading-comprehension accuracy during 20-minute sessions among students under the tested conditions?</p>`,
+      example:`<strong>Refinement example</strong><p>Weak: Does music help people study? Better experimental question: Among students completing a 20-minute reading task, how does instrumental background music, compared with silence, affect reading-comprehension accuracy?</p>`,
       warning:`<strong>Question problems</strong><ul><li>Leading questions that assume the result.</li><li>Terms such as “better,” “successful,” or “healthy” with no definition.</li><li>Questions that require data you cannot obtain.</li><li>Causal wording for correlational designs.</li></ul>`,
       sections:[
         {title:"Draft several versions",desc:"Variation helps expose hidden assumptions.",fields:[
