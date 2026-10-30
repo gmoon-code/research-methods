@@ -2,7 +2,7 @@
 
 ## Assigned Sodium Chloride Concentration and Early Radicle Growth in Radish Seeds
 
-> **Instructional status.** This paper demonstrates how a research project can remain aligned from question through conclusion. The literature citations below are real and verified. The procedure details, dataset, statistical results, and findings are synthetic teaching material. They do not document an actual conducted experiment and should not be cited as empirical evidence.
+> **Instructional status.** This paper demonstrates how a research project can remain aligned from question through conclusion. The literature citations below are real and verified. The procedure details, dataset, statistical results, and findings are synthetic teaching material. They do not document an actual conducted experiment and should not be cited as empirical evidence. This 72-hour radicle-length study is a separate illustration from the Day 7 shoot-length examples elsewhere in the Studio.
 
 ## Abstract
 
