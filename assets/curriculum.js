@@ -451,13 +451,13 @@ window.RMSCurriculum = (() => {
           <li>Analyze limitations by explaining how each one changes interpretation.</li>
           <li>Discuss generalizability, practical or theoretical implications, and future research.</li>
         </ol>
-        <div class="concept-box"><strong>Limitation ≠ apology</strong><br>A useful limitation statement identifies a feature of the design, explains the direction or type of uncertainty it creates, and shows how a future study could address it.</div>
+        <div class="concept-box"><strong>Limitation ≠ apology</strong><br>A useful limitation statement identifies a feature of the design and explains how it restricts a claim. Where relevant, it may also suggest what further evidence or a different design could clarify.</div>
         <p>For correlational work, explicitly consider confounding and reverse causation. For experiments, examine assignment, control, adherence, expectancy, measurement, attrition, and generalization. For qualitative work, discuss sampling, reflexivity, coding decisions, credibility, and transferability. For reviews, discuss search coverage, study quality, heterogeneity, and publication bias where relevant.</p>`,
       example:`<strong>Strong limitation logic</strong><p>“Because study condition was confounded with time of day, the observed difference cannot be attributed uniquely to the intervention. A future counterbalanced design would separate these explanations.”</p>`,
       warning:`<strong>Overclaiming</strong><ul><li>Statistical significance does not turn an observational study into an experiment.</li><li>A large effect in one small convenience sample does not guarantee a population effect.</li><li>Do not claim a mechanism you did not measure as if it were observed.</li></ul>`,
       sections:[
         {title:"Discussion architecture",desc:"Build interpretation around anchor findings.",fields:[
-          ["directAnswer","Direct answer to the research question","textarea"],["interpret1","Interpretation of anchor finding 1 with evidence boundary","textarea"],["interpret2","Interpretation of anchor finding 2 with evidence boundary","textarea"],["litCompare","How findings converge with or differ from prior literature","textarea"],["alternatives","Alternative explanations or mechanisms","textarea"],["limitations","At least two limitations and exactly how each restricts claims","textarea"],["implications","Realistic implications and who/what they apply to","textarea"],["future","Specific future research that follows from the findings","textarea"],["discussionDraft","Discussion draft","textarea"]
+          ["directAnswer","Direct answer to the research question","textarea"],["interpret1","Interpretation of anchor finding 1 with evidence boundary","textarea"],["interpret2","Interpretation of anchor finding 2 with evidence boundary","textarea"],["litCompare","How findings converge with or differ from prior literature","textarea"],["alternatives","Alternative explanations or mechanisms","textarea"],["limitations","Relevant limitations and how each restricts claims","textarea"],["implications","Realistic implications and who/what they apply to","textarea"],["future","Specific future research that follows from the findings","textarea"],["discussionDraft","Discussion draft","textarea"]
         ]}
       ],
       checks:["The first part answers the research question.","Interpretations are tied to actual results.","Limitations explain how interpretation is restricted.","I separated plausible mechanisms from mechanisms that were directly measured."]
@@ -470,7 +470,7 @@ window.RMSCurriculum = (() => {
         <h3>Conclusion</h3>
         <p>A conclusion should synthesize the answer, strongest evidence, main boundary, and reasonable implication without adding new results or new literature.</p>
         <h3>Abstract</h3>
-        <p>Write the abstract after the paper is stable. In most empirical research papers it briefly states the problem or purpose, method/design and sample or system, most important results, and main conclusion. Exact length and structure depend on the assignment or journal.</p>
+        <p>Write the abstract after the paper is stable. In an empirical research paper, it usually states the purpose, study design and sample or system, principal findings, and main conclusion. Reviews, proposals, and other research genres require summaries suited to their actual work. Exact length and structure depend on the assignment or journal.</p>
         <p>Abstracts generally avoid detailed calculations, long literature reviews, unexplained abbreviations, and citations unless a discipline or assignment specifically requires them.</p>
         <h3>Title</h3>
         <p>A strong title identifies the central variables/phenomenon, population or context when useful, and sometimes the design. It should be informative without claiming more than the study established.</p>`,
@@ -481,7 +481,7 @@ window.RMSCurriculum = (() => {
           ["conclusionDraft","Conclusion","textarea"],["abstractDraft","Abstract","textarea"],["titleDraft","Proposed title","text"],["keywords","Keywords","text"]
         ]}
       ],
-      checks:["The conclusion contains no new evidence.","The abstract states purpose, method, central result, and conclusion at the correct level of certainty.","The title describes the study without overstating causality or generalizability."]
+      checks:["The conclusion contains no new evidence.","The abstract reflects the work’s purpose, approach, findings when available, and main conclusion without overstating certainty.","The title describes the study without overstating causality or generalizability."]
     },
     {
       id:18, phase:"write", title:"Citations, references, and final alignment audit",
@@ -493,11 +493,11 @@ window.RMSCurriculum = (() => {
           <li>A citation should support the exact nearby claim.</li>
           <li>Paraphrasing still requires citation.</li>
           <li>Direct quotations require quotation formatting and a locator such as a page number when the style calls for it.</li>
-          <li>Every in-text citation should have a matching reference entry and vice versa.</li>
+          <li>Every citation to a recoverable source should correspond to a reference-list entry, and listed references should be cited in the text. Follow the required style for exceptions such as personal communications.</li>
           <li>Verify references against the original source. Never trust an AI-generated reference without checking it.</li>
         </ul>
         <h3>APA 7 essentials for this studio</h3>
-        <p>Use author–date in-text citations. Two authors are named in each citation. For three or more authors, APA 7 normally uses the first author plus “et al.” from the first citation. Journal references typically include authors, year, article title, journal title, volume, issue when applicable, pages or article number, and DOI as a URL when available.</p>
+        <p>Use author–date in-text citations. For two authors, use both surnames, joined by “and” in narrative citations or “&” in parentheses. For three or more authors, APA 7 normally uses the first surname followed by “et al.” from the first citation, except where more names are needed to avoid ambiguity. Journal references typically include authors, year, article title, journal title, volume, issue when applicable, pages or article number, and DOI as a URL when available.</p>
         <div class="concept-box"><strong>Final alignment question</strong><br>Could a reader start with your research question and trace a continuous logical path through the variables/constructs, method, dataset, analysis, results, and final claim?</div>`,
       example:`<strong>APA in-text examples</strong><p>Narrative: Chen and Lee (2024) … &nbsp; Parenthetical: (Chen & Lee, 2024). Three or more authors: Chen et al. (2024).</p>`,
       warning:`<strong>Final integrity check</strong><ul><li>No fabricated references.</li><li>No citation attached to a claim the paper does not support.</li><li>No causal language beyond the design.</li><li>No p-value interpreted as effect size or probability the hypothesis is true.</li></ul>`,
@@ -508,7 +508,7 @@ window.RMSCurriculum = (() => {
           ["citationAudit","Citation/reference issues I still need to fix","textarea"],["finalEdits","Final methodological or writing revisions","textarea"]
         ]}
       ],
-      checks:["Every factual/research claim that needs support has an appropriate source.","Every in-text citation has a matching reference entry and vice versa.","The final conclusion does not exceed the design or sample.","The question, method, data, analysis, results, and discussion form one aligned chain."]
+      checks:["Every factual/research claim that needs support has an appropriate source.","Recoverable sources have matching in-text citations and reference entries; style-specific exceptions are handled appropriately.","The final conclusion does not exceed the design or sample.","The question, method, data, analysis, results, and discussion form one aligned chain."]
     }
   ];
 
