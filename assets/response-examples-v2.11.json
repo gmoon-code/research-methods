@@ -1229,7 +1229,7 @@
     },
     "limitations": {
       "stage": 16,
-      "label": "At least two limitations and exactly how each restricts claims",
+      "label": "Relevant limitations and how each restricts claims",
       "type": "textarea",
       "expected_shape": "at least two concrete limitations and their consequences",
       "typical_length": "about 45–145 words",
