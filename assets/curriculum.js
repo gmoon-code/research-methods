@@ -376,7 +376,7 @@ window.RMSCurriculum = (() => {
           <li>Look for outliers, ceiling/floor effects, skew, clustering, and repeated observations.</li>
         </ol>
         <div class="concept-box"><strong>Descriptive statistics depend on data type</strong><br>Numerical data may use mean/SD and median/IQR. Categorical data use counts and proportions. Paired and repeated data should preserve within-unit relationships. Qualitative evidence requires a transparent corpus and coding trail.</div>`,
-      example:`<strong>Example</strong><p>For a paired study, do not show only two separate bar means. A paired dot or line plot reveals whether the same participants improved, declined, or varied across conditions.</p>`,
+      example:`<strong>Example</strong><p>For paired measurements, do not show only two separate group means. A paired dot or line plot shows how each participant’s recorded value changed across conditions, without assuming that a change is an improvement.</p>`,
       warning:`<strong>Data cleaning is not result improvement</strong><ul><li>Do not remove an outlier because it weakens the effect.</li><li>Do not replace missing observations with invented values.</li><li>Do not silently change units or categories.</li></ul>`,
       sections:[
         {title:"Data integrity log",desc:"Record what happened to the data.",fields:[
@@ -390,8 +390,8 @@ window.RMSCurriculum = (() => {
       nav:"Statistical analysis",
       purpose:"Select analysis from the research question, design structure, outcome type, and assumptions. Statistical significance is one part of interpretation, not the goal of the study.",
       learn:`
-        <h3>Start with the estimand, not the test name</h3>
-        <p>First ask what quantity answers the research question. A mean difference? A paired change? A proportion difference? An association? A slope? A theme? The test follows from that structure.</p>
+        <h3>Begin with the question, not the test name</h3>
+        <p>For quantitative research, specify the quantity you want to estimate, such as a mean difference, paired change, proportion, association, or slope. That target is the estimand. In qualitative research, identify the phenomenon and interpretive question guiding the analysis. Analytical methods should follow the research question and design.</p>
         <h3>Core interpretation</h3>
         <ul>
           <li>Report effect magnitude in meaningful units when possible.</li>
@@ -401,12 +401,12 @@ window.RMSCurriculum = (() => {
           <li>A non-significant result is not proof of “no effect.” Consider the estimate, interval, power/precision, and study limitations.</li>
         </ul>
         <div class="concept-box"><strong>Assumptions are design-specific</strong><br>Independence comes from the study design. For a paired t-test, normality concerns the difference scores, not each condition separately. Equal variance is not required for Welch's two-sample t-test. Regression assumptions concern residuals and model form. Do not choose a test from a normality test alone.</div>`,
-      example:`<strong>Example</strong><p>Two independent groups with a continuous outcome → compare distributions and means; Welch's t-test is a strong default when mean comparison is appropriate because it does not require equal population variances. Report the raw mean difference, CI, and an effect size.</p>`,
+      example:`<strong>Example</strong><p>For two independent groups with a continuous outcome, inspect the distributions and the design before comparing means. Welch's t-test is often appropriate when its other assumptions are reasonable, and it does not require equal population variances. Report the mean difference, its uncertainty interval, and a meaningful effect size.</p>`,
       warning:`<strong>Statistical red flags</strong><ul><li>Running many tests until something is significant.</li><li>Treating repeated observations as independent.</li><li>Using percentages as if they were raw counts in chi-square.</li><li>Choosing Pearson versus Spearman solely from a normality p-value.</li><li>Reporting p without magnitude or context.</li></ul>`,
       custom:"statsWizard",
       sections:[
         {title:"Analysis decision log",desc:"Save the reasoning behind the analysis.",fields:[
-          ["primaryEstimand","The quantity that most directly answers my question","textarea"],["analysisChoice","Primary analysis and justification","textarea"],["assumptionChecks","Assumptions/design checks and what I observed","textarea"],["effectSizePlan","Effect size and/or interval estimate","textarea"],["multiplicity","Multiple comparisons or exploratory analyses and how I will handle/label them","textarea"]
+          ["primaryEstimand","The quantity or phenomenon that most directly answers my question","textarea"],["analysisChoice","Primary analysis and justification","textarea"],["assumptionChecks","Assumptions/design checks and what I observed","textarea"],["effectSizePlan","Effect size and/or interval estimate","textarea"],["multiplicity","Multiple comparisons or exploratory analyses and how I will handle/label them","textarea"]
         ]}
       ],
       checks:["My analysis matches the design structure and outcome type.","I identified the effect or quantity I want to estimate, not only a test name.","I will report magnitude and uncertainty where appropriate.","I understand what the p-value does and does not mean."]
@@ -414,7 +414,7 @@ window.RMSCurriculum = (() => {
     {
       id:15, phase:"analyze", title:"Write the Results section",
       nav:"Results",
-      purpose:"Report what the analysis produced in a traceable, neutral way. Keep explanation and implications for the Discussion.",
+      purpose:"Report what the analysis supports in a traceable way. Where Results and Discussion are separate, distinguish findings from broader explanations and implications.",
       learn:`
         <h3>Results answer “What did the evidence show?”</h3>
         <p>Every reported number, table, figure, code, or theme should trace back to the dataset or analysis output.</p>
@@ -427,15 +427,15 @@ window.RMSCurriculum = (() => {
           <li>Report weak, null, unexpected, and contradictory findings as transparently as favorable findings.</li>
         </ol>
         <div class="concept-box"><strong>Quantitative reporting</strong><br>Include the estimate or raw difference, units, uncertainty interval when appropriate, test statistic and degrees of freedom when a test is used, p-value, and effect size where meaningful. The exact reporting format depends on analysis.</div>
-        <div class="concept-box"><strong>Qualitative reporting</strong><br>Explain the analytic approach, themes/codes, prevalence carefully if counted, and representative evidence. Keep a traceable codebook and do not turn qualitative frequency counts into unsupported population statistics.</div>`,
+        <div class="concept-box"><strong>Qualitative reporting</strong><br>Describe the analytic approach and the patterns or interpretations supported by the evidence, using relevant excerpts or cases. Explain any reported counts carefully, and do not turn qualitative frequencies into unsupported population statistics. Document the analytic decisions and coding process where applicable.</div>`,
       example:`<strong>Correlational wording</strong><p>“Screen time and sleep duration were negatively associated in the analyzed sample…” not “Screen time reduced sleep.”</p>`,
-      warning:`<strong>Keep Results separate</strong><ul><li>Do not explain mechanisms here if your course separates Results and Discussion.</li><li>Do not hide non-significant or small results.</li><li>Do not duplicate every table value in prose.</li></ul>`,
+      warning:`<strong>Keep findings grounded in evidence</strong><ul><li>If your course separates Results and Discussion, reserve broader explanations and implications for the Discussion. Qualitative findings may include interpretations grounded in the data.</li><li>Do not hide non-significant or small results.</li><li>Do not duplicate every table value in prose.</li></ul>`,
       sections:[
         {title:"Results map",desc:"Plan traceability before writing paragraphs.",fields:[
           ["analysisSample","Final analyzed sample/corpus and exclusions","textarea"],["result1","Primary result and exact supporting output/table/figure","textarea"],["result2","Secondary result and exact supporting output/table/figure","textarea"],["unexpected","Null, weak, unexpected, or contradictory result","textarea"],["resultsDraft","Results section draft","textarea"]
         ]}
       ],
-      checks:["Every key result is traceable to raw/cleaned data or an analysis output.","I used language appropriate to the research design.","I reported weak or non-significant results transparently.","Interpretation and recommendations are reserved for the Discussion."]
+      checks:["Every key result is traceable to raw/cleaned data or an analysis output.","I used language appropriate to the research design.","I reported weak or non-significant results transparently.","I distinguished evidence-supported findings from broader implications, following my assignment's reporting structure."]
     },
     {
       id:16, phase:"write", title:"Write the Discussion and limitations",
