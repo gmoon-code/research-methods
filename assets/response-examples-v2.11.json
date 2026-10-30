@@ -803,7 +803,7 @@
       "typical_length": "about 15–80 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Everyone in my class.",
-      "good_working_response": "Hypothetical proposal: up to 30 students in one Grade 11 biology class might be eligible to participate, subject to approvals and voluntary consent. The final report would state how many actually enrolled and contributed analysable data.",
+      "good_working_response": "For a hypothetical proposal, up to 30 students in one Grade 11 biology class might be eligible to participate, subject to approvals and voluntary consent. The final report would state how many actually enrolled and contributed analysable data.",
       "detailed_response": "",
       "why_it_works": "Differentiate an eligible or planned sample from a completed sample. Do not present a hypothetical recruitment count as an observed result."
     },
@@ -887,7 +887,7 @@
       "typical_length": "about 25–110 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Some seeds, water and equipment.",
-      "good_working_response": "For an illustrative 18-dish study: 18 labelled Petri dishes; 90 radish seeds from one batch; uniform substrate; 0, 50 and 100 mM NaCl solutions; dispenser for equal solution volumes; millimetre-marked ruler; spreadsheet template with dish and seed IDs.",
+      "good_working_response": "An illustrative 18-dish study would need 18 labelled Petri dishes; 90 radish seeds from one batch; uniform substrate; 0, 50 and 100 mM NaCl solutions; a dispenser for equal solution volumes; a millimetre-marked ruler; and a spreadsheet with dish and seed IDs.",
       "detailed_response": "",
       "why_it_works": "List the items needed for this proposed protocol, including quantities that affect its interpretation. Example numbers are planning assumptions, not a sample-size justification."
     },
@@ -899,9 +899,9 @@
       "typical_length": "120–250 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Give the seeds salt, then check whether they grow.",
-      "good_working_response": "Illustrative sequence: label and assign 18 dishes; plant five seeds per dish; apply the assigned solution volume; standardise growing conditions; record each seed's Day 7 shoot length; calculate one mean per dish.",
+      "good_working_response": "In an illustrative sequence, label and assign 18 dishes; plant five seeds per dish; apply the assigned solution volume; standardise growing conditions; record each seed's Day 7 shoot length; and calculate one mean per dish.",
       "detailed_response": "This is an illustrative protocol to adapt before collecting data. Label 18 Petri dishes with neutral identifiers and use a documented random allocation to assign six dishes to each of three solution concentrations, 0, 50 or 100 mM NaCl. Record the allocation key separately from the measurement sheet. Place five radish seeds from the same batch on a consistent substrate in each dish and assign unique seed IDs within each dish. Prepare the solutions with appropriate supervision, and dispense an equal, prespecified volume into each dish. Record the actual volume and maintain a consistent light schedule, temperature range and observation period. Randomise or periodically rearrange dish positions according to a plan that does not depend on observed growth. On Day 7, record germination status and measure shoot length from the substrate surface to the shoot tip in centimetres. For the prespecified primary outcome, enter 0 cm for a seed with no shoot and calculate one mean shoot length per planted seed for each dish. Retain seed-level measurements linked to their dish IDs. Document missing observations and departures from the procedure when they occur. Review whether the proposed number of dishes is sufficient before beginning the study.",
-      "why_it_works": "Show how treatment assignment, nested measurements, recording rules and departures from the procedure will be managed. Complete all bracketed or unspecified implementation details before collection."
+      "why_it_works": "Show how treatment assignment, nested measurements, recording rules and departures from the procedure will be managed. Settle remaining implementation details before data collection."
     },
     "replication": {
       "stage": 12,
