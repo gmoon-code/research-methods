@@ -175,7 +175,7 @@ window.RMSCurriculum = (() => {
           <li><strong>Discussion.</strong> How do the authors interpret it, and what limitations do they acknowledge?</li>
         </ul>
         <div class="concept-box"><strong>Extraction rule</strong><br>Keep a distinction between what the authors measured, what they observed, and what they concluded. Your notes should make it possible to verify every later literature claim.</div>`,
-      example:`<strong>Source note</strong><p>Design: correlational survey. Sample: n = 420 secondary students. Measures: validated well-being scale and self-reported activity hours. Finding: small positive association. Limits: cross-sectional, self-report, possible confounding.</p>`,
+      example:`<strong>Hypothetical source note</strong><p>Design: correlational survey. Sample: n = 420 secondary students. Measures: validated well-being scale and self-reported activity hours. Finding: small positive association. Limits: cross-sectional, self-report, possible confounding.</p>`,
       warning:`<strong>Avoid source-by-source thinking</strong><ul><li>Your literature review should not become “Study A said… Study B said… Study C said…”</li><li>Do not copy sentences into notes without marking them as direct quotations.</li></ul>`,
       custom:"sourceManager",
       sections:[],
@@ -227,7 +227,7 @@ window.RMSCurriculum = (() => {
         </ul>
         <div class="concept-box"><strong>Paragraph logic</strong><br>Claim about the literature → evidence from multiple sources → comparison or qualification → implication for the topic or your study.</div>
         <p>In some scientific papers, the literature review is integrated into the Introduction. In some courses, it is a separate section. Follow your assignment while keeping the same synthesis principles.</p>`,
-      example:`<strong>Weak versus stronger</strong><p>Weak: “Smith studied X. Lee studied X. Park studied X.” Stronger: “Across three studies, X was consistently associated with Y, although the magnitude was smaller in samples using measure Z (citations).”</p>`,
+      example:`<strong>Weak versus stronger (fictional examples)</strong><p>Weak: “Smith studied X. Lee studied X. Park studied X.” Stronger: “Across three studies, X was consistently associated with Y, although the magnitude was smaller in samples using measure Z (citations).”</p>`,
       warning:`<strong>Citation integrity</strong><ul><li>Every citation must actually support the nearby claim.</li><li>Do not cite a review as if you personally checked every primary study it summarizes.</li><li>Never invent a reference or DOI.</li></ul>`,
       sections:[
         {title:"Literature review outline",desc:"Plan the argument before drafting.",fields:[
