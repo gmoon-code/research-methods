@@ -310,7 +310,7 @@
       "expected_shape": "one complete sentence, sometimes two",
       "typical_length": "about 15–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "How does this affect things?",
+      "too_vague": "What do students think about things?",
       "good_working_response": "How do students describe the study strategies they use after receiving assessment feedback?",
       "detailed_response": "",
       "why_it_works": "Write another defensible question and compare it with the first two."
@@ -322,10 +322,10 @@
       "expected_shape": "one selection",
       "typical_length": "Choose the option that matches your project. Use the nearby explanation field to justify it when one is provided.",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "How does this affect things?",
-      "good_working_response": "“Is sleep duration associated with score?” → relationship/association.",
+      "too_vague": "I chose a category because it sounds more scientific.",
+      "good_working_response": "For a question about whether sleep duration is associated with scores, select “Correlational / observational”.",
       "detailed_response": "",
-      "why_it_works": "Choose the family that best matches the question: description, association, causal effect, experience/process, or literature synthesis."
+      "why_it_works": "Choose the available category that matches the proposed evidence and inference, then explain the choice in the nearby justification field."
     },
     "finalRQ": {
       "stage": 4,
@@ -346,19 +346,19 @@
       "expected_shape": "2–4 focused sentences",
       "typical_length": "about 40–120 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "It is interesting and I can do it.",
-      "good_working_response": "The variables can be measured with a short anonymous survey and existing quiz scores only if teacher/privacy approval permits; the question is limited to association.",
-      "detailed_response": "This question is feasible because the required evidence can be collected within one class using a short anonymous sleep survey and an existing biology quiz score, provided teacher and privacy approval are in place. The variables can be measured during the course timeline without changing students’ sleep. Because sleep is observed rather than assigned, the study is designed to estimate an association and will not make a causal claim.",
-      "why_it_works": "Explain feasibility, access to evidence, ethics/safety, and why the question is scientifically or locally useful."
+      "too_vague": "It is easy, and students can answer.",
+      "good_working_response": "Students could voluntarily report weekday sleep duration. Connecting survey responses to existing quiz records would require appropriate approval, consent and secure coded matching. The resulting observational study could examine association without establishing that sleep duration caused a score difference.",
+      "detailed_response": "A short questionnaire could collect students’ reports of weekday sleep duration if the school permits the proposed research and appropriate consent procedures are in place. Matching those reports to existing biology quiz scores would require authorized access to the records, secure coded identifiers and a plan for protecting student privacy. Students must be free to decline participation without consequences for grades or their relationship with the teacher. The study can be conducted without assigning sleep conditions, but self-reports and a single class may limit the interpretation. The research question therefore concerns the association between reported sleep duration and quiz performance, with no claim that one causes the other.",
+      "why_it_works": "Explain the evidence needed, realistic permissions and participant safeguards alongside the limits of the proposed inference."
     },
     "searchBlock1": {
       "stage": 5,
       "label": "Concept block 1 and synonyms",
       "type": "textarea",
-      "expected_shape": "3–8 equivalent or closely related search terms",
-      "typical_length": "about 5–30 words",
+      "expected_shape": "2–5 useful terms for the first concept",
+      "typical_length": "about 4–30 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
+      "too_vague": "Studying.",
       "good_working_response": "retrieval practice, practice testing, self-testing",
       "detailed_response": "",
       "why_it_works": "List the main term and several true synonyms or closely related research terms."
@@ -367,25 +367,25 @@
       "stage": 5,
       "label": "Concept block 2 and synonyms",
       "type": "textarea",
-      "expected_shape": "3–8 equivalent or closely related search terms",
-      "typical_length": "about 5–30 words",
+      "expected_shape": "2–5 useful terms for the second concept",
+      "typical_length": "about 4–30 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "sleep duration OR sleep time OR weekday sleep OR nightly sleep",
+      "too_vague": "Other words for learning.",
+      "good_working_response": "biology OR \"science learning\" OR \"science education\"",
       "detailed_response": "",
-      "why_it_works": "List synonyms/closely equivalent terms for the second major idea."
+      "why_it_works": "Build the second concept block and check whether related terms broaden or narrow the meaning of the search."
     },
     "searchBlock3": {
       "stage": 5,
       "label": "Population/context block if relevant",
       "type": "textarea",
-      "expected_shape": "3–8 population/context terms when needed",
-      "typical_length": "about 5–30 words",
+      "expected_shape": "optional population or setting terms, when they improve precision",
+      "typical_length": "about 3–30 words when used",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Students.",
-      "good_working_response": "retention OR recall OR delayed test",
+      "good_working_response": "adolescent* OR \"high school\" OR \"secondary school\"",
       "detailed_response": "",
-      "why_it_works": "Add a third concept and synonyms if the question genuinely needs it."
+      "why_it_works": "Use this optional block for the population or context. Test whether adding it would wrongly exclude relevant studies."
     },
     "searchStrings": {
       "stage": 5,
@@ -394,10 +394,10 @@
       "expected_shape": "2–4 complete Boolean search strings you could paste into a database",
       "typical_length": "about 20–100 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "retrieval practice biology",
-      "good_working_response": "(\"retrieval practice\" OR \"practice testing\" OR self-testing) AND (biology OR science) AND (retention OR \"delayed recall\"); (\"retrieval practice\" OR \"practice testing\") AND (secondary students OR \"high school\") AND feedback",
+      "too_vague": "I searched for biology tests.",
+      "good_working_response": "(\"retrieval practice\" OR \"practice testing\") AND (biology OR \"science learning\"); (\"retrieval practice\" OR \"practice testing\") AND (adolescent* OR \"high school\") AND (retention OR \"delayed recall\")",
       "detailed_response": "",
-      "why_it_works": "Record the full Boolean strings, including parentheses/quotes when used."
+      "why_it_works": "Preserve the concept-group logic and adapt quotation marks, truncation and field syntax to each database before recording the executed search."
     },
     "databases": {
       "stage": 5,
@@ -415,25 +415,25 @@
       "stage": 5,
       "label": "Inclusion criteria",
       "type": "textarea",
-      "expected_shape": "3–6 objective inclusion criteria",
-      "typical_length": "about 30–100 words total",
+      "expected_shape": "3–6 clear inclusion rules, as a list or short statements",
+      "typical_length": "about 15–75 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Peer-reviewed empirical studies; secondary/high-school or university learners; includes a delayed retention outcome.",
+      "too_vague": "Include good studies.",
+      "good_working_response": "Peer-reviewed empirical studies; participants learning science or biology; retrieval practice is defined; reports an outcome measured after learning.",
       "detailed_response": "",
-      "why_it_works": "Write criteria that can be applied consistently before reading whether the result supports your expectation."
+      "why_it_works": "Set criteria that can be applied consistently before examining whether a study supports the expected result. Justify age or setting restrictions when used."
     },
     "excludeCriteria": {
       "stage": 5,
       "label": "Exclusion criteria",
       "type": "textarea",
-      "expected_shape": "3–6 objective exclusion criteria",
-      "typical_length": "about 30–100 words total",
+      "expected_shape": "3–6 clear exclusion rules, as a list or short statements",
+      "typical_length": "about 15–75 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Exclude editorials without original data and studies that do not report a learning outcome.",
+      "too_vague": "Exclude studies I do not like.",
+      "good_working_response": "Exclude opinion pieces without original data for an empirical-only review; reports without a learning outcome; studies outside the predeclared education context.",
       "detailed_response": "",
-      "why_it_works": "State objective reasons for exclusion."
+      "why_it_works": "Specify exclusion rules that correspond to the review question and inclusion rules. Do not exclude studies because their findings disagree with an expectation."
     },
     "searchLog": {
       "stage": 5,
@@ -442,70 +442,70 @@
       "expected_shape": "one concise record per search; usually 2–6 rows/entries",
       "typical_length": "about 30–150 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "2026-09-07 | ERIC | (retrieval practice OR practice testing) AND biology | peer reviewed | 84 results | 22 screened | 7 kept | add retention terms next.",
+      "too_vague": "I found lots of useful articles.",
+      "good_working_response": "Illustrative blank search record, not an executed search. [Actual date] | ERIC | (\"retrieval practice\" OR \"practice testing\") AND biology | [filters used] | [actual hits] | [screened, if any] | [retained, if any] | [reason for next revision].",
       "detailed_response": "",
-      "why_it_works": "Record date, database, exact search string, filters, result count, screened/kept count, and what you changed next."
+      "why_it_works": "Enter actual search dates, exact queries, filters and counts after performing each search. Do not turn a sample log into fabricated retrieval data."
     },
     "theme1": {
       "stage": 7,
       "label": "Theme or convergence 1",
       "type": "textarea",
-      "expected_shape": "1–2 synthesis sentences",
-      "typical_length": "about 25–70 words",
+      "expected_shape": "1–2 source-grounded synthesis sentences",
+      "typical_length": "about 15–75 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "The sources say similar things.",
-      "good_working_response": "Retrieval-based practice is generally associated with stronger delayed retention across several tasks.",
+      "too_vague": "All the articles agree.",
+      "good_working_response": "Illustrative theme to verify: Retrieval-based practice may be linked with stronger delayed recall in the selected studies. Identify the papers, outcomes and exceptions before describing this as a convergent finding.",
       "detailed_response": "",
-      "why_it_works": "State the pattern, then identify which sources support, complicate, or contradict it."
+      "why_it_works": "Describe a documented pattern and show which specific sources support or complicate it."
     },
     "theme2": {
       "stage": 7,
       "label": "Theme or convergence 2",
       "type": "textarea",
-      "expected_shape": "1–2 synthesis sentences",
-      "typical_length": "about 25–70 words",
+      "expected_shape": "1–2 source-grounded synthesis sentences",
+      "typical_length": "about 15–75 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "The sources say similar things.",
-      "good_working_response": "Feedback timing appears to change the size of retrieval-practice benefits.",
+      "too_vague": "Another study also agreed.",
+      "good_working_response": "Possible second theme to check: Feedback procedures may help explain differences in reported retrieval-practice outcomes. Compare the actual studies and their designs before drawing that conclusion.",
       "detailed_response": "",
-      "why_it_works": "State a pattern distinct from Theme 1 and link it to source evidence."
+      "why_it_works": "Develop a different pattern only when the included sources support it, identifying the relevant evidence."
     },
     "theme3": {
       "stage": 7,
       "label": "Theme or convergence 3",
       "type": "textarea",
-      "expected_shape": "1–2 synthesis sentences",
-      "typical_length": "about 25–70 words",
+      "expected_shape": "1–2 source-grounded synthesis sentences",
+      "typical_length": "about 15–75 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "The sources say similar things.",
-      "good_working_response": "Measurement method differs substantially across studies, limiting direct comparison of effect magnitude.",
+      "too_vague": "The articles have limitations.",
+      "good_working_response": "If studies use different kinds of retention assessments, discuss how those measures affect the comparability of results. Name the papers and measures rather than assuming that all studies differ.",
       "detailed_response": "",
-      "why_it_works": "Use it when the evidence base genuinely contains another useful pattern."
+      "why_it_works": "Use the third theme for another substantiated relationship or limitation, not to fill a prescribed number of themes."
     },
     "tensions": {
       "stage": 7,
       "label": "Contradictions, tensions, or boundary conditions",
       "type": "textarea",
-      "expected_shape": "2–4 focused sentences",
-      "typical_length": "about 40–120 words",
+      "expected_shape": "1–3 focused sentences grounded in compared sources",
+      "typical_length": "about 20–100 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Benefits are smaller in studies using immediate tests; retention interval may be a boundary condition.",
+      "too_vague": "The studies contradict one another.",
+      "good_working_response": "If two included studies report different retrieval-practice advantages, compare their retention intervals, feedback procedures and scoring before calling the findings contradictory. A difference in design may explain part of the contrast, but the evidence must establish that connection.",
       "detailed_response": "",
-      "why_it_works": "Describe what differs and what methodological/context feature may explain it."
+      "why_it_works": "Identify what differs and distinguish a plausible methodological explanation from one directly demonstrated."
     },
     "repeatedLimits": {
       "stage": 7,
       "label": "Repeated methodological limitations",
       "type": "textarea",
-      "expected_shape": "2–4 focused sentences",
-      "typical_length": "about 40–120 words",
+      "expected_shape": "1–3 sentences identifying limitations in named studies",
+      "typical_length": "about 20–100 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "The study had limitations.",
-      "good_working_response": "Several studies use short retention intervals and convenience university samples.",
+      "too_vague": "The studies were not perfect.",
+      "good_working_response": "Check which retrieved studies used short retention intervals or convenience university samples. If these limitations recur, cite the relevant papers and explain how they constrain what can be concluded about secondary biology learners.",
       "detailed_response": "",
-      "why_it_works": "Name repeated limitations and identify the studies in which they occur."
+      "why_it_works": "Identify repeated limitations from the actual evidence base and explain their implications without treating all limitations as research gaps."
     },
     "gapType": {
       "stage": 7,
@@ -514,10 +514,10 @@
       "expected_shape": "one selection",
       "typical_length": "Choose the option that matches your project. Use the nearby explanation field to justify it when one is provided.",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "If prior work exists but uses university samples, choose extension to a new context/population rather than documented literature gap.",
+      "too_vague": "Select “Documented literature gap” just because the local question is unfamiliar.",
+      "good_working_response": "If relevant research exists in other populations, choose “Extension to a new context/population” when that is the strongest supported rationale.",
       "detailed_response": "",
-      "why_it_works": "Choose the smallest defensible rationale. A project can be valuable without proving that no research exists."
+      "why_it_works": "Choose the narrowest defensible rationale. Evidence that a particular context differs does not establish that no earlier research exists."
     },
     "gapStatement": {
       "stage": 7,
@@ -526,10 +526,10 @@
       "expected_shape": "2–4 focused sentences",
       "typical_length": "about 40–120 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "No research has ever studied this.",
-      "good_working_response": "Few included studies used a secondary biology classroom context; this project is a local extension of the established retrieval-practice question.",
+      "too_vague": "No one has ever researched this topic.",
+      "good_working_response": "If my recorded searches identify retrieval-practice studies but few in secondary biology classrooms, I could justify a local extension. I would name the searched databases, the relevant studies and the limits of the search before making that statement.",
       "detailed_response": "",
-      "why_it_works": "State a bounded gap, replication, extension, inconsistency, method comparison, or local question."
+      "why_it_works": "Bound claims about a gap or extension to the search actually performed and avoid unsupported assertions about the entire literature."
     },
     "litToRQ": {
       "stage": 7,
@@ -538,22 +538,22 @@
       "expected_shape": "2–4 focused sentences",
       "typical_length": "about 40–120 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "How does this affect things?",
-      "good_working_response": "Because prior studies suggest a retrieval benefit but rarely examine this secondary biology context, the project asks whether the pattern appears in this classroom setting.",
+      "too_vague": "Research proves this works, so I will test it.",
+      "good_working_response": "If the reviewed studies support benefits under particular conditions, their methods can help me choose a suitable delayed-recall outcome. I would then explain why examining that outcome in a secondary biology class is meaningful without claiming the classroom context has never been studied.",
       "detailed_response": "",
-      "why_it_works": "Explain how the patterns, limits, or rationale lead to the question you will ask."
+      "why_it_works": "Show how documented evidence, its limits and the proposed setting inform the question, with no claim broader than the search permits."
     },
     "litIntroPlan": {
       "stage": 8,
       "label": "Opening, scope, and key definitions",
       "type": "textarea",
-      "expected_shape": "2–4 focused sentences",
-      "typical_length": "about 40–120 words",
+      "expected_shape": "2–4 connected planning sentences",
+      "typical_length": "about 30–100 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Define retrieval practice and delayed retention, limit the review to science-learning contexts, then preview themes of retention, feedback, and measurement differences.",
+      "too_vague": "Introduce the topic and talk about some studies.",
+      "good_working_response": "I will define retrieval practice and explain how delayed recall is measured in the papers selected for review. The introduction will set the scope around science-learning contexts, while the following synthesis will develop only themes supported by the retrieved sources.",
       "detailed_response": "",
-      "why_it_works": "Plan how you will define the topic, establish scope, and preview how the review is organized."
+      "why_it_works": "Identify the relevant concepts and scope before developing evidence-based themes; a fixed sequence of paragraphs is unnecessary."
     },
     "litThemePlan": {
       "stage": 8,
@@ -562,34 +562,34 @@
       "expected_shape": "3–6 specific items, short phrases, or bullets",
       "typical_length": "about 20–80 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "The sources say similar things.",
-      "good_working_response": "Theme 1: delayed retention pattern. Theme 2: feedback timing. Theme 3: measurement differences and comparability.",
+      "too_vague": "Summarize each article one by one.",
+      "good_working_response": "Possible theme sequence, pending evidence: delayed retention across outcomes; the role of feedback; differences in measures and their comparability. Under each theme, note the studies being compared and the point of agreement or disagreement.",
       "detailed_response": "",
-      "why_it_works": "List each theme and what comparison it will make across sources."
+      "why_it_works": "Organise the review through questions and relationships across actual sources. Revise the proposed themes when the evidence does not support them."
     },
     "litTensionPlan": {
       "stage": 8,
       "label": "Where disagreement or limitations will appear",
       "type": "textarea",
-      "expected_shape": "2–4 focused sentences",
-      "typical_length": "about 40–120 words",
+      "expected_shape": "1–3 sentences about specific comparisons to make",
+      "typical_length": "about 20–100 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "The study had limitations.",
-      "good_working_response": "Two studies report smaller effects with immediate feedback; compare retention interval and scoring methods before calling the findings contradictory.",
+      "too_vague": "Mention that some studies are different.",
+      "good_working_response": "If selected studies report different effects, I will compare their feedback procedures, retention intervals and scoring methods before interpreting the difference. I will identify the papers involved and distinguish a possible explanation from a demonstrated one.",
       "detailed_response": "",
-      "why_it_works": "Plan the exact contradiction/qualification and which design differences may explain it."
+      "why_it_works": "Plan where source-specific disagreement belongs and which methodological differences warrant examination."
     },
     "litEndPlan": {
       "stage": 8,
       "label": "How the review will lead to the study purpose/question",
       "type": "textarea",
-      "expected_shape": "2–4 focused sentences",
-      "typical_length": "about 40–120 words",
+      "expected_shape": "1–3 sentences explaining the bridge to the question",
+      "typical_length": "about 20–100 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "How does this affect things?",
-      "good_working_response": "Close by stating the consistent retention pattern, limits of context, and rationale for a local secondary biology extension.",
+      "too_vague": "End by saying more research is needed.",
+      "good_working_response": "The review will close by explaining which reported patterns are supported, which contexts or measures limit their interpretation, and what follows for my proposed question. A local extension will be justified by the actual sources rather than an assumed absence of research.",
       "detailed_response": "",
-      "why_it_works": "Plan a short synthesis of what is established, what remains bounded/uncertain, and why the current question follows."
+      "why_it_works": "Connect the review to the study purpose through the evidence you have, without manufacturing a global research gap."
     },
     "litDraft": {
       "stage": 8,
@@ -598,10 +598,10 @@
       "expected_shape": "2–5 connected paragraphs",
       "typical_length": "250–600 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "Several studies discussed this topic.",
-      "good_working_response": "Across several studies, retrieval-based practice improved delayed recall, although effect magnitude varied with feedback and retention interval (citations).",
-      "detailed_response": "Retrieval practice requires learners to bring information to mind, creating a different learning activity from rereading or restudying material. Across science-learning and broader educational studies, retrieval-based practice is frequently associated with stronger later recall, although the size of the advantage varies with feedback, retention interval, and task format. These differences matter when comparing studies because an immediate quiz and a delayed test do not represent the same retention outcome.\n\nWithin the literature reviewed for this project, delayed retention is the most consistent point of convergence. Several studies report stronger delayed performance after retrieval practice than after restudy, while studies using shorter intervals or different scoring procedures show smaller or less directly comparable differences. Much of the accessible evidence also comes from university samples. The present project therefore uses a local extension rationale and asks whether a similar pattern appears in a secondary biology context without claiming that the literature contains a global gap.",
-      "why_it_works": "Write paragraphs around claims about the literature, using traceable citations and comparison across sources."
+      "too_vague": "Several papers say learning is important.",
+      "good_working_response": "Illustrative opening only. Retrieval practice involves recalling previously studied material without consulting the source. A literature review should then compare documented findings from named studies and explain how their methods and contexts bear on the proposed question.",
+      "detailed_response": "Retrieval practice describes activities in which learners try to bring previously studied material to mind, such as answering questions without consulting notes. Dunlosky and colleagues (2013) reviewed practice testing alongside other learning techniques, examining their usefulness across different learning conditions, learners, materials and outcome tasks. Their review provides a starting point for defining the approach. Its broad scope, however, cannot establish what happened in the particular secondary biology studies that a student might later select.\n\nFor the papers retrieved in my own search, I would compare [insert study A] and [insert study B] in terms of the learning activities they assigned or observed, the interval before measuring retention, and the forms of knowledge the assessments captured. If their results point in similar directions, I would describe that convergence using the reported findings and citations. Where the outcomes differ, I would examine whether differences in student groups, feedback procedures, or measures offer plausible explanations. I would not treat a contrast between two research designs as evidence that one design feature caused their different results without stronger support.\n\nThe relationship between that evidence and a secondary biology project would then need to be explained with care. A local classroom investigation may be valuable for its curricular context even if studies of retrieval practice already exist elsewhere. I would identify the specific studies supporting any statement about a recurring pattern, an underexplored population, or a methodological limitation. The final literature review would replace these planning notes and bracketed references with a connected synthesis of actual retrieved studies, accurate citations, and a research question warranted by what those sources show.",
+      "why_it_works": "Use the longer illustration to see how connected paragraphs can develop an argument. Replace its planning language and bracketed sources with your own verified synthesis and complete references."
     },
     "designType": {
       "stage": 9,
