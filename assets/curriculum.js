@@ -249,11 +249,11 @@ window.RMSCurriculum = (() => {
           <li><strong>Descriptive.</strong> Characterize one or more features without testing a causal explanation.</li>
           <li><strong>Correlational/observational.</strong> Measure variables without assigning the exposure and examine association.</li>
           <li><strong>Experimental.</strong> Manipulate an independent variable and compare outcomes under conditions designed to reduce alternative explanations.</li>
-          <li><strong>Quasi-experimental.</strong> Compare an intervention or naturally formed conditions without full random assignment.</li>
+          <li><strong>Quasi-experimental.</strong> Evaluate an intervention or other defined change without random assignment, using comparisons or repeated measurements that help address alternative explanations. Pre-existing groups alone do not establish a quasi-experiment.</li>
           <li><strong>Qualitative.</strong> Investigate meaning, experience, process, or explanation using textual or observational evidence.</li>
           <li><strong>Mixed methods.</strong> Combine qualitative and quantitative components because each answers a different part of the question.</li>
-          <li><strong>Literature review.</strong> Synthesize existing studies without statistically pooling effects.</li>
-          <li><strong>Meta-analysis.</strong> Quantitatively combine comparable effect estimates using a defensible synthesis model.</li>
+          <li><strong>Literature review.</strong> Examine and synthesize existing studies through a review appropriate to the question. Some reviews also include meta-analysis.</li>
+          <li><strong>Meta-analysis.</strong> Quantitatively combine comparable effect estimates using a defensible synthesis model, usually within a systematic review.</li>
         </ul>
         <div class="concept-box"><strong>Causal caution</strong><br>Manipulation alone does not guarantee strong causal inference. Assignment, comparison conditions, confounding, measurement, adherence, attrition, and implementation all affect what can be concluded.</div>`,
       example:`<strong>Example</strong><p>Question: “Is weekly study time associated with exam score?” → observational correlational design. Question: “How does assigned retrieval practice versus rereading affect delayed recall?” → experimental or quasi-experimental design depending on assignment and control.</p>`,
@@ -281,7 +281,7 @@ window.RMSCurriculum = (() => {
           <li><strong>Dependent/outcome variable.</strong> The response you measure.</li>
           <li><strong>Controlled conditions.</strong> Features intentionally standardized across experimental conditions. “Constants” is a common classroom term, but controlled condition is usually more precise.</li>
           <li><strong>Control group/condition.</strong> A comparison condition that provides a reference. This is different from a controlled variable.</li>
-          <li><strong>Covariate/confounder.</strong> A measured or unmeasured factor related to the exposure and outcome that can complicate interpretation.</li>
+          <li><strong>Covariate.</strong> An additional measured variable used in an analysis; its role depends on the design and question.</li><li><strong>Potential confounder.</strong> A factor that contributes to differences in both exposure and outcome and can distort their observed relationship. Association alone does not establish confounding.</li>
           <li><strong>Experimental unit.</strong> The smallest unit independently assigned to a treatment. Ten seeds in one treated pot are not automatically ten independent experimental units.</li>
         </ul>
         <div class="concept-box"><strong>Operational definition</strong><br>Every construct that drives the study must be translated into exactly what is manipulated, observed, scored, counted, or measured.</div>`,
@@ -311,7 +311,7 @@ window.RMSCurriculum = (() => {
         <ul>
           <li><strong>Reliability.</strong> Does the procedure produce sufficiently consistent measurements?</li>
           <li><strong>Validity.</strong> Does the measure support the interpretation you want to make from the score or observation?</li>
-          <li><strong>Calibration/precision.</strong> Are tools accurate enough for the expected effect?</li>
+          <li><strong>Calibration and precision.</strong> Have tools been checked against appropriate reference standards, and are repeated measurements consistent enough to detect meaningful differences?</li>
           <li><strong>Blinding.</strong> Could knowledge of condition influence measurement or scoring?</li>
         </ul>
         <div class="concept-box"><strong>Human participants</strong><br>Surveys, interviews, identifiable observations, existing student records, audio/video, health information, or interventions involving people can require consent, privacy safeguards, school approval, and sometimes formal ethics review. Student projects should not assume that classroom access equals research permission.</div>`,
@@ -330,7 +330,7 @@ window.RMSCurriculum = (() => {
     {
       id:12, phase:"design", title:"Write the method and lock the data plan",
       nav:"Method and protocol",
-      purpose:"Create a procedure detailed enough that another researcher could understand what was done, then predefine how data will be recorded, cleaned, and analyzed before looking at the final results.",
+      purpose:"Create a procedure detailed enough that another researcher could follow the planned study, then specify how data will be recorded, cleaned, and analyzed before looking at the final results.",
       learn:`
         <h3>Methods should make the study auditable</h3>
         <p>A strong Method section usually explains participants or units, materials/instruments, design, variables or coding structure, procedure, and planned analysis. Exact headings vary by discipline.</p>
