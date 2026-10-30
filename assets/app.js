@@ -152,12 +152,12 @@
     const cards=project.sources.map((s,i)=>{
       const comp=Lit.sourceCompleteness(s), tr=Lit.trappSummary(s);
       const stClass=s.screeningStatus==="Included"?"status-inc":s.screeningStatus==="Excluded"?"status-exc":"status-pen";
-      return `<div class="source-card"><div class="lit-source-head"><div><div class="lit-source-title">${esc(s.id)} · ${esc(s.citation||s.title||"Untitled source")}</div><div><span class="pill ${stClass}">${esc(s.screeningStatus)}</span><span class="pill">${Math.round(comp.ratio*100)}% extraction</span><span class="pill">${tr.filled}/5 TRAPP</span>${s.verified?'<span class="pill green">bibliography verified</span>':""}</div></div><div class="source-actions"><button class="ghost small" data-edit-source="${i}">Edit</button><button class="danger small" data-del-source="${i}">Remove</button></div></div>
+      return `<div class="source-card"><div class="lit-source-head"><div><div class="lit-source-title">${esc(s.id)} · ${esc(s.citation||s.title||"Untitled source")}</div><div><span class="pill ${stClass}">${esc(s.screeningStatus)}</span><span class="pill">${Math.round(comp.ratio*100)}% extraction</span><span class="pill">${tr.filled}/5 TRAAP</span>${s.verified?'<span class="pill green">bibliography verified</span>':""}</div></div><div class="source-actions"><button class="ghost small" data-edit-source="${i}">Edit</button><button class="danger small" data-del-source="${i}">Remove</button></div></div>
         <p><b>Design</b> ${esc(s.design||"—")} · <b>Population/context</b> ${esc(s.sample||"—")}</p>
         <p><b>Measures</b> ${esc(s.measures||"—")}</p><p><b>Finding</b> ${esc(s.finding||"—")}</p><p><b>Limitations</b> ${esc(s.limits||"—")}</p>
         ${(s.themeEvidence||[]).length?`<p><b>Theme evidence</b><br>${s.themeEvidence.map(e=>`<span class="theme-chip">${esc(e.theme)} · ${esc(e.stance)}</span>`).join("")}</p>`:""}</div>`;
     }).join("");
-    return `<div class="form-section"><h4>Study extraction records</h4><p>This stage stores the evidence needed for the study matrix and later synthesis. The full Literature Workspace adds screening, TRAPP evaluation, theme stance, evidence mapping, and paragraph planning.</p>
+    return `<div class="form-section"><h4>Study extraction records</h4><p>This stage stores the evidence needed for the study matrix and later synthesis. The full Literature Workspace adds screening, TRAAP evaluation, theme stance, evidence mapping, and paragraph planning.</p>
       <div class="button-row"><button class="secondary" id="openLitFromSource">Open full Literature Workspace</button></div>
       <div>${cards||'<p class="muted">No sources added yet. Open the Literature Workspace to add and screen sources.</p>'}</div></div>`;
   }
@@ -460,7 +460,7 @@
           <label><span>How is this source relevant to your research question?</span><textarea id="lfRelevance">${esc(s.relevance||"")}</textarea></label>
           <label><span>Quality / methods notes</span><textarea id="lfQuality">${esc(s.qualityNotes||"")}</textarea></label>
         </div>
-        <details class="nested-source-help"><summary>Optional TRAPP source evaluation</summary><div class="trapp-grid">${[["timeframe","Timeframe"],["relevance","Relevance"],["authority","Authority"],["accuracy","Accuracy"],["purpose","Purpose"]].map(([k,l])=>`<div class="trapp-box"><label><span>${l}</span><textarea id="tr_${k}" placeholder="Evidence and judgment">${esc(t[k]||"")}</textarea></label></div>`).join("")}</div></details>
+        <details class="nested-source-help"><summary>Optional TRAAP source evaluation</summary><div class="trapp-grid">${[["timeframe","Timeliness"],["relevance","Relevance"],["authority","Authority"],["accuracy","Accuracy"],["purpose","Purpose"]].map(([k,l])=>`<div class="trapp-box"><label><span>${l}</span><textarea id="tr_${k}" placeholder="Evidence and judgment">${esc(t[k]||"")}</textarea></label></div>`).join("")}</div></details>
       </details>
 
       <details class="source-pass"><summary><span>3</span><div><b>Extract the evidence you will use later</b><small>Record the study details, findings, and limitations in comparable language.</small></div></summary>
@@ -496,7 +496,7 @@
   function screeningWorkspace(){
     const sources=project.sources||[];
     return `<div class="lit-section"><h4>Screening board</h4><p>Not every source found belongs in the review. Make each include/exclude decision explicit and keep the reason.</p>
-      <div class="table-wrap"><table><thead><tr><th>ID</th><th>Source</th><th>Status</th><th>Reason</th><th>Extraction</th><th>TRAPP</th><th></th></tr></thead><tbody>${sources.map((s,i)=>{
+      <div class="table-wrap"><table><thead><tr><th>ID</th><th>Source</th><th>Status</th><th>Reason</th><th>Extraction</th><th>TRAAP</th><th></th></tr></thead><tbody>${sources.map((s,i)=>{
         const c=Lit.sourceCompleteness(s),t=Lit.trappSummary(s);
         return `<tr><td>${esc(s.id)}</td><td>${esc(s.citation||s.title||"Untitled")}</td><td><select data-screen-status="${i}">${["Included","Pending","Excluded"].map(o=>`<option ${s.screeningStatus===o?"selected":""}>${o}</option>`).join("")}</select></td><td><input data-screen-reason="${i}" value="${esc(s.screeningReason||"")}" placeholder="Why?"></td><td>${c.filled}/${c.total}</td><td>${t.filled}/${t.total}</td><td><button class="ghost small" data-litedit="${i}">Edit</button></td></tr>`;
       }).join("")}</tbody></table></div>${!sources.length?'<p class="muted tiny">Add sources first.</p>':""}</div>`;
@@ -566,7 +566,7 @@
   function literatureWorkspace(active="search", editIndex=null){
     Lit.normalizeProject(project);
     const wrap=document.createElement("div");wrap.className="modal-backdrop";wrap.id="litBackdrop";
-    const tabs=[["search","1 · Search log"],["sources","2 · Sources & TRAPP"],["screen","3 · Screening"],["study","4 · Study matrix"],["synth","5 · Synthesis"],["gap","6 · Gap/rationale"],["claims","7 · Claim audit"],["outline","8 · Outline"]];
+    const tabs=[["search","1 · Search log"],["sources","2 · Sources & TRAAP"],["screen","3 · Screening"],["study","4 · Study matrix"],["synth","5 · Synthesis"],["gap","6 · Gap/rationale"],["claims","7 · Claim audit"],["outline","8 · Outline"]];
     function content(){
       if(active==="search")return searchWorkspace();
       if(active==="sources")return litSourceForm(editIndex===null?{}:project.sources[editIndex],editIndex);
