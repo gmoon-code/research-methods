@@ -4,10 +4,10 @@
     {
       "id": "radish_salinity_experimental_v27",
       "title": "Radish Salinity Experiment",
-      "subtitle": "Experimental exemplar emphasizing treatment assignment, experimental unit, and pseudoreplication",
+      "subtitle": "Experimental exemplar emphasising treatment assignment, experimental units and pseudoreplication",
       "path": "experimental",
       "status": "synthetic_instructional_exemplar",
-      "disclaimer": "The literature records are real and verified. All project data, numerical results, and classroom procedure details are synthetic/instructional and must not be represented as an actual conducted study.",
+      "disclaimer": "The three cited publications are real and independently checked. All procedures, data and results in this example are synthetic and do not document a conducted experiment. This 72-hour radicle-length example is separate from the Studio's Day 7 shoot-length response illustrations.",
       "rq": "Under standardised germination conditions, how does mean radicle length among germinated radish (Raphanus sativus) seeds after 72 hours differ across dishes independently assigned to 0, 50, or 100 mM NaCl?",
       "stages": [
         {
@@ -48,7 +48,7 @@
           "rejected": "Long-term biomass and flowering outcomes were rejected because the course timeline and environmental control would be much more demanding.",
           "notebook": {
             "scope": "Early radicle growth over 72 hours; not whole-plant fitness, yield, or long-term salt tolerance",
-            "feasibility": "Seeds, dishes, salt solution, water, labels, ruler/image scale, and a controlled germination location are available."
+            "feasibility": "A real project would need confirmed access to radish seeds, dishes, correctly prepared NaCl solutions, a suitable measurement scale and a supervised germination location."
           },
           "forward": "The literature scan now needs terminology around salinity, germination, radicle growth, NaCl, and Raphanus sativus.",
           "compare": [
@@ -140,7 +140,7 @@
           "decision": "Keep three verified sources as background/example records, while continuing the real search in a real project.",
           "rejected": "Treating every peer-reviewed source as equally strong or directly comparable is rejected.",
           "notebook": {
-            "sourceRecords": "E-S01, E-S02, and E-S03 are verified against the source records included with this exemplar.",
+            "sourceRecords": "The three references E-S01, E-S02 and E-S03 have been checked against publisher and scholarly records. Their methods and findings must still be evaluated for the claim being made.",
             "screeningLogic": "Include sources that inform salinity mechanisms, radish germination, or early radicle growth; record differences in treatment and measurement."
           },
           "forward": "The extracted records now make cross-study synthesis possible instead of producing an annotated bibliography.",
@@ -270,7 +270,7 @@
             "instrument": "standardised millimetre measurement from seed coat to radicle tip at 72 hours, using the same scale/procedure.",
             "measureQuality": "Same measurer/protocol and time point; coded dish images can reduce expectation effects during measurement.",
             "ethicsIssues": "No human participants. Use ordinary classroom laboratory safety for salt solutions, biological material, and disposal.",
-            "ethicsPlan": "Teacher-approved nonhuman procedure; label solutions clearly and follow school laboratory handling/disposal rules."
+            "ethicsPlan": "Seek teacher approval before any classroom laboratory work, label solutions clearly, and follow the school's handling and disposal requirements."
           },
           "forward": "The written protocol must now specify exactly how dishes are assigned, prepared, measured, and converted into a dish-level analysis table.",
           "compare": [
@@ -543,7 +543,7 @@
         "paper": "examples/radish-salinity/COMPLETE_SYNTHETIC_EXEMPLAR_PAPER.md"
       },
       "path_name": "experimental",
-      "data_summary": "18 synthetic independently treated dishes with 90 seed subsamples; Welch ANOVA uses dish-level means."
+      "data_summary": "18 synthetic independently assigned dishes containing 90 seed subsamples; Welch ANOVA compares dish-level mean radicle lengths among germinated seeds."
     },
     {
       "id": "aquarium_descriptive_v28",
