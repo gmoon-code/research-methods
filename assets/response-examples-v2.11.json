@@ -13,28 +13,28 @@
       "too_vague": "Science, biology, and other things.",
       "good_working_response": "Plant physiology; human memory and learning; freshwater ecosystem health.",
       "detailed_response": "",
-      "why_it_works": "Write one concrete curiosity. It does not need to be a research question yet."
+      "why_it_works": "List three distinct areas that interest you. You may include a curiosity within each; none needs to be a research question yet."
     },
     "problem1": {
       "stage": 1,
       "label": "A problem or pattern I have noticed",
       "type": "textarea",
-      "expected_shape": "1–3 focused sentences",
-      "typical_length": "about 25–90 words",
+      "expected_shape": "1–2 focused sentences",
+      "typical_length": "about 10–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Students often remember vocabulary for a quiz but forget it several days later.",
+      "too_vague": "Students forget things.",
+      "good_working_response": "Hypothetical classroom pattern: Some students recall vocabulary on quiz day but struggle to retrieve it a week later.",
       "detailed_response": "",
-      "why_it_works": "Describe the observable problem or uncertainty in one or two sentences."
+      "why_it_works": "Identify an observable pattern and the specific uncertainty it raises. Present an illustrative observation as hypothetical."
     },
     "claim1": {
       "stage": 1,
       "label": "A claim I would like to investigate",
       "type": "textarea",
-      "expected_shape": "1–3 focused sentences",
-      "typical_length": "about 25–90 words",
+      "expected_shape": "one claim that could be investigated",
+      "typical_length": "about 5–35 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
+      "too_vague": "Music always helps everybody learn.",
       "good_working_response": "Using music while studying improves memory.",
       "detailed_response": "",
       "why_it_works": "Write the claim as someone might say it, then keep an open mind about whether the evidence will support it."
@@ -56,9 +56,9 @@
       "label": "Possible direction A",
       "type": "textarea",
       "expected_shape": "one possible research direction",
-      "typical_length": "about 15–40 words",
+      "typical_length": "about 10–40 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
+      "too_vague": "Do an experiment with soil.",
       "good_working_response": "Compare water loss from identical soil containers placed under two light conditions.",
       "detailed_response": "",
       "why_it_works": "Write a short direction that connects an interest to a possible kind of evidence."
@@ -68,9 +68,9 @@
       "label": "Possible direction B",
       "type": "textarea",
       "expected_shape": "one possible research direction",
-      "typical_length": "about 15–40 words",
+      "typical_length": "about 10–40 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
+      "too_vague": "Read about studying.",
       "good_working_response": "Review published studies comparing retrieval practice and rereading in science learning.",
       "detailed_response": "",
       "why_it_works": "Generate another route, preferably using a different question, context, or type of evidence."
@@ -80,9 +80,9 @@
       "label": "Possible direction C",
       "type": "textarea",
       "expected_shape": "one possible research direction",
-      "typical_length": "about 15–40 words",
+      "typical_length": "about 10–40 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
+      "too_vague": "Research shade.",
       "good_working_response": "Observe whether shaded and unshaded school surfaces differ in afternoon temperature.",
       "detailed_response": "",
       "why_it_works": "Write another feasible option before you decide which project to pursue."
@@ -94,10 +94,10 @@
       "expected_shape": "a short topic phrase",
       "typical_length": "about 2–6 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Plant stress; memory and learning; freshwater pollution.",
+      "too_vague": "Science.",
+      "good_working_response": "Plant stress.",
       "detailed_response": "",
-      "why_it_works": "Name a field-sized area, usually a short phrase."
+      "why_it_works": "Choose one broad area. The next field will narrow it to a subtopic."
     },
     "subtopic": {
       "stage": 2,
@@ -106,8 +106,8 @@
       "expected_shape": "a narrower topic phrase",
       "typical_length": "about 3–12 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Broad topic: plant stress. Subtopic: early seedling responses to salinity.",
+      "too_vague": "Plants.",
+      "good_working_response": "Early seedling responses to salinity.",
       "detailed_response": "",
       "why_it_works": "Name the specific process, relationship, population, mechanism, or context you want to focus on."
     },
@@ -116,19 +116,19 @@
       "label": "Phenomenon, relationship, experience, or problem",
       "type": "textarea",
       "expected_shape": "one complete sentence, sometimes two",
-      "typical_length": "about 15–50 words",
+      "typical_length": "about 10–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Seedlings exposed to different salt concentrations appear to grow differently.",
+      "too_vague": "Salt affects plants.",
+      "good_working_response": "Possible pattern to investigate: Seedling growth may differ across salt concentrations.",
       "detailed_response": "",
-      "why_it_works": "Describe what seems to happen, vary, or need explanation."
+      "why_it_works": "Describe a possible observation or relationship without presenting an unmeasured pattern as a finding."
     },
     "contextPop": {
       "stage": 2,
       "label": "Population, system, organism, setting, or context",
       "type": "textarea",
-      "expected_shape": "one complete sentence, sometimes two",
-      "typical_length": "about 15–50 words",
+      "expected_shape": "a defined population or setting, as a phrase or short sentence",
+      "typical_length": "about 5–35 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Students.",
       "good_working_response": "Bean seedlings grown in classroom trays during a 7-day period.",
@@ -140,10 +140,10 @@
       "label": "What part of the issue I can realistically study",
       "type": "textarea",
       "expected_shape": "one complete sentence, sometimes two",
-      "typical_length": "about 15–50 words",
+      "typical_length": "about 10–55 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Focus on early seedling growth over 7 days, not long-term plant fitness.",
+      "too_vague": "Everything about plant stress.",
+      "good_working_response": "I would measure early seedling growth over seven days, leaving long-term plant survival outside the project's scope.",
       "detailed_response": "",
       "why_it_works": "State what you will focus on and what you will leave outside the project."
     },
@@ -154,7 +154,7 @@
       "expected_shape": "one short statement of the actual time available",
       "typical_length": "about 5–20 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
+      "too_vague": "As long as I need.",
       "good_working_response": "Six weeks total, with about eight class periods available for data collection.",
       "detailed_response": "",
       "why_it_works": "State the calendar or number of class periods/weeks you truly have."
@@ -163,25 +163,25 @@
       "stage": 2,
       "label": "Equipment/data/source access",
       "type": "textarea",
-      "expected_shape": "2–4 focused sentences",
-      "typical_length": "about 40–120 words",
+      "expected_shape": "a short list of required resources, with access status where relevant",
+      "typical_length": "about 10–65 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "Google and some articles.",
-      "good_working_response": "Digital balance, nine containers, salinity solutions, spreadsheet software, teacher approval for laboratory space.",
+      "too_vague": "Some equipment.",
+      "good_working_response": "Digital balance; labelled containers; salinity solutions prepared with supervision; spreadsheet software; teacher approval for laboratory space still needed.",
       "detailed_response": "",
-      "why_it_works": "List what is required and note anything you do not yet have."
+      "why_it_works": "Distinguish resources already available from materials or permissions still needed. A materials list does not establish an adequate sample size."
     },
     "safety": {
       "stage": 2,
       "label": "Safety or ethics concerns I can already see",
       "type": "textarea",
-      "expected_shape": "2–4 focused sentences",
-      "typical_length": "about 40–120 words",
+      "expected_shape": "1–3 focused sentences identifying risks and possible safeguards",
+      "typical_length": "about 15–85 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "Be safe and keep it private.",
-      "good_working_response": "Human caffeine assignment would create health/authority concerns; use a safer observational or literature-based route instead.",
+      "too_vague": "It should be safe.",
+      "good_working_response": "Assigning caffeine intake to students could pose health and consent concerns, especially where a teacher recruits participants. I would avoid this intervention and consider a literature-based question instead.",
       "detailed_response": "",
-      "why_it_works": "Name possible risks early, even if you think they can be controlled."
+      "why_it_works": "Identify possible harm, pressure or privacy concerns early. Human participation may require permission, ethical review and genuinely voluntary consent."
     },
     "topicChoice": {
       "stage": 2,
@@ -190,7 +190,7 @@
       "expected_shape": "a short phrase or one sentence",
       "typical_length": "about 3–25 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
+      "too_vague": "Something with plants.",
       "good_working_response": "Early seedling growth under different salinity conditions.",
       "detailed_response": "",
       "why_it_works": "State the chosen topic as a specific phrase and briefly keep its boundaries in mind."
@@ -199,25 +199,25 @@
       "stage": 3,
       "label": "Core concepts",
       "type": "textarea",
-      "expected_shape": "3–8 key concepts or scientific terms",
-      "typical_length": "about 5–30 words total",
+      "expected_shape": "2–4 central search concepts",
+      "typical_length": "about 4–25 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
+      "too_vague": "Learning, things, scores.",
       "good_working_response": "retrieval practice; biology learning; delayed recall",
       "detailed_response": "",
-      "why_it_works": "List the two to four central concepts separately."
+      "why_it_works": "Select a few central concepts that carry the research question's meaning; separate them so each can be searched with suitable terms."
     },
     "synonyms": {
       "stage": 3,
       "label": "Synonyms and related terms",
       "type": "textarea",
-      "expected_shape": "2–5 concepts, each with 2–4 synonyms or related terms",
-      "typical_length": "about 20–70 words total",
+      "expected_shape": "2–4 concepts with synonyms or clearly identified related search terms",
+      "typical_length": "about 15–65 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "retrieval practice: practice testing, self-testing; delayed recall: retention, delayed test",
+      "too_vague": "Memory means memory stuff.",
+      "good_working_response": "retrieval practice: practice testing, test-enhanced learning; delayed recall: retention after a delay; related search term: delayed test",
       "detailed_response": "",
-      "why_it_works": "Build a small synonym bank for each concept."
+      "why_it_works": "Gather alternatives for each concept while distinguishing true synonyms from related terms that may refer to different measures."
     },
     "prelimSearch": {
       "stage": 3,
@@ -226,10 +226,10 @@
       "expected_shape": "2–3 preliminary search strings with a short note about what each revealed",
       "typical_length": "about 30–100 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "I searched Google for retrieval practice.",
-      "good_working_response": "ERIC: (\"retrieval practice\" OR \"practice testing\") AND biology → many education studies. Scopus: \"retrieval practice\" AND \"delayed recall\" → more retention-focused studies. Google Scholar: \"practice testing\" science classroom → useful terminology for a later database search.",
+      "too_vague": "I looked up retrieval practice on the internet.",
+      "good_working_response": "Illustrative search plan, not completed searches. ERIC: (\"retrieval practice\" OR \"practice testing\") AND biology. Scopus: \"retrieval practice\" AND \"delayed recall\". Google Scholar: \"practice testing\" science classroom. For each search, record the date, actual sources found and any useful terms or methods.",
       "detailed_response": "",
-      "why_it_works": "Write the search phrases and where you tried them, plus what each search taught you."
+      "why_it_works": "Use these strings as possible starting points. Report what each search actually revealed after running it; do not invent search results."
     },
     "known": {
       "stage": 3,
@@ -238,10 +238,10 @@
       "expected_shape": "one complete sentence, sometimes two",
       "typical_length": "about 15–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Several studies report that retrieval practice can improve delayed recall under specific learning conditions.",
+      "too_vague": "Research proves testing works.",
+      "good_working_response": "Possible claim to verify against identified studies: Retrieval practice may improve delayed recall under some learning conditions. Record the supporting sources, populations and measurement conditions before calling this established.",
       "detailed_response": "",
-      "why_it_works": "Summarize a pattern that appears across credible sources and keep the claim within their scope."
+      "why_it_works": "Build a qualified synthesis from studies you have actually read, with references and attention to where their findings apply."
     },
     "methodsSeen": {
       "stage": 3,
@@ -250,10 +250,10 @@
       "expected_shape": "3–6 specific items, short phrases, or bullets",
       "typical_length": "about 20–80 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Many studies use pre/post or delayed tests; several compare recall scores after assigned study conditions.",
+      "too_vague": "They did tests.",
+      "good_working_response": "Illustrative extraction categories, not findings from a completed search: delayed-recall tests; comparisons of assigned study conditions; time between learning and measurement. Replace these with methods documented in the sources you examined.",
       "detailed_response": "",
-      "why_it_works": "Note recurring designs, instruments, outcomes, timeframes, or analytic approaches."
+      "why_it_works": "Identify methods in specific papers before describing them as common or recurring in the literature."
     },
     "uncertain": {
       "stage": 3,
@@ -262,10 +262,10 @@
       "expected_shape": "one complete sentence, sometimes two",
       "typical_length": "about 15–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Studies use different retention intervals, so it is unclear whether the size of the retrieval-practice advantage is similar at 24 versus 48 hours.",
+      "too_vague": "More research is needed.",
+      "good_working_response": "Possible uncertainty to check: If the studies I find assess recall at different intervals, do reported effects differ between 24 and 48 hours? I would compare their methods and results before claiming an unresolved gap.",
       "detailed_response": "",
-      "why_it_works": "Describe the uncertainty precisely and identify what creates it."
+      "why_it_works": "Describe a question to investigate in the literature. An apparent difference between studies is not itself proof of a research gap."
     },
     "questionShift": {
       "stage": 3,
@@ -274,8 +274,8 @@
       "expected_shape": "one complete sentence, sometimes two",
       "typical_length": "about 15–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "How does this affect things?",
-      "good_working_response": "Before: Does sleep improve grades? After: What is the association between self-reported weekday sleep duration and biology quiz score? The wording changed because sleep will be observed, not assigned.",
+      "too_vague": "I made the question better.",
+      "good_working_response": "I revised my question from “Does sleep improve grades?” to “What is the association between self-reported weekday sleep duration and biology quiz score?” because I would observe sleep rather than assign it.",
       "detailed_response": "",
       "why_it_works": "Write the earlier idea and the improved direction, then explain what caused the change."
     },
@@ -286,8 +286,8 @@
       "expected_shape": "one complete sentence, sometimes two",
       "typical_length": "about 15–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "How does this affect things?",
-      "good_working_response": "What is the association between weekly study time and delayed biology recall in this class?",
+      "too_vague": "Does studying help?",
+      "good_working_response": "What is the association between reported weekly study time and delayed biology recall score among students in this class?",
       "detailed_response": "",
       "why_it_works": "Write one answerable question using the best current wording."
     },
@@ -298,10 +298,10 @@
       "expected_shape": "one complete sentence, sometimes two",
       "typical_length": "about 15–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "How does this affect things?",
+      "too_vague": "Is one study method better?",
       "good_working_response": "How does delayed recall differ between two assigned study procedures under the same content conditions?",
       "detailed_response": "",
-      "why_it_works": "Change something meaningful such as scope, claim type, outcome, or population."
+      "why_it_works": "Compare this question with the first. Assigning study procedures changes the design and may require ethical approval and safeguards for student participation."
     },
     "rq3": {
       "stage": 4,
