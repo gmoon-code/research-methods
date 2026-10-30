@@ -130,7 +130,7 @@ window.RMSCoach = (() => {
     if(n && complete<n) m.push(msg("warn","Some extraction records are incomplete",`${complete} of ${n} source records contain at least five of the six core evidence fields.`,"Complete design, sample/context, measures, finding, limitations, and relevance before synthesis."));
     const included=sources.filter(s=>(s.screeningStatus||"Included")==="Included");
     const evaluated=sources.filter(s=>s.trapp && ["timeframe","relevance","authority","accuracy","purpose"].filter(k=>present(s.trapp[k])).length===5).length;
-    if(n){score += 10*(evaluated/n); if(evaluated<n)m.push(msg("info","Source evaluation is incomplete",`${evaluated} of ${n} source records have all five TRAPP dimensions recorded.`,"Use the Literature Workspace to evaluate Timeframe, Relevance, Authority, Accuracy, and Purpose."));}
+    if(n){score += 10*(evaluated/n); if(evaluated<n)m.push(msg("info","Source evaluation is incomplete",`${evaluated} of ${n} source records have all five TRAAP criteria recorded.`,"Use the Literature Workspace to evaluate Timeliness, Relevance, Authority, Accuracy, and Purpose."));}
     const withThemes=sources.filter(s=>(Array.isArray(s.themeEvidence)&&s.themeEvidence.length)||(Array.isArray(s.themes)&&s.themes.length)).length;
     score += n?10*(withThemes/n):0;
     if(n && withThemes<n) m.push(msg("info","Tag source contributions to themes","The synthesis matrix works best when each important source is tagged as supporting, conflicting, mixed, or background evidence for a theme.","Use the Literature Workspace to record theme evidence and stance."));
