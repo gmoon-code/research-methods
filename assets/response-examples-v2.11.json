@@ -1207,97 +1207,97 @@
       "stage": 16,
       "label": "How findings converge with or differ from prior literature",
       "type": "textarea",
-      "expected_shape": "2–4 focused sentences",
-      "typical_length": "about 40–120 words",
+      "expected_shape": "2–4 sentences comparing documented studies with one's findings",
+      "typical_length": "about 35–130 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "The sources say similar things.",
-      "good_working_response": "The direction is similar to two prior studies, but direct magnitude comparison is limited because they used different salinity ranges and growth measures.",
+      "too_vague": "My findings agree with all the research.",
+      "good_working_response": "An illustrative comparison might find a similar direction of shoot-length differences in two published seedling studies, although their salinity ranges and outcomes may differ. Verify the studies, report their actual estimates and cite them before claiming convergence. A shared direction does not automatically establish comparable effect magnitude.",
       "detailed_response": "",
-      "why_it_works": "State where your findings are consistent, different, or difficult to compare, and use design/method details to explain why."
+      "why_it_works": "Compare identified findings and methods in sources you have read, making agreements, differences and limits of comparability specific."
     },
     "alternatives": {
       "stage": 16,
       "label": "Alternative explanations or mechanisms",
       "type": "textarea",
-      "expected_shape": "2–4 focused sentences",
-      "typical_length": "about 40–120 words",
+      "expected_shape": "2–4 sentences explaining credible alternative pathways",
+      "typical_length": "about 35–120 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Students who sleep more may also have different study routines or workloads; reverse direction is also possible.",
+      "too_vague": "Lots of other things might have happened.",
+      "good_working_response": "In a hypothetical seedling comparison, differences in water availability, ionic conditions or growth after germination might contribute to observed shoot-length patterns. Uneven moisture or dish position could also matter if procedures varied across conditions. The measurements would need to distinguish these possibilities before any specific mechanism could be claimed.",
       "detailed_response": "",
-      "why_it_works": "Name realistic alternatives connected to the design."
+      "why_it_works": "Identify alternatives that the design makes plausible and clarify what additional evidence would help distinguish them."
     },
     "limitations": {
       "stage": 16,
       "label": "At least two limitations and exactly how each restricts claims",
       "type": "textarea",
-      "expected_shape": "2–4 focused sentences",
-      "typical_length": "about 40–120 words",
+      "expected_shape": "at least two concrete limitations and their consequences",
+      "typical_length": "about 45–145 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "The sample was small.",
-      "good_working_response": "Self-reported sleep may contain measurement error, limiting precision of the estimated association; one-class convenience sample limits generalization.",
-      "detailed_response": "First, sleep duration is self-reported, so recall or rounding error could weaken the precision of the estimated association. Second, the sample comes from one convenience class, which limits generalization to students in other courses or schools. Third, sleep was not assigned, so factors such as prior achievement, study time, stress, and attendance could partly explain the observed relationship. These limitations mean the study can describe an association in this sample but cannot establish that changing sleep would cause a change in quiz scores.",
-      "why_it_works": "For each limitation, state the mechanism and the exact claim it weakens."
+      "too_vague": "The study had some problems.",
+      "good_working_response": "Six independently assigned dishes per treatment could leave substantial uncertainty in the estimated mean difference, especially if dish outcomes vary widely. The single seed batch and growing setting would limit generalisation to other conditions. Because the primary outcome averages shoot length across planted seeds, including zeroes for seeds without shoots, it would not separate germination differences from growth among germinated seedlings.",
+      "detailed_response": "In this illustrative design, the primary comparison would use only six independently assigned dishes per treatment. The resulting estimate could be imprecise, and the five seeds within a dish would not constitute additional independent treatment replicates. A single seed batch in one growing setting would also limit how confidently the results could be applied to other plant populations or environments. The prespecified Day 7 outcome includes zero values for seeds without visible shoots, so the dish-level mean reflects a combination of germination and subsequent growth. A difference in this measure could not, on its own, establish which developmental process was responsible. Actual protocol deviations and missing observations would need to be checked before describing further limitations.",
+      "why_it_works": "State how a particular feature of the design, sample or measurement restricts the interpretation, rather than merely listing weaknesses."
     },
     "implications": {
       "stage": 16,
       "label": "Realistic implications and who/what they apply to",
       "type": "textarea",
-      "expected_shape": "2–4 focused sentences",
-      "typical_length": "about 40–120 words",
+      "expected_shape": "2–4 sentences about justified, bounded uses of the findings",
+      "typical_length": "about 35–115 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "The result supports further study of sleep and learning in this local context; it does not justify prescribing sleep changes based on this observational sample alone.",
+      "too_vague": "The experiment proves what all plants need.",
+      "good_working_response": "If the planned experiment identifies a reliable difference between the salinity conditions, it could inform a limited classroom discussion of how early development responds in this particular system. The result would need confirmation with more independently assigned units and other seed batches before supporting broader horticultural recommendations.",
       "detailed_response": "",
-      "why_it_works": "State who/what the implication applies to and avoid claiming more than the study showed."
+      "why_it_works": "Explain who could use the evidence and where stronger replication or more direct measurement would be needed."
     },
     "future": {
       "stage": 16,
       "label": "Specific future research that follows from the findings",
       "type": "textarea",
-      "expected_shape": "one complete sentence, sometimes two",
-      "typical_length": "about 15–50 words",
+      "expected_shape": "1–2 specific sentences linked to observed limitations",
+      "typical_length": "about 20–80 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Replicate with a larger multi-class sample and objective sleep measurement; examine prior achievement as a prespecified covariate.",
+      "too_vague": "Scientists should study this more.",
+      "good_working_response": "A subsequent experiment could include more independently assigned dishes, use several radish seed batches and measure germination separately from shoot length among emerged seedlings. Planning an adequate number of treatment units in advance would strengthen the comparison.",
       "detailed_response": "",
-      "why_it_works": "Propose a design improvement directly connected to current evidence."
+      "why_it_works": "Connect a feasible next design directly to a documented uncertainty or measurement limitation."
     },
     "discussionDraft": {
       "stage": 16,
       "label": "Discussion draft",
       "type": "textarea",
-      "expected_shape": "3–6 connected paragraphs",
+      "expected_shape": "3–6 connected paragraphs that develop evidence-bound interpretations",
       "typical_length": "300–700 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "The results agree with the research and show the hypothesis was correct.",
-      "good_working_response": "Reported weekday sleep duration was positively associated with biology quiz score in this sample. This pattern may be related to attention or memory processes, although those mechanisms were not measured directly. The result is consistent with prior sleep-and-learning literature, but self-reported sleep, one-class convenience sampling, and unmeasured factors such as study time limit the conclusion to an association rather than a causal sleep effect.",
-      "detailed_response": "Reported weekday sleep duration was positively associated with biology quiz score in this sample. One possible explanation is that longer sleep supports attention and memory processes relevant to assessment performance, although those mechanisms were not measured directly. The finding is consistent with prior literature connecting sleep and academic performance, but the observational design leaves plausible alternative explanations such as prior achievement, study time, stress, and attendance. Self-reported sleep may also contain measurement error, and the one-class convenience sample limits generalization. The result therefore supports a sample-specific association and provides a rationale for further research using stronger measurement and design controls.",
-      "why_it_works": "Build from direct answer to anchor findings, reasoning, literature comparison, limitations, implications, and future research."
+      "too_vague": "The findings proved that salt harms plants, just as other studies did.",
+      "good_working_response": "Illustrative Discussion opening only. If the completed dish-level analysis shows a difference in mean Day 7 shoot length between 0 and 100 mM NaCl, interpret its direction and uncertainty in the context of the actual design. Discuss which biological mechanisms remain unmeasured and compare only verifiable literature findings.",
+      "detailed_response": "Illustrative Discussion for a hypothetical study. The assumed patterns below are fictional and must be replaced by findings from an actual analysis.\n\nSuppose dishes assigned the highest NaCl concentration had shorter mean shoot length per planted seed than those receiving the reference solution. The primary comparison would then describe a difference in early development under the conditions studied. Its estimated magnitude and uncertainty would need to be reported from the dish-level analysis before deciding how firmly the pattern could be interpreted. The observations would concern the experimental dishes and seed batch used in the study. A broader claim about radish plants in other settings would require further evidence.\n\nSeveral biological processes might contribute to such a difference. Added salt could change water availability or create ionic stress, although shoot length alone would not identify either mechanism. The chosen outcome also combines germination and subsequent shoot growth by assigning 0 cm to seeds without visible shoots on Day 7. A lower dish-level mean might therefore arise from fewer seeds developing shoots, shorter shoots among those that emerged, or both. Germination records could help explore these possibilities. Any additional comparison among germinated seedlings would need to be clearly described, since selecting only those that germinated changes the group being compared.\n\nA useful literature comparison would examine studies that report comparable species, concentration ranges and measurement times. The manuscript must identify those studies and cite their actual findings before claiming agreement or disagreement. Even when two investigations show a similar direction of difference, their reported magnitudes may be difficult to compare if one measures germination percentages and another measures length among surviving seedlings. Such differences in outcome definition shape the interpretation of apparent convergence.\n\nThe proposed design contains six independently assigned dishes per concentration. Measurements from five seeds within one dish increase detail about that dish, while the number of independent treatment units remains six per group. This modest replication could produce imprecise estimates, and a single seed batch or classroom growing environment further limits generalisation. Position-related differences in light or moisture would warrant attention if the planned controls were not maintained consistently. These limitations should be discussed using the recorded deviations and observed distributions, without assuming that every possible source of error occurred.\n\nA subsequent study could use more independently assigned dishes selected through a justified sample-size plan, repeat the work across seed batches, and distinguish germination from growth among seedlings. That extension would help examine which aspects of early development respond under particular salinity conditions. For the present illustration, the central obligation is narrower. The Discussion should explain what the measurements actually support and leave unresolved mechanisms open to further investigation.",
+      "why_it_works": "Develop interpretation through the actual measured pattern, relevant explanations, literature, concrete limitations and a defensible next question. The paragraphs are connected by the argument, not by a compulsory list of rhetorical moves."
     },
     "conclusionDraft": {
       "stage": 17,
       "label": "Conclusion",
       "type": "textarea",
-      "expected_shape": "2–4 focused sentences",
-      "typical_length": "about 40–120 words",
+      "expected_shape": "2–4 sentences closing on findings or a proposed study purpose",
+      "typical_length": "about 30–110 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Higher salinity was associated with lower growth under the studied laboratory conditions; the limited unit replication restricts broader generalization.",
+      "too_vague": "The hypothesis was correct, and this proves salt stops growth.",
+      "good_working_response": "For a completed experiment, the conclusion should report the observed direction and magnitude of the dish-level salinity comparison only after analysis. Any conclusion about early development would remain bounded by the seed batch, treatment units and combined growth measure. A proposal should instead close on its planned question and anticipated evidence without claiming results.",
       "detailed_response": "",
-      "why_it_works": "Restate the main answer at the correct claim level, include an important boundary, and avoid new results."
+      "why_it_works": "Close with the actual answer when one exists, or the study purpose when work remains proposed. Keep limitations proportionate and introduce no new findings."
     },
     "abstractDraft": {
       "stage": 17,
       "label": "Abstract",
       "type": "textarea",
-      "expected_shape": "one compact paragraph",
+      "expected_shape": "one coherent paragraph appropriate to proposal or completed work",
       "typical_length": "150–250 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "This study looked at sleep and grades. The results were significant.",
-      "good_working_response": "This observational study examined the association between reported weekday sleep duration and biology quiz score among 30 students in one class. Students reported typical weekday sleep, and quiz scores were obtained from the same assessment. Reported sleep duration was positively associated with quiz score, r = .43, p = .018. Because sleep was self-reported and not assigned, the result supports an association within this sample and does not establish that increasing sleep would cause higher scores.",
-      "detailed_response": "This observational study examined the association between reported weekday sleep duration and biology quiz score among 30 students in one class. Students reported typical weekday sleep, and quiz scores were obtained from the same assessment. Reported sleep duration was positively associated with quiz score, r = .43, p = .018. Because sleep was self-reported and not assigned, the result supports an association within this sample and does not establish that increasing sleep would cause higher scores.",
-      "why_it_works": "Include purpose/question, design/method, sample/system, central result, and bounded conclusion."
+      "too_vague": "We tested salt, and the findings were very significant.",
+      "good_working_response": "Illustrative proposal abstract. The proposed experiment would compare mean shoot length per planted seed at Day 7 under assigned 0, 50 and 100 mM NaCl conditions. Eighteen dishes are envisioned, with treatment assigned at the dish level and five seeds observed per dish. Any conclusions would depend on the subsequent evidence and the adequacy of replication.",
+      "detailed_response": "This proposed classroom laboratory study would examine early radish development under three assigned sodium chloride concentrations. The research question concerns mean shoot length per planted seed after seven days, with particular attention to the comparison between dishes receiving 0 mM and 100 mM NaCl. In the illustrative design, 18 dishes would be independently assigned across 0, 50 and 100 mM conditions, with six dishes per concentration and five seeds within each dish. Each dish would contribute one mean outcome to the primary comparison, while individual seed records and germination status would be retained to clarify the measurement. Seeds without visible shoot growth at the designated time would be assigned 0 cm under a prespecified outcome definition that combines germination and subsequent growth. Random allocation and consistent growing procedures would be documented, and the adequacy of the proposed number of dishes would require review before collection. The study could describe differences under the specified laboratory conditions, with interpretation limited by its experimental replication, seed batch and measurement choices. No empirical findings are reported here because the study is presented as a proposal rather than a completed investigation.",
+      "why_it_works": "Summarise the purpose, system, design and planned analysis in a proposal, without reporting results that do not exist. A completed-study abstract must instead include verified central findings."
     },
     "titleDraft": {
       "stage": 17,
@@ -1306,10 +1306,10 @@
       "expected_shape": "a short phrase or one sentence",
       "typical_length": "about 3–25 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Reported Sleep Duration and Biology Quiz Scores in a Secondary Classroom: An Observational Study",
+      "too_vague": "The Impact of Salt on All Plants",
+      "good_working_response": "Early Radish Shoot Growth Across Assigned Salinity Conditions",
       "detailed_response": "",
-      "why_it_works": "Name the central variables/phenomenon and useful context/design information."
+      "why_it_works": "Use a specific title that identifies the system and comparison without implying that the results or mechanism have already been established."
     },
     "keywords": {
       "stage": 17,
@@ -1318,10 +1318,10 @@
       "expected_shape": "3–6 searchable keywords or short phrases",
       "typical_length": "about 3–20 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "retrieval practice; biology education; delayed recall; secondary students",
+      "too_vague": "science; data; experiment",
+      "good_working_response": "salinity; radish seedlings; shoot length; experimental units; early plant growth",
       "detailed_response": "",
-      "why_it_works": "Choose commonly used research terms, usually several concise phrases."
+      "why_it_works": "Select terms that describe this study's actual system, outcomes or method and that would help a relevant reader locate it."
     },
     "citationStyle": {
       "stage": 18,
@@ -1330,34 +1330,34 @@
       "expected_shape": "one selection",
       "typical_length": "Choose the option that matches your project. Use the nearby explanation field to justify it when one is provided.",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "APA 7 if your course instructions require APA seventh edition.",
+      "too_vague": "Whatever referencing style is easiest.",
+      "good_working_response": "APA 7",
       "detailed_response": "",
-      "why_it_works": "Select the required style and follow its official rules consistently."
+      "why_it_works": "Use the exact option required by the teacher, journal or assignment. Follow the applicable official conventions rather than mixing styles."
     },
     "citationAudit": {
       "stage": 18,
       "label": "Citation/reference issues I still need to fix",
       "type": "textarea",
-      "expected_shape": "2–6 specific citation/reference problems still needing correction",
-      "typical_length": "about 20–120 words",
+      "expected_shape": "2–6 specific issues to verify against source records",
+      "typical_length": "about 20–125 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "(Garcia, 2022) appears in text but no verified source record exists; verify before submission.",
+      "too_vague": "I need to fix the references.",
+      "good_working_response": "An in-text author–date citation has no matching verified publication record; identify the source before retaining the claim. Confirm article titles, publication years and DOIs against the actual publications, and review whether every cited claim is supported by the referenced material.",
       "detailed_response": "",
-      "why_it_works": "Record missing matches, incomplete bibliographic data, unsupported claims, or formatting issues."
+      "why_it_works": "Record concrete, auditable problems while avoiding invented author names, DOIs or source details."
     },
     "finalEdits": {
       "stage": 18,
       "label": "Final methodological or writing revisions",
       "type": "textarea",
-      "expected_shape": "2–6 specific final revisions",
-      "typical_length": "about 20–120 words",
+      "expected_shape": "2–6 concrete actions needed for submission",
+      "typical_length": "about 25–120 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
-      "too_vague": "A short answer that names the topic but does not give enough project-specific detail.",
-      "good_working_response": "Change causal wording in Discussion paragraph 2; verify S06 DOI; update Results n from 30 to 28 complete pairs.",
+      "too_vague": "Read it again and make it sound professional.",
+      "good_working_response": "Reconcile the number of independently assigned dishes across Methods and Results; verify that figures display dish-level comparisons; confirm the rule distinguishing ungerminated seeds from missing measurements; check every citation against its source; and revise any claims that exceed the recorded evidence.",
       "detailed_response": "",
-      "why_it_works": "List concrete actions, not vague intentions."
+      "why_it_works": "Make each remaining action specific enough that another reader can verify whether it has been completed."
     }
   }
 }
