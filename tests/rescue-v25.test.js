@@ -14,6 +14,8 @@ for(const k of earlyKeys){
   frames.push(f.levels["5"].frame);
 }
 if(new Set(examples).size!==earlyKeys.length||new Set(frames).size!==earlyKeys.length)process.exit(1);
+if(new Set(earlyKeys.map(k=>fullRescueModel.fields[k].levels["1"].prompt)).size!==earlyKeys.length)process.exit(1);
+if(new Set(["ideaA","ideaB","ideaC"].map(k=>fullRescueModel.fields[k].levels["3"].strong_example)).size!==3)process.exit(1);
 if(!/three/i.test(fullRescueModel.fields.interest1.levels["1"].body))process.exit(1);
 if(!/three/i.test(fullRescueModel.fields.interest1.levels["2"].body))process.exit(1);
 if(!/three/i.test(fullRescueModel.fields.interest1.levels["5"].frame))process.exit(1);
