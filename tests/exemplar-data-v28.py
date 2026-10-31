@@ -34,4 +34,21 @@ assert mo["k"]==8 and 0<=mo["I2_percent"]<=100
 with open(r/"examples/retrieval-mixed-methods/SYNTHETIC_QUANTITATIVE_DATA.csv",newline="",encoding="utf-8") as f: mm=list(csv.DictReader(f))
 with open(r/"examples/retrieval-mixed-methods/SYNTHETIC_INTERVIEW_EXCERPTS.csv",newline="",encoding="utf-8") as f: mi=list(csv.DictReader(f))
 assert len(mm)==24 and len(mi)==6
+ids=[x["student_id"] for x in mm]
+assert len(set(ids))==24
+pre=np.array([float(x["pre_score"]) for x in mm])
+post=np.array([float(x["post_score"]) for x in mm])
+change=np.array([float(x["change_score"]) for x in mm])
+assert np.allclose(change,post-pre,atol=1e-9)
+assert len({x["student_id"] for x in mi})==6
+assert all(x["student_id"] in ids for x in mi)
+assert sum(change>0)==23 and sum(change<0)==1
+assert all(change[ids.index(x["student_id"])]>0 for x in mi)
+mixed_out=json.loads((r/"examples/retrieval-mixed-methods/SYNTHETIC_MIXED_OUTPUT.json").read_text())
+assert abs(change.mean()-mixed_out["mean_change"])<1e-9
+paired=stats.ttest_rel(post,pre)
+assert abs(paired.statistic-mixed_out["paired_t"])<1e-9
+assert abs(paired.pvalue-mixed_out["p"])<1e-9
+ci=stats.t.interval(0.95,df=23,loc=change.mean(),scale=stats.sem(change))
+assert np.allclose(ci,mixed_out["ci95"],atol=1e-9)
 print("PASS v2.8 exemplar evidence packs")
