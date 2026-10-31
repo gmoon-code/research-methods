@@ -5079,7 +5079,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The formatting system required by your teacher, journal, or discipline.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which citation system does the assignment or target venue require, and have you checked its exact version?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -5091,7 +5091,7 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "APA 7 if your course instructions require APA seventh edition.",
+          "strong_example": "Select MLA because that is the stated assignment requirement. Check the specified edition and local instructions before formatting citations and reference entries.",
           "avoid": "Do not choose a style based on personal preference when the assignment specifies one.",
           "choice": {
             "title": "Which citation style should I use?",
@@ -5111,19 +5111,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The conclusion says 'X caused Y,' but the Method describes an observational study.",
+            "situation": "A student sees an APA-formatted example online, but the school assignment specifies MLA.",
             "thinking": [
-              "This is an alignment problem, not a grammar problem.",
-              "The research question, Results, Discussion, and title all need the same claim ceiling.",
-              "I should trace the wording backward through the design before final submission."
+              "The formal assignment requirement takes priority over a convenient example.",
+              "The correct choice is MLA for this assignment, although the student still needs to check the specific edition or teacher directions.",
+              "The style decision sets formatting rules; it does not establish whether a cited source is genuine or supports a claim."
             ],
-            "draft": "Revise causal language to association language throughout the paper unless the design genuinely supports causal inference."
+            "draft": "Select MLA because that is the stated assignment requirement. Check the specified edition and local instructions before formatting citations and reference entries."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Required citation style: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "I selected [exact required option] following [identified assignment, journal or instructor direction]. I will check [edition or local exception] and apply it consistently to [citations and bibliography].",
           "path_frames": {}
         }
       }
@@ -5137,11 +5137,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A list of citation/reference problems that still require checking against actual sources.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which exact claim or reference needs source verification, and what concrete correction will resolve the problem?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Record missing matches, incomplete bibliographic data, unsupported claims, or formatting issues.",
+          "body": "Check each in-text citation against a real bibliographic record and read the corresponding source for the exact claim. Document missing references, unsupported scope, incorrect dates and unresolved source details without inventing them.",
           "questions": [
             "Does every in-text citation have a reference entry?",
             "Does the source support the exact nearby claim?"
@@ -5149,26 +5149,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "(Garcia, 2022) appears in text but no verified source record exists; verify before submission.",
+          "strong_example": "Issue C01: a literature claim is followed by '(Author, year)' without a verified source. Action: locate and read the source, enter accurate bibliographic details and confirm the claim, or revise/remove the sentence. Status: unresolved.",
           "avoid": "Do not invent a DOI or missing author information.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The conclusion says 'X caused Y,' but the Method describes an observational study.",
+            "situation": "A draft includes the placeholder citation '(Author, year)' next to a literature claim, without a linked source record.",
             "thinking": [
-              "This is an alignment problem, not a grammar problem.",
-              "The research question, Results, Discussion, and title all need the same claim ceiling.",
-              "I should trace the wording backward through the design before final submission."
+              "A placeholder is not evidence and must not be left as a real citation.",
+              "Locate the actual paper and verify that its methods and findings support the precise claim.",
+              "If no reliable source supports the sentence, qualify or remove the unsupported claim and record the issue in the audit."
             ],
-            "draft": "Revise causal language to association language throughout the paper unless the design genuinely supports causal inference."
+            "draft": "Issue C01: a literature claim is followed by '(Author, year)' without a verified source. Action: locate and read the source, enter accurate bibliographic details and confirm the claim, or revise/remove the sentence. Status: unresolved."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Verify [claim/citation] against [actual source]. Record [missing match / unsupported scope / incomplete bibliography] and the required correction.",
+          "frame": "Audit item [ID] concerns [exact sentence or citation]. [Matched source or missing record] shows [verification issue]. I will [specific correction], then confirm [citation-reference match and claim support] before marking it resolved.",
           "path_frames": {}
         }
       }
@@ -5182,37 +5182,37 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The final methodological and writing changes needed before submission.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which precise unresolved scholarly or writing problems remain, and how will each correction be checked?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "List concrete actions, not vague intentions.",
+          "body": "Record actionable corrections tied to a page, section, table or sentence, and identify the evidence or rereading needed to verify each change. Mark unresolved items accurately.",
           "questions": [
             "What still prevents the paper from being auditable?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Change causal wording in Discussion paragraph 2; verify S06 DOI; update Results n from 30 to 28 complete pairs.",
+          "strong_example": "Action E01: reconcile the analysed n across Results and Table 1 using the log. Action E02: revise the observational conclusion's causal wording. After both changes, verify the underlying records, cross-section consistency and paragraph cohesion.",
           "avoid": "Avoid writing only 'proofread.'",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The conclusion says 'X caused Y,' but the Method describes an observational study.",
+            "situation": "A final draft contains a Results sample count that disagrees with the analysis log, plus a conclusion that uses causal wording for an observational design.",
             "thinking": [
-              "This is an alignment problem, not a grammar problem.",
-              "The research question, Results, Discussion, and title all need the same claim ceiling.",
-              "I should trace the wording backward through the design before final submission."
+              "First reconcile the sample count against the actual analysed records and every table referring to it.",
+              "Replace causal language with an inference justified by the study's observed exposure and design.",
+              "Read the revised Results and Discussion together for logical flow, then verify the corrected citations and document what remains unresolved."
             ],
-            "draft": "Revise causal language to association language throughout the paper unless the design genuinely supports causal inference."
+            "draft": "Action E01: reconcile the analysed n across Results and Table 1 using the log. Action E02: revise the observational conclusion's causal wording. After both changes, verify the underlying records, cross-section consistency and paragraph cohesion."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Before submission I will [specific methodological correction], [specific citation correction], and [specific writing/alignment correction].",
+          "frame": "Before submission I will correct [specific evidence or method problem] at [location] and verify it using [record]. I will revise [specific prose or citation problem] at [location], reread [surrounding context], and retain [unresolved item] for follow-up.",
           "path_frames": {}
         }
       }
