@@ -297,6 +297,8 @@
       ],
       "13": [
         "rawLocation",
+        "missingObserved",
+        "errorsCorrections",
         "descriptives"
       ],
       "14": [
@@ -556,9 +558,6 @@
       "12": [
         "replication"
       ],
-      "13": [
-        "errorsCorrections"
-      ],
       "15": [
         "unexpected"
       ],
@@ -814,42 +813,42 @@
       "9": [
         "The design matches a question about meaning, experience, process, explanation, or context.",
         "I stated what kind of qualitative evidence will answer the question.",
-        "My claim boundary is contextual and does not promise statistical population causation."
+        "My claims remain grounded in the studied setting and evidence, within boundaries suited to this approach."
       ],
       "10": [
-        "The central phenomenon/domains are defined without forcing them into IV/DV language.",
-        "I know what participant, case, document, observation, or excerpt supplies evidence.",
+        "I have described the phenomenon and relevant domains in terms that fit the question.",
+        "I distinguish the participant or case from the excerpt, observation or other evidence record.",
         "I have stated what will count as relevant evidence."
       ],
       "11": [
-        "The sampling/recruitment strategy fits the qualitative purpose.",
-        "The interview/observation/document procedure is clear and credible.",
-        "Ethics, privacy, reflexivity, and transferability boundaries are addressed."
+        "I have explained which cases to include, why they fit the question and how access will be arranged.",
+        "The planned conversations, observations or documents can provide evidence relevant to the question.",
+        "I have considered participant protections and how my relationship to the setting could shape the evidence."
       ],
       "12": [
-        "The collection protocol and qualitative corpus structure are auditable.",
-        "The coding/category/theme plan and trustworthiness protections are documented.",
-        "I have rules for missing, withdrawn, excluded, or unusable evidence."
+        "The procedure explains how evidence is collected, organised and linked to its source.",
+        "My approach to interpretation is explained, with room to document changes as understanding develops.",
+        "I have planned for missing or withdrawn material, confidentiality and documented exclusions."
       ],
       "13": [
         "The original qualitative corpus is preserved.",
-        "Transcription/coding/data-quality changes are logged.",
-        "I summarized the corpus and inspected patterns before final themes were fixed."
+        "Transcription, annotation, corrections and analytic changes remain traceable without altering the original record.",
+        "The corpus summary describes what was collected and helps me examine variation before settling on findings."
       ],
       "14": [
-        "The analysis explains how codes/categories/themes or interpretations will be developed.",
-        "I documented credibility checks such as audit trail, discrepant evidence, coding consistency, or reflexivity as relevant.",
+        "I have explained how the chosen approach develops findings through coding, close reading or another justified process.",
+        "I have described how interpretations and analytic decisions will be examined, using quality checks suited to the method.",
         "I am not adding a p-value or effect-size requirement that the qualitative question does not need."
       ],
       "15": [
-        "Each major finding/theme is traceable to qualitative evidence.",
-        "The Results distinguish participant evidence from my interpretation.",
-        "Variation, contradictory/disconfirming evidence, or boundary cases are reported when relevant."
+        "Each central finding is supported by relevant excerpts, observations, documents or other evidence.",
+        "My interpretive reasoning is visible while participants' words and actions remain accurately represented.",
+        "Different accounts, tensions and boundary cases are considered where relevant."
       ],
       "16": [
         "The Discussion answers the qualitative question in context.",
-        "Alternative interpretations and researcher/context effects are considered.",
-        "Transferability and other limitations are described without pretending statistical generalization."
+        "I have considered how the setting and my research decisions may have shaped the interpretation.",
+        "I explain where findings may be informative and what the available evidence leaves uncertain."
       ]
     },
     "literature_review": {
