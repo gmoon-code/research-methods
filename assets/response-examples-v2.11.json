@@ -23,9 +23,9 @@
       "typical_length": "about 10–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Students forget things.",
-      "good_working_response": "Hypothetical classroom pattern: Some students recall vocabulary on quiz day but struggle to retrieve it a week later.",
+      "good_working_response": "In a hypothetical classroom, some students recall biology vocabulary on quiz day but struggle to retrieve the same terms a week later.",
       "detailed_response": "",
-      "why_it_works": "Identify an observable pattern and the specific uncertainty it raises. Present an illustrative observation as hypothetical."
+      "why_it_works": "Identify a specific observable pattern and what remains uncertain about it. A hypothetical observation should not be presented as evidence from a real class."
     },
     "claim1": {
       "stage": 1,
@@ -167,9 +167,9 @@
       "typical_length": "about 10–65 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Some equipment.",
-      "good_working_response": "Digital balance; labelled containers; salinity solutions prepared with supervision; spreadsheet software; teacher approval for laboratory space still needed.",
+      "good_working_response": "Digital balance, ruler, labelled seedling dishes, and supervised preparation of salinity solutions. Access to laboratory space and approval for the procedure still need confirmation.",
       "detailed_response": "",
-      "why_it_works": "Distinguish resources already available from materials or permissions still needed. A materials list does not establish an adequate sample size."
+      "why_it_works": "Identify the equipment needed to prepare the conditions and record growth, while distinguishing available materials from unconfirmed access or supervision. Equipment alone does not establish a feasible design."
     },
     "safety": {
       "stage": 2,
@@ -215,21 +215,21 @@
       "typical_length": "about 15–65 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Memory means memory stuff.",
-      "good_working_response": "retrieval practice: practice testing, test-enhanced learning; delayed recall: retention after a delay; related search term: delayed test",
+      "good_working_response": "Retrieval practice: practice testing, self-testing. Related expression to check: test-enhanced learning. Delayed recall: recall after a delay. Related measure to check: delayed test.",
       "detailed_response": "",
-      "why_it_works": "Gather alternatives for each concept while distinguishing true synonyms from related terms that may refer to different measures."
+      "why_it_works": "Group close search terms by concept and flag related expressions separately. A delayed test describes a measurement occasion, while delayed recall names an outcome; they should not automatically be treated as identical."
     },
     "prelimSearch": {
       "stage": 3,
       "label": "Two or three preliminary search strings",
       "type": "textarea",
-      "expected_shape": "2–3 preliminary search strings with a short note about what each revealed",
+      "expected_shape": "2–3 planned or completed search strings, with actual dates and findings recorded after execution",
       "typical_length": "about 30–100 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "I looked up retrieval practice on the internet.",
-      "good_working_response": "Illustrative search plan, not completed searches. ERIC: (\"retrieval practice\" OR \"practice testing\") AND biology. Scopus: \"retrieval practice\" AND \"delayed recall\". Google Scholar: \"practice testing\" science classroom. For each search, record the date, actual sources found and any useful terms or methods.",
+      "good_working_response": "Proposed queries, not yet run. ERIC: (\"retrieval practice\" OR \"practice testing\") AND biology. Scopus: \"retrieval practice\" AND \"delayed recall\". Google Scholar: \"practice testing\" science classroom. After searching, I would record the actual date, returned sources, relevant terms and any changes to each query.",
       "detailed_response": "",
-      "why_it_works": "Use these strings as possible starting points. Report what each search actually revealed after running it; do not invent search results."
+      "why_it_works": "Show usable search expressions and their intended platforms while keeping planned searches separate from executed searches. Report findings only after verifying the search record."
     },
     "known": {
       "stage": 3,
@@ -239,9 +239,9 @@
       "typical_length": "about 15–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Research proves testing works.",
-      "good_working_response": "Possible claim to verify against identified studies: Retrieval practice may improve delayed recall under some learning conditions. Record the supporting sources, populations and measurement conditions before calling this established.",
+      "good_working_response": "One possible claim to check is that retrieval practice may support delayed recall under particular learning conditions. I would identify the supporting studies, populations and outcome measures before describing this pattern as established.",
       "detailed_response": "",
-      "why_it_works": "Build a qualified synthesis from studies you have actually read, with references and attention to where their findings apply."
+      "why_it_works": "Model a cautiously framed proposition that requires verification. A statement about what is well established needs checked sources and an explanation of the settings in which their findings apply."
     },
     "methodsSeen": {
       "stage": 3,
@@ -251,9 +251,9 @@
       "typical_length": "about 20–80 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "They did tests.",
-      "good_working_response": "Illustrative extraction categories, not findings from a completed search: delayed-recall tests; comparisons of assigned study conditions; time between learning and measurement. Replace these with methods documented in the sources you examined.",
+      "good_working_response": "A source-extraction table could record recall-test format, whether study conditions were assigned or observed, and the interval before outcome measurement. These are categories to check in the papers, rather than results from a completed search.",
       "detailed_response": "",
-      "why_it_works": "Identify methods in specific papers before describing them as common or recurring in the literature."
+      "why_it_works": "Specify what to extract from each identified source before describing a method as common. Preserve the distinction between a proposed extraction scheme and verified study characteristics."
     },
     "uncertain": {
       "stage": 3,
@@ -263,9 +263,9 @@
       "typical_length": "about 15–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "More research is needed.",
-      "good_working_response": "Possible uncertainty to check: If the studies I find assess recall at different intervals, do reported effects differ between 24 and 48 hours? I would compare their methods and results before claiming an unresolved gap.",
+      "good_working_response": "If the studies I find assess recall at different intervals, I would check whether outcomes measured after 24 and 48 hours can be compared meaningfully. The uncertainty depends on the measures and studies actually reviewed.",
       "detailed_response": "",
-      "why_it_works": "Describe a question to investigate in the literature. An apparent difference between studies is not itself proof of a research gap."
+      "why_it_works": "Frame a precise comparison to investigate without declaring a literature gap in advance. Differences in measurement timing may complicate synthesis even when individual studies report clear results."
     },
     "questionShift": {
       "stage": 3,
@@ -275,9 +275,9 @@
       "typical_length": "about 15–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "I made the question better.",
-      "good_working_response": "I revised my question from “Does sleep improve grades?” to “What is the association between self-reported weekday sleep duration and biology quiz score?” because I would observe sleep rather than assign it.",
+      "good_working_response": "In this hypothetical reading exercise, I changed “Does sleep improve grades?” to “How is reported weekday sleep duration associated with biology quiz scores?” after examining how observational studies record sleep rather than assign it.",
       "detailed_response": "",
-      "why_it_works": "Write the earlier idea and the improved direction, then explain what caused the change."
+      "why_it_works": "Name both versions and the methodological insight that prompted the change. In an actual project, identify the reviewed sources that informed the revised question instead of implying an undocumented search."
     },
     "rq1": {
       "stage": 4,
@@ -299,9 +299,9 @@
       "typical_length": "about 15–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Is one study method better?",
-      "good_working_response": "How does delayed recall differ between two assigned study procedures under the same content conditions?",
+      "good_working_response": "How do students in this class describe the study practices they use when preparing for delayed biology recall tasks?",
       "detailed_response": "",
-      "why_it_works": "Compare this question with the first. Assigning study procedures changes the design and may require ethical approval and safeguards for student participation."
+      "why_it_works": "The first question examines a numerical association; this second candidate examines students’ accounts. Interviews or written reflections would require an appropriate collection and analysis plan, including participant permissions and safeguards."
     },
     "rq3": {
       "stage": 4,
