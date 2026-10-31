@@ -138,7 +138,7 @@ for(const get of [f=>f.levels["1"].prompt,f=>f.levels["3"].strong_example,f=>f.l
 }
 if(!/independently assigned dishes/.test(fullRescueModel.fields.replication.levels["4"].walkthrough.draft))process.exit(1);
 if(!/missing/.test(fullRescueModel.fields.missingRule.levels["4"].walkthrough.draft))process.exit(1);
-if(!/not been/.test(fullRescueModel.fields.analysisSample.levels["4"].walkthrough.draft+"not been"))process.exit(1);
+if(!/remain pending/.test(fullRescueModel.fields.analysisSample.levels["4"].walkthrough.draft))process.exit(1);
 if(!/paired binary/.test(fullRescueModel.fields.analysisChoice.levels["4"].walkthrough.draft))process.exit(1);
 if(!/not establish equivalence/.test(fullRescueModel.fields.unexpected.levels["4"].walkthrough.draft))process.exit(1);
 if(!/did not measure/.test(fullRescueModel.fields.interpret1.levels["4"].walkthrough.draft))process.exit(1);
