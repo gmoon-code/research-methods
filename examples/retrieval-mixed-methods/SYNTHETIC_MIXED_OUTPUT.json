@@ -7,12 +7,63 @@
   ],
   "paired_t": 7.119536014057916,
   "df": 23,
-  "p": 2.9843189941350387e-07,
+  "p": 2.9843189941350387e-7,
   "qualitative_themes": [
     "Retrieval exposed knowledge gaps and changed preparation",
     "Students valued reconstruction and feedback",
     "Perceived transfer and burden varied"
   ],
   "integration": "Quantitative scores improved on average, while interviews suggest possible mechanisms and boundaries. The qualitative strand does not prove why scores changed.",
-  "boundary": "Synthetic one-group pre/post data cannot establish a causal effect because there is no concurrent comparison group."
+  "boundary": "Synthetic one-group pre/post data cannot establish a causal effect because there is no concurrent comparison group.",
+  "calculation_details": {
+    "formula": "change_score = post_score - pre_score; sample standard deviation and paired t use the 24 within-student differences.",
+    "pre_score_mean": 66.175,
+    "post_score_mean": 74.87083333333332,
+    "change_sample_sd": 5.9836355944806865,
+    "change_standard_error": 1.2214045011027306,
+    "interval_method": "Two-sided 95% Student t interval with 23 degrees of freedom, conditional on independent student-level paired differences and relevant model assumptions.",
+    "t_critical_95": 2.06865761041904,
+    "positive_changes": 23,
+    "negative_changes": 1,
+    "negative_change_id": "M11"
+  },
+  "interview_subset_context": {
+    "linked_ids": [
+      "M03",
+      "M07",
+      "M09",
+      "M12",
+      "M18",
+      "M21"
+    ],
+    "linked_mean_change": 13.933333333333332,
+    "other_18_mean_change": 6.949999999999999,
+    "all_linked_changes_positive": true,
+    "selection_method_documented": false,
+    "limitations": "Six short fictional excerpts and supplied initial codes, no complete interview transcripts or documented sampling criteria; no excerpt for the only declining case, M11."
+  },
+  "data_quality": {
+    "verified_records": 24,
+    "corrected_derived_change_rows": [
+      {
+        "student_id": "M02",
+        "previous_change": 3.2,
+        "corrected_change": 3.1
+      },
+      {
+        "student_id": "M16",
+        "previous_change": 9.8,
+        "corrected_change": 9.9
+      },
+      {
+        "student_id": "M24",
+        "previous_change": 16.5,
+        "corrected_change": 16.4
+      }
+    ],
+    "preserved_fields": "Original pre_score and post_score values and all six interview excerpts were retained. Corrected only calculated change_score entries.",
+    "result": "Original stored paired-t statistics match differences independently calculated from pre_score and post_score."
+  },
+  "qualitative_method_boundary": "The three supplied theme labels are illustrative groupings of six initial codes and quotations, not independently coded full interview transcripts or empirically validated themes.",
+  "integration_boundary": "All six interviewed fictional cases show positive score change and overrepresent larger improvements compared with the remaining 18 cases. Their accounts cannot explain the one negative case or establish that retrieval practice caused improvement."
 }
