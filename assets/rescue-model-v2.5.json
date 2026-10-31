@@ -5633,8 +5633,8 @@
     "data": {
       "import": {
         "stage": 13,
-        "title": "Import — preserve the raw evidence",
-        "body": "Use a copy for analysis and keep the original file unchanged elsewhere. Stable IDs are essential for paired, repeated, or nested observations.",
+        "title": "Import · preserve and trace the raw records",
+        "body": "Preserve an unchanged source file before making corrections. Record where the file came from, when it was exported, what one row represents, and how identifiers preserve repeated, paired or nested observations. Keep access to identifiable records restricted.",
         "terms": [
           "identifier",
           "paired data",
@@ -5643,20 +5643,21 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "One plant height is much larger than the rest.",
+          "situation": "A student imports weekly plant measurements from a file in which plant IDs such as 007 may be converted to 7.",
           "thinking": [
-            "An unusual value is not automatically an error.",
-            "First I check the source record and measurement notes.",
-            "If valid, I retain it and document sensitivity/diagnostic concerns instead of deleting it to improve results."
+            "The source records should remain unchanged so that accidental conversions can be investigated.",
+            "I need to preserve plant IDs as identifiers, retain their links to observation dates, and confirm that each imported row still matches its source.",
+            "I will make corrections in a separate analysis copy, documenting what changed and why; identifiable information, if present, needs appropriate storage controls."
           ],
-          "draft": "Outlier flagged for review; source sheet confirms value is valid, so it remains in the dataset."
+          "draft": "Import log: save an unmodified source export with its date and location. Create a working copy, treat plant_id as text, check row counts and plant-date matches, and record any corrected import formats."
         },
-        "next_prompt": "Write the next data decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Identify your raw source, the meaning of each row and its identifiers, then state how you will preserve the original and document changes.",
+        "compare_prompt": "Compare editing the original spreadsheet with making a dated working copy and recording each transformation. Which process allows someone to trace a later discrepancy?"
       },
       "quality": {
         "stage": 13,
-        "title": "Data quality — investigate before deleting",
-        "body": "Missing values, duplicates, unusual values, and coding problems are reasons to inspect the source and apply documented rules. They are not automatic deletion commands.",
+        "title": "Data quality · investigate anomalies before changing records",
+        "body": "Check missing observations, duplicates, coding conflicts, impossible values and extreme measurements against the source and data dictionary. Distinguish confirmed mistakes from plausible observations; document every correction or exclusion.",
         "terms": [
           "missing data",
           "outlier",
@@ -5664,20 +5665,21 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "One plant height is much larger than the rest.",
+          "situation": "In a plant-height file, one value is 91 cm while neighbouring measurements are near 9 cm.",
           "thinking": [
-            "An unusual value is not automatically an error.",
-            "First I check the source record and measurement notes.",
-            "If valid, I retain it and document sensitivity/diagnostic concerns instead of deleting it to improve results."
+            "The difference makes the value worth checking, but magnitude alone cannot establish an error.",
+            "I will compare the entry with the original record, units and field notes. If the original shows 9.1 cm, I can correct the transcription and keep an audit trail.",
+            "If the source truly records 91 cm, I should preserve it, investigate the measurement context and explain any sensitivity analysis rather than deleting it for a preferred result."
           ],
-          "draft": "Outlier flagged for review; source sheet confirms value is valid, so it remains in the dataset."
+          "draft": "Quality log: flag plant_id and date; verify against the source. Record either a source-supported correction with old and new values, or a retained extreme value with the reason for keeping it."
         },
-        "next_prompt": "Write the next data decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Select one missing, duplicate, inconsistent or unusual record. State how you will check its source and document the decision before making changes.",
+        "compare_prompt": "Compare a documented transcription error with an extreme measurement confirmed by the source. What action would be justified for each, and what evidence would you retain?"
       },
       "explore": {
         "stage": 13,
-        "title": "Explore — see the data before reducing them to one number",
-        "body": "Numerical variables need distribution/relationship plots; categorical variables need counts/proportions. Paired data should preserve links between the same units.",
+        "title": "Explore · examine distributions and linked observations",
+        "body": "Choose summaries and displays suited to the outcome and unit structure. Inspect numerical distributions and relationships, categorical counts with denominators, and paired or repeated trajectories without treating linked observations as independent.",
         "terms": [
           "numerical",
           "categorical",
@@ -5687,20 +5689,21 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "One plant height is much larger than the rest.",
+          "situation": "The same students complete a short quiz before and after a workshop, and their average score rises.",
           "thinking": [
-            "An unusual value is not automatically an error.",
-            "First I check the source record and measurement notes.",
-            "If valid, I retain it and document sensitivity/diagnostic concerns instead of deleting it to improve results."
+            "A higher average does not show whether nearly all students improved or a few large changes drove the mean.",
+            "I will link each student's two scores and inspect a paired-point or connected-line plot; I will also count missing pre- or post-scores.",
+            "The display describes observed score changes and does not, by itself, show that the workshop caused them."
           ],
-          "draft": "Outlier flagged for review; source sheet confirms value is valid, so it remains in the dataset."
+          "draft": "Exploration plan: one paired record per student with before_score and after_score. Plot connected student scores and the distribution of within-student changes; report complete pairs and missing measurements."
         },
-        "next_prompt": "Write the next data decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Name the variable type and observation structure, then choose one display and one summary that reveal features a single overall average might miss.",
+        "compare_prompt": "Compare a single mean change with a plot showing each student's paired scores. What individual patterns would the mean conceal?"
       },
       "setup": {
         "stage": 14,
-        "title": "Analysis setup — define the target quantity first",
-        "body": "Choose what you want to estimate, identify variable type and independence/paired structure, then choose the analysis family.",
+        "title": "Analysis setup · define the target and evidence structure",
+        "body": "For quantitative work, specify the quantity of interest, outcome type, independent or paired units, and any clustering before selecting a method. For qualitative work, specify the phenomenon and interpretive question rather than imposing a numerical estimand.",
         "terms": [
           "estimand",
           "binary",
@@ -5714,20 +5717,20 @@
           "outcomeType"
         ],
         "walkthrough": {
-          "situation": "The same students are coded correct/incorrect before and after an activity.",
+          "situation": "The same students answer a correct/incorrect question before and after a teaching activity.",
           "thinking": [
-            "The outcome has exactly two categories, so it is binary.",
-            "The same students appear twice, so the data are paired.",
-            "I need a paired binary analysis, not a test that treats the two proportions as independent groups."
+            "Correct/incorrect is a binary outcome, and the two records from each student form a pair.",
+            "The quantitative target might be the difference between the before and after proportions correct. The paired transition counts explain that difference.",
+            "A McNemar-type test evaluates whether the two discordant transition directions differ, under its assumptions. Neither the paired comparison nor its p-value alone establishes that the activity caused a change."
           ],
-          "draft": "Structure: paired binary. Estimand: change in the proportion correct based on within-student category changes; consider McNemar-type analysis."
+          "draft": "Outcome: correct/incorrect for each student at two time points. Structure: paired binary. Target: within-sample difference in proportions correct; tabulate incorrect-to-correct and correct-to-incorrect transitions, then consider a suitable paired method."
         },
-        "next_prompt": "Write the next data decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Write the outcome type, the observation unit and any repeated or nested structure. State your quantitative target or qualitative interpretive question before choosing an analysis."
       },
       "run": {
         "stage": 14,
-        "title": "Run analysis — map the actual columns to the design",
-        "body": "The same test name can be wrong if the columns do not represent the planned units. Confirm what each selected column means before running.",
+        "title": "Run analysis · match columns to independent units",
+        "body": "Confirm that selected variables, grouping codes, exclusions and analysis units match the design. Check the method's assumptions and warnings before interpreting the output; a calculation cannot repair incorrectly counted independent units.",
         "terms": [
           "predictor",
           "outcome",
@@ -5742,20 +5745,20 @@
           "fisherChoice"
         ],
         "walkthrough": {
-          "situation": "The same students are coded correct/incorrect before and after an activity.",
+          "situation": "A student independently assigns four trays to each of three fertiliser conditions, with five seedlings measured within every tray.",
           "thinking": [
-            "The outcome has exactly two categories, so it is binary.",
-            "The same students appear twice, so the data are paired.",
-            "I need a paired binary analysis, not a test that treats the two proportions as independent groups."
+            "Each tray receives one fertiliser condition. The five seedlings measured within a tray share that treatment assignment.",
+            "Treating all seedling heights as independent treatment replicates would overstate replication. Tray-level summaries or a model accounting for trays may be appropriate for the planned question.",
+            "Before any mean comparison, I need to map treatment codes and outcome units correctly, inspect the distribution and variability, and choose a method whose assumptions fit the actual data."
           ],
-          "draft": "Structure: paired binary. Estimand: change in the proportion correct based on within-student category changes; consider McNemar-type analysis."
+          "draft": "Analysis mapping: treatment = assigned fertiliser; primary replication unit = tray, four trays per condition. Retain tray_id and seedling_id; assess a tray-level comparison or a clustered model, checking assumptions and reporting uncertainty."
         },
-        "next_prompt": "Write the next data decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "State the exact outcome and grouping columns, the independent or clustered unit count, the method chosen and which diagnostic or warning must be checked."
       },
       "history": {
         "stage": 15,
-        "title": "Analysis record — keep decisions traceable",
-        "body": "Store the primary analysis with its variable mapping, assumptions, estimate, uncertainty, and warnings. Do not choose a stored run merely because it has the smallest p-value.",
+        "title": "Analysis record · keep every consequential choice traceable",
+        "body": "Save primary and exploratory analysis versions with dataset identifiers, selected columns, exclusions, method settings, diagnostics and outputs. Report estimates and uncertainty when appropriate, and explain changes instead of selecting the smallest p-value.",
         "terms": [
           "p-value",
           "effect size",
@@ -5764,20 +5767,21 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "An observational study finds r = .52 with p < .01.",
+          "situation": "A student reruns a correlation after excluding two unusual observations and gets a different p-value.",
           "thinking": [
-            "I should report the association, coefficient, sample information, and uncertainty if available.",
-            "The small p-value does not turn the study into an experiment.",
-            "I should not explain the mechanism in Results."
+            "I need to establish whether the exclusions were specified in advance or followed inspection of the result.",
+            "Both analyses should remain in the history with their datasets, sample sizes, reasons for exclusions and relevant diagnostics.",
+            "The primary and sensitivity results can be compared transparently; I should not relabel whichever produces the smallest p-value as the original analysis."
           ],
-          "draft": "The variables were positively associated, r = .52, p < .01. Causal interpretation is reserved for Discussion and remains unsupported by this observational design."
+          "draft": "Analysis history: run A uses all source-verified eligible observations; run B excludes two observations only under a documented rule. Retain both outputs, variable mappings, diagnostics, sample sizes and the reason for comparing them."
         },
-        "next_prompt": "Write the next data decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Identify your primary saved analysis, its data version and settings, then document any alternative run and why it was performed.",
+        "compare_prompt": "Compare keeping only the most favourable result with recording the primary analysis and later justified sensitivity checks. What can a reader evaluate in each record?"
       },
       "audit": {
         "stage": 15,
-        "title": "Results audit — question, unit, estimand, analysis, result",
-        "body": "A defensible result answers the same question the study was designed to answer and preserves the true unit structure.",
+        "title": "Results audit · reconnect findings to the original question",
+        "body": "Check that the reported participants or units, analysis sample, target quantity, result and uncertainty agree with the study plan. Identify unsupported generalizations, unreported exclusions and causal language that exceeds the design.",
         "terms": [
           "estimand",
           "experimental unit",
@@ -5785,15 +5789,16 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "An observational study finds r = .52 with p < .01.",
+          "situation": "A student surveys 18 volunteers on two dates. Their report calls the 36 survey rows '36 independent students' and claims the course caused an attitude shift.",
           "thinking": [
-            "I should report the association, coefficient, sample information, and uncertainty if available.",
-            "The small p-value does not turn the study into an experiment.",
-            "I should not explain the mechanism in Results."
+            "There are 36 responses from 18 people, so the analysis and reported sample must preserve paired student IDs.",
+            "The survey can document patterns or changes within these volunteers, subject to missingness and measurement limitations.",
+            "Without a design that supports causal attribution, the result cannot establish that the course produced the reported shift; the wording and analysis must be corrected."
           ],
-          "draft": "The variables were positively associated, r = .52, p < .01. Causal interpretation is reserved for Discussion and remains unsupported by this observational design."
+          "draft": "Audit note: 18 volunteers contributed up to two responses each. Recheck completeness and use a paired or repeated analysis if appropriate. Report the observed attitude pattern without attributing it causally to the course."
         },
-        "next_prompt": "Write the next data decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Compare your reported sample, units, estimate and claim with your design and analysis record; identify and correct one mismatch before finalizing Results.",
+        "compare_prompt": "Compare a report of 36 independent students with records from 18 students measured twice. How would correcting the unit count change the result description and its uncertainty?"
       }
     },
     "writing": {
