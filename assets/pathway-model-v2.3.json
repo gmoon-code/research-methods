@@ -1226,7 +1226,7 @@
     },
     "descriptive_quantitative": {
       "outcomeDV": "Primary variable(s) being described",
-      "experimentalUnit": "Observational unit represented by each independent case",
+      "experimentalUnit": "Observational unit and any repeated records",
       "analysisIntent": "Descriptive analysis plan and any justified inferential extension"
     },
     "observational": {
