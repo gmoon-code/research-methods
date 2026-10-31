@@ -3810,37 +3810,37 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Where the original unchanged data file is kept.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Where is the unmodified original evidence kept, and how will you protect it while preparing analysis copies?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Give a specific storage location or naming convention that protects the raw record.",
+          "body": "Specify a secure, approved location for the original evidence and how access, versions and working copies will be handled. Distinguish original field records from later transcription or cleaning.",
           "questions": [
             "Could I reconstruct what the original data looked like?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "School-approved Drive folder / raw_data_2026-09-04.csv, read-only copy retained.",
+          "strong_example": "Raw record: original dated measurement sheets in the approved secure location; an unchanged digital transcription named raw_measurements_v1.csv. Cleaning and analysis will use separately named copies.",
           "avoid": "Do not overwrite the only raw file with cleaned values.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "One plant height is much larger than the rest.",
+            "situation": "A student has collected measurements on paper and is preparing to enter them into a spreadsheet.",
             "thinking": [
-              "An unusual value is not automatically an error.",
-              "First I check the source record and measurement notes.",
-              "If valid, I retain it and document sensitivity/diagnostic concerns instead of deleting it to improve results."
+              "The dated paper record is the primary source and must remain readable.",
+              "A digital transcription can be stored in a restricted-access folder, with the original sheet retained according to the approved plan.",
+              "A separate working file should hold corrections and derived variables so the original record is never silently overwritten."
             ],
-            "draft": "Outlier flagged for review; source sheet confirms value is valid, so it remains in the dataset."
+            "draft": "Raw record: original dated measurement sheets in the approved secure location; an unchanged digital transcription named raw_measurements_v1.csv. Cleaning and analysis will use separately named copies."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The unchanged original evidence will be stored at [approved location/filename convention]. Analysis will use a separate copy.",
+          "frame": "The original [paper or digital records] are kept at [specific approved, access-restricted location] under [file names or IDs]. I will preserve [unchanged copy or source] and analyse [separately versioned copy].",
           "path_frames": {}
         }
       }
@@ -3854,11 +3854,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Which data are missing and how the analysis handled them.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What data are genuinely absent, how many units are affected and what handling was actually used?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Describe amount/pattern and actual handling.",
+          "body": "Report actual counts, patterns and any recorded reasons for absent data, as well as the handling used for each relevant analysis. A planned rule is not proof that it was followed.",
           "questions": [
             "How many values/units are missing?",
             "Could missingness affect interpretation?"
@@ -3866,26 +3866,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "2 of 30 students lacked follow-up data; paired analysis used 28 complete pairs.",
+          "strong_example": "Illustrative record only: one of six dishes lacked a Day 7 reading, leaving five with the planned paired measurements. The analysis method and the possible consequences of this missing outcome must be recorded, rather than assumed.",
           "avoid": "Do not say 'none' unless checked.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "One plant height is much larger than the rest.",
+            "situation": "In a fictional study, one of six dishes has a recorded baseline measure but lacks the planned Day 7 reading.",
             "thinking": [
-              "An unusual value is not automatically an error.",
-              "First I check the source record and measurement notes.",
-              "If valid, I retain it and document sensitivity/diagnostic concerns instead of deleting it to improve results."
+              "First count the records and dishes with observed versus missing outcomes.",
+              "A missing end-point reading differs from zero growth.",
+              "Report the reason if documented, then identify how the chosen analysis handled the incomplete dish and what inference remains uncertain."
             ],
-            "draft": "Outlier flagged for review; source sheet confirms value is valid, so it remains in the dataset."
+            "draft": "Illustrative record only: one of six dishes lacked a Day 7 reading, leaving five with the planned paired measurements. The analysis method and the possible consequences of this missing outcome must be recorded, rather than assumed."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "[number/description] observations/cases/fields were missing because [known reason if known]. The analysis handled them by [rule].",
+          "frame": "Among [total units], [number and proportion] lacked [specific measurement or record]. [Known reason or unknown status] was documented in [log]. The analysis [actual handling], with [potential bias or information loss] considered.",
           "path_frames": {}
         }
       }
@@ -3899,7 +3899,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Any data error, correction, exclusion, or protocol deviation discovered after collection.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which verified recording error or protocol departure occurred, and where can someone trace the original and corrected information?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3910,26 +3910,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Row 14 height entered as 55.0 cm; source sheet showed 5.5 cm. Corrected with original value logged.",
+          "strong_example": "Illustrative correction log: plant S07, Day 7, entered 55.0 cm, source sheet 5.5 cm, corrected to 5.5 cm after source verification. The original entry and reason are preserved.",
           "avoid": "Never silently rewrite inconvenient values.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "One plant height is much larger than the rest.",
+            "situation": "A fictional paper record shows 5.5 cm for one plant, while the transcribed spreadsheet contains 55.0 cm.",
             "thinking": [
-              "An unusual value is not automatically an error.",
-              "First I check the source record and measurement notes.",
-              "If valid, I retain it and document sensitivity/diagnostic concerns instead of deleting it to improve results."
+              "The original paper entry supports a specific transcription correction.",
+              "Keep the entered 55.0 cm, corrected 5.5 cm, source reference and person or date of correction in the log.",
+              "The correction addresses data accuracy, regardless of whether it changes the outcome."
             ],
-            "draft": "Outlier flagged for review; source sheet confirms value is valid, so it remains in the dataset."
+            "draft": "Illustrative correction log: plant S07, Day 7, entered 55.0 cm, source sheet 5.5 cm, corrected to 5.5 cm after source verification. The original entry and reason are preserved."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Original [value/record] was [original]. It was changed/excluded to [new decision] because [verifiable reason], documented in [log].",
+          "frame": "For [record ID], the original [recorded value or procedure] was [original]. [Independent source or log] supported [corrected value or decision], recorded with [date, reason and reviewer]. Unresolved discrepancies remain [flagged status].",
           "path_frames": {}
         }
       }
@@ -3943,7 +3943,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Visual displays used to understand distribution, relationships, or repeated structure before inference.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which figure would help you inspect the actual data structure, and what question will you examine with it?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3954,26 +3954,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Scatterplot of sleep hours vs score; paired line plot for pre/post; histogram of growth.",
+          "strong_example": "Planned display: a dot plot of individual dish-level seven-day growth summaries by salinity condition, showing the number of independent dishes and their variability. Record the actual figure ID after generating it.",
           "avoid": "Do not use a bar chart automatically for every numerical comparison.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "One plant height is much larger than the rest.",
+            "situation": "A student has seedling growth measures from several seedlings nested in each treatment dish.",
             "thinking": [
-              "An unusual value is not automatically an error.",
-              "First I check the source record and measurement notes.",
-              "If valid, I retain it and document sensitivity/diagnostic concerns instead of deleting it to improve results."
+              "A single unlabelled bar could conceal between-dish variation.",
+              "I could plot one dish-level summary per dish, grouped by solution condition.",
+              "If useful, show seedling trajectories separately with their dish identities to avoid implying every seedling is an independent replicate."
             ],
-            "draft": "Outlier flagged for review; source sheet confirms value is valid, so it remains in the dataset."
+            "draft": "Planned display: a dot plot of individual dish-level seven-day growth summaries by salinity condition, showing the number of independent dishes and their variability. Record the actual figure ID after generating it."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "I will inspect [plot/evidence map] of [variables/evidence] to look for [distribution/relationship/outlier/pattern/coverage issue].",
+          "frame": "I [will create or created] [specific figure] showing [variable and unit structure]. I will inspect [distribution, pattern or data-quality question] and record [figure ID and actual observation once available].",
           "path_frames": {}
         }
       }
@@ -3987,11 +3987,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Summaries describing the observed data before or alongside inference.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which count, numerical summary or qualitative corpus description actually fits the recorded evidence and its units?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Report appropriate summaries for the variable type.",
+          "body": "Select summaries suited to the variable or evidence type, and report the number of independent cases separately from repeated or nested observations.",
           "questions": [
             "Is this variable numerical or categorical?",
             "Is the distribution skewed?"
@@ -3999,26 +3999,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Numerical: n, mean, SD, median, IQR, min/max. Binary: count and proportion in each category.",
+          "strong_example": "Planned summary: count dishes and seedlings by assigned salinity condition, describe dish-level mean seven-day growth and its variability, and note missing follow-up records separately. Actual values remain to be calculated.",
           "avoid": "Do not calculate mean/SD for arbitrary category labels.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "One plant height is much larger than the rest.",
+            "situation": "A student is preparing a description of a dataset with several seedlings measured within each dish.",
             "thinking": [
-              "An unusual value is not automatically an error.",
-              "First I check the source record and measurement notes.",
-              "If valid, I retain it and document sensitivity/diagnostic concerns instead of deleting it to improve results."
+              "The number of dishes and the number of seedlings answer different questions about sample size.",
+              "Dish-level means and their spread may describe independent treatment replication, while within-dish variability can be shown separately.",
+              "Report summaries only after checking the observed records, with missing values and units made explicit."
             ],
-            "draft": "Outlier flagged for review; source sheet confirms value is valid, so it remains in the dataset."
+            "draft": "Planned summary: count dishes and seedlings by assigned salinity condition, describe dish-level mean seven-day growth and its variability, and note missing follow-up records separately. Actual values remain to be calculated."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "For [variable/evidence], I will report [appropriate count/proportion/mean-SD/median-IQR/corpus summary] because [data type/distribution].",
+          "frame": "For [outcome or corpus], I will report [appropriate count, distribution or thematic scope] at [independent unit or case level]. The observed values are [verified figures or pending], with [missingness and coding] described.",
           "path_frames": {}
         }
       }
