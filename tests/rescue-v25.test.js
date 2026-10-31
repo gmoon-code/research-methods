@@ -56,4 +56,24 @@ R.applyFieldRevision(p,4,"questionType","","Qualitative","because I need experie
 let lp={rescue:{}};for(let l=1;l<=4;l++)R.useLabLevel(lp,"methods","design",l,"experimental",C);
 let note=R.saveLabNote(lp,"methods","design","Compare assigned conditions","matches experimental question","experimental",C);
 if(note.supportLevel!==5||lp.rescue.notes.length!==1)process.exit(1);
+// Rescue fields eight through twenty-five follow their distinct research tasks.
+const secondKeys=["broadTopic","subtopic","phenomenon","contextPop","scope","timeLimit","resources","safety","topicChoice","concepts","synonyms","prelimSearch","known","methodsSeen","uncertain","questionShift","rq1","rq2"];
+const nextExamples=[],nextFrames=[],nextPrompts=[];
+for(const k of secondKeys){
+  const f=fullRescueModel.fields[k];
+  if(!f||Object.keys(f.levels).length!==5)process.exit(1);
+  if(!f.levels["4"].walkthrough?.thinking?.length||!f.levels["4"].walkthrough?.draft)process.exit(1);
+  if(!f.levels["1"].prompt||!f.levels["5"].frame)process.exit(1);
+  if(f.levels["5"].frame.includes("[your project-specific answer]")||f.levels["5"].frame.includes("Why it fits:"))process.exit(1);
+  nextExamples.push(f.levels["4"].walkthrough.draft);
+  nextFrames.push(f.levels["5"].frame);
+  nextPrompts.push(f.levels["1"].prompt);
+}
+if(new Set(nextExamples).size!==secondKeys.length||new Set(nextFrames).size!==secondKeys.length||new Set(nextPrompts).size!==secondKeys.length)process.exit(1);
+if(!/two or three/i.test(fullRescueModel.fields.prelimSearch.levels["2"].body))process.exit(1);
+if(!/Proposed searches/.test(fullRescueModel.fields.prelimSearch.levels["4"].walkthrough.draft))process.exit(1);
+if(!/cited sources/.test(fullRescueModel.fields.known.levels["5"].frame))process.exit(1);
+if(!/different evidence or method/.test(fullRescueModel.fields.rq2.levels["5"].frame))process.exit(1);
+if(!/may differ/.test(fullRescueModel.fields.phenomenon.levels["4"].walkthrough.draft))process.exit(1);
+
 console.log("PASS v2.5 progressive rescue state and logging");
