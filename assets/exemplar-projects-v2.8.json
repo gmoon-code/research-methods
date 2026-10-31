@@ -1838,7 +1838,7 @@
       "dir": "multilingual-science-qualitative",
       "rq": "How do multilingual secondary students describe the challenges and supports they experience when explaining data-rich biology questions in English?",
       "disclaimer": "All eight participant identifiers, interview statements, initial codes and themes are synthetic teaching material. Three cited academic sources are genuine. The repository has excerpts only, not full transcripts or evidence of actual recruitment, consent, interviews or empirical findings.",
-      "data_summary": "Eight synthetic interview excerpts organized into three teaching themes. The themes are examples of qualitative reasoning, not empirical claims about real students.",
+      "data_summary": "Eight synthetic statements with eight initial codes, linked to three provisional teaching groupings. Group 1 covers P01, P02, P05 and P06; group 2 covers P03, P04 and P07; group 3 draws only on P08. No full interviews, real participants or empirical themes are represented.",
       "sources": [
         {
           "id": "QL-S01",
@@ -2062,193 +2062,195 @@
         {
           "id": 10,
           "title": "Define constructs, variables, or evidence units",
-          "where": "The multilingual science interviews exemplar is at Stage 10 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 10 decision that belongs to a qualitative design.",
+          "where": "The student defines what the excerpts can reveal and which meanings require further evidence.",
+          "changed": "The analytic unit is one invented statement tied to a participant identifier, rather than an entire interview transcript.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Each of P01 through P08 has one short statement with an initial code; there are no additional turns, interview prompts or participant histories.",
+            "The research question concerns how experiences are described, so an excerpt is evidence of a particular constructed account, not of actual proficiency or achievement.",
+            "Visual explanations, language use and participation are interpretive topics; labels assigned by the example should not be treated as direct measurements of those processes."
           ],
-          "decision": "Define the phenomenon as explaining data-rich biology questions in English; interview transcript segments are evidence linked to participants.",
-          "rejected": "Calling silence a numerical measure of language proficiency is rejected.",
+          "decision": "Use excerpt-level statements and their original code labels as illustrative materials, keeping participant identity and missing context explicit.",
+          "rejected": "Describing P01's reported waiting as a timed observation of delayed participation would invent evidence that is not present.",
           "notebook": {
-            "phenomenon": "Challenges and supports students describe when explaining biology evidence in English.",
-            "unit": "Participant/case, with multiple transcript excerpts linked to participant ID."
+            "phenomenon": "Reported challenges and resources for explaining data-rich biology questions in English, as represented in eight fictional statements.",
+            "unit": "One synthetic excerpt per coded participant identifier P01–P08. No full interviews, task responses, audio or classroom observations exist in the supplied corpus."
           },
-          "forward": "Sampling and ethics must protect participants.",
+          "forward": "A real project would need recruitment and recording procedures that allow students meaningful control over what they share.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What is directly represented in an excerpt, and what is your interpretation?",
+            "Which missing interview context might change the meaning of a brief statement?"
           ]
         },
         {
           "id": 11,
           "title": "Plan sampling, measurement, validity, and ethics",
-          "where": "The multilingual science interviews exemplar is at Stage 11 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 11 decision that belongs to a qualitative design.",
+          "where": "The research plan considers how multilingual students could be interviewed without making participation dependent on their English fluency.",
+          "changed": "The example separates fictional participants from the recruitment, language access and confidentiality procedures required for a real study.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Purposive sampling could seek students who have relevant experiences with data-rich biology questions, without assuming they form one homogeneous language group.",
+            "An actual interview might need accessible questions, a choice of language where possible, and an account of translation and transcription decisions.",
+            "Teacher involvement and minor status require attention to consent or assent, relevant parental permission, voluntary non-participation, grade independence and possible deductive identification."
           ],
-          "decision": "Use purposive recruitment relevant to the phenomenon and plan consent/privacy/reflexivity.",
-          "rejected": "Recruiting only the most fluent volunteers and then generalizing to all multilingual students is rejected.",
+          "decision": "Describe ethical and reflexive safeguards as a proposed protocol; do not claim that interviews, approval or member checks were carried out for fabricated examples.",
+          "rejected": "Selecting only students who speak comfortably in English and then generalising to all multilingual students would create an unacknowledged participation bias.",
           "notebook": {
-            "sample": "8 synthetic multilingual secondary-student interview cases.",
-            "quality": "Semi-structured guide, reflexive memoing, audit trail, attention to discrepant evidence."
+            "sample": "Eight wholly fictional identifiers with one invented statement each; no genuine purposive recruitment or participant characteristics are recorded.",
+            "quality": "For real interviews, document eligibility, sampling, consent, language and translation choices, researcher position and confidentiality. Reflexive memos would record interpretation decisions, not certify participants' views."
           },
-          "forward": "Lock interview, transcript, coding, and withdrawal rules.",
+          "forward": "The method must now preserve exactly what is provided rather than referring to unavailable full transcripts.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Who could feel pressured to participate in a teacher-led interview?",
+            "Would making excerpts short automatically prevent identification in a small school?"
           ]
         },
         {
           "id": 12,
           "title": "Write the method and lock the data plan",
-          "where": "The multilingual science interviews exemplar is at Stage 12 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 12 decision that belongs to a qualitative design.",
+          "where": "The student specifies a transparent file structure and separates authentic fieldwork from the synthetic coding demonstration.",
+          "changed": "The planned corpus is corrected from eight full transcripts to eight single-excerpt rows with no interactional context.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The CSV fields are participant_id, excerpt and initial_code, with exactly one statement per identifier.",
+            "Quoted wording should remain verbatim when used as evidence, and every example must be labelled synthetic.",
+            "Without recordings, prompts, translated originals or complete transcripts, the exercise cannot demonstrate full transcript familiarisation or a complete interpretive analysis."
           ],
-          "decision": "Preserve original transcripts, code excerpts transparently, and distinguish codes from themes.",
-          "rejected": "Treating code frequency as an automatic measure of importance is rejected.",
+          "decision": "Preserve the eight original fabricated statements without editing their voices, and keep an auditable link between each code, excerpt and candidate theme.",
+          "rejected": "Presenting edited composite quotations as verbatim participant speech would make the analysis impossible to verify.",
           "notebook": {
-            "corpus": "One transcript per participant; excerpts retain participant ID.",
-            "analysisIntent": "Iterative thematic analysis with documented code/theme decisions and discrepant cases."
+            "corpus": "Eight synthetic excerpt rows, P01 through P08, each linked to one initial code; no interview transcripts, audio, contextual case histories or consent records.",
+            "analysisIntent": "Practice the movement from illustrative initial codes to candidate themes, checking wording against source excerpts while making no claim of a completed empirical thematic analysis."
           },
-          "forward": "Organize the corpus before final themes.",
+          "forward": "The next stage checks every code against its statement and documents omissions before preparing thematic claims.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can a reader retrieve the precise wording that supports a code?",
+            "Which research procedures remain hypothetical rather than documented?"
           ]
         },
         {
           "id": 13,
-          "title": "Collect or organize evidence",
-          "where": "The multilingual science interviews exemplar is at Stage 13 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 13 decision that belongs to a qualitative design.",
+          "title": "Collect or organise evidence",
+          "where": "The student compares the eight excerpts with their initial codes before accepting a thematic map.",
+          "changed": "A missing code is recovered and each theme is associated with its exact supporting excerpt identifiers.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "P01 describes time needed to formulate an English sentence, whereas P02 describes losing task focus amid lengthy question wording; these are related but not identical concerns.",
+            "P03, P04 and P07 describe arrows, partner discussion and Korean notes as perceived resources for expressing an idea.",
+            "P05 and P06 distinguish unclear response expectations from the difficulty of explaining a pattern; P08 describes sentence starters alongside a wish to select evidence independently."
           ],
-          "decision": "Read the corpus as cases before collapsing excerpts into themes; log coding revisions.",
-          "rejected": "Selecting only vivid quotes that support a favored story is rejected.",
+          "decision": "Retain the complete eight-row corpus and use a three-entry candidate theme matrix with explicit evidence IDs. Include P02, which was omitted from the earlier matrix.",
+          "rejected": "Leaving one excerpt unmapped while claiming all eight contributed to the thematic account would undermine traceability.",
           "notebook": {
-            "dataSummary": "Eight synthetic interview excerpts organized into three teaching themes. The themes are examples of qualitative reasoning, not empirical claims about real students."
+            "dataSummary": "Eight fabricated statements, eight distinct participant IDs and eight original codes. Candidate theme 1 links P01, P02, P05 and P06; theme 2 links P03, P04 and P07; theme 3 is supported only by P08 and is explicitly tentative."
           },
-          "forward": "Analysis should explain how themes were developed.",
+          "forward": "The analysis must consider the difference between a provisional code grouping and a fully developed qualitative theme.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which accounts complicate a simple statement that English itself is the only barrier?",
+            "Does every code in the theme matrix correspond to a source row?"
           ]
         },
         {
           "id": 14,
           "title": "Choose and justify the analysis",
-          "where": "The multilingual science interviews exemplar is at Stage 14 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 14 decision that belongs to a qualitative design.",
+          "where": "The teacher demonstrates interpretive grouping with reference to Braun and Clarke's methodological account.",
+          "changed": "The method is described as a simplified coding-and-candidate-theme exercise rather than a completed reflexive thematic analysis.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Start from the exact statements, inspect how each initial code relates to its wording, then consider possible relationships among codes.",
+            "The first group collects several different difficulties associated with wording and task expectations; the second collects three forms of resources that speakers report.",
+            "The P08 account supplies only one candidate idea about sentence starters and evidence choice, so it cannot support a claim that this is a widely recurring pattern."
           ],
-          "decision": "Use thematic analysis with an audit trail and explicit theme boundaries.",
-          "rejected": "Adding a p-value to make the qualitative analysis look rigorous is rejected.",
+          "decision": "Show an iterative, explicitly provisional thematic map with evidence IDs, scope statements and alternative interpretations.",
+          "rejected": "Treating three attractive theme headings, or their frequency counts, as proof of analytic completeness or validity would turn interpretation into a checklist.",
           "notebook": {
-            "analysisChoice": "Iterative coding → candidate themes → review against excerpts/cases → define themes → report variation and boundaries."
+            "analysisChoice": "A simplified thematic teaching exercise: inspect verbatim fictional excerpts; compare initial codes; form provisional groups; trace each group to its evidence IDs; identify narrow or divergent accounts; describe what additional interviewing would be needed."
           },
-          "forward": "Findings must remain traceable to the corpus.",
+          "forward": "The findings should use source-exact excerpts and distinguish each limited reading from a general statement about students.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What relationship holds these codes together beyond sharing one topic word?",
+            "Which theme would need additional excerpts or interview context before publication?"
           ]
         },
         {
           "id": 15,
           "title": "Write the Results or findings",
-          "where": "The multilingual science interviews exemplar is at Stage 15 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 15 decision that belongs to a qualitative design.",
+          "where": "The findings draw only on the eight supplied fictional statements and the corrected evidence map.",
+          "changed": "The text now distinguishes four excerpts about wording/task demands, three about perceived resources and one tentative account of scaffolded expression.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "P01's synthetic statement identifies English sentence formulation as a reason for waiting, while P02 focuses on losing the biology question amid lengthy wording.",
+            "P03 describes drawing arrows, P04 partner discussion and P07 Korean notes as ways the speakers say they prepare explanations.",
+            "P08 reports that sentence starters can speed an answer while preserving a desire to choose evidence; this single excerpt does not establish a recurring theme in real participants."
           ],
-          "decision": "Report themes with synthetic excerpts and contradictory/limited evidence where relevant.",
-          "rejected": "Claiming that every multilingual student experiences the same barrier is rejected.",
+          "decision": "Report each candidate theme with its exact P-identifiers, verbatim short excerpts and the limitations of the fictional, one-excerpt-per-person corpus.",
+          "rejected": "Writing that students' understanding improved through bilingual resources or that scaffolds reliably caused faster answers would add outcomes not observed or measured.",
           "notebook": {
-            "result1": "Themes concern language-formulation delay, representational/multilingual resources, and scaffolded expression, with explicit synthetic boundaries."
+            "result1": "Candidate grouping 1, wording and task interpretation: P01, P02, P05, P06. Candidate grouping 2, perceived visual/peer/multilingual resources: P03, P04, P07. Tentative single-excerpt grouping 3, sentence starters with student evidence choice: P08. These are illustrative readings of fabricated accounts, not qualitative findings about actual learners."
           },
-          "forward": "Discussion compares themes with literature without treating literature as participant data.",
+          "forward": "The discussion can relate the illustrative accounts to scholarship while keeping the fictional and empirical material separate.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Could a different coding of P02 change the first grouping?",
+            "Are you describing what a speaker reported or claiming a measured change in learning?"
           ]
         },
         {
           "id": 16,
           "title": "Write the Discussion and limitations",
-          "where": "The multilingual science interviews exemplar is at Stage 16 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 16 decision that belongs to a qualitative design.",
+          "where": "The discussion considers why meaning depends on classroom context and the evidence available for interpretation.",
+          "changed": "The candidate themes are connected to published discussions of language and science participation, while empirical limits remain explicit.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The four first-group excerpts involve different concerns, from phrasing a sentence to identifying what a question asks; these should not be collapsed into a single measure of language ability.",
+            "The visual, partner and Korean-note accounts may invite inquiry into how resources are used in classroom explanations, but no corresponding performances are provided.",
+            "The single P08 statement suggests an issue worth asking about, namely whether structured support leaves room for students to choose the evidence they consider relevant."
           ],
-          "decision": "Interpret the synthetic themes as contextual possibilities and discuss researcher position, sample, and transferability.",
-          "rejected": "Treating eight interviews as statistically representative is rejected.",
+          "decision": "Treat the grouping as a demonstration of possible qualitative questions and report what is unknown about the people, settings, task demands and researcher's interpretive choices.",
+          "rejected": "Declaring the three themes transferable or representative of multilingual biology learners would assign empirical standing to invented data.",
           "notebook": {
-            "limitations": "Synthetic excerpts, small purposive teaching sample, interview self-report, researcher interpretation."
+            "limitations": "The excerpts, participant identifiers and codes are fictional. There are no full transcripts, prompting questions, translation records, participant contexts, recordings, consent, multiple analysts or iterative interviews. All themes are provisional teaching constructions; the third has only one excerpt."
           },
-          "forward": "Closing sections must use qualitative language.",
+          "forward": "The abstract and conclusion should clearly label the exercise and avoid making an empirical claim about multilingual students.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which interpretations could change with fuller interactional or linguistic context?",
+            "What could an interview account never establish about actual classroom reasoning on its own?"
           ]
         },
         {
           "id": 17,
           "title": "Write the conclusion, abstract, title, and keywords",
-          "where": "The multilingual science interviews exemplar is at Stage 17 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 17 decision that belongs to a qualitative design.",
+          "where": "The student drafts the title and abstract to make the synthetic material and limited thematic analysis unmistakable.",
+          "changed": "The closing account identifies a three-group teaching map, not completed qualitative research with real participants.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Name student descriptions and data-rich biology explanations while identifying the work as a synthetic qualitative exemplar.",
+            "Mention eight invented excerpts and the unequal support behind the three candidate thematic groupings.",
+            "Keep the distinction between reported resources and demonstrated improvement visible, and identify the absent interview procedures."
           ],
-          "decision": "Use a title and abstract that identify interviews/thematic analysis and synthetic status.",
-          "rejected": "A title claiming 'the effect of English proficiency' is rejected.",
+          "decision": "Use a title and stand-alone abstract that acknowledge the eight-row synthetic corpus and the illustrative status of all three candidate groupings.",
+          "rejected": "A title claiming to reveal the lived experiences of multilingual students would misleadingly imply genuine human-participant evidence.",
           "notebook": {
-            "title": "Synthetic Qualitative Exemplar: Multilingual Students Describing Data-Rich Biology Explanations"
+            "title": "Synthetic Qualitative Exemplar of Multilingual Students' Accounts of Biology Explanations",
+            "abstractDraft": "This teaching exemplar uses eight fictional statements attributed to imagined multilingual secondary students discussing data-rich biology questions in English. Each statement has a participant identifier and an initial code. A simplified thematic exercise groups four excerpts about wording and task interpretation, three describing visual, peer or Korean-language resources, and one account of sentence starters alongside the desire to choose evidence. The single-excerpt grouping is explicitly tentative. The material contains no complete transcripts, actual interview context, consent or classroom observations, and its themes are provisional interpretations of invented accounts rather than findings about learners. The exercise demonstrates how an analyst can preserve quotations, connect codes to excerpts and recognise the difference between a plausible interpretation and a defensible empirical claim.",
+            "keywords": "multilingual science education; biology explanations; qualitative interviewing; provisional themes; synthetic data"
           },
-          "forward": "Final audit checks traceability from theme to excerpts.",
+          "forward": "The final source check should link every code and candidate theme to its original statement and verify the bibliographic details.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Could a reader mistake these quotations for genuine testimony?",
+            "Does the abstract explain why the third grouping is less supported?"
           ]
         },
         {
           "id": 18,
           "title": "Citations, references, and final alignment audit",
-          "where": "The multilingual science interviews exemplar is at Stage 18 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 18 decision that belongs to a qualitative design.",
+          "where": "The final audit checks the source links behind the three published references and all eight invented statements.",
+          "changed": "The record now contains an explicit integrity check for quotation fidelity, omitted codes and unsupported claims about empirical data.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Verify the DOI and publication details for Lee, Quinn and Valdés (2013), the National Academies (2018), and Braun and Clarke (2006).",
+            "Cross-check all eight excerpt/code pairs against the theme matrix, which now lists the precise identifiers P01–P08 and no untraceable participant evidence.",
+            "Confirm the project and paper say synthetic, disclose the absence of full transcripts and consent, and identify P08's single-excerpt basis."
           ],
-          "decision": "Verify every theme has evidence, every quote remains synthetic-labeled, and no prevalence/causal claim was added.",
-          "rejected": "Presenting a theme as a measured frequency in the population is rejected.",
+          "decision": "Preserve the exact fictional quotations, auditable code-to-excerpt mapping, real source references and appropriately limited qualitative interpretations.",
+          "rejected": "Claiming that themes were validated with participants, confirmed by independent coders or measured for prevalence would invent study procedures and results.",
           "notebook": {
-            "audit": "Phenomenon, purposive cases, transcript evidence, thematic analysis, contextual claims, synthetic-data label."
+            "audit": "Three genuine scholarly sources were matched to publisher or official records. The revised matrix assigns all eight initial codes exactly once to P01–P08. No real interview, field note, interview-guide response, translation or consent record exists. One of three candidate groups draws only on P08."
           },
-          "forward": "The exemplar is complete.",
+          "forward": "The synthetic teaching exemplar is ready for repository-level verification. Real research would require actual fieldwork, ethical permissions and contextual analysis.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Is every quoted string identical to the original source excerpt?",
+            "What parts of the analytic account remain a teaching construction rather than a documented study?"
           ]
         }
       ],
