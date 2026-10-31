@@ -1410,7 +1410,7 @@
       "dir": "retrieval-quasi-experiment",
       "rq": "How did pre-to-post biology scores change in a class using a retrieval-practice routine compared with a pre-existing comparison class?",
       "disclaimer": "The two cited retrieval-practice experiments are real scholarly publications. Both class groups, all 48 student records and every result in this exemplar are synthetic teaching material. Only one class represents each instructional condition, so no valid class-level treatment-effect test or causal estimate is available.",
-      "data_summary": "48 synthetic students in two pre-existing classes. Mean change difference = 6.46 points, 95% CI [3.62, 9.29]. Nonrandom class assignment limits causal interpretation.",
+      "data_summary": "48 synthetic student records across two pre-existing classes (24 each). After reconciling change scores with the displayed pre/post values, the class means change by 9.72 and 3.30 points, a descriptive difference of 6.43 points. One class per condition prevents valid class-level treatment-effect inference.",
       "sources": [
         {
           "id": "Q-S01",
@@ -1627,195 +1627,198 @@
         {
           "id": 10,
           "title": "Define constructs, variables, or evidence units",
-          "where": "The two-class retrieval comparison exemplar is at Stage 10 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 10 decision that belongs to a quasi-experimental design.",
+          "where": "The researcher identifies measured scores, paired observations and the level at which the instructional routine differs.",
+          "changed": "Students are distinguished as units of score recording from the two classes that define the instructional comparison.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Each fictional student has pre_score and post_score values, and change_score is their post-minus-pre difference.",
+            "Class identity determines which routine is represented; all 24 students in one group share that condition.",
+            "The class-level difference cannot be separated from teacher, classroom context, scheduling or other pre-existing differences."
           ],
-          "decision": "Define class exposure, pre/post scores, student unit, and plausible class-level confounders.",
-          "rejected": "Assuming baseline equivalence because the classes are the same grade is rejected.",
+          "decision": "Record student-level pre/post change while identifying the class, not the student, as the condition-defining unit.",
+          "rejected": "Treating 48 linked student scores as 48 independently allocated instructional treatments is rejected.",
           "notebook": {
-            "exposure": "One pre-existing class uses retrieval routine; one pre-existing class continues comparison routine.",
-            "outcome": "Biology assessment score.",
-            "unit": "Student nested in class.",
-            "confounders": "Teacher/class composition, prior achievement, attendance, implementation differences."
+            "exposure": "Two pre-existing class groups, retrieval_routine and comparison_class. The exposure is shared by every student within a class.",
+            "outcome": "Paired numerical pre_score and post_score; descriptive change_score equals displayed post_score minus displayed pre_score.",
+            "unit": "One student is a paired measurement unit, nested within one of two classes. There is only one class per condition.",
+            "confounders": "Teacher, initial class composition, scheduling, resources, prior achievement, time-related changes and implementation differences. The file does not identify or measure these."
           },
-          "forward": "Sampling and ethics must reflect educational records.",
+          "forward": "Sampling and educational research ethics must reflect the class structure and students' freedom to decline participation.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which unit receives the routine in common?",
+            "What differs across classes that the dataset cannot distinguish from the routine?"
           ]
         },
         {
           "id": 11,
           "title": "Plan sampling, measurement, validity, and ethics",
-          "where": "The two-class retrieval comparison exemplar is at Stage 11 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 11 decision that belongs to a quasi-experimental design.",
+          "where": "The proposed real-world protocol would involve two intact classes and potentially identifiable grade records.",
+          "changed": "The sample description now separates fictitious record counts from the approvals and consent safeguards that would be required for real students.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Twenty-four simulated students appear in each group; no recruitment took place in this example.",
+            "Equal class sizes and similar mean baseline scores do not guarantee exchangeable classes.",
+            "A real teacher-led project would need applicable school permission, ethics review where required, consent or assent procedures, and assurances that grades are unaffected by participation."
           ],
-          "decision": "Describe both class samples, baseline context, privacy, and instructional authority.",
-          "rejected": "Calling the two classes exchangeable without evidence is rejected.",
+          "decision": "Use the synthetic data for instruction only. In a real study, document class recruitment, measurement access, voluntary consent and how identifiable records are protected.",
+          "rejected": "Assuming routine classroom grading automatically permits researchers to reuse assessments for a study would bypass participants' rights.",
           "notebook": {
-            "sample": "24 synthetic students per pre-existing class.",
-            "ethics": "Real implementation would need appropriate school authority and protection of educational records."
+            "sample": "48 invented student records, with 24 attached to each of two pre-existing class identifiers; no real classroom participants or consent logs.",
+            "ethics": "For real student research, secure applicable review and permission in advance, minimise identifying records, separate teacher authority from research decisions and document how non-participation avoids grading consequences."
           },
-          "forward": "Lock pre/post timing and intervention fidelity.",
+          "forward": "The method must specify compatible assessments and the timing of the routine before making a comparative claim.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "How can students decline without affecting instruction or assessment?",
+            "Would coding records make their original source genuinely anonymous?"
           ]
         },
         {
           "id": 12,
           "title": "Write the method and lock the data plan",
-          "where": "The two-class retrieval comparison exemplar is at Stage 12 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 12 decision that belongs to a quasi-experimental design.",
+          "where": "A data dictionary and proposed implementation plan make the scope of the recorded comparison explicit.",
+          "changed": "The displayed pre/post values are reconciled with the change scores, while unrecorded procedure details remain explicitly unverified.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Preserve exactly the five CSV fields student_id, class_group, pre_score, post_score and change_score.",
+            "Compute change_score as post_score minus pre_score from the displayed one-decimal scores, rather than retaining unexplained inconsistencies.",
+            "For real work, predefine quiz comparability, timing, scoring, retrieval frequency, feedback and implementation records; none is documented in this synthetic file."
           ],
-          "decision": "Preserve student IDs and class IDs, record pre/post timing, and log implementation deviations.",
-          "rejected": "Analyzing only post scores and ignoring baseline is rejected.",
+          "decision": "Keep one linked pre/post record per simulated student and one of two intact-class labels. Use mathematically consistent change scores.",
+          "rejected": "A change value that conflicts with its displayed pre- and post-scores is not an auditable measure unless more precise underlying source values are documented.",
           "notebook": {
-            "rowUnit": "One student with linked pre/post scores.",
-            "analysisIntent": "Compare change between pre-existing classes while retaining quasi-experimental limits."
+            "rowUnit": "One synthetic student, with paired scores and one pre-existing class identifier.",
+            "analysisIntent": "Report the two observed class mean changes and their descriptive difference. No student-level significance test can validly identify an instructional-condition effect with one class per condition.",
+            "columns": "student_id; class_group; pre_score; post_score; change_score = post_score − pre_score, all score values to one decimal."
           },
-          "forward": "Inspect baseline and change distributions.",
+          "forward": "Data inspection can establish the reproducible changes and check baseline differences without asserting class equivalence.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can every change value be reconstructed from the displayed inputs?",
+            "Which procedural facts would you need before claiming to have conducted the comparison?"
           ]
         },
         {
           "id": 13,
-          "title": "Collect or organize evidence",
-          "where": "The two-class retrieval comparison exemplar is at Stage 13 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 13 decision that belongs to a quasi-experimental design.",
+          "title": "Collect or organise evidence",
+          "where": "The student examines all 48 revised synthetic rows and compares the two classes' descriptive summaries.",
+          "changed": "Previously inconsistent change values are corrected, and the summary is now explicit about the condition-level replication problem.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The retrieval class has a pre-score mean of 69.18 and a post-score mean of 78.90, a mean change of 9.72 points.",
+            "The comparison class has a pre-score mean of 68.66 and a post-score mean of 71.96, a mean change of 3.30 points.",
+            "The retrieval class's 6.43-point greater mean change is a descriptive contrast between one class per routine. The closely spaced baseline means do not establish that all relevant class characteristics matched."
           ],
-          "decision": "Inspect baseline means, missingness, change scores, and implementation before the main comparison.",
-          "rejected": "Ignoring a baseline imbalance because the post result is favorable is rejected.",
+          "decision": "Present group-specific baseline, post-test and change summaries, checking record IDs and paired arithmetic against the synthetic CSV.",
+          "rejected": "Treating a mean difference derived from one class in each condition as an independent replication of the instructional effect is rejected.",
           "notebook": {
-            "dataSummary": "48 synthetic students in two pre-existing classes. Mean change difference = 6.46 points, 95% CI [3.62, 9.29]. Nonrandom class assignment limits causal interpretation."
+            "dataSummary": "48 corrected synthetic rows, 24 per intact class. Pre means 69.18 and 68.66; post means 78.90 and 71.96; mean changes 9.72 and 3.30 points. The descriptive difference in change is 6.43 points. No valid group-effect confidence interval can be calculated with one class per routine."
           },
-          "forward": "Analysis can compare changes but cannot create randomization retrospectively.",
+          "forward": "The analysis can describe these values exactly but should not attach student-level inferential certainty to a class-level comparison.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Do pre-score means alone show that classrooms were comparable?",
+            "Have you confirmed that the displayed change values match post minus pre?"
           ]
         },
         {
           "id": 14,
           "title": "Choose and justify the analysis",
-          "where": "The two-class retrieval comparison exemplar is at Stage 14 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 14 decision that belongs to a quasi-experimental design.",
+          "where": "The student chooses an analysis that matches the actual number of independent instructional-condition units.",
+          "changed": "The earlier student-level Welch confidence interval is explicitly rejected as invalid for the between-class teaching contrast.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Calculate mean change separately for the 24 students in each intact class, then subtract the two class means.",
+            "A Welch t-test applied to the 48 student changes would treat the students as independently allocated to instructional conditions, which did not occur.",
+            "With a single class in each condition, the effect of the routine is perfectly confounded with class identity; a valid class-level standard error, p-value or treatment-effect confidence interval is unavailable."
           ],
-          "decision": "Use a change-score comparison as a transparent teaching analysis and retain the nonrandom-assignment boundary.",
-          "rejected": "Saying covariate adjustment would automatically prove causality is rejected.",
+          "decision": "Report the class-level mean changes and their descriptive 6.43-point difference, without an inferential confidence interval or causal test.",
+          "rejected": "Presenting the naïve student-level p-value as statistically significant evidence of a routine benefit would ignore classroom clustering and selection.",
           "notebook": {
-            "analysisChoice": "Welch comparison of student change scores across the two pre-existing classes."
+            "analysisChoice": "Descriptive before-and-after change contrast, using students to calculate two class means. A student-level Welch statistic is retained in the supporting JSON solely to illustrate why that inferential method is inappropriate for one class per condition."
           },
-          "forward": "Results must identify classes as nonrandom.",
+          "forward": "The Results must report the change difference transparently, without overstating inferential precision.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What is the independent unit for comparing instructional conditions?",
+            "Would adding more students to the same two classes create independent class replication?"
           ]
         },
         {
           "id": 15,
           "title": "Write the Results or findings",
-          "where": "The two-class retrieval comparison exemplar is at Stage 15 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 15 decision that belongs to a quasi-experimental design.",
+          "where": "The Results account is built from the corrected raw scores and the documented descriptive analysis.",
+          "changed": "The class-level result is separated from any unwarranted test of the instructional routine.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "In the retrieval class the mean score changes from 69.18 to 78.90, producing an average increase of 9.72 points.",
+            "In the comparison class the mean score changes from 68.66 to 71.96, an average increase of 3.30 points.",
+            "The difference between the two class mean changes is 6.43 points. No valid confidence interval or statistical significance claim for the routine is available from this two-class design."
           ],
-          "decision": "Report mean change in each class and the difference in mean change with CI.",
-          "rejected": "'Retrieval practice caused the improvement' is rejected.",
+          "decision": "Report the synthetic class summaries and descriptive difference using the exact revised source CSV.",
+          "rejected": "A 95% confidence interval calculated from student-level independence does not measure uncertainty about the class-level instructional comparison.",
           "notebook": {
-            "result1": "48 synthetic students in two pre-existing classes. Mean change difference = 6.46 points, 95% CI [3.62, 9.29]. Nonrandom class assignment limits causal interpretation."
+            "result1": "Across 48 invented paired records, the retrieval class (n = 24) changes from mean 69.18 to 78.90, a mean increase of 9.72 points. The comparison class (n = 24) changes from 68.66 to 71.96, increasing by 3.30 points. The difference between their mean changes is 6.43 points, descriptively only."
           },
-          "forward": "Discussion must address selection and class-level confounding.",
+          "forward": "The Discussion should connect this observed synthetic pattern with the published rationale while preserving the possibility of class-specific explanations.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can the class-level mean changes be reproduced directly from the CSV?",
+            "Does the Results language suggest causal inference the design cannot support?"
           ]
         },
         {
           "id": 16,
           "title": "Write the Discussion and limitations",
-          "where": "The two-class retrieval comparison exemplar is at Stage 16 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 16 decision that belongs to a quasi-experimental design.",
+          "where": "The discussion evaluates what the teaching dataset would and would not permit someone to conclude.",
+          "changed": "The principal limitation is made explicit as a design-level inability to separate instructional condition from class identity.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Controlled retrieval-practice experiments provide a plausible reason to investigate classroom use, but they cannot validate these invented data.",
+            "A difference in mean change across two pre-existing classes could reflect composition, teaching context, assessment differences, or other changes over time.",
+            "A pre-test measures one possible baseline difference, but adjustment for that number does not create independent classes or remove unmeasured confounding."
           ],
-          "decision": "Interpret the pattern as consistent with a possible intervention benefit while analyzing alternative explanations.",
-          "rejected": "Treating the published retrieval literature as proof that this class difference is causal is rejected.",
+          "decision": "Discuss the 6.43-point synthetic contrast as a calculation demonstrating quasi-experimental limits rather than as evidence that the retrieval routine increased learning.",
+          "rejected": "A confident recommendation to implement the routine based on a single unreplicated class contrast would exceed the evidence.",
           "notebook": {
-            "limitations": "Two pre-existing classes, possible teacher/class differences, synthetic data, no random assignment."
+            "limitations": "Both groups and their scores are synthetic. One class occupies each instructional condition, with no random assignment or class-level replication. Instrument comparability, implementation duration, teacher/context differences, attendance and consent records are absent. The descriptive difference does not identify a causal effect."
           },
-          "forward": "Abstract/title must call the design quasi-experimental.",
+          "forward": "The title, abstract and conclusion must preserve this source and inference boundary.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What additional classes or design safeguards would strengthen a classroom comparison?",
+            "Can an adjusted model remove the confounding of class identity with condition when each condition has one class?"
           ]
         },
         {
           "id": 17,
           "title": "Write the conclusion, abstract, title, and keywords",
-          "where": "The two-class retrieval comparison exemplar is at Stage 17 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 17 decision that belongs to a quasi-experimental design.",
+          "where": "The abstract and title are drafted after the descriptive results and their methodological boundaries are settled.",
+          "changed": "The closing language names the intact-class design and the synthetic contrast without suggesting a demonstrated intervention benefit.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Use a title identifying two pre-existing classes, paired biology scores and a retrieval routine.",
+            "State that 24 synthetic records appear in each class and the mean changes differ by 6.43 points.",
+            "Explain that one class per condition precludes a valid treatment-effect test and that no actual participant outcomes were measured."
           ],
-          "decision": "Name the pre-existing class comparison and synthetic status.",
-          "rejected": "Calling the study a randomized experiment is rejected.",
+          "decision": "Use a clearly labelled quasi-experimental instructional title and a stand-alone abstract that keeps the source of every number visible.",
+          "rejected": "The proven effect of retrieval practice on biology scores would misrepresent the sample, allocation and evidence.",
           "notebook": {
-            "title": "Synthetic Quasi-Experimental Exemplar: Score Change During a Retrieval-Practice Routine"
+            "title": "Synthetic Quasi-Experimental Exemplar of Paired Biology Scores in Two Pre-Existing Classes",
+            "abstractDraft": "This synthetic instructional example examines paired biology score records from two pre-existing classes, one labelled retrieval_routine and the other comparison_class. Each contains 24 invented student records. The mean pre- and post-scores are 69.18 and 78.90 in the retrieval class and 68.66 and 71.96 in the comparison class, yielding mean increases of 9.72 and 3.30 points. The descriptive difference between mean changes is 6.43 points. Because a single class represents each instructional condition, class characteristics cannot be separated from the routine. Student-level significance tests and confidence intervals would therefore be invalid for estimating a class-level treatment effect. The files are fictitious teaching material, and their calculations do not establish that retrieval practice improved students' scores.",
+            "keywords": "retrieval practice; quasi-experimental design; intact classes; pre-post scores; clustering; synthetic teaching data"
           },
-          "forward": "Final audit checks assignment language.",
+          "forward": "The final audit must reconcile the file arithmetic, bibliographic citations and interpretive claims across all exemplar representations.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Could a reader mistake your abstract for a real classroom study?",
+            "Does every reported statistic have a legitimate descriptive or inferential role?"
           ]
         },
         {
           "id": 18,
           "title": "Citations, references, and final alignment audit",
-          "where": "The two-class retrieval comparison exemplar is at Stage 18 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 18 decision that belongs to a quasi-experimental design.",
+          "where": "The final check traces the classroom question to both authentic publications and the corrected numerical source files.",
+          "changed": "The audit now documents the 16 repaired change-score inconsistencies and rejects the original student-level confidence interval.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The two retrieval-practice citations and DOIs were checked against publisher or PubMed records.",
+            "Recalculating change_score from displayed pre_score and post_score corrected 16 of the 48 original rows; all revised records now reconcile.",
+            "The descriptive mean-change difference is 6.425 points, rounded to 6.43, with 24 student records in each of two intact classes. A valid routine-effect test or confidence interval is unavailable."
           ],
-          "decision": "Trace class assignment, baseline, change score, comparison, and claim boundary through the paper.",
-          "rejected": "A causal conclusion that ignores nonrandom assignment is rejected.",
+          "decision": "Keep the corrected descriptive result, synthetic status and class-confounding limitation explicit across the project bank, analysis file and paper.",
+          "rejected": "Accepting a polished but incoherent dataset and its invalid student-level interval would conceal both an arithmetic and a research-design defect.",
           "notebook": {
-            "audit": "Quasi-experimental label, linked pre/post records, synthetic data, selection/confounding limits."
+            "audit": "All 48 change values now equal displayed post_score minus pre_score; mean changes are 9.720833 and 3.295833, with a 6.425-point descriptive difference. Only one class represents each condition, so student-level Welch inference cannot be used to infer the effect of retrieval practice. The two background DOI records are genuine."
           },
-          "forward": "The exemplar is complete.",
+          "forward": "The exemplar is complete as a source-audited synthetic teaching sequence. A real study would need appropriate consent, documented instruction and assessments, and independently replicated classes for class-level inference.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can you trace the source of every numerical value?",
+            "Does the final report distinguish descriptive class differences from evidence of an instructional effect?"
           ]
         }
       ],
