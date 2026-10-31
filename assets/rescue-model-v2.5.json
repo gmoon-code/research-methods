@@ -3406,7 +3406,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The materials, instruments, software, datasets, forms, or resources needed to carry out the protocol.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What equipment, supplies, software and data forms must be ready to carry out your actual protocol?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3425,19 +3425,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student measures 20 seeds in one dish per treatment.",
+            "situation": "A student plans a seedling experiment and lists only seeds, water and a ruler.",
             "thinking": [
-              "Each seed gives a measurement, but the whole dish receives the treatment together.",
-              "Dish may be the experimental unit.",
-              "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+              "The solution conditions require exact preparation details.",
+              "Dishes, labels and a measurement schedule are part of reproducibility.",
+              "I should specify quantities that affect the procedure and mark missing equipment as pending."
             ],
-            "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+            "draft": "Planned materials include a documented seed batch, separately labelled dishes, prepared solutions, a suitable ruler and a record sheet linking each seed to its dish."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The required materials/data sources are [specific items/sources/software].",
+          "frame": "Required resources include [item and relevant specification], [measurement tool], and [recording or software resource]. [Unconfirmed material] must be obtained before [step].",
           "path_frames": {}
         }
       }
