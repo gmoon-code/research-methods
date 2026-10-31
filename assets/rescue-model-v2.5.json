@@ -4490,7 +4490,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The first controlled answer to the research question in the Discussion.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What direct answer to the research question is supported by your observed evidence and design, without a stronger causal or population claim?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -4502,26 +4502,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Higher reported sleep was associated with higher quiz score in this sample; the observational design does not establish a causal sleep effect.",
+          "strong_example": "In this hypothetical sample, reported sleep duration was associated with attention-task performance [insert verified direction and estimate]. The observational evidence alone does not establish a causal effect of sleep.",
           "avoid": "Avoid 'proved' and universal claims.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same observational study shows a positive sleep-score association.",
+            "situation": "A hypothetical observational study records a relationship between students' reported sleep and attention-task scores.",
             "thinking": [
-              "My direct answer can say the variables were associated.",
-              "Possible explanations include sleep affecting learning, study routines affecting both, or reverse direction.",
-              "I need to explain how self-report and convenience sampling limit the claim."
+              "The answer should first state the observed association at the level of the sample.",
+              "No sleep condition was assigned, so the design does not isolate a sleep effect.",
+              "Self-report, possible confounding and the local sample limit how broadly the answer applies."
             ],
-            "draft": "Higher reported sleep was associated with higher score in this sample; confounding, reverse direction, self-report error, and local sampling prevent a causal or broad population conclusion."
+            "draft": "In this hypothetical sample, reported sleep duration was associated with attention-task performance [insert verified direction and estimate]. The observational evidence alone does not establish a causal effect of sleep."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "In this [sample/context/evidence base], the study/review indicates [bounded answer to the RQ].",
+          "frame": "For [studied units and setting], the evidence indicates [direct, verified answer to the question] with [magnitude or central pattern]. [Design or measurement boundary] limits [stronger inference].",
           "path_frames": {}
         }
       }
@@ -4535,11 +4535,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Your explanation of what the first anchor finding may mean scientifically or practically.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What could the principal finding mean, and which parts of your explanation were actually measured rather than proposed?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Connect the exact result to a plausible interpretation while preserving uncertainty.",
+          "body": "Connect the observed result to an interpretation using a plausible process or checked literature. Explicitly distinguish measured mechanisms from explanations not tested by the study.",
           "questions": [
             "What mechanism or explanation fits the observed pattern?",
             "What evidence in this study directly supports that interpretation?"
@@ -4547,26 +4547,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "The lower growth under higher salinity is consistent with osmotic/ionic stress under these conditions.",
+          "strong_example": "If the verified growth contrast shows lower growth under the assigned saline condition, osmotic stress may be one plausible explanation. The study did not measure water potential or ion movement, so the mechanism requires separate evidence.",
           "avoid": "Do not present a plausible explanation as if the study directly measured the mechanism.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same observational study shows a positive sleep-score association.",
+            "situation": "In a fictional seedling study, dishes assigned a higher salt concentration have smaller recorded growth changes.",
             "thinking": [
-              "My direct answer can say the variables were associated.",
-              "Possible explanations include sleep affecting learning, study routines affecting both, or reverse direction.",
-              "I need to explain how self-report and convenience sampling limit the claim."
+              "Growth was measured, while internal water balance was not.",
+              "An osmotic explanation could be biologically plausible if supported by the appropriate literature.",
+              "The data would show a treatment contrast under these conditions, not direct evidence for a particular cellular mechanism."
             ],
-            "draft": "Higher reported sleep was associated with higher score in this sample; confounding, reverse direction, self-report error, and local sampling prevent a causal or broad population conclusion."
+            "draft": "If the verified growth contrast shows lower growth under the assigned saline condition, osmotic stress may be one plausible explanation. The study did not measure water potential or ion movement, so the mechanism requires separate evidence."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The finding [finding] may reflect [mechanism/interpretation] because [reasoning]. However, [alternative explanation/boundary] remains possible.",
+          "frame": "The first finding [verified observation] is consistent with [specific interpretation], supported by [measured evidence or checked source]. Because [mechanism or population was not observed], [alternative interpretation or limit] remains open.",
           "path_frames": {}
         }
       }
@@ -4580,37 +4580,37 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Your interpretation of another important finding, especially one that adds complexity or qualification.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "How does a second finding modify, complicate or qualify the answer already developed from the first?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Explain the second finding and how it changes the overall answer.",
+          "body": "Explain how the second finding changes the synthesis, including its uncertainty and whether the two outcomes measure different aspects of the phenomenon.",
           "questions": [
             "Does this finding support, complicate, or contradict the main result?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "The germination pattern was weaker than the growth pattern, suggesting the treatment may have affected post-germination growth more clearly than emergence in this short timeframe.",
+          "strong_example": "The hypothetical germination estimate remains too imprecise to establish a clear difference, even if a growth contrast was observed. The findings support a more specific account of the measured outcomes, subject to the distinct uncertainties of each.",
           "avoid": "Do not ignore a finding because it is less convenient.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same observational study shows a positive sleep-score association.",
+            "situation": "A hypothetical seedling study observes a growth contrast, while the germination comparison remains imprecise.",
             "thinking": [
-              "My direct answer can say the variables were associated.",
-              "Possible explanations include sleep affecting learning, study routines affecting both, or reverse direction.",
-              "I need to explain how self-report and convenience sampling limit the claim."
+              "Different outcomes may respond on different timescales or through different processes.",
+              "A broad confidence interval for germination cannot establish that salt has no effect on emergence.",
+              "The second finding should refine the conclusion about what was observed without inventing an explanation."
             ],
-            "draft": "Higher reported sleep was associated with higher score in this sample; confounding, reverse direction, self-report error, and local sampling prevent a causal or broad population conclusion."
+            "draft": "The hypothetical germination estimate remains too imprecise to establish a clear difference, even if a growth contrast was observed. The findings support a more specific account of the measured outcomes, subject to the distinct uncertainties of each."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "A second finding, [finding], may mean [interpretation], with the boundary that [limit].",
+          "frame": "A second finding [verified result and uncertainty] [reinforces, complicates or qualifies] the first by [specific logical relationship]. It leaves [mechanism or broader conclusion] unresolved because [measurement or design limit].",
           "path_frames": {}
         }
       }
