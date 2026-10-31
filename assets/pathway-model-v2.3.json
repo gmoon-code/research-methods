@@ -1227,7 +1227,11 @@
     "descriptive_quantitative": {
       "outcomeDV": "Primary variable(s) being described",
       "experimentalUnit": "Observational unit and any repeated records",
-      "analysisIntent": "Descriptive analysis plan and any justified inferential extension"
+      "analysisIntent": "Descriptive analysis plan and any justified inferential extension",
+      "sample": "Units included (sample or census)",
+      "samplingMethod": "How the units were selected or fully enumerated",
+      "sampleLimits": "Coverage limits and any claims beyond the observed units",
+      "analysisSample": "Records analysed and any exclusions"
     },
     "observational": {
       "predictorIV": "Measured predictor or exposure",
