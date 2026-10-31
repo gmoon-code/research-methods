@@ -981,7 +981,7 @@
       "status": "synthetic_instructional_exemplar",
       "dir": "sleep-school-observational",
       "rq": "Among students in one synthetic biology-class sample, what is the association between reported weekday sleep duration and biology quiz score?",
-      "disclaimer": "Sleep literature records are real and verified. Student records and statistics are synthetic.",
+      "disclaimer": "The two cited sleep reviews are genuine scholarly publications. The 30 student records and their statistical association are invented teaching data, not observations of identifiable students or evidence of a real classroom effect.",
       "data_summary": "30 synthetic students. Pearson r = 0.75, p = 2.1e-06. Sleep is observed/self-reported, so this does not establish that changing sleep would cause the score difference.",
       "sources": [
         {
@@ -1003,197 +1003,197 @@
         {
           "id": 1,
           "title": "Find a research interest",
-          "where": "The sleep–quiz association exemplar is at Stage 1 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 1 decision that belongs to a observational / correlational design.",
+          "where": "A student becomes interested in how everyday sleep patterns may relate to learning in a secondary biology class.",
+          "changed": "The broad interest in student wellbeing becomes a possible question about sleep duration and assessment scores, without presuming an effect.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Explore how sleep duration, sleep quality and daytime sleepiness differ as possible research constructs.",
+            "Consider what a single class could reasonably report and what existing assessment information might be accessible with permission.",
+            "Keep the intended inference modest, since sleep is a naturally varying experience rather than a treatment students can simply be assigned."
           ],
-          "decision": "Keep sleep and school performance as the working area because it can be connected to a specific evidence source.",
-          "rejected": "A broad topic with no observable evidence plan is rejected.",
+          "decision": "Retain the possible relationship between reported sleep and biology assessment performance as an observational topic to examine for feasibility.",
+          "rejected": "Asking whether more sleep makes students better at biology presumes causation before the design or evidence has been established.",
           "notebook": {
-            "broadTopic": "sleep and school performance",
-            "startingQuestion": "What specific pattern, relationship, experience, or evidence synthesis could be documented?"
+            "broadTopic": "Sleep and school learning",
+            "startingQuestion": "How might students' reported sleep duration be associated with their biology quiz scores?"
           },
-          "forward": "Stage 2 must narrow population/system, evidence type, and realistic scope.",
+          "forward": "The next stage must specify which sleep measure, assessment and classroom context could be represented ethically.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which part of a broad topic is measurable without intervening in students' lives?",
+            "Does your initial wording already assume a relationship or mechanism?"
           ]
         },
         {
           "id": 2,
           "title": "Narrow the topic and test feasibility",
-          "where": "The sleep–quiz association exemplar is at Stage 2 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 2 decision that belongs to a observational / correlational design.",
+          "where": "The student narrows the project to one class, one sleep-duration variable and one biology quiz outcome.",
+          "changed": "An open-ended question about sleep and success becomes a bounded snapshot using two measures linked at the student level.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Specify a consistent reporting period for usual weekday sleep, while recognising that the existing synthetic file does not provide the questionnaire wording.",
+            "Define the quiz-score scale and the assessment to which each value refers before any real data are collected.",
+            "Investigate access to appropriate approvals and an independent consent process rather than treating the teacher's access to records as permission."
           ],
-          "decision": "Limit the project to one bounded population/system, time frame, and evidence type.",
-          "rejected": "Trying to answer long-term outcomes, mechanisms, and generalization in one small project is rejected.",
+          "decision": "Use a hypothetical 30-student biology-class dataset to illustrate a same-sample association, without treating those invented records as students who actually participated.",
+          "rejected": "Comparing students who were told to sleep different amounts would be a different design with substantial ethical and practical concerns.",
           "notebook": {
-            "scope": "One bounded instructional exemplar with explicit limits.",
-            "feasibility": "Evidence can be collected or organized within the stated synthetic teaching workflow."
+            "scope": "One illustrative biology class, reported weekday sleep hours and one biology quiz score per student.",
+            "feasibility": "The CSV is synthetic. A real study would require an approved survey instrument, clearly defined quiz-score measure, school permissions and safeguards for voluntary participation."
           },
-          "forward": "The literature scan can now use precise keywords instead of one broad topic word.",
+          "forward": "Published sleep research can inform the question, but its findings cannot supply a result for the invented classroom sample.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does your timeframe match the outcome being analysed?",
+            "Who would need to approve access to sleep responses and educational records?"
           ]
         },
         {
           "id": 3,
           "title": "Explore the research landscape",
-          "where": "The sleep–quiz association exemplar is at Stage 3 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 3 decision that belongs to a observational / correlational design.",
+          "where": "Two published sleep reviews help the student distinguish a plausible research question from an assumed result.",
+          "changed": "The background now differentiates several sleep constructs and their reported relationships with school performance.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Dewald et al. (2010) quantitatively synthesised associations involving sleep quality, duration and sleepiness in school-age participants.",
+            "Their pooled sleep-duration correlation with school performance was modest, approximately r = .069, unlike the much stronger pattern created in this synthetic dataset.",
+            "Curcio et al. (2006) reviewed evidence connecting sleep loss with learning and academic performance, drawing on research designs that differ in their inferential strengths."
           ],
-          "decision": "Use verified background sources to learn vocabulary, existing evidence, and methodological boundaries.",
-          "rejected": "Treating the first relevant source as proof of the final answer is rejected.",
+          "decision": "Use both reviews as background while explicitly separating published findings from the artificial effect size of the teaching data.",
+          "rejected": "The assertion that sleeping longer necessarily improves quiz scores is not warranted by these sources or by the observational example.",
           "notebook": {
-            "known": "The verified sources establish a defensible background rationale.",
-            "uncertain": "The exemplar still needs its own path-specific evidence and cannot inherit effect sizes or themes from background sources."
+            "known": "Published reviews report associations between sleep-related measures and academic outcomes, with important differences by construct and study design.",
+            "uncertain": "The direction or magnitude of a relationship in any real local class would require original observations and cannot be inferred from this invented dataset."
           },
-          "forward": "The research question can now use terminology grounded in the literature while remaining answerable.",
+          "forward": "The research question will therefore ask about an association in one bounded sample.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which sleep construct did the cited review actually examine?",
+            "Does the background evidence justify expecting the same correlation in a new class?"
           ]
         },
         {
           "id": 4,
           "title": "Write and refine the research question",
-          "where": "The sleep–quiz association exemplar is at Stage 4 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 4 decision that belongs to a observational / correlational design.",
+          "where": "The research question is worded to match the variables and an observational analysis.",
+          "changed": "An implied effect of sleep on achievement becomes an explicit association between two recorded quantities.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Identify reported weekday sleep duration as a measured predictor rather than an assigned exposure.",
+            "Name the biology quiz score as the numerical outcome, without inventing a quiz administration or scoring rubric.",
+            "Restrict the interpretation to the described classroom sample rather than all secondary students."
           ],
           "decision": "Among students in one synthetic biology-class sample, what is the association between reported weekday sleep duration and biology quiz score?",
-          "rejected": "A question that uses causal, experimental, or statistical language inconsistent with the selected path is rejected.",
+          "rejected": "How much will students' grades improve if they sleep one hour longer? This asks for a causal intervention estimate that the example cannot produce.",
           "notebook": {
-            "questionType": "observational / correlational",
+            "questionType": "Correlational / observational",
             "finalRQ": "Among students in one synthetic biology-class sample, what is the association between reported weekday sleep duration and biology quiz score?",
-            "rqJustification": "The question matches a observational / correlational evidence structure."
+            "rqJustification": "A student-level correlational description can estimate the association between two measured values in the same sample; no sleep intervention or causal comparison is planned."
           },
-          "forward": "Every later decision must now remain aligned with this exact question.",
+          "forward": "Literature and method choices should remain consistent with the measured variables and the limits of a cross-sectional association.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does every variable in the question correspond to an actual column?",
+            "Would your question still be answerable without knowing why the pattern occurs?"
           ]
         },
         {
           "id": 5,
           "title": "Build a systematic search strategy",
-          "where": "The sleep–quiz association exemplar is at Stage 5 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 5 decision that belongs to a observational / correlational design.",
+          "where": "The student prepares an auditable search for sleep duration and educational-performance research.",
+          "changed": "A broad internet search becomes a set of topic and outcome terms connected to the classroom question.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Use a sleep block such as 'sleep duration' OR 'weekday sleep' and an outcome block such as 'academic performance' OR 'school achievement'.",
+            "Add age or setting terms when a narrower search is required, but avoid excluding relevant work simply because it uses a different school-performance measure.",
+            "Record the database or website, exact query, date and screening decisions if searches are actually undertaken; no historical search count accompanies this exemplar."
           ],
-          "decision": "Build concept blocks and document more than one search route.",
-          "rejected": "One undocumented web search is rejected as an evidence-search record.",
+          "decision": "Build a documented literature search that can locate both sleep-duration associations and limitations of student self-report.",
+          "rejected": "Searching only 'sleep makes better grades' would bias the terms towards a conclusion and obscure contrary evidence.",
           "notebook": {
-            "searchLogic": "Separate the central phenomenon, population/context, and design/evidence terms; connect synonyms with OR and concepts with AND.",
-            "searchLogRule": "Record database/site, date, exact string, filters, and result count."
+            "searchLogic": "('sleep duration' OR 'sleep time' OR 'weekday sleep') AND ('academic performance' OR 'school achievement' OR 'test score').",
+            "searchLogRule": "Record each real search system, date, terms, filters and screening decisions; do not invent result totals or a completed search record."
           },
-          "forward": "The search log makes later source-selection and coverage claims auditable.",
+          "forward": "The two available reviews can now be read for their designs and the specific associations they report.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Would your search also retrieve studies with weak or null associations?",
+            "Can another student identify exactly where and how you searched?"
           ]
         },
         {
           "id": 6,
           "title": "Evaluate, read, and extract sources",
-          "where": "The sleep–quiz association exemplar is at Stage 6 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 6 decision that belongs to a observational / correlational design.",
+          "where": "The student evaluates two genuine review articles as sources for a bounded classroom rationale.",
+          "changed": "Source authority is considered alongside study design, construct definitions and limits on transfer to the example.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Dewald et al. (2010) conducted separate meta-analyses of sleep quality, duration and sleepiness; their estimates should not be treated as interchangeable.",
+            "Curcio et al. (2006) discussed research on sleep loss, learning and performance, including both correlational and manipulated-sleep designs.",
+            "Neither paper reports results for the fictional biology quiz, and neither supplies a survey instrument or consent record for this exemplar."
           ],
-          "decision": "Extract comparable information from each included source instead of saving citation-only records.",
-          "rejected": "Peer-reviewed or authoritative status alone is rejected as a substitute for relevance and methodological appraisal.",
+          "decision": "Retain the reviews for background while documenting how their educational outcomes and sleep measures differ from the proposed class-level comparison.",
+          "rejected": "A citation to a well-known review does not independently validate an invented correlation or imply that all confounding has been addressed.",
           "notebook": {
-            "sourceExtraction": "Record source type, design/scope, population/context, main claim/finding, limitations, and relevance to this exemplar."
+            "sourceExtraction": "O-S01 is a meta-analytic review separating sleep measures and reporting a modest sleep-duration association with school performance. O-S02 reviews sleep loss, learning and educational performance across varied designs. Both are background sources, not classroom data."
           },
-          "forward": "Comparable source records allow synthesis instead of annotated-bibliography writing.",
+          "forward": "The literature synthesis should explain what is plausible without making the invented result appear expected or independently corroborated.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the research design in a source justify its particular inference?",
+            "Which variables and outcomes differ from those used in the teaching dataset?"
           ]
         },
         {
           "id": 7,
           "title": "Synthesize the literature and justify the study",
-          "where": "The sleep–quiz association exemplar is at Stage 7 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 7 decision that belongs to a observational / correlational design.",
+          "where": "The rationale connects a measurable classroom association to a wider but heterogeneous sleep literature.",
+          "changed": "An unsupported novelty claim is replaced by a local measurement and inferential demonstration.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Published work provides reasons to investigate sleep-related variables and school performance, while reporting effect sizes that vary across constructs.",
+            "A short classroom study could illustrate how a measured predictor and a quiz score are linked, with appropriate ethical safeguards.",
+            "The synthetic data are deliberately constructed to provide a visible association, so they cannot independently replicate or extend a published empirical finding."
           ],
-          "decision": "Use a bounded rationale such as replication, local application, evidence synthesis, or methodological demonstration.",
-          "rejected": "A global 'no research exists' claim is rejected unless an appropriately comprehensive search can defend it.",
+          "decision": "Frame the example as a demonstration of observational measurement, correlation and the boundaries of educational inference.",
+          "rejected": "The statement that researchers have not explored sleep and grades is contradicted by the two cited reviews.",
           "notebook": {
-            "rationale": "The exemplar is justified by the stated teaching/research purpose and verified background, without manufacturing novelty."
+            "rationale": "An association-focused example can teach how to measure two variables, inspect a scatterplot and communicate uncertainty without converting correlation into causation."
           },
-          "forward": "The literature review must lead to the actual question and claim boundary.",
+          "forward": "The literature review can now develop the relationship between reported sleep constructs, performance and limits of comparison.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What can a new sample contribute without claiming global novelty?",
+            "Is the stated gap demonstrated or merely asserted?"
           ]
         },
         {
           "id": 8,
           "title": "Write the literature review",
-          "where": "The sleep–quiz association exemplar is at Stage 8 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 8 decision that belongs to a observational / correlational design.",
+          "where": "The student assembles a short argument that leads from sleep research to the chosen observational question.",
+          "changed": "General instructions to synthesise sources become a specific comparison between review findings and the illustrative class variables.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Introduce the distinction between sleep duration, sleep quality and sleepiness because these measures can show different associations with school performance.",
+            "Use the meta-analytic sleep-duration result to demonstrate why magnitudes cannot be assumed across settings and outcomes.",
+            "Explain how self-report and prior achievement could affect an apparent class-level relationship before posing the bounded question."
           ],
-          "decision": "Write the literature section around cross-source claims and differences.",
-          "rejected": "A paragraph-by-paragraph list of source summaries is rejected.",
+          "decision": "Write a background passage that supports studying the association while avoiding a prediction of the synthetic correlation's strength.",
+          "rejected": "Describing a synthetic r = .75 as confirmation of Dewald et al. (2010) would obscure that their pooled duration association was about r = .069.",
           "notebook": {
-            "literatureReviewPlan": "Claim → evidence from more than one source where available → difference/qualification → connection to the present question."
+            "literatureReviewPlan": "Sleep research considers several related measures. In a meta-analysis of school-age samples, Dewald et al. (2010) found a modest pooled association between sleep duration and school performance, whereas Curcio et al. (2006) reviewed wider evidence on sleep loss and learning. The present instructional comparison uses reported weekday sleep and one biology quiz score, so its constructed figures must remain separate from these empirical sources."
           },
-          "forward": "The Method must now operationalize the same constructs and evidence structure.",
+          "forward": "The design now has to explain precisely what is measured and why no treatment effect can be inferred.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the paragraph carry an idea across sources rather than merely listing their titles?",
+            "Can the reader tell which quantities are published evidence and which are fabricated for teaching?"
           ]
         },
         {
           "id": 9,
           "title": "Choose the research design",
-          "where": "The sleep–quiz association exemplar is at Stage 9 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 9 decision that belongs to a observational / correlational design.",
+          "where": "The research design is selected to estimate a relationship between existing reports and scores.",
+          "changed": "The project is explicitly observational and cross-sectional, with no random assignment of sleep duration.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Each synthetic student row includes a reported sleep number and a quiz score, both referring to the same coded identifier.",
+            "The file does not record manipulation of sleep, repeated quiz measurements or time-ordered changes.",
+            "Even a large statistically significant correlation cannot separate the effect of sleep from prior achievement, study habits and other possible explanations."
           ],
-          "decision": "Use an observational correlational design because sleep is reported, not assigned.",
-          "rejected": "Calling the project an experiment is rejected.",
+          "decision": "Use a descriptive correlational design with one observation per student and Pearson correlation as a possible association estimate.",
+          "rejected": "Calling the two variables an experimental treatment and outcome would create an unsupported causal design.",
           "notebook": {
-            "designType": "Observational / correlational",
-            "claimBoundary": "Estimate association in this sample; no direct causal effect."
+            "designType": "Correlational / observational",
+            "claimBoundary": "Estimate the association between reported sleep hours and quiz scores within the constructed sample; do not claim that increasing sleep would change scores or that the records represent all students."
           },
-          "forward": "Define predictor, outcome, unit, and confounders.",
+          "forward": "The next decisions concern operational definitions, the score boundary and the level at which each measurement is recorded.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Was the explanatory variable assigned or simply reported?",
+            "Can the chosen method identify a cause without additional evidence?"
           ]
         },
         {
