@@ -3314,7 +3314,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Any risk, privacy, authority, consent, coercion, environmental, or safety concern created by the method.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What foreseeable harm, privacy concern or safety issue arises from the planned procedure?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3334,19 +3334,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student has access to one biology class and wants to generalize to all teenagers.",
+            "situation": "A field study proposes temperature observations near a busy campus entrance.",
             "thinking": [
-              "Access does not make this a random sample.",
-              "The actual sample is one convenience class.",
-              "The result can be useful locally, but the generalization has to stay narrow."
+              "Standing close to moving vehicles could put researchers at risk.",
+              "The measurement might interrupt normal use of the entrance.",
+              "Access restrictions and supervision should be checked before collection."
             ],
-            "draft": "Sampling: convenience sample from one class. Generalization: limited to similar local context; no claim of national representativeness."
+            "draft": "The proposed entrance location presents traffic and access hazards; the student must assess those risks before selecting the site."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The main ethics/safety issue is [risk/privacy/authority concern] because [mechanism].",
+          "frame": "One concern is [specific potential harm or risk] arising during [research action]. It affects [people or environment] through [mechanism].",
           "path_frames": {}
         }
       }
