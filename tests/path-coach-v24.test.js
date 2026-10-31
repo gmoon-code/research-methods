@@ -131,4 +131,22 @@ if(!C.stageGate(9,metaDesign).canMarkReady)process.exit(1);
 metaDesign.data.designType="Literature review";
 if(C.stageGate(9,metaDesign).canMarkReady)process.exit(1);
 
+// mixed-methods integration and evidence-integrity regression checks
+let mixedRecords={data:{rawLocation:"unaltered survey responses and interview audio",descriptives:"numeric summary and corpus account"},pathway:{selected:"mixed_methods",confirmed:true}};
+let mixedGate=C.stageGate(13,mixedRecords);
+if(mixedGate.canMarkReady||!mixedGate.missing.includes("missingObserved")||!mixedGate.missing.includes("errorsCorrections"))process.exit(1);
+mixedRecords.data.missingObserved="Two unavailable interview segments logged";
+mixedRecords.data.errorsCorrections="Original coding and correction decision retained";
+mixedGate=C.stageGate(13,mixedRecords);
+if(!mixedGate.canMarkReady||mixedGate.missing.length)process.exit(1);
+if(C.recommended(10,mixedRecords).includes("predictorIV")||C.recommended(10,mixedRecords).includes("hypothesisNeeded"))process.exit(1);
+if(!C.readinessChecks(9,mixedRecords).some(s=>s.includes("together or in sequence")))process.exit(1);
+if(!C.readinessChecks(14,mixedRecords).some(s=>s.includes("connected, compared or combined")))process.exit(1);
+if(!C.readinessChecks(16,mixedRecords).some(s=>s.includes("jointly contribute")))process.exit(1);
+if(!C.required(12,mixedRecords).includes("methodControls")||!C.required(14,mixedRecords).includes("assumptionChecks"))process.exit(1);
+let mixedDesign={data:{designType:"Mixed methods",designWhy:"paired complementary evidence",comparisonStructure:"quantitative then qualitative",claimBoundary:"bounded to these sites"},pathway:{selected:"mixed_methods",confirmed:true}};
+if(!C.stageGate(9,mixedDesign).canMarkReady)process.exit(1);
+mixedDesign.data.designType="Experimental";
+if(C.stageGate(9,mixedDesign).canMarkReady)process.exit(1);
+
 console.log("PASS pathway-specific coach");
