@@ -387,12 +387,12 @@ window.RMSCurriculum = (() => {
     },
     {
       id:14, phase:"analyze", title:"Choose and justify the data analysis",
-      nav:"Statistical analysis",
-      purpose:"Select analysis from the research question, design structure, outcome type, and assumptions. Statistical significance is one part of interpretation, not the goal of the study.",
+      nav:"Analysis approach",
+      purpose:"Select a quantitative, qualitative or synthesis approach from the research question, evidence type and design. Statistical tests require appropriate assumptions, while interpretive analyses need clear procedures and evidence checks.",
       learn:`
         <h3>Begin with the question, not the test name</h3>
         <p>For quantitative research, specify the quantity you want to estimate, such as a mean difference, paired change, proportion, association, or slope. That target is the estimand. In qualitative research, identify the phenomenon and interpretive question guiding the analysis. Analytical methods should follow the research question and design.</p>
-        <h3>Core interpretation</h3>
+        <h3>For quantitative interpretation</h3>
         <ul>
           <li>Report effect magnitude in meaningful units when possible.</li>
           <li>Use an effect size appropriate to the design.</li>
@@ -409,7 +409,7 @@ window.RMSCurriculum = (() => {
           ["primaryEstimand","The quantity or phenomenon that most directly answers my question","textarea"],["analysisChoice","Primary analysis and justification","textarea"],["assumptionChecks","Assumptions/design checks and what I observed","textarea"],["effectSizePlan","Effect size and/or interval estimate","textarea"],["multiplicity","Multiple comparisons or exploratory analyses and how I will handle/label them","textarea"]
         ]}
       ],
-      checks:["My analysis matches the design structure and outcome type.","I identified the effect or quantity I want to estimate, not only a test name.","I will report magnitude and uncertainty where appropriate.","I understand what the p-value does and does not mean."]
+      checks:["My analysis matches the question, evidence type and design structure.","For quantitative work, I identified the quantity to estimate; for qualitative or review work, I specified the interpretive or synthesis purpose.","I will report magnitude and uncertainty where appropriate, and keep qualitative interpretations grounded in their sources.","If using a statistical test, I understand what its p-value does and does not mean."]
     },
     {
       id:15, phase:"analyze", title:"Write the Results section",
@@ -421,10 +421,10 @@ window.RMSCurriculum = (() => {
         <h3>Recommended sequence</h3>
         <ol>
           <li>Describe the analyzed sample or corpus and exclusions.</li>
-          <li>Report descriptive statistics and data-quality information relevant to interpretation.</li>
+          <li>Describe relevant distributions or corpus characteristics and any data-quality issues affecting interpretation.</li>
           <li>Present figures and tables that directly address the question.</li>
           <li>Report primary statistical or qualitative results with complete information.</li>
-          <li>Report weak, null, unexpected, and contradictory findings as transparently as favorable findings.</li>
+          <li>Report weak, null, discrepant, unexpected and contradictory findings as carefully as the central pattern.</li>
         </ol>
         <div class="concept-box"><strong>Quantitative reporting</strong><br>Include the estimate or raw difference, units, uncertainty interval when appropriate, test statistic and degrees of freedom when a test is used, p-value, and effect size where meaningful. The exact reporting format depends on analysis.</div>
         <div class="concept-box"><strong>Qualitative reporting</strong><br>Describe the analytic approach and the patterns or interpretations supported by the evidence, using relevant excerpts or cases. Explain any reported counts carefully, and do not turn qualitative frequencies into unsupported population statistics. Document the analytic decisions and coding process where applicable.</div>`,
@@ -435,7 +435,7 @@ window.RMSCurriculum = (() => {
           ["analysisSample","Final analyzed sample/corpus and exclusions","textarea"],["result1","Primary result and exact supporting output/table/figure","textarea"],["result2","Secondary result and exact supporting output/table/figure","textarea"],["unexpected","Null, weak, unexpected, or contradictory result","textarea"],["resultsDraft","Results section draft","textarea"]
         ]}
       ],
-      checks:["Every key result is traceable to raw/cleaned data or an analysis output.","I used language appropriate to the research design.","I reported weak or non-significant results transparently.","I distinguished evidence-supported findings from broader implications, following my assignment's reporting structure."]
+      checks:["Every key result is traceable to records, source passages or an analysis output.","I used language appropriate to the research design and reporting genre.","I reported weak, discrepant or statistically non-significant findings where relevant.","I distinguished evidence-supported findings from broader implications, following my assignment's reporting structure."]
     },
     {
       id:16, phase:"write", title:"Write the Discussion and limitations",
