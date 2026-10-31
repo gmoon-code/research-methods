@@ -5308,7 +5308,7 @@
       "synth": {
         "stage": 7,
         "title": "Synthesis — build claims across studies",
-        "body": "A theme should connect multiple sources and also record conflicting or mixed evidence. The question is 'what does the evidence collectively support, and under what conditions?'",
+        "body": "Synthesize findings across actual sources by identifying the question they address, what the evidence supports and where it varies. Link every theme to its study records, including credible contrary or inconclusive findings.",
         "terms": [
           "synthesis",
           "theme",
@@ -5318,20 +5318,20 @@
           "themeStance"
         ],
         "walkthrough": {
-          "situation": "Three studies mostly agree, but one reports a smaller effect.",
+          "situation": "A fictional evidence table contains two studies using delayed recall and another using immediate recognition.",
           "thinking": [
-            "I should not label the fourth study an outlier and ignore it.",
-            "The studies use different feedback timing and retention intervals.",
-            "The disagreement may reveal a boundary condition instead of a simple contradiction."
+            "Compare studies that ask sufficiently similar questions and use relevant measures.",
+            "The different testing interval may limit whether the findings can be described as one pattern.",
+            "An evidence-based synthesis should name sources and describe the variation without inventing a field-wide consensus."
           ],
-          "draft": "Theme: retrieval practice generally supports delayed retention, with effect magnitude varying across feedback and retention conditions."
+          "draft": "Fictional synthesis plan: group studies A and B under delayed-recall outcomes, then discuss study C's immediate-recognition measure separately. Replace each ID with checked evidence before asserting convergence."
         },
-        "next_prompt": "Write the next literature decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Which verified sources support your emerging synthesis claim, which source complicates it, and how will you express the boundary between their methods?"
       },
       "gap": {
         "stage": 7,
         "title": "Gap/rationale — make the smallest claim the evidence supports",
-        "body": "A legitimate project can be replication, extension, local investigation, method comparison, or exploration of inconsistent findings. Global novelty is not required.",
+        "body": "A study may make a useful local extension, replication or method comparison even when related research exists. Base the justification on a documented search and the evidence reviewed; never infer that a whole field lacks research from a few searches.",
         "terms": [
           "literature gap",
           "replication",
@@ -5339,20 +5339,20 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "Three studies mostly agree, but one reports a smaller effect.",
+          "situation": "A student reads university-based retrieval-practice studies and wants to investigate a similar question in one secondary classroom.",
           "thinking": [
-            "I should not label the fourth study an outlier and ignore it.",
-            "The studies use different feedback timing and retention intervals.",
-            "The disagreement may reveal a boundary condition instead of a simple contradiction."
+            "Existing research establishes that the broader question has already been examined.",
+            "The selected sources alone cannot demonstrate that all secondary-school research is absent.",
+            "A local extension is defensible if the project clearly describes its new context and evidence."
           ],
-          "draft": "Theme: retrieval practice generally supports delayed retention, with effect magnitude varying across feedback and retention conditions."
+          "draft": "Proposed rationale for this fictional case: examine a previously studied retrieval-practice question in one local secondary science setting, while recording the limited scope of the literature search. No global research gap is claimed."
         },
-        "next_prompt": "Write the next literature decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Which supported rationale best describes your project now, and what exact reviewed evidence justifies an extension, replication, inconsistency or local question?"
       },
       "claims": {
         "stage": 8,
         "title": "Claim audit — every literature statement needs evidence",
-        "body": "Link a claim to the exact source records that support it, then add a boundary when the sources apply only to particular populations, measures, or designs.",
+        "body": "Check each literature claim against the underlying sources and its actual scope. Match in-text citations to verified references, and distinguish what a source measured from how its authors interpreted the evidence.",
         "terms": [
           "citation",
           "causal claim",
@@ -5360,35 +5360,35 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "The student's draft has one paragraph per article.",
+          "situation": "A draft says that study strategies always improve grades and cites one observational survey.",
           "thinking": [
-            "Readers need a claim about the literature, not a reading log.",
-            "I can group the three articles around delayed retention, then compare where they differ.",
-            "Citations should support the claim after I make it."
+            "The word 'always' implies broader and stronger evidence than one survey can provide.",
+            "Read the original source to identify which variables it measured and which association it reported.",
+            "Revise or remove the claim until its scope matches the verified evidence and citation."
           ],
-          "draft": "Across the included studies, retrieval-based practice generally improved delayed retention, although effect magnitude varied with feedback timing and test delay (citations)."
+          "draft": "Unresolved claim C01: 'Study strategies always improve grades.' Verify the cited survey's measures and conclusions before replacing this with a bounded, accurate statement; do not retain an unsupported universal claim."
         },
-        "next_prompt": "Write the next literature decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Which exact sentence needs verification, which source and result will you check, and how will you document a correction or an unresolved citation?"
       },
       "outline": {
         "stage": 8,
         "title": "Paragraph planning — give each paragraph a reasoning job",
-        "body": "Plan a claim about the literature, supporting studies, comparison/qualification, and the implication for the next paragraph or your study.",
+        "body": "Plan paragraphs around connected ideas and comparisons across sources. Give each paragraph a focused question or interpretive task, decide which verified evidence belongs there and show how it leads naturally into the next point.",
         "terms": [
           "synthesis",
           "theme"
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "The student's draft has one paragraph per article.",
+          "situation": "A student's literature review has three consecutive paragraphs, each giving a separate article summary.",
           "thinking": [
-            "Readers need a claim about the literature, not a reading log.",
-            "I can group the three articles around delayed retention, then compare where they differ.",
-            "Citations should support the claim after I make it."
+            "The first two sources both address when learning was assessed, so they can be compared together.",
+            "The third differs in scoring method and may clarify why the findings are difficult to compare.",
+            "Develop the paragraph around measurement decisions and their consequences, with citations checked before drafting."
           ],
-          "draft": "Across the included studies, retrieval-based practice generally improved delayed retention, although effect magnitude varied with feedback timing and test delay (citations)."
+          "draft": "Paragraph plan: introduce variation in assessment timing; compare verified sources using matched time intervals; qualify the comparison using differing test formats; move to the next paragraph on how outcome definitions affect interpretation."
         },
-        "next_prompt": "Write the next literature decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "What is the next paragraph's intellectual task, which checked sources will develop it, and how does its reasoning connect to the preceding paragraph?"
       }
     },
     "methods": {
