@@ -2268,9 +2268,9 @@
       "subtitle": "Mini literature-review exemplar with real source records and bounded coverage claims",
       "status": "verified_source_mini_review_exemplar",
       "dir": "multilingual-science-literature-review",
-      "rq": "Across a small verified teaching corpus, what recurring principles describe how language and participation interact in secondary science investigation for multilingual learners?",
-      "disclaimer": "The source records and cited claims are real. The corpus is intentionally small for methods instruction and must not be presented as an exhaustive systematic review.",
-      "data_summary": "Four verified records form a deliberately small teaching corpus. The exemplar demonstrates search, screening, study-matrix, synthesis, and coverage boundaries rather than claiming exhaustive field coverage.",
+      "rq": "What considerations for language and participation in secondary science investigation can be drawn from three selected education publications, and what limits their interpretation?",
+      "disclaimer": "Four genuine publications are supplied for teaching. Three are selected science/STEM education sources, and the fourth is the PRISMA 2020 reporting guideline. There is no documented database search, screening history or systematic review, and this small conceptual comparison does not establish field-wide findings.",
+      "data_summary": "Four authentic source records, including three selected education publications (LR-S01–LR-S03) and one reporting-guideline reference (LR-S04). The matrix illustrates limited conceptual synthesis, not a systematic search or a four-study empirical review.",
       "sources": [
         {
           "id": "LR-S01",
@@ -2305,197 +2305,197 @@
         {
           "id": 1,
           "title": "Find a research interest",
-          "where": "The multilingual science mini-review exemplar is at Stage 1 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 1 decision that belongs to a literature review design.",
+          "where": "A student becomes interested in how language shapes opportunities to participate in secondary science investigation.",
+          "changed": "The broad interest is directed towards what selected scholarly publications can illuminate about disciplinary language and classroom participation.",
           "reasoning": [
-            "Start from the research question and the literature review evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Investigating a scientific phenomenon involves interpreting evidence and making an explanation understandable to others.",
+            "Students may draw on linguistic and experiential resources as they engage in that work.",
+            "A literature-based question can examine how scholars conceptualise these opportunities, provided the review does not claim to represent the whole field."
           ],
-          "decision": "Keep language and participation in science inquiry as the working area because it can be connected to a specific evidence source.",
-          "rejected": "A broad topic with no observable evidence plan is rejected.",
+          "decision": "Explore selected research and consensus publications concerning science practices, language and students' participation.",
+          "rejected": "Assuming that multilingual students face one uniform language barrier would predetermine the conclusion before sources are examined.",
           "notebook": {
-            "broadTopic": "language and participation in science inquiry",
-            "startingQuestion": "What specific pattern, relationship, experience, or evidence synthesis could be documented?"
+            "broadTopic": "Language, participation and secondary science investigation",
+            "startingQuestion": "What do selected scholarly sources say about disciplinary language and opportunities to engage in science investigation?"
           },
-          "forward": "Stage 2 must narrow population/system, evidence type, and realistic scope.",
+          "forward": "The topic needs boundaries that reflect the actual publications available and their different evidential roles.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science mini-review example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What aspect of science participation will guide your selection of scholarship?",
+            "What would be lost if you treated all multilingual students as having the same experiences?"
           ]
         },
         {
           "id": 2,
           "title": "Narrow the topic and test feasibility",
-          "where": "The multilingual science mini-review exemplar is at Stage 2 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 2 decision that belongs to a literature review design.",
+          "where": "The student restricts a broad scholarly question to a small, openly selected educational reading set.",
+          "changed": "The scope is a teaching comparison of three education publications, with a fourth methodological guideline kept separate.",
           "reasoning": [
-            "Start from the research question and the literature review evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The example contains one conceptual science-language article and two National Academies consensus reports.",
+            "One report addresses English learners across STEM, while another concerns investigation and design in Grades 6–12 more generally.",
+            "PRISMA 2020 is useful for discussing transparent review reporting, although it is not evidence about language participation."
           ],
-          "decision": "Limit the project to one bounded population/system, time frame, and evidence type.",
-          "rejected": "Trying to answer long-term outcomes, mechanisms, and generalization in one small project is rejected.",
+          "decision": "Use three education sources for a bounded conceptual comparison and one reporting-guideline source as methodological context.",
+          "rejected": "Presenting this collection as an exhaustive or representative sample of all secondary multilingual science research is unjustified.",
           "notebook": {
-            "scope": "One bounded instructional exemplar with explicit limits.",
-            "feasibility": "Evidence can be collected or organized within the stated synthetic teaching workflow."
+            "scope": "Three selected education publications (LR-S01–LR-S03) and one methodological reporting guideline (LR-S04).",
+            "feasibility": "Their bibliographic records and a four-row source matrix are available. No original search log, screened-record set, appraisal forms or comprehensive review protocol is supplied."
           },
-          "forward": "The literature scan can now use precise keywords instead of one broad topic word.",
+          "forward": "Source appraisal should examine what each publication covers rather than treating all four rows as comparable empirical studies.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science mini-review example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which sources address the substantive question and which address how reviews are reported?",
+            "Can the available files demonstrate how the publications were originally discovered?"
           ]
         },
         {
           "id": 3,
           "title": "Explore the research landscape",
-          "where": "The multilingual science mini-review exemplar is at Stage 3 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 3 decision that belongs to a literature review design.",
+          "where": "The student examines the educational claims and source genres before composing a synthesis.",
+          "changed": "The conceptual article, two consensus reports and PRISMA guideline are distinguished by what they can legitimately support.",
           "reasoning": [
-            "Start from the research question and the literature review evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Lee, Quinn and Valdés (2013) connect language demands and opportunities to science and engineering practices.",
+            "The 2018 National Academies report addresses resources and learning opportunities for English learners across STEM.",
+            "The 2019 National Academies report places investigation and design at the centre of Grades 6–12 science, without focusing specifically on multilingual learners. PRISMA 2020 provides review-reporting guidance only."
           ],
-          "decision": "Use verified background sources to learn vocabulary, existing evidence, and methodological boundaries.",
-          "rejected": "Treating the first relevant source as proof of the final answer is rejected.",
+          "decision": "Compare disciplinary language, opportunities for learners and investigation practices using LR-S01–LR-S03, while citing LR-S04 only when explaining reporting transparency.",
+          "rejected": "Counting PRISMA as a fourth study showing that multilingual learners benefit from investigation would be a category error.",
           "notebook": {
-            "known": "The verified sources establish a defensible background rationale.",
-            "uncertain": "The exemplar still needs its own path-specific evidence and cannot inherit effect sizes or themes from background sources."
+            "known": "All four citations correspond to genuine publications. Three concern science/STEM education; the fourth describes transparent reporting for systematic reviews.",
+            "uncertain": "A three-source purposive set cannot establish the prevalence of a claim, intervention efficacy or comprehensive field coverage."
           },
-          "forward": "The research question can now use terminology grounded in the literature while remaining answerable.",
+          "forward": "The research question must invite a bounded conceptual interpretation rather than promise themes recurrent across an undisclosed search.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science mini-review example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What is genuinely shared across the educational sources?",
+            "Which source addresses a different population or question from the others?"
           ]
         },
         {
           "id": 4,
           "title": "Write and refine the research question",
-          "where": "The multilingual science mini-review exemplar is at Stage 4 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 4 decision that belongs to a literature review design.",
+          "where": "The question is refined to make its small source base and uncertainty visible.",
+          "changed": "A claim to identify recurring principles across an unspecified research field becomes an explicit inquiry into three selected publications.",
           "reasoning": [
-            "Start from the research question and the literature review evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "State that the synthesis is drawn from selected texts, not from a systematically sampled body of studies.",
+            "Ask about language and participation in secondary science investigation while acknowledging that sources address different scopes.",
+            "Include limits in the question so methodological differences remain part of the interpretation."
           ],
-          "decision": "Across a small verified teaching corpus, what recurring principles describe how language and participation interact in secondary science investigation for multilingual learners?",
-          "rejected": "A question that uses causal, experimental, or statistical language inconsistent with the selected path is rejected.",
+          "decision": "What considerations for language and participation in secondary science investigation can be drawn from three selected education publications, and what limits their interpretation?",
+          "rejected": "What does all research prove about the best method for multilingual science learners? This would require a much wider, defined evidence base and intervention comparisons.",
           "notebook": {
-            "questionType": "literature review",
-            "finalRQ": "Across a small verified teaching corpus, what recurring principles describe how language and participation interact in secondary science investigation for multilingual learners?",
-            "rqJustification": "The question matches a literature review evidence structure."
+            "questionType": "Literature review",
+            "finalRQ": "What considerations for language and participation in secondary science investigation can be drawn from three selected education publications, and what limits their interpretation?",
+            "rqJustification": "A bounded conceptual comparison can identify considerations in three known education publications and explain why their source types and populations limit wider inferences."
           },
-          "forward": "Every later decision must now remain aligned with this exact question.",
+          "forward": "A reproducible search strategy can be illustrated next, but no historical database search will be invented.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science mini-review example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the question imply a comprehensive search that has not occurred?",
+            "Could the answer change if another kind of study were added?"
           ]
         },
         {
           "id": 5,
           "title": "Build a systematic search strategy",
-          "where": "The multilingual science mini-review exemplar is at Stage 5 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 5 decision that belongs to a literature review design.",
+          "where": "The student builds a plausible search plan while separating it from the undocumented selection history.",
+          "changed": "Searching and source selection become procedures for a future review, not descriptions of completed work.",
           "reasoning": [
-            "Start from the research question and the literature review evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Develop terms for multilingual learners or English learners, disciplinary language, science practices and secondary investigation.",
+            "Specify possible source systems and document exact queries, search dates, restrictions and record counts if the searches are later carried out.",
+            "The current repository contains four selected publications but no dated search exports, duplicate records or exclusion log."
           ],
-          "decision": "Build concept blocks and document more than one search route.",
-          "rejected": "One undocumented web search is rejected as an evidence-search record.",
+          "decision": "Demonstrate a search-string structure and identify records a real reviewer must preserve before claiming systematic selection.",
+          "rejected": "Inventing a database hit count, PRISMA flow or zero-exclusion screening outcome would misrepresent the origin of the selected texts.",
           "notebook": {
-            "searchLogic": "Separate the central phenomenon, population/context, and design/evidence terms; connect synonyms with OR and concepts with AND.",
-            "searchLogRule": "Record database/site, date, exact string, filters, and result count."
+            "searchLogic": "('multilingual learners' OR 'English learners' OR bilingual) AND ('science investigation' OR 'science practices' OR 'disciplinary language') AND (secondary OR adolescence); adapt syntax to each database.",
+            "searchLogRule": "A future reviewer would record database, search date, exact query, filters, retrieved identifiers, deduplication and inclusion decisions. None is available as historical evidence for this teaching corpus."
           },
-          "forward": "The search log makes later source-selection and coverage claims auditable.",
+          "forward": "The four known records can be appraised for publication type, population and permitted use without implying systematic screening.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science mini-review example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What evidence of a search would readers need to reproduce it?",
+            "Which useful publications might be excluded by requiring every term to appear in a title?"
           ]
         },
         {
           "id": 6,
           "title": "Evaluate, read, and extract sources",
-          "where": "The multilingual science mini-review exemplar is at Stage 6 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 6 decision that belongs to a literature review design.",
+          "where": "The student extracts publication-level descriptions without treating a report as a single experiment.",
+          "changed": "A four-row matrix is appraised by evidence role, topic scope and limitations, with three domain sources separated from methods guidance.",
           "reasoning": [
-            "Start from the research question and the literature review evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "LR-S01 is a conceptual/research discussion of language within science practices; it is not an intervention-effect study.",
+            "LR-S02 synthesises work on English learners across STEM, while LR-S03 discusses investigation and design in middle and high school science broadly.",
+            "LR-S04 introduces the PRISMA 2020 checklist and flow guidance; it cannot substantiate claims about multilingual classroom participation."
           ],
-          "decision": "Extract comparable information from each included source instead of saving citation-only records.",
-          "rejected": "Peer-reviewed or authoritative status alone is rejected as a substitute for relevance and methodological appraisal.",
+          "decision": "Retain four source records with explicit genres and boundaries; count only LR-S01–LR-S03 as substantive education sources.",
+          "rejected": "Calling all four rows included empirical studies would misrepresent both their methods and their relevance.",
           "notebook": {
-            "sourceExtraction": "Record source type, design/scope, population/context, main claim/finding, limitations, and relevance to this exemplar."
+            "sourceExtraction": "Record source ID, publication genre, intended population/scope, bounded contribution to the conceptual comparison and why it cannot support broader conclusions. Do not invent participants, effect sizes or study-level risk-of-bias assessments."
           },
-          "forward": "Comparable source records allow synthesis instead of annotated-bibliography writing.",
+          "forward": "A meaningful synthesis needs comparisons that respect these differences rather than a numerical vote across four records.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science mini-review example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can each row's contribution be linked to the publication's stated focus?",
+            "Which limitations come from source genre rather than poor research quality?"
           ]
         },
         {
           "id": 7,
           "title": "Synthesize the literature and justify the study",
-          "where": "The multilingual science mini-review exemplar is at Stage 7 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 7 decision that belongs to a literature review design.",
+          "where": "The rationale is developed around what a small mixed-source comparison can teach about scholarly inference.",
+          "changed": "The project foregrounds transparent argument development without manufacturing a research gap.",
           "reasoning": [
-            "Start from the research question and the literature review evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Language is involved in interpreting and communicating science, as described by the 2013 article and 2018 consensus report.",
+            "Investigation and design offer a disciplinary context for those language practices in the 2019 report.",
+            "The selected publications invite complementary questions, but three domain texts cannot identify field-wide consensus or determine how well a particular scaffold works."
           ],
-          "decision": "Use a bounded rationale such as replication, local application, evidence synthesis, or methodological demonstration.",
-          "rejected": "A global 'no research exists' claim is rejected unless an appropriately comprehensive search can defend it.",
+          "decision": "Frame the exercise as practice in bringing differently scoped sources into conversation while recording their limits.",
+          "rejected": "A declaration that earlier reviews ignored multilingual science learning is unsupported by this selected bibliography.",
           "notebook": {
-            "rationale": "The exemplar is justified by the stated teaching/research purpose and verified background, without manufacturing novelty."
+            "rationale": "The teaching purpose is to show how a cautious conceptual comparison can connect language and science investigation while preserving different source populations, genres and claims."
           },
-          "forward": "The literature review must lead to the actual question and claim boundary.",
+          "forward": "The literature prose should develop these relationships rather than simply repeat four source summaries.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science mini-review example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which intellectual connection is defensible across the selected publications?",
+            "Where should the writer stop short of generalising from the small corpus?"
           ]
         },
         {
           "id": 8,
           "title": "Write the literature review",
-          "where": "The multilingual science mini-review exemplar is at Stage 8 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 8 decision that belongs to a literature review design.",
+          "where": "The student writes a connected conceptual account of language and disciplinary investigation.",
+          "changed": "A sequence of summaries becomes a qualified comparison of two education concerns and a contextual investigation framework.",
           "reasoning": [
-            "Start from the research question and the literature review evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Science activities can require students to express relationships, evaluate evidence and communicate explanations.",
+            "The English-learner report draws attention to students' existing resources and access to rigorous STEM opportunities.",
+            "The Grades 6–12 investigation report expands the context to participation in evidence-based scientific and engineering work, without supplying a multilingual-specific estimate."
           ],
-          "decision": "Write the literature section around cross-source claims and differences.",
-          "rejected": "A paragraph-by-paragraph list of source summaries is rejected.",
+          "decision": "Write an integrated account linking disciplinary language with participation, making explicit where the sources discuss different populations or learning opportunities.",
+          "rejected": "Saying that every selected publication demonstrates that bilingual discussion raises test scores would invent a common empirical result.",
           "notebook": {
-            "literatureReviewPlan": "Claim → evidence from more than one source where available → difference/qualification → connection to the present question."
+            "literatureReviewPlan": "Science practices involve both reasoning with evidence and communicating ideas (Lee, Quinn, & Valdés, 2013). The 2018 National Academies report examines opportunities and resources for students identified as English learners. A separate 2019 report situates these practices within Grades 6–12 investigation and design. Reading the three together invites questions about access and expression, although their differing remits do not establish a single intervention effect."
           },
-          "forward": "The Method must now operationalize the same constructs and evidence structure.",
+          "forward": "The method must label the approach accurately as a purposive conceptual mini-review.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science mini-review example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the paragraph progress from disciplinary practices to access and then the setting of investigation?",
+            "Where might a source's broader scope complicate a claim about multilingual learners?"
           ]
         },
         {
           "id": 9,
           "title": "Choose the research design",
-          "where": "The multilingual science mini-review exemplar is at Stage 9 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 9 decision that belongs to a literature review design.",
+          "where": "The design is identified as a bounded narrative/conceptual mini-review rather than a systematic review.",
+          "changed": "The method now matches the actual source material, including the absence of search and screening records.",
           "reasoning": [
-            "Start from the research question and the literature review evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The three education sources were selected for instructional contrast, and the PRISMA guideline is cited as methodological context.",
+            "No database search history, eligibility-screening ledger, independent study appraisal or registered review protocol accompanies the files.",
+            "Consequently, this source set can demonstrate synthesis writing but cannot establish exhaustive coverage, prevalence, or intervention-effect estimates."
           ],
-          "decision": "Use a bounded mini literature-review design with transparent source selection.",
-          "rejected": "Pretending a four-record teaching corpus is an exhaustive systematic review is rejected.",
+          "decision": "Use a purposively selected conceptual mini-review with a separate reporting-guideline record.",
+          "rejected": "Applying a PRISMA label to an undocumented four-item reading set would make a false claim about how evidence was identified and selected.",
           "notebook": {
-            "designType": "Teaching mini literature review",
-            "claimBoundary": "Synthesize recurring principles in this verified mini corpus only."
+            "designType": "Literature review",
+            "claimBoundary": "Three purposively selected education publications support a bounded interpretive comparison. LR-S04 provides methods guidance only. The source set is not a conducted systematic or scoping review."
           },
-          "forward": "Define review concepts and unit of inclusion.",
+          "forward": "The next decision concerns the unit of extraction and how to keep methodology references out of substantive evidence counts.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science mini-review example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the design name what was actually done?",
+            "Which additional records would be needed before claiming a systematic search or review?"
           ]
         },
         {
