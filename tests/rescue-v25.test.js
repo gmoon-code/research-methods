@@ -77,3 +77,23 @@ if(!/different evidence or method/.test(fullRescueModel.fields.rq2.levels["5"].f
 if(!/may differ/.test(fullRescueModel.fields.phenomenon.levels["4"].walkthrough.draft))process.exit(1);
 
 console.log("PASS v2.5 progressive rescue state and logging");
+
+
+// Stage C-X3a2 | fields 26–50 must retain independent pedagogical guidance.
+const stageCX3a2Keys=["rq3","questionType","finalRQ","rqJustification","searchBlock1","searchBlock2","searchBlock3","searchStrings","databases","includeCriteria","excludeCriteria","searchLog","theme1","theme2","theme3","tensions","repeatedLimits","gapType","gapStatement","litToRQ","litIntroPlan","litThemePlan","litTensionPlan","litEndPlan","litDraft"];
+for(const k of stageCX3a2Keys){
+  const field=fullRescueModel.fields[k];
+  if(!field||Object.keys(field.levels).length!==5)process.exit(1);
+  if(!field.levels["1"].prompt||!field.levels["2"].body||!field.levels["3"].strong_example)process.exit(1);
+  if(!field.levels["4"].walkthrough?.thinking?.length||!field.levels["4"].walkthrough?.draft)process.exit(1);
+  if(field.levels["5"].frame.includes("[your project-specific answer]")||field.levels["5"].frame.includes("Why it fits:"))process.exit(1);
+  if(JSON.stringify(field).includes("—"))process.exit(1);
+}
+for(const [level,read] of [["L1",f=>f.levels["1"].prompt],["L3",f=>f.levels["3"].strong_example],["L4",f=>f.levels["4"].walkthrough.draft],["L5",f=>f.levels["5"].frame]]){
+  if(new Set(stageCX3a2Keys.map(k=>read(fullRescueModel.fields[k]))).size!==stageCX3a2Keys.length)process.exit(1);
+}
+if(!/Qualitative/.test(fullRescueModel.fields.questionType.levels["4"].walkthrough.draft))process.exit(1);
+if(!/not recorded as executed/.test(fullRescueModel.fields.searchStrings.levels["4"].walkthrough.draft))process.exit(1);
+if(!/No date, retrieval count or inclusion count recorded/.test(fullRescueModel.fields.searchLog.levels["4"].walkthrough.draft))process.exit(1);
+if(!/fictional/i.test(fullRescueModel.fields.litDraft.levels["4"].walkthrough.draft))process.exit(1);
+if(!/optional/i.test(fullRescueModel.fields.theme3.levels["1"].prompt))process.exit(1);
