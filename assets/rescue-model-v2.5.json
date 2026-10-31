@@ -2995,7 +2995,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The smallest unit providing independent treatment/observation information for the key comparison.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which entity receives an independently assigned treatment, and how do repeated measurements relate to it?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3014,19 +3014,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+            "situation": "Six planting dishes receive two different treatment solutions.",
             "thinking": [
-              "Those are still constructs, not exact data.",
-              "If stress is observed, calling it a manipulated independent variable is misleading.",
-              "I need an operational definition for both constructs and the actual unit."
+              "Treatment is applied separately to dishes.",
+              "Individual seedlings share the assigned treatment within each dish.",
+              "The count of independent treatment replicates comes from dishes."
             ],
-            "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+            "draft": "The dish is the experimental unit. Measurements of several seedlings in the same dish are nested observations."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The [unit] is the independent research/experimental unit because [why it independently receives a condition or contributes one independent case].",
+          "frame": "The experimental unit is [entity assigned to a treatment]. Repeated measures within [unit] remain linked through [identifier]. For observational work, the sampled case is [entity].",
           "path_frames": {
             "qualitative": "The evidence unit is [participant/case/document/observation]. It contributes [what evidence], and repeated excerpts/observations from the same unit remain linked by [ID].",
             "literature_review": "One unit of inclusion is [report/study/distinct sample/dataset]. Multiple reports from the same study will be linked by [study ID/rule].",
