@@ -4894,7 +4894,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The short final answer that closes the paper using evidence already presented.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What short closing answer follows from the actual evidence, and what boundary must remain visible?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -4906,26 +4906,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Higher salinity was associated with lower growth under the studied laboratory conditions; the limited unit replication restricts broader generalization.",
+          "strong_example": "For this hypothetical class, reported sleep duration was associated with attention-task performance [insert verified direction and estimate]. The observational design and local sampling limit causal and wider population conclusions.",
           "avoid": "Do not make the conclusion broader or more certain than the Discussion.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The abstract currently has background and method but no finding.",
+            "situation": "A hypothetical observational study reports an association between reported sleep and an attention-task score in one class.",
             "thinking": [
-              "A reader should know what the study actually observed.",
-              "I can summarize the main estimate/pattern without reproducing calculations.",
-              "The conclusion must stay within the design."
+              "The conclusion should answer the same question as the Results and Discussion.",
+              "The association is local and observational; a causal claim would exceed the evidence.",
+              "The closing can acknowledge uncertainty without introducing an unreported mechanism or new finding."
             ],
-            "draft": "Add the primary result in one concise sentence, followed by a bounded conclusion that matches the observational/experimental design."
+            "draft": "For this hypothetical class, reported sleep duration was associated with attention-task performance [insert verified direction and estimate]. The observational design and local sampling limit causal and wider population conclusions."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Overall, [bounded answer]. The strongest supporting evidence is [central finding]. Interpretation is limited by [main limitation].",
+          "frame": "In [studied setting], [verified main finding] answers [the research question] at [appropriate inference level]. [Most consequential boundary] limits [stronger claim]; the conclusion introduces no new result.",
           "path_frames": {}
         }
       }
@@ -4939,11 +4939,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A stand-alone summary of the complete study, usually written after the paper is stable.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Does the abstract accurately represent your finished purpose, actual method, key result and bounded conclusion?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Include purpose/question, design/method, sample/system, central result, and bounded conclusion.",
+          "body": "Summarise the actual purpose, design, analysed units, central finding and bounded conclusion. Write the abstract after confirming the results, rather than supplying plausible but unverified numbers.",
           "questions": [
             "Could someone tell what was actually found?",
             "Is there any calculation detail that belongs in Results instead?"
@@ -4951,26 +4951,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Purpose… Method… Main result with summarized estimate/pattern… Conclusion within design limits.",
+          "strong_example": "Abstract template pending actual evidence: This study examined [specific question] in [actual setting and analysed sample] using [observational or other design]. [Verified principal result with estimate or pattern]. The findings [bounded conclusion], subject to [main limitation].",
           "avoid": "Do not write an abstract with only background and no result.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The abstract currently has background and method but no finding.",
+            "situation": "A student's draft abstract names the question and observational design but omits the analysis sample and findings.",
             "thinking": [
-              "A reader should know what the study actually observed.",
-              "I can summarize the main estimate/pattern without reproducing calculations.",
-              "The conclusion must stay within the design."
+              "State the study purpose and which participants or records were actually analysed.",
+              "Summarise the design and the main verified result with the most informative estimate or pattern.",
+              "Finish with the warranted conclusion and limitation, without inserting figures that have not been calculated."
             ],
-            "draft": "Add the primary result in one concise sentence, followed by a bounded conclusion that matches the observational/experimental design."
+            "draft": "Abstract template pending actual evidence: This study examined [specific question] in [actual setting and analysed sample] using [observational or other design]. [Verified principal result with estimate or pattern]. The findings [bounded conclusion], subject to [main limitation]."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Purpose/RQ: [ ]. Method/design/sample: [ ]. Main result/finding: [ ]. Bounded conclusion: [ ].",
+          "frame": "Write one self-contained account of [purpose/question], [actual design and analysed cases], [checked primary finding with uncertainty if suitable], and [conclusion consistent with the evidence and scope].",
           "path_frames": {}
         }
       }
@@ -4984,7 +4984,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A specific, accurate title that helps a reader know what was studied.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Does the proposed title name the phenomenon and context accurately without implying a result or causal design you did not establish?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -4996,26 +4996,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Reported Sleep Duration and Biology Quiz Scores in a Secondary Classroom: An Observational Study",
+          "strong_example": "Reported Sleep Duration and Attention-Task Performance in One Secondary Classroom: An Observational Study.",
           "avoid": "Avoid sensational or causal titles for observational evidence.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The abstract currently has background and method but no finding.",
+            "situation": "An observational classroom project is tentatively titled 'How More Sleep Improves Every Student's Grades'.",
             "thinking": [
-              "A reader should know what the study actually observed.",
-              "I can summarize the main estimate/pattern without reproducing calculations.",
-              "The conclusion must stay within the design."
+              "The study measured sleep and task outcomes but did not assign sleep.",
+              "The word 'improves' wrongly implies a causal effect; 'every' overstates the sample.",
+              "A focused title can identify the observed constructs and the local study design."
             ],
-            "draft": "Add the primary result in one concise sentence, followed by a bounded conclusion that matches the observational/experimental design."
+            "draft": "Reported Sleep Duration and Attention-Task Performance in One Secondary Classroom: An Observational Study."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "[Central phenomenon/variables] in [useful population/context]: [design descriptor if useful].",
+          "frame": "Use [specific measured phenomenon or relationship] and [relevant study context], adding [accurate design descriptor] only if it improves clarity. Check every word for an unsupported effect, scope or result claim.",
           "path_frames": {}
         }
       }
@@ -5029,11 +5029,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A small set of searchable terms that describe the central topic, variables, population/context, or method.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which precise terms would help a reader locate the work without exaggerating its topic or method?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Choose commonly used research terms, usually several concise phrases.",
+          "body": "Choose precise, commonly used research terms that reflect the central concepts, setting and method. Follow the target venue's required number and format rather than imposing a universal count.",
           "questions": [
             "Would a researcher search this phrase to find my paper?",
             "Are these terms more informative than words already obvious from 'research' or 'study'?"
@@ -5041,26 +5041,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "retrieval practice; biology education; delayed recall; secondary students",
+          "strong_example": "Possible keywords for the hypothetical study: sleep duration; attention performance; secondary education; observational research. Check target venue requirements.",
           "avoid": "Do not use full sentences or extremely general terms such as science, data, and research.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The abstract currently has background and method but no finding.",
+            "situation": "A student's title already identifies an observational sleep study in a secondary classroom.",
             "thinking": [
-              "A reader should know what the study actually observed.",
-              "I can summarize the main estimate/pattern without reproducing calculations.",
-              "The conclusion must stay within the design."
+              "Choose discipline-recognizable terms for the measured constructs and setting.",
+              "Avoid generic words such as 'research' or claims of an intervention that never occurred.",
+              "Use the number and capitalization required by the target journal or assignment."
             ],
-            "draft": "Add the primary result in one concise sentence, followed by a bounded conclusion that matches the observational/experimental design."
+            "draft": "Possible keywords for the hypothetical study: sleep duration; attention performance; secondary education; observational research. Check target venue requirements."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Choose 3–6 searchable terms that name [central phenomenon], [population/context], and [method/construct] without repeating only words from the title.",
+          "frame": "Select [required number] searchable phrases, including [principal construct], [outcome or phenomenon], and [population or method where useful]. Check [venue or assignment rules] and remove [redundant or misleading term].",
           "path_frames": {}
         }
       }
