@@ -5223,27 +5223,27 @@
       "search": {
         "stage": 5,
         "title": "Search log — what you are doing",
-        "body": "Record exactly where and how you searched. A search log lets you distinguish 'I did not find it' from 'it probably does not exist.'",
+        "body": "Record a search only after you have run it. Keep its date, database, exact submitted query, search fields, filters and reported results. Proposed strings belong in the plan, and a quick unsuccessful search cannot establish that no relevant research exists.",
         "terms": [
           "boolean search",
           "literature gap"
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "The question concerns retrieval practice in biology learning.",
+          "situation": "A student has proposed a retrieval-practice search in ERIC but has not yet submitted it.",
           "thinking": [
-            "My main concepts are retrieval practice, biology/science learning, and delayed retention.",
-            "I need synonyms within each concept block.",
-            "OR connects synonyms; AND connects different concepts."
+            "The concept terms and Boolean string can be prepared before using the database.",
+            "Without a completed search I cannot supply a date or result count.",
+            "After execution I will copy the exact submitted string, platform settings and actual result count into the log."
           ],
-          "draft": "(\"retrieval practice\" OR \"practice testing\") AND (biology OR science) AND (retention OR recall)"
+          "draft": "Proposed only: (\"retrieval practice\" OR \"practice testing\") AND (biology OR \"science education\"). Search date, filters and retrieved count remain pending until this exact query is run."
         },
-        "next_prompt": "Write the next literature decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Which search will you actually run next, in which database, and what exact settings will you record? Separate planned syntax from an executed search."
       },
       "sources": {
         "stage": 6,
         "title": "Source record — what each paper contributes",
-        "body": "Capture enough information to compare studies later: design, population/context, variables/constructs, measures, findings, limitations, and source quality.",
+        "body": "Record what each source actually contributes. Keep its identifier, question, design, population, measures, results and limits. Verify the paper itself before citing a statement; peer review alone does not establish relevance or measurement validity.",
         "terms": [
           "TRAPP",
           "observational study",
@@ -5253,20 +5253,20 @@
           "sourceType"
         ],
         "walkthrough": {
-          "situation": "A paper reports a strong result but uses one university course and self-reported outcomes.",
+          "situation": "A student reads an observational survey paper about study habits and memory scores.",
           "thinking": [
-            "The finding may still be useful, but I need to record the design and measure before citing it broadly.",
-            "Peer reviewed does not automatically mean the evidence fits my claim.",
-            "I should separate the observed result from the authors' interpretation."
+            "First record the source and its actual measures without reinterpreting the result.",
+            "The design may support a reported association but cannot by itself isolate a causal effect.",
+            "Note the sample and measurement limits next to the findings so later synthesis stays faithful."
           ],
-          "draft": "Include with quality note: limited context and self-report measurement; use only for claims matching that scope."
+          "draft": "Source record template: [verified citation and ID]; [design and sampling]; [exact measured variables]; [reported finding and page/table]; [limits on interpretation]. No findings are entered without checking the paper."
         },
-        "next_prompt": "Write the next literature decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "For the source you have open, which verified design, measure and result belong in its record, and where in the paper can each be checked?"
       },
       "screen": {
         "stage": 6,
         "title": "Screening — apply rules consistently",
-        "body": "Include or exclude sources using prespecified relevance/design criteria. Do not keep a paper because its result agrees with your expectation.",
+        "body": "Apply inclusion and exclusion criteria consistently, regardless of whether a study supports your expectation. Record a distinct decision and reason for each report, and separate uncertain abstracts from full-text decisions.",
         "terms": [
           "sampling method",
           "literature gap"
@@ -5275,35 +5275,35 @@
           "screeningStatus"
         ],
         "walkthrough": {
-          "situation": "A paper reports a strong result but uses one university course and self-reported outcomes.",
+          "situation": "A hypothetical screening protocol requires empirical research with a delayed learning outcome. A commentary argues that retrieval practice works.",
           "thinking": [
-            "The finding may still be useful, but I need to record the design and measure before citing it broadly.",
-            "Peer reviewed does not automatically mean the evidence fits my claim.",
-            "I should separate the observed result from the authors' interpretation."
+            "A commentary can be relevant background but does not meet the defined empirical-evidence criterion.",
+            "The reason for exclusion is source type, not agreement or disagreement with the argument.",
+            "Record the report ID and screening stage; if eligibility is unclear, obtain further information rather than guessing."
           ],
-          "draft": "Include with quality note: limited context and self-report measurement; use only for claims matching that scope."
+          "draft": "Hypothetical screening decision: exclude report S-02 at the appropriate screening stage because it has no original empirical data under the predefined criteria. Record its exact source ID and reason; do not count it as an included empirical study."
         },
-        "next_prompt": "Write the next literature decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Which eligibility rule determines this source's include, exclude or uncertain status, and what evidence from the record supports the decision?"
       },
       "study": {
         "stage": 7,
         "title": "Study matrix — compare like with like",
-        "body": "Read across rows to compare populations, methods, measures, and findings. Differences in methods can explain apparent disagreement.",
+        "body": "Use the study matrix to compare the same research dimensions across sources. Record actual participant or system contexts, designs, operational measures and results before deciding whether apparent disagreements are substantively comparable.",
         "terms": [
           "synthesis",
           "measurement validity"
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "Three studies mostly agree, but one reports a smaller effect.",
+          "situation": "Two fictional studies both discuss 'retention', but one uses immediate recognition and the other delayed free recall.",
           "thinking": [
-            "I should not label the fourth study an outlier and ignore it.",
-            "The studies use different feedback timing and retention intervals.",
-            "The disagreement may reveal a boundary condition instead of a simple contradiction."
+            "The shared word 'retention' can hide different outcome definitions.",
+            "Record the assessment interval and scoring method for each study in separate matrix columns.",
+            "A direct comparison of effect size may be inappropriate until the differences are examined."
           ],
-          "draft": "Theme: retrieval practice generally supports delayed retention, with effect magnitude varying across feedback and retention conditions."
+          "draft": "Fictional matrix comparison: study A measures next-day recognition; study B measures free recall after a week. The matrix records distinct outcome definitions, so their estimates cannot simply be compared as interchangeable retention measures."
         },
-        "next_prompt": "Write the next literature decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Which two sources or study records should be compared next, and which common matrix dimensions will show whether their outcomes are genuinely comparable?"
       },
       "synth": {
         "stage": 7,
