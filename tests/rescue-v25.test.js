@@ -236,4 +236,42 @@ if(!/results remain pending/.test(fullRescueModel.labs.writing.closing.walkthrou
 if(!/Citation check C01/.test(fullRescueModel.labs.writing.citations.walkthrough.draft))process.exit(1);
 if(!/without interactional records/.test(fullRescueModel.labs.writing.audit.walkthrough.draft))process.exit(1);
 
+// Stage C-X3c | cross-path field help, curriculum and coach requirements.
+const pathwayConfig=require("../assets/pathway-model-v2.3.json");
+const coachConfig=require("../assets/path-coach-model-v2.4.json");
+for(const [path,stages] of Object.entries(coachConfig.required)){
+ for(const [stage,keys] of Object.entries(stages)){
+  for(const key of keys){
+   if(!fullRescueModel.fields[key]||String(fullRescueModel.fields[key].stage)!==stage)process.exit(1);
+   if(pathwayConfig.field_modes[path]?.[key]==="hide")process.exit(1);
+  }
+ }
+}
+for(const [path,stages] of Object.entries(coachConfig.recommended)){
+ for(const [stage,keys] of Object.entries(stages)){
+  for(const key of keys){
+   if(!fullRescueModel.fields[key]||String(fullRescueModel.fields[key].stage)!==stage)process.exit(1);
+   if(pathwayConfig.field_modes[path]?.[key]==="hide")process.exit(1);
+  }
+ }
+}
+for(const [lab,tabs] of Object.entries(fullRescueModel.labs)){
+ for(const [key,cfg] of Object.entries(tabs)){
+  for(const term of cfg.terms||[])if(!studyGlossary[term.toLowerCase()])process.exit(1);
+  for(const choice of cfg.decision_keys||[])if(!studyChoices[choice]?.options)process.exit(1);
+  if(!(cfg.decision_keys||[]).length&&!cfg.compare_prompt)process.exit(1);
+ }
+}
+if(!/qualitative|review/i.test(fullRescueModel.fields.analysisChoice.levels["1"].prompt))process.exit(1);
+if(!/qualitative|review/i.test(fullRescueModel.fields.analysisChoice.levels["2"].body))process.exit(1);
+if(!/underlying studies/i.test(fullRescueModel.fields.experimentalUnit.levels["2"].body))process.exit(1);
+if(!/qualitative/i.test(fullRescueModel.fields.resultsDraft.levels["2"].body))process.exit(1);
+if(!/qualitative/i.test(fullRescueModel.fields.unexpected.levels["2"].body))process.exit(1);
+if(!/proposal/i.test(fullRescueModel.fields.abstractDraft.levels["2"].body))process.exit(1);
+if(!/mixed-methods/i.test(fullRescueModel.fields.primaryEstimand.levels["2"].body))process.exit(1);
+const stageGuide=require("fs").readFileSync(require("path").join(__dirname,"../assets/curriculum.js"),"utf8");
+if(!stageGuide.includes('nav:"Analysis approach"'))process.exit(1);
+if(!stageGuide.includes("for qualitative or review work, I specified the interpretive or synthesis purpose"))process.exit(1);
+if(!stageGuide.includes("Every key result is traceable to records, source passages or an analysis output."))process.exit(1);
+
 console.log("PASS v2.5 progressive rescue state and logging");
