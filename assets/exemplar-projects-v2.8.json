@@ -1844,22 +1844,22 @@
           "id": "QL-S01",
           "citation": "Lee, O., Quinn, H., & Valdés, G. (2013). Science and language for English language learners in relation to Next Generation Science Standards and with implications for Common Core State Standards for English language arts and mathematics. Educational Researcher, 42(4), 223–233. https://doi.org/10.3102/0013189X13480524",
           "verified": true,
-          "use": "Supports the premise that science practices create language demands and opportunities for multilingual learners.",
-          "boundary": "The article does not supply the synthetic students' experiences."
+          "use": "Explains language demands and opportunities within science and engineering practices, offering conceptual context for examining how students describe disciplinary explanations.",
+          "boundary": "The article focuses on English language learners and science-language practices; the teaching sample uses the wider label multilingual without documented learner characteristics, and its eight invented statements are not empirical evidence from the article."
         },
         {
           "id": "QL-S02",
           "citation": "National Academies of Sciences, Engineering, and Medicine. (2018). English learners in STEM subjects: Transforming classrooms, schools, and lives. The National Academies Press. https://doi.org/10.17226/25182",
           "verified": true,
-          "use": "Provides evidence-based background on multilingual learners' STEM participation, language, and opportunity.",
-          "boundary": "Consensus guidance does not predetermine themes in a local interview study."
+          "use": "Provides a consensus research synthesis on English learners' participation, linguistic resources and opportunities in STEM education.",
+          "boundary": "English-learner classifications are context-specific and are not synonymous with all multilingual students. The report neither supplies nor validates the fabricated interview excerpts or their themes."
         },
         {
           "id": "QL-S03",
           "citation": "Braun, V., & Clarke, V. (2006). Using thematic analysis in psychology. Qualitative Research in Psychology, 3(2), 77–101. https://doi.org/10.1191/1478088706qp063oa",
           "verified": true,
-          "use": "Provides a methodological reference for thematic analysis.",
-          "boundary": "The exemplar uses a simplified teaching version and does not claim that one checklist guarantees qualitative validity."
+          "use": "Introduces thematic analysis as a flexible qualitative approach and discusses methodological choices and pitfalls.",
+          "boundary": "The exemplar models only an excerpt-to-code-to-candidate-group exercise. There are no full transcripts, reflexive analytic record, actual participants or empirical themes established by this citation."
         }
       ],
       "stages": [
