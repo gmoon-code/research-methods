@@ -2932,194 +2932,197 @@
         {
           "id": 10,
           "title": "Define constructs, variables, or evidence units",
-          "where": "The synthetic effect synthesis exemplar is at Stage 10 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 10 decision that belongs to a meta-analysis design.",
+          "where": "The student defines the synthetic effect as the unit of quantitative synthesis.",
+          "changed": "The data dictionary distinguishes each study ID, its stored g value and the uncertainty supplied as a standard error.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The CSV has the exact fields study_id, standardized_mean_difference_g and standard_error, with T01–T08 unique.",
+            "A value labelled g implies a small-sample corrected standardised mean difference, but no raw group statistics are provided to verify its computation.",
+            "The estimates are treated as independent for this particular model illustration; no actual participant overlap, multiple outcomes or study design can be checked."
           ],
-          "decision": "Treat one synthetic independent study effect as the unit and standardized mean difference g as the effect metric.",
-          "rejected": "Treating multiple outcomes from one sample as automatically independent is rejected.",
+          "decision": "Treat each g/SE pair as an assumed independent synthetic effect and avoid claiming to have verified primary-study origins.",
+          "rejected": "Treating the eight effects as Hedges' g values calculated from confirmed experimental samples would invent underlying records.",
           "notebook": {
-            "effectMetric": "Standardized mean difference g.",
-            "unit": "One independent synthetic study effect."
+            "effectMetric": "Precomputed synthetic Hedges-type standardised mean difference labelled g; original means, standard deviations and sample sizes are absent.",
+            "unit": "One putatively independent hypothetical effect estimate per T01–T08; the study identifier is a teaching label, not evidence of a real study.",
+            "uncertainty": "Each row has a positive synthetic standard_error whose square is the within-effect variance for weighting."
           },
-          "forward": "Search/extraction rules must preserve effect uncertainty.",
+          "forward": "A full review would establish compatible contrasts and address dependence before applying this extraction structure.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can the individual g estimates be reconstructed from their source data?",
+            "Could two reported effects share participants even when they have different identifiers?"
           ]
         },
         {
           "id": 11,
           "title": "Plan sampling, measurement, validity, and ethics",
-          "where": "The synthetic effect synthesis exemplar is at Stage 11 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 11 decision that belongs to a meta-analysis design.",
+          "where": "The analysis plan confronts the missing empirical details that would normally determine effect eligibility.",
+          "changed": "The sample description separates eight fabricated effects from eligibility rules and risk-of-bias procedures for actual studies.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "There are no real study populations, treatment assignments, participant counts or assessment instruments in the file.",
+            "A genuine review would specify comparable intervention, comparator, outcome and follow-up definitions before extracting any effect.",
+            "Study overlap, selective outcomes and risk of bias require primary reports; methodological citations cannot establish these characteristics for synthetic T01–T08."
           ],
-          "decision": "Specify eligible design/effect information and extract standard errors with each effect.",
-          "rejected": "Collecting p-values without effect estimates is rejected.",
+          "decision": "Use all eight invented g/SE pairs as supplied for computation, without asserting a screened or independent empirical study sample.",
+          "rejected": "Describing positive effect estimates as eight successfully replicated benefits would overstate what fictional inputs can demonstrate.",
           "notebook": {
-            "sample": "8 synthetic independent study effects.",
-            "quality": "Teaching extraction includes effect estimate, SE, study ID; real review would add design/risk-of-bias appraisal."
+            "sample": "Eight invented rows, T01–T08, each with one effect estimate and one standard error. No primary-study sample sizes or consent/ethics records exist.",
+            "quality": "A real review would check effect direction, comparators, study overlap, outcome definitions, study-level bias and reporting practices before synthesis."
           },
-          "forward": "Lock effect extraction and dependence rules.",
+          "forward": "The method should preserve the original input file and specify the estimator and its limitations.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What information is required to judge whether studies should be pooled?",
+            "Would restricting a review to reported significant effects distort the synthesis?"
           ]
         },
         {
           "id": 12,
           "title": "Write the method and lock the data plan",
-          "where": "The synthetic effect synthesis exemplar is at Stage 12 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 12 decision that belongs to a meta-analysis design.",
+          "where": "The mathematical method is written as a reproducible sequence based on the original eight-row CSV.",
+          "changed": "The weighting and DerSimonian–Laird variance estimate are specified rather than reduced to a generic 'random effects' label.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Calculate each variance vᵢ = SEᵢ² and fixed-effect weight 1/vᵢ to form the weighted preliminary mean and Cochran's Q.",
+            "Estimate τ² = max(0, (Q − (k − 1))/C), where C is the sum of fixed weights minus the squared-weight sum divided by the total weight.",
+            "Use random-effects weights 1/(vᵢ + τ²), calculate the weighted mean and its conventional standard error, then give an approximate normal 95% interval."
           ],
-          "decision": "Use one row per independent effect and prespecify model/heterogeneity calculations.",
-          "rejected": "Duplicating one study outcome into several independent rows is rejected.",
+          "decision": "Reconstruct the exact DerSimonian–Laird moment estimator and conditional normal-approximation confidence interval from the eight supplied numbers.",
+          "rejected": "An arithmetic mean of the eight g values would ignore the differing standard errors and would not reproduce the specified model.",
           "notebook": {
-            "rowUnit": "One independent effect estimate.",
-            "columns": "study_id, g, standard_error.",
-            "analysisIntent": "Random-effects pooled g plus heterogeneity."
+            "rowUnit": "One T01–T08 synthetic effect with fields study_id, standardized_mean_difference_g, standard_error.",
+            "columns": "study_id; standardized_mean_difference_g; standard_error. Compute within-effect variance from the squared standard error.",
+            "analysisIntent": "Inverse-variance fixed-effect reference for Q; moment estimate of τ²; random-effects inverse-variance pooled g; normal-approximation interval; I² = max(0, (Q − df)/Q) × 100%."
           },
-          "forward": "Validate extracted effects before pooling.",
+          "forward": "Check for missing or duplicated rows, invalid standard errors, effect-scale inconsistencies and the sign convention before calculating results.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Why does the algorithm first calculate fixed-effect weights even when reporting a random-effects pooled value?",
+            "Which assumptions are left out of the simple confidence interval?"
           ]
         },
         {
           "id": 13,
-          "title": "Collect or organize evidence",
-          "where": "The synthetic effect synthesis exemplar is at Stage 13 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 13 decision that belongs to a meta-analysis design.",
+          "title": "Collect or organise evidence",
+          "where": "The synthetic extraction is inspected before pooling all eight numeric effects.",
+          "changed": "The source checks are tied to the real CSV fields, value ranges and assumed direction of an effect.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "There are eight unique study identifiers and eight strictly positive standard errors, ranging from 0.11 to 0.19.",
+            "The stored g values range from 0.17 to 0.64 and all have the same positive sign, as constructed for this illustration.",
+            "No comparator descriptions or original effect calculations are available, so comparable direction and independence are modelling assumptions rather than verified study properties."
           ],
-          "decision": "Check effect signs, SE values, duplicate IDs, and forest-plot inputs.",
-          "rejected": "Pooling effects before verifying direction/scale is rejected.",
+          "decision": "Retain all eight rows, preserve the exact supplied effect sizes and standard errors, and clearly identify the unverified interpretation of their positive signs.",
+          "rejected": "Treating positive signs as independent evidence that learners benefited would mistake fabricated numbers for real outcomes.",
           "notebook": {
-            "dataSummary": "8 synthetic effects. Random-effects pooled g = 0.37, 95% CI [0.26, 0.47], I² = 13.3%."
+            "dataSummary": "Eight synthetic g estimates, 0.17–0.64, and positive standard errors, 0.11–0.19. Every ID is distinct. The extracted effect values are sufficient to reproduce the stated DL calculation, without validating the original g computation."
           },
-          "forward": "Model choice now depends on the estimand and heterogeneity assumptions.",
+          "forward": "The model can now be applied with explicit assumptions about between-effect variation and normal-approximation uncertainty.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Do unique study labels establish independent samples?",
+            "What is the exact sign convention of the hypothetical intervention contrast?"
           ]
         },
         {
           "id": 14,
           "title": "Choose and justify the analysis",
-          "where": "The synthetic effect synthesis exemplar is at Stage 14 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 14 decision that belongs to a meta-analysis design.",
+          "where": "The student selects and executes an explicit inverse-variance random-effects calculation.",
+          "changed": "A generic request for heterogeneity statistics becomes a traceable model calculation with known assumptions.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The fixed-effect reference mean is approximately 0.3656 and Cochran's Q is approximately 8.0729 with seven degrees of freedom.",
+            "DerSimonian–Laird estimates τ² = 0.003087, resulting in random-effects weights 1/(SE² + τ²).",
+            "The pooled estimate is approximately 0.36876 with a conventional normal-approximation standard error of 0.05386; this interval does not fully account for uncertainty in estimating τ² from eight inputs."
           ],
-          "decision": "Use a random-effects teaching model and report pooled effect, CI, tau², Q, and I².",
-          "rejected": "Averaging p-values is rejected.",
+          "decision": "Report the DL pooled estimate and conditional normal interval while describing τ², Q and I² as properties of the synthetic calculation.",
+          "rejected": "Choosing the random-effects model after finding a low I², then declaring heterogeneity negligible, would misstate both model choice and statistic interpretation.",
           "notebook": {
-            "analysisChoice": "Random-effects pooling of synthetic g values with heterogeneity summary."
+            "analysisChoice": "DerSimonian–Laird random-effects model with τ² estimated by the method of moments, inverse-variance weights 1/(SEᵢ²+τ²), and approximate 95% interval g ± 1.96×SE. The small-k normal interval is illustrative, not a validated real-study precision claim."
           },
-          "forward": "Results must keep study/effect counts explicit.",
+          "forward": "The Results must report inputs and outputs without translating a fabricated g into real educational improvement.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Could another estimator give a different heterogeneity estimate?",
+            "What does the normal approximation leave out when k is small?"
           ]
         },
         {
           "id": 15,
           "title": "Write the Results or findings",
-          "where": "The synthetic effect synthesis exemplar is at Stage 15 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 15 decision that belongs to a meta-analysis design.",
+          "where": "The Results give the exact numerical summary and the limits of its significance for real research.",
+          "changed": "The headline result is linked to the original input table and described as a synthetic model output.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The eight g values produce random-effects pooled g = 0.3687617, with a normal-approximation 95% interval from approximately 0.2632 to 0.4743.",
+            "Cochran's Q = 8.0729 on seven degrees of freedom, the DL τ² estimate is 0.003087 and I² is approximately 13.29%.",
+            "These numbers are internally reproducible but cannot estimate the effectiveness of any observed learning intervention because the primary studies do not exist."
           ],
-          "decision": "Report the pooled synthetic effect and heterogeneity without treating I² as a cause.",
-          "rejected": "'I² explains why studies differ' is rejected.",
+          "decision": "Present the pooled g, conditional interval, between-effect variance and inconsistency statistic with a prominent synthetic-data statement.",
+          "rejected": "An apparently positive 95% interval is not evidence that an actual teaching intervention works.",
           "notebook": {
-            "result1": "8 synthetic effects. Random-effects pooled g = 0.37, 95% CI [0.26, 0.47], I² = 13.3%."
+            "result1": "From eight fictitious g/SE pairs, the DerSimonian–Laird pooled g is 0.3688, with normal-approximation 95% CI [0.2632, 0.4743]. Q(7) = 8.0729, τ² = 0.00309 and I² = 13.29%. Every result is synthetic."
           },
-          "forward": "Discussion addresses synthetic nature, model sensitivity, and study-quality limits.",
+          "forward": "The discussion should consider model and selection limits rather than recommending a classroom intervention.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can every value be recalculated from the supplied CSV?",
+            "Would a reader understand that the reported confidence interval has no real-study evidential status?"
           ]
         },
         {
           "id": 16,
           "title": "Write the Discussion and limitations",
-          "where": "The synthetic effect synthesis exemplar is at Stage 16 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 16 decision that belongs to a meta-analysis design.",
+          "where": "The statistical summary is considered alongside the uncertainty in its assumptions and origins.",
+          "changed": "The discussion explains the distinction between model-generated precision, heterogeneity and an empirically justified effect estimate.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "With eight hypothetical effects, the DL moment estimator and the normal confidence interval may behave differently from alternative estimators or small-sample methods.",
+            "I² describes a proportion of the observed dispersion statistic attributed to heterogeneity under a model; its small value does not prove identical effects or explain the variation.",
+            "The file provides neither searched-and-screened studies nor means, variances and sample sizes, so publication bias, study quality and dependence cannot be assessed."
           ],
-          "decision": "Interpret the pooled result as a mechanics demonstration, not a real intervention estimate.",
-          "rejected": "Generalizing the synthetic pooled effect to learners is rejected.",
+          "decision": "Use the calculated values to teach model sensitivity and transparent interpretation, without any general statement about students or interventions.",
+          "rejected": "Calling I² = 13.29% proof of consistent educational benefits would mistake a descriptive heterogeneity measure for causal and evidential validation.",
           "notebook": {
-            "limitations": "All primary effects synthetic; only eight effects; simplified model; no real risk-of-bias assessment."
+            "limitations": "All g/SE pairs are invented; no empirical study designs, raw effect data, independence audit, risk-of-bias assessment, search process or publication-bias evidence exists. k = 8 is small, and the conventional DL normal interval does not incorporate all τ² uncertainty."
           },
-          "forward": "Closing sections keep synthetic status visible.",
+          "forward": "Closing material must identify the exercise as a model demonstration, including within its abstract.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Could the apparent precision result from an unrealistic data-generation choice?",
+            "Does a low I² tell readers why study effects might differ?"
           ]
         },
         {
           "id": 17,
           "title": "Write the conclusion, abstract, title, and keywords",
-          "where": "The synthetic effect synthesis exemplar is at Stage 17 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 17 decision that belongs to a meta-analysis design.",
+          "where": "The conclusion and abstract are drafted to make statistical meaning understandable without overstating evidence.",
+          "changed": "The example identifies a specific method and every synthetic result while excluding claims about actual students.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The title refers to eight invented effects and a worked random-effects calculation.",
+            "The abstract names the supplied g and standard-error inputs, pooled output and approximate interval.",
+            "The conclusion explains why mathematically reproducible model outputs cannot substitute for verified primary studies or review selection."
           ],
-          "decision": "Title/abstract say synthetic meta-analysis and identify k.",
-          "rejected": "A title implying a real evidence synthesis is rejected.",
+          "decision": "Write an abstract that gives the arithmetic and limitations in proportion to one another.",
+          "rejected": "Eight studies prove a learning intervention is effective would invent empirical research and misrepresent inference.",
           "notebook": {
-            "title": "Synthetic Meta-Analysis Exemplar: Pooling Eight Hypothetical Learning-Intervention Effects"
+            "title": "Synthetic Meta-Analysis Exemplar of Eight Hypothetical Intervention Effects",
+            "abstractDraft": "This teaching exemplar reconstructs DerSimonian–Laird random-effects pooling from eight fictitious standardised mean differences and their standard errors. The synthetic values yield pooled g = 0.3688, with a conventional normal-approximation 95% interval from 0.2632 to 0.4743. The heterogeneity calculations give Q(7) = 8.0729, τ² = 0.00309 and I² = 13.29%. The underlying primary-study data, independence, study selection and risk of bias cannot be assessed because no real intervention reports are supplied. The interval illustrates one modelling procedure and is not an empirical estimate of learning-intervention effectiveness.",
+            "keywords": "meta-analysis; DerSimonian–Laird; standardised mean difference; heterogeneity; synthetic evidence"
           },
-          "forward": "Final audit verifies calculations and study independence.",
+          "forward": "The final audit compares every derived statistic and all three references against source documents.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the abstract disclose that the primary studies are fictional before discussing outcomes?",
+            "Could the title be confused with an actual evidence synthesis?"
           ]
         },
         {
           "id": 18,
           "title": "Citations, references, and final alignment audit",
-          "where": "The synthetic effect synthesis exemplar is at Stage 18 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 18 decision that belongs to a meta-analysis design.",
+          "where": "The final audit links every data value and model output to reproducible calculations and genuine methodology sources.",
+          "changed": "Statistical verification is distinguished from what cannot be checked about hypothetical study provenance.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The eight effect rows and the JSON model summary reproduce Q, τ², the pooled estimate and I², with no added or omitted input effect.",
+            "Borenstein et al. (2010) support distinguishing pooling models, Higgins et al. (2003) address I², and Page et al. (2021) concern reporting guidance.",
+            "No primary interventions, historical systematic search, overlapping-sample audit or individual-effect source data exist in the project, and the final paper must say so."
           ],
-          "decision": "Trace every pooled quantity to the extraction table and model output.",
-          "rejected": "Inventing effect-size sources or hiding synthetic status is rejected.",
+          "decision": "Retain the arithmetically verified synthetic results and explicitly record every inferential or empirical uncertainty.",
+          "rejected": "Representing methodological references as the sources of the fictional effect estimates would manufacture evidence.",
           "notebook": {
-            "audit": "k=8 synthetic effects; real methods references; random-effects output; heterogeneity reported; no real efficacy claim."
+            "audit": "Eight unique T01–T08 g/SE pairs; DL Q ≈ 8.072862, τ² ≈ 0.00308714, pooled g ≈ 0.36876172 and I² ≈ 13.2897%; normal-approximation 95% interval ≈ [0.2632, 0.4743]. All values are teaching calculations with no real primary-study evidence."
           },
-          "forward": "The exemplar is complete.",
+          "forward": "Repository-level exemplar verification can close this stage; live application publication parity remains a separate task.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Do the summary values match the formulas applied to the actual CSV?",
+            "Is every citation limited to claims it can genuinely support?"
           ]
         }
       ],
