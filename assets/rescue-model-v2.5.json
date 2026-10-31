@@ -1708,11 +1708,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A cross-study pattern or idea supported by more than one source when possible.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What is the first recurring finding or idea you can trace to specific sources, and how far does that pattern extend?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State the pattern, then identify which sources support, complicate, or contradict it.",
+          "body": "Identify a pattern in the sources you actually reviewed. Name the supporting studies and compare their measures, contexts and qualifications before summarizing the finding.",
           "questions": [
             "Which sources support this?",
             "Which source does not fit cleanly?"
@@ -1720,26 +1720,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Retrieval-based practice is generally associated with stronger delayed retention across several tasks.",
+          "strong_example": "Illustrative only: if studies A and B report delayed-recall outcomes in comparable groups, group their findings under a theme about the timing of learning assessments, citing both.",
           "avoid": "Do not make a theme that is simply one article title.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "Three studies mostly agree, but one reports a smaller effect.",
+            "situation": "In a fictional source set, studies A and B assess recall several days after learning. They differ in topic and participant age.",
             "thinking": [
-              "I should not label the fourth study an outlier and ignore it.",
-              "The studies use different feedback timing and retention intervals.",
-              "The disagreement may reveal a boundary condition instead of a simple contradiction."
+              "First check the results in each paper rather than assuming they agree.",
+              "Even if their findings align, different participant groups may narrow what can be concluded.",
+              "A theme should point to each supporting source and preserve relevant distinctions."
             ],
-            "draft": "Theme: retrieval practice generally supports delayed retention, with effect magnitude varying across feedback and retention conditions."
+            "draft": "Possible theme for the fictional sources: delayed recall is assessed across studies A and B, but their different student groups and tasks limit direct comparison of the reported outcomes. Replace A and B with checked citations."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Across [source IDs/studies], the evidence suggests [cross-study pattern], although [important qualification/conflict].",
+          "frame": "Theme 1 concerns [specific pattern]. [Verified sources] support [precise shared finding or approach], while [source difference] limits [interpretation or comparison].",
           "path_frames": {}
         }
       }
@@ -1753,11 +1753,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A second cross-study pattern that helps organize the literature.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What second evidence-based pattern adds an important dimension beyond Theme 1, without repeating its conclusion?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State a pattern distinct from Theme 1 and link it to source evidence.",
+          "body": "Look for a distinct finding, explanatory process or methodological pattern. Specify which sources support it, and keep relationships between study conditions and results conditional on the evidence.",
           "questions": [
             "Which studies contribute?",
             "Does this overlap too much with Theme 1?"
@@ -1765,26 +1765,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Feedback timing appears to change the size of retrieval-practice benefits.",
+          "strong_example": "Illustrative only: studies that describe when learners receive feedback could form a separate theme about feedback procedures, if those procedures are documented in your sources.",
           "avoid": "Do not invent a theme before checking whether multiple studies support it.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "Three studies mostly agree, but one reports a smaller effect.",
+            "situation": "In a fictional set of four education studies, some describe immediate feedback after practice tasks and others describe delayed feedback.",
             "thinking": [
-              "I should not label the fourth study an outlier and ignore it.",
-              "The studies use different feedback timing and retention intervals.",
-              "The disagreement may reveal a boundary condition instead of a simple contradiction."
+              "The timing of feedback is a different topic from when recall is measured.",
+              "I need to check whether feedback procedures are comparable and whether each source reports relevant outcomes.",
+              "I can organize a second theme around variation in feedback implementation without claiming it changed outcomes."
             ],
-            "draft": "Theme: retrieval practice generally supports delayed retention, with effect magnitude varying across feedback and retention conditions."
+            "draft": "Possible Theme 2: the fictional studies differ in the timing and description of feedback following practice. Their outcome evidence needs to be compared before inferring any consequence of that variation."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Theme or convergence 2: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "Theme 2 examines [distinct finding or methodological dimension] across [checked source IDs]. Its relationship to Theme 1 is [specific connection], and the evidence does or does not establish [bounded inference].",
           "path_frames": {}
         }
       }
@@ -1798,11 +1798,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "An optional third cross-study pattern or methodological theme.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Would a third theme explain something genuinely new in the evidence, or is your synthesis clearer without one?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Use it when the evidence base genuinely contains another useful pattern.",
+          "body": "A third theme is optional. Use it to examine a distinct substantive pattern, theoretical perspective or measurement issue that the sources support, rather than filling a predetermined outline.",
           "questions": [
             "Is this a finding theme or a methods theme?",
             "Does it help explain disagreement?"
@@ -1810,26 +1810,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Measurement method differs substantially across studies, limiting direct comparison of effect magnitude.",
+          "strong_example": "Possible methodological theme, if source notes support it: recall measures differ in scoring, test format and delay, making some cross-study comparisons difficult.",
           "avoid": "Do not add themes merely to reach a target number.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "Three studies mostly agree, but one reports a smaller effect.",
+            "situation": "A student has outlined findings and feedback procedures but notices that the fictional source set measures outcomes in different ways.",
             "thinking": [
-              "I should not label the fourth study an outlier and ignore it.",
-              "The studies use different feedback timing and retention intervals.",
-              "The disagreement may reveal a boundary condition instead of a simple contradiction."
+              "One paper uses a recognition test, another free recall, and a third uses an explanation task.",
+              "These outcomes may represent different aspects of learning even when labelled 'retention'.",
+              "A measurement-comparability theme would help interpret the synthesis, but only if it does not duplicate the first two."
             ],
-            "draft": "Theme: retrieval practice generally supports delayed retention, with effect magnitude varying across feedback and retention conditions."
+            "draft": "Optional Theme 3: in this fictional source set, outcomes are measured with recognition, free recall and explanations. These measures should be distinguished before findings are compared as if they capture the same outcome."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Theme or convergence 3: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "Include a third theme only if [source IDs] establish [additional pattern]. It adds [new comparison or interpretation] and is distinct from earlier themes through [specific difference].",
           "path_frames": {}
         }
       }
@@ -1843,11 +1843,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Important differences, contradictions, or conditions that make the literature less simple.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which source findings or approaches genuinely differ, and what contextual or methodological factors might account for that difference?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Describe what differs and what methodological/context feature may explain it.",
+          "body": "State both sides of a documented disagreement and compare study procedures, measures or populations. Distinguish a possible explanation from one the evidence actually tests.",
           "questions": [
             "Do the studies use the same measure?",
             "Do populations or designs differ?"
@@ -1855,26 +1855,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Benefits are smaller in studies using immediate tests; retention interval may be a boundary condition.",
+          "strong_example": "Illustrative only: if one study reports a difference on free recall and another reports none on recognition, the outcomes may not be directly comparable.",
           "avoid": "Do not treat disagreement as proof that one paper is wrong.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "Three studies mostly agree, but one reports a smaller effect.",
+            "situation": "Two fictional studies appear to reach different conclusions about a learning activity, but one measures free recall after a week and the other recognition the same day.",
             "thinking": [
-              "I should not label the fourth study an outlier and ignore it.",
-              "The studies use different feedback timing and retention intervals.",
-              "The disagreement may reveal a boundary condition instead of a simple contradiction."
+              "First verify whether both results concern the same outcome and comparison.",
+              "Test format and delay offer plausible explanations for the apparent disagreement, not demonstrated causes of it.",
+              "A careful synthesis names both results and identifies what cannot be resolved from these reports."
             ],
-            "draft": "Theme: retrieval practice generally supports delayed retention, with effect magnitude varying across feedback and retention conditions."
+            "draft": "In the fictional comparison, results differ between a delayed free-recall task and an immediate recognition task. Measurement and timing differences complicate interpretation, so the studies do not yet establish a direct contradiction."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The studies differ in [finding/method/context]. One plausible reason is [measurement/design/population difference].",
+          "frame": "[Source A] reports [verified result] whereas [Source B] reports [verified difference]. They differ in [measure, design or context]; [proposed explanation] remains tentative because [evidence limitation].",
           "path_frames": {}
         }
       }
@@ -1888,11 +1888,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Limitations that recur across several studies and therefore shape what the literature can establish.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which limitation appears in more than one actual study, and what specific inference does that recurring problem restrict?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Name repeated limitations and identify the studies in which they occur.",
+          "body": "Track limitations across source IDs and separate repeated features from their consequences. A short follow-up interval, for instance, limits claims about long-term retention only when the studies actually used it.",
           "questions": [
             "Does this limitation actually recur?",
             "How does it restrict the collective evidence?"
@@ -1900,26 +1900,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Several studies use short retention intervals and convenience university samples.",
+          "strong_example": "Illustrative only: if several included studies use very short follow-up periods, explain why their outcomes cannot establish retention over longer intervals.",
           "avoid": "Do not copy each paper's limitation list without identifying patterns.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "Three studies mostly agree, but one reports a smaller effect.",
+            "situation": "A student's fictional evidence table shows that studies A, C and D measure recall within two days, while study B uses a longer interval.",
             "thinking": [
-              "I should not label the fourth study an outlier and ignore it.",
-              "The studies use different feedback timing and retention intervals.",
-              "The disagreement may reveal a boundary condition instead of a simple contradiction."
+              "I should verify which studies share the short interval rather than asserting all do.",
+              "Short intervals can be suitable for some questions, so I must relate the limitation to my own long-term-retention focus.",
+              "The synthesis should name the affected sources and describe which claims remain open."
             ],
-            "draft": "Theme: retrieval practice generally supports delayed retention, with effect magnitude varying across feedback and retention conditions."
+            "draft": "In the fictional evidence set, studies A, C and D use follow-up intervals of two days or less. These designs provide limited evidence about retention over several weeks; study B requires separate consideration."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Repeated methodological limitations: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "A repeated limitation in [specific sources] is [verified design or measurement feature]. It limits conclusions about [particular question] because [mechanism of the limitation], although [important exception].",
           "path_frames": {}
         }
       }
@@ -1942,18 +1942,18 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The most accurate kind of justification for doing your study.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which listed justification most closely describes your project given the extent and quality of evidence you have actually reviewed?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Choose the smallest defensible rationale. A project can be valuable without proving that no research exists.",
+          "body": "Select a defensible rationale without treating every limitation as a missing research topic. The category describes why the project is useful, not an automatic claim of novelty.",
           "questions": [
             "Am I repeating, extending, comparing methods, addressing inconsistency, or asking a local practical question?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "If prior work exists but uses university samples, choose extension to a new context/population rather than documented literature gap.",
+          "strong_example": "If a student repeats an established procedure with a new local cohort, 'Extension to a new context/population' may be more precise than 'Documented literature gap'.",
           "avoid": "Do not choose 'documented literature gap' simply because it sounds strongest.",
           "choice": {
             "title": "What kind of study rationale do I actually have?",
@@ -1978,19 +1978,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "Three studies mostly agree, but one reports a smaller effect.",
+            "situation": "A student finds relevant published studies but wants to study the question among students at their own school.",
             "thinking": [
-              "I should not label the fourth study an outlier and ignore it.",
-              "The studies use different feedback timing and retention intervals.",
-              "The disagreement may reveal a boundary condition instead of a simple contradiction."
+              "The existing studies show the broad question has been examined before.",
+              "The student has not performed a search comprehensive enough to claim that no research covers the local context.",
+              "An extension to a new context, or a local/practical question, describes the project's rationale more cautiously."
             ],
-            "draft": "Theme: retrieval practice generally supports delayed retention, with effect magnitude varying across feedback and retention conditions."
+            "draft": "Selected rationale in this fictional case: Extension to a new context/population. The project examines a previously studied question locally without claiming that the wider literature lacks such work."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Best description: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "The best listed rationale is [exact option]. It fits because [what checked studies establish] and [the proposed project's distinctive scope]. I cannot claim [stronger novelty claim] without [additional evidence].",
           "path_frames": {}
         }
       }
@@ -2004,11 +2004,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A precise statement of what your project will add, based on the evidence you actually reviewed.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What is the smallest research need or extension your sources justify, and how will your study address it?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State a bounded gap, replication, extension, inconsistency, method comparison, or local question.",
+          "body": "Connect the project's precise contribution to traceable literature evidence. If the search was limited, describe a local extension or bounded uncertainty rather than claiming a universal research gap.",
           "questions": [
             "What source evidence supports this statement?",
             "Would 'extension' be more accurate than 'no research exists'?"
@@ -2016,26 +2016,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Few included studies used a secondary biology classroom context; this project is a local extension of the established retrieval-practice question.",
+          "strong_example": "Illustrative only: among the sources this student examined, few addressed delayed recall in secondary biology; the proposed project would extend the question locally. This does not establish a field-wide absence.",
           "avoid": "Avoid global absence claims unless the search genuinely supports them.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "Three studies mostly agree, but one reports a smaller effect.",
+            "situation": "A student has reviewed a limited set of research on retrieval practice, mainly conducted with university students.",
             "thinking": [
-              "I should not label the fourth study an outlier and ignore it.",
-              "The studies use different feedback timing and retention intervals.",
-              "The disagreement may reveal a boundary condition instead of a simple contradiction."
+              "The selected sources help justify interest in a different age group, but they do not prove secondary-school studies are absent.",
+              "A local study could ask a bounded question within an approved classroom setting.",
+              "I should report the scope of the search and explain the project as an extension until stronger evidence supports a gap claim."
             ],
-            "draft": "Theme: retrieval practice generally supports delayed retention, with effect magnitude varying across feedback and retention conditions."
+            "draft": "In the fictional, limited set of reviewed studies, university settings predominate. A proposed study in one secondary biology context would provide a local extension; the current search cannot establish a general absence of secondary-school research."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The reviewed evidence supports a rationale of [replication/extension/inconsistency/local question/documented gap] because [traceable evidence].",
+          "frame": "[Checked sources and search scope] indicate [specific known pattern or limitation]. My project will [replicate, extend, compare or examine a local question] in [bounded context]. This supports [modest contribution], subject to [uncertainty].",
           "path_frames": {}
         }
       }
@@ -2049,11 +2049,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The logical bridge from the literature synthesis to your exact research question.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "How does a specific pattern or uncertainty in the reviewed evidence lead to the wording of your current research question?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Explain how the patterns, limits, or rationale lead to the question you will ask.",
+          "body": "Explain the sequence from checked evidence through a bounded study rationale to the proposed question. Align the question with the design and sources rather than implying a wider contribution than warranted.",
           "questions": [
             "What literature evidence makes this question reasonable?",
             "Is the question still broader than the reviewed evidence?"
@@ -2061,26 +2061,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Because prior studies suggest a retrieval benefit but rarely examine this secondary biology context, the project asks whether the pattern appears in this classroom setting.",
+          "strong_example": "Illustrative only: if reviewed studies use different delayed-outcome measures, a question comparing what those measures capture could follow directly from that methodological difference.",
           "avoid": "Do not introduce a research question unrelated to the literature you just reviewed.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "Three studies mostly agree, but one reports a smaller effect.",
+            "situation": "The fictional source set contains delayed learning measures that vary in test format; a student is planning a focused document-based review.",
             "thinking": [
-              "I should not label the fourth study an outlier and ignore it.",
-              "The studies use different feedback timing and retention intervals.",
-              "The disagreement may reveal a boundary condition instead of a simple contradiction."
+              "The sources reveal a comparability issue in how delayed outcomes are defined.",
+              "A literature-based question can examine those operational definitions using the source reports themselves.",
+              "I should name the evidence base and avoid presenting a synthesis as proof of effects."
             ],
-            "draft": "Theme: retrieval practice generally supports delayed retention, with effect magnitude varying across feedback and retention conditions."
+            "draft": "Because the fictional sources assess delayed learning differently, the proposed review asks: How do included science-education studies define and measure delayed retention after retrieval practice?"
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "How the literature leads to my research question: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "[Referenced studies or patterns] raise [specific issue]. This motivates a question about [bounded process, relationship or evidence feature], which I can examine using [proposed data and method] without assuming [unsupported claim].",
           "path_frames": {}
         }
       }
@@ -2094,37 +2094,37 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The job of the opening part of the literature review.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What scope and definitions must a reader understand before you begin comparing sources?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Plan how you will define the topic, establish scope, and preview how the review is organized.",
+          "body": "Plan the opening around the inquiry, relevant terms, evidence boundaries and organization. Establish a reason to read the review without claiming a gap before demonstrating it.",
           "questions": [
             "What does the reader need to understand before the themes?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Define retrieval practice and delayed retention, limit the review to science-learning contexts, then preview themes of retention, feedback, and measurement differences.",
+          "strong_example": "Opening plan: define retrieval practice and delayed retention; identify which science-learning contexts the review covers; indicate that the review compares outcome measures and study conditions.",
           "avoid": "Do not begin with a list of article summaries.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's draft has one paragraph per article.",
+            "situation": "A student has a collection of papers about study activities but has not defined 'delayed retention' consistently.",
             "thinking": [
-              "Readers need a claim about the literature, not a reading log.",
-              "I can group the three articles around delayed retention, then compare where they differ.",
-              "Citations should support the claim after I make it."
+              "The opening should clarify which kinds of learning activity count as retrieval practice.",
+              "The review needs an explicit description of what delay intervals and science-learning contexts are in scope.",
+              "I can preview the comparisons without announcing a finding before examining the sources."
             ],
-            "draft": "Across the included studies, retrieval-based practice generally improved delayed retention, although effect magnitude varied with feedback timing and test delay (citations)."
+            "draft": "Opening plan: introduce the question of delayed learning in science, define retrieval-based practice, delimit the populations and follow-up intervals, then explain why the review compares measures and study conditions."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Opening, scope, and key definitions: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "I will open with [focused inquiry], define [term and how it is used], delimit [source population, period or setting], and preview [organizing logic]. I will defer claims about [possible pattern] until [cited evidence] supports them.",
           "path_frames": {}
         }
       }
@@ -2138,11 +2138,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The order and purpose of the main synthesis sections or paragraphs.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What order of evidence-based sections will help the reader understand the literature, and which sources belong in each?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "List each theme and what comparison it will make across sources.",
+          "body": "Arrange themes to develop a coherent argument. For each section, specify the central comparison and source IDs; choose an order that grows from the evidence rather than a fixed number of themes.",
           "questions": [
             "Does each theme answer part of the literature question?",
             "Do the sections build logically?"
@@ -2150,26 +2150,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Theme 1: delayed retention pattern. Theme 2: feedback timing. Theme 3: measurement differences and comparability.",
+          "strong_example": "Outline example: assessment timing [sources A, B]; differences in outcome measures [sources B, C]; implications for comparability [sources A, B, C], with IDs replaced by real citations.",
           "avoid": "Do not organize only by author unless chronology itself is the research purpose.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's draft has one paragraph per article.",
+            "situation": "A student wants a review of how classroom studies measure later learning but has organized notes chronologically by publication year.",
             "thinking": [
-              "Readers need a claim about the literature, not a reading log.",
-              "I can group the three articles around delayed retention, then compare where they differ.",
-              "Citations should support the claim after I make it."
+              "Publication chronology is not central to this question, whereas measurement choices are.",
+              "Begin with when outcomes were assessed, then compare how recall was scored.",
+              "End with what those differences permit researchers to compare, linking each section to verified source notes."
             ],
-            "draft": "Across the included studies, retrieval-based practice generally improved delayed retention, although effect magnitude varied with feedback timing and test delay (citations)."
+            "draft": "Proposed section order for a fictional review: (1) timing of assessments in studies A and B, (2) recognition and recall measures in B and C, (3) limits of cross-study comparison across A, B and C."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Theme sequence and sources under each theme: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "Section [working heading] will compare [specific evidence or method] across [verified source IDs]. It follows [previous section] because [actual conceptual connection]; subsequent sections will address [next evidence issue].",
           "path_frames": {}
         }
       }
@@ -2183,11 +2183,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Where and how the review will address disagreement, mixed evidence, or methodological tension.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which particular result, interpretation or methodological difference needs qualification, and where will readers encounter that evidence?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Plan the exact contradiction/qualification and which design differences may explain it.",
+          "body": "Place relevant disagreements alongside the claims they complicate. Name supporting and conflicting sources, then plan an explanation of what design and measurement differences do or do not show.",
           "questions": [
             "Which studies do not fit the main pattern?",
             "Could measurement or population differences explain it?"
@@ -2195,26 +2195,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Two studies report smaller effects with immediate feedback; compare retention interval and scoring methods before calling the findings contradictory.",
+          "strong_example": "In the section on delayed outcomes, contrast studies using immediate recognition tests with those using later free-recall tasks before discussing whether results are comparable.",
           "avoid": "Do not hide evidence that complicates your preferred story.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's draft has one paragraph per article.",
+            "situation": "A student plans to place all study limitations at the end, even though several directly affect the main synthesis claim.",
             "thinking": [
-              "Readers need a claim about the literature, not a reading log.",
-              "I can group the three articles around delayed retention, then compare where they differ.",
-              "Citations should support the claim after I make it."
+              "A disagreement about outcome measures should appear where those outcomes are compared.",
+              "I need to describe each study's procedure and reported result before offering possible explanations.",
+              "The review can reserve broader limitations for the ending while keeping local qualifications close to the claims they affect."
             ],
-            "draft": "Across the included studies, retrieval-based practice generally improved delayed retention, although effect magnitude varied with feedback timing and test delay (citations)."
+            "draft": "In the assessment-outcomes section, compare the fictional immediate-recognition and delayed-free-recall studies before interpreting differences. Explain that test type and interval prevent a simple result-to-result comparison."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Where disagreement or limitations will appear: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "I will address [specified tension] within [relevant section] immediately after [claim it qualifies]. [Source A] and [Source B] differ in [verified feature], leaving [interpretive uncertainty].",
           "path_frames": {}
         }
       }
@@ -2228,37 +2228,37 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "How the literature review will close and lead into the present study.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What has the reviewed literature established at the scale of your sources, and which precise study question logically follows?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Plan a short synthesis of what is established, what remains bounded/uncertain, and why the current question follows.",
+          "body": "Plan a closing synthesis that weighs the evidence, acknowledges scope and states why the present inquiry is warranted. Do not introduce an unsupported absence claim or a new theme.",
           "questions": [
             "Does the ending naturally lead to the research question?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Close by stating the consistent retention pattern, limits of context, and rationale for a local secondary biology extension.",
+          "strong_example": "Ending plan: summarize what the reviewed studies actually measure, explain remaining comparability limits, then introduce a focused question about how delayed retention is operationalized.",
           "avoid": "Do not add a new major theme in the final paragraph.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's draft has one paragraph per article.",
+            "situation": "A student has completed a synthesis of different learning-outcome measures but ends with an unconnected claim that all schools should change teaching practice.",
             "thinking": [
-              "Readers need a claim about the literature, not a reading log.",
-              "I can group the three articles around delayed retention, then compare where they differ.",
-              "Citations should support the claim after I make it."
+              "The sources may establish variation in measurement, not the effectiveness of a school-wide intervention.",
+              "The ending should identify which comparison remains difficult and why it is relevant to the proposed review.",
+              "I will connect that uncertainty to the exact evidence and question the project will address."
             ],
-            "draft": "Across the included studies, retrieval-based practice generally improved delayed retention, although effect magnitude varied with feedback timing and test delay (citations)."
+            "draft": "Closing plan for the fictional review: synthesize documented differences in delayed-recall measures, acknowledge the limited evidence set, and introduce a question about how secondary science studies operationalize retention."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "How the review will lead to the study purpose/question: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "The closing will bring together [source-supported conclusion] and [qualified remaining issue]. Given [search or method boundary], it will lead to [exact research question] and the evidence needed to investigate it.",
           "path_frames": {}
         }
       }
@@ -2272,11 +2272,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Your working literature-review prose.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Does each paragraph make a source-supported claim and develop it through comparison, qualification or explanation?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Write paragraphs around claims about the literature, using traceable citations and comparison across sources.",
+          "body": "Draft in your own words using checked source notes. Vary paragraph development as the evidence warrants; cite every factual interpretation and mark unresolved claims for later checking.",
           "questions": [
             "What claim is this paragraph making about multiple studies?",
             "Where is the qualification or comparison?"
@@ -2284,26 +2284,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Across several studies, retrieval-based practice improved delayed recall, although effect magnitude varied with feedback and retention interval (citations).",
+          "strong_example": "Fictional drafting illustration only: 'Studies A and B measured recall after different delays. That difference affects which outcomes can be compared directly (replace A and B with checked citations).' ",
           "avoid": "Avoid one-source-per-paragraph summary chains when synthesis is needed.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's draft has one paragraph per article.",
+            "situation": "A student has two paragraphs that each summarize one fictional paper, without explaining why their procedures should be compared.",
             "thinking": [
-              "Readers need a claim about the literature, not a reading log.",
-              "I can group the three articles around delayed retention, then compare where they differ.",
-              "Citations should support the claim after I make it."
+              "The first paper uses a recognition test the next day, while the second uses free recall one week later.",
+              "A paragraph can begin with the measurement comparison, then describe the two study procedures and qualify interpretations.",
+              "I must cite the underlying reports, check that they support each sentence and avoid suggesting that either outcome demonstrates a long-term effect."
             ],
-            "draft": "Across the included studies, retrieval-based practice generally improved delayed retention, although effect magnitude varied with feedback timing and test delay (citations)."
+            "draft": "Fictional example requiring replacement with verified citations: Studies A and B assessed learning at different intervals and with different test formats. Study A used next-day recognition, whereas study B used free recall after one week. These differences restrict direct comparisons between the reported outcomes; their implications depend on the studies' actual findings and designs."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Literature review draft: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "Draft [paragraph's evidence-based point] using [verified source IDs]. Explain [one pertinent finding or method], relate it to [specific comparison or qualification], and end where [the evidence-led point] has been developed. Check [every citation and inference] against the sources.",
           "path_frames": {}
         }
       }
