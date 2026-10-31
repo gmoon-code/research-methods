@@ -1798,7 +1798,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "An optional third cross-study pattern or methodological theme.",
-          "prompt": "Would a third theme explain something genuinely new in the evidence, or is your synthesis clearer without one?"
+          "prompt": "This third theme is optional. Would it explain something genuinely new in the evidence, or is your synthesis clearer without one?"
         },
         "2": {
           "name": "Explain how to approach it",
