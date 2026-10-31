@@ -3269,7 +3269,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Why the measurement is consistent enough and supports the intended interpretation.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "How will you check that the measurement procedure is sufficiently consistent and meaningful?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3288,19 +3288,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student has access to one biology class and wants to generalize to all teenagers.",
+            "situation": "A sensor gives varied readings from the same surface.",
             "thinking": [
-              "Access does not make this a random sample.",
-              "The actual sample is one convenience class.",
-              "The result can be useful locally, but the generalization has to stay narrow."
+              "The instrument needs consistent placement.",
+              "Replicate readings can reveal variability.",
+              "This cannot alone prove that the measure captures the intended construct."
             ],
-            "draft": "Sampling: convenience sample from one class. Generalization: limited to similar local context; no claim of national representativeness."
+            "draft": "Use one documented placement method and record repeat readings to assess measurement variability."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Measurement/data-collection quality will be supported by [reliability/consistency/credibility procedure] and [validity/interpretive rationale].",
+          "frame": "I will assess [quality property] with [procedure or reference]. It addresses [risk] while [remaining uncertainty] should be reported.",
           "path_frames": {}
         }
       }
