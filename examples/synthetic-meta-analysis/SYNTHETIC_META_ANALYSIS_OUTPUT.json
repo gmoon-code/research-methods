@@ -10,5 +10,12 @@
   "Q": 8.072862084482537,
   "df": 7,
   "I2_percent": 13.289736319721937,
-  "boundary": "All study effects are synthetic. This is a mechanics exemplar, not a real evidence synthesis."
+  "boundary": "All effect estimates and standard errors are synthetic. These are independently reproducible computational results under the named model, not findings about any learning intervention or a completed empirical review.",
+  "fixed_effect_reference_g": 0.36560207223998453,
+  "der_simonian_laird_C": 347.5261085628748,
+  "pooled_standard_error_conditional": 0.05385545737244206,
+  "normal_interval_z_multiplier": 1.96,
+  "ci_interpretation": "Conventional normal-approximation interval computed as pooled_g ± 1.96 × pooled_standard_error_conditional; does not fully reflect uncertainty in τ², particularly with k = 8. The source estimates and their SEs are fictitious.",
+  "independence_status": "Each T01–T08 row is treated as independent for teaching. No real study reports, participant samples or effect derivations are available to verify statistical independence.",
+  "study_search_status": "No real database search, screening flow, included-study reports or risk-of-bias assessments were conducted or supplied."
 }
