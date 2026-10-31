@@ -1143,11 +1143,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A third candidate used to compare clarity and feasibility.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What genuinely different third question could you ask, and what new evidence would it require compared with your first two drafts?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Write another defensible question and compare it with the first two.",
+          "body": "Try a third question that changes the evidence route, scope or purpose. You can compare its feasibility with your earlier versions rather than selecting it now.",
           "questions": [
             "Which question best matches my real curiosity?",
             "Which can I answer ethically with available evidence?"
@@ -1155,26 +1155,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "How do students describe the study strategies they use after receiving assessment feedback?",
+          "strong_example": "What do published studies report about how secondary students' phone use and academic outcomes have been measured?",
           "avoid": "Do not select a question solely because it sounds complex.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student wants to ask 'Does phone use lower grades?'",
+            "situation": "A student has drafted an association question about phone use and grades and a qualitative question about study routines. They need a genuinely different third option.",
             "thinking": [
-              "I will only measure existing phone use, not assign it.",
-              "That means the design is observational.",
-              "My question should ask about association, not whether phone use causes lower grades."
+              "The first question needs paired measures of phone use and grades; the second needs students' accounts.",
+              "A review question could examine how published studies define and measure the constructs without collecting student records.",
+              "I should specify the population and focus of the literature synthesis, then compare its workload with the other options."
             ],
-            "draft": "What is the association between self-reported daily phone use and current course grade in this sample?"
+            "draft": "How have published studies of secondary students defined and measured phone use in relation to academic outcomes?"
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Draft question 3: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "My third candidate asks [different, evidence-answerable question] about [population or context]. It would use [distinct evidence route], unlike drafts 1 and 2, and may be limited by [scope or access constraint].",
           "path_frames": {}
         }
       }
@@ -1196,18 +1196,18 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The main kind of answer your research question asks for.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What kind of evidence and inference does your working question call for, and which available question family fits that purpose?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Choose the family that best matches the question: description, association, causal effect, experience/process, or literature synthesis.",
+          "body": "Choose the category that best describes the question you are currently asking. Question family describes the inquiry; the eventual research design must still justify what you can infer.",
           "questions": [
             "Am I asking what exists, what relates, what causes, what people experience, or what the literature collectively says?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "“Is sleep duration associated with score?” → relationship/association.",
+          "strong_example": "'How do students explain their choices after receiving written assessment feedback?' is primarily qualitative when it is answered through accounts and observed interactions.",
           "avoid": "Do not choose causal simply because you hope to show an effect.",
           "choice": {
             "title": "How do I choose the question family?",
@@ -1231,19 +1231,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student wants to ask 'Does phone use lower grades?'",
+            "situation": "A student asks how classmates explain changes to their study plans after feedback and considers choosing 'Experimental' because the project takes place after a test.",
             "thinking": [
-              "I will only measure existing phone use, not assign it.",
-              "That means the design is observational.",
-              "My question should ask about association, not whether phone use causes lower grades."
+              "The question seeks students' accounts of their reasoning, not an effect estimate from assigned conditions.",
+              "Open interviews or documented conversations could address this question if participation and access are approved.",
+              "'Qualitative' best fits this question; the timing of feedback alone does not make the design experimental."
             ],
-            "draft": "What is the association between self-reported daily phone use and current course grade in this sample?"
+            "draft": "Question family selected: Qualitative. The question asks how participants describe a process, and the proposed evidence consists of consented accounts rather than assigned treatment comparisons."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Question family: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "I selected [exact category from the list] because my question asks [description, association, effect, experience, synthesis or integrated questions]. I would use [specific evidence] and must limit my conclusions to [appropriate inference].",
           "path_frames": {}
         }
       }
@@ -1257,7 +1257,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The exact question your project is designed to answer with evidence.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Can you name the precise phenomenon or relationship, the relevant setting and the evidence that could answer your chosen working question?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -1269,26 +1269,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "What is the association between reported weekday sleep duration and biology quiz score among students in this class?",
+          "strong_example": "At selected school-ground locations, how do recorded surface temperatures vary between shaded and sun-exposed sites during the same observation periods?",
           "avoid": "Avoid vague questions such as “How does sleep affect students?”",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student wants to ask 'Does phone use lower grades?'",
+            "situation": "A student has selected observational measurements of school-ground surface temperatures but keeps writing 'How much does shade cool the school?'",
             "thinking": [
-              "I will only measure existing phone use, not assign it.",
-              "That means the design is observational.",
-              "My question should ask about association, not whether phone use causes lower grades."
+              "The plan records temperatures at naturally shaded and sun-exposed sites without assigning shade.",
+              "Surface materials and location can differ, so the comparison will not isolate a causal shade effect.",
+              "I can specify sites and matched observation periods and ask about recorded differences."
             ],
-            "draft": "What is the association between self-reported daily phone use and current course grade in this sample?"
+            "draft": "During matched observation periods, how do recorded surface temperatures differ between selected shaded and sun-exposed school-ground sites?"
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "What is / How does / How do [precise phenomenon, relationship, effect, or experience] [key variables/constructs] in [population/system/context]?",
+          "frame": "My working question is [one complete, focused question]. It identifies [phenomenon or variables], [setting or participants], and [comparison or time period if relevant]; [available evidence] could address it without assuming [unsupported inference].",
           "path_frames": {}
         }
       }
@@ -1302,11 +1302,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Why the question can be answered responsibly within this project.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which permissions, resources, timeline and safeguards make your selected question answerable, and what would prevent the study from proceeding?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Explain feasibility, access to evidence, ethics/safety, and why the question is scientifically or locally useful.",
+          "body": "Check feasibility against the precise evidence the question requires. State what access is confirmed, which approvals remain pending, the time needed, and the claim the planned design can support.",
           "questions": [
             "Do I have access to the needed evidence?",
             "Is the project safe and permitted?",
@@ -1315,26 +1315,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "The variables can be measured with a short anonymous survey and existing quiz scores only if teacher/privacy approval permits; the question is limited to association.",
+          "strong_example": "A planned comparison of school-ground temperatures needs approved access to sites, a suitable thermometer, repeated observation periods and a record of surface conditions; it cannot establish the isolated effect of shade.",
           "avoid": "Do not use “interesting” as the only justification.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student wants to ask 'Does phone use lower grades?'",
+            "situation": "The student wants to compare naturally shaded and exposed surfaces during lunch periods, but permission to access two candidate sites is still pending.",
             "thinking": [
-              "I will only measure existing phone use, not assign it.",
-              "That means the design is observational.",
-              "My question should ask about association, not whether phone use causes lower grades."
+              "A non-invasive temperature procedure might fit the available time if a suitable instrument can be borrowed.",
+              "The student must confirm site access, supervision and safe distance from traffic before measuring.",
+              "Different surface materials could explain some differences, so the defensible result is a description of observed site contrasts."
             ],
-            "draft": "What is the association between self-reported daily phone use and current course grade in this sample?"
+            "draft": "The question is conditionally feasible if safe site access and the thermometer are confirmed. Repeated measurements fit the proposed schedule, but observations alone would describe site differences rather than isolate a shade effect."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "This question is feasible because [evidence/access]. It is appropriate because [safety/ethics/authority]. The strongest answer this design can support is [claim boundary].",
+          "frame": "I can answer [working question] using [observations, sources or measures] over [timeframe]. I have confirmed [resources or permissions], must still obtain [approval or access], and would interpret the evidence within [claim boundary].",
           "path_frames": {}
         }
       }
@@ -1348,11 +1348,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "One major concept from the research question plus alternative words researchers may use.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which single concept is central to your question, and which alternative labels refer to that same construct in scholarly writing?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "List the main term and several true synonyms or closely related research terms.",
+          "body": "Build a concept group around one idea. Add spelling variants and defensible alternatives; examine related expressions before assuming that their meanings are equivalent.",
           "questions": [
             "What else might authors call this idea?",
             "Are there spelling or terminology differences?"
@@ -1360,26 +1360,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "retrieval practice, practice testing, self-testing",
+          "strong_example": "First concept group for a retrieval-practice review: \"retrieval practice\" OR \"practice testing\" OR \"self-testing\". Check whether each term retrieves relevant uses of the concept.",
           "avoid": "Do not mix unrelated concepts in the same OR block.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The question concerns retrieval practice in biology learning.",
+            "situation": "A student studying recall in science learning starts with the central process of retrieving information from memory.",
             "thinking": [
-              "My main concepts are retrieval practice, biology/science learning, and delayed retention.",
-              "I need synonyms within each concept block.",
-              "OR connects synonyms; AND connects different concepts."
+              "'Retrieval practice' describes the process most directly.",
+              "'Practice testing' and 'self-testing' are plausible search alternatives, although their coverage can differ.",
+              "I will test the block alone before combining it with another concept."
             ],
-            "draft": "(\"retrieval practice\" OR \"practice testing\") AND (biology OR science) AND (retention OR recall)"
+            "draft": "Concept block 1: (\"retrieval practice\" OR \"practice testing\" OR \"self-testing\"). These are proposed terms to test, not evidence that a search has been performed."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Concept 1: [main term] OR [synonym] OR [scientific term].",
+          "frame": "Concept block 1 concerns [single construct]. Proposed alternatives are ([term A] OR [term B] OR [variant C]); I will check whether [potentially broader term] changes the meaning or relevance of results.",
           "path_frames": {}
         }
       }
@@ -1393,7 +1393,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A second concept block for the formal literature search.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which second concept must your search capture, and how is it different from the first?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -1405,26 +1405,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "biology OR science OR STEM",
+          "strong_example": "For delayed learning outcomes: \"delayed recall\" OR \"delayed retention\" OR \"retention test\". The terms overlap but should be checked against the review question.",
           "avoid": "Do not connect synonyms with AND when OR is needed.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The question concerns retrieval practice in biology learning.",
+            "situation": "A student's first concept block covers retrieval practice. The second is the outcome assessed after a delay.",
             "thinking": [
-              "My main concepts are retrieval practice, biology/science learning, and delayed retention.",
-              "I need synonyms within each concept block.",
-              "OR connects synonyms; AND connects different concepts."
+              "The outcome is separate from the learning activity and belongs in its own block.",
+              "'Delayed recall' and 'retention test' may index different measurement descriptions.",
+              "I will test alternatives within this outcome block with OR, then combine it with the retrieval block using AND."
             ],
-            "draft": "(\"retrieval practice\" OR \"practice testing\") AND (biology OR science) AND (retention OR recall)"
+            "draft": "Concept block 2: (\"delayed recall\" OR \"delayed retention\" OR \"retention test\"). Its focus is a later outcome, not another name for retrieval practice."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Concept block 2 and synonyms: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "My second search concept is [distinct construct or outcome]. I propose ([term A] OR [term B] OR [term C]), and I will combine this group with block 1 using [appropriate operator].",
           "path_frames": {}
         }
       }
@@ -1438,11 +1438,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "An optional third concept block used only when it improves search precision without hiding relevant literature.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Does an additional population or context restriction help identify relevant studies, or would it remove sources you still need?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Add a third concept and synonyms if the question genuinely needs it.",
+          "body": "Use a population or setting block when the scope requires one. Test its effect on retrieval, since papers may omit contextual terms from searchable titles and abstracts.",
           "questions": [
             "Does this block represent a necessary concept?",
             "Am I over-restricting the search?"
@@ -1450,26 +1450,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "retention OR recall OR delayed test",
+          "strong_example": "Optional population block for secondary school studies: adolescent* OR \"secondary school\" OR \"high school\". Adapt terminology and wildcards to the database.",
           "avoid": "Do not force a third block into every search.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The question concerns retrieval practice in biology learning.",
+            "situation": "The review seeks studies in secondary science classrooms; the first two blocks describe practice and later recall.",
             "thinking": [
-              "My main concepts are retrieval practice, biology/science learning, and delayed retention.",
-              "I need synonyms within each concept block.",
-              "OR connects synonyms; AND connects different concepts."
+              "A population block could help focus the results on secondary students.",
+              "Some relevant articles might use only a grade range or a country-specific school term.",
+              "I will compare searches with and without this block before deciding whether to require it."
             ],
-            "draft": "(\"retrieval practice\" OR \"practice testing\") AND (biology OR science) AND (retention OR recall)"
+            "draft": "Optional block 3: (adolescent* OR \"secondary school\" OR \"high school\"). I will test whether adding it excludes studies that meet my actual eligibility criteria."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Population/context block if relevant: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "An optional context/population block would include ([term A] OR [term B]). It is relevant because [scope], but I will also test [broader search route] to avoid excluding [potentially missing studies].",
           "path_frames": {}
         }
       }
@@ -1483,11 +1483,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The exact database queries you actually plan to use.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Have you written each exact intended database query, including grouping, quotation marks and any platform-specific changes?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Record the full Boolean strings, including parentheses/quotes when used.",
+          "body": "Record at least two reproducible search strings or routes. Specify which database each version is for, and distinguish proposed queries from executed searches in the search log.",
           "questions": [
             "Could another person repeat this search?",
             "Did I use OR for synonyms and AND for different concepts?"
@@ -1495,26 +1495,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "(\"retrieval practice\" OR \"practice testing\") AND (biology OR science) AND recall",
+          "strong_example": "Proposed ERIC query: (\"retrieval practice\" OR \"practice testing\") AND (\"delayed recall\" OR retention). Proposed broader comparison: (\"retrieval practice\" OR \"self-testing\") AND learning.",
           "avoid": "Do not write only a list of keywords if the actual search is more complex.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The question concerns retrieval practice in biology learning.",
+            "situation": "A student has developed concept blocks but has not yet run searches in ERIC and another scholarly index.",
             "thinking": [
-              "My main concepts are retrieval practice, biology/science learning, and delayed retention.",
-              "I need synonyms within each concept block.",
-              "OR connects synonyms; AND connects different concepts."
+              "I can draft a focused combination of retrieval and delayed-outcome terms.",
+              "A broader route can check whether the outcome terms are too restrictive.",
+              "Each platform may need different field codes or operators; I will record the exact submitted versions after testing them."
             ],
-            "draft": "(\"retrieval practice\" OR \"practice testing\") AND (biology OR science) AND (retention OR recall)"
+            "draft": "Proposed ERIC query A: (\"retrieval practice\" OR \"practice testing\") AND (\"delayed recall\" OR retention). Proposed query B: (\"retrieval practice\" OR \"self-testing\") AND science. Neither is recorded as executed."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "([synonym OR synonym]) AND ([different concept OR synonym]) AND [optional third concept].",
+          "frame": "Proposed [database] query A is [exact string with parentheses and quotes]. Proposed query B is [different exact string or citation-search route]. After running each, I will record [platform-specific syntax or filters] in the search log.",
           "path_frames": {}
         }
       }
@@ -1528,11 +1528,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The scholarly databases or search systems you will use.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which scholarly search systems index the kinds of studies your question needs, and which can you actually access?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Name each system and, when helpful, explain why it is appropriate for the topic.",
+          "body": "Select databases based on discipline, study coverage and practical access. Explain complementary coverage and distinguish a planned search from one already performed.",
           "questions": [
             "Could one database miss an important part of the field?",
             "Does the database index the type of studies I need?"
@@ -1540,26 +1540,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "ERIC and Education Source for education research; Scopus for broader interdisciplinary coverage.",
+          "strong_example": "For a science-education review, I would plan to search ERIC and Education Source, checking institutional access, with Scopus or Web of Science if available for broader interdisciplinary coverage.",
           "avoid": "Do not rely on one general web search when the task requires a documented scholarly search.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The question concerns retrieval practice in biology learning.",
+            "situation": "A student preparing a school science-learning review has access to one education database but is uncertain whether it includes psychological research.",
             "thinking": [
-              "My main concepts are retrieval practice, biology/science learning, and delayed retention.",
-              "I need synonyms within each concept block.",
-              "OR connects synonyms; AND connects different concepts."
+              "ERIC offers education-focused indexing relevant to teaching and learning.",
+              "PsycINFO may capture psychological measures and study designs if access is available.",
+              "I will list confirmed access separately from databases that require library or school support."
             ],
-            "draft": "(\"retrieval practice\" OR \"practice testing\") AND (biology OR science) AND (retention OR recall)"
+            "draft": "Planned systems: ERIC (accessible for education literature) and PsycINFO (access not yet confirmed). The second would broaden coverage if available; no search is claimed as completed."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Databases/search tools I will use: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "I plan to search [system A] for [relevant literature] and [system B] for [complementary coverage]. Access is [confirmed or pending], and [coverage limitation] may require [another search route].",
           "path_frames": {}
         }
       }
@@ -1573,11 +1573,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Rules a source must meet to enter your evidence set.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Could another reader apply your inclusion rules before knowing a study's results, and would the rules capture the evidence your question needs?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Write criteria that can be applied consistently before reading whether the result supports your expectation.",
+          "body": "Specify eligibility by population or setting, phenomenon, study type, outcomes or evidence, and source type as relevant. Choose rules that you can apply consistently and document any protocol changes.",
           "questions": [
             "Would I include a study with an unexpected result if it meets this rule?",
             "Is each rule relevant to the question?"
@@ -1585,26 +1585,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Peer-reviewed empirical studies; secondary/high-school or university learners; includes a delayed retention outcome.",
+          "strong_example": "Illustrative review criteria: original empirical study; includes secondary-school science learners; reports a delayed assessment after an identifiable retrieval-based activity. These criteria require refinement to fit the review purpose.",
           "avoid": "Do not include papers simply because their result agrees with you.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The question concerns retrieval practice in biology learning.",
+            "situation": "A student wants to include studies about retrieval practice and later learning, regardless of whether outcomes favoured the approach.",
             "thinking": [
-              "My main concepts are retrieval practice, biology/science learning, and delayed retention.",
-              "I need synonyms within each concept block.",
-              "OR connects synonyms; AND connects different concepts."
+              "Relevance should be based on participants, activity and measured outcome, not statistical significance.",
+              "A study that reports no difference could still meet every criterion.",
+              "I should record explicit eligibility rules before screening and document later changes if necessary."
             ],
-            "draft": "(\"retrieval practice\" OR \"practice testing\") AND (biology OR science) AND (retention OR recall)"
+            "draft": "Include reports of original empirical studies with secondary-school science learners, an identifiable retrieval-based learning activity, and a later learning outcome, regardless of direction of findings."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Include a source when it [criterion 1], [criterion 2], and [criterion 3].",
+          "frame": "Eligible sources must [population/context condition], examine [phenomenon or intervention], and report [evidence or outcome]. I will include qualifying studies regardless of [direction of findings] and record [any justified exceptions].",
           "path_frames": {}
         }
       }
@@ -1618,11 +1618,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Rules for removing sources that are outside the question or unusable for the planned review.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What concrete characteristics would put a source outside your review, independently of whether you agree with its conclusions?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State objective reasons for exclusion.",
+          "body": "Describe exclusions that complement the inclusion rules, identify unusable source types when relevant, and record exclusion reasons consistently at the appropriate screening stage.",
           "questions": [
             "Could two people apply this rule similarly?",
             "Is this about relevance/design, not whether I like the findings?"
@@ -1630,26 +1630,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Exclude editorials without original data and studies that do not report a learning outcome.",
+          "strong_example": "For the hypothetical empirical review, exclude sources with no original study data or no delayed learning outcome. A null result alone is never an exclusion reason.",
           "avoid": "Do not exclude inconvenient results.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The question concerns retrieval practice in biology learning.",
+            "situation": "A student is screening titles and abstracts and must distinguish scope exclusions from inconvenient results.",
             "thinking": [
-              "My main concepts are retrieval practice, biology/science learning, and delayed retention.",
-              "I need synonyms within each concept block.",
-              "OR connects synonyms; AND connects different concepts."
+              "An opinion article without original observations does not meet the chosen empirical-study criterion.",
+              "A science-learning experiment with only immediate tests may not meet the delayed-outcome criterion.",
+              "A relevant study with null findings remains eligible if the predefined rules are met."
             ],
-            "draft": "(\"retrieval practice\" OR \"practice testing\") AND (biology OR science) AND (retention OR recall)"
+            "draft": "Exclude records outside secondary science learning or without an identifiable delayed learning outcome; exclude commentaries if the review is restricted to original empirical studies. Record the specific reason for each excluded full text."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Exclude a source when it [objective exclusion rule].",
+          "frame": "Exclude sources that [out-of-scope population or setting], [lack required evidence or outcome], or [ineligible publication type]. Apply the rules before judging results and document [full-text exclusion reasons].",
           "path_frames": {}
         }
       }
@@ -1663,11 +1663,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A reproducible record of each search attempt and how it changed.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which searches have you actually run, on what date, and what exact query, filters and results can you verify?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Record date, database, exact search string, filters, result count, screened/kept count, and what you changed next.",
+          "body": "For each executed search, record the platform, actual date, verbatim query, applied fields and filters, number retrieved if available, and later screening decisions. Keep proposed searches in the search plan until performed.",
           "questions": [
             "Could someone repeat this search?",
             "Can I explain why I revised the query?"
@@ -1675,26 +1675,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "2026-09-07 | ERIC | (retrieval practice OR practice testing) AND biology | peer reviewed | 84 results | 22 screened | 7 kept | add retention terms next.",
+          "strong_example": "Blank record format, not a completed search: [actual date] | [platform] | [exact submitted query] | [fields/filters] | [number reported] | [screened/eligible, if completed] | [reason for revision].",
           "avoid": "Do not record only the final successful query.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The question concerns retrieval practice in biology learning.",
+            "situation": "A student has drafted two searches but has not opened the database. The log needs to distinguish preparation from actual retrieval.",
             "thinking": [
-              "My main concepts are retrieval practice, biology/science learning, and delayed retention.",
-              "I need synonyms within each concept block.",
-              "OR connects synonyms; AND connects different concepts."
+              "Draft strings are plans, so I cannot enter invented dates or result counts.",
+              "When I run a query, I should copy the exact submitted syntax and record applied filters.",
+              "Screening numbers are added when screening occurs, with a separate note if records were deduplicated."
             ],
-            "draft": "(\"retrieval practice\" OR \"practice testing\") AND (biology OR science) AND (retention OR recall)"
+            "draft": "Search plan awaiting execution: [database and proposed query]. No date, retrieval count or inclusion count recorded. After execution, enter the actual date, submitted query, filters and reported results."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Search log or dates searched: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "Executed on [verified date] in [database/platform]. Exact submitted query [string]; fields/filters [settings]; results reported [actual count]; screening [actual status/count]. Revision made [reason], if applicable.",
           "path_frames": {}
         }
       }
