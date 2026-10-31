@@ -214,4 +214,26 @@ if(!/tray/.test(fullRescueModel.labs.data.run.walkthrough.draft))process.exit(1)
 if(!/both outputs/.test(fullRescueModel.labs.data.history.walkthrough.draft))process.exit(1);
 if(!/18 volunteers/.test(fullRescueModel.labs.data.audit.walkthrough.draft))process.exit(1);
 
+// Stage C-X3b4 | all eight Writing lab paths need distinct source-aware scaffolds.
+const writingKeys=["intro","lit","method","results","discussion","closing","citations","audit"];
+const writingTabs=writingKeys.map(k=>fullRescueModel.labs.writing[k]);
+for(const [idx,tab] of writingTabs.entries()){
+ if(!tab||!tab.title||!tab.body||!tab.compare_prompt||!tab.next_prompt)process.exit(1);
+ if(!tab.walkthrough?.situation||tab.walkthrough.thinking.length<2||!tab.walkthrough.draft)process.exit(1);
+ if(JSON.stringify(tab).includes("—"))process.exit(1);
+ for(const term of tab.terms||[])if(!studyGlossary[term.toLowerCase()])process.exit(1);
+ if(tab.decision_keys?.length){for(const key of tab.decision_keys)if(!studyChoices[key]?.options)process.exit(1)}
+}
+for(const read of [tab=>tab.title,tab=>tab.body,tab=>tab.compare_prompt,tab=>tab.walkthrough.situation,tab=>tab.walkthrough.draft,tab=>tab.next_prompt]){
+ if(new Set(writingTabs.map(read)).size!==writingKeys.length)process.exit(1);
+}
+if(!/unverified literature gap/.test(fullRescueModel.labs.writing.intro.walkthrough.draft))process.exit(1);
+if(!/operationalises engagement/.test(fullRescueModel.labs.writing.lit.walkthrough.draft))process.exit(1);
+if(!/Seven observation sessions/.test(fullRescueModel.labs.writing.method.walkthrough.draft))process.exit(1);
+if(!/12 scored higher/.test(fullRescueModel.labs.writing.results.walkthrough.draft))process.exit(1);
+if(!/sunlight alone/.test(fullRescueModel.labs.writing.discussion.walkthrough.draft))process.exit(1);
+if(!/results remain pending/.test(fullRescueModel.labs.writing.closing.walkthrough.draft))process.exit(1);
+if(!/Citation check C01/.test(fullRescueModel.labs.writing.citations.walkthrough.draft))process.exit(1);
+if(!/without interactional records/.test(fullRescueModel.labs.writing.audit.walkthrough.draft))process.exit(1);
+
 console.log("PASS v2.5 progressive rescue state and logging");
