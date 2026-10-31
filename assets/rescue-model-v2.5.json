@@ -3180,7 +3180,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "How the sampling method limits what populations the results can represent.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What does your selection process leave out, and how does that limit interpretation?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3199,19 +3199,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student has access to one biology class and wants to generalize to all teenagers.",
+            "situation": "A student observes only accessible school-ground sites during one season.",
             "thinking": [
-              "Access does not make this a random sample.",
-              "The actual sample is one convenience class.",
-              "The result can be useful locally, but the generalization has to stay narrow."
+              "The accessible sites may differ from other surfaces.",
+              "Different seasons may produce different temperature patterns.",
+              "My conclusions should reflect the actual sites and dates."
             ],
-            "draft": "Sampling: convenience sample from one class. Generalization: limited to similar local context; no claim of national representativeness."
+            "draft": "Findings describe the selected school-ground locations during the recorded period and do not establish a representative result for other settings."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Because the sample was obtained through [method/context], the findings should be limited to [defensible scope].",
+          "frame": "The sample was selected through [procedure], which may exclude [units or conditions]. The defensible scope is [setting or group], with uncertainty about [wider context].",
           "path_frames": {}
         }
       }
