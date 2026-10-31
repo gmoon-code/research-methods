@@ -3360,7 +3360,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "How the identified ethics/safety issues will be handled and who must review/approve them.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which permissions and protective steps must be confirmed before collection begins?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3380,19 +3380,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student has access to one biology class and wants to generalize to all teenagers.",
+            "situation": "A student wants to measure surfaces beside a busy school entrance.",
             "thinking": [
-              "Access does not make this a random sample.",
-              "The actual sample is one convenience class.",
-              "The result can be useful locally, but the generalization has to stay narrow."
+              "I should ask school staff which locations are permitted.",
+              "A safer nearby site might answer the question without traffic exposure.",
+              "Measurements must not start until supervision and access conditions are settled."
             ],
-            "draft": "Sampling: convenience sample from one class. Generalization: limited to similar local context; no claim of national representativeness."
+            "draft": "Seek school approval for the site and procedure, use a designated safe observation location, and document who is responsible for supervision."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Before collection, I will [approval/consent/privacy/safety action]. Data will be protected by [specific safeguard].",
+          "frame": "Before collecting evidence, I will confirm [authority and required approval]. [Specific protection] will reduce [identified risk], and [responsible person] will check [condition].",
           "path_frames": {}
         }
       }
