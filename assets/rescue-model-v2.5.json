@@ -3225,7 +3225,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The tool or procedure used to obtain a measurement.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which actual instrument or observation procedure will generate each record?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3243,19 +3243,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student has access to one biology class and wants to generalize to all teenagers.",
+            "situation": "A student plans to record surface temperatures at several outdoor sites.",
             "thinking": [
-              "Access does not make this a random sample.",
-              "The actual sample is one convenience class.",
-              "The result can be useful locally, but the generalization has to stay narrow."
+              "I need a suitable device for the surface and expected temperature range.",
+              "Every reading should follow a consistent contact or measurement procedure.",
+              "Record site, time, conditions and instrument information alongside each result."
             ],
-            "draft": "Sampling: convenience sample from one class. Generalization: limited to similar local context; no claim of national representativeness."
+            "draft": "Proposed instrument is an appropriate temperature sensor used with a documented reading protocol and site log. Confirm its specifications before collecting data."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The evidence will be produced/recorded using [instrument/procedure], which measures/collects [what].",
+          "frame": "I will collect [particular measurement or account] using [instrument, guide or observation method] under [specified settings or procedure]. I must verify [suitability or access].",
           "path_frames": {}
         }
       }
