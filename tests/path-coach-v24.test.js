@@ -112,7 +112,7 @@ if(C.stageGate(9,reviewDesign).canMarkReady)process.exit(1);
 // meta-analysis dependence and single-parameter synthesis checks
 let metaParameter={data:{outcomeDV:"estimated prevalence",operationalDefs:"proportion and sampling variance",experimentalUnit:"independent source sample"},pathway:{selected:"meta_analysis",confirmed:true}};
 let mp=C.stageGate(10,metaParameter);
-if(!mp.canMarkReady||mp.missing.includes("predictorIV")||!C.recommended(10,metaParameter).includes("predictorIV"))process.exit(1);
+if(!mp.canMarkReady||mp.missing.includes("predictorIV")||C.recommended(10,metaParameter).includes("predictorIV")||C.reviewStage(10,metaParameter).score!==100)process.exit(1);
 metaParameter.data.outcomeDV="";
 mp=C.stageGate(10,metaParameter);
 if(mp.canMarkReady||!mp.missing.includes("outcomeDV"))process.exit(1);
