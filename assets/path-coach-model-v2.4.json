@@ -374,7 +374,6 @@
         "claimBoundary"
       ],
       "10": [
-        "predictorIV",
         "outcomeDV",
         "operationalDefs",
         "experimentalUnit"
@@ -589,6 +588,9 @@
       ]
     },
     "meta_analysis": {
+      "10": [
+        "predictorIV"
+      ],
       "11": [
         "ethicsIssues",
         "ethicsPlan"
@@ -894,12 +896,12 @@
     },
     "meta_analysis": {
       "9": [
-        "The research question and available effect estimates warrant quantitative synthesis.",
+        "The question and available estimates or data support a meaningful quantitative synthesis.",
         "I have stated which outcomes, contrasts, study designs and populations can meaningfully be combined.",
         "I understand that pooling does not repair bias or make dissimilar studies comparable."
       ],
       "10": [
-        "The effect measure, outcome, direction and units are defined for the comparison or quantity of interest.",
+        "The effect measure or target parameter, its direction and units are defined for this synthesis.",
         "I distinguish an independent study or sample from multiple outcomes, time points or contrasts derived from it.",
         "I have explained how estimates on different scales will be handled and whether combining them is justified."
       ],
