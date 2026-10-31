@@ -828,7 +828,7 @@
           "rejected": "Adding a value to fill a missing day or claiming an unrecorded field existed would silently alter the evidence structure.",
           "notebook": {
             "rowUnit": "One aquarium-day observation, identified by aquarium and day. Each aquarium contributes seven linked measurements.",
-            "columns": "aquarium (A/B/C), day (1–7), temperature_C (°C), dissolved_oxygen_mg_L (mg/L). The supplied source CSV contains these four fields and no notes column."
+            "columns": "aquarium (A/B/C); day (1–7); temperature_C (°C); dissolved_oxygen_mg_L (mg/L). These are the four source CSV fields."
           },
           "forward": "Check that each aquarium has one row on each of the seven days and that readings fall in the recorded units.",
           "compare": [
@@ -838,7 +838,7 @@
         },
         {
           "id": 13,
-          "title": "Collect or organize evidence",
+          "title": "Collect or organise evidence",
           "where": "The synthetic dataset becomes the focus, with its observation schedule and values independently checked.",
           "changed": "The summary now distinguishes overall daily-record averages from aquarium-specific values and repeated patterns.",
           "reasoning": [
