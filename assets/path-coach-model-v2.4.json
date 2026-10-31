@@ -120,7 +120,8 @@
       ],
       "13": [
         "rawLocation",
-        "plots",
+        "missingObserved",
+        "errorsCorrections",
         "descriptives"
       ],
       "14": [
@@ -492,8 +493,8 @@
       "10": [
         "hypothesisNeeded"
       ],
-      "12": [
-        "replication"
+      "13": [
+        "plots"
       ],
       "14": [
         "multiplicity"
@@ -679,42 +680,42 @@
       "9": [
         "The key predictor/exposure is measured, not assigned by the researcher.",
         "The design can estimate association/difference/prediction without claiming direct causation.",
-        "My claim boundary explicitly acknowledges observational limitations."
+        "My question and claim boundary distinguish observed relationships from any proposed causal explanation."
       ],
       "10": [
-        "The measured predictor/exposure and outcome are both operationally defined.",
-        "I know the observational/analytic unit.",
-        "I identified plausible confounders or alternative explanations."
+        "The measured predictor and outcome have operational definitions, including their units and observation periods where relevant.",
+        "I can identify the observational unit and recognise paired, repeated or clustered records.",
+        "I have identified plausible confounders or competing explanations without assuming every associated variable is a confounder."
       ],
       "11": [
-        "Sampling and measurement support the association I want to estimate.",
-        "I stated how sampling limits generalization.",
-        "Ethics, privacy, and measurement quality are addressed before collection."
+        "I have explained how cases were selected and how the predictor and outcome were measured.",
+        "I have considered who the observed cases represent and how selection could restrict wider inference.",
+        "Measurement quality, privacy and any applicable ethics or safety requirements are addressed before data access or collection."
       ],
       "12": [
-        "The protocol preserves IDs, pairing, clustering, or repeated structure where relevant.",
-        "Potential confounders/standardization decisions are documented.",
-        "The planned analysis matches the observational question."
+        "The recording plan preserves identifiers needed for paired observations, repeated measures or clustering.",
+        "I have documented relevant measurement conditions, plausible sources of bias and any steps intended to reduce them.",
+        "The planned analysis matches the observational question and records how missing or excluded data will be handled."
       ],
       "13": [
-        "I inspected distributions and the predictor–outcome relationship before inference.",
-        "The raw data and corrections are traceable.",
-        "Repeated or clustered observations remain identifiable."
+        "I have inspected missingness and relevant distributions and relationships before interpreting the estimates.",
+        "The original data are retained, with corrections, recoding and exclusions documented.",
+        "I can identify records that share a participant, class, site or other observational unit."
       ],
       "14": [
-        "The estimand states the association/difference I actually want to estimate.",
-        "The analysis matches outcome type, pairing/clustering, and design.",
-        "Magnitude and uncertainty are planned alongside any p-value."
+        "I have specified the association, difference or prediction quantity that answers the question, including its scale where relevant.",
+        "The method fits the variable types and accounts for pairing, clustering and relevant model assumptions.",
+        "I plan to report the main estimate and its uncertainty, rather than relying on a p-value alone."
       ],
       "15": [
-        "Results report association/difference without causal wording.",
-        "Key estimates and uncertainty are traceable to stored output.",
-        "Null or weak findings are reported transparently."
+        "The Results distinguish observed associations or differences from effects attributed to an intervention.",
+        "Estimates, uncertainty and any adjustments can be traced to the recorded analysis.",
+        "Weak, null and unexpected findings remain visible, together with their estimated magnitude and uncertainty."
       ],
       "16": [
-        "The direct answer uses observational language.",
-        "Alternative explanations, confounding, or reverse direction are considered.",
-        "Limitations keep causal and generalization claims bounded."
+        "The answer to my research question reflects the observed relationship or prediction without asserting an untested cause.",
+        "I have considered confounding, selection, measurement differences and possible reverse direction where relevant.",
+        "Limitations explain how design and sampling restrict causal interpretation and claims beyond the observed cases."
       ]
     },
     "experimental": {
