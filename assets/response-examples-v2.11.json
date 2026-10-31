@@ -311,9 +311,9 @@
       "typical_length": "about 10–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "What do students think about things?",
-      "good_working_response": "How do students describe the study strategies they use after receiving assessment feedback?",
+      "good_working_response": "How have secondary science education studies defined and measured delayed recall after retrieval practice?",
       "detailed_response": "",
-      "why_it_works": "Write another defensible question and compare it with the first two."
+      "why_it_works": "This third candidate uses published research as its evidence, whereas the first asks about an observed association and the second examines students' accounts. It offers a different research route to compare for feasibility."
     },
     "questionType": {
       "stage": 4,
@@ -323,9 +323,9 @@
       "typical_length": "Choose the option that matches your project. Use the nearby explanation field to justify it when one is provided.",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "I chose a category because it sounds more scientific.",
-      "good_working_response": "For a question about whether sleep duration is associated with scores, select “Correlational / observational”.",
+      "good_working_response": "Correlational / observational",
       "detailed_response": "",
-      "why_it_works": "Choose the available category that matches the proposed evidence and inference, then explain the choice in the nearby justification field."
+      "why_it_works": "Select the exact available category for the question about measured sleep duration and quiz scores. The design justification should explain why the evidence permits association rather than a causal effect."
     },
     "finalRQ": {
       "stage": 4,
@@ -371,9 +371,9 @@
       "typical_length": "about 4–30 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Other words for learning.",
-      "good_working_response": "biology OR \"science learning\" OR \"science education\"",
+      "good_working_response": "\"delayed recall\" OR \"delayed retention\" OR \"retention test\"",
       "detailed_response": "",
-      "why_it_works": "Build the second concept block and check whether related terms broaden or narrow the meaning of the search."
+      "why_it_works": "Build the outcome concept around delayed learning, then check whether each term refers to a comparable assessment. A retention test is a measurement procedure, not automatically the same outcome as free recall."
     },
     "searchBlock3": {
       "stage": 5,
@@ -395,9 +395,9 @@
       "typical_length": "about 20–100 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "I searched for biology tests.",
-      "good_working_response": "(\"retrieval practice\" OR \"practice testing\") AND (biology OR \"science learning\"); (\"retrieval practice\" OR \"practice testing\") AND (adolescent* OR \"high school\") AND (retention OR \"delayed recall\")",
+      "good_working_response": "Proposed ERIC query: (\"retrieval practice\" OR \"practice testing\") AND (\"delayed recall\" OR \"retention test\"). Proposed Scopus query: (\"retrieval practice\" OR \"self-testing\") AND (\"delayed recall\" OR retention) AND (adolescent* OR \"secondary school\"). Adapt database syntax and filters, and record results only after running each query.",
       "detailed_response": "",
-      "why_it_works": "Preserve the concept-group logic and adapt quotation marks, truncation and field syntax to each database before recording the executed search."
+      "why_it_works": "Combine the research activity, outcome and optional population blocks in reproducible candidate queries. Specify the intended database and retain a clear boundary between planned and executed searches."
     },
     "databases": {
       "stage": 5,
@@ -419,9 +419,9 @@
       "typical_length": "about 15–75 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Include good studies.",
-      "good_working_response": "Peer-reviewed empirical studies; participants learning science or biology; retrieval practice is defined; reports an outcome measured after learning.",
+      "good_working_response": "Original peer-reviewed empirical studies; secondary-school science learners; identifiable retrieval-based learning activity; a learning outcome assessed after practice; inclusion regardless of whether findings favour retrieval practice.",
       "detailed_response": "",
-      "why_it_works": "Set criteria that can be applied consistently before examining whether a study supports the expected result. Justify age or setting restrictions when used."
+      "why_it_works": "Define eligibility using population, activity, measured outcome and source type before assessing findings. The direction or statistical significance of results must not determine inclusion."
     },
     "excludeCriteria": {
       "stage": 5,
@@ -431,9 +431,9 @@
       "typical_length": "about 15–75 words total",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Exclude studies I do not like.",
-      "good_working_response": "Exclude opinion pieces without original data for an empirical-only review; reports without a learning outcome; studies outside the predeclared education context.",
+      "good_working_response": "Exclude reports outside secondary-school science learning; studies with no identifiable retrieval-based activity; reports without a later learning outcome; and commentaries without original evidence when the review is restricted to empirical studies.",
       "detailed_response": "",
-      "why_it_works": "Specify exclusion rules that correspond to the review question and inclusion rules. Do not exclude studies because their findings disagree with an expectation."
+      "why_it_works": "Keep the exclusion rules consistent with the inclusion criteria and record the specific reason applied to each excluded report. A study's unfavourable result is never an exclusion criterion."
     },
     "searchLog": {
       "stage": 5,
@@ -600,8 +600,8 @@
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Several papers say learning is important.",
       "good_working_response": "Illustrative opening only. Retrieval practice involves recalling previously studied material without consulting the source. A literature review should then compare documented findings from named studies and explain how their methods and contexts bear on the proposed question.",
-      "detailed_response": "Retrieval practice describes activities in which learners try to bring previously studied material to mind, such as answering questions without consulting notes. Dunlosky and colleagues (2013) reviewed practice testing alongside other learning techniques, examining their usefulness across different learning conditions, learners, materials and outcome tasks. Their review provides a starting point for defining the approach. Its broad scope, however, cannot establish what happened in the particular secondary biology studies that a student might later select.\n\nFor the papers retrieved in my own search, I would compare [insert study A] and [insert study B] in terms of the learning activities they assigned or observed, the interval before measuring retention, and the forms of knowledge the assessments captured. If their results point in similar directions, I would describe that convergence using the reported findings and citations. Where the outcomes differ, I would examine whether differences in student groups, feedback procedures, or measures offer plausible explanations. I would not treat a contrast between two research designs as evidence that one design feature caused their different results without stronger support.\n\nThe relationship between that evidence and a secondary biology project would then need to be explained with care. A local classroom investigation may be valuable for its curricular context even if studies of retrieval practice already exist elsewhere. I would identify the specific studies supporting any statement about a recurring pattern, an underexplored population, or a methodological limitation. The final literature review would replace these planning notes and bracketed references with a connected synthesis of actual retrieved studies, accurate citations, and a research question warranted by what those sources show.",
-      "why_it_works": "Use the longer illustration to see how connected paragraphs can develop an argument. Replace its planning language and bracketed sources with your own verified synthesis and complete references."
+      "detailed_response": "Retrieval practice describes activities in which learners try to bring previously studied material to mind, such as answering questions without consulting notes. Dunlosky and colleagues (2013) reviewed practice testing alongside other learning techniques, examining their usefulness across different learning conditions, learners, materials and outcome tasks. Their review provides a starting point for defining the approach. Its broad scope, however, cannot establish what happened in the particular secondary biology studies that a student might later select.\n\nOnce I have retrieved and checked the relevant papers, I would compare their learning activities, the intervals before measuring retention, and the kinds of knowledge assessed. For this illustration, [study A] and [study B] are placeholders, not citations to published studies. If their results point in similar directions, I would describe that convergence using the reported findings and citations. Where the outcomes differ, I would examine whether differences in student groups, feedback procedures, or measures offer plausible explanations. I would not treat a contrast between two research designs as evidence that one design feature caused their different results without stronger support.\n\nThe relationship between that evidence and a secondary biology project would then need to be explained with care. A local classroom investigation may be valuable for its curricular context even if studies of retrieval practice already exist elsewhere. I would identify the specific studies supporting any statement about a recurring pattern, an underexplored population, or a methodological limitation. The final literature review would replace these planning notes and bracketed references with a connected synthesis of actual retrieved studies, accurate citations, and a research question warranted by what those sources show.",
+      "why_it_works": "The short preview introduces a possible opening; the longer illustration demonstrates paragraph development. Dunlosky and colleagues (2013) is a verifiable review, while the bracketed study labels are hypothetical placeholders. Replace those planning passages with a synthesis grounded in papers actually examined."
     },
     "designType": {
       "stage": 9,
