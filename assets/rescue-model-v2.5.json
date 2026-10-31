@@ -738,7 +738,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The main ideas in your possible research question that will become search concepts.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which two to four central ideas would you search for separately?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -750,26 +750,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "retrieval practice; biology learning; delayed recall",
+          "strong_example": "Retrieval practice; science education; delayed recall.",
           "avoid": "Do not copy every word from the question, including unimportant connecting words.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student initially searches 'studying better.'",
+            "situation": "A student is exploring research about learning science through retrieval practice.",
             "thinking": [
-              "The phrase is everyday language, not field vocabulary.",
-              "Papers use retrieval practice, practice testing, retention, delayed recall, and feedback.",
-              "Those terms help me write a more precise question."
+              "The everyday phrase 'studying better' is too vague for a useful search.",
+              "I can separate the learning activity, the subject area and the learning outcome.",
+              "These concepts can be combined later without treating every word in my question as a separate concept."
             ],
-            "draft": "Question shift: from 'Does testing help studying?' to a question about assigned retrieval practice and delayed recall."
+            "draft": "Search concepts: retrieval practice, science learning, and delayed recall."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Core concepts: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "The central concepts are [concept A], [concept B] and [concept C, if needed]. I included each because [role in question or evidence].",
           "path_frames": {}
         }
       }
@@ -783,7 +783,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Alternative terms researchers may use for the same concepts.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which alternative terms might retrieve relevant sources, and which merely name related but different ideas?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -795,26 +795,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "retrieval practice: practice testing, self-testing; delayed recall: retention, delayed test",
+          "strong_example": "Retrieval-practice group: 'retrieval practice' OR 'practice testing'; outcome group: 'delayed recall' OR 'retention'.",
           "avoid": "Do not join words that are related but mean different constructs as if they were true synonyms.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student initially searches 'studying better.'",
+            "situation": "The student wants alternative search terms for retrieval practice.",
             "thinking": [
-              "The phrase is everyday language, not field vocabulary.",
-              "Papers use retrieval practice, practice testing, retention, delayed recall, and feedback.",
-              "Those terms help me write a more precise question."
+              "Practice testing and self-testing may describe related retrieval activities, depending on the study.",
+              "Retention and delayed recall are connected but are not always measured in the same way.",
+              "I will group alternatives by concept and check their meaning in the papers I retrieve."
             ],
-            "draft": "Question shift: from 'Does testing help studying?' to a question about assigned retrieval practice and delayed recall."
+            "draft": "Retrieval-practice terms: practice testing, self-testing. Outcome terms to inspect: delayed recall, retention, delayed test."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Synonyms and related terms: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "For [concept], I will try [terms joined by OR]. [Related term] may broaden the search, so I will check whether it refers to the same construct.",
           "path_frames": {}
         }
       }
@@ -828,11 +828,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A record of the early searches used to learn the field before the formal literature search.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What two or three searches could you try, where would you run them, and what would you record?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Write the search phrases and where you tried them, plus what each search taught you.",
+          "body": "Prepare two or three preliminary searches. Record the tool, exact wording, date and what you learn once each search is actually run.",
           "questions": [
             "Did the search reveal better vocabulary?",
             "Did it change the question?"
@@ -840,26 +840,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Google Scholar: \"retrieval practice biology retention\" → learned that many papers use the term practice testing.",
+          "strong_example": "Proposed queries, not results: 'retrieval practice' AND 'delayed recall'; ('practice testing' OR 'self-testing') AND 'science learning'.",
           "avoid": "Do not treat this preliminary scan as proof that a literature gap exists.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student initially searches 'studying better.'",
+            "situation": "The student is preparing a preliminary search about retrieval practice in science learning.",
             "thinking": [
-              "The phrase is everyday language, not field vocabulary.",
-              "Papers use retrieval practice, practice testing, retention, delayed recall, and feedback.",
-              "Those terms help me write a more precise question."
+              "I can begin with a simple phrase search, then combine the intervention and outcome ideas.",
+              "Search tools differ in how they interpret quotation marks, Boolean operators and fields.",
+              "I should record the platform, date, exact query and what vocabulary or studies I actually find, rather than inventing search results."
             ],
-            "draft": "Question shift: from 'Does testing help studying?' to a question about assigned retrieval practice and delayed recall."
+            "draft": "Proposed searches: 'retrieval practice' AND 'delayed recall'; ('practice testing' OR 'self-testing') AND 'science learning'; 'retrieval practice' AND 'biology education'. Record the actual platform, date and findings after searching."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Two or three preliminary search strings: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "In [database or search tool], I tried [exact search 1], [exact search 2] and [search 3 if useful] on [date]. The searches yielded [what I actually found or did not find], suggesting [next vocabulary or search adjustment].",
           "path_frames": {}
         }
       }
@@ -873,11 +873,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "What the preliminary literature repeatedly supports with reasonably consistent evidence.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which claim can you support with the sources actually read, and how far does that evidence extend?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Summarize a pattern that appears across credible sources and keep the claim within their scope.",
+          "body": "Summarise only what the sources you have checked support. Compare their designs and contexts before judging how established a finding is.",
           "questions": [
             "How many sources support this?",
             "Are their populations and measures comparable?"
@@ -885,26 +885,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Several studies report that retrieval practice can improve delayed recall under specific learning conditions.",
+          "strong_example": "Illustrative structure, to use only with supporting citations: Several relevant studies report [specified outcome] after [defined activity] under [conditions].",
           "avoid": "Do not write “research proves” or make a universal claim from one source.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student initially searches 'studying better.'",
+            "situation": "A student has started reading about retrieval activities and delayed recall.",
             "thinking": [
-              "The phrase is everyday language, not field vocabulary.",
-              "Papers use retrieval practice, practice testing, retention, delayed recall, and feedback.",
-              "Those terms help me write a more precise question."
+              "I should keep notes about the participants, tasks and outcomes in each source.",
+              "Similar findings across a few papers may be worth describing, but that is not enough to establish a field-wide consensus.",
+              "I will only write a summary after checking the sources and noting their relevant boundaries."
             ],
-            "draft": "Question shift: from 'Does testing help studying?' to a question about assigned retrieval practice and delayed recall."
+            "draft": "Provisional summary to complete after source checks: [pattern documented across cited studies], for [participants, measures and conditions]; [important qualification]."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Across the sources I have reviewed, [bounded pattern] appears reasonably established for [population/context/conditions].",
+          "frame": "In [identified and cited sources], [supported pattern] appears under [specific conditions]. The evidence is limited by [population, measure or design difference].",
           "path_frames": {}
         }
       }
@@ -918,11 +918,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Research methods or measurement approaches that appear in the preliminary literature.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What research designs, measures and time intervals do the sources actually use?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Note recurring designs, instruments, outcomes, timeframes, or analytic approaches.",
+          "body": "Record the study designs, measurement tools, outcomes and timing used in the sources, with citations.",
           "questions": [
             "How do researchers actually measure my construct?",
             "Are there methods I cannot realistically reproduce?"
@@ -930,26 +930,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Many studies use pre/post or delayed tests; several compare recall scores after assigned study conditions.",
+          "strong_example": "An example of what to record from a paper: assigned or observed study activity; recall-test format; interval before testing.",
           "avoid": "Do not copy a method simply because it is common without checking whether it fits your question.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student initially searches 'studying better.'",
+            "situation": "The student wants to understand how published studies investigate science recall.",
             "thinking": [
-              "The phrase is everyday language, not field vocabulary.",
-              "Papers use retrieval practice, practice testing, retention, delayed recall, and feedback.",
-              "Those terms help me write a more precise question."
+              "I can identify whether a study assigns learning activities or observes what students normally do.",
+              "I should note exactly how recall was tested and after what delay.",
+              "A method may suit its authors' question without being feasible or appropriate for my own project."
             ],
-            "draft": "Question shift: from 'Does testing help studying?' to a question about assigned retrieval practice and delayed recall."
+            "draft": "Extraction notes to make for each source: design or assignment, participants, retrieval activity, outcome measure, delay and any limitations described."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Methods or measurements used in existing studies: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "In [cited source], the researchers used [design and recruitment/assignment] and assessed [outcome] through [measure and timing]. This method can address [question] but leaves [limitation].",
           "path_frames": {}
         }
       }
@@ -963,11 +963,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "What remains unclear after the preliminary scan: inconsistent findings, missing contexts, measurement differences, or unresolved mechanisms.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What specific disagreement or unanswered question remains after checking the available sources?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Describe the uncertainty precisely and identify what creates it.",
+          "body": "Describe a specific uncertainty and explain which evidence or methodological difference leaves it unresolved.",
           "questions": [
             "What exactly is uncertain?",
             "Could different methods explain the disagreement?"
@@ -975,26 +975,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Studies use different retention intervals, so it is unclear whether the size of the retrieval-practice advantage is similar at 24 versus 48 hours.",
+          "strong_example": "Possible uncertainty after verification: Studies may use different delays before testing, complicating comparisons of reported recall outcomes.",
           "avoid": "Do not call every limitation a research gap.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student initially searches 'studying better.'",
+            "situation": "The student sees that sources discuss retention using different testing intervals.",
             "thinking": [
-              "The phrase is everyday language, not field vocabulary.",
-              "Papers use retrieval practice, practice testing, retention, delayed recall, and feedback.",
-              "Those terms help me write a more precise question."
+              "A difference in measurement timing can make findings difficult to compare.",
+              "I need to check the actual papers before claiming results conflict.",
+              "The uncertainty might concern comparability rather than a complete absence of research."
             ],
-            "draft": "Question shift: from 'Does testing help studying?' to a question about assigned retrieval practice and delayed recall."
+            "draft": "Possible uncertainty to investigate: whether differences in recall-test timing affect how findings across the retrieved studies can be compared."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "It remains unclear whether/how [specific uncertainty], especially when [boundary/context/method difference].",
+          "frame": "After examining [cited sources], I remain uncertain about [specific issue] because [difference, missing detail or limitation]. My preliminary search covered [boundary].",
           "path_frames": {}
         }
       }
@@ -1008,7 +1008,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "How your question changed after learning field vocabulary, methods, or limitations.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which new term, study method or evidence limitation led you to change the question?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -1020,26 +1020,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Before: Does sleep improve grades? After: What is the association between self-reported weekday sleep duration and biology quiz score? The wording changed because sleep will be observed, not assigned.",
+          "strong_example": "Before: Does testing improve learning? After: How do science education studies define and measure delayed recall following retrieval practice?",
           "avoid": "Do not pretend your question never changed; revision is part of research.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student initially searches 'studying better.'",
+            "situation": "The student's first idea was 'Does testing make science students learn better?'",
             "thinking": [
-              "The phrase is everyday language, not field vocabulary.",
-              "Papers use retrieval practice, practice testing, retention, delayed recall, and feedback.",
-              "Those terms help me write a more precise question."
+              "The term 'testing' covers several activities, and 'better' has no clear measure.",
+              "The papers I plan to examine can be compared by what they call retrieval practice and delayed recall.",
+              "If I am reviewing existing studies, I should frame the question around their measures and findings rather than claiming I have assigned an intervention."
             ],
-            "draft": "Question shift: from 'Does testing help studying?' to a question about assigned retrieval practice and delayed recall."
+            "draft": "Before: Does testing make students learn better? Revised direction: How have studies of retrieval practice in science education measured delayed recall?"
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "How my possible question changed after reading: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "My earlier question was [original wording]. After reading [identified sources or topics], I changed it to [revised question] because [new concept, method or evidence boundary].",
           "path_frames": {}
         }
       }
@@ -1053,7 +1053,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Your first complete research-question candidate.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What specific evidence would make your first research-question candidate answerable?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -1065,26 +1065,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "What is the association between weekly study time and delayed biology recall in this class?",
+          "strong_example": "What is the association between self-reported daily phone use and course grades among consenting students in the study setting?",
           "avoid": "Do not worry if this is not the final version.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student wants to ask 'Does phone use lower grades?'",
+            "situation": "A student asks whether daily phone use causes lower grades.",
             "thinking": [
-              "I will only measure existing phone use, not assign it.",
-              "That means the design is observational.",
-              "My question should ask about association, not whether phone use causes lower grades."
+              "I would be measuring existing phone use rather than assigning it, so a causal question is not justified.",
+              "Self-reported use and course grades may be measured differently or incompletely.",
+              "If I work with classmates, I need approval and a privacy-conscious way to obtain any records."
             ],
-            "draft": "What is the association between self-reported daily phone use and current course grade in this sample?"
+            "draft": "How is self-reported daily phone use associated with course grades among consenting students in the selected setting?"
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Draft question 1: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "My first question is [specific question] concerning [population or context]. I could examine it using [data and design], although [evidence or access limit] would remain.",
           "path_frames": {}
         }
       }
@@ -1098,7 +1098,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A second wording or conceptual version of the research question.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What meaningful change in question type, evidence or scope makes this a genuine second candidate?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -1110,26 +1110,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "How does delayed recall differ between two assigned study procedures under the same content conditions?",
+          "strong_example": "How do consenting students describe phone use during their independent study routines?",
           "avoid": "Do not create a second version by changing only punctuation.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student wants to ask 'Does phone use lower grades?'",
+            "situation": "The student is considering an alternative to correlating phone use with grades.",
             "thinking": [
-              "I will only measure existing phone use, not assign it.",
-              "That means the design is observational.",
-              "My question should ask about association, not whether phone use causes lower grades."
+              "The first question compares two measured quantities but cannot describe how students experience study interruptions.",
+              "A qualitative question could explore students' own accounts of phone use while studying.",
+              "It requires different evidence, appropriate consent and care not to present accounts as proof of an effect on grades."
             ],
-            "draft": "What is the association between self-reported daily phone use and current course grade in this sample?"
+            "draft": "How do consenting students describe the ways phone use enters or interrupts their study routines?"
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Draft question 2: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "An alternative question is [second question]. Compared with the first, it changes [phenomenon, population or design] and would need [different evidence or method].",
           "path_frames": {}
         }
       }
