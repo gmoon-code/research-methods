@@ -2714,22 +2714,22 @@
           "id": "M-S01",
           "citation": "Borenstein, M., Hedges, L. V., Higgins, J. P. T., & Rothstein, H. R. (2010). A basic introduction to fixed-effect and random-effects models for meta-analysis. Research Synthesis Methods, 1(2), 97–111. https://doi.org/10.1002/jrsm.12",
           "verified": true,
-          "use": "Methodological basis for distinguishing fixed-effect and random-effects models.",
-          "boundary": "The exemplar's effect sizes are synthetic."
+          "use": "Explains how fixed-effect and random-effects pooling embody different assumptions about underlying effects, providing background for the DerSimonian–Laird illustration.",
+          "boundary": "The publication supplies statistical methodology, not T01–T08, and does not validate the independence or source data of the fictional effect estimates."
         },
         {
           "id": "M-S02",
           "citation": "Higgins, J. P. T., Thompson, S. G., Deeks, J. J., & Altman, D. G. (2003). Measuring inconsistency in meta-analyses. BMJ, 327(7414), 557–560. https://doi.org/10.1136/bmj.327.7414.557",
           "verified": true,
-          "use": "Methodological reference for heterogeneity and I².",
-          "boundary": "I² does not explain why effects differ."
+          "use": "Presents and interprets the I² inconsistency measure used alongside Cochran's Q in meta-analysis.",
+          "boundary": "I² is a descriptive measure, sensitive to the available study set, and does not identify causes of heterogeneity or certify a homogeneous intervention effect."
         },
         {
           "id": "M-S03",
-          "citation": "Page, M. J., McKenzie, J. E., Bossuyt, P. M., et al. (2021). The PRISMA 2020 statement: An updated guideline for reporting systematic reviews. BMJ, 372, n71. https://doi.org/10.1136/bmj.n71",
+          "citation": "Page, M. J., McKenzie, J. E., Bossuyt, P. M., Boutron, I., Hoffmann, T. C., Mulrow, C. D., Shamseer, L., Tetzlaff, J. M., Akl, E. A., Brennan, S. E., Chou, R., Glanville, J., Grimshaw, J. M., Hróbjartsson, A., Lalu, M. M., Li, T., Loder, E. W., Mayo-Wilson, E., McDonald, S., ... Moher, D. (2021). The PRISMA 2020 statement: An updated guideline for reporting systematic reviews. BMJ, 372, n71. https://doi.org/10.1136/bmj.n71",
           "verified": true,
-          "use": "Reporting framework for transparent search, selection, and synthesis.",
-          "boundary": "The synthetic study set is intentionally small and is not a real systematic review."
+          "use": "Guidance for transparent reporting of actual systematic-review searches, screening, appraisal and synthesis procedures.",
+          "boundary": "No primary studies or search, selection and appraisal records exist for the fictional effect set, so citing PRISMA does not make the worked calculation a conducted systematic review."
         }
       ],
       "stages": [
