@@ -5238,14 +5238,15 @@
           ],
           "draft": "Proposed only: (\"retrieval practice\" OR \"practice testing\") AND (biology OR \"science education\"). Search date, filters and retrieved count remain pending until this exact query is run."
         },
-        "next_prompt": "Which search will you actually run next, in which database, and what exact settings will you record? Separate planned syntax from an executed search."
+        "next_prompt": "Which search will you actually run next, in which database, and what exact settings will you record? Separate planned syntax from an executed search.",
+        "compare_prompt": "Compare a broad and a focused search route by asking which concepts they combine, what each might miss and how you would document the actual queries."
       },
       "sources": {
         "stage": 6,
         "title": "Source record — what each paper contributes",
         "body": "Record what each source actually contributes. Keep its identifier, question, design, population, measures, results and limits. Verify the paper itself before citing a statement; peer review alone does not establish relevance or measurement validity.",
         "terms": [
-          "TRAPP",
+          "citation",
           "observational study",
           "measurement validity"
         ],
@@ -5261,7 +5262,8 @@
           ],
           "draft": "Source record template: [verified citation and ID]; [design and sampling]; [exact measured variables]; [reported finding and page/table]; [limits on interpretation]. No findings are entered without checking the paper."
         },
-        "next_prompt": "For the source you have open, which verified design, measure and result belong in its record, and where in the paper can each be checked?"
+        "next_prompt": "For the source you have open, which verified design, measure and result belong in its record, and where in the paper can each be checked?",
+        "compare_prompt": "Compare two source types by checking what data each reports, which methods were used and what claims the source can support."
       },
       "screen": {
         "stage": 6,
@@ -5283,7 +5285,8 @@
           ],
           "draft": "Hypothetical screening decision: exclude report S-02 at the appropriate screening stage because it has no original empirical data under the predefined criteria. Record its exact source ID and reason; do not count it as an included empirical study."
         },
-        "next_prompt": "Which eligibility rule determines this source's include, exclude or uncertain status, and what evidence from the record supports the decision?"
+        "next_prompt": "Which eligibility rule determines this source's include, exclude or uncertain status, and what evidence from the record supports the decision?",
+        "compare_prompt": "Compare include, exclude and pending decisions against the actual eligibility criteria. A result supporting your expectation does not change those rules."
       },
       "study": {
         "stage": 7,
@@ -5303,7 +5306,8 @@
           ],
           "draft": "Fictional matrix comparison: study A measures next-day recognition; study B measures free recall after a week. The matrix records distinct outcome definitions, so their estimates cannot simply be compared as interchangeable retention measures."
         },
-        "next_prompt": "Which two sources or study records should be compared next, and which common matrix dimensions will show whether their outcomes are genuinely comparable?"
+        "next_prompt": "Which two sources or study records should be compared next, and which common matrix dimensions will show whether their outcomes are genuinely comparable?",
+        "compare_prompt": "Compare sources using the same columns for population, design, measures and findings. Identify differences that would make direct comparison misleading."
       },
       "synth": {
         "stage": 7,
@@ -5326,7 +5330,8 @@
           ],
           "draft": "Fictional synthesis plan: group studies A and B under delayed-recall outcomes, then discuss study C's immediate-recognition measure separately. Replace each ID with checked evidence before asserting convergence."
         },
-        "next_prompt": "Which verified sources support your emerging synthesis claim, which source complicates it, and how will you express the boundary between their methods?"
+        "next_prompt": "Which verified sources support your emerging synthesis claim, which source complicates it, and how will you express the boundary between their methods?",
+        "compare_prompt": "Compare the evidence supporting a theme with studies that complicate it. Which patterns remain defensible across the relevant methods and contexts?"
       },
       "gap": {
         "stage": 7,
@@ -5337,7 +5342,9 @@
           "replication",
           "generalization"
         ],
-        "decision_keys": [],
+        "decision_keys": [
+          "gapType"
+        ],
         "walkthrough": {
           "situation": "A student reads university-based retrieval-practice studies and wants to investigate a similar question in one secondary classroom.",
           "thinking": [
@@ -5347,7 +5354,8 @@
           ],
           "draft": "Proposed rationale for this fictional case: examine a previously studied retrieval-practice question in one local secondary science setting, while recording the limited scope of the literature search. No global research gap is claimed."
         },
-        "next_prompt": "Which supported rationale best describes your project now, and what exact reviewed evidence justifies an extension, replication, inconsistency or local question?"
+        "next_prompt": "Which supported rationale best describes your project now, and what exact reviewed evidence justifies an extension, replication, inconsistency or local question?",
+        "compare_prompt": "Compare replication, extension, local inquiry and a documented literature gap. Choose the smallest rationale supported by the searches and papers actually reviewed."
       },
       "claims": {
         "stage": 8,
@@ -5368,7 +5376,8 @@
           ],
           "draft": "Unresolved claim C01: 'Study strategies always improve grades.' Verify the cited survey's measures and conclusions before replacing this with a bounded, accurate statement; do not retain an unsupported universal claim."
         },
-        "next_prompt": "Which exact sentence needs verification, which source and result will you check, and how will you document a correction or an unresolved citation?"
+        "next_prompt": "Which exact sentence needs verification, which source and result will you check, and how will you document a correction or an unresolved citation?",
+        "compare_prompt": "Compare a precise source-supported sentence with a broader assertion that the same source does not warrant. Specify what must be checked or qualified."
       },
       "outline": {
         "stage": 8,
@@ -5388,7 +5397,8 @@
           ],
           "draft": "Paragraph plan: introduce variation in assessment timing; compare verified sources using matched time intervals; qualify the comparison using differing test formats; move to the next paragraph on how outcome definitions affect interpretation."
         },
-        "next_prompt": "What is the next paragraph's intellectual task, which checked sources will develop it, and how does its reasoning connect to the preceding paragraph?"
+        "next_prompt": "What is the next paragraph's intellectual task, which checked sources will develop it, and how does its reasoning connect to the preceding paragraph?",
+        "compare_prompt": "Compare a series of one-paper summaries with an idea-led sequence. Which paragraph structure makes relationships and transitions between sources clearer?"
       }
     },
     "methods": {
