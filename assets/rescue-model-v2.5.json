@@ -3451,7 +3451,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The ordered actions used to collect or generate the evidence.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Could another student carry out your steps, record the intended evidence and identify any departure from the plan?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3471,19 +3471,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student measures 20 seeds in one dish per treatment.",
+            "situation": "Six planting dishes will receive two solution conditions and be measured on Days 0 and 7.",
             "thinking": [
-              "Each seed gives a measurement, but the whole dish receives the treatment together.",
-              "Dish may be the experimental unit.",
-              "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+              "Label dishes and confirm permissions before beginning.",
+              "Assign treatments at the dish level and apply the same solution volume.",
+              "Record measurements with dish IDs and log missing or altered observations."
             ],
-            "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+            "draft": "Prepare labelled dishes, assign each dish a condition, apply equal solution volumes, record the defined growth measures on Days 0 and 7, and document deviations."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "First, [step]. Next, [step]. For each unit/case/source, I will [record/collect action]. Deviations will be documented as [rule].",
+          "frame": "After [preparation and approval], I will [selection or assignment], then [condition or observation step]. At [defined times], I will record [outcomes and identifiers] and log deviations by [rule].",
           "path_frames": {}
         }
       }
