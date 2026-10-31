@@ -2706,9 +2706,9 @@
       "subtitle": "Meta-analysis mechanics exemplar with effect units, heterogeneity, and model reasoning",
       "status": "synthetic_instructional_exemplar",
       "dir": "synthetic-meta-analysis",
-      "rq": "Across eight synthetic independent studies, what is the pooled standardized mean difference for a hypothetical learning intervention?",
-      "disclaimer": "Meta-analysis methodology sources are real and verified. All eight study effects are synthetic.",
-      "data_summary": "8 synthetic effects. Random-effects pooled g = 0.37, 95% CI [0.26, 0.47], I² = 13.3%.",
+      "rq": "What pooled standardised mean difference results from applying a DerSimonian–Laird random-effects calculation to eight hypothetical effect estimates?",
+      "disclaimer": "All eight effect estimates, their standard errors and the resulting pooled calculations are synthetic. The three cited papers are genuine methodology sources; no primary intervention reports, original outcome data, selection log, evidence of independence or real systematic review are supplied.",
+      "data_summary": "Eight invented g/SE pairs (T01–T08). DerSimonian–Laird random-effects pooled g = 0.3688, normal-approximation 95% CI [0.2632, 0.4743], Q(7) = 8.0729, τ² = 0.00309, I² = 13.29%. These are reproducible teaching calculations, not empirical treatment evidence.",
       "sources": [
         {
           "id": "M-S01",
@@ -2736,197 +2736,197 @@
         {
           "id": 1,
           "title": "Find a research interest",
-          "where": "The synthetic effect synthesis exemplar is at Stage 1 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 1 decision that belongs to a meta-analysis design.",
+          "where": "A student wonders how quantitative findings from more than one intervention study could be considered together.",
+          "changed": "The interest moves from the effectiveness of a learning intervention to the calculations and assumptions involved in pooling comparable results.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Different studies may estimate similar educational outcomes on scales that are not directly comparable.",
+            "A standardised mean difference can express a contrast relative to its variability, provided the measures and comparisons warrant synthesis.",
+            "Constructed effect estimates offer a way to practise the calculation without claiming to have identified research about a real intervention."
           ],
-          "decision": "Keep quantitative synthesis of intervention effects as the working area because it can be connected to a specific evidence source.",
-          "rejected": "A broad topic with no observable evidence plan is rejected.",
+          "decision": "Explore what a meta-analysis does when estimates are placed on a shared scale and assigned weights reflecting their uncertainty.",
+          "rejected": "A claim that a particular learning intervention works cannot be supported by invented effects.",
           "notebook": {
-            "broadTopic": "quantitative synthesis of intervention effects",
-            "startingQuestion": "What specific pattern, relationship, experience, or evidence synthesis could be documented?"
+            "broadTopic": "Quantitative synthesis of learning-intervention results",
+            "startingQuestion": "How can several comparable effect estimates be combined, and how do their uncertainties influence the answer?"
           },
-          "forward": "Stage 2 must narrow population/system, evidence type, and realistic scope.",
+          "forward": "The next stage should define the hypothetical studies and what the existing extraction file can actually substantiate.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What conditions would make different intervention outcomes suitable for a common effect metric?",
+            "Are you investigating an intervention or demonstrating a statistical method?"
           ]
         },
         {
           "id": 2,
           "title": "Narrow the topic and test feasibility",
-          "where": "The synthetic effect synthesis exemplar is at Stage 2 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 2 decision that belongs to a meta-analysis design.",
+          "where": "The exercise is bounded to eight invented effect-estimate rows instead of a real evidence base.",
+          "changed": "Its scope is defined by the exact study identifiers, effect values and standard errors supplied in a synthetic CSV.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Each of T01–T08 has a value labelled standardised_mean_difference_g and a corresponding standard_error.",
+            "The source does not contain the sample sizes, outcome distributions or primary reports needed to recompute each individual g.",
+            "Study independence and measurement comparability are assumptions of the illustration, not facts verified through real reports."
           ],
-          "decision": "Limit the project to one bounded population/system, time frame, and evidence type.",
-          "rejected": "Trying to answer long-term outcomes, mechanisms, and generalization in one small project is rejected.",
+          "decision": "Use the eight fictional effects to demonstrate a specific random-effects pooling algorithm with a clearly limited inferential interpretation.",
+          "rejected": "Describing the eight effects as eight independently verified experiments would invent study designs and participant information.",
           "notebook": {
-            "scope": "One bounded instructional exemplar with explicit limits.",
-            "feasibility": "Evidence can be collected or organized within the stated synthetic teaching workflow."
+            "scope": "Eight invented effect estimates and eight positive standard errors, one row for each T01–T08.",
+            "feasibility": "The extracted inputs are sufficient to reproduce one simplified inverse-variance meta-analysis. They are insufficient to verify effect-size generation, actual study independence, search coverage or study quality."
           },
-          "forward": "The literature scan can now use precise keywords instead of one broad topic word.",
+          "forward": "Methodology sources can now establish the distinctions among pooling models, heterogeneity and reporting.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which calculations can you verify from the available columns?",
+            "Which features of a real meta-analysis would require primary-study records?"
           ]
         },
         {
           "id": 3,
           "title": "Explore the research landscape",
-          "where": "The synthetic effect synthesis exemplar is at Stage 3 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 3 decision that belongs to a meta-analysis design.",
+          "where": "Three genuine methodology papers provide a basis for analysing the invented effect table.",
+          "changed": "Each source is assigned its specific function instead of being treated as intervention-effect evidence.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Borenstein et al. (2010) explain how fixed-effect and random-effects models involve different assumptions and aims.",
+            "Higgins et al. (2003) introduce and discuss I² as a measure associated with between-study inconsistency, without identifying why estimates differ.",
+            "Page et al. (2021) provide the PRISMA 2020 reporting framework for real systematic reviews; its presence does not establish that this synthetic set was systematically selected."
           ],
-          "decision": "Use verified background sources to learn vocabulary, existing evidence, and methodological boundaries.",
-          "rejected": "Treating the first relevant source as proof of the final answer is rejected.",
+          "decision": "Use the three publications for methodology only and keep the hypothetical effect sizes separate from their published evidence.",
+          "rejected": "Calling the methodological citations eight real learning-intervention studies would confuse guidance with observations.",
           "notebook": {
-            "known": "The verified sources establish a defensible background rationale.",
-            "uncertain": "The exemplar still needs its own path-specific evidence and cannot inherit effect sizes or themes from background sources."
+            "known": "The selected publications explain model assumptions, heterogeneity interpretation and transparent review reporting.",
+            "uncertain": "The eight effect sizes were invented, so there is no verified source of their intervention outcomes, independent sampling or risk of bias."
           },
-          "forward": "The research question can now use terminology grounded in the literature while remaining answerable.",
+          "forward": "The research question can focus on a reproducible synthetic calculation rather than a claim about an intervention's effectiveness.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which methodological claims can a citation support without supplying any intervention effects?",
+            "How might the interpretation change under a different pooling model?"
           ]
         },
         {
           "id": 4,
           "title": "Write and refine the research question",
-          "where": "The synthetic effect synthesis exemplar is at Stage 4 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 4 decision that belongs to a meta-analysis design.",
+          "where": "The question names the specific statistical procedure and acknowledges the hypothetical character of the input.",
+          "changed": "An open question about a real intervention's pooled effect becomes a reproducible teaching question.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The effects have been labelled g, but the original group statistics needed to check Hedges' correction are not available.",
+            "DerSimonian–Laird random-effects pooling can be reconstructed from g and its standard error for each row.",
+            "The question should ask what that calculation produces, without presupposing the existence of eight independently recruited studies."
           ],
-          "decision": "Across eight synthetic independent studies, what is the pooled standardized mean difference for a hypothetical learning intervention?",
-          "rejected": "A question that uses causal, experimental, or statistical language inconsistent with the selected path is rejected.",
+          "decision": "What pooled standardised mean difference results from applying a DerSimonian–Laird random-effects calculation to eight hypothetical effect estimates?",
+          "rejected": "What is the proven effect of the learning intervention? This would turn fabricated study-level estimates into a real educational conclusion.",
           "notebook": {
-            "questionType": "meta-analysis",
-            "finalRQ": "Across eight synthetic independent studies, what is the pooled standardized mean difference for a hypothetical learning intervention?",
-            "rqJustification": "The question matches a meta-analysis evidence structure."
+            "questionType": "Meta-analysis",
+            "finalRQ": "What pooled standardised mean difference results from applying a DerSimonian–Laird random-effects calculation to eight hypothetical effect estimates?",
+            "rqJustification": "Eight synthetic g/SE pairs support reconstruction of one specified random-effects calculation. They do not document real interventions, study selection or underlying participant measures."
           },
-          "forward": "Every later decision must now remain aligned with this exact question.",
+          "forward": "The next stages should explain how a genuine systematic search and an auditable effect extraction would be conducted.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can someone answer the question directly from the stored CSV?",
+            "Does the question promise an empirical claim that a synthetic table cannot deliver?"
           ]
         },
         {
           "id": 5,
           "title": "Build a systematic search strategy",
-          "where": "The synthetic effect synthesis exemplar is at Stage 5 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 5 decision that belongs to a meta-analysis design.",
+          "where": "The student considers how real review searches would produce study-level inputs before pooling.",
+          "changed": "A hypothetical search procedure is separated from the undocumented origin of the teaching data.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "A real intervention review would specify population, intervention, comparator, outcomes and eligible study designs.",
+            "Search strings, database names, dates, de-duplication and screening decisions would be archived before reporting a flow of studies.",
+            "No such search or selection history accompanies these eight invented rows."
           ],
-          "decision": "Build concept blocks and document more than one search route.",
-          "rejected": "One undocumented web search is rejected as an evidence-search record.",
+          "decision": "Illustrate a prospective systematic search plan while explicitly recording that no search yielded T01–T08.",
+          "rejected": "A fabricated PRISMA flow in which eight studies were retrieved and included would imply research activity that never happened.",
           "notebook": {
-            "searchLogic": "Separate the central phenomenon, population/context, and design/evidence terms; connect synonyms with OR and concepts with AND.",
-            "searchLogRule": "Record database/site, date, exact string, filters, and result count."
+            "searchLogic": "For a future real review, combine intervention terms with relevant learner, comparison and outcome concepts; specify actual databases and adapt their search syntax.",
+            "searchLogRule": "Preserve exact search queries and dates, all retrieved identifiers, duplicate and exclusion decisions, and full-text sources. None exists for the invented effects."
           },
-          "forward": "The search log makes later source-selection and coverage claims auditable.",
+          "forward": "Source appraisal must next distinguish methodology articles from the absent primary intervention studies.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which review records would substantiate that eight empirical studies were selected?",
+            "Why can PRISMA guidance not stand in for having performed those steps?"
           ]
         },
         {
           "id": 6,
           "title": "Evaluate, read, and extract sources",
-          "where": "The synthetic effect synthesis exemplar is at Stage 6 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 6 decision that belongs to a meta-analysis design.",
+          "where": "The three literature records are evaluated for the methodological contributions they actually make.",
+          "changed": "A method paper is not treated as a source of fictional effect estimates or a verification of primary-study quality.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Borenstein et al. describe model assumptions, supporting explicit selection of a random-effects calculation.",
+            "Higgins et al. examine inconsistency measures, highlighting that an I² value alone cannot explain heterogeneity.",
+            "PRISMA 2020 concerns the reporting of real searches, selection and analysis, none of which can be retrospectively assumed for fictional T01–T08."
           ],
-          "decision": "Extract comparable information from each included source instead of saving citation-only records.",
-          "rejected": "Peer-reviewed or authoritative status alone is rejected as a substitute for relevance and methodological appraisal.",
+          "decision": "Record each citation's methodological role and boundary, noting that no underlying intervention papers were available to appraise.",
+          "rejected": "A verified DOI does not make an artificial effect estimate an independently verified study result.",
           "notebook": {
-            "sourceExtraction": "Record source type, design/scope, population/context, main claim/finding, limitations, and relevance to this exemplar."
+            "sourceExtraction": "M-S01 informs random-effects model assumptions; M-S02 informs Q/I² interpretation; M-S03 informs transparent review reporting. The three sources are methodology references, not the primary reports for T01–T08."
           },
-          "forward": "Comparable source records allow synthesis instead of annotated-bibliography writing.",
+          "forward": "The rationale can focus on learning the quantitative method without manufacturing a claim of research novelty.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which source defines the calculation, and which addresses reporting?",
+            "Would a real review require additional information beyond the abstract of each intervention report?"
           ]
         },
         {
           "id": 7,
           "title": "Synthesize the literature and justify the study",
-          "where": "The synthetic effect synthesis exemplar is at Stage 7 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 7 decision that belongs to a meta-analysis design.",
+          "where": "The rationale moves from a teaching need to the actual limitations of pooled statistics.",
+          "changed": "The project is justified as a transparent computational demonstration rather than a synthesis of an intervention literature.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Combining effects requires decisions about a common metric and the distribution of plausible underlying effects.",
+            "Random-effects weighting includes an estimated between-study variance, so results depend on modelling assumptions as well as input standard errors.",
+            "A small invented dataset can make these steps visible while teaching why plausible-looking confidence intervals must not be mistaken for empirical evidence."
           ],
-          "decision": "Use a bounded rationale such as replication, local application, evidence synthesis, or methodological demonstration.",
-          "rejected": "A global 'no research exists' claim is rejected unless an appropriately comprehensive search can defend it.",
+          "decision": "Use the fictional table to show how an estimate is calculated and why model choice and uncertainty need careful explanation.",
+          "rejected": "Stating that no meta-analysis of this intervention exists would require a genuine search and an identified intervention.",
           "notebook": {
-            "rationale": "The exemplar is justified by the stated teaching/research purpose and verified background, without manufacturing novelty."
+            "rationale": "The synthetic example is a worked illustration of inverse-variance random-effects pooling, heterogeneity and reporting limits using traceable numeric inputs."
           },
-          "forward": "The literature review must lead to the actual question and claim boundary.",
+          "forward": "The background section should connect model choice to heterogeneity and appropriate reporting without a mechanical list of references.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What does the random-effects framework assume about study estimates?",
+            "How can an instructional numerical result seem credible even when its underlying studies do not exist?"
           ]
         },
         {
           "id": 8,
           "title": "Write the literature review",
-          "where": "The synthetic effect synthesis exemplar is at Stage 8 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 8 decision that belongs to a meta-analysis design.",
+          "where": "The literature section develops how the choice of pooling model changes what is estimated.",
+          "changed": "The narrative connects model assumptions, inconsistency and transparent reporting through their methodological implications.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "A fixed-effect analysis assumes one underlying effect, while a random-effects analysis models variation in underlying effects among studies.",
+            "A measure such as I² helps describe inconsistency, although it does not determine which research settings explain differences.",
+            "Real reviews must report how their studies were found and assessed; because the present inputs are invented, those reporting steps cannot be filled with fictional details."
           ],
-          "decision": "Write the literature section around cross-source claims and differences.",
-          "rejected": "A paragraph-by-paragraph list of source summaries is rejected.",
+          "decision": "Build a methods rationale that leads from effect-size comparability through modelling to transparent presentation of uncertainty.",
+          "rejected": "Treating a small I² as proof that all eight fictional interventions are identical would misinterpret the statistic.",
           "notebook": {
-            "literatureReviewPlan": "Claim → evidence from more than one source where available → difference/qualification → connection to the present question."
+            "literatureReviewPlan": "Borenstein et al. (2010) distinguish the assumptions and purposes of fixed-effect and random-effects synthesis. Higgins et al. (2003) describe how inconsistency can be summarised, while warning against using heterogeneity measures as explanations. Page et al. (2021) provide reporting guidance that a genuine review would need to follow. These publications justify methodological care, not any empirical learning benefit."
           },
-          "forward": "The Method must now operationalize the same constructs and evidence structure.",
+          "forward": "The project can now state exactly which modelling procedure its source file allows.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can readers see how the statistical models differ before they see the numbers?",
+            "Which part of PRISMA reporting would remain impossible without original study records?"
           ]
         },
         {
           "id": 9,
           "title": "Choose the research design",
-          "where": "The synthetic effect synthesis exemplar is at Stage 9 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 9 decision that belongs to a meta-analysis design.",
+          "where": "The method is defined as a worked random-effects computation using eight invented g/SE pairs.",
+          "changed": "The design distinguishes a meta-analysis teaching calculation from a conducted systematic review with real independent studies.",
           "reasoning": [
-            "Start from the research question and the meta-analysis evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The source file contains eight effect estimates with positive standard errors, enabling inverse-variance weighting.",
+            "DerSimonian–Laird provides a moment estimate of the between-study variance τ² and an approximate pooled estimate.",
+            "Neither the underlying studies' independence nor their outcome comparability can be confirmed from the file."
           ],
-          "decision": "Use a meta-analysis design only because the teaching records contain comparable quantitative effect estimates.",
-          "rejected": "Calling any literature review a meta-analysis is rejected.",
+          "decision": "Use a DerSimonian–Laird random-effects instructional calculation with a conventional normal-approximation interval.",
+          "rejected": "Calling the worked calculation a systematic review demonstrating intervention efficacy would claim nonexistent empirical procedures.",
           "notebook": {
-            "designType": "Synthetic random-effects meta-analysis",
-            "claimBoundary": "Demonstrate pooling mechanics for eight synthetic independent effects only."
+            "designType": "Meta-analysis",
+            "claimBoundary": "Reconstruct numerical pooling of eight synthetic input effects only. Normal-approximation uncertainty is conditional on simplifying assumptions and cannot be treated as real evidence about learning."
           },
-          "forward": "Define effect metric and independent synthesis unit.",
+          "forward": "Define the units and exact variable names before computing any pooled quantities.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this synthetic effect synthesis example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What do the file's inputs permit you to compute directly?",
+            "What would you need to verify before asserting that effects are statistically independent?"
           ]
         },
         {
