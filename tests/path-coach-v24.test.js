@@ -91,4 +91,22 @@ const interpretiveChecks=C.readinessChecks(14,qualitativeCorpus);
 if(!interpretiveChecks.some(s=>s.includes("coding, close reading or another justified process")))process.exit(1);
 if(!interpretiveChecks.some(s=>s.includes("suited to the method")))process.exit(1);
 
+// literature-review record integrity and distinct study/report accounting
+let litEvidence={data:{rawLocation:"original source and extraction register",descriptives:"included study characteristics"},pathway:{selected:"literature_review",confirmed:true}};
+let litGate=C.stageGate(13,litEvidence);
+if(litGate.canMarkReady||!litGate.missing.includes("missingObserved")||!litGate.missing.includes("errorsCorrections"))process.exit(1);
+if(litGate.missing.includes("plots")||C.recommended(13,litEvidence).includes("errorsCorrections"))process.exit(1);
+litEvidence.data.missingObserved="Unreported setting information retained as unclear";
+litEvidence.data.errorsCorrections="Duplicate report linkage corrected in the extraction log";
+litGate=C.stageGate(13,litEvidence);
+if(!litGate.canMarkReady||litGate.missing.length!==0||!C.recommended(13,litEvidence).includes("plots"))process.exit(1);
+if(C.recommended(12,litEvidence).includes("replication"))process.exit(1);
+if(!C.required(12,litEvidence).includes("methodControls")||!C.required(14,litEvidence).includes("assumptionChecks"))process.exit(1);
+if(!C.readinessChecks(13,litEvidence).some(x=>x.includes("records, reports and studies")))process.exit(1);
+if(!C.readinessChecks(14,litEvidence).some(x=>x.includes("pooled estimate")))process.exit(1);
+let reviewDesign={data:{designType:"Literature review",designWhy:"synthesis of available evidence",claimBoundary:"bounded by searched literature"},pathway:{selected:"literature_review",confirmed:true}};
+if(!C.stageGate(9,reviewDesign).canMarkReady)process.exit(1);
+reviewDesign.data.designType="Meta-analysis";
+if(C.stageGate(9,reviewDesign).canMarkReady)process.exit(1);
+
 console.log("PASS pathway-specific coach");
