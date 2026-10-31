@@ -398,6 +398,8 @@
       ],
       "13": [
         "rawLocation",
+        "missingObserved",
+        "errorsCorrections",
         "descriptives"
       ],
       "14": [
@@ -595,7 +597,6 @@
         "replication"
       ],
       "13": [
-        "errorsCorrections",
         "plots"
       ],
       "14": [
@@ -893,44 +894,44 @@
     },
     "meta_analysis": {
       "9": [
-        "The question requires quantitative synthesis of existing comparable effects.",
-        "I stated the scope of studies/effects and claim boundary.",
-        "I understand that meta-analysis still depends on study quality and comparability."
+        "The research question and available effect estimates warrant quantitative synthesis.",
+        "I have stated which outcomes, contrasts, study designs and populations can meaningfully be combined.",
+        "I understand that pooling does not repair bias or make dissimilar studies comparable."
       ],
       "10": [
-        "Treatment/exposure, outcome/effect metric, eligibility concepts, and independent effect unit are defined.",
-        "Multiple effects from the same sample will not automatically be treated as independent.",
-        "The effect definition matches the review question."
+        "The effect measure, outcome, direction and units are defined for the comparison or quantity of interest.",
+        "I distinguish an independent study or sample from multiple outcomes, time points or contrasts derived from it.",
+        "I have explained how estimates on different scales will be handled and whether combining them is justified."
       ],
       "11": [
-        "Search, screening, extraction, and appraisal procedures are planned.",
-        "Coverage/generalization limits of the included literature are explicit.",
-        "Effect-size information can be obtained or converted consistently."
+        "The search and eligibility approach is traceable, including reports describing the same underlying study.",
+        "I have planned extraction checks and an appraisal approach suited to the included study designs.",
+        "I have considered missing studies or results and how search coverage might affect the synthesis."
       ],
       "12": [
-        "Effect extraction/conversion and dependence rules are prespecified.",
-        "One effect-size row and all variance/SE/study-ID fields are defined.",
-        "Missing-statistic and duplicate-sample decisions are documented."
+        "The protocol explains how effect estimates and their uncertainty will be obtained, calculated or converted.",
+        "Study and sample identifiers link repeated outcomes, shared comparison groups and multiple reports.",
+        "I have recorded missing-statistic, exclusion, model and sensitivity decisions before pooling where feasible."
       ],
       "13": [
-        "Extracted effects and study characteristics are checked before pooling.",
-        "Dependence/duplicate samples remain identifiable.",
-        "Corrections and conversions are traceable to source reports."
+        "I have checked effect directions, extracted estimates and their variances or standard errors against sources.",
+        "Effects from overlapping samples or repeated measures remain linked rather than counted independently.",
+        "Missing results, conversions and corrections are logged so each analysed estimate is traceable."
       ],
       "14": [
-        "The pooled estimand/effect metric and model are defined.",
-        "Heterogeneity, dependence, sensitivity, and moderator decisions are justified.",
-        "Pooled magnitude and uncertainty are central; p-values are secondary."
+        "The pooled estimand and model reflect the review question and the assumptions about effects across studies.",
+        "I have examined heterogeneity and explained how dependent estimates and relevant model assumptions are handled.",
+        "I will report the pooled magnitude and uncertainty, considering a prediction interval where useful and estimable."
       ],
       "15": [
-        "Results report pooled estimate, uncertainty, study count/effect count, and heterogeneity where appropriate.",
-        "Forest/other outputs are traceable to extracted effects.",
-        "Sensitivity or conflicting evidence is reported transparently."
+        "The Results identify the contributing studies, samples and effect estimates, including exclusions.",
+        "The estimated effects, uncertainty and heterogeneity are traceable to the selected model and source data.",
+        "Sensitivity findings and differences among studies remain visible alongside the principal result."
       ],
       "16": [
-        "Interpretation accounts for heterogeneity, bias, study quality, and dependence.",
-        "The pooled estimate is not generalized beyond represented populations/outcomes/designs.",
-        "Limitations distinguish meta-analytic model limits from primary-study limits."
+        "I have examined how study bias, missing results and analytic choices affect the interpretation.",
+        "The pooled estimate is interpreted within the populations, outcomes and study designs represented.",
+        "Limitations distinguish weaknesses in the primary studies from the synthesis model and remaining uncertainty."
       ]
     },
     "mixed_methods": {
