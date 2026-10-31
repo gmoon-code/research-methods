@@ -3044,7 +3044,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The broader group/system your research question refers to.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "To which specific group or setting does the question refer?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3062,19 +3062,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student has access to one biology class and wants to generalize to all teenagers.",
+            "situation": "A researcher measures surface temperatures at one campus.",
             "thinking": [
-              "Access does not make this a random sample.",
-              "The actual sample is one convenience class.",
-              "The result can be useful locally, but the generalization has to stay narrow."
+              "The campus is a local setting.",
+              "The observation period has defined dates.",
+              "A larger area has not been sampled."
             ],
-            "draft": "Sampling: convenience sample from one class. Generalization: limited to similar local context; no claim of national representativeness."
+            "draft": "The intended system is selected locations on this campus during the observation period."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The target population/system/literature is [target].",
+          "frame": "My study concerns [defined group or system] during [period and setting]. It does not claim to represent [other groups or settings].",
           "path_frames": {}
         }
       }
