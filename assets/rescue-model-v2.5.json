@@ -2348,7 +2348,7 @@
               "Descriptive": "Measures or documents a phenomenon without a primary relationship/effect comparison.",
               "Correlational / observational": "Measures predictors/exposures and outcomes without assigning the key exposure.",
               "Experimental": "Researcher assigns/manipulates conditions with design protections aimed at estimating a causal effect.",
-              "Quasi-experimental": "There is an intervention or exposure comparison, but assignment is not fully randomized; causal interpretation needs stronger qualification.",
+              "Quasi-experimental": "An intervention is evaluated without randomized assignment using a comparison or time series that helps assess alternative explanations. Pre-existing groups or a simple before–after difference alone do not establish a strong quasi-experiment.",
               "Qualitative": "Uses systematic non-numerical evidence to understand meanings, experiences, processes, or explanations.",
               "Mixed methods": "Intentionally integrates quantitative and qualitative evidence, with a reason for how the strands answer connected questions.",
               "Literature review": "Synthesizes existing research without quantitative pooling of effect estimates.",
