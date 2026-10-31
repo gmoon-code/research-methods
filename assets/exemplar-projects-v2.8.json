@@ -3433,7 +3433,7 @@
         },
         {
           "id": 13,
-          "title": "Collect or organize evidence",
+          "title": "Collect or organise evidence",
           "where": "All 24 score pairs are present, along with six linked fictional interview excerpts.",
           "changed": "The score-change column is required to equal the recorded post-score minus pre-score for every ID.",
           "reasoning": [
@@ -3528,7 +3528,7 @@
           "decision": "Conclude that the constructed dataset illustrates how linked evidence can deepen descriptive interpretation while leaving causal and representativeness questions unresolved.",
           "rejected": "A concluding claim that retrieval practice reliably raises biology scores in classrooms is not warranted.",
           "notebook": {
-            "title": "Retrieval Practice, Paired Biology Scores, and Student Accounts, a Synthetic Mixed-Methods Exemplar",
+            "title": "Retrieval Practice, Score Change, and Student Experience",
             "abstract": "This instructional mixed-methods example brings together 24 fictional paired biology scores and six fictional interview excerpts linked by student identifier. Mean score change was 8.70 points (paired-t 95% CI [6.17, 11.22]); 23 students had higher recorded scores and one had a lower score. The excerpts describe noticing gaps, reconstructing ideas and changing preparation, alongside concerns about repetition and unfamiliar questions. All six interview-linked records show increases, limiting their usefulness for interpreting the wider distribution. Without a control group, documented assessment equivalence or complete interviews, the integrated findings remain descriptive and illustrative."
           },
           "forward": "The final stage audits source use, arithmetic, quotation fidelity and the limits of each inference.",
