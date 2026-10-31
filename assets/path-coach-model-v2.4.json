@@ -242,7 +242,8 @@
       ],
       "13": [
         "rawLocation",
-        "plots",
+        "missingObserved",
+        "errorsCorrections",
         "descriptives"
       ],
       "14": [
@@ -534,6 +535,9 @@
         "researchHyp",
         "hypReason"
       ],
+      "13": [
+        "plots"
+      ],
       "14": [
         "multiplicity"
       ],
@@ -766,44 +770,44 @@
     },
     "quasi_experimental": {
       "9": [
-        "An intervention/condition exists, but assignment is not fully randomized.",
-        "I have identified what makes the design quasi-experimental.",
-        "The causal claim boundary reflects selection/confounding threats."
+        "I have identified the intervention or change and explained when and how it occurred.",
+        "The design provides a meaningful comparison, such as an untreated group or a pre-intervention trend.",
+        "I have considered whether other changes could explain the findings."
       ],
       "10": [
-        "Intervention/exposure, outcome, units, and comparison structure are defined.",
-        "Likely baseline differences/confounders are identified.",
-        "I am not treating nonrandom groups as automatically equivalent."
+        "The intervention or exposure, outcome and units of observation have clear definitions and measurement periods.",
+        "I have considered baseline differences, time trends and other influences on the comparison.",
+        "The reference group or period is justified without assuming nonrandom groups are equivalent."
       ],
       "11": [
-        "Sampling and measurement quality are documented.",
-        "Baseline/group differences that affect interpretation are considered.",
-        "Ethics and intervention authority are resolved before collection."
+        "I have explained how people, sites or records were selected and measured.",
+        "I have considered baseline differences, timing and changes in the observed population.",
+        "Relevant permissions, privacy protections and safety requirements have been addressed."
       ],
       "12": [
-        "Timing, fidelity, comparison procedures, unit IDs, and planned adjustment/analysis are documented.",
-        "The protocol records how nonrandom assignment will be handled analytically and interpretively.",
-        "Missing/exclusion rules are prespecified where possible."
+        "The protocol documents intervention timing, implementation and the units or periods observed.",
+        "I have identified what supports the comparison and how competing explanations will be examined.",
+        "Missing-data rules, exclusions and departures from the procedure are included in the plan."
       ],
       "13": [
-        "I inspected baseline differences, missingness, implementation, and outcome distributions.",
-        "Raw data and protocol deviations are preserved.",
-        "Group membership and repeated structure remain traceable."
+        "I have inspected missing observations, relevant baseline patterns and changes around the intervention.",
+        "The original records remain available, with corrections and implementation differences documented.",
+        "I can trace groups, sites or periods and recognise repeated or clustered records."
       ],
       "14": [
-        "The analysis estimates the intended comparison without pretending adjustment creates randomization.",
-        "Relevant baseline variables/design structure are considered.",
-        "Magnitude and uncertainty are reported with the quasi-experimental boundary."
+        "The analysis estimates the intended comparison without treating adjustment as randomisation.",
+        "The analysis checks assumptions relevant to this design, including time trends, clustering or time dependence where applicable.",
+        "The estimated contrast and its uncertainty will be reported with a suitably qualified interpretation."
       ],
       "15": [
-        "Results report the adjusted/unadjusted comparison exactly as analyzed.",
-        "The Results do not claim randomization that did not occur.",
+        "The Results identify the units, groups or periods contributing to the estimates.",
+        "The Results do not claim randomisation that did not occur.",
         "Weak or contradictory findings are reported."
       ],
       "16": [
-        "The Discussion addresses selection/confounding threats directly.",
+        "I have considered whether selection, concurrent events or other changes could account for the findings.",
         "Causal wording is calibrated to the actual quasi-experimental design.",
-        "Limitations explain how nonrandom assignment restricts interpretation."
+        "Limitations explain how the comparison, measurement and coverage restrict the conclusions."
       ]
     },
     "qualitative": {
