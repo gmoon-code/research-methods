@@ -1252,6 +1252,17 @@
       "outcomeDV": "Quantitative outcome if the quantitative strand has one",
       "operationalDefs": "Operational definitions plus qualitative domains/construct definitions",
       "analysisIntent": "Quantitative analysis, qualitative analysis, and integration plan"
+    },
+    "experimental": {
+      "predictorIV": "Assigned or manipulated treatment factor",
+      "outcomeDV": "Outcome measured under each condition",
+      "experimentalUnit": "Unit assigned to a treatment or treatment sequence",
+      "controlCondition": "Reference condition or within-unit comparison",
+      "controlledConditions": "Procedures kept consistent across conditions",
+      "replication": "Experimental units, repeated measures and subsamples",
+      "methodControls": "Assignment and other design protections",
+      "effectSizePlan": "Treatment contrast and uncertainty plan",
+      "analysisSample": "Units analysed by treatment condition and exclusions"
     }
   },
   "stage_focus": {
