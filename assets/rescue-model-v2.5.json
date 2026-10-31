@@ -2950,7 +2950,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Alternative factors that could explain an observed relationship or create group differences.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which factor might influence both the predictor and outcome, or differ between groups?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -2969,19 +2969,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+            "situation": "A researcher observes an association between sleep duration and task scores.",
             "thinking": [
-              "Those are still constructs, not exact data.",
-              "If stress is observed, calling it a manipulated independent variable is misleading.",
-              "I need an operational definition for both constructs and the actual unit."
+              "Sleep duration is recorded, not assigned.",
+              "Evening workload might affect both sleep and scores.",
+              "Workload could be recorded, although not all confounding can be resolved."
             ],
-            "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+            "draft": "Evening workload is one plausible alternative explanation for the observed association. The design cannot alone determine a causal effect."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "A plausible alternative explanation is [factor] because it may relate to both [predictor/exposure/group] and [outcome]. I will [prevent/measure/acknowledge] it by [plan].",
+          "frame": "A plausible confounder is [factor] because [mechanism relating it to predictor and outcome]. I will [measure, prevent or acknowledge] it through [plan], recognising [limitation].",
           "path_frames": {}
         }
       }
