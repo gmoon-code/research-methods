@@ -4032,37 +4032,37 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The exact quantity that, if estimated, would answer the research question.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What population quantity or bounded comparison would answer your question before you choose a statistical test?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Write the quantity in ordinary language before naming a test.",
+          "body": "Define the population-level quantity, relevant conditions and analysis unit in ordinary language. An estimand is the target of estimation, whereas a statistical test addresses a model-based question about it.",
           "questions": [
             "What number would I most want to know even if I never calculated a p-value?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Mean difference in 7-day growth between 0% and 2% salt conditions; or correlation between sleep hours and quiz score.",
+          "strong_example": "Proposed estimand: the difference between the after and before proportions correct for the defined student population, using paired student responses to estimate that contrast.",
           "avoid": "Do not write only the name of a statistical test.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same students are coded correct/incorrect before and after an activity.",
+            "situation": "One fictional classroom records the same students' correct or incorrect response to a question before and after a learning activity.",
             "thinking": [
-              "The outcome has exactly two categories, so it is binary.",
-              "The same students appear twice, so the data are paired.",
-              "I need a paired binary analysis, not a test that treats the two proportions as independent groups."
+              "Each response is binary and linked within a student.",
+              "The target quantity could be the difference in the proportion correct between the two occasions in the defined group.",
+              "The paired response transitions matter for estimating uncertainty; the test name is not the estimand."
             ],
-            "draft": "Structure: paired binary. Estimand: change in the proportion correct based on within-student category changes; consider McNemar-type analysis."
+            "draft": "Proposed estimand: the difference between the after and before proportions correct for the defined student population, using paired student responses to estimate that contrast."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The primary quantity I want to estimate is [mean difference / paired change / proportion / association / pooled effect / other exact quantity] for [population/conditions].",
+          "frame": "The primary quantity is [defined difference, association, proportion or other target] for [population or setting], comparing [conditions or time points] at [relevant unit]. It answers [exact question] without assuming [causal effect or generalization].",
           "path_frames": {}
         }
       }
@@ -4076,7 +4076,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The primary analysis and why it matches the design, units, and outcome type.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which analysis fits the outcome scale, pairing or clustering, research purpose and available evidence?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -4089,26 +4089,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Paired t-test for a numerical before/after outcome from the same students because the paired difference is the estimand.",
+          "strong_example": "Proposed analysis: summarise the paired before/after transition table and estimate the change in proportion correct. Consider an appropriate paired binary method, such as an exact or asymptotic McNemar test depending on discordant-pair counts and assumptions.",
           "avoid": "Do not pick a test by searching for the one that gives significance.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same students are coded correct/incorrect before and after an activity.",
+            "situation": "A fictional dataset records each student's correct or incorrect answer before and after an activity.",
             "thinking": [
-              "The outcome has exactly two categories, so it is binary.",
-              "The same students appear twice, so the data are paired.",
-              "I need a paired binary analysis, not a test that treats the two proportions as independent groups."
+              "Both observations come from the same person, so independent-samples tests would ignore the paired structure.",
+              "A two-by-two table would show each direction of change.",
+              "For a suitable paired binary comparison, a McNemar-type test could examine equality of marginal proportions; the method and small-sample requirements need checking."
             ],
-            "draft": "Structure: paired binary. Estimand: change in the proportion correct based on within-student category changes; consider McNemar-type analysis."
+            "draft": "Proposed analysis: summarise the paired before/after transition table and estimate the change in proportion correct. Consider an appropriate paired binary method, such as an exact or asymptotic McNemar test depending on discordant-pair counts and assumptions."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The primary analysis will use [method/approach] because the outcome/evidence is [type] and the design structure is [independent/paired/repeated/qualitative/review/meta-analytic].",
+          "frame": "I will use [method] for [outcome or evidence type], respecting [pairing, nesting or source dependence]. It estimates or examines [target quantity or question], provided [necessary assumptions or checks] hold.",
           "path_frames": {
             "qualitative": "I will analyze [interviews/observations/documents] using [coding/thematic/category/other qualitative approach]. I will move from [initial coding step] to [category/theme/interpretation step] and check credibility with [audit/discrepant-case/reflexivity/second-coder procedure].",
             "literature_review": "I will synthesize the included studies by [theme/method/chronology/theory]. I will compare [study characteristics/measures/findings] and preserve conflicting or mixed evidence.",
@@ -4126,11 +4126,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The design and data conditions you checked before interpreting the analysis.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which design or model conditions must be evaluated, and what did the records actually reveal?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State the relevant assumptions and what plots/design information showed.",
+          "body": "Name the assumptions relevant to the actual design and method, explain the evidence used to check them, and distinguish planned checks from observed diagnostics.",
           "questions": [
             "Which assumption comes from design rather than a normality test?",
             "What did the plot show?"
@@ -4138,26 +4138,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "For paired t-test, inspect distribution of difference scores and extreme paired differences; pairing is preserved by student ID.",
+          "strong_example": "Checks planned: verify paired identifiers and binary coding, inspect discordant counts, and assess between-student dependence. Results remain pending until the actual data are inspected.",
           "avoid": "Do not write simply 'data are normal' without saying what was checked.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same students are coded correct/incorrect before and after an activity.",
+            "situation": "A student proposes a McNemar test for before/after binary answers but has not examined the paired table.",
             "thinking": [
-              "The outcome has exactly two categories, so it is binary.",
-              "The same students appear twice, so the data are paired.",
-              "I need a paired binary analysis, not a test that treats the two proportions as independent groups."
+              "Verify that responses are paired by student ID and the outcome has two defined categories.",
+              "Check whether students are independent across pairs, or clustered by class or group.",
+              "Count discordant pairs to decide whether a large-sample approximation is reasonable; do not report an assumption as passed before checking."
             ],
-            "draft": "Structure: paired binary. Estimand: change in the proportion correct based on within-student category changes; consider McNemar-type analysis."
+            "draft": "Checks planned: verify paired identifiers and binary coding, inspect discordant counts, and assess between-student dependence. Results remain pending until the actual data are inspected."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Before interpreting the analysis I will check [relevant design/model/credibility conditions] using [plot/procedure/evidence].",
+          "frame": "The method requires [specific assumptions]. I [will check or checked] these using [actual records or diagnostic]. The observed result is [finding or pending], requiring [adjustment or qualification if needed].",
           "path_frames": {}
         }
       }
@@ -4171,11 +4171,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "How you will report magnitude, not only statistical significance.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which estimate communicates the size and direction of the finding, and how will its uncertainty be reported?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Name the raw effect/association and a standardized effect only if useful.",
+          "body": "Identify an interpretable magnitude or association and a compatible interval or uncertainty description. The correct measure depends on the design, estimand and independence structure; a p-value is not an effect size.",
           "questions": [
             "What unit makes the result scientifically understandable?",
             "Would a standardized effect add useful comparison?"
@@ -4183,26 +4183,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Report raw mean difference with 95% CI and Hedges' g for a two-group mean comparison.",
+          "strong_example": "Planned report: paired difference in percentage points between before and after correctness, with a compatible confidence interval if supportable; include denominators and uncertainty instead of reporting only a test result.",
           "avoid": "Do not treat p-value as an effect size.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same students are coded correct/incorrect before and after an activity.",
+            "situation": "The fictional before/after binary dataset has yet to be analysed.",
             "thinking": [
-              "The outcome has exactly two categories, so it is binary.",
-              "The same students appear twice, so the data are paired.",
-              "I need a paired binary analysis, not a test that treats the two proportions as independent groups."
+              "The difference in the proportions correct is interpretable in percentage points.",
+              "A confidence interval should respect the paired observations.",
+              "A p-value cannot serve as an effect estimate or describe practical importance."
             ],
-            "draft": "Structure: paired binary. Estimand: change in the proportion correct based on within-student category changes; consider McNemar-type analysis."
+            "draft": "Planned report: paired difference in percentage points between before and after correctness, with a compatible confidence interval if supportable; include denominators and uncertainty instead of reporting only a test result."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "I will report [raw estimate/contrast/association] with [confidence interval/uncertainty] and, if useful, [standardized effect].",
+          "frame": "I will report [raw contrast or relationship] in [interpretable units] with [suitable interval or uncertainty description]. [Additional standardized measure] is included only if it aids understanding and is justified.",
           "path_frames": {}
         }
       }
@@ -4216,7 +4216,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "How you will handle several statistical tests or exploratory comparisons.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which question is primary, and how will readers distinguish planned comparisons from exploratory ones?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -4228,26 +4228,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Primary comparison defined in advance; exploratory pairwise comparisons labeled exploratory and adjusted for multiplicity if used.",
+          "strong_example": "The primary analysis will be the prespecified overall before/after comparison. Subgroup and alternative-scoring analyses, if performed, will be labelled exploratory with the number of comparisons and any multiplicity approach disclosed.",
           "avoid": "Do not hide how many analyses were tried.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same students are coded correct/incorrect before and after an activity.",
+            "situation": "A student plans one primary learning-outcome contrast but is also interested in several subgroups and alternative scoring rules.",
             "thinking": [
-              "The outcome has exactly two categories, so it is binary.",
-              "The same students appear twice, so the data are paired.",
-              "I need a paired binary analysis, not a test that treats the two proportions as independent groups."
+              "Choose and document the primary contrast before seeing results.",
+              "Additional subgroup comparisons can multiply opportunities for chance findings.",
+              "If these comparisons are conducted, identify them as secondary or exploratory and specify whether a familywise or false-discovery approach, or cautious descriptive reporting, is appropriate."
             ],
-            "draft": "Structure: paired binary. Estimand: change in the proportion correct based on within-student category changes; consider McNemar-type analysis."
+            "draft": "The primary analysis will be the prespecified overall before/after comparison. Subgroup and alternative-scoring analyses, if performed, will be labelled exploratory with the number of comparisons and any multiplicity approach disclosed."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The primary analysis is [analysis]. Additional comparisons are [secondary/exploratory] and will be handled by [labeling/adjustment/dependence plan].",
+          "frame": "My prespecified primary analysis is [question or contrast]. I will report [number and type] additional analyses as [secondary or exploratory] and handle multiplicity through [justified adjustment or qualified interpretation].",
           "path_frames": {}
         }
       }
