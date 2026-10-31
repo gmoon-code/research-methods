@@ -77,4 +77,18 @@ if(C.stageGate(9,wrongDesign).canMarkReady)process.exit(1);
 wrongDesign.data.designType="Quasi-experimental";
 if(!C.stageGate(9,wrongDesign).canMarkReady)process.exit(1);
 
+// qualitative corpus integrity and method-appropriate analysis regressions
+let qualitativeCorpus={data:{rawLocation:"original interview audio and notes",descriptives:"five interview sessions and transcripts"},pathway:{selected:"qualitative",confirmed:true}};
+let qualitativeGate=C.stageGate(13,qualitativeCorpus);
+if(qualitativeGate.canMarkReady||!qualitativeGate.missing.includes("missingObserved")||!qualitativeGate.missing.includes("errorsCorrections"))process.exit(1);
+qualitativeCorpus.data.missingObserved="One unavailable excerpt documented; others available";
+qualitativeCorpus.data.errorsCorrections="Transcript corrections recorded alongside originals";
+qualitativeGate=C.stageGate(13,qualitativeCorpus);
+if(!qualitativeGate.canMarkReady||qualitativeGate.missing.length!==0)process.exit(1);
+if(C.recommended(13,qualitativeCorpus).includes("errorsCorrections"))process.exit(1);
+if(!C.required(12,qualitativeCorpus).includes("methodControls")||!C.required(14,qualitativeCorpus).includes("assumptionChecks"))process.exit(1);
+const interpretiveChecks=C.readinessChecks(14,qualitativeCorpus);
+if(!interpretiveChecks.some(s=>s.includes("coding, close reading or another justified process")))process.exit(1);
+if(!interpretiveChecks.some(s=>s.includes("suited to the method")))process.exit(1);
+
 console.log("PASS pathway-specific coach");
