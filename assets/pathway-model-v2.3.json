@@ -1244,8 +1244,15 @@
       "effectSizePlan": "Association estimate and uncertainty to report"
     },
     "quasi_experimental": {
-      "predictorIV": "Intervention/condition or exposure defining the comparison",
-      "experimentalUnit": "Unit receiving or belonging to a condition"
+      "predictorIV": "Intervention or exposure defining the comparison",
+      "experimentalUnit": "Unit, group or time series represented in the comparison",
+      "comparisonStructure": "Reference group, period or comparison for the change",
+      "outcomeDV": "Outcome measured across comparison conditions or periods",
+      "controlCondition": "Reference group or period, if applicable",
+      "replication": "Units, repeated observations and time points",
+      "methodControls": "Measures addressing selection, timing and competing explanations",
+      "effectSizePlan": "Estimated change or contrast and uncertainty plan",
+      "analysisSample": "Groups, units and periods analysed, including exclusions"
     },
     "mixed_methods": {
       "predictorIV": "Quantitative predictor/intervention if the quantitative strand has one",
