@@ -24,4 +24,24 @@ for(const [key,entry] of Object.entries(R.fields)){
 }
 if(!/quantitative target/.test(R.fields.primaryEstimand.expected_shape))process.exit(1);
 if(!/mixed-methods/.test(R.fields.primaryEstimand.why_it_works))process.exit(1);
+// Stage C-X3c2b | initial 25 responses retain bounded, task-specific examples.
+const first25=Object.keys(R.fields).slice(0,25);
+if(first25.join(",")!=="interest1,problem1,claim1,access1,ideaA,ideaB,ideaC,broadTopic,subtopic,phenomenon,contextPop,scope,timeLimit,resources,safety,topicChoice,concepts,synonyms,prelimSearch,known,methodsSeen,uncertain,questionShift,rq1,rq2")process.exit(1);
+for(const key of first25){
+ const v=R.fields[key],match=v.typical_length.match(/(\\d+)[–-](\\d+)/);
+ if(!v.expected_shape||!v.good_working_response||!v.why_it_works||v.good_working_response.includes("—"))process.exit(1);
+ if(match){const count=v.good_working_response.trim().split(/\\s+/).length;if(count<Number(match[1])||count>Number(match[2]))process.exit(1)}
+}
+if(!/hypothetical classroom/.test(R.fields.problem1.good_working_response))process.exit(1);
+if(!/ruler/.test(R.fields.resources.good_working_response))process.exit(1);
+if(!/measurement occasion/.test(R.fields.synonyms.why_it_works))process.exit(1);
+if(!/not yet run/.test(R.fields.prelimSearch.good_working_response))process.exit(1);
+if(!/after execution/.test(R.fields.prelimSearch.expected_shape))process.exit(1);
+if(!/before describing this pattern as established/.test(R.fields.known.good_working_response))process.exit(1);
+if(!/rather than results from a completed search/.test(R.fields.methodsSeen.good_working_response))process.exit(1);
+if(!/studies actually reviewed/.test(R.fields.uncertain.good_working_response))process.exit(1);
+if(!/hypothetical reading exercise/.test(R.fields.questionShift.good_working_response))process.exit(1);
+if(!/students in this class describe/.test(R.fields.rq2.good_working_response))process.exit(1);
+if(R.fields.rq1.good_working_response===R.fields.rq2.good_working_response)process.exit(1);
+
 console.log("PASS v2.11 response-example coverage and depth");
