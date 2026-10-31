@@ -2327,11 +2327,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The overall structure used to obtain evidence.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What evidence will you actually collect, and who or what determines the exposure or intervention, if there is one?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Choose the design family that matches the research question and how the key variables will be generated.",
+          "body": "Choose the primary design from how the study generates evidence and addresses the question. An intervention alone does not make a study experimental, and a before–after comparison alone does not establish a quasi-experiment.",
           "questions": [
             "Is the key exposure assigned or only measured?",
             "Am I studying numerical patterns, experiences, or existing literature?"
@@ -2339,7 +2339,7 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Measured sleep and grades without assigning sleep → correlational/observational.",
+          "strong_example": "A planned intervention evaluated using repeated observations and a comparison series without randomized assignment may be quasi-experimental, provided the design addresses plausible alternative explanations.",
           "avoid": "Do not label a study experimental just because it has groups.",
           "choice": {
             "title": "How do I choose the primary design?",
@@ -2365,19 +2365,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student asks whether sleep causes better grades but cannot assign sleep duration.",
+            "situation": "A student observes existing classroom routines and records how learners discuss feedback. No procedure is assigned to compare outcomes.",
             "thinking": [
-              "The factor is observed, not manipulated.",
-              "A correlational/observational design can estimate association.",
-              "Even a strong association would not establish causation."
+              "The purpose is to understand how students respond and explain their choices.",
+              "Classroom observation and consented conversations can provide evidence about that process.",
+              "The study is primarily qualitative. It is not experimental merely because some students receive feedback during the lesson."
             ],
-            "draft": "Design: observational correlational. Claim ceiling: association within the studied sample/context."
+            "draft": "Selected primary design is qualitative, based on documented classroom interactions and student accounts. It can examine responses within this context without estimating a treatment effect."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Primary design: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "I chose [exact design category] because [who generates which evidence and how]. This fits my question about [phenomenon] and could support [bounded interpretation]. [Design feature or missing protection] limits stronger claims.",
           "path_frames": {}
         }
       }
@@ -2391,7 +2391,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Your reasoning for why this design can answer the question.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "How will this particular design turn your research question into observations you can interpret?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -2403,26 +2403,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Because sleep is measured rather than assigned, an observational correlational design can estimate association but cannot establish a causal sleep effect.",
+          "strong_example": "If a project asks how learners explain feedback choices, a qualitative observation and interview design can examine expressed reasoning, subject to consent and interpretive limits.",
           "avoid": "Do not write only “because it is easiest.”",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student asks whether sleep causes better grades but cannot assign sleep duration.",
+            "situation": "A student's question asks how seedlings respond to different salinity levels assigned to separate planting trays.",
             "thinking": [
-              "The factor is observed, not manipulated.",
-              "A correlational/observational design can estimate association.",
-              "Even a strong association would not establish causation."
+              "Each tray can be assigned a defined salinity condition, and seedling growth can be measured over time.",
+              "Comparing independently treated trays could address whether the imposed conditions influence growth.",
+              "The design still needs adequate replication, consistent handling and attention to tray location to interpret the contrast."
             ],
-            "draft": "Design: observational correlational. Claim ceiling: association within the studied sample/context."
+            "draft": "I would assign separate trays to defined salinity conditions and measure seedling growth at agreed intervals. This experimental structure directly compares assigned conditions, with replication and handling practices needed to support interpretation."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "I will use a [design] because [how the evidence will be generated]. This can support [allowed claim] but cannot establish [important limit].",
+          "frame": "My question asks [specific comparison or process]. [Chosen design] will generate [measurements, accounts or sources] by [actual procedure]; those observations address [part of question] while leaving [important uncertainty].",
           "path_frames": {}
         }
       }
@@ -2436,11 +2436,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Exactly which groups, conditions, times, or variables are compared, or what is simply described.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Are you comparing different units, following the same units over time, or describing cases without a formal comparison?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Name the structure clearly.",
+          "body": "Describe what is compared or documented, including the number of conditions or time points and whether observations are paired, clustered or independent.",
           "questions": [
             "Same units or different units?",
             "How many conditions/time points?"
@@ -2448,26 +2448,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Same students before and after correction; or different plants assigned to 0%, 1%, and 2% salt.",
+          "strong_example": "Three different dishes receive each salt level; several seedlings within one dish share an assigned condition and should remain linked in the data.",
           "avoid": "Do not leave pairing/repetition implicit.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student asks whether sleep causes better grades but cannot assign sleep duration.",
+            "situation": "A student plans three salinity conditions, with multiple seeds in each of several dishes, measured at two time points.",
             "thinking": [
-              "The factor is observed, not manipulated.",
-              "A correlational/observational design can estimate association.",
-              "Even a strong association would not establish causation."
+              "The dish receives the salt solution; seeds inside it share that treatment.",
+              "Growth is measured on the same seeds across time, so observations are repeated.",
+              "I need to distinguish differences between independently treated dishes from changes within seeds."
             ],
-            "draft": "Design: observational correlational. Claim ceiling: association within the studied sample/context."
+            "draft": "The study compares three salinity levels assigned to separate dishes. Each identified seed is measured on Days 0 and 7, with repeated seed measurements nested within its treatment dish."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The study compares/describes [groups, conditions, times, variables, or cases]. The same/different units contribute [how observations are related].",
+          "frame": "The structure includes [conditions, times or cases]. [Units] contribute [one or repeated observations], linked by [identifier]. Comparisons are [between or within units, if relevant]; [dependence or absent comparison] must be accounted for.",
           "path_frames": {}
         }
       }
@@ -2481,7 +2481,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The strongest conclusion the design could support and an important conclusion it cannot support.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which conclusion would your data justify, and which stronger causal or general claim would remain untested?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -2493,26 +2493,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Can estimate association in this sample; cannot establish that phone use causes lower scores.",
+          "strong_example": "A non-randomized before–after comparison can describe change over time, but without further safeguards it cannot attribute the change confidently to an intervention.",
           "avoid": "Do not let the p-value determine the causal claim.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student asks whether sleep causes better grades but cannot assign sleep duration.",
+            "situation": "A student measures quiz performance before and after introducing a new study routine in one class, with no comparison group.",
             "thinking": [
-              "The factor is observed, not manipulated.",
-              "A correlational/observational design can estimate association.",
-              "Even a strong association would not establish causation."
+              "An average score difference is a change that can be described within this class.",
+              "Students also gain practice and experience over time; the new routine is not the only possible explanation.",
+              "A before–after observation without a counterfactual comparison cannot isolate the routine's causal contribution."
             ],
-            "draft": "Design: observational correlational. Claim ceiling: association within the studied sample/context."
+            "draft": "This design can describe score changes after the routine was introduced in the observed class. It cannot establish that the routine caused those changes or that they would occur in other schools."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "This design can support [descriptive/associative/causal/contextual/synthesis claim]. It cannot by itself support [stronger claim].",
+          "frame": "If the data show [pattern], I could conclude [description or design-supported inference] about [studied units]. I could not infer [unsupported causal, population or mechanism claim], given [specific limitation].",
           "path_frames": {}
         }
       }
@@ -2530,7 +2530,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Whether a formal prediction is appropriate for this study.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Are you testing a prediction specified before examining evidence, or is your study primarily descriptive or exploratory?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -2542,7 +2542,7 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Descriptive survey of species frequencies → a formal directional hypothesis may not be needed.",
+          "strong_example": "A project documenting which questions arise during classroom discussions may proceed with exploratory research questions; a formal directional hypothesis is not necessary.",
           "avoid": "Do not invent a hypothesis because you think every paper must have one.",
           "choice": {
             "title": "Does my study need a formal hypothesis?",
@@ -2561,19 +2561,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+            "situation": "A student proposes interviews about how classmates choose science-study strategies and is unsure whether to predict which explanation will be most common.",
             "thinking": [
-              "Those are still constructs, not exact data.",
-              "If stress is observed, calling it a manipulated independent variable is misleading.",
-              "I need an operational definition for both constructs and the actual unit."
+              "The question asks how participants describe decisions, with categories not yet established.",
+              "A fixed prediction about the most common response could narrow attention prematurely.",
+              "For this exploratory qualitative inquiry, the student can select No and document questions and analytic approach instead."
             ],
-            "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+            "draft": "Select No for this exploratory interview project. The question seeks participants' accounts, and a formal hypothesis would not add a suitable testable prediction."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Does this study need a formal hypothesis?: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "I selected [Yes, No or Unsure] because the study is [confirmatory, descriptive or exploratory] and intends to [test a stated prediction or examine an open question]. [If Unsure, identify the design decision still pending].",
           "path_frames": {}
         }
       }
@@ -2587,11 +2587,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The scientific prediction you plan to evaluate, written before seeing the result.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What relationship or difference do you predict before data collection, and which existing evidence warrants that prediction?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State the expected direction/pattern and variables, grounded in prior reasoning.",
+          "body": "When a prespecified prediction suits the design, write a testable expected pattern using the actual variables, direction and units or groups. Cite evidence or explain the mechanism separately rather than pretending the prediction is a result.",
           "questions": [
             "What exactly do I expect to differ or relate?",
             "What prior evidence or mechanism supports this?"
@@ -2599,26 +2599,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Seedlings assigned to higher salt concentrations will show lower mean growth over 7 days.",
+          "strong_example": "Before testing, predict that independently assigned seedling dishes receiving a higher salt concentration will have a lower mean seven-day height change than dishes receiving the reference solution.",
           "avoid": "Do not write the observed result after the fact as if it was predicted.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+            "situation": "A student plans to assign planting dishes either plain water or a defined saline solution and measure growth over seven days.",
             "thinking": [
-              "Those are still constructs, not exact data.",
-              "If stress is observed, calling it a manipulated independent variable is misleading.",
-              "I need an operational definition for both constructs and the actual unit."
+              "The proposed contrast is between assigned solution conditions, and the outcome is change in height.",
+              "Any proposed direction should be grounded in relevant plant physiology or examined literature, not observed results from this experiment.",
+              "I should state the expected direction before examining the records, then retain that prediction even if the outcome differs."
             ],
-            "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+            "draft": "Prespecified hypothesis: dishes assigned the saline solution will have lower average seven-day seedling height change than dishes assigned plain water. The claim remains a prediction until tested."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Before examining the results, I predict that [direction/pattern] because [prior evidence/mechanism].",
+          "frame": "Before examining results, I predict [outcome measure] will be [higher, lower or associated in a stated direction] for [defined units or conditions] compared with [reference], based on [identified rationale or source].",
           "path_frames": {}
         }
       }
@@ -2632,11 +2632,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The null model/hypothesis associated with a planned inferential test.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which parameter does your planned inferential test evaluate, and what exact null value does its model specify?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State the statistical no-difference/no-association condition appropriate to the analysis.",
+          "body": "State the null for the parameter and test you actually intend to use. The common zero-difference or zero-association null is one possibility, not a universal formula for every test.",
           "questions": [
             "What parameter does my test evaluate?",
             "Does the test actually use this null?"
@@ -2644,26 +2644,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "The mean paired change is 0; or the population correlation is 0.",
+          "strong_example": "For a planned two-condition comparison of independent dish-level mean growth, H₀ specifies that the population mean difference between the conditions equals 0.",
           "avoid": "Do not treat the null as “nothing is happening anywhere.”",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+            "situation": "A student plans a comparison of mean seven-day growth across independently assigned dishes in two solution conditions.",
             "thinking": [
-              "Those are still constructs, not exact data.",
-              "If stress is observed, calling it a manipulated independent variable is misleading.",
-              "I need an operational definition for both constructs and the actual unit."
+              "The intended parameter is the difference between condition-level population means, defined from dish summaries.",
+              "The usual null for this test is a zero mean difference, not 'nothing happens in either condition'.",
+              "The test and its assumptions must be confirmed before adopting that null."
             ],
-            "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+            "draft": "If the planned independent-group mean comparison is appropriate, H₀ is μ_saline − μ_reference = 0 for dish-level seven-day growth."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "For the planned analysis, the null model states that [parameter difference/association] equals [null value].",
+          "frame": "For [named planned test], the parameter is [precise difference, association or model coefficient]. Its null specifies [parameter] = [value or condition], with [unit of analysis and model assumptions] to be checked.",
           "path_frames": {}
         }
       }
@@ -2677,11 +2677,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Your explanation for why a formal hypothesis is or is not appropriate.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What checked source, relevant mechanism or design purpose supports your prediction, or your choice to proceed without one?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Connect the decision to the research question and design.",
+          "body": "Give the reasoning behind the hypothesis decision, naming the source or mechanism when a prediction is made. If the study is exploratory, explain why open-ended questions are a better fit.",
           "questions": [
             "Is this confirmatory or exploratory?",
             "Would a hypothesis change what I plan to test?"
@@ -2689,26 +2689,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "A directional hypothesis is appropriate because the experimental comparison and prior evidence support a prespecified prediction about mean growth.",
+          "strong_example": "A proposed salinity-growth prediction could be motivated by an identified source about osmotic conditions and plant development; the student should provide that source rather than asserting a verified effect without one.",
           "avoid": "Do not add a hypothesis as a decorative requirement.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+            "situation": "A student thinks salty water will slow seedling growth but has not yet checked the relevant literature.",
             "thinking": [
-              "Those are still constructs, not exact data.",
-              "If stress is observed, calling it a manipulated independent variable is misleading.",
-              "I need an operational definition for both constructs and the actual unit."
+              "The explanation needs an identifiable physiological rationale for why the assigned condition could affect growth.",
+              "A plausible mechanism can guide a prediction but does not establish that these particular seeds will respond in the expected direction.",
+              "I should record which supporting paper or textbook was actually checked, or flag the hypothesis as provisional."
             ],
-            "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+            "draft": "The prediction is provisional. Altered external solute concentration could affect water uptake, but the student still needs to check an appropriate plant-physiology source and specify the tested conditions."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Evidence or theory supporting the prediction: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "I [propose or do not propose] a formal hypothesis because [research design and purpose]. [Checked source or mechanism] [supports or qualifies] the anticipated [specific pattern], while [remaining uncertainty] warrants caution.",
           "path_frames": {}
         }
       }
@@ -2722,7 +2722,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The variable playing the explanatory role. In experiments it may be a manipulated independent variable; in observational studies it is usually a measured predictor/exposure.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Is the factor assigned to research units, observed as it naturally occurs, or unsuitable to describe as a single predictor?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -2734,26 +2734,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Experimental: assigned salinity concentration. Observational: self-reported sleep duration.",
+          "strong_example": "For an experiment, solution salinity assigned to separate dishes is a manipulated factor; for an observational study, a student's recorded sleep duration is a measured exposure.",
           "avoid": "Do not use IV terminology automatically in observational work.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+            "situation": "A student plans to record ordinary hours of sleep and next-day concentration task scores, without changing any sleep schedules.",
             "thinking": [
-              "Those are still constructs, not exact data.",
-              "If stress is observed, calling it a manipulated independent variable is misleading.",
-              "I need an operational definition for both constructs and the actual unit."
+              "No participant receives an assigned sleep duration.",
+              "The explanatory variable is each participant's self-reported sleep duration, recorded for a specified period.",
+              "I should call it a measured predictor or exposure, with reporting accuracy and confounding limitations."
             ],
-            "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+            "draft": "Measured predictor is self-reported sleep duration in hours on the preceding night. It is observed rather than manipulated, so the design can examine association."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The [manipulated factor / measured predictor or exposure] is [name], represented by [levels/measurement].",
+          "frame": "The variable is [exact name], classified as [assigned factor or measured predictor/exposure]. I will [assign levels or observe values] for [unit] using [procedure or data source].",
           "path_frames": {
             "observational": "The measured predictor/exposure is [variable], recorded as [measurement]. It is observed rather than assigned.",
             "experimental": "The manipulated independent variable is [factor], assigned at [levels/conditions] to [experimental unit] using [assignment procedure]."
@@ -2770,7 +2770,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The response measured to answer the question.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What observation would count as the outcome, and exactly when and how will it be recorded?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -2782,26 +2782,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Change in seedling height in centimeters from Day 0 to Day 7.",
+          "strong_example": "A delayed-recall outcome could be the count of correctly recalled target concepts in a prespecified ten-item task, scored using a documented rubric.",
           "avoid": "Avoid abstract outcomes with no measurement rule.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+            "situation": "A student asks whether naturally occurring sleep duration is related to performance on a fixed attention task.",
             "thinking": [
-              "Those are still constructs, not exact data.",
-              "If stress is observed, calling it a manipulated independent variable is misleading.",
-              "I need an operational definition for both constructs and the actual unit."
+              "'Performance' is too vague to record or compare.",
+              "The outcome could be the number of correct responses on the same defined task for each participant.",
+              "The testing period and scoring rules must be stated so results are interpretable."
             ],
-            "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+            "draft": "The outcome is the count of correct answers out of 20 on the same specified attention task, recorded once for each consented participant during the scheduled session."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The outcome is [name], measured as [exact measurement/coding] in [units/categories] at [timing].",
+          "frame": "The outcome is [measurable response], represented by [score, count, category or described event] at [specified time]. Its unit or coding rule is [exact rule], and it addresses [aspect of question].",
           "path_frames": {}
         }
       }
@@ -2815,7 +2815,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The exact rules connecting abstract ideas to observable data.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Could another investigator reproduce the rules that turn your concepts into recorded values or coded observations?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -2827,26 +2827,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Germination = visible radicle emergence by Day 7, coded 1=yes and 0=no.",
+          "strong_example": "Define 'germinated' as a visible radicle of at least 2 mm by Day 7, assessed at the stated inspection time, if that threshold is justified for the study.",
           "avoid": "Do not define a construct using another vague word.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+            "situation": "A student wants to compare 'germination success' across planting dishes but has not written a reproducible scoring rule.",
             "thinking": [
-              "Those are still constructs, not exact data.",
-              "If stress is observed, calling it a manipulated independent variable is misleading.",
-              "I need an operational definition for both constructs and the actual unit."
+              "I need an observation threshold that can be applied in the same way across dishes.",
+              "An agreed radicle-length criterion and inspection schedule would turn the idea into a binary record.",
+              "Measurement resolution and ambiguous cases should be documented rather than silently scored."
             ],
-            "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+            "draft": "For this hypothetical study, germination is coded 1 when a visible radicle measures at least 2 mm at the Day 7 inspection and 0 otherwise. Record uncertain cases for a second check; verify that the threshold suits the chosen species."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "[Construct/variable] will be represented by [exact observable measurement/coding rule], recorded as [units/categories] using [procedure].",
+          "frame": "I will define [construct] by [observable rule and threshold, if justified]. At [time], [observer or instrument] will record [unit/code], and ambiguous observations will be handled by [consistent rule].",
           "path_frames": {}
         }
       }
@@ -2860,7 +2860,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The reference group/condition used for comparison, if the design needs one.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Does your study need a reference condition, and what makes that group or condition a defensible comparison?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -2872,26 +2872,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "0% salt solution as the reference condition.",
+          "strong_example": "For dishes assigned salt solutions, plain water at 0% added salt can serve as a reference if other solution and handling conditions are defined consistently.",
           "avoid": "Do not confuse a control group with keeping procedures constant.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+            "situation": "A student is comparing plant growth under two assigned watering solutions and must identify a reference.",
             "thinking": [
-              "Those are still constructs, not exact data.",
-              "If stress is observed, calling it a manipulated independent variable is misleading.",
-              "I need an operational definition for both constructs and the actual unit."
+              "The reference should make the intended treatment contrast interpretable.",
+              "A defined no-added-salt solution is a possible baseline, while the total volume and handling must be similar.",
+              "A reference group does not by itself guarantee that other factors are controlled."
             ],
-            "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+            "draft": "The reference condition is dishes assigned the no-added-salt solution, with equal watering volume and a shared handling schedule. It supplies a comparison for the saline condition."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The reference/comparison condition is [condition] because [why it provides the comparison].",
+          "frame": "[If relevant] my reference is [condition or group], selected because [relation to assigned factor or research question]. I will keep [important procedures] comparable; if no reference is needed, I will explain [design rationale].",
           "path_frames": {}
         }
       }
@@ -2905,7 +2905,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Procedures or environmental features kept similar across conditions.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which procedures or environmental factors can you actually keep consistent across observations, and how will you do so?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -2917,26 +2917,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Same seed species/batch, solution volume, light period, temperature range, measurement schedule.",
+          "strong_example": "Use seeds from a documented batch, a defined solution volume, consistent measurement times and a procedure for monitoring temperature; report any conditions that cannot be kept constant.",
           "avoid": "Do not claim a human characteristic is 'controlled' when it is merely measured or varies naturally.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+            "situation": "A student plans dishes at three salinity levels and notices that shelf positions receive different amounts of daylight.",
             "thinking": [
-              "Those are still constructs, not exact data.",
-              "If stress is observed, calling it a manipulated independent variable is misleading.",
-              "I need an operational definition for both constructs and the actual unit."
+              "Light may influence growth independently of the assigned salinity.",
+              "I can standardize the light cycle or randomize and rotate dish positions according to a prespecified rule.",
+              "Any temperature or light differences that remain must be recorded, not described as controlled."
             ],
-            "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+            "draft": "All dishes will use the same seed source, container type, solution volume and measurement schedule. Shelf position will follow a recorded allocation or rotation plan, with temperature monitored."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Across conditions I will standardize [factor], [factor], and [factor] using [specific procedure].",
+          "frame": "I will standardize [factor or procedure] by [specific action] for [all relevant units]. [Variable I cannot hold fixed] will be [measured, balanced or documented] rather than claimed as fully controlled.",
           "path_frames": {}
         }
       }
