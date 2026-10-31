@@ -1409,7 +1409,7 @@
       "status": "synthetic_instructional_exemplar",
       "dir": "retrieval-quasi-experiment",
       "rq": "How did pre-to-post biology scores change in a class using a retrieval-practice routine compared with a pre-existing comparison class?",
-      "disclaimer": "Retrieval-practice literature is real and verified. Classroom groups and scores are synthetic.",
+      "disclaimer": "The two cited retrieval-practice experiments are real scholarly publications. Both class groups, all 48 student records and every result in this exemplar are synthetic teaching material. Only one class represents each instructional condition, so no valid class-level treatment-effect test or causal estimate is available.",
       "data_summary": "48 synthetic students in two pre-existing classes. Mean change difference = 6.46 points, 95% CI [3.62, 9.29]. Nonrandom class assignment limits causal interpretation.",
       "sources": [
         {
@@ -1431,197 +1431,197 @@
         {
           "id": 1,
           "title": "Find a research interest",
-          "where": "The two-class retrieval comparison exemplar is at Stage 1 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 1 decision that belongs to a quasi-experimental design.",
+          "where": "A teacher wonders whether regular opportunities to retrieve biological concepts could be examined using the classes already on the timetable.",
+          "changed": "A general interest in retrieval practice becomes a question about a feasible comparison of existing classroom routines.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Identify what counts as retrieval practice, such as recalling material without consulting notes before receiving feedback.",
+            "Consider whether pre- and post-assessments can address the same intended knowledge and reasoning without introducing a different score scale.",
+            "Recognise early that different intact classes may vary in ways unrelated to a teaching routine."
           ],
-          "decision": "Keep retrieval practice in existing classes as the working area because it can be connected to a specific evidence source.",
-          "rejected": "A broad topic with no observable evidence plan is rejected.",
+          "decision": "Explore a short retrieval-practice routine as an instructional change to describe within one existing class alongside another class's scores.",
+          "rejected": "Assuming that any difference between two classes shows the routine's effect would ignore differences that existed before the routine.",
           "notebook": {
-            "broadTopic": "retrieval practice in existing classes",
-            "startingQuestion": "What specific pattern, relationship, experience, or evidence synthesis could be documented?"
+            "broadTopic": "Retrieval practice in secondary biology",
+            "startingQuestion": "How might scores change in an existing class using retrieval practice compared with a different class following its usual routine?"
           },
-          "forward": "Stage 2 must narrow population/system, evidence type, and realistic scope.",
+          "forward": "The available timetable and assessments now set the feasible sample and the limits of comparison.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What could you reasonably observe within existing classroom routines?",
+            "Which classroom differences could already influence the result?"
           ]
         },
         {
           "id": 2,
           "title": "Narrow the topic and test feasibility",
-          "where": "The two-class retrieval comparison exemplar is at Stage 2 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 2 decision that belongs to a quasi-experimental design.",
+          "where": "The student narrows the illustration to two pre-existing classes with 24 fictional records each.",
+          "changed": "The proposed study becomes a before-and-after comparison of scores in the same students, with each class attached to one routine.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Two groups of 24 records allow practice linking pre- and post-scores within students.",
+            "An intact class receives the retrieval routine and the other serves as a comparison; no student-level or class-level random assignment occurs.",
+            "The source does not specify teaching duration, assessment rubric or implementation records, so those details must be presented as requirements for any real study."
           ],
-          "decision": "Limit the project to one bounded population/system, time frame, and evidence type.",
-          "rejected": "Trying to answer long-term outcomes, mechanisms, and generalization in one small project is rejected.",
+          "decision": "Use a hypothetical two-class comparison with 48 student-level paired observations, and acknowledge that the teaching condition is inseparable from class identity.",
+          "rejected": "Calling the classes equivalent because each has 24 students would mistake equal sample size for comparability.",
           "notebook": {
-            "scope": "One bounded instructional exemplar with explicit limits.",
-            "feasibility": "Evidence can be collected or organized within the stated synthetic teaching workflow."
+            "scope": "One synthetic retrieval class and one synthetic comparison class, with pre- and post-scores for each of 24 students.",
+            "feasibility": "A real project would require compatible assessments, documented instructional routines, a defined timeline, appropriate consent and data access. None is supplied by the fabricated file."
           },
-          "forward": "The literature scan can now use precise keywords instead of one broad topic word.",
+          "forward": "Scholarly background can establish why retrieval practice is relevant without validating this particular class contrast.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What information would you need to know about the two classes before comparing their changes?",
+            "Which planned details cannot be inferred from a synthetic spreadsheet?"
           ]
         },
         {
           "id": 3,
           "title": "Explore the research landscape",
-          "where": "The two-class retrieval comparison exemplar is at Stage 3 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 3 decision that belongs to a quasi-experimental design.",
+          "where": "The student reads experimental research on retrieval practice while keeping the school comparison's design distinct.",
+          "changed": "The research rationale now connects delayed retrieval outcomes and conceptual learning to the proposed biology task.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Roediger and Karpicke (2006) compared retrieval testing and restudying in controlled studies using written passages and delayed retention tests.",
+            "Karpicke and Blunt (2011) compared retrieval practice with elaborative concept-mapping study and reported an advantage on learning assessments using science-related texts.",
+            "Those experiments support the relevance of retrieval as a learning activity, but they do not remove differences between two pre-existing classes."
           ],
-          "decision": "Use verified background sources to learn vocabulary, existing evidence, and methodological boundaries.",
-          "rejected": "Treating the first relevant source as proof of the final answer is rejected.",
+          "decision": "Retain retrieval-practice research as a theoretical and instructional rationale, without borrowing the studies' causal conclusions for this invented comparison.",
+          "rejected": "The statement that retrieval practice necessarily caused a larger score change in the fictional class is not supported by the cited literature.",
           "notebook": {
-            "known": "The verified sources establish a defensible background rationale.",
-            "uncertain": "The exemplar still needs its own path-specific evidence and cannot inherit effect sizes or themes from background sources."
+            "known": "Controlled experimental studies have reported benefits of retrieval practice on delayed retention and conceptual learning in their tested conditions.",
+            "uncertain": "The reasons for score changes in two actual intact classes would require local implementation, measurement and contextual evidence."
           },
-          "forward": "The research question can now use terminology grounded in the literature while remaining answerable.",
+          "forward": "An answerable question should compare recorded changes without asserting an identifiable treatment effect.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What do the published researchers compare that differs from these two intact classes?",
+            "Can experimental findings elsewhere justify a question without proving your classroom result?"
           ]
         },
         {
           "id": 4,
           "title": "Write and refine the research question",
-          "where": "The two-class retrieval comparison exemplar is at Stage 4 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 4 decision that belongs to a quasi-experimental design.",
+          "where": "The research question is finalised as a comparison of pre-to-post scores rather than an estimated treatment effect.",
+          "changed": "The wording gives a clear outcome and time structure while limiting the inference to the two selected classes.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Link pre- and post-scores within students and then describe each class's average change.",
+            "Specify the retrieval routine and the comparison class without implying randomised allocation.",
+            "Avoid promising a causal effect or a general population estimate when only one intact class represents each condition."
           ],
           "decision": "How did pre-to-post biology scores change in a class using a retrieval-practice routine compared with a pre-existing comparison class?",
-          "rejected": "A question that uses causal, experimental, or statistical language inconsistent with the selected path is rejected.",
+          "rejected": "How much did the retrieval routine increase learning? This would require a causal comparison the two-class example cannot identify.",
           "notebook": {
-            "questionType": "quasi-experimental",
+            "questionType": "Quasi-experimental",
             "finalRQ": "How did pre-to-post biology scores change in a class using a retrieval-practice routine compared with a pre-existing comparison class?",
-            "rqJustification": "The question matches a quasi-experimental evidence structure."
+            "rqJustification": "One paired score record per fictional student permits a descriptive comparison of change across two intact classes. The class-level assignment prevents valid treatment-effect inference."
           },
-          "forward": "Every later decision must now remain aligned with this exact question.",
+          "forward": "The literature search and study plan now need to preserve the distinctions between retrieval studies and descriptive intact-class comparisons.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the question still have a meaningful answer if causation cannot be established?",
+            "Could readers mistake a comparison of two classes for replicated treatment evidence?"
           ]
         },
         {
           "id": 5,
           "title": "Build a systematic search strategy",
-          "where": "The two-class retrieval comparison exemplar is at Stage 5 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 5 decision that belongs to a quasi-experimental design.",
+          "where": "The student plans how to find retrieval-practice studies and appropriate quasi-experimental design guidance.",
+          "changed": "The search plan identifies the instructional activity, learning outcomes and method limitations rather than looking only for positive results.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Use related terms such as retrieval practice, practice testing and test-enhanced learning for the intervention concept.",
+            "Pair them with retention, science learning or assessment outcomes to locate relevant empirical work.",
+            "Search separately for intact-class comparison, pretest-posttest design and classroom-level clustering to examine inferential limitations."
           ],
-          "decision": "Build concept blocks and document more than one search route.",
-          "rejected": "One undocumented web search is rejected as an evidence-search record.",
+          "decision": "Document background searches by query, source system and date, without pretending the two available papers constitute an exhaustive review.",
+          "rejected": "Searching only for studies that prove retrieval improves grades would shape source selection around an assumed conclusion.",
           "notebook": {
-            "searchLogic": "Separate the central phenomenon, population/context, and design/evidence terms; connect synonyms with OR and concepts with AND.",
-            "searchLogRule": "Record database/site, date, exact string, filters, and result count."
+            "searchLogic": "('retrieval practice' OR 'practice testing' OR 'test-enhanced learning') AND (learning OR retention OR science); add a separate search for intact-class quasi-experimental comparison and clustering.",
+            "searchLogRule": "Record actual databases, dates, strings, filters and screening decisions. No historic search log or source counts accompany this example."
           },
-          "forward": "The search log makes later source-selection and coverage claims auditable.",
+          "forward": "Source extraction can then distinguish experimental retrieval evidence from methods advice about two existing classrooms.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which search terms could find null or conflicting retrieval-practice results?",
+            "How would you document a search without inventing records of searches never made?"
           ]
         },
         {
           "id": 6,
           "title": "Evaluate, read, and extract sources",
-          "where": "The two-class retrieval comparison exemplar is at Stage 6 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 6 decision that belongs to a quasi-experimental design.",
+          "where": "The student appraises two genuine experimental articles as research background.",
+          "changed": "Rather than treating citations as endorsements of the fictional result, the account considers participants, outcome type and intervention structure.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Roediger and Karpicke (2006) tested delayed retention following retrieval and restudy conditions with educationally relevant prose.",
+            "Karpicke and Blunt (2011) examined retrieval-based learning and concept mapping, including assessments of inference and comprehension.",
+            "Neither article documents the two fictional biology classes, their pre/post tests or their classroom routines."
           ],
-          "decision": "Extract comparable information from each included source instead of saving citation-only records.",
-          "rejected": "Peer-reviewed or authoritative status alone is rejected as a substitute for relevance and methodological appraisal.",
+          "decision": "Retain both citations with explicit boundaries and record that their experimental conclusions are not transferable without considering the local design.",
+          "rejected": "Using these published experiments to label two existing classes as experimentally exchangeable would misrepresent the studies.",
           "notebook": {
-            "sourceExtraction": "Record source type, design/scope, population/context, main claim/finding, limitations, and relevance to this exemplar."
+            "sourceExtraction": "Q-S01 concerns retrieval tests and delayed prose retention. Q-S02 compares retrieval practice with concept mapping for science-relevant textual learning. Their controlled contrasts differ from a one-class-per-condition before-and-after example."
           },
-          "forward": "Comparable source records allow synthesis instead of annotated-bibliography writing.",
+          "forward": "A literature synthesis should explain why retrieval practice deserves study while recognising that the local example cannot support the same causal inference.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What was actually assigned or compared in the published work?",
+            "Does a source's use of biology-related material match the exact quiz and conditions of this illustration?"
           ]
         },
         {
           "id": 7,
           "title": "Synthesize the literature and justify the study",
-          "where": "The two-class retrieval comparison exemplar is at Stage 7 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 7 decision that belongs to a quasi-experimental design.",
+          "where": "The research rationale is developed without inventing a gap or an observed intervention benefit.",
+          "changed": "The exemplar becomes a methodological demonstration of linking score changes and interpreting classroom differences cautiously.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Published retrieval studies provide background for why retrieval could be an educationally interesting routine.",
+            "An intact-class comparison can describe how scores changed during a particular classroom period.",
+            "Because the routine appears in only one class, a change difference is also a difference between the particular classes and cannot isolate the routine."
           ],
-          "decision": "Use a bounded rationale such as replication, local application, evidence synthesis, or methodological demonstration.",
-          "rejected": "A global 'no research exists' claim is rejected unless an appropriately comprehensive search can defend it.",
+          "decision": "Frame the project as an instructional illustration of a quasi-experimental before-and-after comparison, with the selection and class-confounding problem central to the rationale.",
+          "rejected": "Claiming that the example replicates a randomised retrieval experiment would conceal major design differences.",
           "notebook": {
-            "rationale": "The exemplar is justified by the stated teaching/research purpose and verified background, without manufacturing novelty."
+            "rationale": "Use two fictional intact classes to teach score linkage, descriptive change and the limits of attributing between-class differences to instructional practice."
           },
-          "forward": "The literature review must lead to the actual question and claim boundary.",
+          "forward": "The literature review can now connect prior experimental evidence with the more limited classroom comparison.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Why can a comparison still be educationally useful when it does not identify a treatment effect?",
+            "How might a better study create replication at the class level?"
           ]
         },
         {
           "id": 8,
           "title": "Write the literature review",
-          "where": "The two-class retrieval comparison exemplar is at Stage 8 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 8 decision that belongs to a quasi-experimental design.",
+          "where": "The student joins the two published findings into a discussion that leads to a bounded comparison question.",
+          "changed": "The literature account now follows an intellectual thread from retrieval and retention to the difficulty of translating controlled comparisons into intact classrooms.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Retrieval testing may influence later retention, as studied by Roediger and Karpicke (2006), under specified assessment delays.",
+            "Karpicke and Blunt (2011) extend the rationale to conceptual learning with science-related texts and comparisons to elaborative study.",
+            "The proposed before-and-after class comparison would address a different outcome and leave class composition, teacher practice and other contextual factors uncontrolled."
           ],
-          "decision": "Write the literature section around cross-source claims and differences.",
-          "rejected": "A paragraph-by-paragraph list of source summaries is rejected.",
+          "decision": "Use a connected literature passage that explains the proposed routine and also prepares readers for why the class contrast has weaker inferential status.",
+          "rejected": "An article-by-article list that ends by predicting a numerical benefit would overstate how directly the published results apply.",
           "notebook": {
-            "literatureReviewPlan": "Claim → evidence from more than one source where available → difference/qualification → connection to the present question."
+            "literatureReviewPlan": "Retrieving knowledge can be part of learning, and controlled experiments have examined its consequences for delayed retention and meaningful learning (Roediger & Karpicke, 2006; Karpicke & Blunt, 2011). A classroom comparison of pre-to-post biology scores asks a narrower local question. Unlike the published controlled experiments, the instructional example assigns one intact class to each routine, so any difference in change also reflects unseparated class-level conditions."
           },
-          "forward": "The Method must now operationalize the same constructs and evidence structure.",
+          "forward": "The Method must now identify which units are independently exposed to the routines and how scores will be linked across time.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the literature discussion explain the transition from controlled tests to intact classrooms?",
+            "Have you kept the specific causal claims attached to the designs that produced them?"
           ]
         },
         {
           "id": 9,
           "title": "Choose the research design",
-          "where": "The two-class retrieval comparison exemplar is at Stage 9 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 9 decision that belongs to a quasi-experimental design.",
+          "where": "The design is chosen after recognising that existing classes receive the instructional conditions.",
+          "changed": "The example is labelled quasi-experimental, but the class-level contrast is explicitly descriptive because each condition has one class.",
           "reasoning": [
-            "Start from the research question and the quasi-experimental evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Twenty-four records are nested in each of two intact classes; the instructional routine varies only between classes.",
+            "There is no class replication within either instructional condition and no random assignment.",
+            "With one class per condition, a class-specific feature is inseparable from the routine, so a student-level test cannot yield a valid treatment-effect interval."
           ],
-          "decision": "Use a quasi-experimental two-group pre/post design because classes already existed and were not randomly assigned.",
-          "rejected": "Calling pre-existing classes randomized conditions is rejected.",
+          "decision": "Use a two-group quasi-experimental teaching design for describing paired score changes, without claiming valid inference about the routine's causal effect.",
+          "rejected": "Calling 24 students per class independent treatment replications would mistake within-class observations for replicated instructional conditions.",
           "notebook": {
             "designType": "Quasi-experimental",
-            "claimBoundary": "Estimate comparative change with persistent selection/confounding limits."
+            "claimBoundary": "Describe how scores changed in these two fictional classes. With one class per routine, no valid class-level treatment-effect test or generalisable causal conclusion is available."
           },
-          "forward": "Define classes, time points, outcomes, and baseline differences.",
+          "forward": "Measurement and analysis must distinguish students as score-record units from classes as instructional-condition units.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this two-class retrieval comparison example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Who actually receives the same classroom routine together?",
+            "How many independent classes represent each condition?"
           ]
         },
         {
