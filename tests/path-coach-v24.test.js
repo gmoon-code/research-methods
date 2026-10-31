@@ -35,4 +35,24 @@ study.data.designType="Experimental";
 if(C.stageGate(9,study).canMarkReady)process.exit(1);
 if(!C.readinessChecks(10,observed).some(s=>s.includes("clustered records")))process.exit(1);
 
+// experiment with no formal hypothesis is not penalised for unwritten prediction fields
+let e={data:{hypothesisNeeded:"No",designType:"Experimental",predictorIV:"assigned light",outcomeDV:"growth",operationalDefs:"lux and cm",controlCondition:"standard light",controlledConditions:"water and soil",experimentalUnit:"plant",confounders:"placement"},pathway:{selected:"experimental",confirmed:true}};
+let er=C.reviewStage(10,e);
+if(er.details.missing.length!==0||er.details.recommended.includes("researchHyp")||er.details.recommended.includes("hypReason"))process.exit(1);
+if(!C.stageGate(10,e).canMarkReady)process.exit(1);
+e.data.hypothesisNeeded="Yes";
+er=C.reviewStage(10,e);
+if(C.stageGate(10,e).canMarkReady||!er.messages.some(x=>x.level==="bad"&&/hypothesis/i.test(x.title)))process.exit(1);
+e.data.researchHyp="Assigned higher light will increase growth";
+if(!C.stageGate(10,e).canMarkReady||!C.recommended(10,e).includes("hypReason"))process.exit(1);
+// experiment needs a data-quality record even if a plot was not useful
+let exdata={data:{rawLocation:"original unit-level observations",descriptives:"treatment-wise means and spread"},pathway:{selected:"experimental",confirmed:true}};
+let egate=C.stageGate(13,exdata);
+if(egate.canMarkReady||!egate.missing.includes("missingObserved")||!egate.missing.includes("errorsCorrections")||egate.missing.includes("plots"))process.exit(1);
+exdata.data.missingObserved="None found";
+exdata.data.errorsCorrections="No errors or deviations recorded";
+egate=C.stageGate(13,exdata);
+if(!egate.canMarkReady||egate.missing.length!==0||!C.recommended(13,exdata).includes("plots"))process.exit(1);
+if(!C.readinessChecks(10,e).some(x=>x.includes("repeated measurements or subsamples")))process.exit(1);
+
 console.log("PASS pathway-specific coach");
