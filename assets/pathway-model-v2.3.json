@@ -969,7 +969,7 @@
       "researchHyp": "hide",
       "nullHyp": "hide",
       "hypReason": "hide",
-      "predictorIV": "core",
+      "predictorIV": "optional",
       "outcomeDV": "core",
       "operationalDefs": "core",
       "controlCondition": "hide",
@@ -1195,8 +1195,8 @@
       "analysisSample": "Included studies, reports or other sources and any changes to the included set"
     },
     "meta_analysis": {
-      "predictorIV": "Comparison, predictor or other exposure represented by the effect",
-      "outcomeDV": "Outcome or quantity represented by the extracted estimate",
+      "predictorIV": "Comparison or predictor, when relevant to the synthesis",
+      "outcomeDV": "Outcome or target parameter represented by the estimate",
       "operationalDefs": "Eligibility definitions and exact effect/outcome definitions",
       "experimentalUnit": "Independent study or sample and links between its effect estimates",
       "population": "Target literature/populations/settings represented by the meta-analysis",
@@ -1224,7 +1224,7 @@
       "assumptionChecks": "Heterogeneity, effect dependence and model or sensitivity checks",
       "effectSizePlan": "Pooled effect scale, uncertainty and heterogeneity reporting",
       "multiplicity": "Multiple outcomes and prespecified subgroup or moderator analyses",
-      "comparisonStructure": "Effect comparisons, eligible outcomes and study-grouping structure",
+      "comparisonStructure": "Comparison or target-parameter structure and study groupings",
       "analysisSample": "Studies, independent samples and estimates contributing to each synthesis"
     },
     "descriptive_quantitative": {
@@ -1332,7 +1332,7 @@
     },
     "meta_analysis": {
       "9": "Define the meta-analytic review design and ensure effect estimates can reasonably be compared.",
-      "10": "Define treatment/exposure, outcome/effect metric, eligibility concepts, and the independent study/sample/effect unit.",
+      "10": "Define the effect metric or target parameter, its scale and direction, and the independent study or sample unit. Comparisons or predictors are used when appropriate.",
       "11": "Plan search/screening, extraction, risk-of-bias/quality appraisal, and coverage limits.",
       "12": "Lock effect extraction/conversion, dependence rules, missing-statistic decisions, model plan, and audit trail.",
       "13": "Validate extracted effect sizes and study characteristics before pooling.",
