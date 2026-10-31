@@ -109,4 +109,26 @@ if(!C.stageGate(9,reviewDesign).canMarkReady)process.exit(1);
 reviewDesign.data.designType="Meta-analysis";
 if(C.stageGate(9,reviewDesign).canMarkReady)process.exit(1);
 
+// meta-analysis dependence and single-parameter synthesis checks
+let metaParameter={data:{outcomeDV:"estimated prevalence",operationalDefs:"proportion and sampling variance",experimentalUnit:"independent source sample"},pathway:{selected:"meta_analysis",confirmed:true}};
+let mp=C.stageGate(10,metaParameter);
+if(!mp.canMarkReady||mp.missing.includes("predictorIV")||!C.recommended(10,metaParameter).includes("predictorIV"))process.exit(1);
+metaParameter.data.outcomeDV="";
+mp=C.stageGate(10,metaParameter);
+if(mp.canMarkReady||!mp.missing.includes("outcomeDV"))process.exit(1);
+let metaRecords={data:{rawLocation:"unaltered effect extraction source records",descriptives:"source and estimate counts"},pathway:{selected:"meta_analysis",confirmed:true}};
+let mr=C.stageGate(13,metaRecords);
+if(mr.canMarkReady||!mr.missing.includes("missingObserved")||!mr.missing.includes("errorsCorrections")||mr.missing.includes("plots"))process.exit(1);
+metaRecords.data.missingObserved="Two studies lacked uncertainty measures; retained in the decision log";
+metaRecords.data.errorsCorrections="A duplicate effect was linked to its original sample";
+mr=C.stageGate(13,metaRecords);
+if(!mr.canMarkReady||mr.missing.length||!C.recommended(13,metaRecords).includes("plots"))process.exit(1);
+if(!C.required(12,metaRecords).includes("methodControls"))process.exit(1);
+const metaChecks=C.readinessChecks(14,metaRecords);
+if(!metaChecks.some(s=>s.includes("dependent estimates"))||!metaChecks.some(s=>s.includes("prediction interval")))process.exit(1);
+let metaDesign={data:{designType:"Meta-analysis",designWhy:"combine comparable estimates",claimBoundary:"pooled results limited to samples"},pathway:{selected:"meta_analysis",confirmed:true}};
+if(!C.stageGate(9,metaDesign).canMarkReady)process.exit(1);
+metaDesign.data.designType="Literature review";
+if(C.stageGate(9,metaDesign).canMarkReady)process.exit(1);
+
 console.log("PASS pathway-specific coach");
