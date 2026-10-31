@@ -44,4 +44,19 @@ if(!/hypothetical reading exercise/.test(R.fields.questionShift.good_working_res
 if(!/students in this class describe/.test(R.fields.rq2.good_working_response))process.exit(1);
 if(R.fields.rq1.good_working_response===R.fields.rq2.good_working_response)process.exit(1);
 
+// Stage C-X3c2c | response examples 26-50 keep distinct candidate questions and verified source status.
+const second25=Object.keys(R.fields).slice(25,50);
+if(second25.length!==25||second25[0]!=="rq3"||second25[24]!=="litDraft")process.exit(1);
+for(const key of second25){
+ const v=R.fields[key];if(!v.expected_shape||!v.good_working_response||!v.why_it_works||v.good_working_response.includes("—"))process.exit(1);
+}
+if(!/published research/.test(R.fields.rq3.why_it_works))process.exit(1);
+if(R.fields.questionType.good_working_response!=="Correlational / observational")process.exit(1);
+if(!/retention test/.test(R.fields.searchBlock2.good_working_response))process.exit(1);
+if(!/Proposed ERIC query/.test(R.fields.searchStrings.good_working_response))process.exit(1);
+if(!/regardless of whether findings/.test(R.fields.includeCriteria.good_working_response))process.exit(1);
+if(!/unfavourable result is never an exclusion/.test(R.fields.excludeCriteria.why_it_works))process.exit(1);
+if(!/placeholders, not citations/.test(R.fields.litDraft.detailed_response))process.exit(1);
+if(R.fields.litDraft.detailed_response.trim().split(/\s+/).length<250)process.exit(1);
+
 console.log("PASS v2.11 response-example coverage and depth");
