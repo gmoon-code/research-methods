@@ -2440,10 +2440,10 @@
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Describe what is compared or documented, including the number of conditions or time points and whether observations are paired, clustered or independent.",
+          "body": "Describe the evidence you will compare or document. For assigned conditions, groups or time points, specify how observations are linked. For qualitative cases or research literature, identify the cases, documents or studies being compared and the dimensions that make the comparison meaningful.",
           "questions": [
-            "Same units or different units?",
-            "How many conditions/time points?"
+            "Which units, cases or sources contribute evidence?",
+            "Are these independent records, repeated observations or linked reports, and what is being compared, if anything?"
           ]
         },
         "3": {
@@ -2819,10 +2819,10 @@
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Write how every central variable is manipulated, measured, scored, or coded, including units/categories.",
+          "body": "Explain how each central concept becomes identifiable evidence. Specify measurement or coding rules, units and categories where relevant. For qualitative and review-based work, clarify case definitions, inclusion rules and the interpretation of recorded categories without implying that every concept must become a numerical variable.",
           "questions": [
-            "Could another person apply this rule the same way?",
-            "What happens at ambiguous boundaries?"
+            "What evidence would another researcher recognise using your definition?",
+            "How will ambiguous cases or coding boundaries be handled consistently?"
           ]
         },
         "3": {
@@ -2995,14 +2995,14 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "For experiments, identify the unit that independently receives a condition. For observational work, identify the primary case and any repeated or clustered measurements.",
-          "prompt": "Which entity receives an independently assigned treatment, and how do repeated measurements relate to it?"
+          "prompt": "What is the relevant treatment, observation, case or source unit, and how do multiple records relate to the same underlying unit?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Name the object/person/group that could independently receive a different condition or exposure.",
+          "body": "In an experiment, name the unit independently assigned to a treatment. In observational or qualitative work, identify the observed participant, case, setting or document and any repeated records. In a review or meta-analysis, distinguish reports, underlying studies, samples and dependent effects.",
           "questions": [
-            "What could have been assigned differently?",
-            "Are several measurements coming from the same underlying unit?"
+            "Which entity receives treatment, supplies evidence or contributes a source record?",
+            "Could multiple measurements, excerpts or reports come from the same unit?"
           ]
         },
         "3": {
@@ -4031,14 +4031,15 @@
       "levels": {
         "1": {
           "name": "Clarify what this field is asking",
-          "body": "The exact quantity that, if estimated, would answer the research question.",
-          "prompt": "What population quantity or bounded comparison would answer your question before you choose a statistical test?"
+          "body": "For the quantitative component, the particular quantity the analysis aims to estimate in relation to the research question.",
+          "prompt": "For your quantitative question or mixed-methods numerical strand, what difference, proportion, association or other quantity should be estimated?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Define the population-level quantity, relevant conditions and analysis unit in ordinary language. An estimand is the target of estimation, whereas a statistical test addresses a model-based question about it.",
+          "body": "Define the quantitative target in ordinary language, identifying the relevant population, comparison, unit and conditions. A statistical test can examine a model-based hypothesis about that target but does not replace its definition. In mixed-methods work, link this target to the separate qualitative question without treating the qualitative strand as another estimand.",
           "questions": [
-            "What number would I most want to know even if I never calculated a p-value?"
+            "Which quantity would answer the quantitative part of the question even without a p-value?",
+            "Which aspect of the broader research question needs qualitative evidence instead?"
           ]
         },
         "3": {
@@ -4075,16 +4076,16 @@
       "levels": {
         "1": {
           "name": "Clarify what this field is asking",
-          "body": "The primary analysis and why it matches the design, units, and outcome type.",
-          "prompt": "Which analysis fits the outcome scale, pairing or clustering, research purpose and available evidence?"
+          "body": "The method used to analyse the available evidence and the reasoning connecting it to the research question.",
+          "prompt": "Which quantitative, qualitative or synthesis method can answer your question using the actual type and structure of evidence?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Name the method and justify using design structure.",
+          "body": "For quantitative evidence, justify a method from the outcome, estimand and dependence among observations. For qualitative work, explain how records will be examined and interpreted. For a review, identify how study findings will be compared or synthesised. Describe any assumptions, credibility checks or limits relevant to the chosen approach.",
           "questions": [
-            "Same units or different units?",
-            "What type is the outcome?",
-            "What quantity am I estimating?"
+            "What question does the method help answer using the evidence you have?",
+            "How are repeated records, linked sources or differing measurements handled?",
+            "Which checks make the analysis or interpretation traceable?"
           ]
         },
         "3": {
@@ -4404,10 +4405,10 @@
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Report the observed estimate and its uncertainty when available. Failure to reject a null does not establish no effect or equivalence; interpret the result in light of precision and design.",
+          "body": "Report the actual weak, contrary, ambiguous or unexpected evidence, including a traceable source. For quantitative results, describe estimates and uncertainty where available; a non-significant result alone does not establish no effect or equivalence. For qualitative or review findings, attend to discrepant accounts, alternative interpretations and variation across cases or sources.",
           "questions": [
-            "Was this analysis planned or exploratory?",
-            "Does uncertainty prevent a strong no-effect claim?"
+            "Was this interpretation or analysis planned, or did it emerge during review of the evidence?",
+            "Which observations, passages or estimates support the finding, and what remains uncertain?"
           ]
         },
         "3": {
@@ -4449,16 +4450,16 @@
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Organise results around the research question and prespecified analyses. Provide actual denominators, descriptive evidence, estimates, uncertainty and traceable tables or figures, keeping explanatory interpretation for Discussion where appropriate.",
+          "body": "Organise findings in a sequence that answers the question and leads readers to the corresponding evidence. For quantitative results, identify analysed units, denominators, estimates and uncertainty where appropriate. For qualitative findings or literature synthesis, support interpretations with specific excerpts, case comparisons or checked sources. Follow the reporting conventions of the study without inventing results.",
           "questions": [
-            "Can every number be traced to stored output?",
-            "Have I kept interpretation out?"
+            "Can every count, estimate, theme or comparison be traced to its source?",
+            "Does each paragraph develop the preceding finding, with interpretation at a level the evidence supports?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
           "strong_example": "Results draft outline pending actual outputs: [n] matched records contributed to the primary analysis (Table [ID]); [descriptive pattern] was observed. The estimated change was [value and interval] (Analysis [ID]). [Secondary result] is reported separately. Replace each placeholder only after checking the source.",
-          "avoid": "Do not explain why a result happened in this section.",
+          "avoid": "Do not introduce a causal or general claim unsupported by the study; qualitative Findings may include grounded interpretation.",
           "choice": null
         },
         "4": {
@@ -4539,10 +4540,10 @@
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Connect the observed result to an interpretation using a plausible process or checked literature. Explicitly distinguish measured mechanisms from explanations not tested by the study.",
+          "body": "Connect the first key finding to a defensible interpretation using the evidence itself and, where relevant, checked research. For experiments, distinguish measured processes from proposed mechanisms. For qualitative studies and reviews, distinguish documented accounts or reported findings from the broader explanation you develop.",
           "questions": [
-            "What mechanism or explanation fits the observed pattern?",
-            "What evidence in this study directly supports that interpretation?"
+            "Which specific observation, passage or source supports this interpretation?",
+            "What alternative reading or unexamined process limits the claim?"
           ]
         },
         "3": {
@@ -4938,21 +4939,21 @@
       "levels": {
         "1": {
           "name": "Clarify what this field is asking",
-          "body": "A stand-alone summary of the complete study, usually written after the paper is stable.",
-          "prompt": "Does the abstract accurately represent your finished purpose, actual method, key result and bounded conclusion?"
+          "body": "A self-contained summary that accurately represents completed research or planned work, usually drafted after the main text is stable.",
+          "prompt": "Can readers tell whether your work is proposed or completed, what evidence exists and which conclusions are warranted?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Summarise the actual purpose, design, analysed units, central finding and bounded conclusion. Write the abstract after confirming the results, rather than supplying plausible but unverified numbers.",
+          "body": "For completed research, summarise the purpose, approach, analysed material or units, verified central findings and bounded conclusion. For a proposal, describe the intended question and methods, then state the potential contribution without reporting findings that do not yet exist. Follow the abstract requirements of the research genre or venue.",
           "questions": [
-            "Could someone tell what was actually found?",
-            "Is there any calculation detail that belongs in Results instead?"
+            "Does the abstract distinguish completed actions from proposed steps and findings from expectations?",
+            "For completed work, are central findings present and verifiable without excessive detail?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
           "strong_example": "Abstract template pending actual evidence: This study examined [specific question] in [actual setting and analysed sample] using [observational or other design]. [Verified principal result with estimate or pattern]. The findings [bounded conclusion], subject to [main limitation].",
-          "avoid": "Do not write an abstract with only background and no result.",
+          "avoid": "Do not omit verified central findings from a completed-study abstract or invent results for a proposal.",
           "choice": null
         },
         "4": {
@@ -4970,7 +4971,7 @@
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Write one self-contained account of [purpose/question], [actual design and analysed cases], [checked primary finding with uncertainty if suitable], and [conclusion consistent with the evidence and scope].",
+          "frame": "For completed work, summarise [purpose], [actual design and analysed evidence], [verified central finding] and [bounded conclusion]. For a proposal, summarise [question], [planned evidence and approach], [scope] and [potential contribution], without claiming that data have been collected.",
           "path_frames": {}
         }
       }
