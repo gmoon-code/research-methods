@@ -757,7 +757,7 @@
       "materials": "core",
       "procedure": "core",
       "replication": "optional",
-      "methodControls": "optional",
+      "methodControls": "core",
       "rowUnit": "core",
       "columns": "core",
       "missingRule": "core",
@@ -770,7 +770,7 @@
       "descriptives": "core",
       "primaryEstimand": "hide",
       "analysisChoice": "core",
-      "assumptionChecks": "optional",
+      "assumptionChecks": "core",
       "effectSizePlan": "hide",
       "multiplicity": "hide",
       "analysisSample": "core",
@@ -1144,7 +1144,7 @@
   "label_overrides": {
     "qualitative": {
       "operationalDefs": "Key phenomenon/domains and what will count as evidence",
-      "experimentalUnit": "Participant, document, observation, or other unit represented in the evidence",
+      "experimentalUnit": "Unit of analysis and how observations or excerpts relate to it",
       "confounders": "Alternative explanations, context effects, or researcher-position considerations",
       "population": "Population, group, setting, or document universe the question concerns",
       "sample": "Actual participants, observations, documents, or cases included",
@@ -1153,7 +1153,7 @@
       "instrument": "Interview guide, observation protocol, document source, or other data-collection procedure",
       "measureQuality": "Credibility, consistency, reflexivity, or data-collection quality plan",
       "replication": "Sampling/corpus adequacy, repeated contacts, or observation coverage if relevant",
-      "methodControls": "Trustworthiness protections such as coding guide, audit trail, discrepant cases, or second-coder review",
+      "methodControls": "Approach to documentation, reflexivity and analytic quality",
       "rowUnit": "What one qualitative record, excerpt, case, or observation row represents",
       "columns": "Planned identifiers, descriptors, text fields, codes, and metadata",
       "missingRule": "How missing, withdrawn, inaudible, or unavailable evidence will be recorded",
@@ -1164,7 +1164,7 @@
       "errorsCorrections": "Transcription, coding, metadata corrections, exclusions, or protocol deviations",
       "descriptives": "Corpus/sample summary and early qualitative pattern summary",
       "analysisChoice": "Qualitative analysis approach and why it fits",
-      "assumptionChecks": "Credibility checks, coding consistency, discrepant-case review, and analytic decisions"
+      "assumptionChecks": "Appropriate credibility and reflexive checks, with reasons for the choices"
     },
     "literature_review": {
       "operationalDefs": "Review concepts, outcomes, populations, and definitions used for eligibility/extraction",
