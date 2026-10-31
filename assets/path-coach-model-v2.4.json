@@ -182,7 +182,8 @@
       ],
       "13": [
         "rawLocation",
-        "plots",
+        "missingObserved",
+        "errorsCorrections",
         "descriptives"
       ],
       "14": [
@@ -513,6 +514,9 @@
         "hypReason",
         "confounders"
       ],
+      "13": [
+        "plots"
+      ],
       "14": [
         "multiplicity"
       ],
@@ -720,44 +724,44 @@
     },
     "experimental": {
       "9": [
-        "The key condition is deliberately manipulated or assigned.",
-        "The comparison structure is explicit.",
+        "I can identify the condition I deliberately assign or manipulate and the units that receive it.",
+        "The comparison is clear, including a reference condition or within-unit sequence where appropriate.",
         "I stated the causal claim boundary before seeing results."
       ],
       "10": [
-        "The manipulated factor and measured outcome are operationally defined.",
-        "I know the experimental unit that independently receives treatment.",
-        "Control/comparison and controlled procedures are distinguished."
+        "The assigned factor, measured outcome and timing have clear operational definitions.",
+        "I have identified the unit that independently receives treatment and distinguished it from repeated measurements or subsamples.",
+        "I can distinguish the comparison condition from the procedures kept consistent across conditions."
       ],
       "11": [
-        "Sampling/generalization and measurement quality are explicit.",
-        "The experiment is safe and permitted before collection.",
-        "The measurement genuinely represents the intended outcome."
+        "I have explained how the experimental units were selected and what population or setting they may represent.",
+        "Permissions, participant protections and applicable safety precautions are addressed before treatment begins.",
+        "The measurement procedure captures the intended outcome and is comparable across conditions where feasible."
       ],
       "12": [
-        "Replication is counted at the experimental-unit level.",
-        "Randomization/counterbalancing/blinding/standardization are documented when relevant.",
-        "The protocol and analysis preserve the actual treatment structure."
+        "I count replication at the treatment-assignment level and keep repeated observations linked to their experimental units.",
+        "The protocol explains assignment, treatment order, blinding and standardisation where relevant, including protections that are unavailable.",
+        "The analysis plan preserves assigned conditions, experimental units and any paired or clustered structure."
       ],
       "13": [
-        "Raw data remain unchanged and unit/treatment IDs are preserved.",
-        "I inspected treatment-group distributions and unusual observations.",
-        "Corrections/exclusions follow documented rules."
+        "The original observations retain links between experimental units, assigned conditions and measurement times.",
+        "I have examined missing outcomes and relevant distributions within each condition.",
+        "Data corrections, exclusions and departures from the planned treatment or procedure are documented."
       ],
       "14": [
-        "The estimand is the treatment contrast of interest.",
-        "The analysis matches treatment structure, experimental unit, and outcome type.",
+        "The quantity I want to estimate states the treatment comparison or within-unit contrast, with its scale and units.",
+        "The analysis matches the treatment-assignment unit, outcome type and any pairing or repeated structure.",
         "Effect magnitude and uncertainty will be reported."
       ],
       "15": [
-        "Results report the treatment contrast and exact supporting output.",
+        "Results identify the units analysed in each condition and trace the treatment contrast to recorded output.",
         "Statistical significance is not treated as effect magnitude.",
-        "Mechanistic explanations remain for Discussion unless directly measured."
+        "Missing outcomes, weak or unexpected results and any departures from the protocol remain visible."
       ],
       "16": [
-        "The Discussion separates observed treatment effects from proposed mechanisms.",
-        "Internal-validity and implementation limitations are considered.",
-        "Generalization is limited to supported populations/conditions."
+        "My interpretation distinguishes the observed treatment contrast from proposed mechanisms that were not directly measured.",
+        "I have considered how assignment, adherence, contamination or attrition could affect the interpretation, where relevant.",
+        "Claims about other units, populations or settings reflect the conditions actually tested and the study's limitations."
       ]
     },
     "quasi_experimental": {
