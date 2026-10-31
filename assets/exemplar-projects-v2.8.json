@@ -2276,29 +2276,29 @@
           "id": "LR-S01",
           "citation": "Lee, O., Quinn, H., & Valdés, G. (2013). Science and language for English language learners in relation to Next Generation Science Standards and with implications for Common Core State Standards for English language arts and mathematics. Educational Researcher, 42(4), 223–233. https://doi.org/10.3102/0013189X13480524",
           "verified": true,
-          "use": "Evidence on language demands and opportunities embedded in science practices.",
-          "boundary": "One conceptual article cannot establish the entire evidence base."
+          "use": "Conceptual discussion of language demands and opportunities within science and engineering practices, including implications for English learners.",
+          "boundary": "An article discussing language in science practices is not a classroom intervention trial and does not establish how common or effective any particular strategy is."
         },
         {
           "id": "LR-S02",
           "citation": "National Academies of Sciences, Engineering, and Medicine. (2018). English learners in STEM subjects: Transforming classrooms, schools, and lives. The National Academies Press. https://doi.org/10.17226/25182",
           "verified": true,
-          "use": "Consensus synthesis on supporting English learners in STEM.",
-          "boundary": "A consensus report covers broader populations and topics than the mini-review question."
+          "use": "Consensus synthesis of research and guidance on the varied linguistic resources, experiences and educational opportunities of English learners across STEM.",
+          "boundary": "The term English learners names a context-specific population and should not be treated as synonymous with all multilingual students. The report synthesises multiple sources; it is not one independent primary intervention study."
         },
         {
           "id": "LR-S03",
           "citation": "National Academies of Sciences, Engineering, and Medicine. (2019). Science and engineering for grades 6–12: Investigation and design at the center. The National Academies Press. https://doi.org/10.17226/25216",
           "verified": true,
-          "use": "Supports investigation/design as central science-learning practices and the value of contextualized participation.",
-          "boundary": "The report is not specific to multilingual learners."
+          "use": "Consensus study report on organising Grades 6–12 science around investigation, evidence use and engineering design.",
+          "boundary": "It addresses secondary science broadly and does not estimate a multilingual-specific teaching effect. The source is a consensus report, not an intervention trial."
         },
         {
           "id": "LR-S04",
-          "citation": "Page, M. J., McKenzie, J. E., Bossuyt, P. M., et al. (2021). The PRISMA 2020 statement: An updated guideline for reporting systematic reviews. BMJ, 372, n71. https://doi.org/10.1136/bmj.n71",
+          "citation": "Page, M. J., McKenzie, J. E., Bossuyt, P. M., Boutron, I., Hoffmann, T. C., Mulrow, C. D., Shamseer, L., Tetzlaff, J. M., Akl, E. A., Brennan, S. E., Chou, R., Glanville, J., Grimshaw, J. M., Hróbjartsson, A., Lalu, M. M., Li, T., Loder, E. W., Mayo-Wilson, E., McDonald, S., ... Moher, D. (2021). The PRISMA 2020 statement: An updated guideline for reporting systematic reviews. BMJ, 372, n71. https://doi.org/10.1136/bmj.n71",
           "verified": true,
-          "use": "Methodological guidance for transparent systematic-review reporting.",
-          "boundary": "PRISMA is a reporting guideline and does not by itself determine review quality or synthesis conclusions."
+          "use": "PRISMA 2020 reporting guideline for transparent documentation of systematic-review questions, searches, selection, appraisal and synthesis.",
+          "boundary": "A reporting guideline supplies methodological expectations, not domain evidence. No historical search or screening records exist for this four-publication instructional selection."
         }
       ],
       "stages": [
