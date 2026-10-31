@@ -3497,11 +3497,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "How many independent units exist and how many repeated/technical observations are taken within them.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "How many independent cases or treatment-assigned units does your plan include, and what will be measured repeatedly within them?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Separate independent replication from repeats/subsamples.",
+          "body": "Distinguish independently assigned treatment units or sampled cases from subsamples, technical repeats and successive observations. Explain how the proposed numbers fit the design and question.",
           "questions": [
             "How many units could independently receive different treatments?",
             "How many measurements come from each unit?"
@@ -3509,26 +3509,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "9 dishes are independent treatment units; 2 seeds measured per dish are subsamples, not n=18 independent treatment replicates.",
+          "strong_example": "Planned replication is three independently assigned dishes per condition. Each dish contains four measured seedlings, with two linked time-point records per seedling; neither seedlings nor repeated readings increase the number of treatment units.",
           "avoid": "Do not multiply n by the number of repeated readings.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student measures 20 seeds in one dish per treatment.",
+            "situation": "In a proposed seedling study, three dishes per salt condition each contain four seedlings measured twice.",
             "thinking": [
-              "Each seed gives a measurement, but the whole dish receives the treatment together.",
-              "Dish may be the experimental unit.",
-              "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+              "Salt solution is assigned to dishes, which supply the independent treatment replicates.",
+              "Seedlings share dish conditions; repeated measurements from one seedling also remain linked.",
+              "I must describe three dishes per condition separately from twelve seedlings and twenty-four readings per condition."
             ],
-            "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+            "draft": "Planned replication is three independently assigned dishes per condition. Each dish contains four measured seedlings, with two linked time-point records per seedling; neither seedlings nor repeated readings increase the number of treatment units."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "There are [number] independent units/cases/studies at the level of [unit]. Each has [number] repeated/subsample/technical observations, which will remain linked by [ID].",
+          "frame": "I plan [number] independently assigned units or cases at the level of [unit], with [number and type] nested or repeated observations per unit. [ID] preserves this dependence, and [feasibility or precision rationale] supports the proposed amount.",
           "path_frames": {}
         }
       }
@@ -3542,7 +3542,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Design protections used to reduce alternative explanations or measurement bias.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which actual procedural protection addresses a specific threat to your study, and how will it be implemented?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3553,26 +3553,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Randomly assign dishes to salinity conditions; randomize position on shelf; standardize solution volume; blind scorer to condition if feasible.",
+          "strong_example": "I will use documented random assignment of dishes to the two solutions, a defined allocation of shelf positions and a common watering and measurement schedule. Remaining differences in light exposure will be recorded.",
           "avoid": "Do not list 'randomization' unless a random mechanism will be used.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student measures 20 seeds in one dish per treatment.",
+            "situation": "A student plans to compare growth across dishes assigned to two solutions on an unevenly lit shelf.",
             "thinking": [
-              "Each seed gives a measurement, but the whole dish receives the treatment together.",
-              "Dish may be the experimental unit.",
-              "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+              "Light exposure may vary with shelf position independently of solution assignment.",
+              "Randomly allocate solution labels to dishes and use a documented random placement plan if feasible.",
+              "Keep solution volume and observation time consistent, and record light differences that cannot be eliminated."
             ],
-            "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+            "draft": "I will use documented random assignment of dishes to the two solutions, a defined allocation of shelf positions and a common watering and measurement schedule. Remaining differences in light exposure will be recorded."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "To reduce [specific validity/bias threat], I will use [randomization/blinding/standardization/audit trail/verification procedure].",
+          "frame": "To address [specific bias or alternative explanation], I will [actual random allocation, blinding, counterbalancing, standardization or verification procedure] at [unit or stage]. Its remaining limitation is [uncontrolled feature].",
           "path_frames": {}
         }
       }
@@ -3586,7 +3586,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The exact meaning of one row in the dataset.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What exactly does one record represent, and which IDs show whether records share a study unit?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3598,26 +3598,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "One row represents one plant at one measurement time; plant_id links repeated rows.",
+          "strong_example": "One dataset row represents the height of one identified seedling at one stated day. seed_id links repeated measures, and dish_id identifies the experimental unit.",
           "avoid": "Do not assume one row equals one independent unit.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student measures 20 seeds in one dish per treatment.",
+            "situation": "The seedling study records height on Day 0 and Day 7 for each seed within an assigned dish.",
             "thinking": [
-              "Each seed gives a measurement, but the whole dish receives the treatment together.",
-              "Dish may be the experimental unit.",
-              "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+              "One reading belongs to one seedling at one measurement time.",
+              "Each seedling has two linked records, and several seedlings share one dish.",
+              "A row count therefore differs from the number of independent treatment units."
             ],
-            "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+            "draft": "One dataset row represents the height of one identified seedling at one stated day. seed_id links repeated measures, and dish_id identifies the experimental unit."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "One row/record represents [one unit at one time / one case / one study / one effect]. [ID field] preserves [pairing/nesting/repeated structure].",
+          "frame": "One row represents [one observation or source at defined level and time]. The fields [ID(s)] link [repeated measures or nested units]; the independent analysis unit is [unit, if applicable].",
           "path_frames": {}
         }
       }
@@ -3631,7 +3631,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The variables/fields that will be stored in the dataset.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which named columns would let another researcher understand every value, its unit and its relation to other records?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3643,26 +3643,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "plant_id (ID), dish_id (ID), salinity_pct (numeric), day (count), height_cm (numeric), germinated (binary 0/1).",
+          "strong_example": "Proposed columns: dish_id (text ID), seed_id (text ID), salt_pct (percentage), day (0 or 7), height_cm (numeric), reading_status (observed or missing), deviation_note (text).",
           "avoid": "Avoid ambiguous column names such as data1 or result.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student measures 20 seeds in one dish per treatment.",
+            "situation": "A student creates the blank dataset for dish-assigned salinity and twice-measured seedlings.",
             "thinking": [
-              "Each seed gives a measurement, but the whole dish receives the treatment together.",
-              "Dish may be the experimental unit.",
-              "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+              "Dish and seed identifiers must link the treatment and repeated observations.",
+              "Salinity has defined units and each height measurement needs a day and length unit.",
+              "A status field should distinguish a truly missing reading from a measured zero."
             ],
-            "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+            "draft": "Proposed columns: dish_id (text ID), seed_id (text ID), salt_pct (percentage), day (0 or 7), height_cm (numeric), reading_status (observed or missing), deviation_note (text)."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The dataset/matrix will include [ID], [variable/field + type/unit], [variable/field + type/unit], and [missing/deviation metadata].",
+          "frame": "The dataset will contain [unit ID and nested ID], [condition or predictor with units], [time if applicable], [outcome with type and units], and [missingness or deviation code]. Each column will use [precise naming or coding rule].",
           "path_frames": {}
         }
       }
@@ -3676,7 +3676,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The rule for representing and handling values that are genuinely missing.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "How will a genuinely absent value be distinguished from a recorded zero, a measurement error or a case excluded from analysis?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3688,26 +3688,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Blank means not observed; 0 is a real value and will never be used to mean missing.",
+          "strong_example": "If Day 7 height was not measured, leave height_cm missing and record missing_reason. Do not replace it with zero or a guessed value; evaluate whether the selected analysis can use incomplete records.",
           "avoid": "Do not invent replacement values just to fill blanks.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student measures 20 seeds in one dish per treatment.",
+            "situation": "During a planned Day 7 plant measurement, a label might be missing even when the seed is visibly present.",
             "thinking": [
-              "Each seed gives a measurement, but the whole dish receives the treatment together.",
-              "Dish may be the experimental unit.",
-              "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+              "A missing measurement is not equivalent to a plant height of zero.",
+              "The original empty field and reason should be retained, rather than supplying a guessed height.",
+              "Before analysis, specify how incomplete growth pairs will be flagged and how the consequences will be assessed."
             ],
-            "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+            "draft": "If Day 7 height was not measured, leave height_cm missing and record missing_reason. Do not replace it with zero or a guessed value; evaluate whether the selected analysis can use incomplete records."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "A missing value means [exact meaning] and will be recorded as [code/blank rule]. It will be handled by [planned rule].",
+          "frame": "A value is missing when [observable condition]. I will code it as [missing code distinct from legitimate values] and record [reason or status]. The planned analysis will [appropriate handling approach] subject to [assumptions and sensitivity check].",
           "path_frames": {}
         }
       }
@@ -3721,7 +3721,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A rule decided before results are known for excluding units/observations from a particular analysis.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which evidence-based rule would justify excluding a case or reading before seeing whether it favours the expected result?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3732,26 +3732,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Exclude measurements only when the sensor recorded an explicit error code; retain biologically extreme but valid values.",
+          "strong_example": "Exclude a temperature reading only when the instrument explicitly flags it as invalid or a documented recording error cannot be resolved. Retain unusual valid readings, and record exclusions before comparing results.",
           "avoid": "Do not remove values because they make p larger.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student measures 20 seeds in one dish per treatment.",
+            "situation": "A student has planned a temperature comparison and is deciding what to do with measurements beyond a sensor's stated range.",
             "thinking": [
-              "Each seed gives a measurement, but the whole dish receives the treatment together.",
-              "Dish may be the experimental unit.",
-              "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+              "A documented sensor error or out-of-range code may make a measurement unusable.",
+              "An extreme but valid temperature does not qualify merely because it looks unusual.",
+              "The original reading, decision, reason and any alternative analysis should remain traceable."
             ],
-            "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+            "draft": "Exclude a temperature reading only when the instrument explicitly flags it as invalid or a documented recording error cannot be resolved. Retain unusual valid readings, and record exclusions before comparing results."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Exclude [unit/observation/source] only when [objective criterion]. Keep a log of [original evidence, decision, reason].",
+          "frame": "I will exclude [record or unit] only if [prespecified, independently checkable criterion]. I will preserve [raw value and reason] in [audit log] and distinguish deviations from the original rule.",
           "path_frames": {}
         }
       }
@@ -3765,11 +3765,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The planned way you expect to summarize or analyze the data before final results are known.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What will you summarise or compare first, at what unit, and which method could address the question without overstating it?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State the primary estimand and likely analysis family at an appropriate level of detail.",
+          "body": "Identify the primary question-aligned quantity or qualitative purpose, the independent analysis unit, how evidence will be summarised and which assumptions would need checking before using a specific method.",
           "questions": [
             "What exact quantity answers the question?",
             "Does the planned analysis preserve unit structure?"
@@ -3777,26 +3777,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Primary quantity: mean 7-day growth difference across assigned salinity conditions; describe group distributions and use an analysis that respects dish-level treatment assignment.",
+          "strong_example": "Primary plan: describe dish-level seven-day growth summaries for each assigned salinity condition and compare them while accounting for the limited number of independent dishes. Assess model assumptions and report an interpretable contrast with uncertainty when justified.",
           "avoid": "Do not choose a method because you expect it to produce a small p-value.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student measures 20 seeds in one dish per treatment.",
+            "situation": "The proposed salinity experiment assigns solutions to dishes and records seedling height change.",
             "thinking": [
-              "Each seed gives a measurement, but the whole dish receives the treatment together.",
-              "Dish may be the experimental unit.",
-              "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+              "The treatment is assigned to dishes, so the comparison must respect dish-level replication.",
+              "Compute descriptive summaries of growth within dishes and across treatment conditions.",
+              "Choose a suitable contrast and uncertainty procedure after checking the small number of treatment units and assumptions; do not choose a test for its expected p-value."
             ],
-            "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+            "draft": "Primary plan: describe dish-level seven-day growth summaries for each assigned salinity condition and compare them while accounting for the limited number of independent dishes. Assess model assumptions and report an interpretable contrast with uncertainty when justified."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The analysis will [describe/compare/associate/code/synthesize/pool] [evidence] to answer [specific part of the RQ].",
+          "frame": "My planned analysis targets [primary quantity or evidence pattern] using [observational or experimental unit] and [descriptive comparison or qualitative synthesis]. I will check [relevant assumptions or evidence quality] and limit inference to [design-supported scope].",
           "path_frames": {}
         }
       }
