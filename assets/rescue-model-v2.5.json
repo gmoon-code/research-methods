@@ -2994,7 +2994,7 @@
       "levels": {
         "1": {
           "name": "Clarify what this field is asking",
-          "body": "The smallest unit providing independent treatment/observation information for the key comparison.",
+          "body": "For experiments, identify the unit that independently receives a condition. For observational work, identify the primary case and any repeated or clustered measurements.",
           "prompt": "Which entity receives an independently assigned treatment, and how do repeated measurements relate to it?"
         },
         "2": {
