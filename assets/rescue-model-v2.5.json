@@ -4261,37 +4261,37 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The exact observations/units included in the final analysis after documented exclusions/missingness.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which units actually contributed to each analysis, and how do those counts reconcile with the collected evidence?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State n and any difference from the collected sample.",
+          "body": "Report actual unit counts for each analysis, linked to recruitment, missingness and exclusion records. Distinguish independent cases from repeated measurements and do not substitute the planned sample size.",
           "questions": [
             "Why is analyzed n different from enrolled/collected n?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Collected 30 students; primary paired analysis includes 28 complete pairs because 2 lacked follow-up.",
+          "strong_example": "Reporting template for an unfinished study: [number enrolled] students contributed [number complete paired records] to the primary paired analysis; [number] lacked [time point], with handling detailed in the missing-data log. All counts remain pending.",
           "avoid": "Do not hide exclusions.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "An observational study finds r = .52 with p < .01.",
+            "situation": "In a fictional paired student-response study, some participants have a baseline record but no follow-up.",
             "thinking": [
-              "I should report the association, coefficient, sample information, and uncertainty if available.",
-              "The small p-value does not turn the study into an experiment.",
-              "I should not explain the mechanism in Results."
+              "The enrolled sample and the number of complete response pairs may differ.",
+              "A paired analysis needs identifiable matched records, or a justified alternative method for missing outcomes.",
+              "The final report must give actual denominators and reasons where known, not invent a completed sample from a planned target."
             ],
-            "draft": "The variables were positively associated, r = .52, p < .01. Causal interpretation is reserved for Discussion and remains unsupported by this observational design."
+            "draft": "Reporting template for an unfinished study: [number enrolled] students contributed [number complete paired records] to the primary paired analysis; [number] lacked [time point], with handling detailed in the missing-data log. All counts remain pending."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The final analysis includes [n / cases / studies / effects] because [missing/exclusion explanation].",
+          "frame": "[Verified initial number] units entered the study and [verified analysis number] contributed to [named analysis]. [Actual exclusions or missing records] explain the difference, documented in [record or table].",
           "path_frames": {}
         }
       }
@@ -4305,7 +4305,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The main result that directly answers the research question, tied to exact output/table/figure.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What is the exact primary finding, and where can a reader verify the corresponding estimate or evidence?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -4317,26 +4317,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Mean paired change = 2.1 points, 95% CI [...]; see Analysis A1 / Table 1.",
+          "strong_example": "Unfilled Results template: For [verified n] paired student responses, the observed change in the proportion correct was [computed difference] percentage points, with [appropriate uncertainty]; see [actual output ID or table].",
           "avoid": "Do not write an explanation of why it happened here.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "An observational study finds r = .52 with p < .01.",
+            "situation": "A student has not yet computed the paired binary comparison but wants to draft the primary result.",
             "thinking": [
-              "I should report the association, coefficient, sample information, and uncertainty if available.",
-              "The small p-value does not turn the study into an experiment.",
-              "I should not explain the mechanism in Results."
+              "The source of the estimate must be the actual final analysis output.",
+              "Record the denominator and any interval or test result that the analysis supports.",
+              "Until the computation is complete, use marked placeholders instead of invented numbers or a claim of significance."
             ],
-            "draft": "The variables were positively associated, r = .52, p < .01. Causal interpretation is reserved for Discussion and remains unsupported by this observational design."
+            "draft": "Unfilled Results template: For [verified n] paired student responses, the observed change in the proportion correct was [computed difference] percentage points, with [appropriate uncertainty]; see [actual output ID or table]."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The primary analysis/finding showed [estimate/pattern/theme], supported by [exact output/table/source evidence] and based on [n/unit/corpus].",
+          "frame": "The primary result for [actual analysed n and unit] was [observed estimate or pattern], with [interval or qualification]. It is traceable to [named output/table/figure and record ID].",
           "path_frames": {
             "qualitative": "The first major finding/theme is [theme/pattern]. It is supported by [cases/excerpts/observations], including [variation or discrepant evidence].",
             "literature_review": "Across the included studies, the evidence shows [theme/pattern], with [studies/source IDs] supporting it and [conflicting/mixed studies] setting the boundary.",
@@ -4355,7 +4355,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A secondary result that is relevant but not the main answer to the research question.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which secondary finding adds relevant information without displacing the prespecified primary result?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -4367,26 +4367,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Germination proportion was also lower at the highest salinity level; see Table 2.",
+          "strong_example": "Unfilled secondary report: In the [specified item category], [observed count or proportion] showed [documented pattern]; see [table or figure]. This [prespecified secondary or exploratory] result is separate from the primary paired comparison.",
           "avoid": "Do not let secondary findings replace the primary result simply because they are more dramatic.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "An observational study finds r = .52 with p < .01.",
+            "situation": "A fictional study's main comparison concerns correct responses; a separate planned summary describes response patterns across item categories.",
             "thinking": [
-              "I should report the association, coefficient, sample information, and uncertainty if available.",
-              "The small p-value does not turn the study into an experiment.",
-              "I should not explain the mechanism in Results."
+              "The second result answers a different, documented secondary question.",
+              "Its descriptive evidence must have a verified denominator and output location.",
+              "If discovered after inspecting results, mark the comparison exploratory rather than implying it was prespecified."
             ],
-            "draft": "The variables were positively associated, r = .52, p < .01. Causal interpretation is reserved for Discussion and remains unsupported by this observational design."
+            "draft": "Unfilled secondary report: In the [specified item category], [observed count or proportion] showed [documented pattern]; see [table or figure]. This [prespecified secondary or exploratory] result is separate from the primary paired comparison."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "A secondary analysis/finding showed [estimate/pattern/theme], supported by [traceable evidence].",
+          "frame": "A [prespecified secondary or exploratory] analysis of [different outcome, group or source] found [verified observation], supported by [record/table]. It qualifies or extends [specific part of the primary answer] within [boundary].",
           "path_frames": {}
         }
       }
@@ -4400,11 +4400,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A null, weak, contradictory, or surprising result that still needs transparent reporting.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which weak, null, contrary or ambiguous finding deserves reporting, and what interpretations remain possible?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State it neutrally and exactly.",
+          "body": "Report the observed estimate and its uncertainty when available. Failure to reject a null does not establish no effect or equivalence; interpret the result in light of precision and design.",
           "questions": [
             "Was this analysis planned or exploratory?",
             "Does uncertainty prevent a strong no-effect claim?"
@@ -4412,26 +4412,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "No clear difference was observed in the secondary outcome; CI included values in both directions.",
+          "strong_example": "Unfilled unexpected-result template: The estimated treatment contrast was [value] with an interval of [limits], spanning [relevant directions]. These results do not clearly distinguish [interpretations]; the study does not establish equivalence or no effect.",
           "avoid": "Do not omit a result because it does not support the hypothesis.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "An observational study finds r = .52 with p < .01.",
+            "situation": "In a fictional experiment, a confidence interval for the treatment contrast spans both potentially meaningful benefit and harm.",
             "thinking": [
-              "I should report the association, coefficient, sample information, and uncertainty if available.",
-              "The small p-value does not turn the study into an experiment.",
-              "I should not explain the mechanism in Results."
+              "The interval contains estimates in different directions.",
+              "A non-significant test, if one was performed, would not establish that effects are absent.",
+              "Report the estimate and uncertainty, then discuss whether the design had enough precision to distinguish the competing possibilities."
             ],
-            "draft": "The variables were positively associated, r = .52, p < .01. Causal interpretation is reserved for Discussion and remains unsupported by this observational design."
+            "draft": "Unfilled unexpected-result template: The estimated treatment contrast was [value] with an interval of [limits], spanning [relevant directions]. These results do not clearly distinguish [interpretations]; the study does not establish equivalence or no effect."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "An unexpected, weak, null, or conflicting result was [finding]. The uncertainty/evidence means I can claim [bounded interpretation].",
+          "frame": "The [unexpected or weak] result was [verified estimate or observation] from [source]. [Specific uncertainty] leaves [plausible interpretations] unresolved, rather than proving [unsupported null or mechanism claim].",
           "path_frames": {}
         }
       }
@@ -4445,11 +4445,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The working Results section of the paper.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Does the Results passage develop findings in the question's order, with traceable evidence and appropriate uncertainty?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Organize results in the order of the research question/analysis plan, using exact estimates and references to tables/figures.",
+          "body": "Organise results around the research question and prespecified analyses. Provide actual denominators, descriptive evidence, estimates, uncertainty and traceable tables or figures, keeping explanatory interpretation for Discussion where appropriate.",
           "questions": [
             "Can every number be traced to stored output?",
             "Have I kept interpretation out?"
@@ -4457,26 +4457,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Begin with analyzed sample and descriptives, then primary analysis, then clearly labeled secondary results.",
+          "strong_example": "Results draft outline pending actual outputs: [n] matched records contributed to the primary analysis (Table [ID]); [descriptive pattern] was observed. The estimated change was [value and interval] (Analysis [ID]). [Secondary result] is reported separately. Replace each placeholder only after checking the source.",
           "avoid": "Do not explain why a result happened in this section.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "An observational study finds r = .52 with p < .01.",
+            "situation": "A student has source-linked output for a paired response analysis but a draft that jumps straight to whether the outcome was significant.",
             "thinking": [
-              "I should report the association, coefficient, sample information, and uncertainty if available.",
-              "The small p-value does not turn the study into an experiment.",
-              "I should not explain the mechanism in Results."
+              "Begin by reporting the observed analysis sample and how incomplete pairs were handled.",
+              "Describe the paired response distribution and the primary estimated contrast before any model-based test.",
+              "Then present secondary or unexpected findings with figure and table references, avoiding explanations of the mechanism."
             ],
-            "draft": "The variables were positively associated, r = .52, p < .01. Causal interpretation is reserved for Discussion and remains unsupported by this observational design."
+            "draft": "Results draft outline pending actual outputs: [n] matched records contributed to the primary analysis (Table [ID]); [descriptive pattern] was observed. The estimated change was [value and interval] (Analysis [ID]). [Secondary result] is reported separately. Replace each placeholder only after checking the source."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Report the evidence in this order: [sample/corpus] → [descriptive evidence] → [primary finding/estimate] → [uncertainty/test details if applicable] → [secondary or weak findings].",
+          "frame": "Write Results in a coherent sequence from [actual sample and descriptive evidence] to [primary finding with exact values and reference], followed by [relevant secondary or unexpected result]. Preserve [uncertainty and analysis boundary] without inventing a mechanism.",
           "path_frames": {}
         }
       }
