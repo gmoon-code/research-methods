@@ -28,9 +28,9 @@ if(!/mixed-methods/.test(R.fields.primaryEstimand.why_it_works))process.exit(1);
 const first25=Object.keys(R.fields).slice(0,25);
 if(first25.join(",")!=="interest1,problem1,claim1,access1,ideaA,ideaB,ideaC,broadTopic,subtopic,phenomenon,contextPop,scope,timeLimit,resources,safety,topicChoice,concepts,synonyms,prelimSearch,known,methodsSeen,uncertain,questionShift,rq1,rq2")process.exit(1);
 for(const key of first25){
- const v=R.fields[key],match=v.typical_length.match(/(\\d+)[–-](\\d+)/);
+ const v=R.fields[key],match=v.typical_length.match(/(\d+)[–-](\d+)/);
  if(!v.expected_shape||!v.good_working_response||!v.why_it_works||v.good_working_response.includes("—"))process.exit(1);
- if(match){const count=v.good_working_response.trim().split(/\\s+/).length;if(count<Number(match[1])||count>Number(match[2]))process.exit(1)}
+ if(match){const count=v.good_working_response.trim().split(/\s+/).length;if(count<Number(match[1])||count>Number(match[2]))process.exit(1)}
 }
 if(!/hypothetical classroom/.test(R.fields.problem1.good_working_response))process.exit(1);
 if(!/ruler/.test(R.fields.resources.good_working_response))process.exit(1);
