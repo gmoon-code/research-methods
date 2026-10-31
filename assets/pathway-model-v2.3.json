@@ -412,7 +412,7 @@
       "materials": "core",
       "procedure": "core",
       "replication": "core",
-      "methodControls": "optional",
+      "methodControls": "core",
       "rowUnit": "core",
       "columns": "core",
       "missingRule": "core",
@@ -1237,7 +1237,11 @@
       "predictorIV": "Measured predictor or exposure",
       "outcomeDV": "Measured outcome",
       "experimentalUnit": "Observational/analytic unit",
-      "controlCondition": "Comparison/reference category if applicable"
+      "controlCondition": "Comparison/reference category if applicable",
+      "replication": "Observational units, repeated observations and clustering",
+      "methodControls": "Measures to reduce selection, measurement or other bias",
+      "confounders": "Plausible confounders and alternative explanations",
+      "effectSizePlan": "Association estimate and uncertainty to report"
     },
     "quasi_experimental": {
       "predictorIV": "Intervention/condition or exposure defining the comparison",
