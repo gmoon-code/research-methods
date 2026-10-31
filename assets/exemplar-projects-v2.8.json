@@ -1416,15 +1416,15 @@
           "id": "Q-S01",
           "citation": "Roediger, H. L., III, & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. Psychological Science, 17(3), 249–255. https://doi.org/10.1111/j.1467-9280.2006.01693.x",
           "verified": true,
-          "use": "Provides experimental background for retrieval-practice effects on delayed retention.",
-          "boundary": "Its controlled experiments do not make two pre-existing classroom groups equivalent."
+          "use": "Experimental evidence that retrieval practice can improve delayed retention compared with restudying educationally relevant prose passages in the tested conditions.",
+          "boundary": "The 2006 experiments used controlled study conditions and delayed memory assessments. They do not describe or establish comparability between the two invented intact biology classes."
         },
         {
           "id": "Q-S02",
           "citation": "Karpicke, J. D., & Blunt, J. R. (2011). Retrieval practice produces more learning than elaborative studying with concept mapping. Science, 331(6018), 772–775. https://doi.org/10.1126/science.1199327",
           "verified": true,
-          "use": "Supports the instructional rationale for retrieval practice in learning from science-like texts.",
-          "boundary": "The published experiment differs from the synthetic classroom implementation and outcome."
+          "use": "Experimental evidence that retrieval practice can support meaningful learning from science-related texts compared with elaborative concept mapping in the tested tasks.",
+          "boundary": "The study's controlled comparison, material and assessments are different from the fabricated pre/post biology-class dataset; it does not substantiate the invented class difference."
         }
       ],
       "stages": [
@@ -1507,9 +1507,9 @@
           "decision": "How did pre-to-post biology scores change in a class using a retrieval-practice routine compared with a pre-existing comparison class?",
           "rejected": "How much did the retrieval routine increase learning? This would require a causal comparison the two-class example cannot identify.",
           "notebook": {
-            "questionType": "Quasi-experimental",
+            "questionType": "Experimental",
             "finalRQ": "How did pre-to-post biology scores change in a class using a retrieval-practice routine compared with a pre-existing comparison class?",
-            "rqJustification": "One paired score record per fictional student permits a descriptive comparison of change across two intact classes. The class-level assignment prevents valid treatment-effect inference."
+            "rqJustification": "The question concerns an instructional change, so its broad question family is Experimental. The specific design is quasi-experimental, and the single-class-per-condition illustration supports descriptive change only, not identification of an intervention effect."
           },
           "forward": "The literature search and study plan now need to preserve the distinctions between retrieval studies and descriptive intact-class comparisons.",
           "compare": [
