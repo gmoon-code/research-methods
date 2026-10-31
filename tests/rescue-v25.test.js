@@ -114,7 +114,7 @@ for(const get of [f=>f.levels["1"].prompt,f=>f.levels["3"].strong_example,f=>f.l
 }
 if(!/Pre-existing groups/.test(fullRescueModel.fields.designType.levels["3"].choice.options["Quasi-experimental"]))process.exit(1);
 if(!/dish/.test(fullRescueModel.fields.experimentalUnit.levels["4"].walkthrough.draft))process.exit(1);
-if(!/not yet known/.test(fullRescueModel.fields.sample.levels["4"].walkthrough.draft))process.exit(1);
+if(!/remains to be determined/.test(fullRescueModel.fields.sample.levels["4"].walkthrough.draft))process.exit(1);
 if(!/other settings/.test(fullRescueModel.fields.sampleLimits.levels["4"].walkthrough.draft))process.exit(1);
 if(!/sensor/.test(fullRescueModel.fields.instrument.levels["4"].walkthrough.draft))process.exit(1);
 if(!/safety/.test(fullRescueModel.fields.ethicsIssues.levels["1"].prompt))process.exit(1);
