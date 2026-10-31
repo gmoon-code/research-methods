@@ -16,39 +16,39 @@
       "levels": {
         "1": {
           "name": "Clarify what this field is asking",
-          "body": "One science-related topic, observation, problem, or claim that genuinely catches your attention.",
+          "body": "List three science or research areas that genuinely interest you. They can be broad at this stage.",
           "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Write one concrete curiosity. It does not need to be a research question yet.",
+          "body": "Write three distinct areas or curiosities. You will narrow them after considering what you can investigate.",
           "questions": [
-            "Would I still care about this after spending several weeks on it?",
-            "Can I imagine any evidence that might help me learn about it?"
+            "Which of these interests would I still want to explore after several weeks?",
+            "What kinds of evidence might help me learn more about each one?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "I keep wondering why leaves on the same species look different in sunny and shaded areas.",
+          "strong_example": "Plant responses to sunlight; how students remember science vocabulary; changes in local stream conditions.",
           "avoid": "Do not write a topic just because it sounds academically impressive.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student is curious about why some plants in the school courtyard wilt faster.",
+            "situation": "A student is interested in patterns noticed around school and in science class.",
             "thinking": [
-              "I should not jump straight to 'sun causes wilting.'",
-              "I can list several possibilities: light, soil moisture, pot size, watering schedule.",
-              "I can access plants and environmental measurements, but I cannot manipulate school landscaping without permission."
+              "Plants in different parts of the courtyard catch my attention.",
+              "I am also curious about how classmates remember science terms.",
+              "Local rainfall and drainage give me a third area to explore. I do not need to choose one yet."
             ],
-            "draft": "Possible direction: observe or experimentally model how light exposure relates to soil moisture loss using standardized containers."
+            "draft": "Three interests to explore are plant responses to local conditions, science vocabulary learning, and rainwater drainage near school."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Three science or research areas I enjoy: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "Three areas I would like to explore are (1) [area], (2) [area], and (3) [area]. I am curious about [one concrete feature of each].",
           "path_frames": {}
         }
       }
@@ -82,19 +82,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student is curious about why some plants in the school courtyard wilt faster.",
+            "situation": "A student notices that some courtyard plants look wilted after lunch.",
             "thinking": [
-              "I should not jump straight to 'sun causes wilting.'",
-              "I can list several possibilities: light, soil moisture, pot size, watering schedule.",
-              "I can access plants and environmental measurements, but I cannot manipulate school landscaping without permission."
+              "I can describe which plants, where they grow and when wilting appears.",
+              "I do not yet know whether soil moisture, light, planting conditions or another factor accounts for the pattern.",
+              "I will first describe the observation without assuming what caused it."
             ],
-            "draft": "Possible direction: observe or experimentally model how light exposure relates to soil moisture loss using standardized containers."
+            "draft": "Some courtyard plants appear wilted during the afternoon, while others nearby do not. I want to understand the conditions associated with this pattern."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "A problem or pattern I have noticed: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "I noticed [specific pattern] in [place or group] during [time or conditions]. I am uncertain about [what remains unexplained], and [alternative explanation] is possible.",
           "path_frames": {}
         }
       }
@@ -127,19 +127,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student is curious about why some plants in the school courtyard wilt faster.",
+            "situation": "Someone says that plants in direct sunlight always lose more water than plants in shade.",
             "thinking": [
-              "I should not jump straight to 'sun causes wilting.'",
-              "I can list several possibilities: light, soil moisture, pot size, watering schedule.",
-              "I can access plants and environmental measurements, but I cannot manipulate school landscaping without permission."
+              "The word 'always' makes this a strong claim.",
+              "Water loss could also depend on temperature, wind, soil and plant characteristics.",
+              "I could examine relevant measurements or published evidence before deciding how well the claim holds."
             ],
-            "draft": "Possible direction: observe or experimentally model how light exposure relates to soil moisture loss using standardized containers."
+            "draft": "Claim to investigate: Plants in direct sunlight always lose more water than those in shade. I would look for conditions and evidence that support or challenge this statement."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "A claim I would like to investigate: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "The claim I want to examine is [statement]. I would look for [relevant observations or sources] and consider [circumstances that might challenge it].",
           "path_frames": {}
         }
       }
@@ -172,19 +172,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student is curious about why some plants in the school courtyard wilt faster.",
+            "situation": "A student hopes to study moisture in school courtyard soil.",
             "thinking": [
-              "I should not jump straight to 'sun causes wilting.'",
-              "I can list several possibilities: light, soil moisture, pot size, watering schedule.",
-              "I can access plants and environmental measurements, but I cannot manipulate school landscaping without permission."
+              "I can observe the courtyard without disturbing the plants if school rules permit it.",
+              "Using sensors or collecting soil samples would require permission and suitable equipment.",
+              "I also need enough access across several days to answer a question involving change over time."
             ],
-            "draft": "Possible direction: observe or experimentally model how light exposure relates to soil moisture loss using standardized containers."
+            "draft": "Potentially accessible resources include the courtyard for non-invasive observations, a borrowed moisture sensor if approved, and published plant research. Any sampling would need permission."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Resources, settings, people, organisms, tools, or datasets I can realistically access: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "I may be able to use [data, materials or site] through [access or permission route]. I must confirm [restriction or approval] before collecting [specific evidence].",
           "path_frames": {}
         }
       }
@@ -217,19 +217,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student is curious about why some plants in the school courtyard wilt faster.",
+            "situation": "A student wants a feasible first direction for understanding courtyard wilting.",
             "thinking": [
-              "I should not jump straight to 'sun causes wilting.'",
-              "I can list several possibilities: light, soil moisture, pot size, watering schedule.",
-              "I can access plants and environmental measurements, but I cannot manipulate school landscaping without permission."
+              "I can record light exposure and soil moisture at selected plants without moving them.",
+              "Repeated observations would help me describe patterns at different times.",
+              "Other environmental differences would limit any causal conclusion."
             ],
-            "draft": "Possible direction: observe or experimentally model how light exposure relates to soil moisture loss using standardized containers."
+            "draft": "Direction A is an observational study of soil moisture and light exposure around selected courtyard plants over several days."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Possible direction A: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "Direction A would examine [question or pattern] using [kind of evidence] in [setting]. It seems feasible because [resource or access], with [important limitation].",
           "path_frames": {}
         }
       }
@@ -262,19 +262,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student is curious about why some plants in the school courtyard wilt faster.",
+            "situation": "The student considers a more controlled alternative to observing courtyard plants.",
             "thinking": [
-              "I should not jump straight to 'sun causes wilting.'",
-              "I can list several possibilities: light, soil moisture, pot size, watering schedule.",
-              "I can access plants and environmental measurements, but I cannot manipulate school landscaping without permission."
+              "Identical containers could provide a simpler way to examine soil water loss under different light conditions.",
+              "I would need to check permission, keep the soil quantity and initial water amount comparable, and record container weights.",
+              "This tests a narrower process than wilting in living plants."
             ],
-            "draft": "Possible direction: observe or experimentally model how light exposure relates to soil moisture loss using standardized containers."
+            "draft": "Direction B is to compare water loss from equal amounts of soil in matching containers placed under two light conditions, if the setup is approved."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Possible direction B: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "Direction B would [different research action] using [different design or evidence]. It differs meaningfully from A through [comparison of question, source or procedure], and requires [access or safeguard].",
           "path_frames": {}
         }
       }
@@ -307,19 +307,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student is curious about why some plants in the school courtyard wilt faster.",
+            "situation": "The student wants an option that does not require collecting new measurements.",
             "thinking": [
-              "I should not jump straight to 'sun causes wilting.'",
-              "I can list several possibilities: light, soil moisture, pot size, watering schedule.",
-              "I can access plants and environmental measurements, but I cannot manipulate school landscaping without permission."
+              "Published studies may already examine plant water stress and environmental conditions.",
+              "I would need a focused question and transparent choices about which sources to include.",
+              "A literature review would explain patterns in the available studies without directly measuring the school courtyard."
             ],
-            "draft": "Possible direction: observe or experimentally model how light exposure relates to soil moisture loss using standardized containers."
+            "draft": "Direction C is a focused review of published studies on how light and soil moisture relate to plant water stress."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Possible direction C: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "Direction C would investigate [focused question] through [alternative evidence source]. Compared with A and B, it offers [distinct advantage] but is limited by [coverage or feasibility issue].",
           "path_frames": {}
         }
       }
@@ -436,7 +436,7 @@
         "3": {
           "name": "Compare examples and choices",
           "strong_example": "Seedlings exposed to different salt concentrations appear to grow differently.",
-          "avoid": "Avoid writing only a subject name such as \u201cplants.\u201d",
+          "avoid": "Avoid writing only a subject name such as “plants.”",
           "choice": null
         },
         "4": {
@@ -840,7 +840,7 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Google Scholar: \"retrieval practice biology retention\" \u2192 learned that many papers use the term practice testing.",
+          "strong_example": "Google Scholar: \"retrieval practice biology retention\" → learned that many papers use the term practice testing.",
           "avoid": "Do not treat this preliminary scan as proof that a literature gap exists.",
           "choice": null
         },
@@ -886,7 +886,7 @@
         "3": {
           "name": "Compare examples and choices",
           "strong_example": "Several studies report that retrieval practice can improve delayed recall under specific learning conditions.",
-          "avoid": "Do not write \u201cresearch proves\u201d or make a universal claim from one source.",
+          "avoid": "Do not write “research proves” or make a universal claim from one source.",
           "choice": null
         },
         "4": {
@@ -1207,7 +1207,7 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "\u201cIs sleep duration associated with score?\u201d \u2192 relationship/association.",
+          "strong_example": "“Is sleep duration associated with score?” → relationship/association.",
           "avoid": "Do not choose causal simply because you hope to show an effect.",
           "choice": {
             "title": "How do I choose the question family?",
@@ -1270,7 +1270,7 @@
         "3": {
           "name": "Compare examples and choices",
           "strong_example": "What is the association between reported weekday sleep duration and biology quiz score among students in this class?",
-          "avoid": "Avoid vague questions such as \u201cHow does sleep affect students?\u201d",
+          "avoid": "Avoid vague questions such as “How does sleep affect students?”",
           "choice": null
         },
         "4": {
@@ -1316,7 +1316,7 @@
         "3": {
           "name": "Compare examples and choices",
           "strong_example": "The variables can be measured with a short anonymous survey and existing quiz scores only if teacher/privacy approval permits; the question is limited to association.",
-          "avoid": "Do not use \u201cinteresting\u201d as the only justification.",
+          "avoid": "Do not use “interesting” as the only justification.",
           "choice": null
         },
         "4": {
@@ -2339,7 +2339,7 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Measured sleep and grades without assigning sleep \u2192 correlational/observational.",
+          "strong_example": "Measured sleep and grades without assigning sleep → correlational/observational.",
           "avoid": "Do not label a study experimental just because it has groups.",
           "choice": {
             "title": "How do I choose the primary design?",
@@ -2404,7 +2404,7 @@
         "3": {
           "name": "Compare examples and choices",
           "strong_example": "Because sleep is measured rather than assigned, an observational correlational design can estimate association but cannot establish a causal sleep effect.",
-          "avoid": "Do not write only \u201cbecause it is easiest.\u201d",
+          "avoid": "Do not write only “because it is easiest.”",
           "choice": null
         },
         "4": {
@@ -2542,7 +2542,7 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Descriptive survey of species frequencies \u2192 a formal directional hypothesis may not be needed.",
+          "strong_example": "Descriptive survey of species frequencies → a formal directional hypothesis may not be needed.",
           "avoid": "Do not invent a hypothesis because you think every paper must have one.",
           "choice": {
             "title": "Does my study need a formal hypothesis?",
@@ -2645,7 +2645,7 @@
         "3": {
           "name": "Compare examples and choices",
           "strong_example": "The mean paired change is 0; or the population correlation is 0.",
-          "avoid": "Do not treat the null as \u201cnothing is happening anywhere.\u201d",
+          "avoid": "Do not treat the null as “nothing is happening anywhere.”",
           "choice": null
         },
         "4": {
@@ -3590,7 +3590,7 @@
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Write one sentence: 'One row represents\u2026'",
+          "body": "Write one sentence: 'One row represents…'",
           "questions": [
             "Can the same independent unit appear in several rows?",
             "What ID is needed to preserve that relationship?"
@@ -4476,7 +4476,7 @@
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Report the evidence in this order: [sample/corpus] \u2192 [descriptive evidence] \u2192 [primary finding/estimate] \u2192 [uncertainty/test details if applicable] \u2192 [secondary or weak findings].",
+          "frame": "Report the evidence in this order: [sample/corpus] → [descriptive evidence] → [primary finding/estimate] → [uncertainty/test details if applicable] → [secondary or weak findings].",
           "path_frames": {}
         }
       }
@@ -4861,7 +4861,7 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Paragraph 1 answers the question; paragraphs 2\u20133 interpret anchor findings; later paragraphs address alternatives, literature, limitations, implications, and future work.",
+          "strong_example": "Paragraph 1 answers the question; paragraphs 2–3 interpret anchor findings; later paragraphs address alternatives, literature, limitations, implications, and future work.",
           "avoid": "Do not repeat the Results section with extra adjectives.",
           "choice": null
         },
@@ -4880,7 +4880,7 @@
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Organize the Discussion as [direct answer] \u2192 [anchor finding + evidence + reasoning] \u2192 [alternative explanation] \u2192 [literature comparison] \u2192 [limitations] \u2192 [implications/future work].",
+          "frame": "Organize the Discussion as [direct answer] → [anchor finding + evidence + reasoning] → [alternative explanation] → [literature comparison] → [limitations] → [implications/future work].",
           "path_frames": {}
         }
       }
@@ -4951,7 +4951,7 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Purpose\u2026 Method\u2026 Main result with summarized estimate/pattern\u2026 Conclusion within design limits.",
+          "strong_example": "Purpose… Method… Main result with summarized estimate/pattern… Conclusion within design limits.",
           "avoid": "Do not write an abstract with only background and no result.",
           "choice": null
         },
@@ -5060,7 +5060,7 @@
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Choose 3\u20136 searchable terms that name [central phenomenon], [population/context], and [method/construct] without repeating only words from the title.",
+          "frame": "Choose 3–6 searchable terms that name [central phenomenon], [population/context], and [method/construct] without repeating only words from the title.",
           "path_frames": {}
         }
       }
@@ -5222,7 +5222,7 @@
     "literature": {
       "search": {
         "stage": 5,
-        "title": "Search log \u2014 what you are doing",
+        "title": "Search log — what you are doing",
         "body": "Record exactly where and how you searched. A search log lets you distinguish 'I did not find it' from 'it probably does not exist.'",
         "terms": [
           "boolean search",
@@ -5242,7 +5242,7 @@
       },
       "sources": {
         "stage": 6,
-        "title": "Source record \u2014 what each paper contributes",
+        "title": "Source record — what each paper contributes",
         "body": "Capture enough information to compare studies later: design, population/context, variables/constructs, measures, findings, limitations, and source quality.",
         "terms": [
           "TRAPP",
@@ -5265,7 +5265,7 @@
       },
       "screen": {
         "stage": 6,
-        "title": "Screening \u2014 apply rules consistently",
+        "title": "Screening — apply rules consistently",
         "body": "Include or exclude sources using prespecified relevance/design criteria. Do not keep a paper because its result agrees with your expectation.",
         "terms": [
           "sampling method",
@@ -5287,7 +5287,7 @@
       },
       "study": {
         "stage": 7,
-        "title": "Study matrix \u2014 compare like with like",
+        "title": "Study matrix — compare like with like",
         "body": "Read across rows to compare populations, methods, measures, and findings. Differences in methods can explain apparent disagreement.",
         "terms": [
           "synthesis",
@@ -5307,7 +5307,7 @@
       },
       "synth": {
         "stage": 7,
-        "title": "Synthesis \u2014 build claims across studies",
+        "title": "Synthesis — build claims across studies",
         "body": "A theme should connect multiple sources and also record conflicting or mixed evidence. The question is 'what does the evidence collectively support, and under what conditions?'",
         "terms": [
           "synthesis",
@@ -5330,7 +5330,7 @@
       },
       "gap": {
         "stage": 7,
-        "title": "Gap/rationale \u2014 make the smallest claim the evidence supports",
+        "title": "Gap/rationale — make the smallest claim the evidence supports",
         "body": "A legitimate project can be replication, extension, local investigation, method comparison, or exploration of inconsistent findings. Global novelty is not required.",
         "terms": [
           "literature gap",
@@ -5351,7 +5351,7 @@
       },
       "claims": {
         "stage": 8,
-        "title": "Claim audit \u2014 every literature statement needs evidence",
+        "title": "Claim audit — every literature statement needs evidence",
         "body": "Link a claim to the exact source records that support it, then add a boundary when the sources apply only to particular populations, measures, or designs.",
         "terms": [
           "citation",
@@ -5372,7 +5372,7 @@
       },
       "outline": {
         "stage": 8,
-        "title": "Paragraph planning \u2014 give each paragraph a reasoning job",
+        "title": "Paragraph planning — give each paragraph a reasoning job",
         "body": "Plan a claim about the literature, supporting studies, comparison/qualification, and the implication for the next paragraph or your study.",
         "terms": [
           "synthesis",
@@ -5394,7 +5394,7 @@
     "methods": {
       "design": {
         "stage": 9,
-        "title": "Design \u2014 start with what you need to know",
+        "title": "Design — start with what you need to know",
         "body": "Decide whether the key factor is assigned or observed, whether the same unit appears in several conditions/times, and what causal claim ceiling follows.",
         "terms": [
           "experimental unit",
@@ -5420,7 +5420,7 @@
       },
       "vars": {
         "stage": 10,
-        "title": "Variables and constructs \u2014 turn ideas into records",
+        "title": "Variables and constructs — turn ideas into records",
         "body": "A construct such as stress or growth needs a role and an operational definition. Design determines whether 'independent variable' is appropriate terminology.",
         "terms": [
           "construct",
@@ -5443,7 +5443,7 @@
       },
       "rep": {
         "stage": 10,
-        "title": "Units and replication \u2014 identify what is truly independent",
+        "title": "Units and replication — identify what is truly independent",
         "body": "Separate independently treated/observed units from repeated readings, technical replicates, and subsamples. This prevents pseudoreplication.",
         "terms": [
           "experimental unit",
@@ -5467,7 +5467,7 @@
       },
       "sample": {
         "stage": 11,
-        "title": "Sampling \u2014 who/what enters the study",
+        "title": "Sampling — who/what enters the study",
         "body": "Sampling affects whom the result can represent. Random sampling and random assignment are different processes with different purposes.",
         "terms": [
           "population",
@@ -5493,7 +5493,7 @@
       },
       "measure": {
         "stage": 11,
-        "title": "Measurement \u2014 define exactly what produces the data",
+        "title": "Measurement — define exactly what produces the data",
         "body": "For every construct, specify instrument/procedure, operational rule, unit/scale, timing, reliability, validity, and relevant calibration/scoring protections.",
         "terms": [
           "reliability",
@@ -5517,7 +5517,7 @@
       },
       "ethics": {
         "stage": 11,
-        "title": "Ethics and safety \u2014 permission comes before data",
+        "title": "Ethics and safety — permission comes before data",
         "body": "Access to classmates, grades, video, health information, or interventions does not automatically mean a student researcher is authorized to use them. Identify risk, consent, privacy, and approval before collection.",
         "terms": [
           "identifiable data",
@@ -5543,7 +5543,7 @@
       },
       "procedure": {
         "stage": 12,
-        "title": "Procedure \u2014 remove hidden guesses",
+        "title": "Procedure — remove hidden guesses",
         "body": "Write ordered actions, what is recorded, and what counts as a deviation. Another researcher should not have to invent missing decisions.",
         "terms": [
           "protocol",
@@ -5565,7 +5565,7 @@
       },
       "data": {
         "stage": 12,
-        "title": "Data table \u2014 define rows before columns",
+        "title": "Data table — define rows before columns",
         "body": "First state what one row represents. Then create columns with IDs, data types, units/categories, coding rules, and missing-value rules.",
         "terms": [
           "data dictionary",
@@ -5590,7 +5590,7 @@
       },
       "audit": {
         "stage": 12,
-        "title": "Audit and lock \u2014 check the evidence chain before collection",
+        "title": "Audit and lock — check the evidence chain before collection",
         "body": "Critical issues should be resolved before locking. Locking preserves the version of the plan that existed before final data were seen.",
         "terms": [
           "protocol",
@@ -5614,7 +5614,7 @@
     "data": {
       "import": {
         "stage": 13,
-        "title": "Import \u2014 preserve the raw evidence",
+        "title": "Import — preserve the raw evidence",
         "body": "Use a copy for analysis and keep the original file unchanged elsewhere. Stable IDs are essential for paired, repeated, or nested observations.",
         "terms": [
           "identifier",
@@ -5636,7 +5636,7 @@
       },
       "quality": {
         "stage": 13,
-        "title": "Data quality \u2014 investigate before deleting",
+        "title": "Data quality — investigate before deleting",
         "body": "Missing values, duplicates, unusual values, and coding problems are reasons to inspect the source and apply documented rules. They are not automatic deletion commands.",
         "terms": [
           "missing data",
@@ -5657,7 +5657,7 @@
       },
       "explore": {
         "stage": 13,
-        "title": "Explore \u2014 see the data before reducing them to one number",
+        "title": "Explore — see the data before reducing them to one number",
         "body": "Numerical variables need distribution/relationship plots; categorical variables need counts/proportions. Paired data should preserve links between the same units.",
         "terms": [
           "numerical",
@@ -5680,7 +5680,7 @@
       },
       "setup": {
         "stage": 14,
-        "title": "Analysis setup \u2014 define the target quantity first",
+        "title": "Analysis setup — define the target quantity first",
         "body": "Choose what you want to estimate, identify variable type and independence/paired structure, then choose the analysis family.",
         "terms": [
           "estimand",
@@ -5707,7 +5707,7 @@
       },
       "run": {
         "stage": 14,
-        "title": "Run analysis \u2014 map the actual columns to the design",
+        "title": "Run analysis — map the actual columns to the design",
         "body": "The same test name can be wrong if the columns do not represent the planned units. Confirm what each selected column means before running.",
         "terms": [
           "predictor",
@@ -5735,7 +5735,7 @@
       },
       "history": {
         "stage": 15,
-        "title": "Analysis record \u2014 keep decisions traceable",
+        "title": "Analysis record — keep decisions traceable",
         "body": "Store the primary analysis with its variable mapping, assumptions, estimate, uncertainty, and warnings. Do not choose a stored run merely because it has the smallest p-value.",
         "terms": [
           "p-value",
@@ -5757,7 +5757,7 @@
       },
       "audit": {
         "stage": 15,
-        "title": "Results audit \u2014 question, unit, estimand, analysis, result",
+        "title": "Results audit — question, unit, estimand, analysis, result",
         "body": "A defensible result answers the same question the study was designed to answer and preserves the true unit structure.",
         "terms": [
           "estimand",
@@ -5780,7 +5780,7 @@
     "writing": {
       "intro": {
         "stage": 8,
-        "title": "Introduction \u2014 lead the reader to the question",
+        "title": "Introduction — lead the reader to the question",
         "body": "Move from the problem and key constructs to synthesized prior evidence, a bounded rationale/gap, and the exact study purpose/question.",
         "terms": [
           "construct",
@@ -5801,7 +5801,7 @@
       },
       "lit": {
         "stage": 8,
-        "title": "Literature review \u2014 write relationships among studies",
+        "title": "Literature review — write relationships among studies",
         "body": "Organize around ideas or methodological comparisons. Source-by-source summaries should not dominate.",
         "terms": [
           "synthesis",
@@ -5822,7 +5822,7 @@
       },
       "method": {
         "stage": 12,
-        "title": "Method \u2014 report what was actually planned/done",
+        "title": "Method — report what was actually planned/done",
         "body": "Use the locked protocol as factual evidence. Do not quietly add a procedure to the paper that was not part of the study.",
         "terms": [
           "protocol",
@@ -5843,7 +5843,7 @@
       },
       "results": {
         "stage": 15,
-        "title": "Results \u2014 report evidence without explaining it away",
+        "title": "Results — report evidence without explaining it away",
         "body": "State the observed estimates/patterns and trace them to analysis records. Explanations and implications belong in Discussion.",
         "terms": [
           "effect size",
@@ -5864,7 +5864,7 @@
       },
       "discussion": {
         "stage": 16,
-        "title": "Discussion \u2014 make reasoning and limits explicit",
+        "title": "Discussion — make reasoning and limits explicit",
         "body": "Answer the question, interpret anchor findings, consider alternatives, compare literature, analyze limitations, and calibrate claims.",
         "terms": [
           "causal claim",
@@ -5885,7 +5885,7 @@
       },
       "closing": {
         "stage": 17,
-        "title": "Conclusion and abstract \u2014 finish from the evidence",
+        "title": "Conclusion and abstract — finish from the evidence",
         "body": "The conclusion gives the controlled answer. The abstract summarizes purpose, method, central result, and bounded conclusion.",
         "terms": [
           "generalization",
@@ -5905,7 +5905,7 @@
       },
       "citations": {
         "stage": 18,
-        "title": "Citation audit \u2014 presence is not enough",
+        "title": "Citation audit — presence is not enough",
         "body": "A citation must correspond to a real source and the source must support the nearby claim at the stated scope.",
         "terms": [
           "citation",
@@ -5925,8 +5925,8 @@
       },
       "audit": {
         "stage": 18,
-        "title": "Whole-paper audit \u2014 one continuous evidence chain",
-        "body": "Question \u2192 literature \u2192 method \u2192 data \u2192 analysis \u2192 results \u2192 discussion \u2192 conclusion should remain logically consistent.",
+        "title": "Whole-paper audit — one continuous evidence chain",
+        "body": "Question → literature → method → data → analysis → results → discussion → conclusion should remain logically consistent.",
         "terms": [
           "protocol",
           "estimand",
