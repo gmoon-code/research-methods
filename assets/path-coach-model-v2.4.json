@@ -614,9 +614,7 @@
     },
     "mixed_methods": {
       "10": [
-        "predictorIV",
-        "outcomeDV",
-        "hypothesisNeeded"
+        "outcomeDV"
       ],
       "12": [
         "replication"
