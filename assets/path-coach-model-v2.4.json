@@ -63,6 +63,8 @@
       ],
       "13": [
         "rawLocation",
+        "missingObserved",
+        "errorsCorrections",
         "descriptives"
       ],
       "14": [
@@ -633,44 +635,44 @@
   "checks": {
     "descriptive_quantitative": {
       "9": [
-        "My design is intended to describe a distribution, amount, frequency, or proportion rather than isolate a causal effect.",
-        "I have stated what the descriptive evidence can and cannot represent.",
+        "My design describes a feature, frequency, distribution or pattern within a defined group or system.",
+        "I have stated which group, setting and period my description covers, and what it cannot represent.",
         "I have not invented an intervention simply to make the study seem more scientific."
       ],
       "10": [
-        "Every variable being described has an operational definition.",
-        "I know what one independent observational case/unit represents.",
+        "The quantities or categories I describe have clear operational definitions and units where applicable.",
+        "I can identify the observational unit and recognise when several records belong to the same unit.",
         "I have not added IV/DV or hypothesis language unless my actual question requires it."
       ],
       "11": [
-        "I distinguished the target population/system from the actual sample.",
+        "I have identified the target population or system and explained whether I observe all of it or a subset.",
         "My measurement procedure produces the variable I claim to describe.",
-        "I stated the boundary on generalization and reviewed ethics/safety."
+        "I have considered limits from selection and measurement, alongside any applicable ethics, privacy or safety requirements."
       ],
       "12": [
         "Another person could reproduce the descriptive collection procedure.",
-        "I know exactly what one row and each column mean.",
-        "Missing and exclusion rules are recorded before final analysis."
+        "Each row and column has a defined meaning, and repeated observations remain linked to their source unit.",
+        "I have stated how missing observations, data corrections and exclusions will be recorded."
       ],
       "13": [
         "The original data are preserved.",
-        "The distribution/counts/proportions were inspected before interpretation.",
-        "Descriptive summaries match the data type."
+        "I examined missingness and relevant distributions, time patterns or groupings before interpreting the summaries.",
+        "The summaries use statistics, counts or proportions appropriate to the variables and observation structure."
       ],
       "14": [
-        "I named the descriptive quantity or estimand that answers the question.",
-        "The analysis is no more complex than the question requires.",
-        "Any inferential extension is justified by sampling/design rather than added automatically."
+        "I have identified the quantity or pattern that answers my descriptive question, including units or denominators where relevant.",
+        "The selected summaries or displays suit the variables and preserve relevant grouping or time structure.",
+        "Any inference beyond the observed cases is justified by the selection process and applicable assumptions."
       ],
       "15": [
-        "The Results report the observed distribution/count/proportion/summary clearly.",
+        "The Results describe observed values or patterns and make clear who or what was measured.",
         "Every result is traceable to the data or analysis record.",
-        "The wording remains descriptive and does not imply causation."
+        "I report differences or changes without treating them as evidence of a causal intervention effect."
       ],
       "16": [
         "The Discussion answers the descriptive question directly.",
-        "Interpretations stay within the studied sample/system and measurement.",
-        "Limitations explain what cannot be generalized or inferred."
+        "My interpretation reflects the observed cases, measurement conditions and meaningful variation in the data.",
+        "I explain how coverage and measurement limitations restrict the conclusions, including any claims beyond the observed units."
       ]
     },
     "observational": {
@@ -695,7 +697,7 @@
         "The planned analysis matches the observational question."
       ],
       "13": [
-        "I inspected distributions and the predictor\u2013outcome relationship before inference.",
+        "I inspected distributions and the predictor–outcome relationship before inference.",
         "The raw data and corrections are traceable.",
         "Repeated or clustered observations remain identifiable."
       ],
