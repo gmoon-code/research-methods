@@ -4624,11 +4624,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "How your results compare with specific prior research.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which specific finding from your study can be compared fairly with which verified result from earlier research?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State where your findings are consistent, different, or difficult to compare, and use design/method details to explain why.",
+          "body": "Compare like with like when possible. Check each cited study's population, exposure or condition, outcome definition and effect measure before interpreting apparent agreement or disagreement.",
           "questions": [
             "Are the outcomes measured the same way?",
             "Are populations/conditions comparable?"
@@ -4636,26 +4636,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "The direction is similar to two prior studies, but direct magnitude comparison is limited because they used different salinity ranges and growth measures.",
+          "strong_example": "Illustrative comparison: the present study's [checked growth estimate] and [verified prior source] concern growth under saline conditions, although their salinity ranges and outcome measures differ. Direct effect-size comparison is therefore limited.",
           "avoid": "Do not write only 'this agrees with Smith' without explaining the basis of comparison.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same observational study shows a positive sleep-score association.",
+            "situation": "A student has a hypothetical plant growth contrast and has read a prior paper using a different salinity range and a different growth measure.",
             "thinking": [
-              "My direct answer can say the variables were associated.",
-              "Possible explanations include sleep affecting learning, study routines affecting both, or reverse direction.",
-              "I need to explain how self-report and convenience sampling limit the claim."
+              "First check what the prior study actually measured and reported, rather than relying on its abstract alone.",
+              "A similar direction does not make the estimated magnitudes directly comparable when outcomes and conditions differ.",
+              "Describe the limited point of comparison with an exact citation, leaving the supporting source blank until verified."
             ],
-            "draft": "Higher reported sleep was associated with higher score in this sample; confounding, reverse direction, self-report error, and local sampling prevent a causal or broad population conclusion."
+            "draft": "Illustrative comparison: the present study's [checked growth estimate] and [verified prior source] concern growth under saline conditions, although their salinity ranges and outcome measures differ. Direct effect-size comparison is therefore limited."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "This finding is [consistent/inconsistent/more qualified] compared with [source/theme] because [design/population/measure/context comparison].",
+          "frame": "In [verified source and finding], [outcome under conditions] was reported. My result [actual finding] [aligns, diverges or cannot be directly compared] because [specific difference in population, design or measure].",
           "path_frames": {}
         }
       }
@@ -4669,7 +4669,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Other plausible explanations for the observed pattern besides your preferred interpretation.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which plausible competing process or source of bias could produce the observed pattern, and what in the study leaves it unresolved?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -4681,26 +4681,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Students who sleep more may also have different study routines or workloads; reverse direction is also possible.",
+          "strong_example": "Evening workload is one plausible alternative explanation for the hypothetical sleep-score association because it could influence both reported sleep and task performance. The observational records alone cannot separate these pathways.",
           "avoid": "Do not list implausible possibilities merely to fill space.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same observational study shows a positive sleep-score association.",
+            "situation": "In a fictional observational study, reported nightly sleep is associated with next-day task scores.",
             "thinking": [
-              "My direct answer can say the variables were associated.",
-              "Possible explanations include sleep affecting learning, study routines affecting both, or reverse direction.",
-              "I need to explain how self-report and convenience sampling limit the claim."
+              "Both variables were observed rather than assigned, leaving common causes possible.",
+              "Evening workload may influence sleep duration and attention at the same time.",
+              "The study would need appropriate additional measures or a stronger design to distinguish this alternative from a sleep-related process."
             ],
-            "draft": "Higher reported sleep was associated with higher score in this sample; confounding, reverse direction, self-report error, and local sampling prevent a causal or broad population conclusion."
+            "draft": "Evening workload is one plausible alternative explanation for the hypothetical sleep-score association because it could influence both reported sleep and task performance. The observational records alone cannot separate these pathways."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "An alternative explanation/interpretation is [alternative]. It remains plausible because [specific feature of the design/evidence].",
+          "frame": "[Verified pattern] might also arise through [specific competing process or confounder]. [Design or missing measurement] leaves it unresolved, and [additional evidence] would help distinguish explanations.",
           "path_frames": {}
         }
       }
@@ -4714,11 +4714,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Specific design/measurement/sampling limits and how each restricts the conclusion.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What are at least two specific limitations, and how does each change the conclusion you can draw?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "For each limitation, state the mechanism and the exact claim it weakens.",
+          "body": "Identify at least two distinct, substantive limitations. For each, explain the mechanism by which it affects measurement, inference, generalization or transferability rather than merely naming a weakness.",
           "questions": [
             "How could this feature bias or limit the result?",
             "What claim becomes weaker because of it?"
@@ -4726,26 +4726,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Self-reported sleep may contain measurement error, limiting precision of the estimated association; one-class convenience sample limits generalization.",
+          "strong_example": "First, self-reported sleep may contain measurement error, limiting confidence in the reported association's precision. Second, the single-class convenience sample does not support a population-wide claim about students in other settings.",
           "avoid": "Avoid generic 'small sample is a limitation' without explaining why.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same observational study shows a positive sleep-score association.",
+            "situation": "A hypothetical single-class sleep and attention study collects self-reported sleep hours with one task score per student.",
             "thinking": [
-              "My direct answer can say the variables were associated.",
-              "Possible explanations include sleep affecting learning, study routines affecting both, or reverse direction.",
-              "I need to explain how self-report and convenience sampling limit the claim."
+              "Self-report may inaccurately measure sleep, affecting the estimated relationship.",
+              "Recruitment from one accessible class restricts how broadly the result can be generalized.",
+              "Explain the exact consequence of each limitation instead of relying on a generic 'small sample' statement."
             ],
-            "draft": "Higher reported sleep was associated with higher score in this sample; confounding, reverse direction, self-report error, and local sampling prevent a causal or broad population conclusion."
+            "draft": "First, self-reported sleep may contain measurement error, limiting confidence in the reported association's precision. Second, the single-class convenience sample does not support a population-wide claim about students in other settings."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "A limitation is [specific feature]. It could affect [measurement/selection/confounding/coverage/etc.] by [mechanism]. Therefore, I cannot confidently claim [boundary].",
+          "frame": "Limitation 1 is [design or measurement feature], which restricts [specific inference] through [mechanism]. Limitation 2 is [different feature], affecting [different claim] through [mechanism]. [Possible safeguard] could reduce [one problem] in later work.",
           "path_frames": {}
         }
       }
@@ -4759,7 +4759,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Reasonable actions or interpretations supported by the evidence and its limits.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Who could reasonably use this evidence now, and which decision would still require stronger evidence?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -4771,26 +4771,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "The result supports further study of sleep and learning in this local context; it does not justify prescribing sleep changes based on this observational sample alone.",
+          "strong_example": "The hypothetical finding could guide further discussion and measurement of sleep and attention within this school context. It does not justify attributing score changes to sleep or prescribing a specific intervention on this evidence alone.",
           "avoid": "Do not turn statistical significance into a policy recommendation.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same observational study shows a positive sleep-score association.",
+            "situation": "A student's hypothetical observational sleep study suggests an association, and someone proposes a mandatory school sleep programme.",
             "thinking": [
-              "My direct answer can say the variables were associated.",
-              "Possible explanations include sleep affecting learning, study routines affecting both, or reverse direction.",
-              "I need to explain how self-report and convenience sampling limit the claim."
+              "An observed association may motivate further local inquiry.",
+              "It does not show that imposing a sleep programme would improve task scores.",
+              "A proportionate implication would involve improved measurement or discussion of the local pattern, not a claim that one intervention will work."
             ],
-            "draft": "Higher reported sleep was associated with higher score in this sample; confounding, reverse direction, self-report error, and local sampling prevent a causal or broad population conclusion."
+            "draft": "The hypothetical finding could guide further discussion and measurement of sleep and attention within this school context. It does not justify attributing score changes to sleep or prescribing a specific intervention on this evidence alone."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Within the study's limits, the evidence supports [realistic implication] for [specific context/person/decision]. It does not yet justify [stronger action/claim].",
+          "frame": "For [specific audience or setting], the evidence can inform [bounded inquiry or decision]. [Broader recommendation] would require [further evidence or design protection] because [current limitation].",
           "path_frames": {}
         }
       }
@@ -4804,7 +4804,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A specific next study that addresses a limitation or unanswered mechanism.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which focused next investigation follows from the most consequential uncertainty in your findings?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -4816,26 +4816,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Replicate with a larger multi-class sample and objective sleep measurement; examine prior achievement as a prespecified covariate.",
+          "strong_example": "A follow-up observational study could record sleep and evening workload prospectively across several classes to examine whether the association persists after accounting for those recorded differences. It would still require caution about unmeasured confounding.",
           "avoid": "Avoid vague 'more research is needed.'",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same observational study shows a positive sleep-score association.",
+            "situation": "A fictional study links self-reported sleep with attention but cannot separate sleep from evening commitments.",
             "thinking": [
-              "My direct answer can say the variables were associated.",
-              "Possible explanations include sleep affecting learning, study routines affecting both, or reverse direction.",
-              "I need to explain how self-report and convenience sampling limit the claim."
+              "The missing information is a potential common cause, so a follow-up study could document evening workload.",
+              "Recruiting across more than one class may clarify context variation, though it would not by itself establish causation.",
+              "A follow-up design needs an explicit question and plan, with privacy safeguards for students' reported routines."
             ],
-            "draft": "Higher reported sleep was associated with higher score in this sample; confounding, reverse direction, self-report error, and local sampling prevent a causal or broad population conclusion."
+            "draft": "A follow-up observational study could record sleep and evening workload prospectively across several classes to examine whether the association persists after accounting for those recorded differences. It would still require caution about unmeasured confounding."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "A useful next study would [specific design/change] to address [current limitation/alternative explanation].",
+          "frame": "A next study could [specific recruitment, design or measurement change] to examine [uncertainty]. It would collect [new evidence] to distinguish [alternative explanations], while retaining [relevant limitation or safeguard].",
           "path_frames": {}
         }
       }
@@ -4849,7 +4849,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The working Discussion section.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Does the Discussion connect verified results to interpretations, competing accounts, literature and limitations without repeating the Results?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -4861,26 +4861,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Paragraph 1 answers the question; paragraphs 2–3 interpret anchor findings; later paragraphs address alternatives, literature, limitations, implications, and future work.",
+          "strong_example": "Suggested paragraph development for a hypothetical sleep study: state the observed association; consider evening workload as an alternative explanation; compare the pattern with a checked source using comparable measures; explain self-report and sampling limits; identify a feasible follow-up question.",
           "avoid": "Do not repeat the Results section with extra adjectives.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The same observational study shows a positive sleep-score association.",
+            "situation": "A student's discussion draft repeats the numerical results and then claims that an observational correlation proves a mechanism.",
             "thinking": [
-              "My direct answer can say the variables were associated.",
-              "Possible explanations include sleep affecting learning, study routines affecting both, or reverse direction.",
-              "I need to explain how self-report and convenience sampling limit the claim."
+              "Open with the narrow answer supported by the result, without reprinting every number.",
+              "Explain a plausible interpretation while distinguishing it from an unmeasured mechanism, then compare relevant verified sources.",
+              "Place alternatives and limitations beside the claims they qualify and close with proportionate implications."
             ],
-            "draft": "Higher reported sleep was associated with higher score in this sample; confounding, reverse direction, self-report error, and local sampling prevent a causal or broad population conclusion."
+            "draft": "Suggested paragraph development for a hypothetical sleep study: state the observed association; consider evening workload as an alternative explanation; compare the pattern with a checked source using comparable measures; explain self-report and sampling limits; identify a feasible follow-up question."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Organize the Discussion as [direct answer] → [anchor finding + evidence + reasoning] → [alternative explanation] → [literature comparison] → [limitations] → [implications/future work].",
+          "frame": "Develop a Discussion from [verified direct answer] to [specific interpretation and evidence], then examine [alternative or contrast with source]. Relate [named limitations] to [bounded implication] and [justified next question], allowing each paragraph to follow its evidence.",
           "path_frames": {}
         }
       }
