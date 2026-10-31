@@ -3141,8 +3141,8 @@
       "status": "synthetic_instructional_exemplar",
       "dir": "retrieval-mixed-methods",
       "rq": "How did biology scores change during a retrieval-practice routine, how did students describe the routine, and how do the quantitative and qualitative findings jointly inform interpretation?",
-      "disclaimer": "Learning-science and mixed-methods sources are real and verified. Scores, interviews, themes, and integrated findings are synthetic.",
-      "data_summary": "24 synthetic paired scores and 6 synthetic interviews. Mean score change = 8.70, 95% CI [6.17, 11.22]. One-group pre/post design does not establish causality.",
+      "disclaimer": "The three background publications are genuine. The paired scores, six interview excerpts, initial codes, and mixed-methods interpretation are fictional teaching material, not conducted research.",
+      "data_summary": "Twenty-four synthetic score pairs yield a mean post-minus-pre change of 8.6958 points (paired-t 95% CI [6.1692, 11.2225]); 23 increase and one declines. Six fictional interviews are linked to positive-change cases only. The one-group design cannot establish causation.",
       "sources": [
         {
           "id": "MM-S01",
@@ -3170,391 +3170,392 @@
         {
           "id": 1,
           "title": "Find a research interest",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 1 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 1 decision that belongs to a mixed methods design.",
+          "where": "The example begins with two kinds of constructed classroom evidence, paired biology scores and brief student accounts of retrieval practice.",
+          "changed": "A general interest in how students study becomes a question about what score records and accounts of studying can each reveal.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Paired scores can describe change within the same fictional students, while interview excerpts provide access to how six of them describe the routine.",
+            "Neither kind of record identifies why scores changed on its own. A mixed-methods question should preserve that distinction from the beginning.",
+            "The available files are instructional materials, not records of a study carried out with students."
           ],
-          "decision": "Keep retrieval practice outcomes and student experience as the working area because it can be connected to a specific evidence source.",
-          "rejected": "A broad topic with no observable evidence plan is rejected.",
+          "decision": "Explore the relationship between the score pattern and student descriptions of retrieval, feedback, repetition and applying knowledge.",
+          "rejected": "A claim that retrieval practice caused improvements would exceed this one-group synthetic example.",
           "notebook": {
-            "broadTopic": "retrieval practice outcomes and student experience",
-            "startingQuestion": "What specific pattern, relationship, experience, or evidence synthesis could be documented?"
+            "broadTopic": "Paired biology scores and student accounts of retrieval practice",
+            "startingQuestion": "What do changes across 24 paired scores show, and how might six linked interview excerpts complicate their interpretation?"
           },
-          "forward": "Stage 2 must narrow population/system, evidence type, and realistic scope.",
+          "forward": "Stage 2 sets a scope that the constructed score table and six excerpts can genuinely support.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does your own project have two distinct forms of evidence, and what can each show?",
+            "Which limitations should shape your question before analysis begins?"
           ]
         },
         {
           "id": 2,
           "title": "Narrow the topic and test feasibility",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 2 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 2 decision that belongs to a mixed methods design.",
+          "where": "The data files contain 24 student identifiers with paired scores and six excerpts linked to six of those identifiers.",
+          "changed": "The scope is restricted to a single fictional classroom scenario, two score observations per record and a small set of interview excerpts.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "There is no supplied timeline for the retrieval routine, assessment blueprint, score scale or interview sampling procedure.",
+            "A bounded demonstration can still teach paired analysis and evidence integration without supplying an invented school, participant history or intervention schedule.",
+            "The six excerpts should not be taken as a representative account of all 24 students."
           ],
-          "decision": "Limit the project to one bounded population/system, time frame, and evidence type.",
-          "rejected": "Trying to answer long-term outcomes, mechanisms, and generalization in one small project is rejected.",
+          "decision": "Analyse the 24 constructed score pairs and examine the six available excerpts, joining records only through their shared identifiers.",
+          "rejected": "Long-term retention, transfer performance and a treatment effect cannot be established from these files.",
           "notebook": {
-            "scope": "One bounded instructional exemplar with explicit limits.",
-            "feasibility": "Evidence can be collected or organized within the stated synthetic teaching workflow."
+            "scope": "24 fictional paired score records and six linked fictional interview excerpts",
+            "feasibility": "Both files are available for source-level calculations and a six-case joint display; broader protocol details are unavailable."
           },
-          "forward": "The literature scan can now use precise keywords instead of one broad topic word.",
+          "forward": "Stage 3 identifies the research that motivates the teaching question without treating that literature as evidence from this fictional class.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Where does your evidence set begin and end?",
+            "What information is absent, even though it might be useful in an actual study?"
           ]
         },
         {
           "id": 3,
           "title": "Explore the research landscape",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 3 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 3 decision that belongs to a mixed methods design.",
+          "where": "Three authenticated publications provide learning-science and mixed-methods background, rather than participant data.",
+          "changed": "The literature has a separate role from the fictional classroom findings.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Roediger and Karpicke (2006) tested retrieval and restudy under experimental conditions, including delayed retention tests.",
+            "Karpicke and Blunt (2011) compared retrieval practice with elaborative studying using concept maps.",
+            "Johnson and Onwuegbuzie (2004) discuss combining methods and reasoning across kinds of evidence. None reports these 24 scores or six interviews."
           ],
-          "decision": "Use verified background sources to learn vocabulary, existing evidence, and methodological boundaries.",
-          "rejected": "Treating the first relevant source as proof of the final answer is rejected.",
+          "decision": "Use the first two papers to explain why retrieval merits investigation and the third to justify explicitly integrating the two types of evidence.",
+          "rejected": "Published retrieval effects cannot be assigned to this example's unverified routine or interpreted as its causal explanation.",
           "notebook": {
-            "known": "The verified sources establish a defensible background rationale.",
-            "uncertain": "The exemplar still needs its own path-specific evidence and cannot inherit effect sizes or themes from background sources."
+            "known": "Experimental research supports the general relevance of retrieval practice. Mixed-methods scholarship provides a rationale for coordinating different evidence forms.",
+            "uncertain": "Whether this fictional score change reflects retrieval, test differences, maturation or other influences cannot be determined."
           },
-          "forward": "The research question can now use terminology grounded in the literature while remaining answerable.",
+          "forward": "The question will distinguish a descriptive score comparison from accounts of experience and their eventual integration.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does each source directly support the purpose for which you cite it?",
+            "Which source claims would become misleading if moved into your own results section?"
           ]
         },
         {
           "id": 4,
           "title": "Write and refine the research question",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 4 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 4 decision that belongs to a mixed methods design.",
+          "where": "The question is formulated to keep numerical change, reported experience and joint interpretation analytically distinct.",
+          "changed": "The final question includes a specific quantitative component, a qualitative component and a mixed-methods integration task.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "A paired score difference answers how the constructed scores changed, not what caused that difference.",
+            "The six snippets show particular reported experiences, without establishing how commonly those experiences occurred.",
+            "The integration asks what the linked records clarify or leave unresolved."
           ],
           "decision": "How did biology scores change during a retrieval-practice routine, how did students describe the routine, and how do the quantitative and qualitative findings jointly inform interpretation?",
-          "rejected": "A question that uses causal, experimental, or statistical language inconsistent with the selected path is rejected.",
+          "rejected": "Did retrieval practice improve biology learning? would imply a causal contrast that the scenario cannot support.",
           "notebook": {
-            "questionType": "mixed methods",
+            "questionType": "Mixed methods / unsure",
             "finalRQ": "How did biology scores change during a retrieval-practice routine, how did students describe the routine, and how do the quantitative and qualitative findings jointly inform interpretation?",
-            "rqJustification": "The question matches a mixed methods evidence structure."
+            "rqJustification": "The question separates observed differences, reported accounts and interpretive integration; it makes no causal claim."
           },
-          "forward": "Every later decision must now remain aligned with this exact question.",
+          "forward": "Stage 5 plans how to find and document relevant background sources without inventing a completed search.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can each part of your research question be answered with an identifiable evidence source?",
+            "Does any verb imply a causal inference the design cannot sustain?"
           ]
         },
         {
           "id": 5,
           "title": "Build a systematic search strategy",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 5 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 5 decision that belongs to a mixed methods design.",
+          "where": "The three citations are available, but no original database search log is supplied.",
+          "changed": "A reproducible search plan is distinguished from an actually conducted literature search.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "A potential search could combine terms such as retrieval practice, testing effect, biology education, student experience and mixed methods.",
+            "Database names, exact queries, filters, dates and hit counts would need to be retained if a search were performed.",
+            "The presence of three verified papers does not demonstrate systematic coverage of a research field."
           ],
-          "decision": "Build concept blocks and document more than one search route.",
-          "rejected": "One undocumented web search is rejected as an evidence-search record.",
+          "decision": "Draft two background search routes, one on retrieval and retention, another on classroom experience and mixed-methods integration, and label both as proposed.",
+          "rejected": "Do not invent databases searched, numbers retrieved or a comprehensive evidence gap.",
           "notebook": {
-            "searchLogic": "Separate the central phenomenon, population/context, and design/evidence terms; connect synonyms with OR and concepts with AND.",
-            "searchLogRule": "Record database/site, date, exact string, filters, and result count."
+            "searchLogic": "Proposed route 1: (\"retrieval practice\" OR \"testing effect\") AND (learning OR biology). Proposed route 2: (\"retrieval practice\" OR \"low-stakes quiz\") AND (interview OR experience OR \"mixed methods\").",
+            "searchLogRule": "If implemented, record source, search date, exact query, limitations, result count and selection decisions. No completed log exists here."
           },
-          "forward": "The search log makes later source-selection and coverage claims auditable.",
+          "forward": "Stage 6 examines what the three identified publications substantiate and where their scope ends.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Could someone reproduce your claimed search from the information you retain?",
+            "Are you distinguishing an example search string from a search you actually conducted?"
           ]
         },
         {
           "id": 6,
           "title": "Evaluate, read, and extract sources",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 6 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 6 decision that belongs to a mixed methods design.",
+          "where": "The source set consists of two retrieval-learning experiments and one mixed-methods methodology article.",
+          "changed": "Each source receives a distinct evidence role and a boundary on its use.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The 2006 experiment reports effects on retention under its own comparison conditions; it does not validate the present score scale.",
+            "The 2011 experiment addresses retrieval relative to concept mapping under its particular conditions, not six classroom interviews.",
+            "The 2004 methodological discussion supports combining approaches but cannot validate a particular set of codes or establish empirical integration quality."
           ],
-          "decision": "Extract comparable information from each included source instead of saving citation-only records.",
-          "rejected": "Peer-reviewed or authoritative status alone is rejected as a substitute for relevance and methodological appraisal.",
+          "decision": "Retain source metadata, identify study context and comparison, and quote or paraphrase only claims each publication supports.",
+          "rejected": "Reference authenticity is not evidence that the fictional scores, codes or interviews actually occurred.",
           "notebook": {
-            "sourceExtraction": "Record source type, design/scope, population/context, main claim/finding, limitations, and relevance to this exemplar."
+            "sourceExtraction": "MM-S01 and MM-S02 provide experimental retrieval background. MM-S03 provides mixed-methods rationale. All synthetic effects and quotations remain attributed exclusively to the example files."
           },
-          "forward": "Comparable source records allow synthesis instead of annotated-bibliography writing.",
+          "forward": "The literature synthesis can now explain why these strands might be considered together without declaring an invented research gap.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Is a methodological paper being asked to support an empirical finding?",
+            "Does your extraction record enough context to avoid misleading transfer between settings?"
           ]
         },
         {
           "id": 7,
           "title": "Synthesize the literature and justify the study",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 7 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 7 decision that belongs to a mixed methods design.",
+          "where": "The fictional example has no new empirical contribution or documented literature search.",
+          "changed": "Its purpose is articulated as a methodological demonstration with a bounded educational context.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Retrieval studies motivate attention to practice and retention, but this score table contains no concurrent comparison condition.",
+            "A reported study strategy can help readers consider how a student experienced a routine, without identifying the cause of the student's score difference.",
+            "A linked joint display makes those interpretive opportunities and uncertainties visible."
           ],
-          "decision": "Use a bounded rationale such as replication, local application, evidence synthesis, or methodological demonstration.",
-          "rejected": "A global 'no research exists' claim is rejected unless an appropriately comprehensive search can defend it.",
+          "decision": "Justify the exemplar as an exercise in keeping quantitative change, short qualitative accounts and their integration distinguishable.",
+          "rejected": "Claiming that existing research overlooks this classroom or that the example resolves a debate would be unsupported.",
           "notebook": {
-            "rationale": "The exemplar is justified by the stated teaching/research purpose and verified background, without manufacturing novelty."
+            "rationale": "This constructed teaching case demonstrates how a paired-score pattern may be read alongside linked interview snippets while maintaining uncertainty about mechanisms and generalisability."
           },
-          "forward": "The literature review must lead to the actual question and claim boundary.",
+          "forward": "Stage 8 develops a short source-grounded account that leads to the three-part question.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can you describe the study's contribution without inventing novelty?",
+            "Would the rationale remain accurate if the findings were different?"
           ]
         },
         {
           "id": 8,
           "title": "Write the literature review",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 8 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 8 decision that belongs to a mixed methods design.",
+          "where": "The introduction needs to connect prior experimental evidence to the teaching demonstration without transferring experimental conclusions.",
+          "changed": "A short, connected literature narrative replaces a generic instruction to synthesise sources.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Roediger and Karpicke (2006) tested retrieval against restudying and assessed retention at different delays.",
+            "Karpicke and Blunt (2011) examined retrieval alongside elaborative concept mapping, adding evidence that the type of study activity can influence later performance.",
+            "Johnson and Onwuegbuzie (2004) offer a framework for bringing numerical patterns and participant accounts into dialogue, provided the integration answers a substantive question."
           ],
-          "decision": "Write the literature section around cross-source claims and differences.",
-          "rejected": "A paragraph-by-paragraph list of source summaries is rejected.",
+          "decision": "Introduce the score strand as a descriptive paired comparison and the interview strand as a small set of linked accounts that may qualify its interpretation.",
+          "rejected": "The background papers should not be written as though they supply causal validation for this unobserved routine.",
           "notebook": {
-            "literatureReviewPlan": "Claim → evidence from more than one source where available → difference/qualification → connection to the present question."
+            "literatureReviewPlan": "Retrieval studies provide experimental reasons to investigate what happens when students practise remembering. Their protocols and comparisons do not occur in this fictional one-group dataset. A mixed-methods reading therefore asks what the score pairs show and what six linked accounts add, while keeping the absence of a causal comparison explicit."
           },
-          "forward": "The Method must now operationalize the same constructs and evidence structure.",
+          "forward": "The design statement will identify the actual evidence available rather than assume a documented sequence of data collection.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Do neighbouring source-based sentences build one explanation rather than merely name papers?",
+            "Have you separated findings reported by others from results generated in your own study?"
           ]
         },
         {
           "id": 9,
           "title": "Choose the research design",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 9 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 9 decision that belongs to a mixed methods design.",
+          "where": "The fictional materials contain two score observations for 24 IDs and short interview excerpts for six of those IDs.",
+          "changed": "The design is described as a linked-strand mixed-methods teaching demonstration rather than an empirically documented convergent study.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "A within-student pre/post comparison measures change in recorded score values.",
+            "The interview file adds self-reported views from six selected IDs, and a joint display places these alongside the corresponding changes.",
+            "Collection timing, sampling decisions and researcher procedures are not documented, so a specific convergent or explanatory-sequential design cannot be verified."
           ],
-          "decision": "Use a mixed-methods design because score change and student experience answer different parts of the question.",
-          "rejected": "Adding interviews with no integration purpose is rejected.",
+          "decision": "Use a mixed-methods instructional structure with separate analyses followed by case-level integration; state that the one-group score component lacks a causal comparison.",
+          "rejected": "Labelling the files a fully executed convergent design would imply documented collection procedures that are absent.",
           "notebook": {
-            "designType": "Mixed methods, convergent/connected teaching exemplar",
-            "claimBoundary": "Describe paired score change and qualitative experience; integration does not create causal proof."
+            "designType": "Mixed methods",
+            "claimBoundary": "Describe paired differences and six linked fictional accounts. The integrated reading can suggest questions or tensions but cannot attribute score changes to retrieval practice."
           },
-          "forward": "Define both strands and integration point.",
+          "forward": "Define the quantitative units, the excerpt units and the precise link between them.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What specific moment in your design connects different types of evidence?",
+            "Does the design label promise procedures your records cannot document?"
           ]
         },
         {
           "id": 10,
           "title": "Define constructs, variables, or evidence units",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 10 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 10 decision that belongs to a mixed methods design.",
+          "where": "Student IDs link numerical score pairs with the available interview excerpts.",
+          "changed": "The quantitative outcome and qualitative evidence units are defined without forcing them into a single variable scheme.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Each quantitative case has a pre-score and post-score, with change calculated as post minus pre in score points.",
+            "Each qualitative case has one fictional excerpt and an initial interpretive code; no full transcript or interview guide is supplied.",
+            "The score scale, assessment comparability and teaching schedule are unspecified, so both score meaning and mechanisms require caution."
           ],
-          "decision": "Define pre/post score variables for the quantitative strand and experience/strategy-change domains for the qualitative strand.",
-          "rejected": "Forcing interview themes into IV/DV terminology is rejected.",
+          "decision": "Treat the paired student as the quantitative analysis unit, the supplied excerpt as the qualitative evidence unit, and the common identifier as an integration link.",
+          "rejected": "Interview codes are not independent numeric outcomes, and score changes are not measures of students' stated experiences.",
           "notebook": {
-            "quantitative": "Pre/post biology scores for the same students.",
-            "qualitative": "Interview accounts of retrieval, feedback, burden, and transfer.",
-            "integration": "Compare where qualitative themes help explain or qualify the quantitative change."
+            "quantitative": "24 paired student-level score records. Change is post_score − pre_score and is expressed in unspecified score points.",
+            "qualitative": "Six single excerpts with supplied initial codes. These are fictional accounts, not full interview transcripts.",
+            "integration": "Join on student_id, then compare each excerpt's meaning with that student's numeric change without assuming causation."
           },
-          "forward": "Sampling/ethics must cover both strands.",
+          "forward": "Stage 11 examines what the available subset excludes and what an actual study would require ethically.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Do your quantitative and qualitative measures refer to clearly defined units?",
+            "Can you trace every inferred construct to data rather than to a presumed protocol?"
           ]
         },
         {
           "id": 11,
           "title": "Plan sampling, measurement, validity, and ethics",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 11 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 11 decision that belongs to a mixed methods design.",
+          "where": "Six interview IDs are included among the 24 score records; all six have positive changes.",
+          "changed": "The selection limitation becomes part of the research design rather than a minor afterthought.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The six linked changes range from 9.1 to 17.1 points, with a mean of 13.93; the other 18 records average 6.95.",
+            "The only declining case, M11 at −4.6 points, has no interview excerpt.",
+            "The supplied files do not establish how interviews were chosen. It would be inaccurate to claim probability sampling, purposive selection criteria or thematic saturation."
           ],
-          "decision": "Use one synthetic class with linked score records and a purposive interview subset; protect educational records and interview privacy.",
-          "rejected": "Treating the interview subset as statistically representative is rejected.",
+          "decision": "Describe the six records as an available illustrative subset and avoid treating their perspectives as typical of all 24 cases.",
+          "rejected": "Inferring why the declining student performed differently is unsupported by the interview data.",
           "notebook": {
-            "sample": "24 synthetic paired score records; 6 synthetic interview cases.",
-            "ethics": "Real study would require appropriate approval/consent, privacy, and separation from grading pressure."
+            "sample": "24 fictional paired records; six linked interview excerpts (M03, M07, M09, M12, M18, M21). Selection criteria are unspecified.",
+            "ethics": "For any real study, obtain suitable institutional approval and informed consent or assent where applicable, safeguard student records and limit grading-related pressure. No real participants are involved here."
           },
-          "forward": "Lock both data structures and linking IDs.",
+          "forward": "Stage 12 specifies a transparent analysis sequence and matching fields for the joint display.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which experiences are missing from the subset you can analyse?",
+            "What real-world ethical duties would the fictional example require if conducted?"
           ]
         },
         {
           "id": 12,
           "title": "Write the method and lock the data plan",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 12 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 12 decision that belongs to a mixed methods design.",
+          "where": "The quantitative CSV, excerpt CSV and summary JSON are kept as separate traceable sources.",
+          "changed": "A joint-display plan specifies exactly how strand-specific results will meet.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "First verify each post-minus-pre difference and summarise the 24 changes using paired statistics.",
+            "Then group the six existing initial codes provisionally, retaining the full wording of each corresponding excerpt.",
+            "Finally place IDs, score changes, excerpt evidence and cautious interpretive notes together. The absence of interview data for M11 must remain visible."
           ],
-          "decision": "Preserve quantitative and qualitative files separately, then define the joint-display fields before final interpretation.",
-          "rejected": "Mixing interview text into the numeric score column is rejected.",
+          "decision": "Create a six-row ID-linked joint display while also retaining a separate summary of the entire 24-student score distribution.",
+          "rejected": "A p-value cannot replace qualitative interpretation, and six one-sentence codes cannot establish a validated thematic analysis.",
           "notebook": {
-            "quantRow": "One student with paired scores.",
-            "qualCorpus": "One interview case with excerpts/codes.",
-            "integrationRule": "Connect theme evidence to quantitative patterns without treating one strand as proof of the other."
+            "quantRow": "student_id, pre_score, post_score, change_score; one row for each of 24 paired records.",
+            "qualCorpus": "student_id, exact excerpt, initial_code; one entry for each of six fictional accounts.",
+            "integrationRule": "Pair excerpts and score changes by identifier, describe agreement or tension and preserve the unknown causes of change."
           },
-          "forward": "Analyze strands separately first.",
+          "forward": "Stage 13 checks all row-level arithmetic before the results are interpreted.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Could another reader recreate your integration from the recorded identifiers?",
+            "What information would be lost by collapsing the qualitative strand into a numeric theme count?"
           ]
         },
         {
           "id": 13,
           "title": "Collect or organize evidence",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 13 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 13 decision that belongs to a mixed methods design.",
+          "where": "All 24 score pairs are present, along with six linked fictional interview excerpts.",
+          "changed": "The score-change column is required to equal the recorded post-score minus pre-score for every ID.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Initial inspection identified three transcription mismatches in change_score, for M02, M16 and M24; their corrected differences are 3.1, 9.9 and 16.4.",
+            "Using pre and post as the source of truth gives a mean change of 8.6958 points, consistent with the stored statistical output.",
+            "The interview excerpts are unchanged and can be linked to score rows. No transcripts, collection dates or verification of actual interview conduct exist."
           ],
-          "decision": "Inspect score changes and read interview cases before integration.",
-          "rejected": "Using only the most improved students' interviews is rejected.",
+          "decision": "Preserve the original pre/post pairs and six excerpts, correct the three derived-change cells, and document the corrections in the data audit.",
+          "rejected": "Adjusting the paired-test result to match an erroneous derived column would corrupt the demonstrated calculation.",
           "notebook": {
-            "dataSummary": "24 synthetic paired scores and 6 synthetic interviews. Mean score change = 8.70, 95% CI [6.17, 11.22]. One-group pre/post design does not establish causality."
+            "dataSummary": "24 constructed pairs; 23 increases and one decrease. Corrected row differences yield mean change 8.6958 and paired-t 95% CI [6.1692, 11.2225]. Six linked fictional excerpts are available."
           },
-          "forward": "Each strand now receives its own analysis.",
+          "forward": "Stage 14 computes the paired statistics from the verified differences and examines how the six excerpts may be grouped.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Do derived fields agree with the values from which they were calculated?",
+            "Can you preserve the original observations when correcting a formula-derived cell?"
           ]
         },
         {
           "id": 14,
           "title": "Choose and justify the analysis",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 14 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 14 decision that belongs to a mixed methods design.",
+          "where": "The analysis uses 24 within-ID differences and six existing coded excerpts.",
+          "changed": "The numerical method, its inferential assumptions and the modest scope of qualitative grouping are described separately.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "For paired differences, the mean is 8.695833 points, their sample SD is 5.983636 and the standard error is 1.221405.",
+            "The paired statistic is t(23) = 7.119536, with two-sided p ≈ 2.98 × 10⁻⁷ and the conventional 95% paired-t interval [6.169166, 11.222501].",
+            "The six snippets support provisional groupings about noticing gaps, reconstructing ideas, feedback or study changes, and limitations of perceived transfer or repeated practice. They do not establish coded-theme reliability."
           ],
-          "decision": "Use a paired t teaching analysis for scores and thematic coding for interviews, then build a joint display.",
-          "rejected": "Using the p-value as the integration method is rejected.",
+          "decision": "Describe the change distribution and paired-t teaching calculation, then present an ID-linked joint display with the original fictional quotations.",
+          "rejected": "Statistical significance cannot establish that the retrieval routine caused the observed difference, and thematic labels are not validated mechanisms.",
           "notebook": {
-            "analysisChoice": "Paired score analysis + thematic analysis + joint comparison of convergence/divergence."
+            "analysisChoice": "Compute post − pre for 24 IDs; report mean, SD, t with 23 df and paired-t interval. Group the six supplied codes cautiously, then integrate each excerpt with its linked change."
           },
-          "forward": "Results must distinguish strand-specific from integrated findings.",
+          "forward": "Stage 15 reports what each strand actually contains before discussing possible relationships.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Do the test assumptions match the unit of analysis and the data available?",
+            "Are you calling exploratory code groupings 'themes' without acknowledging their limited evidence base?"
           ]
         },
         {
           "id": 15,
           "title": "Write the Results or findings",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 15 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 15 decision that belongs to a mixed methods design.",
+          "where": "The quantitative strand covers 24 pairs; the qualitative strand consists of six excerpt-code records.",
+          "changed": "Results distinguish the overall score pattern, the supplied student accounts and the case-level comparison.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Scores move from a mean of 66.175 to 74.871 points, with a mean paired change of 8.696; 23 differences are positive and M11 is −4.6.",
+            "M03 and M07 describe noticing explanation gaps and connecting ideas, whereas M12 and M21 mention using feedback or retrieval in their preparation.",
+            "M09 describes repetition as burdensome when content feels familiar, and M18 reports uncertainty about differently framed questions despite a higher quiz score. All six interview-linked cases improved, so the accounts cannot explain the declining case."
           ],
-          "decision": "Report score change, qualitative themes, and where they converge or complicate one another.",
-          "rejected": "Saying interviews prove why scores increased is rejected.",
+          "decision": "Report the paired interval [6.17, 11.22] as a conditional model calculation and use the six original excerpts to show both favourable and qualifying accounts.",
+          "rejected": "Do not describe a confidence interval as a causal effect range or imply the six excerpts represent all learner experiences.",
           "notebook": {
-            "result1": "24 synthetic paired scores and 6 synthetic interviews. Mean score change = 8.70, 95% CI [6.17, 11.22]. One-group pre/post design does not establish causality."
+            "result1": "n = 24, mean change 8.6958 points, paired-t 95% CI [6.1692, 11.2225], t(23) = 7.1195; 23 increased and one declined. Six excerpts provide limited, linked interpretive evidence."
           },
-          "forward": "Discussion must preserve the one-group causal limitation.",
+          "forward": "Stage 16 asks which alternative explanations and sampling restrictions constrain these results.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does each result originate from the corresponding file?",
+            "Are discrepant accounts and cases without interviews visible in your interpretation?"
           ]
         },
         {
           "id": 16,
           "title": "Write the Discussion and limitations",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 16 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 16 decision that belongs to a mixed methods design.",
+          "where": "Neither the constructed score table nor the excerpts document a controlled intervention or independently verified interviews.",
+          "changed": "Limitations address both strands and the integration process, rather than adding a generic noncausal disclaimer.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "One-group change is compatible with practice, instruction, assessment differences, maturation or other factors; no concurrent comparison identifies a retrieval effect.",
+            "The two score instruments, scoring criteria, timing and independence across students are unspecified. A conventional paired-t interval therefore illustrates a model-based calculation, not a population estimate from an actual sample.",
+            "The six quotations are a selective, all-improving subset, while initial codes provide no full-transcript or independent-coder audit. They offer possible interpretations of experience but no proof of change mechanisms."
           ],
-          "decision": "Interpret themes as possible explanations/boundaries for the observed change, while acknowledging no concurrent comparison group.",
-          "rejected": "Combining two weak strands and calling the result causal is rejected.",
+          "decision": "Keep the integrated claim at the level of a score pattern alongside contrasting fictional accounts and identify what a real study would need to test alternative explanations.",
+          "rejected": "Treating the interview descriptions as confirmation of score causation would conflate experience with effect identification.",
           "notebook": {
-            "limitations": "Synthetic one-group pre/post scores, small interview subset, self-report, no comparison group, integration is interpretive."
+            "limitations": "All data are synthetic. There is no control group, intervention schedule, assessment-equivalence record, documented sampling scheme, full interviews or validated coding. Only six high-change cases have linked excerpts, and the sole declining case has none."
           },
-          "forward": "Closing sections describe actual integration.",
+          "forward": "Stage 17 writes an abstract that communicates both evidence strands and these substantive limits.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does integration explain what the combined evidence adds without overclaiming?",
+            "Which alternative explanation would a sceptical reader expect you to address?"
           ]
         },
         {
           "id": 17,
           "title": "Write the conclusion, abstract, title, and keywords",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 17 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 17 decision that belongs to a mixed methods design.",
+          "where": "The abstract must distinguish fictional observations from externally supported retrieval research.",
+          "changed": "The conclusion now identifies numerical change, the specific kinds of accounts available and the uncertainty they leave.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The overall paired mean is positive, but the constructed example lacks a comparison group or documented protocol.",
+            "The six excerpts include perceived usefulness, feedback-related study decisions and reservations about repetition or unfamiliar questions.",
+            "The linked excerpt cases are all positive-change records; they cannot represent the full score distribution or identify a mechanism of improvement."
           ],
-          "decision": "Abstract reports quantitative, qualitative, and integrated findings separately.",
-          "rejected": "Listing two methods without an integrated conclusion is rejected.",
+          "decision": "Conclude that the constructed dataset illustrates how linked evidence can deepen descriptive interpretation while leaving causal and representativeness questions unresolved.",
+          "rejected": "A concluding claim that retrieval practice reliably raises biology scores in classrooms is not warranted.",
           "notebook": {
-            "title": "Synthetic Mixed-Methods Exemplar: Retrieval-Practice Score Change and Student Experience"
+            "title": "Retrieval Practice, Paired Biology Scores, and Student Accounts, a Synthetic Mixed-Methods Exemplar",
+            "abstract": "This instructional mixed-methods example brings together 24 fictional paired biology scores and six fictional interview excerpts linked by student identifier. Mean score change was 8.70 points (paired-t 95% CI [6.17, 11.22]); 23 students had higher recorded scores and one had a lower score. The excerpts describe noticing gaps, reconstructing ideas and changing preparation, alongside concerns about repetition and unfamiliar questions. All six interview-linked records show increases, limiting their usefulness for interpreting the wider distribution. Without a control group, documented assessment equivalence or complete interviews, the integrated findings remain descriptive and illustrative."
           },
-          "forward": "Final audit checks both strands and joint claim.",
+          "forward": "The final stage audits source use, arithmetic, quotation fidelity and the limits of each inference.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the abstract reflect the evidence actually reported rather than what the study hoped to show?",
+            "Are substantive limitations visible without overwhelming the example's instructional purpose?"
           ]
         },
         {
           "id": 18,
           "title": "Citations, references, and final alignment audit",
-          "where": "The retrieval mixed-methods study exemplar is at Stage 18 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 18 decision that belongs to a mixed methods design.",
+          "where": "The final source set contains 24 paired numerical rows, six exact fictional excerpts, a summary JSON and three genuine method or learning-science references.",
+          "changed": "The closing audit is an explicit evidence trail rather than a general claim of alignment.",
           "reasoning": [
-            "Start from the research question and the mixed methods evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Recalculate all differences from the pre/post columns, including corrected M02, M16 and M24, and reproduce the paired-t interval and p-value.",
+            "Match each quotation to its student identifier and link its change to the corresponding quantitative row. Retain M11 as an un-interviewed negative-change case.",
+            "Confirm that Roediger and Karpicke (2006), Karpicke and Blunt (2011), and Johnson and Onwuegbuzie (2004) provide background or methodology, never fictional participant evidence."
           ],
-          "decision": "Trace every integrated claim to both the quantitative output and qualitative evidence it coordinates.",
-          "rejected": "Letting one strand disappear from the conclusion is rejected.",
+          "decision": "Retain the synthetic status in the project, the standalone paper and the analysis record. Interpret integration as case-linked comparison, with no causal confirmation.",
+          "rejected": "The example cannot be presented as completed human-subjects research, a verified qualitative thematic study or a classroom intervention effectiveness estimate.",
           "notebook": {
-            "audit": "24 paired records, 6 interview cases, two analyses, explicit integration, noncausal boundary, synthetic status."
+            "audit": "24 verified paired differences; 6 verbatim fictional excerpt records; 3 authenticated references; numerical paired-t replication; six linked joint-display rows; one un-interviewed decline; noncausal interpretation."
           },
-          "forward": "The exemplar is complete.",
+          "forward": "The eight-exemplar instructional bank can now be assessed as a whole before the Path Coach and Rescue banks receive their separate content audits.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this retrieval mixed-methods study example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can you trace each statistic, quote and interpretation to its precise source?",
+            "Would a reader understand which parts are published scholarship and which parts are constructed for teaching?"
           ]
         }
       ],
