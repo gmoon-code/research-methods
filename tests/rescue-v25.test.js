@@ -167,4 +167,24 @@ if(!/MLA/.test(fullRescueModel.fields.citationStyle.levels["4"].walkthrough.draf
 if(!/Issue C01/.test(fullRescueModel.fields.citationAudit.levels["4"].walkthrough.draft))process.exit(1);
 if(!/Action E01/.test(fullRescueModel.fields.finalEdits.levels["4"].walkthrough.draft))process.exit(1);
 
+
+
+
+// Stage C-X3b1 | Literature lab tabs retain differentiated five-level content.
+const literatureKeys=["search","sources","screen","study","synth","gap","claims","outline"];
+const literatureTabs=literatureKeys.map(k=>fullRescueModel.labs.literature[k]);
+for(const tab of literatureTabs){
+ if(!tab||!tab.body||!tab.terms?.length||!tab.compare_prompt)process.exit(1);
+ if(!tab.walkthrough?.situation||tab.walkthrough.thinking.length<2||!tab.walkthrough.draft)process.exit(1);
+ if(!tab.next_prompt||/next literature decision you need to make/.test(tab.next_prompt))process.exit(1);
+ if(JSON.stringify(tab).includes("—"))process.exit(1);
+}
+for(const read of [tab=>tab.body,tab=>tab.compare_prompt,tab=>tab.walkthrough.draft,tab=>tab.next_prompt]){
+ if(new Set(literatureTabs.map(read)).size!==literatureTabs.length)process.exit(1);
+}
+if(fullRescueModel.labs.literature.sources.terms.includes("TRAPP"))process.exit(1);
+if(!fullRescueModel.labs.literature.gap.decision_keys.includes("gapType"))process.exit(1);
+if(!/Proposed only/.test(fullRescueModel.labs.literature.search.walkthrough.draft))process.exit(1);
+if(!/unresolved/.test(fullRescueModel.labs.literature.claims.walkthrough.draft))process.exit(1);
+
 console.log("PASS v2.5 progressive rescue state and logging");
