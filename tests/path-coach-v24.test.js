@@ -17,4 +17,22 @@ gate=C.stageGate(13,quality);
 if(!gate.canMarkReady||gate.missing.length!==0)process.exit(1);
 const checks=C.readinessChecks(10,quality);
 if(checks.length!==3||!checks.some(x=>x.includes("several records belong to the same unit")))process.exit(1);
+// observational evidence-quality regression
+let observed={data:{rawLocation:"original observation file",descriptives:"score and predictor summaries"},pathway:{selected:"observational",confirmed:true}};
+let obsGate=C.stageGate(13,observed);
+if(obsGate.canMarkReady||!obsGate.missing.includes("missingObserved")||!obsGate.missing.includes("errorsCorrections"))process.exit(1);
+if(obsGate.missing.includes("plots"))process.exit(1);
+observed.data.missingObserved="Two entries absent, handled by complete-case summary with limitations";
+observed.data.errorsCorrections="No entry corrections; exclusions recorded";
+obsGate=C.stageGate(13,observed);
+if(!obsGate.canMarkReady||obsGate.missing.length!==0)process.exit(1);
+if(C.recommended(13,observed).indexOf("plots")<0)process.exit(1);
+if(C.recommended(12,observed).includes("replication"))process.exit(1);
+if(!C.required(12,observed).includes("replication")||!C.required(12,observed).includes("methodControls"))process.exit(1);
+let study={data:{designType:"Correlational / observational",designWhy:"measure association",comparisonStructure:"sampled pairs",claimBoundary:"no causal inference"},pathway:{selected:"observational",confirmed:true}};
+if(!C.stageGate(9,study).canMarkReady)process.exit(1);
+study.data.designType="Experimental";
+if(C.stageGate(9,study).canMarkReady)process.exit(1);
+if(!C.readinessChecks(10,observed).some(s=>s.includes("clustered records")))process.exit(1);
+
 console.log("PASS pathway-specific coach");
