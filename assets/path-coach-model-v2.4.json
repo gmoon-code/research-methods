@@ -453,6 +453,8 @@
       ],
       "13": [
         "rawLocation",
+        "missingObserved",
+        "errorsCorrections",
         "descriptives"
       ],
       "14": [
@@ -935,44 +937,44 @@
     },
     "mixed_methods": {
       "9": [
-        "I can explain why one evidence type alone is insufficient.",
-        "The quantitative and qualitative strands each answer a defined part of the question.",
-        "I stated how the strands will relate or integrate."
+        "I can explain what the quantitative and qualitative approaches each contribute to the research question.",
+        "The design specifies whether the strands proceed together or in sequence and how their purposes relate.",
+        "I have identified where integration will occur and what the combined design can support."
       ],
       "10": [
-        "Quantitative variables and qualitative phenomena/domains use appropriate terminology for their own strand.",
-        "The unit(s) represented in each strand are clear.",
-        "I have not forced the qualitative strand into IV/DV language."
+        "Quantitative measures and qualitative phenomena are defined in terms suited to each strand.",
+        "I can distinguish participants or units from individual evidence records and explain whether the strands share them.",
+        "I have considered whether the quantitative strand calls for a predictor or formal hypothesis."
       ],
       "11": [
-        "Sampling, collection quality, ethics, and generalization/transferability are considered for both strands.",
-        "The two strands have compatible case linkage where integration requires it.",
-        "Each measure/procedure supports its intended interpretation."
+        "Sampling plans explain whom or what each strand represents and how the samples relate.",
+        "I have considered how the strands can be connected while respecting consent and confidentiality.",
+        "Measurement quality and qualitative credibility are addressed using appropriate criteria."
       ],
       "12": [
-        "Both strand procedures and data structures are documented.",
-        "The integration point is stated before final interpretation.",
-        "Missing/exclusion/coding rules are explicit for each evidence type."
+        "Both collection procedures and record structures are clear, including their timing.",
+        "I have stated whether one strand informs the other or how their findings will be brought into relation.",
+        "Missing-data, exclusion and documentation rules reflect the needs of each strand."
       ],
       "13": [
-        "Quantitative data and qualitative corpus are each quality-checked before integration.",
-        "IDs/linkage are preserved when the same cases contribute both strands.",
-        "Early summaries do not collapse one evidence type into the other."
+        "Quantitative records and qualitative material are checked on their own terms before integration.",
+        "Case identifiers and source links are preserved where integration relies on corresponding records.",
+        "Missing evidence and corrections are recorded without hiding differences between the sources."
       ],
       "14": [
-        "Each strand uses an analysis appropriate to its evidence type.",
-        "The integration method explains how results will be connected, compared, or merged.",
-        "Quantitative significance is not used to override contradictory qualitative evidence automatically."
+        "Each strand uses analyses that fit its question, design and evidence.",
+        "I have explained how the findings will be connected, compared or combined in the integrated analysis.",
+        "Convergence and disagreement are examined without giving statistical significance automatic priority."
       ],
       "15": [
-        "Results distinguish quantitative, qualitative, and integrated findings.",
-        "Each finding is traceable to its evidence source.",
-        "Convergence and divergence between strands are reported."
+        "The Results distinguish findings from each strand and those developed through integration.",
+        "Readers can trace integrated findings back to the quantitative and qualitative evidence used.",
+        "Complementary and conflicting findings remain visible, including gaps in correspondence."
       ],
       "16": [
-        "The Discussion explains what the strands jointly add.",
-        "Contradictions between strands are analyzed rather than hidden.",
-        "Limitations address both strand-specific and integration-specific weaknesses."
+        "I explain what the strands jointly contribute to the question and where they remain separate.",
+        "I consider alternative interpretations when findings are complementary or inconsistent.",
+        "Limitations address each strand, their integration and the claims supported by the study."
       ]
     },
     "unsure": {}
