@@ -93,7 +93,7 @@ for(const [level,read] of [["L1",f=>f.levels["1"].prompt],["L3",f=>f.levels["3"]
   if(new Set(stageCX3a2Keys.map(k=>read(fullRescueModel.fields[k]))).size!==stageCX3a2Keys.length)process.exit(1);
 }
 if(!/Qualitative/.test(fullRescueModel.fields.questionType.levels["4"].walkthrough.draft))process.exit(1);
-if(!/not recorded as executed/.test(fullRescueModel.fields.searchStrings.levels["4"].walkthrough.draft))process.exit(1);
+if(!/Neither is recorded as executed/.test(fullRescueModel.fields.searchStrings.levels["4"].walkthrough.draft))process.exit(1);
 if(!/No date, retrieval count or inclusion count recorded/.test(fullRescueModel.fields.searchLog.levels["4"].walkthrough.draft))process.exit(1);
 if(!/fictional/i.test(fullRescueModel.fields.litDraft.levels["4"].walkthrough.draft))process.exit(1);
 if(!/optional/i.test(fullRescueModel.fields.theme3.levels["1"].prompt))process.exit(1);
