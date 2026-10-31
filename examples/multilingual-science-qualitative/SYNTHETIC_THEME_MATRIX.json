@@ -1,27 +1,42 @@
 [
   {
-    "theme": "Language formulation can delay visible participation",
+    "theme": "English wording and task interpretation shape visible explanations",
     "codes": [
       "language-formulation delay",
-      "explanation language demand",
-      "unclear response expectations"
+      "language load and task focus",
+      "unclear response expectations",
+      "explanation language demand"
     ],
-    "boundary": "Students described hesitation and wording demands; the exemplar does not infer language proficiency from silence."
+    "evidence_ids": [
+      "P01",
+      "P02",
+      "P05",
+      "P06"
+    ],
+    "boundary": "The fictional speakers report different concerns, including the time needed to phrase an idea, interpreting lengthy prompts, uncertain response expectations and explaining patterns. These accounts cannot establish students' science understanding or English proficiency."
   },
   {
-    "theme": "Representational and multilingual resources support reasoning",
+    "theme": "Visual, peer and multilingual resources are described as helpful",
     "codes": [
       "multimodal resource",
-      "translanguaging as reasoning resource",
-      "rehearsal and participation"
+      "rehearsal and participation",
+      "translanguaging as reasoning resource"
     ],
-    "boundary": "The synthetic excerpts describe perceived supports, not experimentally estimated effects."
+    "evidence_ids": [
+      "P03",
+      "P04",
+      "P07"
+    ],
+    "boundary": "Three imagined speakers describe using arrows, partner discussion or Korean notes before an English explanation. Their reports describe perceived resources, without observed performance, experimentally established benefits or evidence that every learner uses them."
   },
   {
-    "theme": "Scaffolds can support expression while preserving choice",
+    "theme": "Sentence starters are described as helpful alongside control of evidence",
     "codes": [
       "structured language support"
     ],
-    "boundary": "One theme has relatively narrow synthetic support and would require cautious reporting."
+    "evidence_ids": [
+      "P08"
+    ],
+    "boundary": "This is a tentative single-excerpt teaching theme. Only P08 mentions sentence starters while seeking to select their own evidence. It should not be described as a recurrent pattern across participants."
   }
 ]
