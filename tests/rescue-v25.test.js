@@ -143,4 +143,28 @@ if(!/paired binary/.test(fullRescueModel.fields.analysisChoice.levels["4"].walkt
 if(!/not establish equivalence/.test(fullRescueModel.fields.unexpected.levels["4"].walkthrough.draft))process.exit(1);
 if(!/did not measure/.test(fullRescueModel.fields.interpret1.levels["4"].walkthrough.draft))process.exit(1);
 
+
+
+
+// Stage C-X3a5 | final 13 research writing and integrity fields.
+const stageCX3a5Keys=["litCompare","alternatives","limitations","implications","future","discussionDraft","conclusionDraft","abstractDraft","titleDraft","keywords","citationStyle","citationAudit","finalEdits"];
+for(const k of stageCX3a5Keys){
+ const f=fullRescueModel.fields[k];
+ if(!f||Object.keys(f.levels).length!==5)process.exit(1);
+ if(!f.levels["1"].prompt||!f.levels["2"].body||!f.levels["3"].strong_example)process.exit(1);
+ if(!f.levels["4"].walkthrough?.thinking?.length||!f.levels["4"].walkthrough?.draft)process.exit(1);
+ if(!f.levels["5"].frame||/your project-specific answer|Why it fits:/.test(f.levels["5"].frame))process.exit(1);
+ if(JSON.stringify(f).includes("—"))process.exit(1);
+}
+const all113Keys=Object.keys(fullRescueModel.fields);
+if(all113Keys.length!==113)process.exit(1);
+for(const get of [f=>f.levels["1"].prompt,f=>f.levels["3"].strong_example,f=>f.levels["4"].walkthrough.draft,f=>f.levels["5"].frame]){
+ if(new Set(all113Keys.map(k=>get(fullRescueModel.fields[k]))).size!==113)process.exit(1);
+}
+if(!/at least two/.test(fullRescueModel.fields.limitations.levels["1"].prompt))process.exit(1);
+if(!/pending actual evidence/.test(fullRescueModel.fields.abstractDraft.levels["4"].walkthrough.draft))process.exit(1);
+if(!/MLA/.test(fullRescueModel.fields.citationStyle.levels["4"].walkthrough.draft))process.exit(1);
+if(!/Issue C01/.test(fullRescueModel.fields.citationAudit.levels["4"].walkthrough.draft))process.exit(1);
+if(!/Action E01/.test(fullRescueModel.fields.finalEdits.levels["4"].walkthrough.draft))process.exit(1);
+
 console.log("PASS v2.5 progressive rescue state and logging");
