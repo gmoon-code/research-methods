@@ -5222,7 +5222,7 @@
     "literature": {
       "search": {
         "stage": 5,
-        "title": "Search log — what you are doing",
+        "title": "Search log · Record the search performed",
         "body": "Record a search only after you have run it. Keep its date, database, exact submitted query, search fields, filters and reported results. Proposed strings belong in the plan, and a quick unsuccessful search cannot establish that no relevant research exists.",
         "terms": [
           "boolean search",
@@ -5243,7 +5243,7 @@
       },
       "sources": {
         "stage": 6,
-        "title": "Source record — what each paper contributes",
+        "title": "Source record · What each paper contributes",
         "body": "Record what each source actually contributes. Keep its identifier, question, design, population, measures, results and limits. Verify the paper itself before citing a statement; peer review alone does not establish relevance or measurement validity.",
         "terms": [
           "citation",
@@ -5267,7 +5267,7 @@
       },
       "screen": {
         "stage": 6,
-        "title": "Screening — apply rules consistently",
+        "title": "Screening · Apply rules consistently",
         "body": "Apply inclusion and exclusion criteria consistently, regardless of whether a study supports your expectation. Record a distinct decision and reason for each report, and separate uncertain abstracts from full-text decisions.",
         "terms": [
           "sampling method",
@@ -5290,7 +5290,7 @@
       },
       "study": {
         "stage": 7,
-        "title": "Study matrix — compare like with like",
+        "title": "Study matrix · Compare like with like",
         "body": "Use the study matrix to compare the same research dimensions across sources. Record actual participant or system contexts, designs, operational measures and results before deciding whether apparent disagreements are substantively comparable.",
         "terms": [
           "synthesis",
@@ -5311,7 +5311,7 @@
       },
       "synth": {
         "stage": 7,
-        "title": "Synthesis — build claims across studies",
+        "title": "Synthesis · Build claims across studies",
         "body": "Synthesize findings across actual sources by identifying the question they address, what the evidence supports and where it varies. Link every theme to its study records, including credible contrary or inconclusive findings.",
         "terms": [
           "synthesis",
@@ -5335,7 +5335,7 @@
       },
       "gap": {
         "stage": 7,
-        "title": "Gap/rationale — make the smallest claim the evidence supports",
+        "title": "Study rationale · Make the smallest defensible claim",
         "body": "A study may make a useful local extension, replication or method comparison even when related research exists. Base the justification on a documented search and the evidence reviewed; never infer that a whole field lacks research from a few searches.",
         "terms": [
           "literature gap",
@@ -5359,7 +5359,7 @@
       },
       "claims": {
         "stage": 8,
-        "title": "Claim audit — every literature statement needs evidence",
+        "title": "Claim audit · Match statements to evidence",
         "body": "Check each literature claim against the underlying sources and its actual scope. Match in-text citations to verified references, and distinguish what a source measured from how its authors interpreted the evidence.",
         "terms": [
           "citation",
@@ -5381,7 +5381,7 @@
       },
       "outline": {
         "stage": 8,
-        "title": "Paragraph planning — give each paragraph a reasoning job",
+        "title": "Paragraph planning · Develop coherent ideas",
         "body": "Plan paragraphs around connected ideas and comparisons across sources. Give each paragraph a focused question or interpretive task, decide which verified evidence belongs there and show how it leads naturally into the next point.",
         "terms": [
           "synthesis",
