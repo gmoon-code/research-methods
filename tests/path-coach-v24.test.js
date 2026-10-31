@@ -7,4 +7,14 @@ let q={data:{designType:"Qualitative",operationalDefs:"domains",experimentalUnit
 let l={data:{designType:"Literature review",operationalDefs:"eligibility concepts",experimentalUnit:"study",population:"target literature",samplingMethod:"documented search",sampleLimits:"coverage",instrument:"study matrix",measureQuality:"duplicate verification"},pathway:{selected:"literature_review",confirmed:true},methods:{constructs:[],measurements:[],procedureSteps:[]},schema:[]};r=C.reviewStage(11,l);if(r.details.missing.length!==0)process.exit(1);if(C.methodSection(l,"sampling").issues.some(x=>/Actual sample missing/i.test(x[1])))process.exit(1);
 let o={data:{designType:"Correlational / observational",designWhy:"measure natural variables",comparisonStructure:"association",claimBoundary:"association only",predictorIV:"sleep",outcomeDV:"score",operationalDefs:"hours and points",experimentalUnit:"student",confounders:"study time",analysisSample:"n",result1:"r=.4",resultsDraft:"More sleep caused higher scores."},pathway:{selected:"observational",confirmed:true}};r=C.reviewStage(15,o);if(!r.messages.some(x=>x.level==="bad"&&/Causal language/i.test(x.title)))process.exit(1);
 let d={data:{designType:"Descriptive",outcomeDV:"height",operationalDefs:"cm",experimentalUnit:"plant"},pathway:{selected:"descriptive_quantitative",confirmed:true}};r=C.reviewStage(10,d);if(r.details.missing.length!==0)process.exit(1);if(r.messages.some(x=>/hypothesis/i.test(x.title)&&x.level==="warn"))process.exit(1);
+let quality={data:{rawLocation:"original records",descriptives:"frequencies by category"},pathway:{selected:"descriptive_quantitative",confirmed:true}};
+let gate=C.stageGate(13,quality);
+if(gate.canMarkReady)process.exit(1);
+if(!gate.missing.includes("missingObserved")||!gate.missing.includes("errorsCorrections"))process.exit(1);
+quality.data.missingObserved="No missing observations in the recorded set";
+quality.data.errorsCorrections="No corrections or exclusions required";
+gate=C.stageGate(13,quality);
+if(!gate.canMarkReady||gate.missing.length!==0)process.exit(1);
+const checks=C.readinessChecks(10,quality);
+if(checks.length!==3||!checks.some(x=>x.includes("several records belong to the same unit")))process.exit(1);
 console.log("PASS pathway-specific coach");
