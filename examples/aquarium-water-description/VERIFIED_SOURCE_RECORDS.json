@@ -1,16 +1,16 @@
 [
   {
     "id": "D-S01",
-    "citation": "U.S. Geological Survey. (2026). Dissolved oxygen and water. Water Science School.",
+    "citation": "U.S. Geological Survey. (2026, August 24). Dissolved oxygen and water. Water Science School. https://www.usgs.gov/water-science-school/science/dissolved-oxygen-and-water",
     "verified": true,
     "use": "Defines dissolved oxygen as a water-quality variable and explains that temperature affects dissolved oxygen.",
     "boundary": "Authoritative background guidance, not a study of the exemplar aquaria."
   },
   {
     "id": "D-S02",
-    "citation": "U.S. Environmental Protection Agency. (2026). Indicators: Dissolved oxygen.",
+    "citation": "U.S. Environmental Protection Agency. (2026, February 24). Indicators: Dissolved oxygen. https://www.epa.gov/national-aquatic-resource-surveys/indicators-dissolved-oxygen",
     "verified": true,
-    "use": "Provides background on dissolved oxygen as an aquatic-condition indicator and the importance of calibrated measurement.",
+    "use": "Explains dissolved oxygen as an indicator of aquatic conditions and the use of calibrated probes in national aquatic monitoring. The date reflects the page's last-updated date, not necessarily original publication.",
     "boundary": "National monitoring guidance does not determine the values in the synthetic school-aquarium dataset."
   }
 ]
