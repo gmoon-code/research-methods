@@ -5804,8 +5804,8 @@
     "writing": {
       "intro": {
         "stage": 8,
-        "title": "Introduction — lead the reader to the question",
-        "body": "Move from the problem and key constructs to synthesized prior evidence, a bounded rationale/gap, and the exact study purpose/question.",
+        "title": "Introduction · lead the reader to a defensible question",
+        "body": "Introduce the phenomenon and the specific question through relevant context and checked research. Explain how the evidence supports the rationale, then state the study's purpose without claiming that a gap or novelty has already been established.",
         "terms": [
           "construct",
           "synthesis",
@@ -5813,20 +5813,21 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "The student's draft has one paragraph per article.",
+          "situation": "A student proposes observing pollinators around a school garden and begins, 'No one has studied pollinators in schools.' They have read only two papers.",
           "thinking": [
-            "Readers need a claim about the literature, not a reading log.",
-            "I can group the three articles around delayed retention, then compare where they differ.",
-            "Citations should support the claim after I make it."
+            "Two papers cannot establish that no previous research exists.",
+            "I need to identify the phenomenon, the particular school setting and what the reviewed sources actually examined.",
+            "The introduction can explain the local purpose and relevant prior evidence while leaving any broader claim of novelty unresolved."
           ],
-          "draft": "Across the included studies, retrieval-based practice generally improved delayed retention, although effect magnitude varied with feedback timing and test delay (citations)."
+          "draft": "Proposed study purpose: document pollinator visits in the school garden during defined observation periods. Describe the local setting and relevant checked studies, then state the research question without asserting an unverified literature gap."
         },
-        "next_prompt": "Write the next writing decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Draft the specific phenomenon, source-supported context and purpose that lead to your question. Mark any proposed gap that still requires verification.",
+        "compare_prompt": "Compare 'No one has studied this topic' with a rationale based on a documented difference between the student's context and the settings in the sources reviewed. Which claim can the evidence actually support?"
       },
       "lit": {
         "stage": 8,
-        "title": "Literature review — write relationships among studies",
-        "body": "Organize around ideas or methodological comparisons. Source-by-source summaries should not dominate.",
+        "title": "Literature review · connect claims across verified sources",
+        "body": "Organise paragraphs around substantive relationships among studies, such as differences in participants, measures, settings or interpretations. Support each comparison with the actual sources, and distinguish what they report from your synthesis.",
         "terms": [
           "synthesis",
           "theme",
@@ -5834,62 +5835,67 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "The student's draft has one paragraph per article.",
+          "situation": "Two hypothetical papers both use the word 'engagement'. One measures self-reported interest and the other counts contributions during lessons.",
           "thinking": [
-            "Readers need a claim about the literature, not a reading log.",
-            "I can group the three articles around delayed retention, then compare where they differ.",
-            "Citations should support the claim after I make it."
+            "The common label does not mean that the two studies measured the same outcome.",
+            "I should first verify how each author defined and recorded engagement, including the setting and participants.",
+            "A useful synthesis explains why the measures capture different aspects of participation and does not invent agreement or a shared effect."
           ],
-          "draft": "Across the included studies, retrieval-based practice generally improved delayed retention, although effect magnitude varied with feedback timing and test delay (citations)."
+          "draft": "Comparative note for source verification: one study operationalises engagement through self-reported interest, while the other counts classroom contributions. Compare their definitions and settings before drawing any conclusion across the two sources."
         },
-        "next_prompt": "Write the next writing decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Select two verified sources, identify a meaningful connection or difference between them, and write a comparison that respects what each actually measured or described.",
+        "compare_prompt": "Compare separate summaries of two studies with a paragraph that explains how their definitions and methods permit or restrict comparison. What should the reader learn from the relationship?"
       },
       "method": {
         "stage": 12,
-        "title": "Method — report what was actually planned/done",
-        "body": "Use the locked protocol as factual evidence. Do not quietly add a procedure to the paper that was not part of the study.",
+        "title": "Method · report the work with procedural fidelity",
+        "body": "For completed research, describe the setting, participants or materials, sampling, instruments, procedures and analysis as actually undertaken. Disclose departures from the plan. For a proposal, use prospective language and keep permissions and uncompleted actions clearly identified.",
         "terms": [
           "protocol",
           "operational definition",
-          "experimental unit"
+          "experimental unit",
+          "observational unit"
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "A student measures 20 seeds in one dish per treatment.",
+          "situation": "A student's approved classroom observation plan specified ten observation days, but the project logs document only seven because the room was unavailable for three.",
           "thinking": [
-            "Each seed gives a measurement, but the whole dish receives the treatment together.",
-            "Dish may be the experimental unit.",
-            "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+            "Reporting ten completed sessions would misrepresent what happened.",
+            "I need to check the approved plan against dated observation logs and report the seven sessions actually conducted.",
+            "If the change affects coverage or interpretation, the Method and limitations should explain its consequences."
           ],
-          "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+          "draft": "The plan specified ten observation days. Seven observation sessions were completed; three planned sessions could not take place because the room was unavailable. The analysis drew on the seven recorded sessions."
         },
-        "next_prompt": "Write the next writing decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Identify a procedure, sample or analysis step that readers need to reproduce or evaluate. Confirm whether it was planned, completed or changed, and draft wording consistent with the records.",
+        "compare_prompt": "Compare a Methods section that silently repeats the original plan with one that records the procedure actually used and explains deviations. Which allows another reader to evaluate the evidence?"
       },
       "results": {
         "stage": 15,
-        "title": "Results — report evidence without explaining it away",
-        "body": "State the observed estimates/patterns and trace them to analysis records. Explanations and implications belong in Discussion.",
+        "title": "Results · present traceable observations and patterns",
+        "body": "Report the analysed sample or corpus, descriptive observations, central results and relevant uncertainty using the appropriate evidence records. When Results and Discussion are separate, reserve broader explanations for Discussion, while allowing grounded interpretation within qualitative Findings.",
         "terms": [
           "effect size",
           "confidence interval",
-          "p-value"
+          "p-value",
+          "theme"
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "An observational study finds r = .52 with p < .01.",
+          "situation": "In a hypothetical dataset of 20 students with complete before-and-after scores, 12 scores increased, five stayed the same, and three decreased.",
           "thinking": [
-            "I should report the association, coefficient, sample information, and uncertainty if available.",
-            "The small p-value does not turn the study into an experiment.",
-            "I should not explain the mechanism in Results."
+            "All 20 paired observations belong in the result, including unchanged and lower scores.",
+            "I should report counts with the denominator and connect the statement to the recorded paired differences.",
+            "These descriptive results alone do not show that the teaching activity caused the observed changes."
           ],
-          "draft": "The variables were positively associated, r = .52, p < .01. Causal interpretation is reserved for Discussion and remains unsupported by this observational design."
+          "draft": "Among 20 students with paired scores, 12 scored higher at the second measurement, five had unchanged scores, and three scored lower. Report the score-change distribution alongside the corresponding table or plot."
         },
-        "next_prompt": "Write the next writing decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Choose a primary finding and trace every count, estimate or theme to its source. Write a Results passage that includes the appropriate denominator and uncertainty or evidence excerpt.",
+        "compare_prompt": "Compare a result that states only 'scores improved' with one that reports the paired counts, denominator and where the data appear. Which wording permits a reader to assess the pattern?"
       },
       "discussion": {
         "stage": 16,
-        "title": "Discussion — make reasoning and limits explicit",
-        "body": "Answer the question, interpret anchor findings, consider alternatives, compare literature, analyze limitations, and calibrate claims.",
+        "title": "Discussion · interpret findings within their limits",
+        "body": "Begin with an answer to the research question supported by the findings. Develop plausible interpretations and alternatives, relate them to checked research, and explain how limitations restrict the resulting claims rather than listing weaknesses without consequences.",
         "terms": [
           "causal claim",
           "confounder",
@@ -5897,76 +5903,81 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "The same observational study shows a positive sleep-score association.",
+          "situation": "A schoolyard survey records more bee visits in sunnier plots, but sunnier plots were also observed at a different time of day.",
           "thinking": [
-            "My direct answer can say the variables were associated.",
-            "Possible explanations include sleep affecting learning, study routines affecting both, or reverse direction.",
-            "I need to explain how self-report and convenience sampling limit the claim."
+            "The observations support a pattern linking recorded visits with plot conditions in the sampled periods.",
+            "Time of day may affect bee activity and is entangled with the plot comparison, so sunlight cannot be isolated as the cause.",
+            "The discussion should identify this alternative explanation and limit any recommendation or future study proposal accordingly."
           ],
-          "draft": "Higher reported sleep was associated with higher score in this sample; confounding, reverse direction, self-report error, and local sampling prevent a causal or broad population conclusion."
+          "draft": "Bee visits were more frequent in the sunnier plots during the observations. Because plot conditions and observation times varied together, these records do not establish that sunlight alone produced the difference."
         },
-        "next_prompt": "Write the next writing decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Write your strongest supported answer to the question, then explain one alternative interpretation and one limitation that materially changes the conclusion.",
+        "compare_prompt": "Compare a Discussion that calls an observational pattern an effect with one that considers observation timing and environmental differences. How does each treatment of alternatives change the claim?"
       },
       "closing": {
         "stage": 17,
-        "title": "Conclusion and abstract — finish from the evidence",
-        "body": "The conclusion gives the controlled answer. The abstract summarizes purpose, method, central result, and bounded conclusion.",
+        "title": "Conclusion and abstract · reflect completed or proposed work",
+        "body": "Return to the research question with a conclusion bounded by the available evidence. An abstract for completed work summarises its purpose, approach, principal findings and conclusion; a proposal describes the intended inquiry without reporting imagined results.",
         "terms": [
           "generalization",
           "effect size"
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "The abstract currently has background and method but no finding.",
+          "situation": "A student has proposed a three-week comparison of seedling heights under two light settings, but the draft abstract says the study demonstrated faster growth.",
           "thinking": [
-            "A reader should know what the study actually observed.",
-            "I can summarize the main estimate/pattern without reproducing calculations.",
-            "The conclusion must stay within the design."
+            "The proposed measurements have not been collected, so no comparative result is available.",
+            "The abstract can specify the planned system, duration, measures and question using future-facing language.",
+            "The conclusion of a proposal should describe its intended contribution or scope, not an outcome presented as established."
           ],
-          "draft": "Add the primary result in one concise sentence, followed by a bounded conclusion that matches the observational/experimental design."
+          "draft": "This proposed study will compare seedling stem-height records collected over three weeks under two documented light settings. Data collection and results remain pending."
         },
-        "next_prompt": "Write the next writing decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "State whether the work is proposed or completed. Draft a bounded concluding answer and an abstract sentence that accurately reflects which findings, if any, are available.",
+        "compare_prompt": "Compare an abstract that says a proposed study 'demonstrated' an effect with one that reports the planned observations and clearly states that results are unavailable. Which accurately reflects the project's status?"
       },
       "citations": {
         "stage": 18,
-        "title": "Citation audit — presence is not enough",
-        "body": "A citation must correspond to a real source and the source must support the nearby claim at the stated scope.",
+        "title": "Citation audit · check every source-to-claim link",
+        "body": "Confirm that each citation identifies a real, accessible source and that the cited passage supports the exact claim, population and strength of language used. Check quotation fidelity, bibliographic details and references that appear without corresponding text citations.",
         "terms": [
           "citation",
           "generalization"
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "The conclusion says 'X caused Y,' but the Method describes an observational study.",
+          "situation": "A paper states that 'all teachers prefer group work' and cites a study reporting interviews with six teachers at one school.",
           "thinking": [
-            "This is an alignment problem, not a grammar problem.",
-            "The research question, Results, Discussion, and title all need the same claim ceiling.",
-            "I should trace the wording backward through the design before final submission."
+            "Six interviews at one school cannot establish a preference shared by all teachers.",
+            "I must inspect the original study and determine what each interview actually reported before deciding whether any collective statement is warranted.",
+            "The revised claim needs a precise scope and a complete, verified reference; an unsupported universal statement should be removed."
           ],
-          "draft": "Revise causal language to association language throughout the paper unless the design genuinely supports causal inference."
+          "draft": "Citation check C01: verify the six interview accounts and their context. Replace 'all teachers' only with a description the source actually supports, or remove the claim. Confirm the citation and reference match."
         },
-        "next_prompt": "Write the next writing decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Choose one substantive claim and its citation. Verify the original passage, scope and reference details, then record whether you kept, qualified, replaced or removed the claim.",
+        "compare_prompt": "Compare a population-wide claim cited to interviews from one school with a source-bound statement of what those interviews actually documented. What wording can the checked source support?"
       },
       "audit": {
         "stage": 18,
-        "title": "Whole-paper audit — one continuous evidence chain",
-        "body": "Question → literature → method → data → analysis → results → discussion → conclusion should remain logically consistent.",
+        "title": "Whole-paper audit · trace every claim to its evidence",
+        "body": "Compare the question, literature, design, collected evidence, analysis, findings and final claims as one continuous argument. Detect mismatched units, unsupported inference, inconsistent statuses, missing records and revisions that create contradictions elsewhere in the paper.",
         "terms": [
           "protocol",
           "estimand",
-          "causal claim"
+          "causal claim",
+          "synthesis"
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "The conclusion says 'X caused Y,' but the Method describes an observational study.",
+          "situation": "A research question asks how students negotiate scientific explanations in group talk, but the completed study collected only individual written responses.",
           "thinking": [
-            "This is an alignment problem, not a grammar problem.",
-            "The research question, Results, Discussion, and title all need the same claim ceiling.",
-            "I should trace the wording backward through the design before final submission."
+            "Written responses can show what individual students represented on the page; they do not document the interaction through which groups negotiated an explanation.",
+            "The completed Method and Results must not imply that conversations were recorded or analysed.",
+            "I should narrow the research question to the available written evidence, or identify group interaction as a separate question requiring a new authorised study."
           ],
-          "draft": "Revise causal language to association language throughout the paper unless the design genuinely supports causal inference."
+          "draft": "Evidence-chain correction: revise the question to examine scientific explanations in the collected individual written responses. Do not claim to analyse group negotiation without interactional records."
         },
-        "next_prompt": "Write the next writing decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Trace one major conclusion back through Results, analysis, evidence, Method and question. Identify where the chain breaks and draft a correction that can be applied consistently.",
+        "compare_prompt": "Compare a question about group negotiation with a method that records only private written answers. What can those records answer, and what evidence is missing for the original question?"
       }
     }
   }
