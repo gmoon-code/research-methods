@@ -982,7 +982,7 @@
       "dir": "sleep-school-observational",
       "rq": "Among students in one synthetic biology-class sample, what is the association between reported weekday sleep duration and biology quiz score?",
       "disclaimer": "The two cited sleep reviews are genuine scholarly publications. The 30 student records and their statistical association are invented teaching data, not observations of identifiable students or evidence of a real classroom effect.",
-      "data_summary": "30 synthetic students. Pearson r = 0.75, p = 2.1e-06. Sleep is observed/self-reported, so this does not establish that changing sleep would cause the score difference.",
+      "data_summary": "30 distinct synthetic student records. Sleep mean 6.98 hours; quiz score mean 92.32, with six scores of 100. Pearson r = .7472, model-based p ≈ 2.10 × 10⁻⁶. The sample is invented and no real educational or causal finding follows.",
       "sources": [
         {
           "id": "O-S01",
@@ -1199,196 +1199,198 @@
         {
           "id": 10,
           "title": "Define constructs, variables, or evidence units",
-          "where": "The sleep–quiz association exemplar is at Stage 10 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 10 decision that belongs to a observational / correlational design.",
+          "where": "The student translates the question into measured variables and a clearly identified record unit.",
+          "changed": "Sleep is identified as a self-reported predictor, while the quiz score remains an outcome whose scoring procedure would need documentation in real research.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Each row represents one student ID with one reported weekday sleep-hours value, one weekly study-hours value and one quiz score.",
+            "The file does not identify the exact sleep survey question, reporting period, quiz rubric or administration date; these cannot be inferred from the numbers.",
+            "Six of the synthetic quiz values are 100, so the upper score boundary and overall distribution warrant inspection before interpreting Pearson correlation."
           ],
-          "decision": "Define reported sleep hours as a measured predictor and quiz score as the outcome; one student is the analytic unit.",
-          "rejected": "Calling sleep an independent variable that the researcher manipulated is rejected.",
+          "decision": "Describe the two central variables as measured numbers and retain weekly study hours as a possible accompanying predictor rather than a proven confounder.",
+          "rejected": "Calling sleep an assigned independent variable would misstate the design and obscure the meaning of the observed association.",
           "notebook": {
-            "predictor": "Reported weekday sleep hours.",
-            "outcome": "Biology quiz score.",
-            "unit": "Student.",
-            "confounders": "Study time, prior achievement, stress, attendance, health, and other unmeasured factors."
+            "predictor": "reported_weekday_sleep_hours, one synthetic student-level self-report value in hours; original questionnaire wording unavailable.",
+            "outcome": "biology_quiz_score, a synthetic numerical score ranging from 75.2 to 100.0; the original quiz scoring method is not documented.",
+            "unit": "One student identifier, S01 through S30, per row. No repeated measurements are supplied.",
+            "confounders": "weekly_study_hours appears in the CSV, but prior achievement, attendance, stress, family circumstances and other potentially relevant variables are unrecorded."
           },
-          "forward": "Sampling and privacy must be addressed.",
+          "forward": "A genuine classroom study would need a documented sampling and consent process, valid measurement procedures and controlled access to educational records.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What does the file actually reveal about the measurement process?",
+            "Does an observed extra variable necessarily explain the association?"
           ]
         },
         {
           "id": 11,
           "title": "Plan sampling, measurement, validity, and ethics",
-          "where": "The sleep–quiz association exemplar is at Stage 11 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 11 decision that belongs to a observational / correlational design.",
+          "where": "The student considers sampling, privacy and the power relationship involved in teacher-led educational research.",
+          "changed": "A fictional classroom sample becomes an explicit example for planning voluntary participation and safeguarding linked records.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Thirty invented student IDs provide an illustration of a convenience class rather than an empirical sample with consent records.",
+            "A teacher's access to grades does not automatically authorise research use; recruitment and permission requirements depend on school and applicable ethics procedures.",
+            "Students may perceive pressure when a teacher requests sleep information or permission to use their quiz results, so an independent consent process and non-participation safeguards may be necessary."
           ],
-          "decision": "Use a clearly described convenience sample and protect student-record privacy.",
-          "rejected": "Calling one class a random sample is rejected.",
+          "decision": "For a real study, seek the required permissions and ethics review, define recruitment separately from grading, and minimise identifying information in the linked dataset.",
+          "rejected": "Treating automatically accessible grade records as anonymous research data would be misleading; coding alone does not guarantee anonymity.",
           "notebook": {
-            "sample": "30 synthetic students from one class.",
-            "sampling": "Convenience sample; no population-random selection.",
-            "ethics": "Real use would require appropriate approval/consent and protection of identifiable student information."
+            "sample": "A fully synthetic 30-row file resembling one accessible biology class; no real participants were enrolled.",
+            "sampling": "Illustrative convenience sampling only. A real analysed sample would depend on eligible students and voluntary consent, not simply class enrolment.",
+            "ethics": "Plan school permission and applicable research ethics review before data access; use age-appropriate consent/assent and any required parental permission, with participation separated from grading. Protect the code key and explain withdrawal and re-identification limits."
           },
-          "forward": "Lock variables and IDs before analysis.",
+          "forward": "The proposed measurement and data-processing rules should preserve the student-level linkage without exposing identities.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Who controls permission to use students' grades, and who handles consent?",
+            "Would a student feel free to decline participation if their own teacher were recruiting?"
           ]
         },
         {
           "id": 12,
           "title": "Write the method and lock the data plan",
-          "where": "The sleep–quiz association exemplar is at Stage 12 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 12 decision that belongs to a observational / correlational design.",
+          "where": "The data plan specifies how student-level sleep, study-time and score values are linked.",
+          "changed": "A generic one-row-per-student instruction becomes an explicit four-column schema and a distinction between the synthetic file and a real protocol.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Preserve the actual CSV headers student_id, reported_weekday_sleep_hours, weekly_study_hours and biology_quiz_score.",
+            "Check for duplicated identifiers, absent values and scores near the observed maximum before choosing how to display the data.",
+            "For real records, define the sleep reporting window, the quiz-score scale, access rights and procedures for handling missing responses before data collection."
           ],
-          "decision": "Use one row per student and keep study time as a possible measured confounder, without pretending adjustment solves all bias.",
-          "rejected": "Deleting confounder fields after seeing the result is rejected.",
+          "decision": "Use one row per synthetic student and retain all four provided variables, while treating student_id as a record key rather than a numerical predictor.",
+          "rejected": "Interpreting a blank sleep response as zero hours or changing high quiz scores because they seem inconvenient would distort the records.",
           "notebook": {
-            "rowUnit": "One student.",
-            "columns": "student_id, reported sleep hours, weekly study hours, quiz score."
+            "rowUnit": "One synthetic student with one sleep report, one weekly study-hours value and one biology quiz score.",
+            "columns": "student_id (record identifier); reported_weekday_sleep_hours (hours); weekly_study_hours (hours); biology_quiz_score (numerical score, observed range 75.2–100.0)."
           },
-          "forward": "Inspect data quality before correlation.",
+          "forward": "The analytical checks can now reproduce the association and examine the spread of each measure.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the stored column name carry the unit or do you need an accompanying codebook?",
+            "How would you distinguish missing responses from real zeroes?"
           ]
         },
         {
           "id": 13,
           "title": "Collect or organize evidence",
-          "where": "The sleep–quiz association exemplar is at Stage 13 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 13 decision that belongs to a observational / correlational design.",
+          "where": "The analysis begins with an inspection of the 30 fabricated student records.",
+          "changed": "The dataset description includes the distributional context needed to interpret a correlation.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "All 30 student IDs are distinct and the four expected columns are present in the supplied synthetic CSV.",
+            "Reported weekday sleep values range from 4.8 to 9.2 hours, with a mean of 6.98 hours. Quiz scores range from 75.2 to 100.0, averaging 92.32.",
+            "Six scores equal 100.0, creating a visible upper-bound concentration; a scatterplot is needed to assess whether the positive association is reasonably linear or influenced by this boundary."
           ],
-          "decision": "Inspect distributions and the scatter relationship before inference.",
-          "rejected": "Treating a single high-score student as proof of the relationship is rejected.",
+          "decision": "Calculate descriptive statistics and inspect the sleep–score scatterplot, identifying a possible upper score boundary before interpreting Pearson's r.",
+          "rejected": "A large correlation by itself would not establish that the relationship is linear over all sleep durations or transferable to another class.",
           "notebook": {
-            "dataSummary": "30 synthetic students. Pearson r = 0.75, p = 2.1e-06. Sleep is observed/self-reported, so this does not establish that changing sleep would cause the score difference."
+            "dataSummary": "30 wholly synthetic student rows, no duplicate IDs. Sleep mean 6.98 hours (range 4.8–9.2); quiz mean 92.32 (range 75.2–100.0). Six quiz scores equal 100. Pearson r = .7472, p = 2.10 × 10⁻⁶, calculated from the invented values."
           },
-          "forward": "Choose an association estimate consistent with the numerical variables.",
+          "forward": "Choose an association estimate while making the observed range and ceiling pattern visible in the report.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the scatterplot suggest linearity or a bounded-score pattern?",
+            "Could one summary conceal clinically or educationally important variation?"
           ]
         },
         {
           "id": 14,
           "title": "Choose and justify the analysis",
-          "where": "The sleep–quiz association exemplar is at Stage 14 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 14 decision that belongs to a observational / correlational design.",
+          "where": "The student chooses a numerical association estimate appropriate to the observational question.",
+          "changed": "Pearson correlation is justified by the two student-level numerical variables, while its interpretation is qualified by score limits and the constructed sample.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The sample Pearson correlation compares two numerical measurements in paired student records, without treating reported sleep as experimentally assigned.",
+            "The independent student IDs avoid within-student repeated-measures dependence, but the class is still a convenience setting and does not support a population-random inference.",
+            "The score ceiling, potential nonlinearity, unrecorded confounders and the fictional nature of the data all matter when reporting uncertainty."
           ],
-          "decision": "Use Pearson correlation as a simple teaching estimate after checking form/outliers; keep the causal ceiling unchanged.",
-          "rejected": "Interpreting correlation as the effect of increasing sleep is rejected.",
+          "decision": "Use Pearson's r for this synthetic demonstration, report the effect as a sample association and examine the scatterplot rather than relying on significance alone.",
+          "rejected": "A p-value below .05 does not establish causation, a general population effect or the validity of an undocumented quiz instrument.",
           "notebook": {
-            "analysisChoice": "Pearson r between reported sleep hours and quiz score; report r and uncertainty/test result with design limits."
+            "analysisChoice": "Pearson correlation across 30 paired synthetic student records. Report r = .7472 and the corresponding two-sided test p ≈ 2.10 × 10⁻⁶ for an illustrative independent-pairs model; inspect the upper quiz-score boundary and avoid empirical generalisation."
           },
-          "forward": "Results must use associative wording.",
+          "forward": "The Results should distinguish a reproducible statistic from a claim about real students.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which assumptions depend on how students were sampled and measured?",
+            "What would the correlation mean if the entire dataset had been deliberately constructed?"
           ]
         },
         {
           "id": 15,
           "title": "Write the Results or findings",
-          "where": "The sleep–quiz association exemplar is at Stage 15 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 15 decision that belongs to a observational / correlational design.",
+          "where": "The Results text reports a transparent numerical pattern without adding causal explanations.",
+          "changed": "The single statistical sentence becomes a traceable report of the student count, observed ranges and synthetic correlation.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The source CSV has 30 paired sleep and quiz measurements with one row per synthetic student.",
+            "The calculated Pearson correlation is .7472 and the associated model-based two-sided p-value is approximately 2.10 × 10⁻⁶.",
+            "A number of quiz values sit at the upper score boundary, so the positive pattern should be shown with a scatterplot as well as a coefficient."
           ],
-          "decision": "Report the synthetic association without saying sleep caused the scores.",
-          "rejected": "'More sleep improved grades' is rejected.",
+          "decision": "State the descriptive values, the Pearson association and the synthetic status together, without implying that sleep produced the scores.",
+          "rejected": "Students with more sleep earned higher grades because sleep improved memory would overstate the evidence and invent a measured mechanism.",
           "notebook": {
-            "result1": "30 synthetic students. Pearson r = 0.75, p = 2.1e-06. Sleep is observed/self-reported, so this does not establish that changing sleep would cause the score difference."
+            "result1": "Across 30 synthetic student rows, reported sleep averaged 6.98 hours (range 4.8–9.2) and quiz scores averaged 92.32 (range 75.2–100.0). The sample Pearson correlation was r = .7472, with a model-based two-sided p ≈ 2.10 × 10⁻⁶. Six records had the maximum score of 100.0."
           },
-          "forward": "Discussion must consider confounding and reverse direction.",
+          "forward": "The Discussion can now connect this fabricated pattern with the real literature without pretending its magnitude was observed.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Could another student reproduce r from the supplied 30 records?",
+            "Does your Results section report only what was measured or computed?"
           ]
         },
         {
           "id": 16,
           "title": "Write the Discussion and limitations",
-          "where": "The sleep–quiz association exemplar is at Stage 16 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 16 decision that belongs to a observational / correlational design.",
+          "where": "The student distinguishes possible mechanisms from what an observational correlation can actually establish.",
+          "changed": "Interpretation now addresses confounding, uncertainty and the large difference between the synthetic result and published pooled findings.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Dewald et al. (2010) estimated a much smaller pooled sleep-duration association with school performance, r = .069; the synthetic r = .7472 was constructed and cannot validate or contradict that research.",
+            "Sleep duration was not assigned, and different patterns of study, attendance, prior achievement or stress could contribute to associations in real records.",
+            "The quiz-score upper boundary, missing source instruments, single hypothetical class and lack of temporal information further limit what the example could mean as an empirical study."
           ],
-          "decision": "Discuss study time, prior achievement, measurement error, and reverse-direction possibilities.",
-          "rejected": "A policy recommendation based only on this one association is rejected.",
+          "decision": "Use the fabricated association to teach careful observational reporting, alongside a clear explanation of why it cannot support advice that increasing sleep would raise a student's quiz score.",
+          "rejected": "Describing the large synthetic coefficient as a replicated biological or educational effect would confuse an instructional calculation with genuine research.",
           "notebook": {
-            "limitations": "Self-report, one convenience class, synthetic records, uncontrolled confounding, cross-sectional timing."
+            "limitations": "The 30 rows are invented. A comparable real study would face self-report error, a convenience sample, potential confounding, unverified quiz scoring, the observed 100-point ceiling and no recorded temporal ordering. The fictitious p-value cannot establish a real population association."
           },
-          "forward": "Closing sections retain the observational boundary.",
+          "forward": "The conclusion and abstract should remain understandable without access to the dataset and clearly distinguish the real literature from fictional results.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "How does your interpretation change when you know the observations were generated for instruction?",
+            "Which alternative explanations could only be examined with additional records or designs?"
           ]
         },
         {
           "id": 17,
           "title": "Write the conclusion, abstract, title, and keywords",
-          "where": "The sleep–quiz association exemplar is at Stage 17 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 17 decision that belongs to a observational / correlational design.",
+          "where": "The student prepares a descriptive conclusion and stand-alone abstract that preserve the synthetic and observational boundaries.",
+          "changed": "The closing text combines the true design, quantitative illustration and its limited meaning without claiming a classroom effect.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Name the predictor, outcome and observational design in the title without using the language of causal intervention.",
+            "Report 30 synthetic records and Pearson r approximately .75, with the invented status evident in the abstract.",
+            "Close on what the example teaches about student-level association and the need for independent validation rather than a sleep recommendation."
           ],
-          "decision": "Use 'association' in the title and abstract.",
-          "rejected": "Using 'effect of sleep on achievement' is rejected.",
+          "decision": "Use an observational title and an abstract that labels every numerical finding as synthetic and identifies potential confounding.",
+          "rejected": "The effect of additional sleep on biology grades would describe a causal quantity the study cannot estimate.",
           "notebook": {
-            "title": "Synthetic Observational Exemplar: Reported Weekday Sleep and Biology Quiz Scores"
+            "title": "Synthetic Observational Exemplar of Reported Weekday Sleep and Biology Quiz Scores",
+            "abstractDraft": "This synthetic teaching exemplar illustrates an observational association between reported weekday sleep duration and biology quiz scores. The invented file includes 30 student-level records, each with a reported sleep value, weekly study-hours value and quiz score. Sleep averaged 6.98 hours, while quiz scores averaged 92.32. The Pearson association between reported sleep and score was r = .7472, with a model-based two-sided p ≈ 2.10 × 10⁻⁶. Six quiz values reached the observed maximum of 100, so score distribution and possible nonlinearity merit inspection. No sleep intervention, verified questionnaire, real student consent record or actual quiz administration is represented. Published reviews discuss sleep and learning, but they do not authenticate the constructed magnitude or establish its generality. The example demonstrates how to present a numerical association while recognising that confounding and measurement limitations prevent a causal interpretation.",
+            "keywords": "reported sleep duration; biology quiz scores; observational research; Pearson correlation; synthetic data"
           },
-          "forward": "Final audit checks every causal verb.",
+          "forward": "The final audit should verify every reported number and every cited claim against the respective source.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does your abstract tell a reader immediately that the data are invented?",
+            "Would someone mistake your correlation for a policy recommendation if they read only the conclusion?"
           ]
         },
         {
           "id": 18,
           "title": "Citations, references, and final alignment audit",
-          "where": "The sleep–quiz association exemplar is at Stage 18 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 18 decision that belongs to a observational / correlational design.",
+          "where": "The final check traces both scholarly background and synthetic calculations to their sources.",
+          "changed": "A generic checklist becomes a specific audit of the research question, file columns, statistical output and claim limits.",
           "reasoning": [
-            "Start from the research question and the observational / correlational evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Verify the two article citations, including authors, publication details and DOIs, against scholarly bibliographic records.",
+            "Independently reconstruct the 30-row Pearson r and compare the result with the stored analysis output.",
+            "Confirm that the dataset, stage narrative and accompanying report call the records synthetic, name sleep as measured, and do not invent consent, a quiz rubric or causal intervention."
           ],
-          "decision": "Confirm predictor was measured, not assigned; n refers to students; and correlation is not presented as causation.",
-          "rejected": "A statistically significant p-value raising the causal claim ceiling is rejected.",
+          "decision": "Retain the invented numerical example with a visible provenance statement and preserve the distinction between reproducible computation and empirical evidence.",
+          "rejected": "Calling an exact model-based p-value proof of a population relationship would remain wrong even if it were calculated without error.",
           "notebook": {
-            "audit": "Observed exposure, student-level n, confounders, associative wording, synthetic-data label."
+            "audit": "The two sleep review citations match PubMed and publisher records. The CSV contains 30 distinct student IDs, Pearson r = .7472007158832105 reproduces the statistical JSON, and the data are wholly synthetic. Study instruments, consent, actual recruitment and a causal identification strategy are not documented."
           },
-          "forward": "The exemplar is complete.",
+          "forward": "The research chain is now auditable at repository-source level; a real classroom inquiry would need its own authorised data, documented measures and evidence-bounded claims.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this sleep–quiz association example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Is the provenance of every statistic clearly stated?",
+            "What genuine records would a real study require that this teaching example does not contain?"
           ]
         }
       ],
