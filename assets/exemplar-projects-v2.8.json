@@ -556,7 +556,7 @@
       "dir": "aquarium-water-description",
       "rq": "Across seven school days, what distributions of water temperature and dissolved oxygen are observed in three classroom aquaria?",
       "disclaimer": "The cited government water-science pages are real and independently checked. All aquarium readings and monitoring procedures in this example are synthetic instructional material, not observations from a conducted classroom study.",
-      "data_summary": "21 synthetic aquarium-day records. Temperature mean 23.93 °C, range 22.5–25.7; dissolved oxygen mean 7.60 mg/L, range 6.85–8.19.",
+      "data_summary": "21 synthetic aquarium-day records from three repeatedly observed aquaria. Temperature mean 23.93 °C, range 22.5–25.7 °C; dissolved oxygen mean 7.60 mg/L, range 6.85–8.19 mg/L.",
       "sources": [
         {
           "id": "D-S01",
@@ -773,193 +773,196 @@
         {
           "id": 10,
           "title": "Define constructs, variables, or evidence units",
-          "where": "The aquarium monitoring exemplar is at Stage 10 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 10 decision that belongs to a descriptive quantitative design.",
+          "where": "The two measured quantities and the repeated observation structure are defined before the synthetic readings are examined.",
+          "changed": "An aquarium-day is identified as a measurement occasion; the aquarium is the repeatedly observed system.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Record temperature in degrees Celsius and dissolved oxygen concentration in mg/L, preserving the measurement units in the column names.",
+            "Treat aquarium A, B or C as the system identifier and the school-day number as the observation time index.",
+            "Do not describe temperature as a manipulated independent variable or dissolved oxygen as its experimentally caused outcome."
           ],
-          "decision": "Treat one aquarium-day record as an observation while keeping aquarium ID and day explicit.",
-          "rejected": "Calling temperature an independent variable or dissolved oxygen a dependent variable is rejected because nothing is manipulated.",
+          "decision": "Store one record for each aquarium-day, with the aquarium ID linking its seven repeated measurements.",
+          "rejected": "Using 21 as the number of independent aquaria would ignore that each of three tanks contributes seven observations.",
           "notebook": {
-            "variables": "Water temperature (°C) and dissolved oxygen (mg/L).",
-            "unit": "One aquarium measured on one day; repeated observations remain linked to aquarium ID."
+            "variables": "Water temperature in °C and dissolved oxygen concentration in mg/L, each measured for a named aquarium on a scheduled day.",
+            "unit": "One row represents one aquarium on one sampled day. Seven rows come from each aquarium, so the observations are clustered by tank."
           },
-          "forward": "Sampling and measurement must support description.",
+          "forward": "A real monitoring plan needs consistent procedures and documented calibration, even when the analysis remains descriptive.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does your recorded row represent a person, object, event or repeated observation?",
+            "Which identifier prevents several measurements from being mistaken for independent units?"
           ]
         },
         {
           "id": 11,
           "title": "Plan sampling, measurement, validity, and ethics",
-          "where": "The aquarium monitoring exemplar is at Stage 11 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 11 decision that belongs to a descriptive quantitative design.",
+          "where": "The student specifies the accessible systems and how comparable monitoring readings would be obtained.",
+          "changed": "Convenience access is distinguished from probability sampling, and instrument quality becomes an explicit requirement.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Describe the three available classroom aquaria as the selected systems and seven scheduled days as the planned observation period.",
+            "For an actual study, calibrate or check the dissolved-oxygen probe using the manufacturer's procedure and document equipment and environmental conditions.",
+            "Take readings at a consistent time and depth where feasible, recording departures rather than claiming unverified uniformity."
           ],
-          "decision": "Measure all three available aquaria for seven school days with the same calibrated procedures.",
-          "rejected": "Calling this a random sample of all aquaria is rejected.",
+          "decision": "Plan a monitoring schedule for all three selected aquaria, with calibration and repeated-measurement procedures specified before collecting real observations.",
+          "rejected": "Saying that the synthetic file proves the instruments were calibrated would confuse a proposed procedure with recorded evidence.",
           "notebook": {
-            "sample": "Three classroom aquaria, seven scheduled days.",
-            "measurement": "Same temperature/DO procedure and timing window; calibration recorded."
+            "sample": "Three accessible classroom aquaria, each represented on seven numbered school days. The records are wholly synthetic.",
+            "measurement": "In a real study, document probe model, calibration checks, time, depth and temperature compensation. None of these instrument logs exists in the supplied example files."
           },
-          "forward": "Lock the monitoring table before final collection.",
+          "forward": "The dataset must preserve exactly what was recorded, and distinguish missing readings from numerical zeroes.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What evidence would demonstrate that the instrument was calibrated?",
+            "Does the sampling choice permit generalisation beyond these particular aquaria?"
           ]
         },
         {
           "id": 12,
           "title": "Write the method and lock the data plan",
-          "where": "The aquarium monitoring exemplar is at Stage 12 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 12 decision that belongs to a descriptive quantitative design.",
+          "where": "The record structure is fixed before results are summarised.",
+          "changed": "The four real CSV column names replace a generic plan that mentioned a non-existent notes column.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Use the exact columns aquarium, day, temperature_C and dissolved_oxygen_mg_L.",
+            "Require one aquarium-day identifier pair per row, with days numbered 1 through 7 for A, B and C.",
+            "Record genuinely absent readings as missing with a documented reason in a separate log; zero remains a real numerical value if measured."
           ],
-          "decision": "Use one row per aquarium-day and explicit units for every numerical column.",
-          "rejected": "A blank cell that sometimes means zero and sometimes missing is rejected.",
+          "decision": "Preserve the original seed-free monitoring CSV and use 21 aquarium-day rows for a transparent descriptive summary.",
+          "rejected": "Adding a value to fill a missing day or claiming an unrecorded field existed would silently alter the evidence structure.",
           "notebook": {
-            "rowUnit": "One aquarium-day.",
-            "columns": "aquarium_id, day, temperature_C, dissolved_oxygen_mg_L, notes."
+            "rowUnit": "One aquarium-day observation, identified by aquarium and day. Each aquarium contributes seven linked measurements.",
+            "columns": "aquarium (A/B/C), day (1–7), temperature_C (°C), dissolved_oxygen_mg_L (mg/L). The supplied source CSV contains these four fields and no notes column."
           },
-          "forward": "Data can now be summarized without changing the design.",
+          "forward": "Check that each aquarium has one row on each of the seven days and that readings fall in the recorded units.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can a reader reproduce the table layout exactly from the source file?",
+            "What happens if a reading is absent, implausible or recorded with the wrong unit?"
           ]
         },
         {
           "id": 13,
           "title": "Collect or organize evidence",
-          "where": "The aquarium monitoring exemplar is at Stage 13 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 13 decision that belongs to a descriptive quantitative design.",
+          "where": "The synthetic dataset becomes the focus, with its observation schedule and values independently checked.",
+          "changed": "The summary now distinguishes overall daily-record averages from aquarium-specific values and repeated patterns.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The file contains 21 unique aquarium-day records, seven for each of three aquaria, without a missing or duplicate aquarium-day pair.",
+            "Across all 21 entries, temperature averages 23.93 °C (22.5–25.7), while dissolved oxygen averages 7.60 mg/L (6.85–8.19).",
+            "Aquarium means differ, and each aquarium's seven synthetic readings show rising temperature and declining dissolved oxygen over the numbered days."
           ],
-          "decision": "Inspect ranges, centers, repeated patterns, and missingness before writing a conclusion.",
-          "rejected": "Jumping directly to a t-test is rejected because the question is descriptive.",
+          "decision": "Report both the pooled descriptive values and the aquarium-level series rather than treating the pooled mean as a complete account of the data.",
+          "rejected": "Presenting the 21 entries as a random independent sample of 21 tanks would distort the monitoring design.",
           "notebook": {
-            "dataSummary": "21 synthetic aquarium-day records. Temperature mean 23.93 °C, range 22.5–25.7; dissolved oxygen mean 7.60 mg/L, range 6.85–8.19."
+            "dataSummary": "Across 21 synthetic aquarium-day records, temperature mean 23.93 °C (range 22.5–25.7) and dissolved oxygen mean 7.60 mg/L (range 6.85–8.19). Aquarium means for temperature are A 23.03, B 23.93 and C 24.83 °C; dissolved oxygen means are A 7.95, B 7.60 and C 7.25 mg/L."
           },
-          "forward": "The analysis should answer the descriptive question directly.",
+          "forward": "A description by aquarium and day can make the structure of this synthetic pattern visible without needing a significance test.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "How much information is lost when measurements from different aquaria are pooled?",
+            "Does the plot reveal repeated measurements or hide them?"
           ]
         },
         {
           "id": 14,
           "title": "Choose and justify the analysis",
-          "where": "The aquarium monitoring exemplar is at Stage 14 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 14 decision that belongs to a descriptive quantitative design.",
+          "where": "The analysis is chosen to describe the monitored values and their variation.",
+          "changed": "The plan uses transparent descriptive summaries and paired time plots rather than inferential tests unsupported by the sampling design.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Summarise all 21 readings using counts, means and observed ranges, noting that each aquarium contributes seven days.",
+            "Report the same quantities separately for aquaria A, B and C so differences between their series remain visible.",
+            "Plot temperature and dissolved oxygen against day using separate lines for each aquarium, with their own measurement units."
           ],
-          "decision": "Use counts, means/medians, ranges/spread, and plots appropriate to the monitoring data.",
-          "rejected": "Forcing an inferential p-value into the project is rejected.",
+          "decision": "Use overall and aquarium-specific summaries, plus aquarium-linked time-series figures when presenting the synthetic data.",
+          "rejected": "A p-value or causal regression coefficient is unnecessary to answer the bounded descriptive question and might encourage unsupported generalisation.",
           "notebook": {
-            "analysisChoice": "Descriptive summaries by aquarium and overall; time-series plots if helpful."
+            "analysisChoice": "Calculate n, mean and observed minimum/maximum for each measure overall and by aquarium. Use linked day-by-day plots for all three aquaria; do not treat 21 aquarium-days as independent tanks."
           },
-          "forward": "Results should report observed conditions, not causes.",
+          "forward": "Results can now report quantities with appropriate units and describe the temporal pattern without assigning its cause.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which summary answers the research question directly?",
+            "Would aggregation erase a difference among systems or a change across days?"
           ]
         },
         {
           "id": 15,
           "title": "Write the Results or findings",
-          "where": "The aquarium monitoring exemplar is at Stage 15 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 15 decision that belongs to a descriptive quantitative design.",
+          "where": "The Results section is drafted from the synthetic CSV rather than invented statistical outputs.",
+          "changed": "A single summary sentence expands into a transparent account of pooled and per-aquarium variation.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "State that these are 21 synthetic monitoring records, with seven measurements for each aquarium.",
+            "Give pooled means and ranges with the correct units, then distinguish the aquarium-level patterns.",
+            "Acknowledge the constructed time trend without calling it proof that temperature caused changes in oxygen."
           ],
-          "decision": "Report the synthetic temperature and dissolved-oxygen distributions transparently.",
-          "rejected": "Saying warmer water caused lower dissolved oxygen in this monitoring design is rejected.",
+          "decision": "Report the descriptive dataset exactly, including the three aquarium means and the day-linked variation.",
+          "rejected": "Concluding that temperature caused a dissolved-oxygen decline would exceed the descriptive observation structure.",
           "notebook": {
-            "result1": "21 synthetic aquarium-day records. Temperature mean 23.93 °C, range 22.5–25.7; dissolved oxygen mean 7.60 mg/L, range 6.85–8.19."
+            "result1": "Across 21 synthetic observations, temperature averaged 23.93 °C (range 22.5–25.7 °C) and dissolved oxygen averaged 7.60 mg/L (range 6.85–8.19 mg/L).",
+            "result2": "Mean temperature in aquaria A, B and C was 23.03, 23.93 and 24.83 °C, respectively; corresponding dissolved-oxygen means were 7.95, 7.60 and 7.25 mg/L. In each aquarium, temperatures increased from Day 1 to Day 7 while dissolved-oxygen readings declined."
           },
-          "forward": "Discussion can connect patterns with background water-science sources while keeping the design descriptive.",
+          "forward": "The Discussion must separate the synthetic pattern from the genuine scientific explanations described in the agency guidance.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Can each reported mean be recalculated from the CSV?",
+            "Have you kept descriptive observations separate from explanations of why they occurred?"
           ]
         },
         {
           "id": 16,
           "title": "Write the Discussion and limitations",
-          "where": "The aquarium monitoring exemplar is at Stage 16 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 16 decision that belongs to a descriptive quantitative design.",
+          "where": "The student considers what the synthetic pattern may illustrate and which claims the data cannot sustain.",
+          "changed": "The interpretation moves beyond generic caution to explain how repeated observations, unrecorded procedures and the short time window affect inference.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "USGS guidance provides a scientific reason to monitor temperature alongside dissolved oxygen, but it does not validate the fictional relationship in the CSV.",
+            "Three aquaria differ at baseline and are measured repeatedly across the same seven days, making system identity and time relevant to interpretation.",
+            "No actual calibration records, instrument settings, tank-management details or real measurements are available to test alternative explanations."
           ],
-          "decision": "Interpret observed patterns as classroom monitoring evidence and discuss time, calibration, and aquarium-specific limits.",
-          "rejected": "Generalizing three aquaria to all aquatic systems is rejected.",
+          "decision": "Discuss aquarium-specific patterns as a descriptive illustration, keeping the source-based background distinct from the invented data and refusing causal or health assessments.",
+          "rejected": "Saying that these data demonstrate that warming harmed fish or caused oxygen loss would require information the study never collected.",
           "notebook": {
-            "limitations": "Three aquaria, seven days, synthetic values, repeated records, no randomized intervention."
+            "limitations": "Only three selected aquaria, a seven-day window and repeated observations; no random sample or intervention. The values are synthetic, instrument calibration was not documented, and species, aeration, biological activity and probe placement were not measured."
           },
-          "forward": "Closing sections must preserve the descriptive boundary.",
+          "forward": "The conclusion and abstract should report the actual descriptive scope and instructional status.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which proposed explanation would require additional observations?",
+            "What can be learned from a short record without treating it as representative of other aquaria?"
           ]
         },
         {
           "id": 17,
           "title": "Write the conclusion, abstract, title, and keywords",
-          "where": "The aquarium monitoring exemplar is at Stage 17 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 17 decision that belongs to a descriptive quantitative design.",
+          "where": "The closing materials are written after the descriptive results and their limitations have been established.",
+          "changed": "The abstract includes the observation structure, both measured variables, key values and the synthetic-data boundary.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Use a title that names aquarium monitoring without implying experimental effects or animal-health conclusions.",
+            "In the abstract, identify three aquaria followed for seven school days and distinguish 21 aquarium-day observations from 21 independent aquaria.",
+            "Close with the actual descriptive contribution, noting that the invented values have no empirical standing."
           ],
-          "decision": "Write an abstract that names descriptive monitoring and synthetic data status.",
-          "rejected": "Using 'effect of temperature' in the title is rejected.",
+          "decision": "Use a concise descriptive title and an abstract that is independently understandable, with synthetic status prominent.",
+          "rejected": "The effect of temperature on oxygen and fish survival over seven days is an unsupported causal and biological title.",
           "notebook": {
-            "title": "Synthetic Descriptive Exemplar: Temperature and Dissolved Oxygen in Three Classroom Aquaria"
+            "title": "Synthetic Descriptive Exemplar on Temperature and Dissolved Oxygen in Three Classroom Aquaria",
+            "abstractDraft": "This synthetic teaching exemplar illustrates a descriptive monitoring design for water temperature and dissolved oxygen in three classroom aquaria over seven school days. The illustrative file contains one record per aquarium-day, yielding 21 repeated observations from three systems. Across the invented readings, water temperature averaged 23.93 °C and ranged from 22.5 to 25.7 °C. Dissolved oxygen averaged 7.60 mg/L, with recorded values from 6.85 to 8.19 mg/L. Aquarium-specific averages also differed, and each synthetic series showed higher temperatures and lower oxygen concentrations at the end of the seven-day period. The project demonstrates how to retain aquarium identifiers, report repeated measurements transparently and interpret descriptive trends cautiously. No interventions, organism outcomes or actual instrument logs are represented. These values were created for instruction and cannot establish water quality in any real school aquarium.",
+            "keywords": "dissolved oxygen; water temperature; classroom aquaria; descriptive monitoring; synthetic data"
           },
-          "forward": "Final audit checks that no causal language slipped in.",
+          "forward": "The final check will verify source attribution, every reported number, the paper map and the claim boundary.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Could someone reading only the abstract recognise that the observations are synthetic?",
+            "Does the title stay within the evidence the project actually records?"
           ]
         },
         {
           "id": 18,
           "title": "Citations, references, and final alignment audit",
-          "where": "The aquarium monitoring exemplar is at Stage 18 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 18 decision that belongs to a descriptive quantitative design.",
+          "where": "The final audit follows the descriptive question through the cited background and synthetic monitoring records.",
+          "changed": "The vague completion claim becomes a reproducible set of source, calculation and reporting checks.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Confirm that the two government background pages have correct URLs and documented date information.",
+            "Recalculate the 21-row overall means and ranges and verify the seven observations from each aquarium.",
+            "Check that the data remain labelled synthetic, the paper map matches the interactive stages and every inference remains descriptive."
           ],
-          "decision": "Trace every number to the synthetic monitoring file and every background claim to a verified source.",
-          "rejected": "A polished conclusion with an invented treatment effect is rejected.",
+          "decision": "Document the verified source references, preserve raw CSV values and identify the repeated-observation limits in the final teaching record.",
+          "rejected": "Calling the exemplar an empirical classroom study or attaching an unverified calibration certificate would undermine its research integrity.",
           "notebook": {
-            "audit": "Descriptive question, aquarium-day rows, synthetic data label, and noncausal wording all match."
+            "audit": "The two government pages were checked against official web sources. The synthetic CSV contains 21 unique aquarium-day records, seven per aquarium, and its overall and aquarium-specific summaries are reproducible. No measurement or calibration was performed for this teaching exemplar."
           },
-          "forward": "The exemplar is complete.",
+          "forward": "The instructional chain is complete at repository-source level. A real study would require its own measured data, calibration evidence, permissions and recorded deviations.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does each displayed quantity match the supplied source file?",
+            "Which aspects of a real monitoring study would still need documented evidence?"
           ]
         }
       ],
