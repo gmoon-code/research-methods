@@ -1049,15 +1049,15 @@
     },
     "primaryEstimand": {
       "stage": 14,
-      "label": "The quantity or phenomenon that most directly answers my question",
+      "label": "The quantity that most directly answers my question",
       "type": "textarea",
-      "expected_shape": "a precise quantitative contrast or qualitative phenomenon",
+      "expected_shape": "a specified quantitative target with comparison, unit and population or setting",
       "typical_length": "about 15–75 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "The difference between the groups.",
       "good_working_response": "For the illustrative experiment, the primary quantity is the population mean difference in dish-level Day 7 shoot length per planted seed between the 0 mM and 100 mM NaCl conditions. The 50 mM condition would be secondary to this prespecified contrast.",
       "detailed_response": "",
-      "why_it_works": "Define the quantitative contrast before selecting a test. For qualitative inquiry, identify the phenomenon and question the evidence is intended to illuminate."
+      "why_it_works": "Define the quantitative estimand before selecting a test. In mixed-methods work, explain separately what the qualitative strand is intended to understand."
     },
     "analysisChoice": {
       "stage": 14,
@@ -1229,7 +1229,7 @@
     },
     "limitations": {
       "stage": 16,
-      "label": "Relevant limitations and how each restricts claims",
+      "label": "At least two limitations and exactly how each restricts claims",
       "type": "textarea",
       "expected_shape": "at least two concrete limitations and their consequences",
       "typical_length": "about 45–145 words",
