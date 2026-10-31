@@ -1,15 +1,22 @@
 {
+  "status": "synthetic_descriptive_contrast_with_single_class_per_condition",
   "n_retrieval": 24,
   "n_comparison": 24,
-  "mean_change_retrieval": 9.741666666666667,
-  "mean_change_comparison": 3.2833333333333337,
-  "difference_in_mean_change": 6.458333333333334,
-  "welch_t": 4.589713147668634,
-  "df": 44.882465740279194,
-  "p": 3.571663634054065e-05,
-  "ci95": [
-    3.6240186658285274,
-    9.29264800083814
-  ],
-  "interpretation_boundary": "Pre-existing classes were not randomly assigned. The comparison is quasi-experimental and remains vulnerable to selection and classroom-level confounding."
+  "n_classes_retrieval": 1,
+  "n_classes_comparison": 1,
+  "mean_pre_retrieval": 69.175,
+  "mean_pre_comparison": 68.6625,
+  "mean_post_retrieval": 78.89583333333333,
+  "mean_post_comparison": 71.95833333333333,
+  "mean_change_retrieval": 9.720833333333333,
+  "mean_change_comparison": 3.295833333333334,
+  "difference_in_mean_change": 6.424999999999999,
+  "inference_status": "No valid group-level uncertainty interval, significance test or causal effect estimate can be obtained from one pre-existing class per condition. Student-level change-score tests treat classmates as independent treatment replications and confound instructional condition with class identity.",
+  "student_level_welch_illustration_only": {
+    "t": 4.577266946274092,
+    "df": 44.877744616911166,
+    "interpretation": "Algebraic Welch statistic calculated from 48 student-level change values for demonstration only. This is not a valid inferential test for the class-level instructional contrast; do not use its p-value or confidence interval as evidence of a routine effect."
+  },
+  "change_score_rule": "change_score = displayed post_score minus displayed pre_score, rounded to one decimal. All 48 calculated values reconcile with the displayed scores.",
+  "interpretation_boundary": "Synthetic results only. One pre-existing class received each routine, so differences may reflect existing class composition, teacher or classroom conditions. The two class change means are descriptive; no valid between-class treatment test or causal effect follows."
 }
