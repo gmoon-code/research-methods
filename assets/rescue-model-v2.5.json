@@ -333,7 +333,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The large subject area you are interested in. It should still be broader than the final project.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What broad area links your interests without already specifying a final question?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -345,26 +345,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Plant stress; memory and learning; freshwater pollution.",
+          "strong_example": "Local microclimates and environmental conditions around schools.",
           "avoid": "Do not try to make this the final research question.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's original topic is 'climate change.'",
+            "situation": "A student is interested in how local outdoor conditions vary around the school.",
             "thinking": [
-              "That topic is far too large for one class project.",
-              "I can focus on one local phenomenon that is measurable.",
-              "Surface temperature in shaded and unshaded school areas is feasible during a defined afternoon period."
+              "I am curious about temperature and sunlight, but I have not chosen what to measure.",
+              "A broad area can hold several questions about different surfaces or times.",
+              "I will name the area before narrowing it to a specific comparison."
             ],
-            "draft": "Working topic: afternoon surface-temperature differences between shaded and unshaded locations on the school campus."
+            "draft": "Broad area: local environmental conditions and surface temperature."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "My broad area is [topic/phenomenon]. I am especially interested in [narrower aspect].",
+          "frame": "The broad area I want to explore is [field or topic]. It includes questions about [two possible directions], which I will narrow later.",
           "path_frames": {}
         }
       }
@@ -378,7 +378,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A narrower part of the broad topic that can become one project.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which specific part of the broad area might be manageable within this project?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -390,26 +390,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Broad topic: plant stress. Subtopic: early seedling responses to salinity.",
+          "strong_example": "Broad area: local microclimates. Subtopic: surface temperatures of shaded and sun-exposed paths.",
           "avoid": "Avoid using the same wording as the broad topic.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's original topic is 'climate change.'",
+            "situation": "The student's broad area is local surface temperatures around school.",
             "thinking": [
-              "That topic is far too large for one class project.",
-              "I can focus on one local phenomenon that is measurable.",
-              "Surface temperature in shaded and unshaded school areas is feasible during a defined afternoon period."
+              "The full topic includes weather, materials and many times of day.",
+              "I could focus on how shade relates to surface temperature at selected locations.",
+              "That gives me a smaller phenomenon to examine without yet claiming that shade caused a difference."
             ],
-            "draft": "Working topic: afternoon surface-temperature differences between shaded and unshaded locations on the school campus."
+            "draft": "Specific subtopic: surface temperatures at shaded and sun-exposed school locations."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Specific subtopic: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "Within [broad area], I want to focus on [specific process or relationship] in [setting]. I will leave [wider issue] outside this first study.",
           "path_frames": {}
         }
       }
@@ -423,7 +423,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The specific pattern, relationship, experience, process, or problem you want to understand.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What observation, experience or relationship are you trying to understand, without assuming its explanation?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -435,26 +435,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Seedlings exposed to different salt concentrations appear to grow differently.",
+          "strong_example": "Sun-exposed and shaded school surfaces may differ in temperature during the same observation period.",
           "avoid": "Avoid writing only a subject name such as “plants.”",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's original topic is 'climate change.'",
+            "situation": "A student notices that the school courtyard feels different from the covered walkway.",
             "thinking": [
-              "That topic is far too large for one class project.",
-              "I can focus on one local phenomenon that is measurable.",
-              "Surface temperature in shaded and unshaded school areas is feasible during a defined afternoon period."
+              "Feeling warmer is an observation worth checking, but it is not a measured temperature difference.",
+              "Surface material and measurement time may also matter.",
+              "I can describe the possible pattern and decide what evidence would let me examine it."
             ],
-            "draft": "Working topic: afternoon surface-temperature differences between shaded and unshaded locations on the school campus."
+            "draft": "Possible phenomenon: surface temperatures may differ between sun-exposed and shaded parts of the school grounds."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The specific pattern/process/problem I want to understand is [observable phenomenon] in [context].",
+          "frame": "I have noticed or want to examine [pattern, experience or process] in [context]. I do not yet know [important uncertainty].",
           "path_frames": {}
         }
       }
@@ -468,11 +468,11 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Who, what, or where the possible study concerns.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which people, organisms, records or physical setting would actually supply your evidence?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Name the population, organism, system, setting, and useful boundaries.",
+          "body": "Identify the participants, organisms, records or physical units relevant to your project, together with the setting and useful boundaries.",
           "questions": [
             "Who or what would supply the evidence?",
             "Where and when does the question apply?"
@@ -480,26 +480,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Bean seedlings grown in classroom trays during a 7-day period.",
+          "strong_example": "Selected paved surfaces in the school courtyard and covered walkway, observed on planned afternoons.",
           "avoid": "Do not use a population broader than you can justify.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's original topic is 'climate change.'",
+            "situation": "The student is planning observations of outdoor surface temperature.",
             "thinking": [
-              "That topic is far too large for one class project.",
-              "I can focus on one local phenomenon that is measurable.",
-              "Surface temperature in shaded and unshaded school areas is feasible during a defined afternoon period."
+              "The units I could measure are selected surface locations, rather than the entire city.",
+              "I should specify the school area and which kinds of surfaces are included.",
+              "The times of observation also belong in the setting description."
             ],
-            "draft": "Working topic: afternoon surface-temperature differences between shaded and unshaded locations on the school campus."
+            "draft": "Setting and units: selected paved surfaces on the school grounds, observed during scheduled afternoon periods."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "This possible study concerns [population/organism/system] in [setting/time boundary].",
+          "frame": "My evidence would come from [participants, organisms, sources or units] in [setting]. I would include [boundary] during [relevant period].",
           "path_frames": {}
         }
       }
@@ -513,7 +513,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The part of the larger problem that this one project can reasonably address.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which part of the question can you examine well, and what will you deliberately leave unanswered?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -525,26 +525,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Focus on early seedling growth over 7 days, not long-term plant fitness.",
+          "strong_example": "Measure selected school surfaces on three afternoons, without claiming to represent the entire neighbourhood.",
           "avoid": "Do not promise to solve the entire field.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's original topic is 'climate change.'",
+            "situation": "The student wants to study temperatures around the whole school.",
             "thinking": [
-              "That topic is far too large for one class project.",
-              "I can focus on one local phenomenon that is measurable.",
-              "Surface temperature in shaded and unshaded school areas is feasible during a defined afternoon period."
+              "Comparing every building surface would be difficult in the available time.",
+              "I can limit the observations to a few accessible surfaces and consistent times.",
+              "This will describe selected locations and cannot establish the temperature of the whole neighbourhood."
             ],
-            "draft": "Working topic: afternoon surface-temperature differences between shaded and unshaded locations on the school campus."
+            "draft": "Scope: compare surface temperatures at a small set of school locations during selected afternoons; exclude seasonal or citywide patterns."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "This project will focus on [included scope]. It will not attempt to answer [deliberately excluded scope].",
+          "frame": "I will examine [included evidence, places and time period]. I will not attempt [excluded topic], so my conclusions will concern [bounded scope].",
           "path_frames": {}
         }
       }
@@ -557,12 +557,12 @@
       "levels": {
         "1": {
           "name": "Clarify what this field is asking",
-          "body": "The actual amount of time available for planning, collecting/retrieving evidence, analyzing, and writing.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "body": "The actual time available for planning, gathering or retrieving evidence, analysing findings and writing.",
+          "prompt": "How much time is actually available for planning, permissions, evidence gathering, checking and writing?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State the calendar or number of class periods/weeks you truly have.",
+          "body": "State the time you really have, including any limits on access, supervision or repeated observations.",
           "questions": [
             "Does my proposed measurement need longer than this?",
             "Do I need time for pilot testing or repeated observations?"
@@ -570,26 +570,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Six weeks total, with about eight class periods available for data collection.",
+          "strong_example": "Four project weeks available, including one planning session, two observation sessions and time to review records.",
           "avoid": "Do not plan a long-term process that cannot occur during the course timeline.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's original topic is 'climate change.'",
+            "situation": "The student has a limited school-project schedule.",
             "thinking": [
-              "That topic is far too large for one class project.",
-              "I can focus on one local phenomenon that is measurable.",
-              "Surface temperature in shaded and unshaded school areas is feasible during a defined afternoon period."
+              "I need time to confirm access and test the measurement procedure.",
+              "The proposed observations must fit the actual available afternoons.",
+              "I also need time after collection to inspect records and write the report."
             ],
-            "draft": "Working topic: afternoon surface-temperature differences between shaded and unshaded locations on the school campus."
+            "draft": "Working time plan: confirm the available project weeks, reserve one session to test the procedure, schedule a small number of observations, and protect time for analysis and writing."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Time available: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "I have [actual weeks or sessions] available. I plan to use [period] for preparation, [period] for evidence gathering, and [period] for checking and writing; [constraint] may require adjustment.",
           "path_frames": {}
         }
       }
@@ -603,7 +603,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The equipment, software, databases, materials, expertise, or permissions the project needs.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What equipment, data, access and permissions are confirmed, and what remains uncertain?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -615,26 +615,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Digital balance, nine containers, salinity solutions, spreadsheet software, teacher approval for laboratory space.",
+          "strong_example": "School-approved thermometer, observation log and access to outdoor sites, subject to confirmation.",
           "avoid": "Do not list resources you only hope will become available later as if they are guaranteed.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's original topic is 'climate change.'",
+            "situation": "The student hopes to measure surface temperatures in several school locations.",
             "thinking": [
-              "That topic is far too large for one class project.",
-              "I can focus on one local phenomenon that is measurable.",
-              "Surface temperature in shaded and unshaded school areas is feasible during a defined afternoon period."
+              "I would need an appropriate thermometer and a way to record each location and time.",
+              "I should check whether I may use the school grounds and borrow equipment.",
+              "If access is unavailable, I may need a smaller question or existing public data."
             ],
-            "draft": "Working topic: afternoon surface-temperature differences between shaded and unshaded locations on the school campus."
+            "draft": "Potential resources: a suitable thermometer, measurement log and approved access to selected school locations; equipment and permission still need confirmation."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Equipment/data/source access: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "The study needs [equipment, datasets or expertise]. I can currently access [confirmed resources]. I must arrange [unconfirmed resource or approval], or use [feasible alternative].",
           "path_frames": {}
         }
       }
@@ -648,7 +648,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Any physical, biological, chemical, privacy, participant, environmental, or authority issue that could make the project inappropriate without review.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What could create physical, privacy, environmental or permission concerns in this proposed setting?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -660,26 +660,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Human caffeine assignment would create health/authority concerns; use a safer observational or literature-based route instead.",
+          "strong_example": "Do not measure on busy vehicle routes or in restricted areas; ask for approval and select safer observation locations.",
           "avoid": "Do not wait until the final method to think about safety.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's original topic is 'climate change.'",
+            "situation": "The student wants to collect temperatures near school walkways.",
             "thinking": [
-              "That topic is far too large for one class project.",
-              "I can focus on one local phenomenon that is measurable.",
-              "Surface temperature in shaded and unshaded school areas is feasible during a defined afternoon period."
+              "Measurements should not obstruct movement or place anyone near traffic or unsafe heat exposure.",
+              "I need permission for any restricted area and should avoid collecting information about passersby.",
+              "If I cannot observe safely, I should change the location or procedure before collecting data."
             ],
-            "draft": "Working topic: afternoon surface-temperature differences between shaded and unshaded locations on the school campus."
+            "draft": "Initial precautions: use accessible locations with approval, avoid obstructing walkways, follow weather and supervision guidance, and record temperatures without identifiable information about other people."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Safety or ethics concerns I can already see: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "A possible risk or ethics concern is [specific issue]. I would address it through [protection, approval or safer method]. Before starting, I need [confirmation or review].",
           "path_frames": {}
         }
       }
@@ -693,7 +693,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The research direction you are currently choosing to develop.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which direction best fits your curiosity, available evidence, time and safeguards at this point?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -705,26 +705,26 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Early seedling growth under different salinity conditions.",
+          "strong_example": "Surface-temperature comparisons among selected sun-exposed and shaded school locations.",
           "avoid": "Do not confuse the chosen topic with the final research question.",
           "choice": null
         },
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "The student's original topic is 'climate change.'",
+            "situation": "The student has considered outdoor measurements, container experiments and a literature review.",
             "thinking": [
-              "That topic is far too large for one class project.",
-              "I can focus on one local phenomenon that is measurable.",
-              "Surface temperature in shaded and unshaded school areas is feasible during a defined afternoon period."
+              "The temperature comparison fits my interest in local conditions.",
+              "I can only proceed if access and measuring equipment are confirmed.",
+              "I will keep this as a working topic that can change after a preliminary reading."
             ],
-            "draft": "Working topic: afternoon surface-temperature differences between shaded and unshaded locations on the school campus."
+            "draft": "Working topic: comparing recorded surface temperatures at selected shaded and sun-exposed school locations, subject to safe access and equipment."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Working research topic: [your project-specific answer]. Why it fits: [your reasoning and boundary].",
+          "frame": "My current topic is [focused direction] in [setting]. I selected it because [evidence and feasibility], while [constraint or uncertainty] still needs checking.",
           "path_frames": {}
         }
       }
