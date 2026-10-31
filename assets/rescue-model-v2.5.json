@@ -5404,8 +5404,8 @@
     "methods": {
       "design": {
         "stage": 9,
-        "title": "Design — start with what you need to know",
-        "body": "Decide whether the key factor is assigned or observed, whether the same unit appears in several conditions/times, and what causal claim ceiling follows.",
+        "title": "Study design · match claims to evidence",
+        "body": "Identify whether a researcher assigns a condition or observes an existing difference. Specify the unit, timing, possible confounders, and the conclusions the design can reasonably support.",
         "terms": [
           "experimental unit",
           "observational study",
@@ -5418,20 +5418,21 @@
           "mdSameUnit"
         ],
         "walkthrough": {
-          "situation": "A student asks whether sleep causes better grades but cannot assign sleep duration.",
+          "situation": "A student wants to know whether sleeping longer improves quiz scores. They can record volunteered sleep logs and quiz results but cannot assign sleep duration.",
           "thinking": [
-            "The factor is observed, not manipulated.",
-            "A correlational/observational design can estimate association.",
-            "Even a strong association would not establish causation."
+            "Sleep duration is observed, and students may differ in preparation, health or other factors that affect quiz scores.",
+            "Repeated logs from the same student are linked observations, not independent students.",
+            "The plan can examine an association in this group; neither correlation nor repeated measurements alone establishes a sleep effect."
           ],
-          "draft": "Design: observational correlational. Claim ceiling: association within the studied sample/context."
+          "draft": "Design: observational study of volunteered sleep logs and quiz scores. Unit: student, with repeated days linked by student ID. Claim: describe an association within the participating group, accounting for repeated observations and plausible confounders."
         },
-        "next_prompt": "Write the next methods decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "State whether your main factor is assigned or observed, identify the unit and timing, and write one conclusion your design could support without overclaiming.",
+        "compare_prompt": "Compare an assigned-condition experiment with an observational comparison. What changes in the possible causal interpretation, and what remains dependent on the design?"
       },
       "vars": {
         "stage": 10,
-        "title": "Variables and constructs — turn ideas into records",
-        "body": "A construct such as stress or growth needs a role and an operational definition. Design determines whether 'independent variable' is appropriate terminology.",
+        "title": "Variables and constructs · specify observable records",
+        "body": "Translate the research question into constructs and recorded variables. Name the predictor, exposure or assigned factor as appropriate; define each measure, its scale, timing and unit.",
         "terms": [
           "construct",
           "operational definition",
@@ -5441,20 +5442,21 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+          "situation": "A student plans to compare 'stress' with 'performance' using a voluntary survey and a defined quiz.",
           "thinking": [
-            "Those are still constructs, not exact data.",
-            "If stress is observed, calling it a manipulated independent variable is misleading.",
-            "I need an operational definition for both constructs and the actual unit."
+            "Stress and performance are constructs until the measures and timing are specified.",
+            "A reported stress score is an observed predictor, not an assigned experimental treatment.",
+            "The questionnaire and quiz can capture only the aspects of these constructs that their items actually measure."
           ],
-          "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+          "draft": "Observed predictor: score on a named stress questionnaire completed before the quiz. Outcome: correct answers out of 20 on the specified quiz. Unit: consenting participant; record collection date and a coded participant ID."
         },
-        "next_prompt": "Write the next methods decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "For each main construct, name the exact record, instrument or rule, scale, timing and unit; identify whether the factor is assigned or observed.",
+        "compare_prompt": "Compare a broad construct with an operationally defined record. Which version could another researcher collect consistently, and what meaning might the measure leave out?"
       },
       "rep": {
         "stage": 10,
-        "title": "Units and replication — identify what is truly independent",
-        "body": "Separate independently treated/observed units from repeated readings, technical replicates, and subsamples. This prevents pseudoreplication.",
+        "title": "Units and replication · distinguish repeated readings",
+        "body": "Identify the unit independently assigned to a treatment, if applicable, and the unit observed. Separate independently replicated units from subsamples, technical repeats and repeated measurements; preserve their identifiers.",
         "terms": [
           "experimental unit",
           "replication",
@@ -5465,20 +5467,21 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "A student says the independent variable is 'stress' and the dependent variable is 'performance.'",
+          "situation": "A student places 20 seeds in each of two dishes, assigning one dish to water and the other to salt solution.",
           "thinking": [
-            "Those are still constructs, not exact data.",
-            "If stress is observed, calling it a manipulated independent variable is misleading.",
-            "I need an operational definition for both constructs and the actual unit."
+            "Treatment is assigned to a whole dish; individual seeds share that dish's conditions.",
+            "The 20 seeds provide subsample measurements within each dish, not 20 independent treatment assignments.",
+            "With only one dish per condition, any apparent treatment difference is confounded with dish-level differences; additional independently assigned dishes would be needed for treatment replication."
           ],
-          "draft": "Predictor/exposure: self-reported stress score from a specified scale. Outcome: number of correct items on the defined task. Unit: one participant."
+          "draft": "Experimental unit: dish. Observation: seed germination within dish. Record dish_id and seed_id; increase the number of independently assigned dishes per condition before estimating a treatment effect."
         },
-        "next_prompt": "Write the next methods decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Identify the treatment-assignment unit and observation unit, then explain which records are independent replicates and which are repeated or nested observations.",
+        "compare_prompt": "Compare 20 seeds in one treated dish with seeds distributed among several independently treated dishes. Which count supports treatment replication, and why?"
       },
       "sample": {
         "stage": 11,
-        "title": "Sampling — who/what enters the study",
-        "body": "Sampling affects whom the result can represent. Random sampling and random assignment are different processes with different purposes.",
+        "title": "Sampling · specify who or what is represented",
+        "body": "State the target population, actual sampling frame, inclusion rules and recruitment process. Separate random sampling for representativeness from random assignment for comparisons, and limit generalization accordingly.",
         "terms": [
           "population",
           "sample",
@@ -5491,20 +5494,21 @@
           "msMethod"
         ],
         "walkthrough": {
-          "situation": "A student has access to one biology class and wants to generalize to all teenagers.",
+          "situation": "A student invites volunteers from one biology class and hopes to describe study habits across all teenagers.",
           "thinking": [
-            "Access does not make this a random sample.",
-            "The actual sample is one convenience class.",
-            "The result can be useful locally, but the generalization has to stay narrow."
+            "One accessible class is not a random selection of teenagers.",
+            "Volunteers may differ from classmates who do not participate.",
+            "Findings can describe participating students; extension to other schools or age groups would require further evidence."
           ],
-          "draft": "Sampling: convenience sample from one class. Generalization: limited to similar local context; no claim of national representativeness."
+          "draft": "Sampling frame: students in one accessible class. Recruitment: voluntary convenience sample under school procedures. Report the number invited and participating; avoid claims of national representativeness."
         },
-        "next_prompt": "Write the next methods decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Write your target population, actual sampling frame, inclusion criteria and recruitment approach, then set a defensible boundary for generalization.",
+        "compare_prompt": "Compare a convenience sample from one class with a randomly selected sample from a defined school roster. What population could each plausibly represent?"
       },
       "measure": {
         "stage": 11,
-        "title": "Measurement — define exactly what produces the data",
-        "body": "For every construct, specify instrument/procedure, operational rule, unit/scale, timing, reliability, validity, and relevant calibration/scoring protections.",
+        "title": "Measurement · define how evidence is recorded",
+        "body": "For every outcome or predictor, specify the instrument or procedure, scoring rule, unit or category, time point, and quality checks. Consider measurement validity, consistency and relevant calibration without assuming they are established.",
         "terms": [
           "reliability",
           "measurement validity",
@@ -5515,20 +5519,21 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "A student has access to one biology class and wants to generalize to all teenagers.",
+          "situation": "A student wants to measure plant growth and proposes writing 'grew well' after each observation.",
           "thinking": [
-            "Access does not make this a random sample.",
-            "The actual sample is one convenience class.",
-            "The result can be useful locally, but the generalization has to stay narrow."
+            "'Grew well' has no reproducible scoring rule and may mix height, leaf condition and colour.",
+            "Plant height in centimetres can be recorded from a stated reference point at consistent times, though height alone is not all of growth.",
+            "A repeat-measurement check and a consistent ruler procedure may reveal recording variation; neither guarantees that height captures every aspect of plant development."
           ],
-          "draft": "Sampling: convenience sample from one class. Generalization: limited to similar local context; no claim of national representativeness."
+          "draft": "Measure stem height (cm) from soil surface to the highest stem point with a ruler at the same scheduled time each week. Record plant_id, date, height_cm and any measurement difficulty; document the ruler and procedure."
         },
-        "next_prompt": "Write the next methods decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Choose one key variable and specify the instrument, precise scoring or measurement rule, units, timing and one way to evaluate the quality of the record.",
+        "compare_prompt": "Compare a loosely rated 'healthy plant' score with a defined leaf-count procedure. What is gained in consistency and what information about plant health may be lost?"
       },
       "ethics": {
         "stage": 11,
-        "title": "Ethics and safety — permission comes before data",
-        "body": "Access to classmates, grades, video, health information, or interventions does not automatically mean a student researcher is authorized to use them. Identify risk, consent, privacy, and approval before collection.",
+        "title": "Ethics and safety · establish permission before collection",
+        "body": "Identify who may be affected, what information or intervention is involved, foreseeable risks, privacy protections, voluntary participation and required school or institutional approvals. Teacher access is not itself research permission.",
         "terms": [
           "identifiable data",
           "generalization"
@@ -5541,20 +5546,21 @@
           "meIntervention"
         ],
         "walkthrough": {
-          "situation": "A student has access to one biology class and wants to generalize to all teenagers.",
+          "situation": "A student wants to obtain classmates' quiz scores and interview them about study habits for a public project.",
           "thinking": [
-            "Access does not make this a random sample.",
-            "The actual sample is one convenience class.",
-            "The result can be useful locally, but the generalization has to stay narrow."
+            "Routine access to grades does not authorize their reuse for research, and students could feel pressured to participate.",
+            "The student must consult the teacher and applicable school procedures before approaching participants, especially if minors are involved.",
+            "A non-identifiable, approved aggregate approach may reduce privacy risks, but it does not automatically remove all approval or consent obligations."
           ],
-          "draft": "Sampling: convenience sample from one class. Generalization: limited to similar local context; no claim of national representativeness."
+          "draft": "Before collection, consult the responsible teacher and school policy about required review, permission and student/guardian consent or assent. Do not access individual grades or conduct interviews until authorization is documented; plan data minimization, secure storage and withdrawal procedures."
         },
-        "next_prompt": "Write the next methods decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Identify whose data or participation you need, relevant risks, approvals and consent procedures, and one safer alternative if permission is unavailable.",
+        "compare_prompt": "Compare a class assignment using anonymous aggregate counts with a project collecting identifiable student responses. What additional permissions, protections or alternatives may be needed?"
       },
       "procedure": {
         "stage": 12,
-        "title": "Procedure — remove hidden guesses",
-        "body": "Write ordered actions, what is recorded, and what counts as a deviation. Another researcher should not have to invent missing decisions.",
+        "title": "Procedure · make each step reproducible",
+        "body": "Describe preparation, assignment or selection, measurements, timing, recording and deviations in order. Specify decisions another researcher would otherwise need to guess, while keeping safety and approval requirements explicit.",
         "terms": [
           "protocol",
           "blinding",
@@ -5563,20 +5569,21 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "A student measures 20 seeds in one dish per treatment.",
+          "situation": "A student writes, 'Put seedlings in light, water them and measure them for two weeks.'",
           "thinking": [
-            "Each seed gives a measurement, but the whole dish receives the treatment together.",
-            "Dish may be the experimental unit.",
-            "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+            "The plan omits initial selection, light placement, water amounts and when the measurements occur.",
+            "The same measuring point and a schedule help make successive records comparable.",
+            "Missed watering or a moved pot should be recorded as a deviation rather than silently corrected in the final report."
           ],
-          "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+          "draft": "Label each plant and record its starting height. Specify light conditions and watering amount and schedule. Measure height in centimetres from the stated reference point on days 0, 7 and 14; log any missed step or change in conditions."
         },
-        "next_prompt": "Write the next methods decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Write the ordered steps someone else could follow, including timing, materials, recording rules and how deviations will be documented.",
+        "compare_prompt": "Compare 'water plants regularly and measure growth' with a procedure specifying amounts, intervals, measurement rules and deviation logs. Which decisions affect replication?"
       },
       "data": {
         "stage": 12,
-        "title": "Data table — define rows before columns",
-        "body": "First state what one row represents. Then create columns with IDs, data types, units/categories, coding rules, and missing-value rules.",
+        "title": "Data table · define rows, identifiers and codes",
+        "body": "Define the meaning of one row before creating columns. Include identifiers that preserve grouping and time, specify units and allowed categories, and distinguish missing observations from measured zeroes.",
         "terms": [
           "data dictionary",
           "identifier",
@@ -5588,20 +5595,21 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "A student measures 20 seeds in one dish per treatment.",
+          "situation": "A student measures seeds nested within dishes over three dates and plans a spreadsheet headed only 'height.'",
           "thinking": [
-            "Each seed gives a measurement, but the whole dish receives the treatment together.",
-            "Dish may be the experimental unit.",
-            "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+            "A height value without an identifier cannot be linked reliably to its seed, dish or date.",
+            "Repeated records from one seed and seeds from one dish are linked rather than independent.",
+            "An empty cell needs a documented meaning; zero growth and a missing measurement must remain distinguishable."
           ],
-          "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+          "draft": "One row = one seed on one observation date. Columns: dish_id, seed_id, date, treatment, height_cm and observation_status. Record a missing measurement with a documented status, not 0 cm."
         },
-        "next_prompt": "Write the next methods decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Define exactly what one row represents and draft the essential column names, identifiers, units, category codes and missing-data rule.",
+        "compare_prompt": "Compare a table with only seed height values with one containing dish_id, seed_id, day, height_cm and a missing-value code. Which supports valid grouping and checks?"
       },
       "audit": {
         "stage": 12,
-        "title": "Audit and lock — check the evidence chain before collection",
-        "body": "Critical issues should be resolved before locking. Locking preserves the version of the plan that existed before final data were seen.",
+        "title": "Plan audit · check decisions before data collection",
+        "body": "Review the question-to-evidence chain for contradictions among design, sampling, units, measures, procedures, analysis and permissions. Preserve a dated plan version before examining final outcomes, and document later changes transparently.",
         "terms": [
           "protocol",
           "experimental unit",
@@ -5610,15 +5618,16 @@
         ],
         "decision_keys": [],
         "walkthrough": {
-          "situation": "A student measures 20 seeds in one dish per treatment.",
+          "situation": "A student completes a plan for comparing plant treatments, then notices that it lists 20 seeds per dish as 20 independent treatment replicates.",
           "thinking": [
-            "Each seed gives a measurement, but the whole dish receives the treatment together.",
-            "Dish may be the experimental unit.",
-            "My data table needs dish_id and seed_id so I do not mistake 20 subsamples for 20 independent treatment units."
+            "The plan's unit count contradicts its actual dish-level treatment assignment.",
+            "The analysis and sample-size statement must be corrected before data collection, not concealed after results appear.",
+            "The student should also check that the revised replication plan, data structure, safety arrangements and analysis all agree, then save a dated version."
           ],
-          "draft": "One row = one seed measurement; include dish_id and seed_id. Independent treatment replication must come from multiple separately treated dishes."
+          "draft": "Pre-collection audit: treatment unit = dish; seeds are nested observations. Revise replication and analysis accordingly, confirm required approvals, and save dated protocol v2 with a brief change record before collecting data."
         },
-        "next_prompt": "Write the next methods decision you need to make in this tab, then explain why it fits your project."
+        "next_prompt": "Identify the weakest link between your question, design, units, measurements, analysis and permissions; document the correction and version of the plan.",
+        "compare_prompt": "Compare a dated, approved study plan with one rewritten after reviewing outcomes. How does the version history affect interpretation of the analysis?"
       }
     },
     "data": {
