@@ -1,5 +1,23 @@
 
 global.window={};
+// Stage 1 rescue guidance consistency using the complete canonical runtime model.
+require("../assets/rescue-model.js");
+const fullRescueModel=window.RMSRescueModel;
+const earlyKeys=["interest1","problem1","claim1","access1","ideaA","ideaB","ideaC"];
+const examples=[],frames=[];
+for(const k of earlyKeys){
+  const f=fullRescueModel.fields[k];
+  if(f.stage!==1||Object.keys(f.levels).length!==5)process.exit(1);
+  if(!f.levels["4"].walkthrough?.thinking?.length||!f.levels["4"].walkthrough?.draft)process.exit(1);
+  if(!f.levels["5"].frame||/\[your project-specific answer\]/.test(f.levels["5"].frame))process.exit(1);
+  examples.push(f.levels["4"].walkthrough.draft);
+  frames.push(f.levels["5"].frame);
+}
+if(new Set(examples).size!==earlyKeys.length||new Set(frames).size!==earlyKeys.length)process.exit(1);
+if(!/three/i.test(fullRescueModel.fields.interest1.levels["1"].body))process.exit(1);
+if(!/three/i.test(fullRescueModel.fields.interest1.levels["2"].body))process.exit(1);
+if(!/three/i.test(fullRescueModel.fields.interest1.levels["5"].frame))process.exit(1);
+
 window.RMSRescueModel={
  version:"2.5",
  scaffold_levels:{"1":"reflection","2":"concept","3":"structured","4":"parallel","5":"rescue"},
