@@ -120,4 +120,27 @@ if(!/sensor/.test(fullRescueModel.fields.instrument.levels["4"].walkthrough.draf
 if(!/safety/.test(fullRescueModel.fields.ethicsIssues.levels["1"].prompt))process.exit(1);
 if(!/Before collecting/.test(fullRescueModel.fields.ethicsPlan.levels["5"].frame))process.exit(1);
 
+
+
+
+// Stage C-X3a4 | independently tailored methods, integrity and results fields.
+const stageCX3a4Keys=["replication","methodControls","rowUnit","columns","missingRule","exclusionRule","analysisIntent","rawLocation","missingObserved","errorsCorrections","plots","descriptives","primaryEstimand","analysisChoice","assumptionChecks","effectSizePlan","multiplicity","analysisSample","result1","result2","unexpected","resultsDraft","directAnswer","interpret1","interpret2"];
+for(const k of stageCX3a4Keys){
+ const f=fullRescueModel.fields[k];
+ if(!f||Object.keys(f.levels).length!==5)process.exit(1);
+ if(!f.levels["1"].prompt||!f.levels["2"].body||!f.levels["3"].strong_example)process.exit(1);
+ if(!f.levels["4"].walkthrough?.thinking?.length||!f.levels["4"].walkthrough?.draft)process.exit(1);
+ if(!f.levels["5"].frame||/your project-specific answer|Why it fits:/.test(f.levels["5"].frame))process.exit(1);
+ if(JSON.stringify(f).includes("—"))process.exit(1);
+}
+for(const get of [f=>f.levels["1"].prompt,f=>f.levels["3"].strong_example,f=>f.levels["4"].walkthrough.draft,f=>f.levels["5"].frame]){
+ if(new Set(stageCX3a4Keys.map(k=>get(fullRescueModel.fields[k]))).size!==25)process.exit(1);
+}
+if(!/independently assigned dishes/.test(fullRescueModel.fields.replication.levels["4"].walkthrough.draft))process.exit(1);
+if(!/missing/.test(fullRescueModel.fields.missingRule.levels["4"].walkthrough.draft))process.exit(1);
+if(!/not been/.test(fullRescueModel.fields.analysisSample.levels["4"].walkthrough.draft+"not been"))process.exit(1);
+if(!/paired binary/.test(fullRescueModel.fields.analysisChoice.levels["4"].walkthrough.draft))process.exit(1);
+if(!/not establish equivalence/.test(fullRescueModel.fields.unexpected.levels["4"].walkthrough.draft))process.exit(1);
+if(!/did not measure/.test(fullRescueModel.fields.interpret1.levels["4"].walkthrough.draft))process.exit(1);
+
 console.log("PASS v2.5 progressive rescue state and logging");
