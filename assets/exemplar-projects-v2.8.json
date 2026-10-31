@@ -555,21 +555,21 @@
       "status": "synthetic_instructional_exemplar",
       "dir": "aquarium-water-description",
       "rq": "Across seven school days, what distributions of water temperature and dissolved oxygen are observed in three classroom aquaria?",
-      "disclaimer": "Background water-quality sources are real and verified. Monitoring values are synthetic teaching data.",
+      "disclaimer": "The cited government water-science pages are real and independently checked. All aquarium readings and monitoring procedures in this example are synthetic instructional material, not observations from a conducted classroom study.",
       "data_summary": "21 synthetic aquarium-day records. Temperature mean 23.93 °C, range 22.5–25.7; dissolved oxygen mean 7.60 mg/L, range 6.85–8.19.",
       "sources": [
         {
           "id": "D-S01",
-          "citation": "U.S. Geological Survey. (2026). Dissolved oxygen and water. Water Science School.",
+          "citation": "U.S. Geological Survey. (2026, August 24). Dissolved oxygen and water. Water Science School. https://www.usgs.gov/water-science-school/science/dissolved-oxygen-and-water",
           "verified": true,
           "use": "Defines dissolved oxygen as a water-quality variable and explains that temperature affects dissolved oxygen.",
           "boundary": "Authoritative background guidance, not a study of the exemplar aquaria."
         },
         {
           "id": "D-S02",
-          "citation": "U.S. Environmental Protection Agency. (2026). Indicators: Dissolved oxygen.",
+          "citation": "U.S. Environmental Protection Agency. (2026, February 24). Indicators: Dissolved oxygen. https://www.epa.gov/national-aquatic-resource-surveys/indicators-dissolved-oxygen",
           "verified": true,
-          "use": "Provides background on dissolved oxygen as an aquatic-condition indicator and the importance of calibrated measurement.",
+          "use": "Explains dissolved oxygen as an indicator of aquatic conditions and the use of calibrated probes in national aquatic monitoring. The date reflects the page's last-updated date, not necessarily original publication.",
           "boundary": "National monitoring guidance does not determine the values in the synthetic school-aquarium dataset."
         }
       ],
@@ -577,197 +577,197 @@
         {
           "id": 1,
           "title": "Find a research interest",
-          "where": "The aquarium monitoring exemplar is at Stage 1 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 1 decision that belongs to a descriptive quantitative design.",
+          "where": "A student notices that different classroom aquaria may have different water conditions, even when no intervention is planned.",
+          "changed": "The initial interest shifts from aquatic environments generally to measurements the student could describe in a specific school setting.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Consider several questions about water quality, including temperature patterns, dissolved oxygen and how measurements change through time.",
+            "Identify what can be measured without disturbing the aquaria or making claims about aquatic organisms that were not observed.",
+            "Keep the eventual question open until the available monitoring equipment and access are established."
           ],
-          "decision": "Keep water conditions in classroom aquaria as the working area because it can be connected to a specific evidence source.",
-          "rejected": "A broad topic with no observable evidence plan is rejected.",
+          "decision": "Choose classroom aquarium monitoring as a candidate because temperature and dissolved oxygen can be measured directly using appropriate instruments.",
+          "rejected": "Estimating fish health from water temperature alone would exceed the available observations and requires species-specific evidence.",
           "notebook": {
-            "broadTopic": "water conditions in classroom aquaria",
-            "startingQuestion": "What specific pattern, relationship, experience, or evidence synthesis could be documented?"
+            "broadTopic": "Water quality in classroom aquaria",
+            "startingQuestion": "How do water temperature and dissolved oxygen vary among aquaria and across several school days?"
           },
-          "forward": "Stage 2 must narrow population/system, evidence type, and realistic scope.",
+          "forward": "The next decision is how many aquaria and days can reasonably be covered, and what equipment would be needed.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which aspect of an environmental system could you observe without changing it?",
+            "What tempting conclusion would your proposed measurements fail to establish?"
           ]
         },
         {
           "id": 2,
           "title": "Narrow the topic and test feasibility",
-          "where": "The aquarium monitoring exemplar is at Stage 2 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 2 decision that belongs to a descriptive quantitative design.",
+          "where": "The student turns a broad monitoring interest into a bounded plan for three aquaria and seven school days.",
+          "changed": "A single-time comparison becomes a repeated daily description, with the aquarium and observation day both retained.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Identify the three available aquaria as a convenience selection from one setting.",
+            "Propose one temperature and one dissolved-oxygen reading per aquarium on each of seven school days.",
+            "Check access, equipment availability, measurement depth and a common daily observation window before beginning a real study."
           ],
-          "decision": "Limit the project to one bounded population/system, time frame, and evidence type.",
-          "rejected": "Trying to answer long-term outcomes, mechanisms, and generalization in one small project is rejected.",
+          "decision": "Plan 21 aquarium-day records, with seven repeated observations from each of three aquaria. The example data are synthetic and do not confirm that monitoring occurred.",
+          "rejected": "A claim about seasonal water quality would be unsupported by a seven-day classroom schedule.",
           "notebook": {
-            "scope": "One bounded instructional exemplar with explicit limits.",
-            "feasibility": "Evidence can be collected or organized within the stated synthetic teaching workflow."
+            "scope": "Three classroom aquaria over seven school days, with two water-condition variables recorded at each observation.",
+            "feasibility": "Requires permission to access the aquaria, a suitable thermometer and dissolved-oxygen probe, and an approved measurement schedule. These have not been documented as obtained for a real study."
           },
-          "forward": "The literature scan can now use precise keywords instead of one broad topic word.",
+          "forward": "Background sources can explain the meaning of the measurements and why consistent monitoring procedures are important.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Would the selected time window answer the question you wish to ask?",
+            "How will repeated observations be linked to the same aquarium?"
           ]
         },
         {
           "id": 3,
           "title": "Explore the research landscape",
-          "where": "The aquarium monitoring exemplar is at Stage 3 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 3 decision that belongs to a descriptive quantitative design.",
+          "where": "Before interpreting water conditions, the student checks authoritative material on dissolved oxygen and temperature.",
+          "changed": "Dissolved oxygen becomes a defined concentration in mg/L, rather than an undefined impression that water is healthy.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The USGS Water Science School explains why dissolved oxygen is relevant to aquatic life and how water temperature influences it.",
+            "EPA monitoring guidance describes dissolved oxygen as an aquatic-condition indicator and uses calibrated water-quality instruments.",
+            "Both sources address water science generally; neither reports measurements from the hypothetical school aquaria."
           ],
-          "decision": "Use verified background sources to learn vocabulary, existing evidence, and methodological boundaries.",
-          "rejected": "Treating the first relevant source as proof of the final answer is rejected.",
+          "decision": "Use the two agency resources to establish terminology and monitoring considerations, while keeping the proposed classroom observations independent of the published background.",
+          "rejected": "Treating a general statement about cold water holding more oxygen as proof of the causes of a pattern in these aquaria would overstate the evidence.",
           "notebook": {
-            "known": "The verified sources establish a defensible background rationale.",
-            "uncertain": "The exemplar still needs its own path-specific evidence and cannot inherit effect sizes or themes from background sources."
+            "known": "Dissolved oxygen measures oxygen present in water. Temperature influences its solubility, while biological activity and other conditions also affect the recorded concentration.",
+            "uncertain": "The readings in any actual classroom aquaria and the reasons for change cannot be established from these background pages."
           },
-          "forward": "The research question can now use terminology grounded in the literature while remaining answerable.",
+          "forward": "The research question should ask for descriptions of observed values rather than an inferred temperature effect.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which claims come from scientific background sources, and which require your own observations?",
+            "What factors besides temperature might influence a dissolved-oxygen reading?"
           ]
         },
         {
           "id": 4,
           "title": "Write and refine the research question",
-          "where": "The aquarium monitoring exemplar is at Stage 4 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 4 decision that belongs to a descriptive quantitative design.",
+          "where": "The research question is refined to match the two variables, three selected aquaria and repeated observations.",
+          "changed": "A broad question about aquarium health becomes a descriptive question about the distributions of two measured conditions.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Name water temperature and dissolved oxygen with their intended units.",
+            "Specify three aquaria and seven days, rather than implying a wider system was sampled.",
+            "Avoid a causal question because neither temperature nor oxygen concentration is manipulated."
           ],
           "decision": "Across seven school days, what distributions of water temperature and dissolved oxygen are observed in three classroom aquaria?",
-          "rejected": "A question that uses causal, experimental, or statistical language inconsistent with the selected path is rejected.",
+          "rejected": "How does increasing temperature reduce oxygen in classroom aquaria? This question presumes a temperature intervention and causal inference that the monitoring design does not provide.",
           "notebook": {
-            "questionType": "descriptive quantitative",
+            "questionType": "Descriptive",
             "finalRQ": "Across seven school days, what distributions of water temperature and dissolved oxygen are observed in three classroom aquaria?",
-            "rqJustification": "The question matches a descriptive quantitative evidence structure."
+            "rqJustification": "Repeated measurements could describe the values and their variation within the selected aquaria; the project would not test a treatment effect."
           },
-          "forward": "Every later decision must now remain aligned with this exact question.",
+          "forward": "The literature search and method should now stay aligned with this bounded descriptive purpose.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the question require a cause when only observations will be recorded?",
+            "Does the wording name both the setting and the observation period?"
           ]
         },
         {
           "id": 5,
           "title": "Build a systematic search strategy",
-          "where": "The aquarium monitoring exemplar is at Stage 5 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 5 decision that belongs to a descriptive quantitative design.",
+          "where": "The student prepares a reproducible background search for water-temperature and oxygen-monitoring guidance.",
+          "changed": "General web browsing becomes a documented set of searchable concepts and source-selection decisions.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Use terms such as dissolved oxygen, water temperature, aquatic monitoring and water-quality probe.",
+            "Combine related terms with OR and separate concepts with AND when a search service permits Boolean searching.",
+            "Record the actual source page, search system, date and selection reason without inventing numbers of search results."
           ],
-          "decision": "Build concept blocks and document more than one search route.",
-          "rejected": "One undocumented web search is rejected as an evidence-search record.",
+          "decision": "Search official water-science and monitoring resources using explicit concept combinations, then document what was actually consulted.",
+          "rejected": "Calling a single undocumented search exhaustive would make the coverage and selection of sources impossible to assess.",
           "notebook": {
-            "searchLogic": "Separate the central phenomenon, population/context, and design/evidence terms; connect synonyms with OR and concepts with AND.",
-            "searchLogRule": "Record database/site, date, exact string, filters, and result count."
+            "searchLogic": "('dissolved oxygen' OR 'water oxygen') AND ('temperature' OR 'aquatic monitoring'); identify related measurement guidance separately.",
+            "searchLogRule": "Keep the exact search query, service, date, filters and sources retrieved. The exemplar provides two source records and no verified historical search count."
           },
-          "forward": "The search log makes later source-selection and coverage claims auditable.",
+          "forward": "The two located pages can be appraised for what they explain and what remains unmeasured in the proposed setting.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which search terms would recover guidance on measurement rather than treatment effects?",
+            "What can you document about a source search without manufacturing a search history?"
           ]
         },
         {
           "id": 6,
           "title": "Evaluate, read, and extract sources",
-          "where": "The aquarium monitoring exemplar is at Stage 6 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 6 decision that belongs to a descriptive quantitative design.",
+          "where": "The student examines two government information pages and decides how each can support the background discussion.",
+          "changed": "The sources are separated by their contribution, with scope and publication details checked before being cited.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The USGS resource explains dissolved oxygen and its relation to temperature in natural waters.",
+            "The EPA indicators page discusses dissolved oxygen as a condition measure and the use of calibrated probes in national aquatic surveys.",
+            "These are authoritative guidance pages rather than peer-reviewed empirical studies of the selected aquaria."
           ],
-          "decision": "Extract comparable information from each included source instead of saving citation-only records.",
-          "rejected": "Peer-reviewed or authoritative status alone is rejected as a substitute for relevance and methodological appraisal.",
+          "decision": "Retain both sources for definitions and monitoring context, cite their actual URLs and record that neither provides aquarium-specific values or causal evidence.",
+          "rejected": "Assuming that agency guidance verifies the hypothetical readings would confuse general background knowledge with project-generated evidence.",
           "notebook": {
-            "sourceExtraction": "Record source type, design/scope, population/context, main claim/finding, limitations, and relevance to this exemplar."
+            "sourceExtraction": "USGS 2026 describes dissolved oxygen, temperature and water conditions; EPA's dissolved-oxygen indicator page describes monitoring, calibrated probes and context-dependent interpretation. Neither supplies the fictional observations."
           },
-          "forward": "Comparable source records allow synthesis instead of annotated-bibliography writing.",
+          "forward": "The literature synthesis can explain why the variables are relevant without attributing the synthetic pattern to a verified mechanism.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which statement can each source genuinely support?",
+            "Do these two pages answer the same question as the proposed monitoring study?"
           ]
         },
         {
           "id": 7,
           "title": "Synthesize the literature and justify the study",
-          "where": "The aquarium monitoring exemplar is at Stage 7 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 7 decision that belongs to a descriptive quantitative design.",
+          "where": "The rationale is developed around local description rather than an invented research gap.",
+          "changed": "The teaching purpose becomes a short, bounded monitoring illustration instead of an unsupported claim of novelty.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Water temperature and dissolved oxygen are relevant to interpreting aquatic conditions, as described in the two agency resources.",
+            "A classroom monitoring record can illustrate how repeated observations are organised and reported without claiming population representativeness.",
+            "A seven-day account of three selected aquaria cannot establish typical water conditions in other schools."
           ],
-          "decision": "Use a bounded rationale such as replication, local application, evidence synthesis, or methodological demonstration.",
-          "rejected": "A global 'no research exists' claim is rejected unless an appropriately comprehensive search can defend it.",
+          "decision": "Present the project as an instructional example of repeated descriptive monitoring with context from the two checked agency sources.",
+          "rejected": "No one has studied dissolved oxygen in aquaria is an unsupported novelty claim and is unnecessary for the study's descriptive purpose.",
           "notebook": {
-            "rationale": "The exemplar is justified by the stated teaching/research purpose and verified background, without manufacturing novelty."
+            "rationale": "The value of the example lies in connecting a specific descriptive question with two operationally defined measurements and a clearly bounded monitoring record."
           },
-          "forward": "The literature review must lead to the actual question and claim boundary.",
+          "forward": "The literature section can now introduce the variables and their interpretation before the research question.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Why is a limited description worth conducting or learning from?",
+            "How can the rationale remain persuasive without promising a novel discovery?"
           ]
         },
         {
           "id": 8,
           "title": "Write the literature review",
-          "where": "The aquarium monitoring exemplar is at Stage 8 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 8 decision that belongs to a descriptive quantitative design.",
+          "where": "The student turns background information into a connected explanation of what the monitoring variables represent.",
+          "changed": "A generic instruction to synthesise sources is replaced by a model passage tied to the aquarium question.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Describe dissolved oxygen as an aquatic condition that is influenced by water processes and organism activity.",
+            "Explain that water temperature affects oxygen solubility, while other factors can also shape dissolved-oxygen concentration.",
+            "Use the EPA measurement guidance to justify careful probe use and leave claims about actual classroom conditions to the monitoring records."
           ],
-          "decision": "Write the literature section around cross-source claims and differences.",
-          "rejected": "A paragraph-by-paragraph list of source summaries is rejected.",
+          "decision": "Develop the literature discussion around the relevance of the measures and the limitations of interpreting them from one brief monitoring period.",
+          "rejected": "A paragraph that says only that both sources discuss oxygen would conceal what each actually contributes.",
           "notebook": {
-            "literatureReviewPlan": "Claim → evidence from more than one source where available → difference/qualification → connection to the present question."
+            "literatureReviewPlan": "Dissolved oxygen is one indicator of aquatic conditions, and water temperature can influence the concentration that water can hold (U.S. Geological Survey, 2026). EPA guidance also describes measurement with calibrated probes and variation across aquatic systems (U.S. Environmental Protection Agency, 2026). These resources support monitoring both variables, while the aquarium values themselves must come from the recorded observations."
           },
-          "forward": "The Method must now operationalize the same constructs and evidence structure.",
+          "forward": "A descriptive design will allow the student to summarise the monitored aquaria without asserting that one variable caused the other.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does the discussion develop a scientific idea before moving to measurement?",
+            "Can a reader tell which information comes from the agency guidance and which from the example data?"
           ]
         },
         {
           "id": 9,
           "title": "Choose the research design",
-          "where": "The aquarium monitoring exemplar is at Stage 9 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 9 decision that belongs to a descriptive quantitative design.",
+          "where": "The method is chosen to answer the question through observation of existing aquaria.",
+          "changed": "The study is clearly labelled descriptive quantitative, with repeated measures and no assigned exposure.",
           "reasoning": [
-            "Start from the research question and the descriptive quantitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "The aquaria are selected for access rather than randomly sampled from a larger population.",
+            "A thermometer and dissolved-oxygen meter would measure two conditions on each scheduled day.",
+            "Retaining aquarium identifiers prevents the 21 aquarium-day observations from being mistaken for 21 different aquaria."
           ],
-          "decision": "Use a descriptive quantitative design with repeated monitoring of three aquaria.",
-          "rejected": "Adding an intervention merely to make the project look experimental is rejected.",
+          "decision": "Use a descriptive quantitative monitoring design with repeated daily observations from the same three aquaria.",
+          "rejected": "An experimental or correlational-causal label would imply a design that the example does not implement.",
           "notebook": {
-            "designType": "Descriptive quantitative",
-            "claimBoundary": "Describe observed distributions in these aquaria; do not infer a treatment effect."
+            "designType": "Descriptive",
+            "claimBoundary": "Summarise temperatures and dissolved-oxygen concentrations within these three aquaria over seven sampled days. The repeated observations do not justify treatment-effect claims or population estimates."
           },
-          "forward": "Define variables and the observation unit.",
+          "forward": "Variables, observation units and any measurement-quality plan can now be defined precisely.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this aquarium monitoring example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What exactly is an observation in your dataset?",
+            "What can the proposed design describe, and what conclusion is beyond its scope?"
           ]
         },
         {
