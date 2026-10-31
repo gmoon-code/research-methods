@@ -1837,7 +1837,7 @@
       "status": "synthetic_instructional_exemplar",
       "dir": "multilingual-science-qualitative",
       "rq": "How do multilingual secondary students describe the challenges and supports they experience when explaining data-rich biology questions in English?",
-      "disclaimer": "Background and thematic-analysis sources are real and verified. Participants, excerpts, codes, and themes are synthetic.",
+      "disclaimer": "All eight participant identifiers, interview statements, initial codes and themes are synthetic teaching material. Three cited academic sources are genuine. The repository has excerpts only, not full transcripts or evidence of actual recruitment, consent, interviews or empirical findings.",
       "data_summary": "Eight synthetic interview excerpts organized into three teaching themes. The themes are examples of qualitative reasoning, not empirical claims about real students.",
       "sources": [
         {
@@ -1866,197 +1866,197 @@
         {
           "id": 1,
           "title": "Find a research interest",
-          "where": "The multilingual science interviews exemplar is at Stage 1 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 1 decision that belongs to a qualitative design.",
+          "where": "A science teacher notices that interpreting a biology graph and explaining its meaning in English may involve different kinds of classroom work.",
+          "changed": "The broad interest in multilingual science learning is narrowed to students' descriptions of their own experiences with data-rich explanations.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "A student's written English may reveal some aspects of reasoning while leaving others difficult for a reader to interpret.",
+            "Students could describe the processes they use when responding to a graph, including ways they prepare an explanation.",
+            "An interview can provide accounts of such experiences, although it cannot by itself establish what a student understood during a particular task."
           ],
-          "decision": "Keep multilingual students explaining biology evidence as the working area because it can be connected to a specific evidence source.",
-          "rejected": "A broad topic with no observable evidence plan is rejected.",
+          "decision": "Explore students' reported experiences of explaining biological data in English rather than claiming to measure their proficiency or understanding from a single response.",
+          "rejected": "A claim that hesitation shows weak scientific understanding would treat an ambiguous classroom behaviour as a verified cognitive finding.",
           "notebook": {
-            "broadTopic": "multilingual students explaining biology evidence",
-            "startingQuestion": "What specific pattern, relationship, experience, or evidence synthesis could be documented?"
+            "broadTopic": "Multilingual students' experiences of explaining biology evidence",
+            "startingQuestion": "How do students describe the challenges and resources involved in explaining data-rich biology questions in English?"
           },
-          "forward": "Stage 2 must narrow population/system, evidence type, and realistic scope.",
+          "forward": "The next decision is which students, tasks and interview materials could support a bounded inquiry.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What distinction between an explanation and the thinking behind it should your question preserve?",
+            "Which parts of the phenomenon would an interview reveal only through participants' accounts?"
           ]
         },
         {
           "id": 2,
           "title": "Narrow the topic and test feasibility",
-          "where": "The multilingual science interviews exemplar is at Stage 2 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 2 decision that belongs to a qualitative design.",
+          "where": "The illustrative setting becomes a secondary biology context focused on students who work across languages.",
+          "changed": "The project limits its evidence to individual descriptions of challenges and supports, without promising to observe learning directly.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Choose the experience of explaining questions containing biological data as the focal situation.",
+            "Consider how multilingual students could be invited without defining them solely by an English proficiency label.",
+            "Recognise that the supplied file contains only eight invented excerpts, with no school, interview dates or actual recruitment record."
           ],
-          "decision": "Limit the project to one bounded population/system, time frame, and evidence type.",
-          "rejected": "Trying to answer long-term outcomes, mechanisms, and generalization in one small project is rejected.",
+          "decision": "Use eight short fictional student statements as a teaching corpus while treating a real interview project, sampling decision and time frame as unimplemented.",
+          "rejected": "Treating the fabricated eight excerpts as a representative sample of multilingual secondary students would be unwarranted.",
           "notebook": {
-            "scope": "One bounded instructional exemplar with explicit limits.",
-            "feasibility": "Evidence can be collected or organized within the stated synthetic teaching workflow."
+            "scope": "Eight fictional statements relevant to explaining data-rich biology questions in English; one excerpt is attributed to each invented participant identifier.",
+            "feasibility": "An actual study would require access to willing students, an interview guide, language choices, permission and an appropriate plan for recording and protecting accounts."
           },
-          "forward": "The literature scan can now use precise keywords instead of one broad topic word.",
+          "forward": "Background scholarship can clarify why science explanation and language participation warrant study.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What do you know about the participants from the available files, and what remains unknown?",
+            "Would your proposed task give students an accessible way to describe their own experiences?"
           ]
         },
         {
           "id": 3,
           "title": "Explore the research landscape",
-          "where": "The multilingual science interviews exemplar is at Stage 3 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 3 decision that belongs to a qualitative design.",
+          "where": "The student reads scholarship on language in science and on opportunities for learners who use more than one language.",
+          "changed": "The literature provides a conceptual background without determining what the fictional excerpts must mean.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Lee, Quinn and Valdés (2013) discuss language demands and opportunities within science and engineering practices.",
+            "The National Academies (2018) emphasise linguistic and experiential resources that English learners bring to STEM participation, while addressing a specific English-learner population.",
+            "Braun and Clarke (2006) describe thematic analysis as an interpretive and theoretically flexible approach, rather than a mechanical way to discover universal categories."
           ],
-          "decision": "Use verified background sources to learn vocabulary, existing evidence, and methodological boundaries.",
-          "rejected": "Treating the first relevant source as proof of the final answer is rejected.",
+          "decision": "Use these three sources for disciplinary background and analytic guidance, while noting that the label multilingual is not interchangeable with every source's category of English learner.",
+          "rejected": "Using the literature to conclude that every multilingual student experiences the same obstacle would substitute an assumed narrative for participant evidence.",
           "notebook": {
-            "known": "The verified sources establish a defensible background rationale.",
-            "uncertain": "The exemplar still needs its own path-specific evidence and cannot inherit effect sizes or themes from background sources."
+            "known": "Science practices involve language, and learners can draw on linguistic and representational resources. Qualitative themes are developed through analytic interpretation.",
+            "uncertain": "The invented excerpts cannot verify the experiences, learning outcomes or representativeness of students in any actual classroom."
           },
-          "forward": "The research question can now use terminology grounded in the literature while remaining answerable.",
+          "forward": "The research question can now focus on how experiences are described instead of quantifying language ability.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Which ideas come from scholarly sources and which require interview evidence?",
+            "Are the learners named in a source the same population as those in your question?"
           ]
         },
         {
           "id": 4,
           "title": "Write and refine the research question",
-          "where": "The multilingual science interviews exemplar is at Stage 4 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 4 decision that belongs to a qualitative design.",
+          "where": "The question is drafted to invite accounts of both difficulties and resources in explaining biological data.",
+          "changed": "A possible comparison of English proficiency becomes an interpretive question about how students describe classroom experiences.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Ask how students describe experiences rather than how much a particular support improves quiz scores.",
+            "Name secondary biology, data-rich tasks and explanation in English to provide meaningful boundaries.",
+            "Leave open whether students regard a particular classroom practice as supportive, restrictive or both."
           ],
           "decision": "How do multilingual secondary students describe the challenges and supports they experience when explaining data-rich biology questions in English?",
-          "rejected": "A question that uses causal, experimental, or statistical language inconsistent with the selected path is rejected.",
+          "rejected": "Which language support produces the largest improvement in biology achievement? That would require outcomes and a comparative intervention the interview excerpts do not contain.",
           "notebook": {
-            "questionType": "qualitative",
+            "questionType": "Qualitative",
             "finalRQ": "How do multilingual secondary students describe the challenges and supports they experience when explaining data-rich biology questions in English?",
-            "rqJustification": "The question matches a qualitative evidence structure."
+            "rqJustification": "A qualitative interview study could examine how participants make sense of their experiences. A set of short fictional statements illustrates possible responses, without constituting actual fieldwork."
           },
-          "forward": "Every later decision must now remain aligned with this exact question.",
+          "forward": "The literature search should consider scientific explanation, multilingual participation and qualitative methods.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Could the question invite a perspective that challenges your initial expectation?",
+            "Does its wording ask for experiences the proposed evidence could meaningfully address?"
           ]
         },
         {
           "id": 5,
           "title": "Build a systematic search strategy",
-          "where": "The multilingual science interviews exemplar is at Stage 5 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 5 decision that belongs to a qualitative design.",
+          "where": "The literature-search plan is developed around biology explanations and multilingual classroom participation.",
+          "changed": "Concept combinations take the place of a generic instruction to search for supportive studies.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Consider related expressions such as multilingual learners, English learners, bilingual students and language resources, while checking differences in definitions.",
+            "Search for science explanation, interpretation of graphs, data reasoning and secondary biology to connect language practices to the task.",
+            "Include qualitative interview or thematic analysis as a separate methodological route; no previous search log is included in the repository."
           ],
-          "decision": "Build concept blocks and document more than one search route.",
-          "rejected": "One undocumented web search is rejected as an evidence-search record.",
+          "decision": "Document actual databases, dates, queries and source-selection reasoning if a literature search is conducted, without inventing search counts.",
+          "rejected": "Searching only for language barriers would systematically miss accounts describing opportunities and students' linguistic resources.",
           "notebook": {
-            "searchLogic": "Separate the central phenomenon, population/context, and design/evidence terms; connect synonyms with OR and concepts with AND.",
-            "searchLogRule": "Record database/site, date, exact string, filters, and result count."
+            "searchLogic": "('multilingual learners' OR 'English learners' OR bilingual) AND ('science explanation' OR 'graph interpretation' OR 'biology reasoning'); separately inspect qualitative interview and thematic-analysis literature.",
+            "searchLogRule": "For any genuine search, record system, date, exact query, filters and screening decisions. The exemplar provides three source citations, not a reproducible historical search record."
           },
-          "forward": "The search log makes later source-selection and coverage claims auditable.",
+          "forward": "The scholarly sources can be appraised for their differing purposes and the conclusions they actually support.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Would your terms also identify research about assets and participation?",
+            "Could a reader reproduce your search without relying on an unrecorded history?"
           ]
         },
         {
           "id": 6,
           "title": "Evaluate, read, and extract sources",
-          "where": "The multilingual science interviews exemplar is at Stage 6 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 6 decision that belongs to a qualitative design.",
+          "where": "Three published works are appraised for their relevance to the proposed interview inquiry.",
+          "changed": "The reading distinguishes conceptual research, a consensus synthesis and qualitative analysis guidance.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Lee, Quinn and Valdés (2013) examine how language is implicated in science practices; they do not analyse these eight fictional statements.",
+            "The National Academies (2018) review STEM opportunities and instructional contexts for English learners, whose educational definitions may differ from the broad label multilingual.",
+            "Braun and Clarke (2006) explain thematic analysis and its interpretive flexibility; citing them does not establish that this teaching exercise completed a full analysis."
           ],
-          "decision": "Extract comparable information from each included source instead of saving citation-only records.",
-          "rejected": "Peer-reviewed or authoritative status alone is rejected as a substitute for relevance and methodological appraisal.",
+          "decision": "Retain all three for different tasks, identifying their genres, population boundaries and distance from the invented material.",
+          "rejected": "Citing a qualitative methodology article as evidence that the fictional themes are credible would confuse guidance with independent validation.",
           "notebook": {
-            "sourceExtraction": "Record source type, design/scope, population/context, main claim/finding, limitations, and relevance to this exemplar."
+            "sourceExtraction": "QL-S01 addresses science and language practices; QL-S02 synthesises evidence and recommendations for English learners' STEM education; QL-S03 presents a thematic-analysis approach. None supplies participants, transcripts or validated themes for this exemplar."
           },
-          "forward": "Comparable source records allow synthesis instead of annotated-bibliography writing.",
+          "forward": "The literature section should explain the inquiry's significance without imposing findings before the excerpts are examined.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What can a methodological source establish that a science-education source cannot?",
+            "What terms or populations differ between the research question and each reference?"
           ]
         },
         {
           "id": 7,
           "title": "Synthesize the literature and justify the study",
-          "where": "The multilingual science interviews exemplar is at Stage 7 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 7 decision that belongs to a qualitative design.",
+          "where": "The rationale develops from the limits of interpreting student contributions through English-only responses.",
+          "changed": "The project centres a bounded question about students' reported opportunities to express biology reasoning.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "A biology graph requires students to attend to data and decide how to communicate what the pattern means.",
+            "The forms of participation available to multilingual learners may shape what a teacher can hear or read, even when scientific ideas are still developing.",
+            "An interview could document student perspectives on these conditions, while additional classroom records would be needed to compare accounts with actual interactions."
           ],
-          "decision": "Use a bounded rationale such as replication, local application, evidence synthesis, or methodological demonstration.",
-          "rejected": "A global 'no research exists' claim is rejected unless an appropriately comprehensive search can defend it.",
+          "decision": "Present a hypothetical interview project as a way to explore students' perspectives on explanation opportunities, with an explicit boundary between reported experiences and observed learning.",
+          "rejected": "A global research-gap claim or a guarantee that multilingual resources improve performance would exceed both the sources and the design.",
           "notebook": {
-            "rationale": "The exemplar is justified by the stated teaching/research purpose and verified background, without manufacturing novelty."
+            "rationale": "The example illustrates how qualitative evidence could inform questions about participation and representation in biology without defining students by presumed deficits."
           },
-          "forward": "The literature review must lead to the actual question and claim boundary.",
+          "forward": "The literature review can connect science-language scholarship to a carefully bounded interview question.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Why are students' perspectives relevant to how explanations are interpreted?",
+            "Which additional evidence would be required to examine what students actually did during a lesson?"
           ]
         },
         {
           "id": 8,
           "title": "Write the literature review",
-          "where": "The multilingual science interviews exemplar is at Stage 8 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 8 decision that belongs to a qualitative design.",
+          "where": "The student drafts a connected background account rather than listing articles one at a time.",
+          "changed": "Conceptual ideas about disciplinary language and multilingual resources lead to a question about students' own descriptions.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Explaining a biological graph can involve interpreting evidence and choosing language that communicates a relationship.",
+            "Science-language scholarship shows why these processes should be considered together, while national guidance attends to the resources and opportunities available to English learners.",
+            "An interpretive interview approach could ask students what helps or complicates this work, without assuming that the answers will confirm a predetermined theme."
           ],
-          "decision": "Write the literature section around cross-source claims and differences.",
-          "rejected": "A paragraph-by-paragraph list of source summaries is rejected.",
+          "decision": "Write a concise literature passage that distinguishes disciplinary demands, participation opportunities and the limited evidential role of interview accounts.",
+          "rejected": "Making the literature review a list of supposed obstacles faced by all multilingual students would erase diversity of experience.",
           "notebook": {
-            "literatureReviewPlan": "Claim → evidence from more than one source where available → difference/qualification → connection to the present question."
+            "literatureReviewPlan": "Explaining science involves more than naming facts; students interpret evidence and communicate relationships through disciplinary practices (Lee, Quinn, & Valdés, 2013). Opportunities to draw on home languages and prior experience are relevant to participation, although the National Academies (2018) address English learners rather than every multilingual context. A qualitative interview question can explore how students themselves describe these processes, with thematic analysis used cautiously as a way to interpret their accounts (Braun & Clarke, 2006)."
           },
-          "forward": "The Method must now operationalize the same constructs and evidence structure.",
+          "forward": "The proposed method must distinguish a possible full interview study from the eight short invented excerpts currently available.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "Does each sentence develop the research question rather than simply repeat that language is important?",
+            "Are source-derived ideas and potential participant accounts kept distinct?"
           ]
         },
         {
           "id": 9,
           "title": "Choose the research design",
-          "where": "The multilingual science interviews exemplar is at Stage 9 and must make the next decision without borrowing assumptions from another research design.",
-          "changed": "The project becomes more specific by locking the Stage 9 decision that belongs to a qualitative design.",
+          "where": "The method is selected for a question about described experiences of biology explanation.",
+          "changed": "The project uses an interview-oriented qualitative design, while explicitly identifying the material as a simplified teaching corpus.",
           "reasoning": [
-            "Start from the research question and the qualitative evidence structure.",
-            "Use terminology that matches how evidence is actually generated or selected.",
-            "State the strongest claim the design can support before looking at the result."
+            "Semi-structured interviews could allow students to discuss classroom experiences in terms meaningful to them.",
+            "Follow-up prompts and the opportunity to use more than one language could clarify a participant's meaning in a real study.",
+            "The source file contains one invented statement per ID, no full transcript and no interview interaction, so it cannot support the claims of a completed empirical thematic study."
           ],
-          "decision": "Use a qualitative interview design to study how students describe challenges and supports.",
-          "rejected": "Turning experience into a forced numerical IV/DV structure is rejected.",
+          "decision": "Model a qualitative interview inquiry using eight synthetic excerpts, and keep the reported themes provisional and illustrative.",
+          "rejected": "Calling the example an experiment, a survey of prevalence or a completed analysis of eight full interviews would misstate the evidence.",
           "notebook": {
-            "designType": "Qualitative interview study",
-            "claimBoundary": "Contextual themes about described experiences; no statistical population prevalence."
+            "designType": "Qualitative",
+            "claimBoundary": "Illustrate possible readings of fabricated student accounts. The excerpt-only corpus cannot establish real participants' experiences, analytic saturation or any population-level prevalence."
           },
-          "forward": "Define phenomenon, participants, evidence unit, and analytic stance.",
+          "forward": "The evidence unit, analytic decisions and ethics procedures must now match the actual material rather than an imagined full transcript set.",
           "compare": [
-            "Which part of your project plays the same reasoning role as this multilingual science interviews example?",
-            "Which wording or decision would become wrong if your own research path is different?"
+            "What would a complete transcript allow you to examine that one excerpt cannot?",
+            "How can a thematic interpretation remain open to alternative readings?"
           ]
         },
         {
