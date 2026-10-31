@@ -76,7 +76,7 @@ if(!/cited sources/.test(fullRescueModel.fields.known.levels["5"].frame))process
 if(!/different evidence or method/.test(fullRescueModel.fields.rq2.levels["5"].frame))process.exit(1);
 if(!/may differ/.test(fullRescueModel.fields.phenomenon.levels["4"].walkthrough.draft))process.exit(1);
 
-console.log("PASS v2.5 progressive rescue state and logging");
+
 
 
 // Stage C-X3a2 | fields 26–50 must retain independent pedagogical guidance.
@@ -97,3 +97,27 @@ if(!/Neither is recorded as executed/.test(fullRescueModel.fields.searchStrings.
 if(!/No date, retrieval count or inclusion count recorded/.test(fullRescueModel.fields.searchLog.levels["4"].walkthrough.draft))process.exit(1);
 if(!/fictional/i.test(fullRescueModel.fields.litDraft.levels["4"].walkthrough.draft))process.exit(1);
 if(!/optional/i.test(fullRescueModel.fields.theme3.levels["1"].prompt))process.exit(1);
+
+
+// Stage C-X3a3 | fields 51–75 have five relevant, independently worded scaffolds.
+const stageCX3a3Keys=["designType","designWhy","comparisonStructure","claimBoundary","hypothesisNeeded","researchHyp","nullHyp","hypReason","predictorIV","outcomeDV","operationalDefs","controlCondition","controlledConditions","confounders","experimentalUnit","population","sample","samplingMethod","sampleLimits","instrument","measureQuality","ethicsIssues","ethicsPlan","materials","procedure"];
+for(const key of stageCX3a3Keys){
+ const f=fullRescueModel.fields[key];
+ if(!f||Object.keys(f.levels).length!==5)process.exit(1);
+ if(!f.levels["1"].prompt||!f.levels["2"].body||!f.levels["3"].strong_example)process.exit(1);
+ if(!f.levels["4"].walkthrough?.thinking?.length||!f.levels["4"].walkthrough?.draft)process.exit(1);
+ if(!f.levels["5"].frame||/your project-specific answer|Why it fits:/.test(f.levels["5"].frame))process.exit(1);
+ if(JSON.stringify(f).includes("—"))process.exit(1);
+}
+for(const get of [f=>f.levels["1"].prompt,f=>f.levels["3"].strong_example,f=>f.levels["4"].walkthrough.draft,f=>f.levels["5"].frame]){
+ if(new Set(stageCX3a3Keys.map(k=>get(fullRescueModel.fields[k]))).size!==stageCX3a3Keys.length)process.exit(1);
+}
+if(!/Pre-existing groups/.test(fullRescueModel.fields.designType.levels["3"].choice.options["Quasi-experimental"]))process.exit(1);
+if(!/dish/.test(fullRescueModel.fields.experimentalUnit.levels["4"].walkthrough.draft))process.exit(1);
+if(!/not yet known/.test(fullRescueModel.fields.sample.levels["4"].walkthrough.draft))process.exit(1);
+if(!/other settings/.test(fullRescueModel.fields.sampleLimits.levels["4"].walkthrough.draft))process.exit(1);
+if(!/sensor/.test(fullRescueModel.fields.instrument.levels["4"].walkthrough.draft))process.exit(1);
+if(!/safety/.test(fullRescueModel.fields.ethicsIssues.levels["1"].prompt))process.exit(1);
+if(!/Before collecting/.test(fullRescueModel.fields.ethicsPlan.levels["5"].frame))process.exit(1);
+
+console.log("PASS v2.5 progressive rescue state and logging");
