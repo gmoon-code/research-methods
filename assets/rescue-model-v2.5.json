@@ -3088,7 +3088,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The units that will actually be studied.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which units will actually enter the study, and how many are confirmed?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3107,19 +3107,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student has access to one biology class and wants to generalize to all teenagers.",
+            "situation": "A researcher has eight possible observation sites.",
             "thinking": [
-              "Access does not make this a random sample.",
-              "The actual sample is one convenience class.",
-              "The result can be useful locally, but the generalization has to stay narrow."
+              "Possible sites are not completed observations.",
+              "Some locations may not be accessible.",
+              "I will count only the sites actually observed in the final sample."
             ],
-            "draft": "Sampling: convenience sample from one class. Generalization: limited to similar local context; no claim of national representativeness."
+            "draft": "Eight sites are proposed, and the final number actually included remains to be determined."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The actual sample/corpus/included set will be [who/what, number if known, source/context].",
+          "frame": "The sample consists of [specific units and source], with [confirmed count or planned target]. Its inclusion depends on [selection or access condition].",
           "path_frames": {
             "literature_review": "The final evidence set will consist of the studies/reports that pass the documented search and screening criteria."
           }
