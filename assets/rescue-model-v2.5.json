@@ -3135,7 +3135,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "How the sample is selected or recruited.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "How will the study select its units from the available group?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -3154,19 +3154,19 @@
         "4": {
           "name": "Walk through a parallel example",
           "walkthrough": {
-            "situation": "A student has access to one biology class and wants to generalize to all teenagers.",
+            "situation": "A student chooses accessible shaded and sunny sites on campus.",
             "thinking": [
-              "Access does not make this a random sample.",
-              "The actual sample is one convenience class.",
-              "The result can be useful locally, but the generalization has to stay narrow."
+              "The selection is deliberate to include both conditions.",
+              "No probability draw takes place.",
+              "The project will compare these sites without claiming campus-wide representativeness."
             ],
-            "draft": "Sampling: convenience sample from one class. Generalization: limited to similar local context; no claim of national representativeness."
+            "draft": "Sites are selected purposively using specified safety, surface and shading criteria."
           },
           "boundary": "This example uses a different or generic context. Follow the reasoning sequence, not the example's answer."
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Units will enter the study through [sampling/selection method] by [actual procedure]. This limits generalization/transferability because [boundary].",
+          "frame": "I will use [named sampling method], selecting [units] through [documented steps]. This may exclude [other kinds of units] and limits [inference].",
           "path_frames": {}
         }
       }
