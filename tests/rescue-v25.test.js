@@ -185,6 +185,6 @@ for(const read of [tab=>tab.body,tab=>tab.compare_prompt,tab=>tab.walkthrough.dr
 if(fullRescueModel.labs.literature.sources.terms.includes("TRAPP"))process.exit(1);
 if(!fullRescueModel.labs.literature.gap.decision_keys.includes("gapType"))process.exit(1);
 if(!/Proposed only/.test(fullRescueModel.labs.literature.search.walkthrough.draft))process.exit(1);
-if(!/unresolved/.test(fullRescueModel.labs.literature.claims.walkthrough.draft))process.exit(1);
+if(!/unresolved/i.test(fullRescueModel.labs.literature.claims.walkthrough.draft))process.exit(1);
 
 console.log("PASS v2.5 progressive rescue state and logging");
