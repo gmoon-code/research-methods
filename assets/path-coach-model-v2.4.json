@@ -347,6 +347,8 @@
       ],
       "13": [
         "rawLocation",
+        "missingObserved",
+        "errorsCorrections",
         "descriptives"
       ],
       "14": [
@@ -572,11 +574,7 @@
         "ethicsIssues",
         "ethicsPlan"
       ],
-      "12": [
-        "replication"
-      ],
       "13": [
-        "errorsCorrections",
         "plots"
       ],
       "15": [
@@ -854,43 +852,43 @@
     "literature_review": {
       "9": [
         "The review design matches a question answered from existing research.",
-        "I stated the scope/type of synthesis.",
-        "My claim boundary depends on search coverage, included studies, and evidence quality."
+        "I have identified whether the review maps, critically examines or synthesises evidence, and what its scope allows.",
+        "The claim boundary reflects how sources were found, selected and interpreted."
       ],
       "10": [
-        "Review concepts, populations/contexts, outcomes/phenomena, and unit of inclusion are defined.",
-        "I am not inventing IV/DV or participant terminology that the review does not need.",
-        "Eligibility concepts can be applied consistently during screening."
+        "I have defined the concepts and contexts of interest and distinguished reports from the studies or other sources they describe.",
+        "I use terms suited to the review question without imposing experimental variables or participant recruitment.",
+        "The eligibility criteria can be applied to the types of sources I intend to include."
       ],
       "11": [
-        "The target literature and search/screening strategy are clear.",
-        "Extraction/appraisal procedures are documented.",
-        "Coverage limits are stated before making a global gap claim."
+        "The search and selection approach is explained in enough detail for the stated review type.",
+        "I have planned how information will be extracted or recorded and whether critical appraisal suits this review.",
+        "I can explain which literature the search may miss and how that limits claims about the field."
       ],
       "12": [
-        "Search, deduplication, screening, extraction, and synthesis procedures are auditable.",
-        "One study-matrix row/unit and all key extraction columns are defined.",
-        "Missing/unreported study information and exclusion decisions have explicit rules."
+        "The procedure documents searching, selection, extraction and synthesis, with deduplication where needed.",
+        "The evidence matrix identifies what each row represents and links multiple reports of the same study where relevant.",
+        "I have explained how unclear or unreported information, exclusions and changes in decisions will be recorded."
       ],
       "13": [
-        "The master source/extraction record is preserved.",
-        "Included-study scope and characteristics are summarized.",
-        "Screening/extraction corrections and decision changes are traceable."
+        "Original search and source records are retained so that selection and extraction decisions remain traceable.",
+        "The evidence summary distinguishes records, reports and studies when their counts differ.",
+        "Corrections to extraction or selection decisions are documented without obscuring the earlier record."
       ],
       "14": [
-        "The synthesis approach matches the review question.",
-        "Comparability, study design, measurement, context, and evidence-quality differences are examined.",
-        "I am not forcing a statistical test or pooled effect into a narrative review."
+        "The synthesis method explains how evidence will be compared or brought together to answer the review question.",
+        "I have examined differences in methods, populations and evidence quality to the extent appropriate for this review.",
+        "Any statistical synthesis is justified by the question and data; a narrative or scoping review need not produce a pooled estimate."
       ],
       "15": [
-        "Results report the number/scope of included studies and the evidence synthesis.",
-        "Theme or evidence claims are traceable to included studies.",
-        "No pooled effect is invented from incomparable studies."
+        "The Results identify the scope of included evidence and describe what the synthesis found.",
+        "Interpretations and patterns can be traced to their supporting studies or other included sources.",
+        "I do not treat diverse findings as one numerical effect unless a defensible analysis supports it."
       ],
       "16": [
-        "The Discussion/conclusion answers the review question from the included evidence.",
-        "Coverage and study-quality limitations constrain the claims.",
-        "Any research-gap statement stays bounded by the documented search."
+        "The discussion answers the review question using what the included evidence can support.",
+        "I explain how search coverage and limitations of the included evidence affect interpretation.",
+        "Any claim that research is absent or insufficient remains bounded by the search and selection process."
       ]
     },
     "meta_analysis": {
