@@ -55,4 +55,26 @@ egate=C.stageGate(13,exdata);
 if(!egate.canMarkReady||egate.missing.length!==0||!C.recommended(13,exdata).includes("plots"))process.exit(1);
 if(!C.readinessChecks(10,e).some(x=>x.includes("repeated measurements or subsamples")))process.exit(1);
 
+// Quasi-experimental comparison and evidence-integrity regressions.
+let quasi={data:{predictorIV:"school timetable change",outcomeDV:"quiz score",operationalDefs:"recorded points",experimentalUnit:"class",confounders:"cohort timing",hypothesisNeeded:"No"},pathway:{selected:"quasi_experimental",confirmed:true}};
+let qr=C.reviewStage(10,quasi);
+if(qr.details.missing.length!==0||qr.details.recommended.includes("researchHyp")||qr.details.recommended.includes("hypReason"))process.exit(1);
+if(!C.stageGate(10,quasi).canMarkReady)process.exit(1);
+quasi.data.hypothesisNeeded="Yes";
+if(C.stageGate(10,quasi).canMarkReady||!C.reviewStage(10,quasi).messages.some(x=>x.level==="bad"&&/prediction/i.test(x.title)))process.exit(1);
+quasi.data.researchHyp="Scores will change after the timetable adjustment";
+if(!C.stageGate(10,quasi).canMarkReady||!C.recommended(10,quasi).includes("hypReason"))process.exit(1);
+let qdata={data:{rawLocation:"unaltered original observations",descriptives:"counts and period summaries"},pathway:{selected:"quasi_experimental",confirmed:true}};
+let qgate=C.stageGate(13,qdata);
+if(qgate.canMarkReady||!qgate.missing.includes("missingObserved")||!qgate.missing.includes("errorsCorrections")||qgate.missing.includes("plots"))process.exit(1);
+qdata.data.missingObserved="No missing records found";
+qdata.data.errorsCorrections="No corrections or protocol deviations";
+qgate=C.stageGate(13,qdata);
+if(!qgate.canMarkReady||qgate.missing.length!==0||!C.recommended(13,qdata).includes("plots"))process.exit(1);
+if(!C.readinessChecks(14,qdata).some(s=>s.includes("time trends")))process.exit(1);
+let wrongDesign={data:{designType:"Experimental",designWhy:"evaluating change",comparisonStructure:"pre and post series",claimBoundary:"limited attribution"},pathway:{selected:"quasi_experimental",confirmed:true}};
+if(C.stageGate(9,wrongDesign).canMarkReady)process.exit(1);
+wrongDesign.data.designType="Quasi-experimental";
+if(!C.stageGate(9,wrongDesign).canMarkReady)process.exit(1);
+
 console.log("PASS pathway-specific coach");
