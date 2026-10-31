@@ -187,4 +187,31 @@ if(!fullRescueModel.labs.literature.gap.decision_keys.includes("gapType"))proces
 if(!/Proposed only/.test(fullRescueModel.labs.literature.search.walkthrough.draft))process.exit(1);
 if(!/unresolved/i.test(fullRescueModel.labs.literature.claims.walkthrough.draft))process.exit(1);
 
+// Stage C-X3b3 | seven Data lab tabs must remain differentiated and source-connected.
+require("../assets/student-guidance.js");
+const dataKeys=["import","quality","explore","setup","run","history","audit"];
+const dataTabs=dataKeys.map(k=>fullRescueModel.labs.data[k]);
+const studyGlossary=window.RMSStudentGuidance.glossary;
+const studyChoices=window.RMSStudentGuidance.choices;
+for(const [idx,tab] of dataTabs.entries()){
+ if(!tab||!tab.body||!tab.title||!tab.walkthrough?.situation||tab.walkthrough.thinking.length<2||!tab.walkthrough.draft)process.exit(1);
+ if(!tab.next_prompt||/next data decision you need to make/.test(tab.next_prompt))process.exit(1);
+ if(JSON.stringify(tab).includes("—"))process.exit(1);
+ for(const term of tab.terms||[])if(!studyGlossary[term.toLowerCase()])process.exit(1);
+ if(tab.decision_keys?.length){for(const key of tab.decision_keys)if(!studyChoices[key]?.options)process.exit(1)}
+ else if(!tab.compare_prompt)process.exit(1);
+}
+for(const read of [tab=>tab.title,tab=>tab.body,tab=>tab.walkthrough.situation,tab=>tab.walkthrough.draft,tab=>tab.next_prompt]){
+ if(new Set(dataTabs.map(read)).size!==dataKeys.length)process.exit(1);
+}
+const dataFallbackTabs=dataTabs.filter(t=>!(t.decision_keys||[]).length);
+if(new Set(dataFallbackTabs.map(t=>t.compare_prompt)).size!==5)process.exit(1);
+if(!/unmodified source/i.test(fullRescueModel.labs.data.import.walkthrough.draft))process.exit(1);
+if(!/source-supported correction/.test(fullRescueModel.labs.data.quality.walkthrough.draft))process.exit(1);
+if(!/paired/.test(fullRescueModel.labs.data.explore.walkthrough.draft))process.exit(1);
+if(!/McNemar/.test(fullRescueModel.labs.data.setup.walkthrough.thinking.join(" ")))process.exit(1);
+if(!/tray/.test(fullRescueModel.labs.data.run.walkthrough.draft))process.exit(1);
+if(!/both outputs/.test(fullRescueModel.labs.data.history.walkthrough.draft))process.exit(1);
+if(!/18 volunteers/.test(fullRescueModel.labs.data.audit.walkthrough.draft))process.exit(1);
+
 console.log("PASS v2.5 progressive rescue state and logging");
