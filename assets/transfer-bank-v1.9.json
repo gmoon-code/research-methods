@@ -67,7 +67,7 @@
         "temperature",
         "reaction"
       ],
-      "scenario": "A catalase experiment compares 10\u00b0C, 25\u00b0C, and 40\u00b0C. Each temperature uses a different potato, different hydrogen peroxide bottle, and a different student timing the reaction. Oxygen foam height after 60 seconds is recorded.",
+      "scenario": "A catalase experiment compares 10°C, 25°C, and 40°C. Each temperature uses a different potato, different hydrogen peroxide bottle, and a different student timing the reaction. Oxygen foam height after 60 seconds is recorded.",
       "prompts": [
         "Define the experimental unit.",
         "List the key controlled conditions or design protections needed before interpreting temperature as the cause."
@@ -111,7 +111,7 @@
     },
     {
       "id": "TR05",
-      "title": "Classroom CO\u2082 and concentration",
+      "title": "Classroom CO₂ and concentration",
       "domain": "environmental science",
       "keywords": [
         "classroom",
@@ -119,7 +119,7 @@
         "concentration",
         "students"
       ],
-      "scenario": "A class wants to test whether high classroom CO\u2082 lowers student concentration. They propose recording named students' quiz scores, video of attention, and CO\u2082 every class period, then opening windows on selected days.",
+      "scenario": "A class wants to test whether high classroom CO₂ lowers student concentration. They propose recording named students' quiz scores, video of attention, and CO₂ every class period, then opening windows on selected days.",
       "prompts": [
         "Identify the research-design and ethics issues that require teacher or institutional review.",
         "Suggest a lower-risk version that could still address part of the question."
@@ -315,7 +315,7 @@
     },
     {
       "id": "TR13",
-      "title": "Two fertilizer groups with unequal spread",
+      "title": "Two fertiliser groups with unequal spread",
       "domain": "plant biology",
       "keywords": [
         "fertilizer",
@@ -323,7 +323,7 @@
         "variance",
         "groups"
       ],
-      "scenario": "Two independent groups of plants receive fertilizer A or B. Growth is numerical. Group A has SD 1.2 cm and Group B has SD 4.8 cm, with unequal sample sizes.",
+      "scenario": "Two independent groups of plants receive fertiliser A or B. Growth is numerical. Group A has SD 1.2 cm and Group B has SD 4.8 cm, with unequal sample sizes.",
       "prompts": [
         "Which two-group mean comparison is generally safer than the equal-variance Student t-test here?",
         "What should be reported in addition to the p-value?"
@@ -373,7 +373,7 @@
         "paper",
         "writing"
       ],
-      "scenario": "An abstract explains why microplastics matter, states the research question, and describes the sampling method. It ends with 'The implications are discussed.' It gives no numerical or qualitative finding.",
+      "scenario": "In a hypothetical completed empirical study of microplastics, the abstract explains the background, research question and sampling method. It ends with 'The implications are discussed.' Although the research has findings, the abstract reports none of them.",
       "prompts": [
         "What essential function is missing from the abstract?",
         "What should be added without turning the abstract into a calculation transcript?"
@@ -383,10 +383,10 @@
         "evidence_claims"
       ],
       "criteria": {
-        "scholarly_communication": "Identifies the missing central result and bounded conclusion.",
+        "scholarly_communication": "Identifies the missing verified central finding and bounded conclusion in this completed-study abstract.",
         "evidence_claims": "Recommends a summarized primary estimate/pattern and uncertainty or qualitative finding without overclaiming."
       },
-      "cue": "A stand-alone abstract should tell the reader what the study actually observed."
+      "cue": "An abstract for a completed study should summarise what the study actually found. A proposal, by contrast, must not invent results."
     },
     {
       "id": "TR16",
@@ -398,7 +398,7 @@
         "claim",
         "writing"
       ],
-      "scenario": "A paragraph states, 'Retrieval practice improves long-term learning for every age group and subject (Garcia, 2022).' The cited paper studied 42 university students learning foreign-language pairs for one week.",
+      "scenario": "In a fictional citation-checking exercise, a paragraph says, 'Retrieval practice improves long-term learning for every age group and subject (Garcia, 2022).' The invented example source is described as a study of 42 university students learning foreign-language pairs for one week.",
       "prompts": [
         "What is wrong with the claim-source relationship?",
         "Rewrite the scope of the claim so it could be supported by the described study."
@@ -411,7 +411,7 @@
         "scholarly_communication": "Identifies citation overextension and preserves accurate source scope.",
         "evidence_claims": "Limits population, task, duration, and causal/generalization wording to what the described design supports."
       },
-      "cue": "The citation supports only the population, task, design, and time scale that were actually studied."
+      "cue": "Check the original cited work where it exists. In this fictional example, even the described narrow source could not support a claim about every age group and subject."
     },
     {
       "id": "TR17",
