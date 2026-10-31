@@ -17,7 +17,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "List three science or research areas that genuinely interest you. They can be broad at this stage.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which three interests have you named? Can you distinguish each one without deciding on a final question?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -62,7 +62,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A specific situation within your interest that seems worth explaining, describing, comparing, or improving.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What did you notice, and which part of the pattern still needs an explanation?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -108,7 +108,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A statement people make that could be examined with evidence.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What does the statement actually claim, and what kind of evidence might challenge it?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -153,7 +153,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "The evidence, materials, organisms, people, records, databases, or settings you could realistically access.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "Which sources can you use now, and where would permission or equipment still be needed?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -198,7 +198,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Your first possible research direction.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What would you investigate in this first direction, and how might evidence help?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -210,7 +210,7 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Compare water loss from identical soil containers placed under two light conditions.",
+          "strong_example": "Observe soil moisture and light exposure around selected courtyard plants over several days.",
           "avoid": "Do not spend time making this wording perfect yet.",
           "choice": null
         },
@@ -243,7 +243,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A second possible research direction that is meaningfully different from Idea A.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "How would pursuing B change the question, evidence or procedure compared with A?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -255,7 +255,7 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Review published studies comparing retrieval practice and rereading in science learning.",
+          "strong_example": "Compare water loss from matching soil containers placed in sunlight and shade, with permission.",
           "avoid": "Avoid rewriting Idea A with only one word changed.",
           "choice": null
         },
@@ -288,7 +288,7 @@
         "1": {
           "name": "Clarify what this field is asking",
           "body": "A third possible research direction used to prevent premature commitment.",
-          "prompt": "Before going further, compare this description with what you currently wrote. What part of the task is still unclear?"
+          "prompt": "What genuine alternative does C offer, and what might make it more or less feasible?"
         },
         "2": {
           "name": "Explain how to approach it",
@@ -300,7 +300,7 @@
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "Observe whether shaded and unshaded school surfaces differ in afternoon temperature.",
+          "strong_example": "Review published studies on environmental conditions associated with plant water stress.",
           "avoid": "Do not skip this simply because your first idea seems good.",
           "choice": null
         },
