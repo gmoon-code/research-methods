@@ -30,7 +30,7 @@ Describe the available values using the number of records, mean and observed ran
 
 ## Results
 
-<escape>All values below are synthetic.</escape> The dataset includes 21 aquarium-day records, with seven observations from each of three aquaria. Across all records, mean temperature is **23.93 °C**, with an observed range of **22.5–25.7 °C**. Mean dissolved oxygen is **7.60 mg/L**, ranging from **6.85 to 8.19 mg/L**. The overall means summarise measurements from the three selected tanks and days, with each day contributing one value per aquarium.
+**All values below are synthetic.** The dataset includes 21 aquarium-day records, with seven observations from each of three aquaria. Across all records, mean temperature is **23.93 °C**, with an observed range of **22.5–25.7 °C**. Mean dissolved oxygen is **7.60 mg/L**, ranging from **6.85 to 8.19 mg/L**. The overall means summarise measurements from the three selected tanks and days, with each day contributing one value per aquarium.
 
 The aquarium-level descriptions reveal differences hidden by those pooled means. Average temperatures are **23.03 °C** in aquarium A, **23.93 °C** in B and **24.83 °C** in C. The corresponding mean dissolved-oxygen concentrations are **7.95**, **7.60** and **7.25 mg/L**. In each synthetic series, Day 7 is warmer and has a lower dissolved-oxygen reading than Day 1. These patterns arise within a deliberately constructed dataset and have no standing as observed changes in school aquaria.
 
