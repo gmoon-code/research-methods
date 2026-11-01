@@ -152,17 +152,17 @@ window.RMSWriting=(()=>{
     if(section==="results"){
       if(discussWords.test(t))issues.push(["warning","Possible Discussion language in Results","Explanations, importance, mechanisms, recommendations, and future research generally belong in Discussion."]);
       if(proposal&&present(t))issues.push(["info","Proposal Results text needs status review","Describe planned reporting or possible outcomes explicitly as plans. Do not present uncollected findings as observations."]);
-      if(!proposal&&!qualitative&&!review&&!resultWords.test(t))issues.push(["info","Result evidence is difficult to identify","Link findings to actual analysis or evidence records; numerical summaries are not mandatory for qualitative or review designs."]);
+      if(mode==="completed"&&!qualitative&&!review&&!resultWords.test(t))issues.push(["info","Result evidence is difficult to identify","Link findings to actual analysis or evidence records; numerical summaries are not mandatory for qualitative or review designs."]);
       if(/Correlational|Descriptive/.test(type)&&causal.test(t))issues.push(["critical","Causal wording exceeds the design","Use association, distribution, or difference language unless the design supports causal inference."]);
-      if(!proposal&&!(p.analysis?.runs||[]).length)issues.push(["warning","No linked Data Lab calculation","Check the evidence records supporting these findings. Qualitative work and reviews may have results documented outside the numerical Data Lab."]);
+      if(mode==="completed"&&!(p.analysis?.runs||[]).length)issues.push(["warning","No linked Data Lab calculation","Check the evidence records supporting these findings. Qualitative work and reviews may have results documented outside the numerical Data Lab."]);
     }
     if(section==="discussion"){
-      if(!present(p.data?.directAnswer)&&present(t)&&!proposal)issues.push(["info","Check the Discussion’s answer","Read the Discussion continuously to confirm that it answers the actual research question. The presence of a fixed phrase does not establish that the answer is clear."]);
+      if(!present(p.data?.directAnswer)&&present(t)&&mode==="completed")issues.push(["info","Check the Discussion’s answer","Read the Discussion continuously to confirm that it answers the actual research question. The presence of a fixed phrase does not establish that the answer is clear."]);
       if(/Correlational|Descriptive/.test(type)&&causal.test(t))issues.push(["critical","Causal interpretation exceeds the design","Statistical significance cannot raise a nonexperimental study to a causal claim."]);
       const ca=citationAudit(t,p.sources);if(p.sources?.length&&ca.unmatched.length)issues.push(["critical","Unmatched literature citation(s) in Discussion",ca.unmatched.map(x=>x.text).join(", ")]);
       if(ca.ambiguous.length)issues.push(["warning","Citation matches more than one source record","Verify the exact publication for "+ca.ambiguous.map(x=>x.text).join(", ")]);
       if(ca.statusToCheck.length)issues.push(["info","Cited source status needs review","A pending or excluded source may be appropriate as background, but must not silently enter the included synthesis."]);
-      if(!proposal&&present(t)&&!/\blimit|confound|uncertain|cannot|boundary|generali[sz]/i.test(t))issues.push(["info","Review claim limitations","Check whether the interpretation explains relevant boundaries, even when they are expressed without standard limitation vocabulary."]);
+      if(mode==="completed"&&present(t)&&!/\blimit|confound|uncertain|cannot|boundary|generali[sz]/i.test(t))issues.push(["info","Review claim limitations","Check whether the interpretation explains relevant boundaries, even when they are expressed without standard limitation vocabulary."]);
     }
     if(section==="conclusion"){
       if(/\([A-Z][A-Za-z'’\-]+.*\d{4}\)/.test(t))issues.push(["info","Conclusion contains literature citation(s)","A short empirical-paper conclusion often closes from the paper's own evidence. Check your assignment conventions."]);
@@ -172,7 +172,7 @@ window.RMSWriting=(()=>{
       if(/\([A-Z][A-Za-z'’\-]+.*\d{4}\)/.test(t))issues.push(["info","Abstract contains citation(s)","Many empirical abstracts omit citations unless a discipline or assignment requires them."]);
       if(!/\b(method|design|sample|participants?|data|analysis|survey|experiment|interview|review|procedure|corpus|documents?)\b/i.test(t))issues.push(["warning","Method information is difficult to find","Explain the planned or completed approach at a level appropriate to the research genre."]);
       if(proposal){if(/\bwe found|results (showed|demonstrated)|we observed\b/i.test(t))issues.push(["warning","Proposal abstract describes completed findings","Check whether the described findings were actually observed. A proposal abstract should describe proposed work without inventing results."]);}
-      else if(!qualitative&&!review&&!resultWords.test(t))issues.push(["info","Central finding is difficult to identify","For a completed study, summarise the most relevant observed result. A proposal or other research genre may require a different abstract."]);
+      else if(mode==="completed"&&!qualitative&&!review&&!resultWords.test(t))issues.push(["info","Central finding is difficult to identify","For a completed study, summarise the most relevant observed result. A proposal or other research genre may require a different abstract."]);
     }
     return {wordCount:words(t),sentenceCount:sentences(t),issues};
   }
@@ -186,9 +186,9 @@ window.RMSWriting=(()=>{
     if(!present(d.finalRQ))issues.push(["critical","Research question missing","The paper cannot be aligned without a final research question."]);
     if(!present(d.designType))issues.push(["critical","Design missing","The Method and claim ceiling depend on the study design."]);
     if(!(m.protocolVersions||[]).length)issues.push(["warning","No saved protocol version","Check the actual procedure and whether a dated plan documents decisions made before evidence collection or analysis."]);
-    if(!proposal&&!runs.length)issues.push(["warning","No linked Data Lab analysis","Check where the reported findings are documented. Qualitative studies and reviews may rely on other traceable records."]);
-    if(!proposal&&!present(w.results))issues.push(["warning","Results draft missing","For a completed study, describe observed findings from the relevant evidence records."]);
-    if(!proposal&&!present(w.discussion))issues.push(["warning","Discussion draft missing","For completed work, interpret findings within the actual design and source-evidence limits."]);
+    if(mode==="completed"&&!runs.length)issues.push(["warning","No linked Data Lab analysis","Check where the reported findings are documented. Qualitative studies and reviews may rely on other traceable records."]);
+    if(mode==="completed"&&!present(w.results))issues.push(["warning","Results draft missing","For a completed study, describe observed findings from the relevant evidence records."]);
+    if(mode==="completed"&&!present(w.discussion))issues.push(["warning","Discussion draft missing","For completed work, interpret findings within the actual design and source-evidence limits."]);
     if(/Correlational|Descriptive/.test(d.designType||"")&&causal.test(w.discussion+" "+w.conclusion+" "+w.abstract))issues.push(["critical","Causal claim ceiling violation","Nonexperimental designs should not be described as establishing that X caused Y."]);
     const ca=citationAudit(sectionNames.map(section=>w[section]||"").join("\n"),p.sources);
     if(ca.unmatched.length)issues.push(["critical","Paper contains citation(s) without a matching bibliographic record",ca.unmatched.map(x=>x.text).join(", ")]);
