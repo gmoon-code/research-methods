@@ -26,7 +26,7 @@ window.RMSLiterature = (() => {
       limits:s.limits||"",
       relevance:s.relevance||"",
       qualityNotes:s.qualityNotes||"",
-      screeningStatus:s.screeningStatus||"Included",
+      screeningStatus:["Included","Pending","Excluded"].includes(s.screeningStatus)?s.screeningStatus:"Pending",
       screeningReason:s.screeningReason||"",
       trapp:s.trapp||{timeframe:"",relevance:"",authority:"",accuracy:"",purpose:""},
       themes:s.themes||[],
@@ -55,13 +55,13 @@ window.RMSLiterature = (() => {
   }
 
   function uniqueThemes(project){
-    return [...new Set((project.sources||[]).flatMap(s=>(s.themeEvidence||[]).map(e=>e.theme).concat(s.themes||[])).map(x=>String(x||"").trim()).filter(Boolean))].sort();
+    return [...new Set((project.sources||[]).filter(s=>s.screeningStatus==="Included").flatMap(s=>(s.themeEvidence||[]).map(e=>e.theme).concat(s.themes||[])).map(x=>String(x||"").trim()).filter(Boolean))].sort();
   }
 
   function themeMap(project){
     const themes=uniqueThemes(project);
     return themes.map(theme=>{
-      const rows=(project.sources||[]).map(s=>{
+      const rows=(project.sources||[]).filter(s=>s.screeningStatus==="Included").map(s=>{
         const ev=(s.themeEvidence||[]).filter(e=>String(e.theme||"").trim()===theme);
         const legacy=(s.themes||[]).includes(theme) && !ev.length ? [{theme,stance:"supports",note:"Tagged in source record"}] : [];
         const all=ev.concat(legacy);
@@ -99,7 +99,7 @@ window.RMSLiterature = (() => {
       measurementDiversity:measurements,
       contextDiversity:contexts,
       messages,
-      safeToClaimGlobalGap: included.length>=8 && withMulti.length>=2
+      safeToClaimGlobalGap: false
     };
   }
 
