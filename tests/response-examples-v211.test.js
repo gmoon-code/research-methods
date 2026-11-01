@@ -59,4 +59,28 @@ if(!/unfavourable result is never an exclusion/.test(R.fields.excludeCriteria.wh
 if(!/placeholders, not citations/.test(R.fields.litDraft.detailed_response))process.exit(1);
 if(R.fields.litDraft.detailed_response.trim().split(/\s+/).length<250)process.exit(1);
 
+// Stage C-X3c2d | design, sampling, measurement and procedure examples 51-75.
+const third25=Object.keys(R.fields).slice(50,75);
+if(third25.length!==25||third25[0]!=="designType"||third25[24]!=="procedure")process.exit(1);
+for(const key of third25){
+ const v=R.fields[key];
+ if(!v.expected_shape||!v.good_working_response||!v.why_it_works)process.exit(1);
+ if(JSON.stringify(v).includes("—"))process.exit(1);
+ const span=v.typical_length.match(/(\d+)[–-](\d+)/);
+ if(span){
+  const n=v.good_working_response.trim().split(/\s+/).length;
+  if(n<Number(span[1])||n>Number(span[2]))process.exit(1);
+ }
+}
+if(!/100 mM/.test(R.fields.researchHyp.good_working_response)||!/0 mM/.test(R.fields.researchHyp.good_working_response))process.exit(1);
+if(!/water potential/.test(R.fields.hypReason.good_working_response))process.exit(1);
+if(!/independently assigned/.test(R.fields.predictorIV.good_working_response))process.exit(1);
+if(!/Missing observations are not zeroes/.test(R.fields.outcomeDV.good_working_response))process.exit(1);
+if(!/genuinely missing/.test(R.fields.operationalDefs.why_it_works))process.exit(1);
+if(!/90 seed-level records are planned/.test(R.fields.experimentalUnit.detailed_response))process.exit(1);
+if(!/millimetre-marked ruler/.test(R.fields.instrument.good_working_response))process.exit(1);
+if(!/Repeat selected measurements/.test(R.fields.measureQuality.good_working_response))process.exit(1);
+if(!/missing-data rule/.test(R.fields.procedure.good_working_response))process.exit(1);
+if(R.fields.procedure.good_working_response.trim().split(/\s+/).length<120)process.exit(1);
+
 console.log("PASS v2.11 response-example coverage and depth");
