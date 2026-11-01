@@ -999,7 +999,7 @@
       ${ds.map(x=>`<div class="coach-msg ${x.severity==="critical"?"bad":x.severity==="warning"?"warn":"info"}"><b>${esc(x.category||"Diagnostic")}</b><p>${esc(x.finding||"")}</p><p>${esc(x.why_it_matters||"")}</p><p class="next">Your task: ${esc(x.student_task||"")}</p></div>`).join("")}
       ${qs.length?`<div class="coach-feedback"><b>Questions to answer next</b><br>${qs.map((q,i)=>`${i+1}. ${esc(q)}`).join("<br>")}</div>`:""}
       ${r.next_action?`<div class="coach-feedback good"><b>Next action</b><br>${esc(r.next_action)}</div>`:""}
-      ${cites.length?`<div class="ai-cites"><b>Source references supplied by the coach (check against originals)</b><br>${cites.map(c=>`${esc(c.citation_label||c.claim)}${c.source_url?` · <a href="${esc(c.source_url)}" target="_blank" rel="noopener">source</a>`:""}${c.verified?" · marked verified in coach response":""}`).join("<br>")}</div>`:""}
+      ${cites.length?`<div class="ai-cites"><b>Source references supplied by the coach (check against originals)</b><br>${cites.map(c=>`${esc(c.citation_label||c.claim)}${c.source_url?` · <a href="${esc(c.source_url)}" target="_blank" rel="noopener">source</a>`:""}${c.verified?" · bibliography marked checked by student":""}`).join("<br>")}</div>`:""}
       ${r.safety?.status && r.safety.status!=="clear"?`<div class="coach-feedback bad"><b>Safety/ethics status: ${esc(r.safety.status)}</b><br>${esc(r.safety.reason||"")}</div>`:""}
     </div>`;
   }
