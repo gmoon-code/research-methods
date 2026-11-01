@@ -98,4 +98,18 @@ if(!G.fields.measureQuality.example.includes("does not independently assess germ
 if(!G.fields.materials.example.includes("90 radish seeds"))process.exit(1);
 if(!G.fields.procedure.example.includes("keeping no-visible-shoot zeroes distinct from missing records"))process.exit(1);
 
+// Stage C-X3c4d | data handling and Results guidance 76-100.
+const batchData=Object.keys(G.fields).slice(75,100);
+if(batchData.length!==25||batchData[0]!=="replication"||batchData[24]!=="interpret2")process.exit(1);
+for(const k of batchData){const x=G.fields[k];if(!x.meaning||!x.write||!x.example||!x.questions?.length||!x.avoid||JSON.stringify(x).includes("—"))process.exit(1)}
+if(!G.fields.replication.example.includes("18 independently assigned dishes"))process.exit(1);
+if(!G.fields.columns.example.includes("visible_shoot"))process.exit(1);
+if(!G.fields.missingRule.example.includes("missing"))process.exit(1);
+if(!G.fields.analysisIntent.example.includes("0 and 100 mM"))process.exit(1);
+if(!G.fields.primaryEstimand.example.includes("Day 7 shoot length"))process.exit(1);
+if(!G.fields.analysisChoice.example.includes("Welch two-sample t-test"))process.exit(1);
+if(!G.fields.assumptionChecks.example.includes("six dish outcomes"))process.exit(1);
+if(!G.fields.result2.example.includes("visible shoots"))process.exit(1);
+if(!G.fields.resultsDraft.write.includes("Organise"))process.exit(1);
+if(!G.fields.interpret2.example.includes("cannot itself establish a germination mechanism"))process.exit(1);
 console.log("PASS student guidance coverage");
