@@ -169,4 +169,13 @@ if(!G.stages[17].examples[1].text.includes("For a proposal"))process.exit(1);
 if(!G.stages[17].steps[4].includes("proposed inquiry"))process.exit(1);
 if(!G.stages[18].steps[6].includes("connections between adjacent sentences and paragraphs"))process.exit(1);
 if(!G.stages[18].strong.includes("connected, varied argument"))process.exit(1);
+// Stage C-X3c6a | literature lab source-integrity descriptions.
+const litLab=G.labs.literature;
+if(Object.keys(litLab).length!==8)process.exit(1);
+for(const x of Object.values(litLab))if(!x.title||!x.text||!x.terms?.length||JSON.stringify(x).includes("—"))process.exit(1);
+if(!litLab.search.text.includes("searches actually run")||!litLab.search.text.includes("proposed queries"))process.exit(1);
+if(!litLab.sources.text.includes("original paper")||!litLab.sources.text.includes("page or table"))process.exit(1);
+if(!litLab.screen.text.includes("leave uncertain records pending"))process.exit(1);
+if(!litLab.synth.text.includes("verified source records"))process.exit(1);
+if(!litLab.gap.text.includes("documented searches"))process.exit(1);
 console.log("PASS student guidance coverage");
