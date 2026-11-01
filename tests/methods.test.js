@@ -51,4 +51,13 @@ const qualitativeOnly={data:{designType:"Qualitative"},methods:{measurements:[]}
 if(M.auditMeasurements(qualitativeOnly).issues.some(x=>x[0]==="critical"))process.exit(1);
 const quantitative={data:{designType:"Experimental"},methods:{measurements:[]}};
 if(!M.auditMeasurements(quantitative).issues.some(x=>x[0]==="critical"))process.exit(1);
+const assignmentMissing={data:{designType:"Experimental"},methods:{
+ constructs:[{role:"Manipulated independent variable"},{role:"Outcome / dependent variable"}],
+ design:{experimentalUnit:"dish",sameUnitAllConditions:"no",primaryOutcome:"length"},
+ conditions:[{name:"control"},{name:"salt"}]}};
+const missingAudit=M.auditDesign(assignmentMissing);
+if(!missingAudit.issues.some(x=>x[1]==="Assignment process not specified"))process.exit(1);
+if(!missingAudit.good.some(x=>x.includes("check whether it was specified before")))process.exit(1);
+const nonrandomSample={methods:{sampling:{population:"school",sample:"one class",method:"Nonrandom selection",generalization:"local class"}}};
+if(M.auditSampling(nonrandomSample).issues.some(x=>x[1]==="Sampling frame missing"))process.exit(1);
 console.log("PASS methods lab engine");
