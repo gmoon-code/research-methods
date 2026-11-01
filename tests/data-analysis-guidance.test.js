@@ -14,7 +14,7 @@ const p={analysis:{rawData:[{dish_id:"D1",score:"0"}],headers:["dish_id","score"
 const a=setup(p),b=run(p),h=history(p),r=audit(p);
 if(!a.includes("before examining results")||!a.includes("independent units"))process.exit(1);
 if(!a.includes("one unit per row"))process.exit(1);
-if(!b.includes("Nested observations require aggregation")||!b.includes("missing codes"))process.exit(1);
+if(!b.includes("nested observations require an analysis that accounts for dependence")||!b.includes("unrecognised nonnumeric value"))process.exit(1);
 if(!h.includes("If the analysis was selected or changed afterwards"))process.exit(1);
 if(!r.includes("Independent unit differs from row unit"))process.exit(1);
 if(!r.includes("A p-value alone does not establish"))process.exit(1);
