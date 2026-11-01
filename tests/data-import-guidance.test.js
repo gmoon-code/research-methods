@@ -17,4 +17,11 @@ if(!quality.includes("blank cells do not include every study-specific missing-va
 if(source.includes("The lab does not silently alter imported values."))process.exit(1);
 if(!source.includes("p.analysis.importWarnings=z.importWarnings||[]"))process.exit(1);
 if(!source.includes("p.analysis.rawRowCount=z.rawRowCount??z.data.length"))process.exit(1);
+project.analysis.missingTokens="NA";
+const updatedQuality=qualityTab(project);
+if(!updatedQuality.includes('id="dqCodes"')||!updatedQuality.includes('value="NA"'))process.exit(1);
+if(!updatedQuality.includes("Configured missing")&&!updatedQuality.includes("configured missing"))process.exit(1);
+if(!updatedQuality.includes("Codes are not inferred from the written missing-data rule."))process.exit(1);
+if(!source.includes('id("dqCodes").oninput')||!source.includes("A.missingTokenAudit(p)"))process.exit(1);
+if(!source.includes("A.resultsMarkdown(p)")||!source.includes('missingTokens:p.analysis.missingTokens||""'))process.exit(1);
 console.log("PASS Data Lab import guidance content");
