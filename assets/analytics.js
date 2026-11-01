@@ -1,7 +1,42 @@
 window.RMSAnalytics=(()=>{
 const ok=v=>v!=null&&String(v).trim()!=="",num=v=>{if(!ok(v))return null;const x=Number(String(v).replaceAll(",","").trim());return Number.isFinite(x)?x:null};
-function normalizeProject(p){p.analysis=p.analysis||{};Object.assign(p.analysis,{rawData:p.analysis.rawData||[],headers:p.analysis.headers||[],fileName:p.analysis.fileName||"",importedAt:p.analysis.importedAt||"",runs:p.analysis.runs||[],decisionLog:p.analysis.decisionLog||{}});return p}
-function parseCSV(t){let rows=[],r=[],c="",q=false;for(let i=0;i<t.length;i++){let x=t[i],n=t[i+1];if(q){if(x==='"'&&n==='"'){c+='"';i++}else if(x==='"')q=false;else c+=x}else if(x==='"')q=true;else if(x===','){r.push(c);c=""}else if(x==='\n'){r.push(c);rows.push(r);r=[];c=""}else if(x!=='\r')c+=x}r.push(c);if(r.length>1||r[0])rows.push(r);if(!rows.length)return{headers:[],data:[]};let seen={},headers=rows.shift().map((h,i)=>String(h||`column_${i+1}`).trim()||`column_${i+1}`).map(h=>(seen[h]=(seen[h]||0)+1,seen[h]===1?h:`${h}_${seen[h]}`));let data=rows.filter(x=>x.some(ok)).map((x,j)=>{let o={__row:j+1};headers.forEach((h,i)=>o[h]=x[i]??"");return o});return{headers,data}}
+function normalizeProject(p){p.analysis=p.analysis||{};Object.assign(p.analysis,{rawData:p.analysis.rawData||[],headers:p.analysis.headers||[],fileName:p.analysis.fileName||"",importedAt:p.analysis.importedAt||"",importWarnings:p.analysis.importWarnings||[],rawRowCount:p.analysis.rawRowCount||0,runs:p.analysis.runs||[],decisionLog:p.analysis.decisionLog||{}});return p}
+function parseCSV(t){
+ let rows=[],row=[],cell="",quoted=false;
+ for(let i=0;i<t.length;i++){
+   const char=t[i],next=t[i+1];
+   if(quoted){
+     if(char==='"'&&next==='"'){cell+='"';i++}
+     else if(char==='"')quoted=false;
+     else cell+=char;
+   }else if(char==='"')quoted=true;
+   else if(char===","){row.push(cell);cell=""}
+   else if(char==="\n"){row.push(cell);rows.push(row);row=[];cell=""}
+   else if(char!=="\r")cell+=char;
+ }
+ row.push(cell);if(row.length>1||row[0])rows.push(row);
+ if(!rows.length)return{headers:[],data:[],importWarnings:[]};
+ const originalHeaders=rows.shift(),seen={},warnings=[];
+ const headers=originalHeaders.map((original,i)=>{
+   const name=String(original||`column_${i+1}`).trim()||`column_${i+1}`;
+   seen[name]=(seen[name]||0)+1;
+   const result=seen[name]===1?name:`${name}_${seen[name]}`;
+   if(original!==result)warnings.push(`Header ${i+1} was imported as "${result}" (original "${original}").`);
+   return result;
+ });
+ let blankRows=0,shortRows=0,longRows=0;const data=[];
+ for(const values of rows){
+   if(!values.some(ok)){blankRows++;continue}
+   if(values.length<headers.length)shortRows++;
+   if(values.length>headers.length)longRows++;
+   const item={__row:data.length+1};headers.forEach((h,i)=>item[h]=values[i]??"");data.push(item);
+ }
+ if(blankRows)warnings.push(`${blankRows} completely blank data row(s) were omitted from the imported table.`);
+ if(shortRows)warnings.push(`${shortRows} data row(s) had fewer fields than the header; missing trailing cells were left blank.`);
+ if(longRows)warnings.push(`${longRows} data row(s) had extra fields beyond the header; those extra values were not imported. Correct the original CSV before analysis.`);
+ if(quoted)warnings.push("The CSV contains an unmatched quotation mark. Check the original file before analysis.");
+ return {headers,data,importWarnings:warnings,rawRowCount:rows.length};
+}
 const mean=a=>a.reduce((s,x)=>s+x,0)/a.length;function variance(a){if(a.length<2)return NaN;let m=mean(a);return a.reduce((s,x)=>s+(x-m)**2,0)/(a.length-1)}const sd=a=>Math.sqrt(variance(a));
 function quantile(a,p){let b=[...a].sort((x,y)=>x-y),z=(b.length-1)*p,l=Math.floor(z),h=Math.ceil(z);return l===h?b[l]:b[l]+(b[h]-b[l])*(z-l)}
 const median=a=>quantile(a,.5);function skew(a){if(a.length<3)return NaN;let m=mean(a),s=sd(a);if(!s)return 0;return a.length/((a.length-1)*(a.length-2))*a.reduce((z,x)=>z+((x-m)/s)**3,0)}
