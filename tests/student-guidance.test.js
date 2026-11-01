@@ -202,4 +202,16 @@ if(!dataLab.setup.text.includes("qualitative work")||!dataLab.setup.text.include
 if(!dataLab.run.text.includes("selected column"))process.exit(1);
 if(!dataLab.history.text.includes("dataset version")||!dataLab.history.text.includes("sensitivity runs"))process.exit(1);
 if(!dataLab.audit.text.includes("reported sample")||!dataLab.audit.text.includes("causal claims"))process.exit(1);
+// Stage C-X3c6d | Writing Lab source fidelity and sentence-level connections.
+const writeLab=G.labs.writing;
+if(Object.keys(writeLab).length!==8)process.exit(1);
+for(const x of Object.values(writeLab))if(!x.title||!x.text||!x.terms?.length||JSON.stringify(x).includes("—"))process.exit(1);
+if(!writeLab.intro.text.includes("without claiming novelty"))process.exit(1);
+if(!writeLab.lit.text.includes("checked sources")||!writeLab.lit.text.includes("each paragraph"))process.exit(1);
+if(!writeLab.method.text.includes("For a proposal"))process.exit(1);
+if(!writeLab.results.text.includes("actual records")||!writeLab.results.text.includes("source passages"))process.exit(1);
+if(!writeLab.discussion.text.includes("paragraph order")||!writeLab.discussion.text.includes("material limitation"))process.exit(1);
+if(!writeLab.closing.text.includes("without inventing results"))process.exit(1);
+if(!writeLab.citations.text.includes("quotation fidelity"))process.exit(1);
+if(!writeLab.audit.text.includes("adjacent sentences and paragraphs")||!writeLab.audit.text.includes("Canadian English"))process.exit(1);
 console.log("PASS student guidance coverage");
