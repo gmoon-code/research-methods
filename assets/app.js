@@ -155,7 +155,7 @@
       return `<div class="source-card"><div class="lit-source-head"><div><div class="lit-source-title">${esc(s.id)} · ${esc(s.citation||s.title||"Untitled source")}</div><div><span class="pill ${stClass}">${esc(s.screeningStatus)}</span><span class="pill">${Math.round(comp.ratio*100)}% extraction</span><span class="pill">${tr.filled}/5 TRAAP</span>${s.verified?'<span class="pill green">bibliography verified</span>':""}</div></div><div class="source-actions"><button class="ghost small" data-edit-source="${i}">Edit</button><button class="danger small" data-del-source="${i}">Remove</button></div></div>
         <p><b>Design</b> ${esc(s.design||"—")} · <b>Population/context</b> ${esc(s.sample||"—")}</p>
         <p><b>Measures</b> ${esc(s.measures||"—")}</p><p><b>Finding</b> ${esc(s.finding||"—")}</p><p><b>Limitations</b> ${esc(s.limits||"—")}</p>
-        ${(s.themeEvidence||[]).length?`<p><b>Theme evidence</b><br>${s.themeEvidence.map(e=>`<span class="theme-chip">${esc(e.theme)} · ${esc(e.stance)}</span>`).join("")}</p>`:""}</div>`;
+        ${(s.themeEvidence||[]).length?`<p><b>Theme evidence</b><br>${s.themeEvidence.map(e=>`<span class="theme-chip">${esc(e.theme)} · ${esc(e.stance||"stance not recorded")}</span>`).join("")}</p>`:""}</div>`;
     }).join("");
     return `<div class="form-section"><h4>Study extraction records</h4><p>This stage stores the evidence needed for the study matrix and later synthesis. The full Literature Workspace adds screening, TRAAP evaluation, theme stance, evidence mapping, and paragraph planning.</p>
       <div class="button-row"><button class="secondary" id="openLitFromSource">Open full Literature Workspace</button></div>
@@ -448,7 +448,7 @@
           <label><span>Journal / publisher</span><input id="lfJournal" value="${esc(s.journal||"")}"></label>
           <label><span>DOI</span><input id="lfDoi" value="${esc(s.doi||"")}"></label>
           <label><span>URL</span><input id="lfUrl" value="${esc(s.url||"")}"></label>
-          <label><span>Source type</span><select id="lfType">${["Peer-reviewed empirical article","Systematic review / meta-analysis","Scholarly review","Government / institutional report","Book / chapter","Other"].map(o=>`<option ${s.type===o?"selected":""}>${o}</option>`).join("")}</select></label>
+          <label><span>Source type</span><select id="lfType"><option value="" ${!s.type?"selected":""}>Choose source type…</option>${["Peer-reviewed empirical article","Systematic review / meta-analysis","Scholarly review","Government / institutional report","Book / chapter","Other"].map(o=>`<option ${s.type===o?"selected":""}>${o}</option>`).join("")}</select></label>
           <label><span>Bibliographic record checked against the actual source?</span><select id="lfVerified"><option value="false" ${!s.verified?"selected":""}>Not yet</option><option value="true" ${s.verified?"selected":""}>Yes</option></select></label>
         </div>
         <p class="source-pass-note"><b>Important</b> “Bibliography verified” means you checked the citation details against the source. It does not mean the study is automatically high quality.</p>
@@ -481,7 +481,7 @@
   }
 
   function themeEvidenceRow(e={},j=0){
-    return `<div class="theme-evidence-row" data-theme-row="${j}"><input data-themename="${j}" placeholder="Theme" value="${esc(e.theme||"")}"><select data-themestance="${j}">${["supports","conflicts","mixed","background"].map(o=>`<option ${e.stance===o?"selected":""}>${o}</option>`).join("")}</select><input data-themenote="${j}" placeholder="What does this source contribute?" value="${esc(e.note||"")}"><button class="danger small" data-theme-del="${j}">×</button></div>`;
+    return `<div class="theme-evidence-row" data-theme-row="${j}"><input data-themename="${j}" placeholder="Theme" value="${esc(e.theme||"")}"><select data-themestance="${j}"><option value="" ${!e.stance?"selected":""}>Choose stance…</option>${["supports","conflicts","mixed","background"].map(o=>`<option ${e.stance===o?"selected":""}>${o}</option>`).join("")}</select><input data-themenote="${j}" placeholder="What does this source contribute?" value="${esc(e.note||"")}"><button class="danger small" data-theme-del="${j}">×</button></div>`;
   }
 
   function searchWorkspace(){
@@ -519,8 +519,8 @@
       matrix=`<div class="matrix-scroll"><table><thead><tr><th>Study</th>${themes.map(t=>`<th>${esc(t)}</th>`).join("")}</tr></thead><tbody>${included.map(s=>`<tr><td>${esc(s.id)} · ${esc(s.citation||s.title)}</td>${themes.map(t=>{
         const ev=(s.themeEvidence||[]).find(e=>e.theme===t);
         if(!ev) return "<td></td>";
-        const cl=ev.stance==="supports"?"matrix-cell-support":ev.stance==="conflicts"?"matrix-cell-conflict":ev.stance==="mixed"?"matrix-cell-mixed":"matrix-cell-background";
-        return `<td class="${cl}" title="${esc(ev.note||"")}">${esc(ev.stance)}</td>`;
+        const cl=ev.stance==="supports"?"matrix-cell-support":ev.stance==="conflicts"?"matrix-cell-conflict":ev.stance==="mixed"?"matrix-cell-mixed":ev.stance==="background"?"matrix-cell-background":"";
+        return `<td class="${cl}" title="${esc(ev.note||"")}">${esc(ev.stance||"unclassified")}</td>`;
       }).join("")}</tr>`).join("")}</tbody></table></div>`;
     }
     return `<div class="lit-section"><h4>Synthesis matrix</h4><p>Compare eligible studies using evidence-specific descriptions. A theme tag or stance is a working classification and must be checked against each paper's actual findings.</p>${matrix||'<p class="muted tiny">Add theme evidence to included source records.</p>'}
@@ -605,7 +605,7 @@
     function collectThemeEvidence(){
       return [...document.querySelectorAll("#themeEvidenceRows [data-theme-row]")].map(row=>{
         const j=row.dataset.themeRow;
-        return {theme:document.querySelector(`[data-themename="${j}"]`)?.value.trim()||"",stance:document.querySelector(`[data-themestance="${j}"]`)?.value||"supports",note:document.querySelector(`[data-themenote="${j}"]`)?.value.trim()||""};
+        return {theme:document.querySelector(`[data-themename="${j}"]`)?.value.trim()||"",stance:document.querySelector(`[data-themestance="${j}"]`)?.value||"",note:document.querySelector(`[data-themenote="${j}"]`)?.value.trim()||""};
       }).filter(e=>e.theme);
     }
     function bindThemeDelete(){
