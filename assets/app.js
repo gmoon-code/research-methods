@@ -794,7 +794,7 @@
   function methodsSamplingTab(){
     const s=project.methods.sampling||{}, a=PathCoach.methodSection(project,"sampling");
     return `<div class="methods-section"><h4>Population, sample, sampling, and recruitment</h4><p>Identify the population or system the question concerns, then describe the units or sources you plan to study or have already examined.</p>
-      <section class="method-substep open"><div class="method-substep-head"><span>1</span><div><b>Who or what is in scope?</b><small>Target population/system, accessible frame, and actual sample/corpus</small></div></div>
+      <section class="method-substep open"><div class="method-substep-head"><span>1</span><div><b>Who or what is in scope?</b><small>Target population or system, accessible frame, and planned or observed sample or corpus</small></div></div>
         <div class="form-grid two">
           ${mInput("msPopulation","Target population / system",s.population||project.data.population||"","textarea")}
           ${mInput("msFrame","Sampling frame / accessible population",s.frame||"","textarea")}
@@ -874,8 +874,8 @@
   function methodsDataTab(){
     const d=project.methods.design||{}, a=PathCoach.methodSection(project,"data");
     const rows=(project.schema||[]).map((r,i)=>`<div class="schema-row" style="grid-template-columns:1fr 120px 180px 1.4fr 90px 48px"><input data-schema-name="${i}" value="${esc(r.name||"")}"><select data-schema-type="${i}">${["ID","Numeric","Count","Categorical","Ordinal","Binary","Text","Date/time"].map(o=>`<option ${r.type===o?"selected":""}>${o}</option>`).join("")}</select><input data-schema-role="${i}" value="${esc(r.role||"")}" placeholder="role"><input data-schema-def="${i}" value="${esc(r.definition||"")}" placeholder="unit/categories/coding/allowed values"><input data-schema-missing="${i}" value="${esc(r.missing||"")}" placeholder="missing code"><button class="danger small" data-schema-del="${i}" aria-label="Remove data column ${i+1}">×</button></div>`).join("");
-    return `<div class="methods-section"><h4>Data table & dictionary</h4><p>Define the unit represented by each row or evidence record and preserve IDs for repeated or nested observations. Explain recorded zeros, missing values and allowable codes. Interviews and documents also need traceable records even without a numerical table.</p>
-      <div class="form-grid two">${mInput("mRowUnit","What ONE row represents",d.rowUnit||project.data.rowUnit||"")}${mInput("mIdPlan","Identifier / linkage plan",d.identifierPlan||"","textarea")}</div>
+    return `<div class="methods-section"><h4>Data and evidence records</h4><p>Describe each data row or other evidence record and retain IDs linking repeated or nested observations. Distinguish observed zeros, missing values and exclusions. Interviews and documents also need traceable records without a numerical table. Missing codes entered in this dictionary document intended coding; enter applicable tokens separately in the Data Lab before calculating.</p>
+      <div class="form-grid two">${mInput("mRowUnit","What one data row or evidence record represents",d.rowUnit||project.data.rowUnit||"")}${mInput("mIdPlan","Identifier / linkage plan",d.identifierPlan||"","textarea")}</div>
       <div class="schema-list">${rows||'<p class="muted tiny">No columns defined.</p>'}</div>
       <div class="button-row"><button id="mAddSchema" class="secondary small">Add column</button><button id="mDownloadTemplate" class="ghost small">Download empty CSV</button><button id="mDownloadDictionary" class="ghost small">Download data dictionary</button></div>
       ${a.issues.map(x=>`<div class="issue ${x[0]}"><b>${esc(x[1])}</b><p>${esc(x[2])}</p></div>`).join("")}
@@ -885,19 +885,19 @@
   function methodsAuditTab(){
     const r=PathCoach.methodsReadiness(project), versions=project.methods.protocolVersions||[];
     return `<div class="methods-section"><h4>Method plan and evidence audit</h4><p>For proposed work, review the plan before collecting outcomes and preserve its dated version. For completed work, record which decisions were prospective and which were made later. Saving a protocol version does not grant research approval.</p>
-      <div class="audit-summary"><div><h4>${esc(r.label)}</h4><p>${r.critical} item(s) to fix before collection · ${r.warning} item(s) to review · ${r.info} information note(s)</p><p>Ethics/safety review route: <b>${esc(r.ethicsStatus==="teacher_review"?"Teacher or institutional review needed":r.ethicsStatus==="do_not_facilitate"?"Unsafe student-facilitated route":"No specific trigger detected")}</b></p></div></div>
+      <div class="audit-summary"><div><h4>${esc(r.label)}</h4><p>${r.critical} critical issue(s) requiring attention · ${r.warning} warning(s) · ${r.info} information note(s)</p><p>Ethics/safety review route: <b>${esc(r.ethicsStatus==="teacher_review"?"Teacher or institutional review needed":r.ethicsStatus==="do_not_facilitate"?"Unsafe student-facilitated route":"No specific trigger detected")}</b></p></div></div>
       ${Object.entries(r.sections).map(([name,x])=>`<div class="method-row"><div class="method-row-head"><b>${esc(name)}</b><span class="role-pill">${(x.issues||[]).length} issue(s)</span></div>${(x.issues||[]).map(i=>`<div class="issue ${i[0]}"><b>${esc(i[1])}</b><p>${esc(i[2])}</p></div>`).join("")||'<p>No issue detected by these automatic checks. Review the actual design and applicable requirements.</p>'}</div>`).join("")}
       <div class="button-row"><button id="lockProtocol" class="primary" ${r.critical||r.ethicsStatus==="do_not_facilitate"?"disabled":""}>Save dated protocol version</button><button id="downloadMethodPlan" class="ghost">Export method plan</button></div>
       ${r.critical?'<div class="gap-warning">Resolve critical methodological issues before saving a version as ready for review. Recording a protocol never authorises research activity.</div>':""}
       ${r.ethicsStatus==="do_not_facilitate"?'<div class="coach-feedback bad">This route must not proceed as a student-facilitated intervention. Redesign toward a safe observational/literature route and obtain teacher review.</div>':""}
-      <h4 style="margin-top:16px">Protocol history</h4>${versions.slice().reverse().map((v,i)=>`<div class="protocol-card"><b>Version ${versions.length-i} · ${esc(new Date(v.lockedAt).toLocaleString())}</b><p>${esc(v.researchQuestion||"No question recorded")} · ${esc(v.designType||"No design recorded")}</p></div>`).join("")||'<p class="muted tiny">No locked protocol versions yet.</p>'}
+      <h4 style="margin-top:16px">Protocol history</h4>${versions.slice().reverse().map((v,i)=>`<div class="protocol-card"><b>Version ${versions.length-i} · ${esc(v.lockedAt&&Number.isFinite(Date.parse(v.lockedAt))?new Date(v.lockedAt).toLocaleString():"Date not recorded")}</b><p>${esc(v.researchQuestion||"No question recorded")} · ${esc(v.designType||"No design recorded")}</p></div>`).join("")||'<p class="muted tiny">No saved protocol versions yet.</p>'}
     </div>`;
   }
 
   function methodsWorkspace(active="design"){
     Methods.normalizeProject(project);Flow.syncCanonical(project);
     const wrap=document.createElement("div");wrap.className="modal-backdrop";wrap.id="methodsBackdrop";
-    const tabs=[["design","1 · Design"],["vars","2 · Variables"],["rep","3 · Units & replication"],["sample","4 · Sampling"],["measure","5 · Measurement"],["ethics","6 · Ethics"],["procedure","7 · Procedure"],["data","8 · Data table"],["audit","9 · Audit & lock"]];
+    const tabs=[["design","1 · Design"],["vars","2 · Variables"],["rep","3 · Units & replication"],["sample","4 · Sampling"],["measure","5 · Measurement"],["ethics","6 · Ethics"],["procedure","7 · Procedure"],["data","8 · Data table"],["audit","9 · Audit & version"]];
     const content=()=>active==="design"?methodsDesignTab():active==="vars"?methodsVariablesTab():active==="rep"?methodsReplicationTab():active==="sample"?methodsSamplingTab():active==="measure"?methodsMeasurementTab():active==="ethics"?methodsEthicsTab():active==="procedure"?methodsProcedureTab():active==="data"?methodsDataTab():methodsAuditTab();
     wrap.innerHTML=`<div class="modal methods-modal"><div style="display:flex;justify-content:space-between;gap:12px;align-items:start"><div><div class="guide-kicker">Study-design workflow</div><h3>Methods & Study Design Laboratory</h3><p>Work through one method decision at a time. The full method route stays available from the step menu.</p></div><button class="ghost small" id="closeMethods">Close</button></div>${FlowUI.labStepper(tabs,active,"mtab")}${Guide.labPanel("methods",active)}<div>${content()}</div></div>`;
     document.body.appendChild(wrap);
@@ -955,7 +955,7 @@
 
     if($("lockProtocol")) $("lockProtocol").onclick=()=>{
       const r=PathCoach.methodsReadiness(project);
-      if(r.critical||r.ethicsStatus==="do_not_facilitate"){alert("Resolve critical path-specific or ethics issues before locking the protocol.");return}
+      if(r.critical||r.ethicsStatus==="do_not_facilitate"){alert("Critical methodological or ethics issues remain. Review them before saving a dated protocol version. Saving does not grant research approval.");return}
       const snap=Methods.protocolSnapshot(project);
       snap.researchPath=project.pathway?.selected||"unsure";
       snap.instructionalBaseline="RMS-INSTRUCTIONAL-BASELINE-v2.13.3";
