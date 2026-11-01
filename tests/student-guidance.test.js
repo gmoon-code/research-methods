@@ -153,4 +153,20 @@ if(!G.stages[11].examples[1].text.includes("does not independently establish ger
 if(!G.stages[12].examples[0].text.includes("visible_shoot")||!G.stages[12].examples[0].text.includes("dish_id"))process.exit(1);
 if(!G.stages[12].examples[1].text.includes("does not establish whether a radicle emerged"))process.exit(1);
 if(!G.stages[12].walkthrough.draft.includes("independently assigned dishes"))process.exit(1);
+// Stage C-X3c5c | stages 13-18; data coding, reporting and writing integrity.
+const stagesC=[13,14,15,16,17,18].map(n=>G.stages[n]);
+if(stagesC.some(s=>!s?.title||!s?.plain||s.steps.length<4||s.examples.length<1||s.stuck.length<2||s.terms.length<2||!s.walkthrough?.draft))process.exit(1);
+if(stagesC.some(s=>JSON.stringify(s).includes("—")))process.exit(1);
+if(!G.stages[13].examples[0].text.includes("per-dish summaries"))process.exit(1);
+if(!G.stages[13].examples[1].text.includes("unobserved seeds distinct from observed zeroes"))process.exit(1);
+if(G.stages[13].examples.some(x=>x.text.startsWith("germinated is binary")))process.exit(1);
+if(!G.stages[14].examples.some(x=>x.text.includes("paired binary data")))process.exit(1);
+if(!G.stages[15].examples[0].text.includes("Do not insert invented values"))process.exit(1);
+if(!G.stages[15].walkthrough.draft.includes("Hypothetical example only"))process.exit(1);
+if(!G.stages[16].steps[6].includes("particular interpretations"))process.exit(1);
+if(!G.stages[16].plain.includes("how the argument unfolds"))process.exit(1);
+if(!G.stages[17].examples[1].text.includes("For a proposal"))process.exit(1);
+if(!G.stages[17].steps[4].includes("proposed inquiry"))process.exit(1);
+if(!G.stages[18].steps[6].includes("connections between adjacent sentences and paragraphs"))process.exit(1);
+if(!G.stages[18].strong.includes("connected, varied argument"))process.exit(1);
 console.log("PASS student guidance coverage");
