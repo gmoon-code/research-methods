@@ -1,6 +1,6 @@
 window.RMSAnalytics=(()=>{
 const ok=v=>v!=null&&String(v).trim()!=="",num=v=>{if(!ok(v))return null;const raw=String(v).trim();if(!/^[-+]?(?:(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?$/.test(raw))return null;const x=Number(raw.replaceAll(",",""));return Number.isFinite(x)?x:null};
-function normalizeProject(p){p.analysis=p.analysis||{};Object.assign(p.analysis,{rawData:p.analysis.rawData||[],headers:p.analysis.headers||[],fileName:p.analysis.fileName||"",importedAt:p.analysis.importedAt||"",importWarnings:p.analysis.importWarnings||[],rawRowCount:p.analysis.rawRowCount||0,runs:p.analysis.runs||[],decisionLog:p.analysis.decisionLog||{}});return p}
+function normalizeProject(p){p.analysis=p.analysis||{};Object.assign(p.analysis,{rawData:p.analysis.rawData||[],headers:p.analysis.headers||[],fileName:p.analysis.fileName||"",importedAt:p.analysis.importedAt||"",missingTokens:p.analysis.missingTokens||"",importWarnings:p.analysis.importWarnings||[],rawRowCount:p.analysis.rawRowCount||0,runs:p.analysis.runs||[],decisionLog:p.analysis.decisionLog||{}});return p}
 function parseCSV(t){
  let rows=[],row=[],cell="",quoted=false;
  for(let i=0;i<t.length;i++){
@@ -42,10 +42,30 @@ const mean=a=>a.reduce((s,x)=>s+x,0)/a.length;function variance(a){if(a.length<2
 function quantile(a,p){let b=[...a].sort((x,y)=>x-y),z=(b.length-1)*p,l=Math.floor(z),h=Math.ceil(z);return l===h?b[l]:b[l]+(b[h]-b[l])*(z-l)}
 const median=a=>quantile(a,.5);function skew(a){if(a.length<3)return NaN;let m=mean(a),s=sd(a);if(!s)return 0;return a.length/((a.length-1)*(a.length-2))*a.reduce((z,x)=>z+((x-m)/s)**3,0)}
 function desc(a){if(!a.length)return{n:0};let q1=quantile(a,.25),q3=quantile(a,.75),iqr=q3-q1,lo=q1-1.5*iqr,hi=q3+1.5*iqr;return{n:a.length,mean:mean(a),sd:sd(a),median:median(a),q1,q3,iqr,min:Math.min(...a),max:Math.max(...a),range:Math.max(...a)-Math.min(...a),skewness:skew(a),outliers:a.filter(x=>x<lo||x>hi).length}}
+function missingTokenAudit(p){
+  const tokens=[...new Set(String(p.analysis?.missingTokens??"").split(",").map(x=>x.trim()).filter(Boolean))];
+  const zeroTokens=tokens.filter(x=>/^[-+]?0(?:\.0+)?$/.test(x));
+  const active=tokens.filter(x=>!zeroTokens.includes(x));
+  const headers=p.analysis?.headers||[],counts=Object.fromEntries(headers.map(h=>[h,0]));
+  const rows=(p.analysis?.rawData||[]).map(row=>{
+    const copy={...row};for(const h of headers)if(active.includes(String(row[h]??"").trim())){copy[h]="";counts[h]++;}
+    return copy;
+  });
+  return {tokens,zeroTokens,active,counts,replacements:Object.values(counts).reduce((a,b)=>a+b,0),rows};
+}
 const vals=(d,c)=>d.map(r=>num(r[c])).filter(x=>x!=null),pairs=(d,x,y)=>d.map(r=>[num(r[x]),num(r[y])]).filter(z=>z[0]!=null&&z[1]!=null);
 function freq(d,c){let m=new Map(),miss=0;d.forEach(r=>{let v=String(r[c]??"").trim();if(!v)miss++;else m.set(v,(m.get(v)||0)+1)});let n=[...m.values()].reduce((a,b)=>a+b,0);return{n,missing:miss,rows:[...m].sort((a,b)=>b[1]-a[1]).map(([value,count])=>({value,count,percent:n?100*count/n:0}))}}
 function type(d,c){let a=d.map(r=>String(r[c]??"").trim()).filter(Boolean);if(!a.length)return"empty";let n=a.filter(x=>num(x)!=null).length;if(n/a.length>=.9){let u=new Set(a).size;return u<=2?"numeric/binary":u<=7?"numeric/discrete":"numeric"}let u=new Set(a).size;return u<=2?"categorical/binary":u<=12?"categorical":"text"}
-function qualityReport(p){normalizeProject(p);let a=p.analysis,du=0,s=new Set();a.rawData.forEach(r=>{let k=a.headers.map(h=>r[h]).join("␟");if(s.has(k))du++;else s.add(k)});return{rows:a.rawData.length,columns:a.headers.length,duplicates:du,columnReports:a.headers.map(c=>{let x=a.rawData.map(r=>String(r[c]??"").trim()),v=vals(a.rawData,c);return{col:c,type:type(a.rawData,c),missing:x.filter(z=>!z).length,unique:new Set(x.filter(Boolean)).size,desc:v.length?desc(v):null}})}}
+function qualityReport(p){
+  normalizeProject(p);const a=p.analysis,clean=missingTokenAudit(p);let duplicates=0,seen=new Set();
+  a.rawData.forEach(row=>{const key=JSON.stringify(a.headers.map(h=>row[h]??""));if(seen.has(key))duplicates++;else seen.add(key);});
+  return {rows:a.rawData.length,columns:a.headers.length,duplicates,missingTokens:clean.tokens,invalidZeroTokens:clean.zeroTokens,
+    configuredMissingTotal:clean.replacements,columnReports:a.headers.map(col=>{
+      const raw=a.rawData.map(row=>String(row[col]??"").trim()),v=vals(clean.rows,col),filtered=clean.rows.map(row=>String(row[col]??"").trim());
+      return {col,type:type(clean.rows,col),blank:raw.filter(x=>!x).length,configuredMissing:clean.counts[col]||0,missing:filtered.filter(x=>!x).length,
+        unique:new Set(filtered.filter(Boolean)).size,desc:v.length?desc(v):null};
+    })};
+}
 function lg(z){let p=[.9999999999998099,676.5203681218851,-1259.139216722403,771.3234287776531,-176.6150291621406,12.5073432786869,-.13857109526572,9.984369578e-6,1.505632735e-7];if(z<.5)return Math.log(Math.PI)-Math.log(Math.sin(Math.PI*z))-lg(1-z);z--;let x=p[0];for(let i=1;i<p.length;i++)x+=p[i]/(z+i);let t=z+7.5;return .5*Math.log(2*Math.PI)+(z+.5)*Math.log(t)-t+Math.log(x)}
 function bcf(a,b,x){let F=1e-30,q=a+b,ap=a+1,am=a-1,c=1,d=1-q*x/ap;if(Math.abs(d)<F)d=F;d=1/d;let h=d;for(let m=1;m<200;m++){let m2=2*m,A=m*(b-m)*x/((am+m2)*(a+m2));d=1+A*d;if(Math.abs(d)<F)d=F;c=1+A/c;if(Math.abs(c)<F)c=F;d=1/d;h*=d*c;A=-(a+m)*(q+m)*x/((a+m2)*(ap+m2));d=1+A*d;if(Math.abs(d)<F)d=F;c=1+A/c;if(Math.abs(c)<F)c=F;d=1/d;let e=d*c;h*=e;if(Math.abs(e-1)<3e-14)break}return h}
 function ib(x,a,b){if(x<=0)return 0;if(x>=1)return 1;let t=Math.exp(lg(a+b)-lg(a)-lg(b)+a*Math.log(x)+b*Math.log(1-x));return x<(a+1)/(a+b+2)?t*bcf(a,b,x)/a:1-t*bcf(b,a,1-x)/b}
@@ -86,11 +106,42 @@ function runAnalysis(p,c){
     const distinct=[...new Set(entries)];
     if(distinct.length>2||!distinct.includes(success))return{error:"The selected binary columns must contain no more than two observed categories, including the stated success value. Check coding and missing-value rules."};
   }
-  const result=calculateAnalysis(p,c);
+  const prepared=missingTokenAudit(p);
+  if(prepared.zeroTokens.length)return{error:"Zero is configured as a missing-value token. Zero may be a genuine observed value. Preserve the original data and recode missing zeros in a documented analysis copy before running a calculation."};
+  const activeProject={...p,analysis:{...p.analysis,rawData:prepared.rows}};
+  const result=calculateAnalysis(activeProject,c);
+  if(result&&!result.error){result.missingness={tokens:prepared.active,convertedCells:prepared.replacements,countsByColumn:prepared.counts,rowsImported:rows.length};}
+
   if(result?.output?.error)return{error:result.output.error};
   return result;
 }
-function assumptionAudit(p,r){let i=[],o=r.output||{},c=r.config||{},d=p.analysis.rawData||[],m=p.methods||{};if(o.error)return{issues:[["critical",o.error]]};if(["independent_two","groups_three"].includes(r.kind))Object.entries(groups(d,c.group,c.y)).forEach(([n,a])=>{let z=desc(a);if(z.n<10)i.push(["info",`${n}: small group n = ${z.n}`]);if(Math.abs(z.skewness||0)>1.5)i.push(["warning",`${n}: strong sample skewness (${z.skewness.toFixed(2)})`]);if(z.outliers)i.push(["info",`${n}: ${z.outliers} 1.5×IQR outlier flag(s)`])});if(r.kind==="correlation"){i.push(["info","Inspect the scatterplot for linear or monotonic form, clustered observations, leverage and unusual points."]);if(o.p_note)i.push(["warning",o.p_note]);}if(r.kind==="categorical_assoc"&&o.cellsExpectedBelow5)i.push(["warning",`${o.cellsExpectedBelow5} expected cell(s) below 5; consider an exact/sparse-data route.`]);let u=m.design?.experimentalUnit||p.data?.experimentalUnit||"",rw=m.design?.rowUnit||p.data?.rowUnit||"";if(u&&rw&&u!==rw)i.push(["warning",`Independent unit is "${u}" but one row is "${rw}". Preserve nesting/repeated structure.`]);return{issues:i}}
-const fm=(x,d=3)=>Number.isFinite(x)?x.toFixed(d):"—",pf=p=>!Number.isFinite(p)?"—":p<.001?"< .001":`= ${p.toFixed(3)}`;function summary(r){let o=r.output||{};if(o.error)return o.error;if(r.kind==="descriptive_numeric")return`n=${o.n}; M=${fm(o.mean,2)}, SD=${fm(o.sd,2)}; median=${fm(o.median,2)}, IQR=${fm(o.q1,2)}–${fm(o.q3,2)}; range=${fm(o.min,2)}–${fm(o.max,2)}.`;if(r.kind==="descriptive_categorical")return`${o.n} non-missing; ${o.rows.slice(0,4).map(x=>`${x.value}: n=${x.count} (${x.percent.toFixed(1)}%)`).join("; ")}.`;if(r.kind==="correlation"){let x=o.r??o.rho;let infer=o.p==null?", inferential p-value withheld pending a suitable procedure":`, ${o.p_approximate?"approximate ":""}p ${pf(o.p)}`;return`${o.test}: n=${o.n}, ${o.r!=null?"r":"ρ"}=${fm(x)}${infer}${o.ci?`, 95% CI [${fm(o.ci[0])}, ${fm(o.ci[1])}]`:""}. Association only.`}if(r.kind==="independent_two")return`${o.test}: mean difference=${fm(o.difference,2)}, 95% CI [${fm(o.ci?.[0],2)}, ${fm(o.ci?.[1],2)}], t(${fm(o.df,1)})=${fm(o.t)}, p ${pf(o.p)}, Hedges' g=${fm(o.hedges_g)}.`;if(r.kind==="paired_two")return`${o.test}: n=${o.n}, mean paired difference=${fm(o.mean_difference,2)}, 95% CI [${fm(o.ci?.[0],2)}, ${fm(o.ci?.[1],2)}], t(${o.df})=${fm(o.t)}, p ${pf(o.p)}, d_z=${fm(o.cohen_dz)}.`;if(r.kind==="groups_three")return`${o.test}: F(${fm(o.df1,1)}, ${fm(o.df2,1)})=${fm(o.F)}, p ${pf(o.p)}${o.eta_squared!=null?`, η²=${fm(o.eta_squared)}, ω²=${fm(o.omega_squared)}`:""}.`;if(r.kind==="categorical_assoc")return o.test.startsWith("Fisher")?`Fisher exact, p ${pf(o.p)}, OR=${fm(o.odds_ratio)}.`:`χ²(${o.df})=${fm(o.chi2)}, p ${pf(o.p)}, Cramér's V=${fm(o.cramers_v)}.`;if(r.kind==="paired_binary")return`McNemar: b=${o.discordant_b}, c=${o.discordant_c}, exact p ${pf(o.exact_p)}.`;if(r.kind==="repeated_binary")return`Cochran's Q(${o.df})=${fm(o.Q)}, p ${pf(o.p)}.`;return JSON.stringify(o)}
-function analysisRecord(p,r){let a=assumptionAudit(p,r);return{timestamp:new Date().toISOString(),structure:r.kind,configuration:r.config,output:r.output,neutral_summary:summary(r),assumption_notes:a.issues,calculation_guard_version:"C-X3c10c",validation_scope:"Automated data and model checks only; inferential assumptions and source evidence require independent review.",traceability:{file:p.analysis.fileName,imported_at:p.analysis.importedAt,rows_imported:p.analysis.rawData.length}}}
-return{normalizeProject,parseCSV,toNum:num,numericValues:vals,validPairs:pairs,mean,sd,median,quantile,descriptives:desc,frequency:freq,guessType:type,qualityReport,tCDF,pearson,spearman,welchT,pairedT,oneWayANOVA:g=>anova(g,false),welchANOVA:g=>anova(g,true),contingency,chiSquare,fisherExact2x2:fisher,mcnemar,cochranQ,recommendation,runAnalysis,assumptionAudit,neutralSummary:summary,analysisRecord};})();
+function assumptionAudit(p,r){let i=[],o=r.output||{},c=r.config||{},d=missingTokenAudit(p).rows,m=p.methods||{};if(o.error)return{issues:[["critical",o.error]]};if(["independent_two","groups_three"].includes(r.kind))Object.entries(groups(d,c.group,c.y)).forEach(([n,a])=>{let z=desc(a);if(z.n<10)i.push(["info",`${n}: small group n = ${z.n}`]);if(Math.abs(z.skewness||0)>1.5)i.push(["warning",`${n}: strong sample skewness (${z.skewness.toFixed(2)})`]);if(z.outliers)i.push(["info",`${n}: ${z.outliers} 1.5×IQR outlier flag(s)`])});if(r.kind==="correlation"){i.push(["info","Inspect the scatterplot for linear or monotonic form, clustered observations, leverage and unusual points."]);if(o.p_note)i.push(["warning",o.p_note]);}if(r.kind==="categorical_assoc"&&o.cellsExpectedBelow5)i.push(["warning",`${o.cellsExpectedBelow5} expected cell(s) below 5; consider an exact/sparse-data route.`]);let u=m.design?.experimentalUnit||p.data?.experimentalUnit||"",rw=m.design?.rowUnit||p.data?.rowUnit||"";if(u&&rw&&u!==rw)i.push(["warning",`Independent unit is "${u}" but one row is "${rw}". Preserve nesting/repeated structure.`]);return{issues:i}}
+const fm=(x,d=3)=>Number.isFinite(x)?x.toFixed(d):"—",pf=p=>!Number.isFinite(p)?"—":p<.001?"< .001":`= ${p.toFixed(3)}`;function summary(r){let o=r.output||{};if(o.error)return o.error;if(r.kind==="descriptive_numeric")return`n=${o.n}, missing=${o.missing}; M=${fm(o.mean,2)}, SD=${fm(o.sd,2)}; median=${fm(o.median,2)}, IQR=${fm(o.q1,2)}–${fm(o.q3,2)}; range=${fm(o.min,2)}–${fm(o.max,2)}.`;if(r.kind==="descriptive_categorical")return`${o.n} non-missing, ${o.missing} missing; ${o.rows.slice(0,4).map(x=>`${x.value}: n=${x.count} (${x.percent.toFixed(1)}%)`).join("; ")}.`;if(r.kind==="correlation"){let x=o.r??o.rho;let infer=o.p==null?", inferential p-value withheld pending a suitable procedure":`, ${o.p_approximate?"approximate ":""}p ${pf(o.p)}`;return`${o.test}: n=${o.n}, ${o.r!=null?"r":"ρ"}=${fm(x)}${infer}${o.ci?`, 95% CI [${fm(o.ci[0])}, ${fm(o.ci[1])}]`:""}. Association only.`}if(r.kind==="independent_two")return`${o.test}: mean difference=${fm(o.difference,2)}, 95% CI [${fm(o.ci?.[0],2)}, ${fm(o.ci?.[1],2)}], t(${fm(o.df,1)})=${fm(o.t)}, p ${pf(o.p)}, Hedges' g=${fm(o.hedges_g)}.`;if(r.kind==="paired_two")return`${o.test}: n=${o.n}, mean paired difference=${fm(o.mean_difference,2)}, 95% CI [${fm(o.ci?.[0],2)}, ${fm(o.ci?.[1],2)}], t(${o.df})=${fm(o.t)}, p ${pf(o.p)}, d_z=${fm(o.cohen_dz)}.`;if(r.kind==="groups_three")return`${o.test}: F(${fm(o.df1,1)}, ${fm(o.df2,1)})=${fm(o.F)}, p ${pf(o.p)}${o.eta_squared!=null?`, η²=${fm(o.eta_squared)}, ω²=${fm(o.omega_squared)}`:""}.`;if(r.kind==="categorical_assoc")return o.test.startsWith("Fisher")?`Fisher exact, p ${pf(o.p)}, OR=${fm(o.odds_ratio)}.`:`χ²(${o.df})=${fm(o.chi2)}, p ${pf(o.p)}, Cramér's V=${fm(o.cramers_v)}.`;if(r.kind==="paired_binary")return`McNemar: b=${o.discordant_b}, c=${o.discordant_c}, exact p ${pf(o.exact_p)}.`;if(r.kind==="repeated_binary")return`Cochran's Q(${o.df})=${fm(o.Q)}, p ${pf(o.p)}.`;return JSON.stringify(o)}
+function analysisRecord(p,r){
+  const audit=assumptionAudit(p,r),missing=r.missingness||missingTokenAudit(p);
+  return {timestamp:new Date().toISOString(),structure:r.kind,configuration:r.config,output:r.output,
+    neutral_summary:summary(r),assumption_notes:audit.issues,missingness:missing,calculation_guard_version:"C-X3c10d",
+    validation_scope:"Automated data and model checks only; inferential assumptions and source evidence require independent review.",
+    traceability:{file:p.analysis.fileName||"",imported_at:p.analysis.importedAt||"",rows_imported:p.analysis.rawData.length,
+      headers:[...(p.analysis.headers||[])],import_warnings:[...(p.analysis.importWarnings||[])]}};
+}
+function resultsMarkdown(p){
+  const lines=["# Results Analysis Notes","",`Research question  ${p.data?.finalRQ||"Not recorded"}`,
+    `Source CSV  ${p.analysis?.fileName||"Not recorded"}`,`Imported rows  ${p.analysis?.rawData?.length||0}`,
+    "","## Import and missing-data documentation",
+    `Explicit missing tokens  ${p.analysis?.missingTokens||"None recorded"}`,
+    ...((p.analysis?.importWarnings||[]).map(x=>`- Import note  ${x}`)),"",
+    "Stored analyses are records of calculations. Their status does not establish prespecification, research approval or inferential validity.",""];
+  (p.analysis?.runs||[]).forEach((r,i)=>{
+    lines.push(`## Analysis ${i+1}`,`Recorded test  ${r.output?.test||r.structure||"Unknown"}`,
+      `Calculation safeguards  ${r.calculation_guard_version||"Historical record, not verified under current guards"}`,
+      `Dataset file recorded for this analysis  ${r.traceability?.file||"Not recorded"}`,
+      `Rows in imported dataset at calculation  ${r.traceability?.rows_imported??"Not recorded"}`,
+      `Missing tokens used for this analysis  ${(r.missingness?.tokens||[]).join(", ")||"Not recorded"}`,
+      `Configured missing cells excluded  ${r.missingness?.convertedCells??"Not recorded"}`,
+      `Calculation summary  ${r.neutral_summary||"Not recorded"}`,"",
+      ...(r.assumption_notes||[]).map(x=>`- Check  ${x[1]}${x[2]?`. ${x[2]}`:""}`),"");
+  });
+  return lines.join("\n");
+}
+return{normalizeProject,parseCSV,missingTokenAudit,resultsMarkdown,toNum:num,numericValues:vals,validPairs:pairs,mean,sd,median,quantile,descriptives:desc,frequency:freq,guessType:type,qualityReport,tCDF,pearson,spearman,welchT,pairedT,oneWayANOVA:g=>anova(g,false),welchANOVA:g=>anova(g,true),contingency,chiSquare,fisherExact2x2:fisher,mcnemar,cochranQ,recommendation,runAnalysis,assumptionAudit,neutralSummary:summary,analysisRecord};})();
