@@ -18,16 +18,16 @@ window.RMSGuidanceUI=(()=>{
    return `<div class="stage-guide">
      <div class="guide-kicker">Student guide · Stage ${stageId}</div><h3>${E(g.title)}</h3><p class="guide-plain">${E(g.plain)}</p>
      <h4>How to do this stage</h4><ol class="guide-steps">${g.steps.map(x=>`<li>${E(x)}</li>`).join("")}</ol>
-     ${g.walkthrough?`<details class="guide-walkthrough" open><summary>See how a first-time researcher could think through this</summary><div class="walk-situation"><b>Situation</b><p>${E(g.walkthrough.situation)}</p></div><div class="walk-thinking"><b>Reasoning</b><ol>${g.walkthrough.thinking.map(x=>`<li>${E(x)}</li>`).join("")}</ol></div><div class="walk-draft"><b>Possible draft after that reasoning</b><p>${E(g.walkthrough.draft)}</p></div><div class="example-boundary">The value of this example is the reasoning path. Your own evidence and wording should come from your project.</div></details>`:""}
+     ${g.walkthrough?`<details class="guide-walkthrough" open><summary>See how a first-time researcher could think through this</summary><div class="walk-situation"><b>Situation</b><p>${E(g.walkthrough.situation)}</p></div><div class="walk-thinking"><b>Reasoning</b><ol>${g.walkthrough.thinking.map(x=>`<li>${E(x)}</li>`).join("")}</ol></div><div class="walk-draft"><b>Possible draft after that reasoning</b><p>${E(g.walkthrough.draft)}</p></div><div class="example-boundary">Follow the reasoning process, then use your own project's records and wording. Examples do not establish findings.</div></details>`:""}
      <div class="guide-strong"><strong>What a strong response looks like</strong><p>${E(g.strong)}</p></div>
-     <details class="guide-examples" open><summary>Examples to guide your thinking</summary>${g.examples.map(x=>`<div class="guide-example"><b>${E(x.label)}</b><p>${E(x.text)}</p></div>`).join("")}<div class="example-boundary">Examples are models of reasoning and specificity. Change the content to match your own project; do not paste an example as your answer.</div></details>
+     <details class="guide-examples" open><summary>Examples to guide your thinking</summary>${g.examples.map(x=>`<div class="guide-example"><b>${E(x.label)}</b><p>${E(x.text)}</p></div>`).join("")}<div class="example-boundary">These examples show how a response can be developed. Write from your own project and distinguish proposed actions from completed work.</div></details>
      <details class="guide-stuck"><summary>If you are stuck, try one of these</summary><ul>${g.stuck.map(x=>`<li>${E(x)}</li>`).join("")}</ul></details>
      <h4>Words you need for this stage</h4>${termsHTML(g.terms)}
    </div>`;
  }
  function responseCue(key,value="",type="textarea"){
    const r=R?.fields?.[key];if(!r)return"";
-   if(type==="select")return `<div class="response-cue"><b>What belongs here</b><span>${E(r.expected_shape)}. ${E(r.typical_length)}</span></div>`;
+   if(type==="select")return `<div class="response-cue"><b>What this field asks for</b><span>${E(r.expected_shape)}. ${E(r.typical_length)}</span></div>`;
    const words=String(value||"").trim()?String(value).trim().split(/\s+/).length:0;
    return `<div class="response-cue" data-response-cue="${E(key)}"><div><b>Typical working response</b><span>${E(r.expected_shape)} · ${E(r.typical_length)}</span></div><small data-response-count="${E(key)}">${words} word${words===1?"":"s"} currently</small></div>`;
  }
@@ -36,9 +36,9 @@ window.RMSGuidanceUI=(()=>{
    return `<div class="response-models">
      <div class="response-expectation"><b>How much should I write?</b><p>${E(r.expected_shape)}. A typical working response is ${E(r.typical_length)}.</p><small>${E(r.length_note)}</small></div>
      <div class="response-contrast vague"><b>Too vague</b><p>${E(r.too_vague)}</p></div>
-     <div class="response-contrast good"><b>Good working response</b><p>${E(r.good_working_response)}</p><small>This is a model from another research context. Use the level of specificity, not the answer.</small></div>
+     <div class="response-contrast good"><b>Good working response</b><p>${E(r.good_working_response)}</p><small>This is an illustrative response. Use its level of specificity, then check any factual claims against your own project records.</small></div>
      ${r.detailed_response?`<div class="response-contrast detailed"><b>More detailed response when this field needs fuller explanation</b><p>${E(r.detailed_response)}</p></div>`:""}
-     <div class="response-why"><b>Why this is the right kind of response</b><p>${E(r.why_it_works)}</p></div>
+     <div class="response-why"><b>What makes this example useful</b><p>${E(r.why_it_works)}</p></div>
    </div>`;
  }
  function updateResponseCount(key,value){
