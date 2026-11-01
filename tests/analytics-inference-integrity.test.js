@@ -30,4 +30,11 @@ if(!A.assumptionAudit(independent,spearman).issues.some(x=>x[0]==="warning"&&x[1
 if(A.toNum("1,2")!==null||A.toNum("1,200")!==1200||A.toNum("0")!==0||A.toNum("NA")!==null)process.exit(1);
 const broken={analysis:{rawData:[{x:"1",y:"2"}],importWarnings:["1 data row(s) had extra fields beyond the header; those extra values were not imported."]},data:{},methods:{}};
 if(!A.runAnalysis(broken,{structure:"descriptive_numeric",y:"y"}).error)process.exit(1);
+const anovaRows=[{group:"A",value:"1"},{group:"A",value:"2"},{group:"B",value:"4"},{group:"B",value:"5"},{group:"C",value:"9"},{group:"C",value:"9"}];
+const anovaProject={analysis:{rawData:anovaRows,headers:["group","value"]},data:{},methods:{}};
+A.normalizeProject(anovaProject);
+const welch=A.runAnalysis(anovaProject,{structure:"groups_three",group:"group",y:"value",anova:"welch"});
+if(!welch.error||!welch.error.includes("every selected group"))process.exit(1);
+const classical=A.runAnalysis({analysis:{rawData:[{g:"A",v:"1"},{g:"A",v:"1"},{g:"B",v:"2"},{g:"B",v:"2"},{g:"C",v:"3"},{g:"C",v:"3"}]},data:{},methods:{}},{structure:"groups_three",group:"g",y:"v",anova:"classical"});
+if(!classical.error||!classical.error.includes("residual variance"))process.exit(1);
 console.log("PASS Data Lab inferential integrity guards");
