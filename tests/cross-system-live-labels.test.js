@@ -5,7 +5,7 @@ const pathSource=fs.readFileSync(path.join(__dirname,"../assets/path-coach.js"),
 const label=(name)=>'<label>'+name+'</label>',esc=s=>String(s??"");
 const project={data:{},methods:{sampling:{},design:{},protocolVersions:[{lockedAt:"invalid",researchQuestion:"Test",designType:"Qualitative"}]},schema:[]};
 const PathCoach={methodSection:()=>({issues:[]}),methodsReadiness:()=>({label:"Institutional or teacher review required",critical:0,warning:0,info:0,ethicsStatus:"teacher_review",sections:{}})};
-function extract(name,next){const i=source.indexOf("function "+name+"(){"),j=source.indexOf("function "+next+"(){",i);if(i<0||j<=i)throw Error("Cannot locate "+name);return source.slice(i,j)}
+function extract(name,next){const i=source.indexOf("function "+name+"(){"),j=source.indexOf("function "+next+"(",i);if(i<0||j<=i)throw Error("Cannot locate "+name);return source.slice(i,j)}
 const sample=new Function("project","PathCoach","mInput","esc",extract("methodsSamplingTab","methodsMeasurementTab")+"return methodsSamplingTab;")(project,PathCoach,label,esc);
 const data=new Function("project","PathCoach","mInput","esc",extract("methodsDataTab","methodsAuditTab")+"return methodsDataTab;")(project,PathCoach,label,esc);
 const audit=new Function("project","PathCoach","mInput","esc",extract("methodsAuditTab","methodsWorkspace")+"return methodsAuditTab;")(project,PathCoach,label,esc);
