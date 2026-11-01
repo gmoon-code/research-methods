@@ -82,14 +82,14 @@ window.RMSLiterature = (() => {
   function gapReadiness(project){
     const included=(project.sources||[]).filter(s=>s.screeningStatus==="Included");
     const themes=themeMap(project);
-    const withMulti=themes.filter(t=>t.sources.length>=2);
+    const withMulti=themes.filter(t=>new Set([...t.supporting,...t.conflicting,...t.mixed].map(s=>s.id)).size>=2);
     const withConflict=themes.filter(t=>t.conflicting.length || t.mixed.length);
     const limitations=included.filter(s=>String(s.limits||"").trim()).length;
     const measurements=new Set(included.map(s=>s.measures).filter(Boolean)).size;
     const contexts=new Set(included.map(s=>s.sample).filter(Boolean)).size;
     const messages=[];
-    if(included.length<4) messages.push("The included evidence base is still small. A strong novelty/gap claim would be premature.");
-    if(withMulti.length<2) messages.push("Few candidate themes are supported by multiple studies. Build the synthesis matrix before claiming a pattern.");
+    if(!included.length) messages.push("No sources have been marked Included. Check eligibility decisions before summarising a literature pattern.");
+    if(withMulti.length<2) messages.push("Fewer than two themes currently link multiple eligible sources with recorded evidence stances. Review the studies and their measures before describing convergence.");
     if(limitations<Math.max(2,Math.ceil(included.length/2))) messages.push("Extract limitations from more included studies before using recurring limitations as a study rationale.");
     return {
       included:included.length,
@@ -104,16 +104,22 @@ window.RMSLiterature = (() => {
   }
 
   function claimAudit(project){
-    const ids=new Set((project.sources||[]).map(s=>s.id));
+    const byId=new Map((project.sources||[]).map(s=>[s.id,s]));
     return (project.litClaims||[]).map(c=>{
-      const refs=(c.sourceIds||[]).filter(Boolean);
-      const valid=refs.filter(x=>ids.has(x));
+      const refs=[...new Set((c.sourceIds||[]).map(x=>String(x||"").trim()).filter(Boolean))];
+      const includedIds=refs.filter(id=>byId.get(id)?.screeningStatus==="Included");
+      const pendingIds=refs.filter(id=>byId.get(id)?.screeningStatus==="Pending");
+      const excludedIds=refs.filter(id=>byId.get(id)?.screeningStatus==="Excluded");
+      const missingIds=refs.filter(id=>!byId.has(id));
       return {
         ...c,
-        sourceCount:valid.length,
-        missingIds:refs.filter(x=>!ids.has(x)),
-        traceable:valid.length>0,
-        synthesis:valid.length>=2
+        sourceCount:includedIds.length,
+        includedIds,
+        pendingIds,
+        excludedIds,
+        missingIds,
+        traceable:includedIds.length>0,
+        synthesis:includedIds.length>=2
       };
     });
   }
