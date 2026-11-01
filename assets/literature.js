@@ -141,6 +141,34 @@ window.RMSLiterature = (() => {
     return {complete,confirmed,missing,label:!complete?"Incomplete record":confirmed?"Execution confirmed by student":"Execution not confirmed"};
   }
 
+  function reviseSearchLog(project,index,updates,reason,editedAt){
+    const records=project.searchLog||[];
+    const original=records[index];
+    if(!original)throw Error("Search record was not found.");
+    const why=String(reason??"").trim();
+    if(!why)throw Error("Explain what was corrected and why, so the earlier record remains interpretable.");
+    if(!/^\d{4}-\d{2}-\d{2}T/.test(String(editedAt??"")))throw Error("A valid revision timestamp is required.");
+    const keys=["date","database","query","filters","results","kept","notes"];
+    const before=Object.fromEntries(keys.map(k=>[k,original[k]??""]));
+    before.executed=original.executed===true;
+    const after=Object.fromEntries(keys.map(k=>[k,String(updates?.[k]??original[k]??"").trim()]));
+    const changed=keys.filter(k=>String(before[k])!==after[k]);
+    if(!changed.length)throw Error("No record details changed. Review the fields before saving a correction.");
+    const executionFields=["date","database","query","filters","results"];
+    const requiresConfirmation=changed.some(k=>executionFields.includes(k));
+    const oldRevisions=Array.isArray(original.revisions)?original.revisions:[];
+    const revised={...original,...after,executed:requiresConfirmation?false:before.executed,
+      revisions:[...oldRevisions,{at:String(editedAt),reason:why,changed,before}]};
+    records[index]=revised;
+    return {record:revised,changed,requiresConfirmation};
+  }
+
+  function makeSearchRevisionCSV(project){
+    const heads=["Search record position","Current database","Current query","Revision timestamp","Correction reason","Changed fields","Previous date","Previous database","Previous query","Previous filters","Previous results","Previous screened/kept","Previous notes","Previously execution-confirmed"];
+    const rows=(project.searchLog||[]).flatMap((record,i)=>(record.revisions||[]).map(rev=>[i+1,record.database,record.query,rev.at,rev.reason,(rev.changed||[]).join("; "),rev.before?.date,rev.before?.database,rev.before?.query,rev.before?.filters,rev.before?.results,rev.before?.kept,rev.before?.notes,rev.before?.executed===true?"yes":"no"]));
+    return [heads,...rows].map(row=>row.map(escCSV).join(",")).join("\n");
+  }
+
   function makeSearchLogCSV(project){
     const heads=["Date","Database/search system","Search string","Filters","Results returned","Screened/kept","Notes","Documentation status"];
     const rows=(project.searchLog||[]).map(x=>[x.date,x.database,x.query,x.filters,x.results,x.kept,x.notes,searchLogStatus(x).label]);
@@ -196,7 +224,7 @@ window.RMSLiterature = (() => {
 
   return {
     normalizeProject,nextSourceId,trappSummary,sourceCompleteness,uniqueThemes,themeMap,
-    gapReadiness,claimAudit,makeStudyMatrixCSV,makeSearchLogCSV,searchLogStatus,makeThemeCSV,
+    gapReadiness,claimAudit,makeStudyMatrixCSV,makeSearchLogCSV,makeSearchRevisionCSV,searchLogStatus,reviseSearchLog,makeThemeCSV,
     outlineMarkdown,sourceIdsForTheme
   };
 })();
