@@ -63,7 +63,7 @@ window.RMSLiterature = (() => {
     return themes.map(theme=>{
       const rows=(project.sources||[]).filter(s=>s.screeningStatus==="Included").map(s=>{
         const ev=(s.themeEvidence||[]).filter(e=>String(e.theme||"").trim()===theme);
-        const legacy=(s.themes||[]).includes(theme) && !ev.length ? [{theme,stance:"supports",note:"Tagged in source record"}] : [];
+        const legacy=(s.themes||[]).includes(theme) && !ev.length ? [{theme,stance:"background",note:"Legacy theme tag; supporting evidence has not been recorded"}] : [];
         const all=ev.concat(legacy);
         return all.length ? {source:s,evidence:all} : null;
       }).filter(Boolean);
