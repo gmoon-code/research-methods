@@ -150,14 +150,14 @@ window.RMSLiterature = (() => {
     if(!/^\d{4}-\d{2}-\d{2}T/.test(String(editedAt??"")))throw Error("A valid revision timestamp is required.");
     const keys=["date","database","query","filters","results","kept","notes"];
     const before=Object.fromEntries(keys.map(k=>[k,original[k]??""]));
-    before.executed=original.executed===true;
+    before.executed=original.executed===true?true:original.executed===false?false:null;
     const after=Object.fromEntries(keys.map(k=>[k,String(updates?.[k]??original[k]??"").trim()]));
     const changed=keys.filter(k=>String(before[k])!==after[k]);
     if(!changed.length)throw Error("No record details changed. Review the fields before saving a correction.");
     const executionFields=["date","database","query","filters","results"];
     const requiresConfirmation=changed.some(k=>executionFields.includes(k));
     const oldRevisions=Array.isArray(original.revisions)?original.revisions:[];
-    const revised={...original,...after,executed:requiresConfirmation?false:before.executed,
+    const revised={...original,...after,executed:requiresConfirmation?false:original.executed,
       revisions:[...oldRevisions,{at:String(editedAt),reason:why,changed,before}]};
     records[index]=revised;
     return {record:revised,changed,requiresConfirmation};
@@ -165,7 +165,7 @@ window.RMSLiterature = (() => {
 
   function makeSearchRevisionCSV(project){
     const heads=["Search record position","Current database","Current query","Revision timestamp","Correction reason","Changed fields","Previous date","Previous database","Previous query","Previous filters","Previous results","Previous screened/kept","Previous notes","Previously execution-confirmed"];
-    const rows=(project.searchLog||[]).flatMap((record,i)=>(record.revisions||[]).map(rev=>[i+1,record.database,record.query,rev.at,rev.reason,(rev.changed||[]).join("; "),rev.before?.date,rev.before?.database,rev.before?.query,rev.before?.filters,rev.before?.results,rev.before?.kept,rev.before?.notes,rev.before?.executed===true?"yes":"no"]));
+    const rows=(project.searchLog||[]).flatMap((record,i)=>(record.revisions||[]).map(rev=>[i+1,record.database,record.query,rev.at,rev.reason,(rev.changed||[]).join("; "),rev.before?.date,rev.before?.database,rev.before?.query,rev.before?.filters,rev.before?.results,rev.before?.kept,rev.before?.notes,rev.before?.executed===true?"yes":rev.before?.executed===false?"no":"not recorded"]));
     return [heads,...rows].map(row=>row.map(escCSV).join(",")).join("\n");
   }
 
