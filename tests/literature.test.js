@@ -82,4 +82,8 @@ const outlineText=L.outlineMarkdown(outlineSample);
 if(!outlineText.includes("Linked source IDs (verify claim support)")||outlineText.includes("**Supporting sources:**"))process.exit(1);
 if(!outlineText.includes("P01 (Pending)")||!outlineText.includes("E01 (Excluded)")||!outlineText.includes("MISSING (unknown ID)"))process.exit(1);
 if(outlineText.includes("**Transition / implication:**"))process.exit(1);
+const unknownExecution={searchLog:[{date:"",database:"ERIC",query:"prior query",filters:"none",results:4}]};
+L.reviseSearchLog(unknownExecution,0,{date:"2026-10-30"},"Recovered export date","2026-11-01T11:00:00Z");
+if(unknownExecution.searchLog[0].revisions[0].before.executed!==null)process.exit(1);
+if(!L.makeSearchRevisionCSV(unknownExecution).includes("not recorded"))process.exit(1);
 console.log("PASS literature workspace engine");
