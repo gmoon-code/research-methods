@@ -99,6 +99,17 @@ function runAnalysis(p,c){
   const prepared=missingTokenAudit(p);
   if(prepared.zeroTokens.length)return{error:"Zero is configured as a missing-value token. Zero may be a genuine observed value. Preserve the original data and recode missing zeros in a documented analysis copy before running a calculation."};
 
+  const numericColumns=structure==="descriptive_numeric"?[c.y]:structure==="correlation"||structure==="paired_two"?[c.x,c.y]:
+    structure==="independent_two"||structure==="groups_three"?[c.y]:[];
+  const recordedHeaders=p.analysis?.headers?.length?p.analysis.headers:Object.keys(rows[0]||{});
+  for(const column of numericColumns){
+    if(!column||!recordedHeaders.includes(column))return{error:"Select an existing numerical column for each required variable."};
+    const invalid=prepared.rows.filter(row=>String(row[column]??"").trim()!==""&&num(row[column])===null).length;
+    if(invalid)return{error:`The selected numerical column "${column}" contains ${invalid} nonblank value(s) that are not valid numbers or declared missing tokens. Check the original records and document any corrections before calculation.`};
+  }
+  if(["correlation","paired_two","categorical_assoc","paired_binary"].includes(structure)&&c.x===c.y)return{error:"Choose two distinct recorded variables or occasions. A column compared with itself does not provide the intended evidence."};
+  if(["independent_two","groups_three"].includes(structure)&&c.group===c.y)return{error:"The group indicator and numerical outcome must refer to different columns."};
+  if(structure==="repeated_binary"&&Array.isArray(c.columns)&&new Set(c.columns).size!==c.columns.length)return{error:"Repeated conditions must use distinct recorded columns, one per occasion."};
   if(["paired_binary","repeated_binary"].includes(structure)){
     const columns=structure==="paired_binary"?[c.x,c.y]:(Array.isArray(c.columns)?c.columns:[]);
     if(columns.some(col=>!col||!p.analysis.headers?.includes(col))||columns.length<(structure==="paired_binary"?2:3))return{error:"Choose the required existing binary-outcome columns before running this analysis."};
