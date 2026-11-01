@@ -13,6 +13,7 @@ const s=sample(),d=data(),a=audit();
 if(!s.includes("planned or observed sample or corpus")||s.includes("and actual sample/corpus"))process.exit(1);
 if(!d.includes("data row or evidence record")||!d.includes("tokens separately in the Data Lab"))process.exit(1);
 if(!d.includes("traceable records without a numerical table"))process.exit(1);
+if(!d.includes("No tabular columns defined.")||!source.includes("8 · Evidence records"))process.exit(1);
 if(!a.includes("critical issue(s) requiring attention")||!a.includes("No saved protocol versions yet.")&&project.methods.protocolVersions.length===0)process.exit(1);
 if(!a.includes("Date not recorded")||a.includes("Invalid Date"))process.exit(1);
 if(a.includes("No locked protocol versions yet."))process.exit(1);
