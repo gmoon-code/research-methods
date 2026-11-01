@@ -139,6 +139,10 @@ window.RMSMethods = (() => {
       elevate("teacher_review");
       issues.push(["warning","Human participation not classified","Determine whether the project involves people or linkable human records before deciding which permissions and privacy protections apply."]);
     }
+    if(e.humanParticipants==="no" && ["identifiable","minors","sensitive","intervention"].some(key=>e[key]==="yes")){
+      elevate("teacher_review");
+      issues.push(["critical","Participant screening answers conflict","The project indicates no human participants or records but also marks a human-related risk or intervention. Resolve the discrepancy and confirm required school or institutional review before collection."]);
+    }
     if(e.humanParticipants==="yes"){
       elevate("teacher_review");
       if(!present(e.consent)) issues.push(["critical","Consent/permission plan missing","Document the required school or institutional review and consent or permission process before recruitment or collection. A written plan is not evidence that approval was granted."]);
@@ -168,7 +172,7 @@ window.RMSMethods = (() => {
     if(project.methods?.ethics?.humanParticipants==="yes"){
       if(!hasConsent) issues.push(["warning","Human-participant procedure has no consent/permission step","Show required review, consent and permission before recruitment or research collection, following the applicable school or institutional rules."]);
       const firstPermission=steps.findIndex(step=>/consent|assent|permission|approval/i.test(step.action||""));
-      const firstCollection=steps.findIndex(step=>/interview|survey|measure|record responses|collect data|extract grade|assign treatment/i.test(step.action||""));
+      const firstCollection=steps.findIndex(step=>/recruit|invite participants|approach students|interview|survey|measure|record responses|collect data|extract grade|assign treatment/i.test(step.action||""));
       if(firstCollection>=0 && firstPermission>=0 && firstPermission>firstCollection) issues.push(["critical","Permission appears after research collection","The listed procedure places collection before a permission or review step. Confirm the correct order and required approvals before approaching participants."]);
     }
     return {issues,count:steps.length};
@@ -176,9 +180,9 @@ window.RMSMethods = (() => {
 
   function dataSchemaAudit(project){
     const schema=project.schema||[], d=(project.methods||{}).design||{}, issues=[];
-    const profile=designProfile(project);
+    const profile=designProfile(project),isQual=profile.isQual||project.pathway?.selected==="qualitative";
     if(!schema.length){
-      if(profile.isQual) issues.push(["warning","Qualitative record structure missing","Define how interviews, observations, documents, codes or other evidence will be identified and linked to interpretations. A spreadsheet is not mandatory."]);
+      if(isQual) issues.push(["warning","Qualitative record structure missing","Define how interviews, observations, documents, codes or other evidence will be identified and linked to interpretations. A spreadsheet is not mandatory."]);
       else issues.push(["critical","No data dictionary columns","Define the recorded variables or extraction fields before data collection or review extraction."]);
     }
     const names=schema.map(x=>String(x.name||"").trim()).filter(Boolean);
@@ -189,7 +193,7 @@ window.RMSMethods = (() => {
       if(["0","0.0"].includes(String(x.missing||"").trim()) && /Numeric|Count|Binary|Ordinal/i.test(String(x.type||""))) issues.push(["warning",`${x.name||`Column ${i+1}`}: zero used as a missing code`,"Check whether zero is a valid observed value. Preserve missing status separately when zero can represent a genuine measurement or category."]);
     });
     if(!present(d.rowUnit)){
-      if(profile.isQual && !schema.length) issues.push(["info","Evidence-record unit not described","Describe how each interview, observation, document or excerpt will be identified and linked, even when there is no data table."]);
+      if(isQual && !schema.length) issues.push(["info","Evidence-record unit not described","Describe how each interview, observation, document or excerpt will be identified and linked, even when there is no data table."]);
       else issues.push(["critical","Row unit missing","Define the meaning of one row or extracted record, including how it links to a participant, study, occasion or assigned unit."]);
     }
     if(present(d.rowUnit) && present(d.experimentalUnit) && d.rowUnit!==d.experimentalUnit){
