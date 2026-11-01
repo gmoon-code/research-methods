@@ -24,6 +24,6 @@ if(!ci.includes("A record match does not verify"))process.exit(1);
 if(!ci.includes("Brown")||!ci.includes("Pending"))process.exit(1);
 if(!inHtml.includes("Introduction evidence plan")||!inHtml.includes("Possible focus"))process.exit(1);
 if(!inHtml.includes("paragraph boundaries can change"))process.exit(1);
-if(!code.includes("The newest saved calculation is not automatically the prespecified primary analysis."))process.exit(1);
+if(!code.includes("the most recently saved analysis is not necessarily the prespecified primary analysis."))process.exit(1);
 if(!code.includes("The student still writes the prose." )&&code.includes("Latest locked protocol"))process.exit(1);
 console.log("PASS Writing Lab rendered source and voice guidance");
