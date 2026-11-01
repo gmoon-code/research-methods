@@ -28,12 +28,13 @@ window.RMSMethods = (() => {
     const isDesc=/Descriptive/i.test(type);
     const isQual=/Qualitative/i.test(type);
     const isReview=/Literature review|Meta-analysis/i.test(type);
-    return {type,isExp,isQuasi,isObs,isDesc,isQual,isReview,human:!!m.ethics.humanParticipants};
+    return {type,isExp,isQuasi,isObs,isDesc,isQual,isReview,human:m.ethics.humanParticipants==="yes"};
   }
 
   function roleOptions(project){
     const p=designProfile(project);
-    if(p.isExp || p.isQuasi) return ["Manipulated independent variable","Outcome / dependent variable","Covariate","Blocking/stratification variable","Process/fidelity measure","Identifier","Other"];
+    if(p.isExp) return ["Manipulated independent variable","Outcome / dependent variable","Covariate","Blocking/stratification variable","Process/fidelity measure","Identifier","Other"];
+    if(p.isQuasi) return ["Intervention / evaluated exposure","Manipulated independent variable","Outcome / dependent variable","Covariate","Blocking/stratification variable","Process/fidelity measure","Identifier","Other"];
     if(p.isObs) return ["Predictor / exposure","Outcome","Covariate / potential confounder","Moderator","Identifier","Other"];
     if(p.isDesc) return ["Descriptive variable","Grouping/context variable","Identifier","Other"];
     if(p.isQual) return ["Participant/context descriptor","Interview/observation domain","Identifier","Other"];
@@ -47,8 +48,11 @@ window.RMSMethods = (() => {
     const unit=d.experimentalUnit||project.data.experimentalUnit||"";
     let structure="Not yet determined";
     if(sameUnit) structure="Repeated-measures / within-unit";
+    else if(/nonrandom|non-random/i.test(assigned)) structure="Nonrandom assigned between-unit";
+    else if(/naturally|observed|existing/i.test(assigned)) structure="Observed exposure; no researcher assignment";
     else if(/random/i.test(assigned)) structure="Randomized between-unit";
-    else if(/nonrandom|natural|existing/i.test(assigned)) structure="Nonrandom between-unit / observational";
+    else if(/single-group|no assignment/i.test(assigned)) structure="Single-group / no assignment";
+    else if(/not applicable/i.test(assigned)) structure="Not applicable";
     return {structure,unit};
   }
 
@@ -57,7 +61,8 @@ window.RMSMethods = (() => {
     const constructs=m.constructs||[];
     const roles=constructs.map(x=>x.role||"");
     if(p.isExp || p.isQuasi){
-      if(!roles.includes("Manipulated independent variable")) issues.push(["critical","Manipulated factor missing","An experimental or quasi-experimental design needs a clearly identified factor that is deliberately varied."]);
+      if(p.isExp && !roles.includes("Manipulated independent variable")) issues.push(["critical","Manipulated factor missing","An experiment needs a clearly identified factor assigned or manipulated by the researcher."]);
+      if(p.isQuasi && !roles.some(role=>["Intervention / evaluated exposure","Manipulated independent variable"].includes(role))) issues.push(["critical","Intervention or exposure missing","Identify the intervention or policy change being evaluated. Quasi-experimental comparisons do not require random assignment, but need an appropriate comparison or time structure."]);
       if(!roles.includes("Outcome / dependent variable")) issues.push(["critical","Outcome missing","The study needs a measured response that answers the research question."]);
       if(!present(d.experimentalUnit)) issues.push(["critical","Experimental unit missing","Without the independently assigned unit, replication and independence cannot be evaluated."]);
       if(d.sameUnitAllConditions==="yes" && !present(d.orderPlan)) issues.push(["warning","Order/carryover plan missing","When the same unit receives multiple conditions, order, practice, fatigue, and carryover need consideration."]);
@@ -71,7 +76,7 @@ window.RMSMethods = (() => {
     }
     if(p.isDesc && roles.some(x=>/Outcome|independent|Predictor/.test(x))) issues.push(["warning","Descriptive design may be over-structured","A purely descriptive question does not require causal predictor/outcome roles."]);
     if(p.isQual && roles.some(x=>/independent|Outcome \/ dependent/.test(x))) issues.push(["warning","Qualitative work is being forced into IV/DV language","Use participant/context descriptors, prompts, observations, codes, and units of qualitative analysis instead."]);
-    if(present(d.experimentalUnit)) good.push("Unit of assignment/analysis is explicitly recorded.");
+    if(present(d.experimentalUnit)) good.push("A primary study unit is recorded; confirm whether it is assigned to conditions, measured, or analysed.");
     if(present(d.assignment)) good.push("Assignment/exposure process is recorded.");
     if(present(d.primaryOutcome)) good.push("Primary outcome is identified before analysis.");
     return {issues,good,profile:p,structure:inferStructure(project)};
@@ -94,14 +99,14 @@ window.RMSMethods = (() => {
   function auditSampling(project){
     const s=(project.methods||{}).sampling||{}, issues=[], good=[];
     if(!present(s.population)) issues.push(["warning","Target population/system missing","State the broader population or system the research question refers to."]);
-    if(!present(s.sample)) issues.push(["critical","Actual sample missing","State exactly who or what will actually be studied."]);
-    if(!present(s.method)) issues.push(["warning","Sampling method missing","Convenience, probability, purposive, census, or another method affects the scope of generalization."]);
+    if(!present(s.sample)) issues.push(["critical","Planned or observed sample missing","For proposed work, specify the planned sample or corpus. For completed work, report the people, organisms, records or documents actually studied."]);
+    if(!present(s.method)) issues.push(["warning","Sampling method missing","Convenience, probability, purposive or census sampling can support different claims about the wider population."]);
     if(!present(s.frame) && /random|stratified|systematic/i.test(s.method||"")) issues.push(["warning","Sampling frame missing","Probability-style sampling requires a defined list/frame or mechanism from which units can actually be sampled."]);
     if(!present(s.inclusion)) issues.push(["info","Inclusion criteria not recorded","State which units qualify before seeing outcomes."]);
     if(!present(s.exclusion)) issues.push(["info","Exclusion criteria not recorded","Separate eligibility exclusions from later data-quality exclusions."]);
     if(!present(s.recruitment) && (project.methods?.ethics?.humanParticipants==="yes")) issues.push(["warning","Recruitment route missing","Human-participant recruitment can introduce coercion or selection bias."]);
-    if(present(s.generalization)) good.push("Generalization boundary is explicitly stated.");
-    else issues.push(["warning","Generalization boundary missing","Explain what the sample can reasonably represent and what it cannot."]);
+    if(present(s.generalization)) good.push("A generalisation or transferability boundary is recorded for review.");
+    else issues.push(["warning","Scope of conclusions missing","Explain which populations, settings or cases the evidence may inform and where generalisation or transferability remains uncertain."]);
     if(/convenience/i.test(s.method||"")) issues.push(["info","Convenience sampling","This may be appropriate for a student project, but broad population generalization should be limited."]);
     return {issues,good};
   }
