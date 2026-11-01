@@ -108,7 +108,8 @@ window.RMSWriting=(()=>{
 
   function discussionRequirements(p){
     const type=p.data?.designType||p.data?.questionType||"";
-    const req=["Answer the research question within the design and available evidence","Interpret findings that bear on the answer without imposing an arbitrary count","Link interpretations to verifiable results","Compare relevant findings with checked literature","Explain consequential limitations where they affect particular claims","State interpretation boundaries","Offer implications only where the evidence supports them","Close without introducing unsupported new findings"];
+    const proposal=p.writing?.reportingMode==="proposal";
+    const req=[proposal?"Explain how planned evidence could address the question without claiming findings":"Answer the research question within the design and available evidence",proposal?"Describe possible interpretive approaches without inventing observed findings":"Interpret findings that bear on the answer without imposing an arbitrary count","Link interpretations to verifiable results","Compare relevant findings with checked literature","Explain consequential limitations where they affect particular claims","State interpretation boundaries","Offer implications only where the evidence supports them","Close without introducing unsupported new findings"];
     if(/Correlational|observational/i.test(type))req.push("Address plausible confounding, reverse causation, and the non-causal boundary");
     if(/Experimental|Quasi/i.test(type))req.push("Address internal-validity threats, implementation/adherence, and external-validity limits");
     if(/Qualitative/i.test(type))req.push("Address sampling, coding/interpretive decisions, discrepant cases, and transferability");
@@ -120,7 +121,7 @@ window.RMSWriting=(()=>{
     if(present(t)&&words(t)<20)issues.push(["info","Brief draft warrants a content check",`Approximately ${words(t)} words. Check whether the section fulfils its specific purpose; length alone does not determine adequacy.`]);
     if(overclaim.test(t))issues.push(["critical","Overclaiming language detected","Terms such as prove/definitively/guarantee usually exceed what a student study can establish."]);
     if(section==="introduction"){
-      if(!present(p.data?.finalRQ))issues.push(["critical","Research question is not locked","The Introduction should end by leading to the actual study question."]);
+      if(!present(p.data?.finalRQ))issues.push(["critical","Research question not recorded","Connect the Introduction to a specific question that the planned or completed study actually addresses."]);
       const ca=citationAudit(t,p.sources);if(ca.found.length<2)issues.push(["warning","Very few source citations detected","The Introduction normally needs evidence for background and prior-research claims."]);
       if(ca.unmatched.length)issues.push(["critical","Citation(s) do not match the source workspace",ca.unmatched.map(x=>x.text).join(", ")]);
       if(ca.ambiguous.length)issues.push(["warning","Citation matches more than one source record","Verify the exact publication for "+ca.ambiguous.map(x=>x.text).join(", ")]);
@@ -135,7 +136,7 @@ window.RMSWriting=(()=>{
       if(authorOpeners>=3)issues.push(["warning","Possible source-by-source organization","Several paragraph/sentence starts appear author-led. Check whether paragraphs are organized around ideas and synthesize multiple studies."]);
     }
     if(section==="method"){
-      if(/\bwe found|results showed|significant|p\s*[<=>]\b/i.test(t))issues.push(["critical","Results language appears in Method","Method should explain what was planned/done, not what the results were."]);
+      if(/\bwe found\b|\bresults showed\b|\bstatistically significant\b|\bsignificant (?:effect|difference|association)\b|\bp\s*[<=>]/i.test(t))issues.push(["warning","Possible result assertion in Method","Check whether this sentence reports an observed result. The Method should describe planned or implemented procedures and deviations with the correct research status."]);
       const bp=methodBlueprint(p);if(!bp.locked)issues.push(["warning","No saved protocol version","The Method draft is being compared with the live plan. Describe completed work from actual records and report deviations; a dated prospective plan can help distinguish earlier decisions from later changes."]);
     }
     if(section==="results"){
@@ -146,12 +147,12 @@ window.RMSWriting=(()=>{
       if(!proposal&&!(p.analysis?.runs||[]).length)issues.push(["warning","No linked Data Lab calculation","Check the evidence records supporting these findings. Qualitative work and reviews may have results documented outside the numerical Data Lab."]);
     }
     if(section==="discussion"){
-      if(!present(p.data?.directAnswer)&&!t.match(/research question|results (suggest|indicate|show)/i))issues.push(["warning","Direct answer is unclear","The Discussion should state the answer to the research question near the beginning."]);
+      if(!present(p.data?.directAnswer)&&present(t)&&!proposal)issues.push(["info","Check the Discussion’s answer","Read the Discussion continuously to confirm that it answers the actual research question. The presence of a fixed phrase does not establish that the answer is clear."]);
       if(/Correlational|Descriptive/.test(type)&&causal.test(t))issues.push(["critical","Causal interpretation exceeds the design","Statistical significance cannot raise a nonexperimental study to a causal claim."]);
       const ca=citationAudit(t,p.sources);if(p.sources?.length&&ca.unmatched.length)issues.push(["critical","Unmatched literature citation(s) in Discussion",ca.unmatched.map(x=>x.text).join(", ")]);
       if(ca.ambiguous.length)issues.push(["warning","Citation matches more than one source record","Verify the exact publication for "+ca.ambiguous.map(x=>x.text).join(", ")]);
       if(ca.statusToCheck.length)issues.push(["info","Cited source status needs review","A pending or excluded source may be appropriate as background, but must not silently enter the included synthesis."]);
-      if(!/\blimit|confound|uncertain|cannot|boundary|generaliz/i.test(t))issues.push(["warning","Interpretive limitations are difficult to find","Explain how specific design features restrict the claims."]);
+      if(!proposal&&present(t)&&!/\blimit|confound|uncertain|cannot|boundary|generali[sz]/i.test(t))issues.push(["info","Review claim limitations","Check whether the interpretation explains relevant boundaries, even when they are expressed without standard limitation vocabulary."]);
     }
     if(section==="conclusion"){
       if(/\([A-Z][A-Za-z'’\-]+.*\d{4}\)/.test(t))issues.push(["info","Conclusion contains literature citation(s)","A short empirical-paper conclusion often closes from the paper's own evidence. Check your assignment conventions."]);
@@ -179,7 +180,7 @@ window.RMSWriting=(()=>{
     if(!proposal&&!present(w.results))issues.push(["warning","Results draft missing","For a completed study, describe observed findings from the relevant evidence records."]);
     if(!proposal&&!present(w.discussion))issues.push(["warning","Discussion draft missing","For completed work, interpret findings within the actual design and source-evidence limits."]);
     if(/Correlational|Descriptive/.test(d.designType||"")&&causal.test(w.discussion+" "+w.conclusion+" "+w.abstract))issues.push(["critical","Causal claim ceiling violation","Nonexperimental designs should not be described as establishing that X caused Y."]);
-    const ca=citationAudit([w.introduction,w.literature,w.discussion].join("\n"),p.sources);
+    const ca=citationAudit(sectionNames.map(section=>w[section]||"").join("\n"),p.sources);
     if(ca.unmatched.length)issues.push(["critical","Paper contains citation(s) without a matching bibliographic record",ca.unmatched.map(x=>x.text).join(", ")]);
     if(ca.ambiguous.length)issues.push(["warning","Citation(s) match more than one source record","Clarify the exact publication for "+ca.ambiguous.map(x=>x.text).join(", ")]);
     if(ca.statusToCheck.length)issues.push(["warning","Cited records require eligibility review","Confirm whether pending or excluded records are being used appropriately as background rather than included synthesis evidence."]);
@@ -207,7 +208,7 @@ window.RMSWriting=(()=>{
     lines.push("## Participants, units and sampling");
     Object.entries(b.sampling||{}).forEach(([key,val])=>{if(present(val))lines.push(`- **${key}:** ${val}`)});
     lines.push("","## Variables, constructs and operational definitions");
-    b.constructs.forEach(x=>lines.push(`- **${x.name||"Unnamed"}** — ${x.role||""}: ${x.operational||""}`));
+    b.constructs.forEach(x=>lines.push(`- **${x.name||"Unnamed"}** (${x.role||"role not recorded"}). ${x.operational||""}`));
     lines.push("","## Conditions or comparisons");
     b.conditions.forEach(x=>lines.push(`- **${x.name||"Condition"}:** ${x.definition||""}`));
     lines.push("","## Instruments and evidence collection");
@@ -227,7 +228,7 @@ window.RMSWriting=(()=>{
       "A stored calculation is not proof that it was prespecified or that its source data and assumptions have been independently verified.",""];
     if(!b.runs.length)lines.push("No linked Data Lab calculations. Check other evidence records where appropriate; a proposal must not invent observed results.","");
     b.runs.forEach(x=>{
-      lines.push(`## ${x.id} — ${x.test}`,
+      lines.push(`## ${x.id}. ${x.test}`,
         `**Stored on:** ${x.storedAt||"Not recorded"}`,
         `**Calculation status:** ${x.version==="C-X3c10d"?"Current automated checks; independent review still needed":x.version?`Earlier safeguards (${x.version}); check before using`:"Historical record without current checks; review before use"}`,
         `**Data file recorded for this calculation:** ${x.traceability.file||"Not recorded"}`,
