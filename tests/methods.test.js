@@ -100,4 +100,12 @@ snapshotProject.schema[0].name="changed";
 snapshotProject.methods.procedureSteps[0].action="changed";
 if(saved.design.experimentalUnit!=="dish"||saved.constructs[0].name!=="shoot length"||saved.schema[0].name!=="dish_id"||saved.procedureSteps[0].action!=="record Day 7 status")process.exit(1);
 if(!M.methodMarkdown(snapshotProject).includes("not research approval"))process.exit(1);
+const conflictingEthics={methods:{ethics:{humanParticipants:"no",identifiable:"yes",storage:"restricted"}}};
+if(M.ethicsRoute(conflictingEthics).status!=="teacher_review")process.exit(1);
+if(!M.ethicsRoute(conflictingEthics).issues.some(x=>x[1]==="Participant screening answers conflict"))process.exit(1);
+const recruiting={methods:{ethics:{humanParticipants:"yes",consent:"planned",withdrawal:"voluntary",storage:"restricted"},
+  procedureSteps:[{action:"Recruit students"},{action:"Obtain consent"},{action:"Record interview responses"}]}};
+if(!M.procedureAudit(recruiting).issues.some(x=>x[1]==="Permission appears after research collection"))process.exit(1);
+const qualitativePathOnly={pathway:{selected:"qualitative"},methods:{design:{}}};
+if(M.dataSchemaAudit(qualitativePathOnly).issues.some(x=>x[0]==="critical"))process.exit(1);
 console.log("PASS methods lab engine");
