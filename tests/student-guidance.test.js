@@ -35,7 +35,7 @@ if(!/a brief scan cannot establish/.test(G.glossary["literature gap"]))process.e
 if(!/dependence between estimates/.test(G.glossary["meta-analysis"]))process.exit(1);
 if(!/observed zero/.test(G.glossary["missing data"]))process.exit(1);
 if(!/categorical data/.test(G.glossary.numerical))process.exit(1);
-if(!/test statistic as extreme/.test(G.glossary["p-value"]))process.exit(1);
+if(!/test statistic at least as extreme/.test(G.glossary["p-value"]))process.exit(1);
 if(!/census/.test(G.glossary.population))process.exit(1);
 if(!/observed or assigned/.test(G.glossary.predictor))process.exit(1);
 
