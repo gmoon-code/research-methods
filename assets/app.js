@@ -436,7 +436,7 @@
   }
 
   function litSourceForm(s={},idx=null){
-    const t=s.trapp||{},ev=s.themeEvidence||[];
+    const t=s.trapp||{},ev=s.themeEvidence||[];\n    const screeningStatus=["Included","Pending","Excluded"].includes(s.screeningStatus)?s.screeningStatus:"Pending";
     return `<div class="lit-section source-three-pass"><div class="source-three-pass-head"><div><h4>${idx===null?"Add a source":`Edit ${esc(s.id)}`}</h4><p>Work through three short passes. You do not need to evaluate every detail before you have identified the source.</p></div><span>${idx===null?"New source":"Saved source"}</span></div>
       <details class="source-pass" open><summary><span>1</span><div><b>Identify the source</b><small>Record enough information to find and cite it again.</small></div></summary>
         <div class="form-grid two">
@@ -455,7 +455,7 @@
 
       <details class="source-pass"><summary><span>2</span><div><b>Decide whether the source belongs</b><small>Use your research question and inclusion rules before extracting everything.</small></div></summary>
         <div class="form-grid two">
-          <label><span>Screening decision</span><select id="lfStatus">${["Included","Pending","Excluded"].map(o=>`<option ${s.screeningStatus===o?"selected":""}>${o}</option>`).join("")}</select></label>
+          <label><span>Screening decision</span><select id="lfStatus">${["Included","Pending","Excluded"].map(o=>`<option ${screeningStatus===o?"selected":""}>${o}</option>`).join("")}</select></label>
           <label><span>Why include, exclude, or keep it pending?</span><textarea id="lfScreenReason">${esc(s.screeningReason||"")}</textarea></label>
           <label><span>How is this source relevant to your research question?</span><textarea id="lfRelevance">${esc(s.relevance||"")}</textarea></label>
           <label><span>Quality / methods notes</span><textarea id="lfQuality">${esc(s.qualityNotes||"")}</textarea></label>
@@ -538,7 +538,7 @@
         <label><span>Precise rationale / gap statement</span><textarea data-field="gapStatement">${esc(project.data.gapStatement||"")}</textarea></label>
         <label><span>What evidence would make this statement too strong?</span><textarea data-field="gapBoundary">${esc(project.data.gapBoundary||"")}</textarea></label>
       </div>
-      <div class="concept-box"><strong>Interpretation rule</strong><br>${g.safeToClaimGlobalGap?"Your evidence base is large enough to begin evaluating a broader gap claim, but the claim still depends on search coverage and source quality.":"Do not claim that “no research exists.” Use a bounded rationale such as replication, local extension, inconsistent findings, or a gap within the literature you actually reviewed."}</div></div>`;
+      <div class="concept-box"><strong>Interpretation rule</strong><br>A fixed number of included studies cannot establish a field-wide gap. Review the coverage of your searches and the evidence in eligible studies, then choose a rationale that matches those limits.</div></div>`;
   }
 
   function claimsWorkspace(){
