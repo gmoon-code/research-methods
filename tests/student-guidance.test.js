@@ -178,4 +178,17 @@ if(!litLab.sources.text.includes("original paper")||!litLab.sources.text.include
 if(!litLab.screen.text.includes("leave uncertain records pending"))process.exit(1);
 if(!litLab.synth.text.includes("verified source records"))process.exit(1);
 if(!litLab.gap.text.includes("documented searches"))process.exit(1);
+// Stage C-X3c6b | methods laboratory descriptions and ethics boundaries.
+const methodLab=G.labs.methods;
+if(Object.keys(methodLab).length!==9)process.exit(1);
+for(const x of Object.values(methodLab))if(!x.title||!x.text||!x.terms?.length||JSON.stringify(x).includes("—"))process.exit(1);
+if(!methodLab.design.text.includes("without random assignment"))process.exit(1);
+if(!methodLab.vars.text.includes("operational definition")||!methodLab.vars.text.includes("timing"))process.exit(1);
+if(!methodLab.rep.text.includes("subsamples"))process.exit(1);
+if(!methodLab.sample.text.includes("Random sampling"))process.exit(1);
+if(!methodLab.measure.text.includes("particular interpretation"))process.exit(1);
+if(!/before recruitment/i.test(methodLab.ethics.text)||!methodLab.ethics.text.includes("assent"))process.exit(1);
+if(!methodLab.procedure.text.includes("deviation"))process.exit(1);
+if(!methodLab.data.text.includes("nested units")||!methodLab.data.text.includes("observed zero"))process.exit(1);
+if(!methodLab.audit.text.includes("retrospective changes"))process.exit(1);
 console.log("PASS student guidance coverage");
