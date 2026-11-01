@@ -158,7 +158,7 @@ window.RMSResearchSnapshot=(()=>{
  }
 
  function markdown(project,showEmpty=false){
-   const lines=[`# ${project.name||"My Research Project"} — Current Research Snapshot`];
+   const lines=[`# ${project.name||"My Research Project"} · Current Research Snapshot`];
    if(project.context)lines.push(`\n**Context:** ${project.context}`);
    const path=Paths.selected?Paths.selected(project).name:(project.pathway?.selected||"Unsure");
    lines.push(`\n**Current research path:** ${path}`);
@@ -197,12 +197,12 @@ window.RMSResearchSnapshot=(()=>{
      lines.push(`\n## Source workspace\n\n${ss.total} source record(s), ${ss.included} marked included, ${ss.verified} bibliography record(s) marked checked by student.`);
      ws.sources.forEach(s=>{
        let block=`\n### ${s.id||"Source"}\n\n${s.citation||"_No citation recorded_"}`;
-       if(s.finding)block+=`\n\n**Finding / contribution**\n\n${s.finding}`;
+       if(s.finding)block+=`\n\n**Student-recorded finding / contribution**\n\n${s.finding}`;
        if(s.limits)block+=`\n\n**Limitations / boundary**\n\n${s.limits}`;
        lines.push(block);
      });
    }
-   if(ws.schema.length){lines.push(`\n## Current data schema`);ws.schema.forEach(x=>lines.push(`\n**${x.name||"Unnamed column"}** — ${[x.type,x.unit].filter(Boolean).join(" · ")}${x.definition?`\n\n${x.definition}`:""}`))}
+   if(ws.schema.length){lines.push(`\n## Current data schema`);ws.schema.forEach(x=>lines.push(`\n**${x.name||"Unnamed column"}** · ${[x.type,x.unit].filter(Boolean).join(" · ")}${x.definition?`\n\n${x.definition}`:""}`))}
    if(ws.runs.length){lines.push(`\n## Stored analysis runs`);ws.runs.forEach(x=>lines.push(`\n**${x.id}${x.test?` · ${x.test}`:""}**\n\n${x.summary||"_No neutral summary stored_"}`))}
    if(ws.writing.length){lines.push(`\n## Writing Lab drafts`);ws.writing.forEach(x=>lines.push(`\n### ${x.section}\n\n${x.text}`))}
    if(ws.feedback.length){lines.push(`\n## Teacher feedback`);ws.feedback.forEach(x=>lines.push(`\n- ${x.comment}`))}
