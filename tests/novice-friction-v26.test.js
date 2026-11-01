@@ -18,4 +18,9 @@ if(!r.messages.some(x=>x.code==="NG-PAIRING-LOST"))process.exit(1);
 p={data:{resultsDraft:"p = .03 means there is a 97% probability that the hypothesis is true"},pathway:{selected:"observational"}};
 r=G.reviewStage(15,p);
 if(!r.messages.some(x=>x.code==="NG-PVALUE-PROBABILITY"))process.exit(1);
+// Stage C-X3c8b | a record count never substantiates field-wide absence.
+const globalGap={data:{gapStatement:"No research exists on this topic"},pathway:{selected:"literature_review"},sources:Array.from({length:12},(_,i)=>({id:"S"+i,screeningStatus:"Included"})),searchLog:Array.from({length:3},(_,i)=>({query:"example "+i}))};
+const gapCheck=G.reviewStage(7,globalGap);
+if(!gapCheck.messages.some(x=>x.code==="NG-GAP-OVERCLAIM"&&x.level==="bad"))process.exit(1);
+if(G.stageGate(7,globalGap).canMarkReady)process.exit(1);
 console.log("PASS v2.6 novice friction guard");
