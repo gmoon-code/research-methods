@@ -935,9 +935,9 @@
       "typical_length": "about 3–25 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "One row is a result.",
-      "good_working_response": "One row represents one planted seed measured on Day 7; dish_id identifies the independently treated dish.",
+      "good_working_response": "One row represents one planted seed's Day 7 observation, including visible-shoot status and, where available, shoot length. The dish_id keeps that record linked to its independently treated dish.",
       "detailed_response": "",
-      "why_it_works": "Define the observation represented by the row and preserve the identifier linking each seed to its treatment unit."
+      "why_it_works": "Identify the record represented by each row and preserve the link to its treatment unit, including seeds without a visible shoot or with missing measurements."
     },
     "columns": {
       "stage": 12,
@@ -947,9 +947,9 @@
       "typical_length": "about 20–110 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "ID, treatment, results and other details.",
-      "good_working_response": "dish_id (dish identifier); seed_id (seed identifier within dish); NaCl_mM (0, 50 or 100 mmol/L); day (days after setup); germinated (0 = no, 1 = yes); shoot_length_cm (centimetres); missing_reason (coded category, if relevant).",
+      "good_working_response": "dish_id (assigned dish); seed_id (seed within dish); NaCl_mM (0, 50 or 100); day (days after setup); visible_shoot (0 = absent, 1 = present); shoot_length_cm (measured length, or prespecified zero for no shoot); observation_status (recorded/missing); missing_reason (when known).",
       "detailed_response": "",
-      "why_it_works": "Provide enough metadata to interpret each column and keep the seed observations linked to their dish. Use concentration units consistent with the assigned treatments."
+      "why_it_works": "Define the observation and coding rules for every column. Visible-shoot status is recorded here, whereas germination would require a separate, justified germination measure. Keep missing observations distinct from the defined zero outcome."
     },
     "missingRule": {
       "stage": 12,
@@ -959,9 +959,9 @@
       "typical_length": "about 30–120 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "I will write zero whenever a number is missing.",
-      "good_working_response": "Record a genuinely unobserved shoot length as missing and add the reason when known. Under the prespecified outcome definition, a seed without a shoot is measured as 0 cm and is not missing. Review incomplete dishes separately and decide their handling before analysing group differences.",
+      "good_working_response": "Mark an unobserved Day 7 shoot length as missing and record the reason when known. When a seed is observed and has no visible shoot, retain that status and use 0 cm only for the defined combined outcome. State how incomplete dishes will be handled before comparing treatment groups.",
       "detailed_response": "",
-      "why_it_works": "Define the difference between a meaningful zero and an absent measurement, then preserve the reason and analysis implications of missingness."
+      "why_it_works": "Distinguish a prespecified outcome zero from an absent observation and document how missingness affects the dish-level analysis. The zero code is an analysis convention, not a ruler measurement."
     },
     "exclusionRule": {
       "stage": 12,
@@ -1031,9 +1031,9 @@
       "typical_length": "about 20–95 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Make a graph of the experiment.",
-      "good_working_response": "A dot plot of the six dish-level mean shoot lengths per salinity condition would show the variation among independently assigned dishes. A separate display of dish-level germination proportions could show whether germination contributes to differences in the combined outcome.",
+      "good_working_response": "Plot the observed dish-level mean shoot lengths for each salinity condition, identifying how many independently assigned dishes contributed data. A second display of the proportion of seeds with visible shoots in each dish could help interpret the combined outcome without presenting shoot emergence as measured germination.",
       "detailed_response": "",
-      "why_it_works": "Choose figures that reveal the actual distribution or comparison and make the independent and nested units clear."
+      "why_it_works": "Show distributions at the level of independent treatment units and keep the secondary observation aligned with what the protocol actually records."
     },
     "descriptives": {
       "stage": 13,
@@ -1043,9 +1043,9 @@
       "typical_length": "about 25–110 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Calculate the average of everything.",
-      "good_working_response": "For each salinity condition, report the number of analysed dishes, mean dish-level shoot length and a suitable measure of variation such as SD or range. Summarise germination with appropriate counts or proportions, and record how many dishes have incomplete data.",
+      "good_working_response": "For each salinity condition, report the actual number of analysed dishes, their mean shoot length per planted seed, and relevant variation such as SD or range. Summarise visible-shoot presence with counts and proportions and document any incomplete seed or dish records.",
       "detailed_response": "",
-      "why_it_works": "Choose summaries that correspond to the outcome and unit. Qualitative projects should instead describe their corpus and relevant evidence characteristics."
+      "why_it_works": "Report summaries that match the observation rules and independent units. Presence of a visible shoot is not, by itself, a complete germination measure."
     },
     "primaryEstimand": {
       "stage": 14,
