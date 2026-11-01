@@ -67,7 +67,7 @@ window.RMSLiterature = (() => {
         const all=ev.concat(legacy);
         return all.length ? {source:s,evidence:all} : null;
       }).filter(Boolean);
-      const stance = st => rows.filter(r=>r.evidence.some(e=>(e.stance||"supports")===st)).map(r=>r.source);
+      const stance = st => rows.filter(r=>r.evidence.some(e=>e.stance===st)).map(r=>r.source);
       return {
         theme,
         sources:rows,
