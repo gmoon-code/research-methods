@@ -136,3 +136,40 @@ test('free limit and provider failures are sanitized for students', async () => 
   const failed = await route(request('POST', { body: { question: 'Help', context: {} } }), { env: ENV, aiRun: async () => { throw new Error('SECRET INTERNAL'); } });
   assert.equal(failed.status, 502); assert.doesNotMatch(await failed.text(), /SECRET/);
 });
+
+test('coach prompt distinguishes student-checked bibliographies from independently confirmed evidence', () => {
+  const context = minimizeContext({
+    stage: { id: 7, title: 'Literature' },
+    project: { summary: {}, verified_sources: [
+      { id: 'S1', title: 'Example source', citation: 'Student-entered citation', verified: true },
+      { id: 'S2', title: 'Not checked', citation: 'Pending', verified: false }
+    ] }
+  });
+  const payload = buildWorkersAIRequest({
+    question: 'Can I cite this as established?',
+    history: [], context, requestedMode: 'feedback', model: MODEL
+  });
+  const system = payload.input.messages[0].content;
+  const studentData = payload.input.messages.at(-1).content;
+  assert.match(system, /STUDENT_CHECKED_BIBLIOGRAPHIC_RECORDS/);
+  assert.match(system, /source ID alone does not establish support/);
+  assert.match(studentData, /STUDENT_CHECKED_BIBLIOGRAPHIC_RECORDS/);
+  assert.doesNotMatch(studentData, /VERIFIED_PROJECT_SOURCES/);
+  assert.deepEqual(context.project.verified_sources.map(s => s.id), ['S1']);
+});
+
+test('coach citation gate preserves source restrictions without implying independent verification', () => {
+  const context = minimizeContext({
+    stage: { id: 7, title: 'Literature' },
+    project: { summary: {}, verified_sources: [
+      { id: 'S1', citation: 'Student-checked source', verified: true }
+    ] }
+  });
+  const valid = enforceOutput(modelOutput({ citations: [{ source_id: 'S1' }] }), context, 'feedback');
+  assert.equal(valid.citations.length, 1);
+  assert.equal(valid.citations[0].source_id, 'S1');
+  const invalid = enforceOutput(modelOutput({ citations: [{ source_id: 'unknown' }] }), context, 'feedback');
+  assert.equal(invalid.status, 'source_verification_needed');
+  assert.equal(invalid.citations.length, 0);
+  assert.match(invalid.answer, /student-marked source record does not independently verify/i);
+});
