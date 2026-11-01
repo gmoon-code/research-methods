@@ -21,7 +21,7 @@ if(!proposedPaper.includes("No reference entries were generated."))process.exit(
 const method=W.methodBlueprint(project);
 if(!method.locked||method.protocolRecordedAt!=="2026-10-01T09:00:00Z")process.exit(1);
 const methodText=W.methodOutlineMarkdown(project);
-if(!methodText.includes("Most recently saved planning version")||!methodText.includes("verify what was actually done"))process.exit(1);
+if(!methodText.includes("Most recently saved planning version")||!methodText.includes("Verify what was actually done"))process.exit(1);
 const qual={data:{designType:"Qualitative",finalRQ:"How do students explain a phenomenon?"},methods:{},analysis:{runs:[]},writing:{reportingMode:"completed"}};
 W.normalizeProject(qual);
 const quality=W.sectionAudit("results","Students' interview accounts described several distinct approaches, alongside discrepant cases.",qual);
