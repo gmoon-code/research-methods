@@ -116,7 +116,7 @@ window.RMSResearchSnapshot=(()=>{
      design:trim(s.design),sample:trim(s.sample||s.population),finding:trim(s.finding),limits:trim(s.limits),verified:!!s.verified
    }));
    const searchLog=(project.searchLog||[]).map(x=>({
-     date:trim(x.date),database:trim(x.database),query:trim(x.query),filters:trim(x.filters),results:trim(x.results),kept:trim(x.kept),notes:trim(x.notes)
+     date:trim(x.date),database:trim(x.database),query:trim(x.query),filters:trim(x.filters),results:trim(x.results),kept:trim(x.kept),notes:trim(x.notes),executed:x.executed===true,complete:["date","database","query","filters","results"].every(k=>trim(x[k])!=="")
    }));
    const schema=(project.schema||[]).map(x=>({
      name:trim(x.name),type:trim(x.type),unit:trim(x.unit||x.units),definition:trim(x.definition)
@@ -183,7 +183,7 @@ window.RMSResearchSnapshot=(()=>{
    const ss=sourceSummary(project),ws=workspaceData(project);
    if(ws.searchLog.length){
      lines.push(`\n## Search history`);
-     ws.searchLog.forEach((x,i)=>lines.push(`\n**Search ${i+1}${x.database?` · ${x.database}`:""}**\n\n${x.query||"_No query recorded_"}${x.date?`\n\nDate: ${x.date}`:""}${x.filters?`\n\nFilters: ${x.filters}`:""}${x.notes?`\n\nNotes: ${x.notes}`:""}`));
+     ws.searchLog.forEach((x,i)=>lines.push(`\n**Search ${i+1}${x.database?` · ${x.database}`:""}**\n\n${x.query||"_No query recorded_"}${x.date?`\n\nDate: ${x.date}`:""}${x.filters?`\n\nFilters: ${x.filters}`:""}\n\nExecution status: ${!x.complete?"Incomplete record":x.executed?"Student-confirmed execution":"Execution not confirmed"}${x.notes?`\n\nNotes: ${x.notes}`:""}`));
    }
    const mr=ws.methodRecords||{};
    if(mr.constructs?.length||mr.conditions?.length||mr.measurements?.length||mr.procedureSteps?.length||mr.design?.length||mr.sampling?.length||mr.ethics?.length){
