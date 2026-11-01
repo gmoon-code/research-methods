@@ -224,7 +224,7 @@ window.RMSMethods = (() => {
 
   function protocolSnapshot(project){
     const d=project.data||{}, m=project.methods||{};
-    return {
+    const snapshot={
       lockedAt:new Date().toISOString(),
       researchQuestion:d.finalRQ||"",
       designType:d.designType||"",
@@ -243,6 +243,7 @@ window.RMSMethods = (() => {
       exclusionRule:d.exclusionRule||"",
       analysisIntent:d.analysisIntent||""
     };
+    return JSON.parse(JSON.stringify(snapshot));
   }
 
   function csvTemplate(project){
