@@ -39,4 +39,17 @@ if(!/test statistic at least as extreme/.test(G.glossary["p-value"]))process.exi
 if(!/census/.test(G.glossary.population))process.exit(1);
 if(!/observed or assigned/.test(G.glossary.predictor))process.exit(1);
 
+// Stage C-X3c3c | final 30 glossary definitions.
+const finalThirty=Object.keys(G.glossary).slice(60);
+if(finalThirty.length!==30||finalThirty[0]!=="protocol"||finalThirty[29]!=="identifiable data")process.exit(1);
+for(const term of finalThirty)if(!G.glossary[term]?.trim()||G.glossary[term].includes("—"))process.exit(1);
+if(!/later changes, which should be dated/.test(G.glossary.protocol))process.exit(1);
+if(!/diagrams, models and observed interactions/.test(G.glossary["qualitative data"]))process.exit(1);
+if(!/chance imbalances may remain/.test(G.glossary["random assignment"]))process.exit(1);
+if(!/actually contribute evidence/.test(G.glossary.sample))process.exit(1);
+if(!/probabilistic or non-probabilistic/.test(G.glossary["sampling frame"]))process.exit(1);
+if(!/pairs whose classifications differ/.test(G.glossary["McNemar test"]))process.exit(1);
+if(!/without identifying which conditions differ/.test(G.glossary["Cochran Q"]))process.exit(1);
+if(!/does not automatically represent a causal effect/.test(G.glossary.regression))process.exit(1);
+
 console.log("PASS student guidance coverage");
