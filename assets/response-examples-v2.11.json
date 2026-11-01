@@ -1355,7 +1355,7 @@
       "typical_length": "about 25–120 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Read it again and make it sound professional.",
-      "good_working_response": "Reconcile the number of independently assigned dishes across Methods and Results; verify that figures display dish-level comparisons; confirm the rule distinguishing ungerminated seeds from missing measurements; check every citation against its source; and revise any claims that exceed the recorded evidence.",
+      "good_working_response": "Reconcile independent dish counts across Methods and Results; verify figures use dish-level comparisons; distinguish a seed with no visible shoot from missing data; verify every citation; and revise unsupported claims.",
       "detailed_response": "",
       "why_it_works": "Make each remaining action specific enough that another reader can verify whether it has been completed."
     }
