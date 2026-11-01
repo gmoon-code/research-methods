@@ -484,6 +484,16 @@
     return `<div class="theme-evidence-row" data-theme-row="${j}"><input data-themename="${j}" placeholder="Theme" value="${esc(e.theme||"")}"><select data-themestance="${j}"><option value="" ${!e.stance?"selected":""}>Choose stance…</option>${["supports","conflicts","mixed","background"].map(o=>`<option ${e.stance===o?"selected":""}>${o}</option>`).join("")}</select><input data-themenote="${j}" placeholder="What does this source contribute?" value="${esc(e.note||"")}"><button class="danger small" data-theme-del="${j}">×</button></div>`;
   }
 
+  function searchCorrectionPanel(record,i){
+    const fields=[["date","Search date"],["database","Database / search system"],["query","Submitted search string"],["filters","Filters / limits"],["results","Results returned"],["kept","Screened / kept"],["notes","Notes"]];
+    const inputs=fields.map(([key,label])=>{
+      const value=esc(record[key]??"");
+      const control=["query","filters","notes"].includes(key) ? '<textarea data-search-edit="'+key+'">'+value+'</textarea>' : '<input data-search-edit="'+key+'" type="'+(key==="date"?"date":"text")+'" value="'+value+'">';
+      return '<label><span>'+esc(label)+'</span>'+control+'</label>';
+    }).join("");
+    const history=(record.revisions||[]).map(rev=>'<li><b>'+esc(rev.at||"Date not recorded")+'</b> · '+esc(rev.reason||"Reason not recorded")+' · '+esc((rev.changed||[]).join(", "))+'<details><summary>Earlier values</summary><pre>'+esc(JSON.stringify(rev.before||{}))+'</pre></details></li>').join("");
+    return '<details class="search-edit" data-search-edit-record="'+i+'"><summary>Correct this record</summary><p>Explain the correction so earlier values remain traceable. Changes to executed search details require renewed confirmation.</p><div class="form-grid two">'+inputs+'</div><label><span>Reason for correction</span><textarea data-search-edit-reason placeholder="Explain what was inaccurate or missing and how you checked it."></textarea></label><button class="secondary" data-save-search-correction="'+i+'">Save documented correction</button><p class="muted tiny" data-search-edit-status role="status"></p>'+(history?'<details><summary>Earlier corrections ('+record.revisions.length+')</summary><ol>'+history+'</ol></details>':"")+'</details>';
+  }
   function searchWorkspace(){
     return `<div class="lit-section"><h4>Search log</h4><p>Document searches you have run, including the date, submitted query, search settings and result count where reported. Earlier records without confirmed execution remain marked for review.</p>
       <div class="form-grid two">
@@ -491,7 +501,7 @@
         <label><span>Exact search string</span><textarea id="slQuery"></textarea></label><label><span>Filters / limits</span><textarea id="slFilters" placeholder="Record filters used, or none"></textarea></label>
         <label><span>Results returned</span><input id="slResults" placeholder="Reported count, 0, or not reported"></label><label><span>Screened / kept</span><input id="slKept"></label><label><span>Notes / what changed next</span><textarea id="slNotes"></textarea></label>
       </div><label class="search-confirm"><input type="checkbox" id="slConfirmed"> I ran this search using the details recorded above.</label><button class="secondary" id="addSearchLog">Add completed search</button><p class="muted tiny" id="searchLogStatus" role="status"></p>
-      <div>${(project.searchLog||[]).map((x,i)=>`<div class="search-entry"><div style="float:right"><button class="danger small" data-del-search="${i}">Remove</button>${Lit.searchLogStatus(x).complete && !Lit.searchLogStatus(x).confirmed?`<button class="ghost small" data-confirm-search="${i}">Confirm I ran this search</button>`:""}</div><b>${esc(x.database||"Search")} · ${esc(x.date||"date not recorded")}</b><p><small>${esc(Lit.searchLogStatus(x).label)}</small></p><p>${esc(x.query||"")}</p><p>Filters: ${esc(x.filters||"—")} · Results: ${esc(x.results||"—")} · Screened/kept: ${esc(x.kept||"—")}</p><p>${esc(x.notes||"")}</p></div>`).join("")||'<p class="muted tiny">No searches logged yet.</p>'}</div>`;
+      <div class="lit-toolbar"><button class="ghost small" id="downloadSearchLog">Download search log CSV</button><button class="ghost small" id="downloadSearchRevisions">Download correction history CSV</button></div><div>${(project.searchLog||[]).map((x,i)=>`<div class="search-entry"><div style="float:right"><button class="danger small" data-del-search="${i}">Remove</button>${Lit.searchLogStatus(x).complete && !Lit.searchLogStatus(x).confirmed?`<button class="ghost small" data-confirm-search="${i}">Confirm I ran this search</button>`:""}</div><b>${esc(x.database||"Search")} · ${esc(x.date||"date not recorded")}</b><p><small>${esc(Lit.searchLogStatus(x).label)}</small></p><p>${esc(x.query||"")}</p><p>Filters: ${esc(x.filters||"—")} · Results: ${esc(x.results||"—")} · Screened/kept: ${esc(x.kept||"—")}</p><p>${esc(x.notes||"")}</p>${searchCorrectionPanel(x,i)}</div>`).join("")||'<p class="muted tiny">No searches logged yet.</p>'}</div>`;
   }
 
   function screeningWorkspace(){
@@ -606,6 +616,19 @@
       }
       project.searchLog.push({...record,executed:true});save();rerender("search");
     };
+    document.querySelectorAll("[data-save-search-correction]").forEach(b=>b.onclick=()=>{
+      const index=Number(b.dataset.saveSearchCorrection),form=b.closest("[data-search-edit-record]");
+      const keys=["date","database","query","filters","results","kept","notes"];
+      const updates=Object.fromEntries(keys.map(key=>[key,form.querySelector('[data-search-edit="'+key+'"]')?.value??""]));
+      const reason=form.querySelector("[data-search-edit-reason]")?.value||"";
+      try{
+        Lit.reviseSearchLog(project,index,updates,reason,new Date().toISOString());
+        save();rerender("search");
+      }catch(e){form.querySelector("[data-search-edit-status]").textContent=e.message}
+    });
+    if($("downloadSearchLog")) $("downloadSearchLog").onclick=()=>download("literature-search-log.csv",Lit.makeSearchLogCSV(project),"text/csv");
+    if($("downloadSearchRevisions")) $("downloadSearchRevisions").onclick=()=>download("literature-search-corrections.csv",Lit.makeSearchRevisionCSV(project),"text/csv");
+
     document.querySelectorAll("[data-confirm-search]").forEach(b=>b.onclick=()=>{
       const x=project.searchLog[Number(b.dataset.confirmSearch)];
       if(!x||!Lit.searchLogStatus(x).complete)return;
