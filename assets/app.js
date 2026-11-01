@@ -436,7 +436,8 @@
   }
 
   function litSourceForm(s={},idx=null){
-    const t=s.trapp||{},ev=s.themeEvidence||[];\n    const screeningStatus=["Included","Pending","Excluded"].includes(s.screeningStatus)?s.screeningStatus:"Pending";
+    const t=s.trapp||{},ev=s.themeEvidence||[];
+    const screeningStatus=["Included","Pending","Excluded"].includes(s.screeningStatus)?s.screeningStatus:"Pending";
     return `<div class="lit-section source-three-pass"><div class="source-three-pass-head"><div><h4>${idx===null?"Add a source":`Edit ${esc(s.id)}`}</h4><p>Work through three short passes. You do not need to evaluate every detail before you have identified the source.</p></div><span>${idx===null?"New source":"Saved source"}</span></div>
       <details class="source-pass" open><summary><span>1</span><div><b>Identify the source</b><small>Record enough information to find and cite it again.</small></div></summary>
         <div class="form-grid two">
