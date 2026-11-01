@@ -167,8 +167,8 @@ window.RMSWriting=(()=>{
     if(!present(d.designType))issues.push(["critical","Design missing","The Method and claim ceiling depend on the study design."]);
     if(!(m.protocolVersions||[]).length)issues.push(["warning","No saved protocol version","Check the actual procedure and whether a dated plan documents decisions made before evidence collection or analysis."]);
     if(!runs.length)issues.push(["critical","No stored analysis","Results cannot be traced to an analysis record."]);
-    if(!present(w.sections.results))issues.push(["critical","Results draft missing","Report what the evidence showed before interpreting it."]);
-    if(!present(w.sections.discussion))issues.push(["critical","Discussion draft missing","The paper still needs interpretation, limitations, literature comparison, and implications."]);
+    if(!present(w.results))issues.push(["critical","Results draft missing","Report what the evidence showed before interpreting it."]);
+    if(!present(w.discussion))issues.push(["critical","Discussion draft missing","The paper still needs interpretation, limitations, literature comparison, and implications."]);
     if(/Correlational|Descriptive/.test(d.designType||"")&&causal.test(w.discussion+" "+w.conclusion+" "+w.abstract))issues.push(["critical","Causal claim ceiling violation","Nonexperimental designs should not be described as establishing that X caused Y."]);
     const ca=citationAudit([w.introduction,w.literature,w.discussion].join("\n"),p.sources);
     if(ca.unmatched.length)issues.push(["critical","Paper contains citation(s) without a matching bibliographic record",ca.unmatched.map(x=>x.text).join(", ")]);
