@@ -515,7 +515,7 @@
 
   function studyMatrixWorkspace(){
     const included=project.sources.filter(s=>s.screeningStatus==="Included");
-    return `<div class="lit-section"><h4>Study matrix</h4><p>Compare eligible studies using their actual populations, methods, measurements, findings and limitations. Keep source identifiers so you can verify every comparison.</p>
+    return `<div class="lit-section"><h4>Study matrix</h4><p>Compare student-included source records using the populations, methods, measurements, findings and limitations entered from each study. Check these details against the original publications before drawing comparisons.</p>
       <div class="lit-toolbar"><button class="ghost small" id="downloadStudyMatrix">Download study matrix CSV</button></div>
       <div class="matrix-scroll"><table><thead><tr><th>ID</th><th>Study</th><th>Population/context</th><th>Variables</th><th>Method/design</th><th>Measures</th><th>Key finding</th><th>Limitations</th><th>Quality notes</th></tr></thead><tbody>${included.map(s=>`<tr><td>${esc(s.id)}</td><td>${esc(s.citation||s.title)}</td><td>${esc(s.sample)}</td><td>${esc(s.variables)}</td><td>${esc(s.design)}</td><td>${esc(s.measures)}</td><td>${esc(s.finding)}</td><td>${esc(s.limits)}</td><td>${esc(s.qualityNotes)}</td></tr>`).join("")}</tbody></table></div></div>`;
   }
@@ -541,7 +541,7 @@
   function gapWorkspace(){
     const g=Lit.gapReadiness(project);
     return `<div class="lit-section"><h4>Gap & study-rationale evidence check</h4><p>This view summarises recorded sources and themes to help you examine a possible rationale. No number of studies or themes, by itself, establishes a literature gap.</p>
-      <div class="lit-scorecards"><div class="lit-scorecard"><span>Included studies</span><b>${g.included}</b></div><div class="lit-scorecard"><span>Themes</span><b>${g.themes}</b></div><div class="lit-scorecard"><span>Multi-source themes</span><b>${g.multiSourceThemes}</b></div><div class="lit-scorecard"><span>Conflict/mixed themes</span><b>${g.conflictThemes}</b></div><div class="lit-scorecard"><span>Measure diversity</span><b>${g.measurementDiversity}</b></div></div>
+      <div class="lit-scorecards"><div class="lit-scorecard"><span>Student-included records</span><b>${g.included}</b></div><div class="lit-scorecard"><span>Themes</span><b>${g.themes}</b></div><div class="lit-scorecard"><span>Multi-source coded themes</span><b>${g.multiSourceThemes}</b></div><div class="lit-scorecard"><span>Conflict/mixed themes</span><b>${g.conflictThemes}</b></div><div class="lit-scorecard"><span>Measure diversity</span><b>${g.measurementDiversity}</b></div></div>
       ${g.messages.map(x=>`<div class="gap-warning">${esc(x)}</div>`).join("")}
       <div class="form-grid two" style="margin-top:12px">
         <label><span>Rationale type</span><select data-field="gapType"><option value="">Choose…</option>${["Documented literature gap","Replication","Extension to a new context/population","Method comparison","Resolve or explore inconsistent findings","Local/practical question","Learning-focused investigation","Other"].map(o=>`<option ${project.data.gapType===o?"selected":""}>${o}</option>`).join("")}</select></label>
