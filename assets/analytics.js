@@ -16,11 +16,12 @@ function parseCSV(t){
  }
  row.push(cell);if(row.length>1||row[0])rows.push(row);
  if(!rows.length)return{headers:[],data:[],importWarnings:[]};
- const originalHeaders=rows.shift(),seen={},warnings=[];
+ const originalHeaders=rows.shift(),used=new Set(),warnings=[];
  const headers=originalHeaders.map((original,i)=>{
    const name=String(original||`column_${i+1}`).trim()||`column_${i+1}`;
-   seen[name]=(seen[name]||0)+1;
-   const result=seen[name]===1?name:`${name}_${seen[name]}`;
+   let result=name,suffix=2;
+   while(used.has(result))result=`${name}_${suffix++}`;
+   used.add(result);
    if(original!==result)warnings.push(`Header ${i+1} was imported as "${result}" (original "${original}").`);
    return result;
  });
