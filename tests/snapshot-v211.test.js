@@ -52,3 +52,34 @@ for(const phrase of ["Current Research Snapshot","Research question","Pearson co
   if(!all.includes(phrase))process.exit(1);
 }
 console.log("PASS v2.11 current research snapshot engine");
+
+
+// Stage C-X3c12m | Source and search provenance must agree between the
+// snapshot's visible workspace and its Markdown export.
+const provenanceProject={
+  ...p,
+  sources:[{id:"S01",citation:"Student record",screeningStatus:"Included",verified:true,finding:"Student-reported study finding"}],
+  searchLog:[
+    {date:"2026-11-01",database:"ERIC",query:"confirmed query",filters:"none",results:"0",executed:true},
+    {date:"2026-11-01",database:"ERIC",query:"unconfirmed query",filters:"none",results:"3",executed:false},
+    {date:"",database:"ERIC",query:"incomplete query",filters:"none",results:"4",executed:true}
+  ],
+  methods:{...p.methods,protocolVersions:[{id:"v1"}]}
+};
+const provenanceMarkdown=S.markdown(provenanceProject);
+for(const phrase of ["Student-confirmed execution","Execution not confirmed","Incomplete record","Student-recorded finding / contribution","bibliography record(s) marked checked by student"]){
+  if(!provenanceMarkdown.includes(phrase))process.exit(1);
+}
+if(provenanceMarkdown.includes("—"))process.exit(1);
+const snapshotUI=require("node:fs").readFileSync(require("node:path").join(__dirname,"../assets/research-snapshot-ui.js"),"utf8");
+const wsBegin=snapshotUI.indexOf("function workspaceHTML(p)");
+const wsEnd=snapshotUI.indexOf("\n function renderBody(p)",wsBegin);
+if(wsBegin<0||wsEnd<wsBegin)process.exit(1);
+const escSnapshot=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const renderWorkspace=new Function("S","E",snapshotUI.slice(wsBegin,wsEnd)+";return workspaceHTML;")(S,escSnapshot);
+const provenanceHTML=renderWorkspace(provenanceProject);
+for(const phrase of ["3 records","Student-confirmed execution","Execution not confirmed","Incomplete record","Student-recorded finding / contribution","bibliography checked by student","1 saved protocol version"]){
+  if(!provenanceHTML.includes(phrase))process.exit(1);
+}
+if(provenanceHTML.includes("locked protocol version"))process.exit(1);
+console.log("PASS snapshot display/export provenance parity");
