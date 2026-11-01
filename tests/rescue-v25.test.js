@@ -161,7 +161,7 @@ if(all113Keys.length!==113)process.exit(1);
 for(const get of [f=>f.levels["1"].prompt,f=>f.levels["3"].strong_example,f=>f.levels["4"].walkthrough.draft,f=>f.levels["5"].frame]){
  if(new Set(all113Keys.map(k=>get(fullRescueModel.fields[k]))).size!==113)process.exit(1);
 }
-if(!/at least two/.test(fullRescueModel.fields.limitations.levels["1"].prompt))process.exit(1);
+if(!/materially affect particular interpretations/i.test(fullRescueModel.fields.limitations.levels["1"].prompt))process.exit(1);
 if(!/pending actual evidence/.test(fullRescueModel.fields.abstractDraft.levels["4"].walkthrough.draft))process.exit(1);
 if(!/MLA/.test(fullRescueModel.fields.citationStyle.levels["4"].walkthrough.draft))process.exit(1);
 if(!/Issue C01/.test(fullRescueModel.fields.citationAudit.levels["4"].walkthrough.draft))process.exit(1);
