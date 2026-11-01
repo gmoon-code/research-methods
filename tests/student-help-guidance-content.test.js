@@ -1,0 +1,17 @@
+global.window={};
+require("../assets/student-guidance.js");
+require("../assets/response-examples.js");
+require("../assets/student-guidance-ui.js");
+const U=window.RMSGuidanceUI;
+const stage=U.stagePanel(1);
+if(!stage.includes("Examples do not establish findings"))process.exit(1);
+if(!stage.includes("proposed actions from completed work"))process.exit(1);
+const model=U.responseExamples("interest1");
+if(!model.includes("Illustrative working response"))process.exit(1);
+if(!model.includes("check any factual claims against your own project records"))process.exit(1);
+if(!model.includes("What makes this example useful"))process.exit(1);
+const choice=U.choiceHelp("screeningStatus");
+if(!choice.includes("full-text assessment"))process.exit(1);
+const laboratory=U.labPanel("literature","search");
+if(!laboratory.includes("searches actually run"))process.exit(1);
+console.log("PASS student help model content");
