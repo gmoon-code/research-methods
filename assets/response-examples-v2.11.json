@@ -695,9 +695,9 @@
       "typical_length": "about 25–110 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "I know salt is bad for plants.",
-      "good_working_response": "Added salt may alter the water available to developing seedlings. I would consult relevant plant physiology studies to judge whether this supports a directional prediction for seven-day shoot length. I would record the prediction before measurements begin, rather than infer it from the results.",
+      "good_working_response": "Higher NaCl concentration may lower the surrounding solution's water potential, potentially affecting water uptake and early seedling development. I would check relevant plant physiology research before using this mechanism to support the proposed Day 7 shoot-length prediction. This study would not directly measure water potential or ion responses.",
       "detailed_response": "",
-      "why_it_works": "Identify a plausible mechanism and the evidence still needed to justify the direction. Keep the timing of the hypothesis clear."
+      "why_it_works": "Identify a plausible mechanism and the literature needed to support it, without presenting that mechanism or the directional prediction as established findings."
     },
     "predictorIV": {
       "stage": 10,
@@ -839,9 +839,9 @@
       "typical_length": "about 20–105 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "A tool that measures things.",
-      "good_working_response": "For the seedling study, use a millimetre-marked ruler and a prespecified shoot-length measurement rule. A digital balance that displays 0.01 g increments could be used for a separate mass measure, but that display resolution alone does not establish accuracy.",
+      "good_working_response": "Use a millimetre-marked ruler to record visible shoot length from the substrate surface to the shoot tip on Day 7. Record the length in centimetres and retain a separate 'no visible shoot' status. The ruler's markings indicate its scale, not proof of accuracy or repeatability.",
       "detailed_response": "",
-      "why_it_works": "Name the source of the recorded value and relevant specifications without confusing instrument display resolution with measurement validity."
+      "why_it_works": "Name the instrument and observation procedure that actually produce the study outcome. Scale resolution alone does not establish reliable measurement or an appropriate construct interpretation."
     },
     "measureQuality": {
       "stage": 11,
@@ -851,9 +851,9 @@
       "typical_length": "about 35–125 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "The balance is valid because it shows two decimals.",
-      "good_working_response": "Check a balance's readings against a suitable reference mass, then zero or tare it before weighing each sample. Use the same weighing procedure and document any drift. Separately justify why mass answers the research question, since consistent readings alone do not establish construct validity.",
+      "good_working_response": "Use the same ruler orientation and shoot-length landmarks for every seedling, with a documented rule for curved or ambiguous shoots. Repeat selected measurements to examine consistency and record discrepancies. The combined Day 7 outcome includes both absent visible shoots and shoot lengths, so consistent readings alone cannot establish how much growth occurred after germination.",
       "detailed_response": "",
-      "why_it_works": "Distinguish reference checks, zeroing and procedural consistency from the question of whether the instrument measures the intended construct."
+      "why_it_works": "Evaluate repeatability of the actual measurement protocol and whether the recorded value answers the intended question. Measurement consistency does not establish construct validity."
     },
     "ethicsIssues": {
       "stage": 11,
