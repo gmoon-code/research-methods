@@ -24,5 +24,5 @@ const wide=make([{t1:"1",t2:"0",t3:"1"},{t1:"0",t2:"1",t3:"0"},{t1:"1",t2:"1",t3
 const q=A.runAnalysis(wide,{structure:"repeated_binary",columns:["t1","t2","t3"],success:"1"});
 if(q.error||q.output.test.indexOf("Cochran")<0)process.exit(1);
 const record=A.analysisRecord(paired,valid);
-if(record.calculation_guard_version!=="C-X3c10c"||!/independent review/.test(record.validation_scope))process.exit(1);
+if(record.calculation_guard_version!=="C-X3c10d"||!/independent review/.test(record.validation_scope))process.exit(1);
 console.log("PASS contingency, paired binary coding and guarded records");
