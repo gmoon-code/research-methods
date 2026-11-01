@@ -37,9 +37,9 @@ window.RMSNoviceGuard=(()=>{
       if(global){
         const sourceCount=(p.sources||[]).filter(s=>String(s.screeningStatus||"").toLowerCase()==="included").length;
         const searches=(p.searchLog||[]).length;
-        const level=(sourceCount<10||searches<2)?"bad":"warn";
+        const level="bad";
         out.push(msg(level,"NG-GAP-OVERCLAIM","The gap statement makes a global absence claim",
-          `A claim such as “no research exists” requires much stronger search evidence than a small preliminary set normally provides. Current project record: ${sourceCount} included source(s), ${searches} logged search route(s).`,
+          `A field-wide absence claim cannot be established by a count of studies or search entries. This project records ${sourceCount} source(s) marked Included and ${searches} search log entry/entries. Review what the searches actually covered, and limit the statement to evidence you can substantiate.`,
           "Use a bounded rationale such as replication, extension, inconsistent findings, method comparison, or a local/context-specific question unless the search can defend a broader claim.","gapStatement"));
       }
     }
