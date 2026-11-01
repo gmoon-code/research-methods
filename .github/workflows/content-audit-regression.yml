@@ -1,0 +1,31 @@
+name: Content audit regression
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'api/research-chat.js'
+      - 'assets/ai-adapter.js'
+      - 'assets/research-snapshot.js'
+      - 'assets/research-snapshot-ui.js'
+      - 'tests/research-chat-backend.test.mjs'
+      - 'tests/adapter-contract.test.mjs'
+      - 'tests/snapshot-v211.test.js'
+      - '.github/workflows/content-audit-regression.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audited-workflows:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Research chat backend and adapter contracts
+        run: node --test tests/research-chat-backend.test.mjs tests/adapter-contract.test.mjs
+      - name: Research Snapshot regression
+        run: node tests/snapshot-v211.test.js
