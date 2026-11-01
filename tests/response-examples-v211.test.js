@@ -83,4 +83,30 @@ if(!/Repeat selected measurements/.test(R.fields.measureQuality.good_working_res
 if(!/missing-data rule/.test(R.fields.procedure.good_working_response))process.exit(1);
 if(R.fields.procedure.good_working_response.trim().split(/\s+/).length<120)process.exit(1);
 
+// Stage C-X3c2e | source-linked data and result examples 76–100.
+const fourth25=Object.keys(R.fields).slice(75,100);
+if(fourth25.length!==25||fourth25[0]!=="replication"||fourth25[24]!=="interpret2")process.exit(1);
+for(const key of fourth25){
+ const item=R.fields[key];
+ if(!item.expected_shape||!item.good_working_response||!item.why_it_works)process.exit(1);
+ if(JSON.stringify(item).includes("—"))process.exit(1);
+ const bounds=item.typical_length.match(/(\d+)[–-](\d+)/);
+ if(bounds){
+  const count=item.good_working_response.trim().split(/\s+/).length;
+  if(count<Number(bounds[1])||count>Number(bounds[2]))process.exit(1);
+ }
+}
+if(!/visible-shoot status/.test(R.fields.rowUnit.good_working_response))process.exit(1);
+if(!/visible_shoot/.test(R.fields.columns.good_working_response))process.exit(1);
+if(!/missing/.test(R.fields.columns.good_working_response))process.exit(1);
+if(!/not a ruler measurement/.test(R.fields.missingRule.why_it_works))process.exit(1);
+if(!/without presenting shoot emergence as measured germination/.test(R.fields.plots.good_working_response))process.exit(1);
+if(!/visible-shoot presence/.test(R.fields.descriptives.good_working_response))process.exit(1);
+if(!/prespecified secondary outcome/.test(R.fields.result2.good_working_response))process.exit(1);
+if(!/Visible-shoot status/.test(R.fields.resultsDraft.detailed_response))process.exit(1);
+if(!/0 and 100 mM/.test(R.fields.directAnswer.good_working_response))process.exit(1);
+if(!/Separate analyses of visible-shoot presence/.test(R.fields.interpret2.good_working_response))process.exit(1);
+if(R.fields.resultsDraft.good_working_response.trim().split(/\s+/).length<120)process.exit(1);
+if(!/combined visible-shoot-and-length outcome/.test(R.fields.operationalDefs.detailed_response))process.exit(1);
+
 console.log("PASS v2.11 response-example coverage and depth");
