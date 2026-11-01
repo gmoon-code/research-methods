@@ -198,38 +198,71 @@ window.RMSWriting=(()=>{
   }
 
   function methodOutlineMarkdown(p){
-    const b=methodBlueprint(p),lines=["# Method Section Evidence Outline","",`**Design:** ${b.design||""}`,`**Independent/analytic unit:** ${b.units||""}`,""];
-    lines.push("## Participants / units and sampling");
-    Object.entries(b.sampling||{}).forEach(([k,v])=>{if(present(v))lines.push(`- **${k}:** ${v}`)});
-    lines.push("","## Variables / constructs and operational definitions");
+    const b=methodBlueprint(p),lines=["# Method Evidence Outline","",
+      `**Source:** ${b.locked?"Most recently saved planning version":"Current planning record"}`,
+      `**Saved at:** ${b.protocolRecordedAt||"Not recorded"}`,
+      "A saved protocol documents a plan. Verify what was actually done and disclose any departures before describing completed research.",
+      `**Design:** ${b.design||"Not recorded"}`,
+      `**Recorded study unit:** ${b.units||"Not recorded"}`,""];
+    lines.push("## Participants, units and sampling");
+    Object.entries(b.sampling||{}).forEach(([key,val])=>{if(present(val))lines.push(`- **${key}:** ${val}`)});
+    lines.push("","## Variables, constructs and operational definitions");
     b.constructs.forEach(x=>lines.push(`- **${x.name||"Unnamed"}** — ${x.role||""}: ${x.operational||""}`));
-    lines.push("","## Conditions / comparison");b.conditions.forEach(x=>lines.push(`- **${x.name||"Condition"}:** ${x.definition||""}`));
-    lines.push("","## Measures / instruments");b.measurements.forEach(x=>lines.push(`- **${x.construct||"Measure"}:** ${x.instrument||""}; ${x.operational||""}; ${x.scale||""}; ${x.timing||""}`));
-    lines.push("","## Procedure");b.procedure.forEach((x,i)=>lines.push(`${i+1}. ${x.action||""}${x.record?` Record: ${x.record}.`:""}`));
-    lines.push("","## Data handling and analysis",`- Missing-data rule: ${b.missingRule}`,`- Exclusion/outlier rule: ${b.exclusionRule}`,`- Analysis plan: ${b.analysisIntent}`);
+    lines.push("","## Conditions or comparisons");
+    b.conditions.forEach(x=>lines.push(`- **${x.name||"Condition"}:** ${x.definition||""}`));
+    lines.push("","## Instruments and evidence collection");
+    b.measurements.forEach(x=>lines.push(`- **${x.construct||"Evidence record"}:** ${x.instrument||""}; ${x.operational||""}; ${x.scale||""}; ${x.timing||""}`));
+    lines.push("","## Procedure",
+      "A procedural entry is a recorded plan or account. Check its timing and actual implementation against contemporaneous evidence.");
+    b.procedure.forEach((x,i)=>lines.push(`${i+1}. ${x.action||""}${x.record?` Record: ${x.record}.`:""}`));
+    lines.push("","## Data handling and analysis",`- Missing-data rule: ${b.missingRule}`,
+      `- Exclusion/outlier rule: ${b.exclusionRule}`,`- Recorded analysis intention: ${b.analysisIntent}`);
     return lines.join("\n");
   }
 
   function resultsNotesMarkdown(p){
-    const b=resultsBlueprint(p),lines=["# Results Evidence Outline","",`**Dataset:** ${b.dataset}`,""];
-    b.runs.forEach(x=>{lines.push(`## ${x.id} — ${x.test}`,x.summary,"",...(x.assumptions||[]).map(a=>`- ${a[1]}${a[2]?`: ${a[2]}`:""}`),"")});
+    const b=resultsBlueprint(p),lines=["# Results Evidence Outline","",
+      `**Current imported dataset:** ${b.dataset||"Not recorded"}`,
+      `**Reporting status:** ${b.mode==="proposal"?"Proposal / planned work":b.mode==="completed"?"Completed work (student-reported)":"Unconfirmed"}`,"",
+      "A stored calculation is not proof that it was prespecified or that its source data and assumptions have been independently verified.",""];
+    if(!b.runs.length)lines.push("No linked Data Lab calculations. Check other evidence records where appropriate; a proposal must not invent observed results.","");
+    b.runs.forEach(x=>{
+      lines.push(`## ${x.id} — ${x.test}`,
+        `**Stored on:** ${x.storedAt||"Not recorded"}`,
+        `**Calculation status:** ${x.version==="C-X3c10d"?"Current automated checks; independent review still needed":x.version?`Earlier safeguards (${x.version}); check before using`:"Historical record without current checks; review before use"}`,
+        `**Data file recorded for this calculation:** ${x.traceability.file||"Not recorded"}`,
+        `**Rows used for this calculation:** ${x.traceability.rows_used??"Not recorded"}`,
+        `**Rows omitted for this calculation:** ${x.traceability.rows_not_used??"Not recorded"}`,
+        `**Missing tokens applied:** ${(x.missingness.tokens||[]).join(", ")||"Not recorded"}`,
+        `**Estimand recorded with the calculation:** ${x.traceability.estimand||"Not recorded"}`,
+        `**Variables / model settings:** ${Object.keys(x.config).length?JSON.stringify(x.config):"Not recorded"}`,
+        `**Recorded summary:** ${x.summary||"Not recorded"}`,"",
+        ...(x.assumptions||[]).map(a=>`- Review: ${a[1]||"Unspecified check"}${a[2]?`. ${a[2]}`:""}`),"");
+    });
     return lines.join("\n");
   }
 
   function paperMarkdown(p){
-    const w=p.writing.sections;
-    return [
-      `# ${p.writing.title||p.data?.titleDraft||p.name||"Research Paper"}`,"",
+    normalizeProject(p);const w=p.writing.sections,mode=p.writing.reportingMode,proposal=mode==="proposal";
+    const lines=[`# ${p.writing.title||p.data?.titleDraft||p.name||"Research Draft"}`,"",
+      `**Research reporting status:** ${proposal?"Proposal / planned work":mode==="completed"?"Completed research (student-reported)":"Not confirmed; verify before submission"}`,"",
       p.writing.keywords?`**Keywords:** ${p.writing.keywords}`:"","",
-      "## Abstract","",w.abstract||"","",
+      proposal?"## Proposal Abstract":"## Abstract","",w.abstract||"","",
       "## Introduction","",w.introduction||"","",
       "## Literature Review","",w.literature||"","",
-      "## Method","",w.method||"","",
-      "## Results","",w.results||"","",
-      "## Discussion","",w.discussion||"","",
-      "## Conclusion","",w.conclusion||"","",
-      "## Reference verification note","","References should be generated from verified bibliographic records in the source workspace and checked against the required style guide."
-    ].join("\n");
+      proposal?"## Planned Method":"## Method","",w.method||"",""];
+    if(proposal){
+      lines.push("## Proposed analysis and reporting","",
+        "Describe any planned analysis as a plan. No observed finding has been supplied or verified by this export.","",w.results||"","",
+        "## Anticipated interpretation and limitations","",w.discussion||"","");
+    }else{
+      lines.push("## Results","",w.results||"","",
+        "## Discussion","",w.discussion||"","");
+    }
+    lines.push("## Conclusion","",w.conclusion||"","",
+      "## Reference verification note","",
+      "No reference entries were generated. Check every in-text citation against the original publication and compile the references using verified bibliographic details and the required style guide.");
+    return lines.join("\n");
   }
 
   return {normalizeProject,sourceKey,citationAudit,introBlueprint,methodBlueprint,resultsBlueprint,discussionRequirements,sectionAudit,paperAudit,titleAudit,methodOutlineMarkdown,resultsNotesMarkdown,paperMarkdown};
