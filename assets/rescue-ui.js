@@ -48,7 +48,7 @@ window.RMSRescueUI=(()=>{
      <div class="rescue-attempt"><b>Your current attempt</b><p>${current.trim()?E(current):"<em>No text yet. Requesting help will record that you could not yet start this field.</em>"}</p></div>
      <div class="rescue-ladder">${[1,2,3,4,5].map(n=>levelButton(n,st)).join("")}</div>
      <div id="rescueLevelContent">${st.maxLevel?levelContent(cfg,Math.min(st.maxLevel,4)):"<div class='rescue-start'><b>Start with Level 1.</b><p>Each higher level becomes available after the previous level is opened.</p></div>"}</div>
-     <div class="rescue-integrity"><b>Authorship rule</b><p>Examples are not inserted automatically. Level 5 can organize only the words and choices you provide, and it requires you to explain why the answer fits.</p></div>
+     <div class="rescue-integrity"><b>Keep the answer your own</b><p>Examples are not inserted automatically. Level 5 combines the words you provide and asks you to explain your choice. Check any claim against your own evidence.</p></div>
    </div>`;
    document.body.appendChild(wrap);id("closeRescue").onclick=close;wrap.onclick=e=>{if(e.target===wrap)close()};
    bindFieldModal(stage,key,cfg,current,meta);
@@ -97,11 +97,11 @@ window.RMSRescueUI=(()=>{
    const current=allEntries.filter(([k])=>currentKeys.includes(k)),other=allEntries.filter(([k])=>!currentKeys.includes(k));
    const renderEntries=entries=>entries.map(([k,x])=>{const val=String(p.data?.[k]??"").trim(),lv=R.maxFieldLevel(p,stage,k);return `<button data-rescue-field="${k}"><div><b>${E(Paths?.label?Paths.label(p,k,x.label):x.label)}</b><small>${val?"Has a current response":"Blank"} · help L${lv}</small></div><span>Open help →</span></button>`}).join("");
    const wrap=document.createElement("div");wrap.className="modal-backdrop";wrap.id="rescueBackdrop",sum=R.stageSupportSummary(p,stage);
-   wrap.innerHTML=`<div class="modal rescue-modal rescue-navigator"><div class="journey-head"><div><div class="guide-kicker">No-dead-end help</div><h3>What are you stuck on?</h3><p>Start with the part you are working on now. Help becomes more direct only when you request another level.</p></div><button class="ghost small" id="closeRescue">Close</button></div>
+   wrap.innerHTML=`<div class="modal rescue-modal rescue-navigator"><div class="journey-head"><div><div class="guide-kicker">Step-by-step research help</div><h3>What are you stuck on?</h3><p>Start with the part you are working on now. Help becomes more direct only when you request another level.</p></div><button class="ghost small" id="closeRescue">Close</button></div>
      <div class="rescue-stage-summary"><span>Stage</span><b>${stage}</b><span>Highest optional help used here</span><b>L${sum.maxLevel||0}</b></div>
      <h4>Current part of this stage</h4><div class="rescue-field-list">${renderEntries(current.length?current:allEntries.slice(0,4))}</div>
      ${other.length?`<details class="other-stage-help"><summary>Other fields in Stage ${stage}</summary><div class="rescue-field-list">${renderEntries(other)}</div></details>`:""}
-     <div class="rescue-integrity"><b>If you cannot even start</b><p>That is okay. Open the field and begin at Level 1. Your blank or original attempt is preserved before stronger support appears.</p></div>
+     <div class="rescue-integrity"><b>If you are unsure where to begin</b><p>Open the field at Level 1. Your original response, including a blank starting point, is preserved as you request more support.</p></div>
    </div>`;
    document.body.appendChild(wrap);id("closeRescue").onclick=close;wrap.onclick=e=>{if(e.target===wrap)close()};
    document.querySelectorAll("[data-rescue-field]").forEach(b=>b.onclick=()=>{const k=b.dataset.rescueField;close();fieldModal(stage,k)});
