@@ -52,4 +52,22 @@ if(!/pairs whose classifications differ/.test(G.glossary["McNemar test"]))proces
 if(!/without identifying which conditions differ/.test(G.glossary["Cochran Q"]))process.exit(1);
 if(!/does not automatically represent a causal effect/.test(G.glossary.regression))process.exit(1);
 
+// Stage C-X3c4a | first 25 student-help entries and source-status boundaries.
+const firstFieldKeys=Object.keys(G.fields).slice(0,25);
+if(firstFieldKeys.length!==25||firstFieldKeys[0]!=="interest1"||firstFieldKeys[24]!=="rq2")process.exit(1);
+for(const k of firstFieldKeys){
+ const v=G.fields[k];
+ if(!v.meaning||!v.write||!v.example||!v.questions?.length||!v.avoid||JSON.stringify(v).includes("—"))process.exit(1);
+}
+if(!/still require confirmation/.test(G.fields.access1.example))process.exit(1);
+if(!/Radish seeds/.test(G.fields.contextPop.example))process.exit(1);
+if(!/analysing records/.test(G.fields.timeLimit.meaning))process.exit(1);
+if(!/18 labelled dishes/.test(G.fields.resources.example))process.exit(1);
+if(!/actually run/.test(G.fields.prelimSearch.meaning))process.exit(1);
+if(!/label the claim as something to investigate/.test(G.fields.known.write))process.exit(1);
+if(!/For a proposed review/.test(G.fields.methodsSeen.write))process.exit(1);
+if(!/based on source evidence already read/.test(G.fields.uncertain.write))process.exit(1);
+if(!/hypothetical reading exercise/.test(G.fields.questionShift.example))process.exit(1);
+if(!/describe the study practices/.test(G.fields.rq2.example))process.exit(1);
+
 console.log("PASS student guidance coverage");
