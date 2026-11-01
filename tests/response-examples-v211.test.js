@@ -109,4 +109,31 @@ if(!/Separate analyses of visible-shoot presence/.test(R.fields.interpret2.good_
 if(R.fields.resultsDraft.good_working_response.trim().split(/\s+/).length<120)process.exit(1);
 if(!/combined visible-shoot-and-length outcome/.test(R.fields.operationalDefs.detailed_response))process.exit(1);
 
+// Stage C-X3c2f | final 13 response examples and complete source-level coverage.
+const fifth13=Object.keys(R.fields).slice(100);
+if(fifth13.length!==13||fifth13[0]!=="litCompare"||fifth13[12]!=="finalEdits")process.exit(1);
+for(const key of fifth13){
+ const v=R.fields[key],bounds=v.typical_length.match(/(\d+)[–-](\d+)/);
+ if(!v.expected_shape||!v.good_working_response||!v.why_it_works||JSON.stringify(v).includes("—"))process.exit(1);
+ if(bounds){
+  const n=v.good_working_response.trim().split(/\s+/).length;
+  if(n<Number(bounds[1])){
+   if(!["discussionDraft","abstractDraft"].includes(key)||!v.detailed_response)process.exit(1);
+   const detailedWords=v.detailed_response.trim().split(/\s+/).length;
+   if(detailedWords<Number(bounds[1])||detailedWords>Number(bounds[2]))process.exit(1);
+   if(!/preview|opening/i.test(v.good_working_response))process.exit(1);
+  }else if(n>Number(bounds[2]))process.exit(1);
+ }
+}
+if(!/visible-shoot presence/.test(R.fields.limitations.good_working_response))process.exit(1);
+if(!/visible-shoot presence and measured length/.test(R.fields.limitations.detailed_response))process.exit(1);
+if(!/separate germination measure/.test(R.fields.discussionDraft.detailed_response))process.exit(1);
+if(!/selected subset/.test(R.fields.discussionDraft.detailed_response))process.exit(1);
+if(!/radicle-emergence criterion/.test(R.fields.future.good_working_response))process.exit(1);
+if(!/proposal-abstract preview/.test(R.fields.abstractDraft.good_working_response))process.exit(1);
+if(!/visible-shoot status/.test(R.fields.abstractDraft.detailed_response))process.exit(1);
+if(!/visible-shoot-and-length measure/.test(R.fields.conclusionDraft.good_working_response))process.exit(1);
+if(!/visible-shoot emergence/.test(R.fields.keywords.good_working_response))process.exit(1);
+if(!/no visible shoot/.test(R.fields.finalEdits.good_working_response))process.exit(1);
+
 console.log("PASS v2.11 response-example coverage and depth");
