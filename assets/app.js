@@ -830,8 +830,8 @@
   function methodsEthicsTab(){
     const e=project.methods.ethics||{}, r=PathCoach.methodSection(project,"ethics");
     const cls=r.status==="clear"?"ethics-clear":r.status==="teacher_review"?"ethics-review":"ethics-stop";
-    return `<div class="methods-section"><h4>Ethics, safety, privacy, and authority</h4><p>This educational screen helps identify when teacher, school, institutional, or other approval is needed. It does not provide formal ethics approval.</p>
-      <div class="concept-box ${cls}"><strong>Current route</strong><br>${esc(r.status.replaceAll("_"," "))}</div>
+    return `<div class="methods-section"><h4>Ethics, safety, privacy, and authority</h4><p>This checklist identifies potential permission, safety and privacy questions. Its answers are student reports, not proof of ethics approval or permission to recruit or access records.</p>
+      <div class="concept-box ${cls}"><strong>Screening outcome (not approval)</strong><p>${esc(r.status==="teacher_review"?"Consult the responsible teacher or institution before recruitment or data collection.":r.status==="do_not_facilitate"?"The identified activity is unsuitable for a student-facilitated intervention. Redesign and seek responsible review.":"No specific trigger was detected by this checklist. Confirm applicable school and institutional requirements before proceeding.")}</p></div>
       <section class="method-substep open"><div class="method-substep-head"><span>1</span><div><b>Quick screening</b><small>Identify participant, privacy, sensitivity, or intervention conditions that change the review route.</small></div></div>
         <div class="form-grid two">
           ${mInput("meHuman","Human participants or identifiable human records?",e.humanParticipants||"","select",["yes","no"])}
@@ -863,7 +863,7 @@
 
   function methodsProcedureTab(){
     const a=PathCoach.methodSection(project,"procedure");
-    return `<div class="methods-section"><h4>Procedure builder</h4><p>Write the procedure as an ordered, auditable protocol. Another researcher should know what happens, what gets recorded, and what counts as a protocol deviation.</p>
+    return `<div class="methods-section"><h4>Procedure builder</h4><p>Describe what happens and is recorded in a clear order. For prospective work, identify the permissions needed before recruitment or collection. Record deviations rather than rewriting the original procedure after observing results.</p>
       <div class="procedure-row" style="font-size:9px;font-weight:900;text-transform:uppercase;color:#6d7a88"><div>Phase</div><div>Action</div><div>Record</div><div>Deviation/decision rule</div><div></div></div>
       ${procedureRows()||'<p class="muted tiny">No procedure steps recorded.</p>'}
       <button class="ghost small" id="addProcedureStep">Add procedure step</button>
@@ -874,7 +874,7 @@
   function methodsDataTab(){
     const d=project.methods.design||{}, a=PathCoach.methodSection(project,"data");
     const rows=(project.schema||[]).map((r,i)=>`<div class="schema-row" style="grid-template-columns:1fr 120px 180px 1.4fr 90px 48px"><input data-schema-name="${i}" value="${esc(r.name||"")}"><select data-schema-type="${i}">${["ID","Numeric","Count","Categorical","Ordinal","Binary","Text","Date/time"].map(o=>`<option ${r.type===o?"selected":""}>${o}</option>`).join("")}</select><input data-schema-role="${i}" value="${esc(r.role||"")}" placeholder="role"><input data-schema-def="${i}" value="${esc(r.definition||"")}" placeholder="unit/categories/coding/allowed values"><input data-schema-missing="${i}" value="${esc(r.missing||"")}" placeholder="missing code"><button class="danger small" data-schema-del="${i}" aria-label="Remove data column ${i+1}">×</button></div>`).join("");
-    return `<div class="methods-section"><h4>Data table & dictionary</h4><p>Your research question decides the structure of the dataset. Define what one row represents, then define each column so another person could collect the same information.</p>
+    return `<div class="methods-section"><h4>Data table & dictionary</h4><p>Define the unit represented by each row or evidence record and preserve IDs for repeated or nested observations. Explain recorded zeros, missing values and allowable codes. Interviews and documents also need traceable records even without a numerical table.</p>
       <div class="form-grid two">${mInput("mRowUnit","What ONE row represents",d.rowUnit||project.data.rowUnit||"")}${mInput("mIdPlan","Identifier / linkage plan",d.identifierPlan||"","textarea")}</div>
       <div class="schema-list">${rows||'<p class="muted tiny">No columns defined.</p>'}</div>
       <div class="button-row"><button id="mAddSchema" class="secondary small">Add column</button><button id="mDownloadTemplate" class="ghost small">Download empty CSV</button><button id="mDownloadDictionary" class="ghost small">Download data dictionary</button></div>
@@ -884,11 +884,11 @@
 
   function methodsAuditTab(){
     const r=PathCoach.methodsReadiness(project), versions=project.methods.protocolVersions||[];
-    return `<div class="methods-section"><h4>Pre-collection method audit</h4><p>Do this before final data collection. A locked protocol can still be amended later, but the previous version remains in the notebook.</p>
-      <div class="audit-summary"><div><h4>${esc(r.label)}</h4><p>${r.critical} item(s) to fix before collection · ${r.warning} item(s) to review · ${r.info} information note(s)</p><p>Ethics/safety route: <b>${esc(r.ethicsStatus.replaceAll("_"," "))}</b></p></div></div>
-      ${Object.entries(r.sections).map(([name,x])=>`<div class="method-row"><div class="method-row-head"><b>${esc(name)}</b><span class="role-pill">${(x.issues||[]).length} issue(s)</span></div>${(x.issues||[]).slice(0,5).map(i=>`<div class="issue ${i[0]}"><b>${esc(i[1])}</b><p>${esc(i[2])}</p></div>`).join("")||'<p>No issue detected by current rule set.</p>'}</div>`).join("")}
-      <div class="button-row"><button id="lockProtocol" class="primary" ${r.critical||r.ethicsStatus==="do_not_facilitate"?"disabled":""}>Lock protocol version</button><button id="downloadMethodPlan" class="ghost">Export method plan</button></div>
-      ${r.critical?'<div class="gap-warning">Resolve critical methodological issues before locking the protocol.</div>':""}
+    return `<div class="methods-section"><h4>Method plan and evidence audit</h4><p>For proposed work, review the plan before collecting outcomes and preserve its dated version. For completed work, record which decisions were prospective and which were made later. Saving a protocol version does not grant research approval.</p>
+      <div class="audit-summary"><div><h4>${esc(r.label)}</h4><p>${r.critical} item(s) to fix before collection · ${r.warning} item(s) to review · ${r.info} information note(s)</p><p>Ethics/safety review route: <b>${esc(r.ethicsStatus==="teacher_review"?"Teacher or institutional review needed":r.ethicsStatus==="do_not_facilitate"?"Unsafe student-facilitated route":"No specific trigger detected")}</b></p></div></div>
+      ${Object.entries(r.sections).map(([name,x])=>`<div class="method-row"><div class="method-row-head"><b>${esc(name)}</b><span class="role-pill">${(x.issues||[]).length} issue(s)</span></div>${(x.issues||[]).map(i=>`<div class="issue ${i[0]}"><b>${esc(i[1])}</b><p>${esc(i[2])}</p></div>`).join("")||'<p>No issue detected by these automatic checks. Review the actual design and applicable requirements.</p>'}</div>`).join("")}
+      <div class="button-row"><button id="lockProtocol" class="primary" ${r.critical||r.ethicsStatus==="do_not_facilitate"?"disabled":""}>Save dated protocol version</button><button id="downloadMethodPlan" class="ghost">Export method plan</button></div>
+      ${r.critical?'<div class="gap-warning">Resolve critical methodological issues before saving a version as ready for review. Recording a protocol never authorises research activity.</div>':""}
       ${r.ethicsStatus==="do_not_facilitate"?'<div class="coach-feedback bad">This route must not proceed as a student-facilitated intervention. Redesign toward a safe observational/literature route and obtain teacher review.</div>':""}
       <h4 style="margin-top:16px">Protocol history</h4>${versions.slice().reverse().map((v,i)=>`<div class="protocol-card"><b>Version ${versions.length-i} · ${esc(new Date(v.lockedAt).toLocaleString())}</b><p>${esc(v.researchQuestion||"No question recorded")} · ${esc(v.designType||"No design recorded")}</p></div>`).join("")||'<p class="muted tiny">No locked protocol versions yet.</p>'}
     </div>`;
