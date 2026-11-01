@@ -112,4 +112,14 @@ if(!G.fields.assumptionChecks.example.includes("six dish outcomes"))process.exit
 if(!G.fields.result2.example.includes("visible shoots"))process.exit(1);
 if(!G.fields.resultsDraft.write.includes("Organise"))process.exit(1);
 if(!G.fields.interpret2.example.includes("cannot itself establish a germination mechanism"))process.exit(1);
+// Stage C-X3c4e | final 13 writing and citation help fields.
+const lastGuideKeys=Object.keys(G.fields).slice(100);
+if(lastGuideKeys.length!==13||lastGuideKeys[0]!=="litCompare"||lastGuideKeys[12]!=="finalEdits")process.exit(1);
+for(const k of lastGuideKeys){const x=G.fields[k];if(!x.meaning||!x.write||!x.example||!x.questions?.length||!x.avoid||JSON.stringify(x).includes("—"))process.exit(1)}
+if(!G.fields.litCompare.example.includes("fictional comparison"))process.exit(1);
+if(!G.fields.implications.example.includes("If a verified"))process.exit(1);
+if(!G.fields.future.example.includes("radicle emergence"))process.exit(1);
+if(!G.fields.discussionDraft.write.includes("allowing the findings to guide paragraph order"))process.exit(1);
+if(!G.fields.conclusionDraft.write.includes("For a proposal"))process.exit(1);
+if(!G.fields.finalEdits.example.includes("visible-shoot presence"))process.exit(1);
 console.log("PASS student guidance coverage");
