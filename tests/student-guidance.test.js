@@ -232,4 +232,15 @@ if(!G.choices.mdAssignment.options["Random assignment"].includes("random process
 if(!G.choices.mdSameUnit.options.yes.includes("multiple times or conditions"))process.exit(1);
 if(!G.choices.meMinors.options.yes.includes("minor"))process.exit(1);
 if(!G.choices.meSensitive.options.yes.includes("sensitive health"))process.exit(1);
+// Stage C-X3c7c | evidence-source, screening and quantitative choices.
+for(const k of ["sourceType","screeningStatus","themeStance","analysisStructure","outcomeType","correlationCoefficient","anovaModel","fisherChoice"])if(!G.choices[k]?.title||!G.choices[k]?.prompt||!Object.keys(G.choices[k].options).length)process.exit(1);
+if(!G.choices.sourceType.options["Peer-reviewed empirical article"].includes("original empirical analysis"))process.exit(1);
+if(!G.choices.screeningStatus.options.Included.includes("full-text assessment"))process.exit(1);
+if(!G.choices.screeningStatus.options.Pending.includes("Not enough information"))process.exit(1);
+if(!G.choices.themeStance.options.conflicts.includes("p-value"))process.exit(1);
+if(!G.choices.analysisStructure.prompt.includes("independent, paired or nested"))process.exit(1);
+if(!G.choices.outcomeType.options.Ordinal.includes("equal spacing is not guaranteed"))process.exit(1);
+if(!G.choices.correlationCoefficient.options["Pearson r"].includes("linear association"))process.exit(1);
+if(!G.choices.anovaModel.options["Welch ANOVA"].includes("group variances"))process.exit(1);
+if(!G.choices.fisherChoice.options["Fisher exact"].includes("independent 2×2 count table"))process.exit(1);
 console.log("PASS student guidance coverage");
