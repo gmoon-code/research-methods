@@ -318,8 +318,8 @@ window.RMSCurriculum = (() => {
       example:`<strong>Example</strong><p>A convenience sample of one class can answer a local classroom question, but the paper should not claim that the result represents all teenagers.</p>`,
       warning:`<strong>Ethics is part of design</strong><ul><li>Do not collect sensitive data simply because it would be interesting.</li><li>Avoid unnecessary identifiers.</li><li>Participants must not be coerced by grades, authority, or peer pressure.</li><li>The Methods Lab separates sampling, recruitment, consent/assent, authority, privacy, storage, and procedure-specific risk.</li></ul>`,
       sections:[
-        {title:"Population and sample",desc:"Define exactly who or what is studied.",fields:[
-          ["population","Target population or system","textarea"],["sample","Actual sample","textarea"],["samplingMethod","Sampling method and why it is feasible","textarea"],["sampleLimits","How sampling limits generalization","textarea"]
+        {title:"Population and sample",desc:"For proposed work, describe the planned sample or corpus. For completed work, report the actual units, records or documents studied.",fields:[
+          ["population","Target population or system","textarea"],["sample","Planned sample or actual sample, with status","textarea"],["samplingMethod","Sampling method and why it is feasible","textarea"],["sampleLimits","How sampling limits generalization","textarea"]
         ]},
         {title:"Measurement and ethics",desc:"Explain how evidence will be trustworthy and safe.",fields:[
           ["instrument","Instrument, measure, sensor, rubric, survey, interview, or observation procedure","textarea"],["measureQuality","Evidence or plan for reliability, validity, calibration, or scoring consistency","textarea"],["ethicsIssues","Ethical, privacy, safety, or environmental issues","textarea"],["ethicsPlan","How those issues will be handled and who must approve","textarea"]
@@ -328,15 +328,15 @@ window.RMSCurriculum = (() => {
       checks:["I distinguished population, sample, and unit of analysis.","My measurement actually represents the construct in the research question.","I identified limits to generalization.","Human-participant or safety issues will be reviewed before collection begins."]
     },
     {
-      id:12, phase:"design", title:"Write the method and lock the data plan",
+      id:12, phase:"design", title:"Write the method and save a dated data plan",
       nav:"Method and protocol",
-      purpose:"Create a procedure detailed enough that another researcher could follow the planned study, then specify how data will be recorded, cleaned, and analyzed before looking at the final results.",
+      purpose:"Describe the planned or completed procedure in enough detail for another researcher to follow the relevant decisions. Save a dated record of intended data handling and analysis, identifying changes made after evidence was examined.",
       learn:`
         <h3>Methods should make the study auditable</h3>
         <p>A strong Method section usually explains participants or units, materials/instruments, design, variables or coding structure, procedure, and planned analysis. Exact headings vary by discipline.</p>
-        <h3>Design the data table before collecting data</h3>
-        <p>Ask two questions. What does one row represent? What does each column represent? If those answers are unclear, the data structure is not ready.</p>
-        <div class="concept-box"><strong>Data dictionary</strong><br>For every variable, record the name, definition, type, units or categories, allowed range, missing-value code, and how it is measured.</div>
+        <h3>Plan how evidence will be recorded</h3>
+        <p>For tabular data, define what one row and each column represent. Qualitative interviews, documents and other records may use a different evidence structure, but still require clear identifiers, provenance and rules for connecting records to interpretations.</p>
+        <div class="concept-box"><strong>Data and evidence definitions</strong><br>For each recorded variable or extraction field, document its meaning, units or categories and any missing-value code. Explicit missing codes used in the Data Lab must also be entered in its separate missing-token control. A prose plan does not automatically recode imported values.</div>
         <h3>Predefine analytic decisions</h3>
         <ul>
           <li>Primary outcome and primary comparison.</li>
@@ -345,7 +345,7 @@ window.RMSCurriculum = (() => {
           <li>Planned descriptive statistics and graphs.</li>
           <li>Candidate inferential analysis and assumptions, if warranted.</li>
         </ul>
-        <p>If the plan changes after seeing the data, document the change. Exploratory analyses are legitimate when labeled as exploratory.</p>`,
+        <p>Save the date and content of the plan. If procedures or analyses change after evidence has been examined, record what changed and when. Exploratory analyses are legitimate when clearly identified as such; saving a plan does not establish that it was followed or that research approval was granted.</p>`,
       example:`<strong>Replication test</strong><p>Give your procedure to a classmate. If they cannot tell what to measure, when to measure it, how many trials to perform, or what counts as a valid observation, the method needs more detail.</p>`,
       warning:`<strong>Do not write the analysis plan after seeing which test gives p &lt; .05</strong><ul><li>Choose analyses from the question, design, variable types, and assumptions.</li><li>Keep raw data unchanged and document cleaning decisions.</li></ul>`,
       custom:"dataSchemaBuilder",
@@ -354,10 +354,10 @@ window.RMSCurriculum = (() => {
           ["materials","Materials, software, instruments, or data sources","textarea"],["procedure","Step-by-step procedure","textarea"],["replication","Number of units, trials, repeated measurements, or observations and why","textarea"],["methodControls","Randomization, counterbalancing, blinding, standardization, control condition, or other validity protections","textarea"]
         ]},
         {title:"Data plan",desc:"Define the dataset before collection.",fields:[
-          ["rowUnit","What one row represents","text"],["columns","Planned columns, variable names, units/categories","textarea"],["missingRule","Missing-data rule","textarea"],["exclusionRule","Exclusion/outlier rule decided in advance","textarea"],["analysisIntent","Primary descriptive and inferential/qualitative analysis plan","textarea"]
+          ["rowUnit","Meaning of one data row or evidence record","text"],["columns","Planned columns or evidence fields, units/categories and identifiers","textarea"],["missingRule","Missing-data rule","textarea"],["exclusionRule","Exclusion/outlier rule decided in advance","textarea"],["analysisIntent","Intended analysis and whether it was specified before evidence review","textarea"]
         ]}
       ],
-      checks:["Another student could follow my procedure without guessing the major steps.","I know exactly what one row and each column will represent.","I identified my primary outcome/comparison before analyzing results.","Missing-data and exclusion decisions will be documented."]
+      checks:["A reader could follow the planned or recorded procedure without guessing the major steps.","I can identify each data row or evidence record and how observations are linked.","I recorded when the main outcome, question or comparison was specified.","I will preserve missing-data and exclusion decisions, including later changes."]
     },
     {
       id:13, phase:"analyze", title:"Collect, clean, visualize, and describe data",
@@ -383,7 +383,7 @@ window.RMSCurriculum = (() => {
           ["rawLocation","Where the unchanged raw data are stored","textarea"],["missingObserved","Missing observations and how they were handled","textarea"],["errorsCorrections","Data-entry errors, corrections, exclusions, or protocol deviations","textarea"],["plots","Plots/figures used to inspect the data","textarea"],["descriptives","Descriptive statistics or qualitative corpus summary","textarea"]
         ]}
       ],
-      checks:["I preserved the raw data unchanged.","Every exclusion or correction has a reason.","I visualized the data before choosing or interpreting an inferential test.","My descriptive summaries match the variable types and design."]
+      checks:["I preserved the original evidence unchanged.","Every exclusion or correction has a recorded rationale.","I inspected distributions or relevant evidence patterns before interpreting a chosen analysis, without retroactively presenting decisions as prespecified.","My descriptive or qualitative summaries match the evidence type and design."]
     },
     {
       id:14, phase:"analyze", title:"Choose and justify the data analysis",
@@ -457,7 +457,7 @@ window.RMSCurriculum = (() => {
       warning:`<strong>Overclaiming</strong><ul><li>Statistical significance does not turn an observational study into an experiment.</li><li>A large effect in one small convenience sample does not guarantee a population effect.</li><li>Do not claim a mechanism you did not measure as if it were observed.</li></ul>`,
       sections:[
         {title:"Discussion architecture",desc:"Build interpretation around anchor findings.",fields:[
-          ["directAnswer","Direct answer to the research question","textarea"],["interpret1","Interpretation of anchor finding 1 with evidence boundary","textarea"],["interpret2","Interpretation of anchor finding 2 with evidence boundary","textarea"],["litCompare","How findings converge with or differ from prior literature","textarea"],["alternatives","Alternative explanations or mechanisms","textarea"],["limitations","At least two limitations and exactly how each restricts claims","textarea"],["implications","Realistic implications and who/what they apply to","textarea"],["future","Specific future research that follows from the findings","textarea"],["discussionDraft","Discussion draft","textarea"]
+          ["directAnswer","Direct answer to the research question","textarea"],["interpret1","Interpretation of anchor finding 1 with evidence boundary","textarea"],["interpret2","Interpretation of anchor finding 2 with evidence boundary","textarea"],["litCompare","How findings converge with or differ from prior literature","textarea"],["alternatives","Alternative explanations or mechanisms","textarea"],["limitations","Consequential limitations and how each affects particular claims","textarea"],["implications","Realistic implications and who/what they apply to","textarea"],["future","Specific future research that follows from the findings","textarea"],["discussionDraft","Discussion draft","textarea"]
         ]}
       ],
       checks:["The first part answers the research question.","Interpretations are tied to actual results.","Limitations explain how interpretation is restricted.","I separated plausible mechanisms from mechanisms that were directly measured."]
