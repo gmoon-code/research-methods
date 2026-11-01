@@ -3,7 +3,7 @@ window.RMSWriting=(()=>{
   const present=v=>String(v??"").trim().length>0;
   const words=s=>(String(s||"").match(/\b[\w’'-]+\b/g)||[]).length;
   const sentences=s=>(String(s||"").match(/[^.!?]+[.!?]+/g)||[]).length;
-  const causal=/\b(caused?|causes?|led to|increased|decreased|improved|reduced|resulted in|effect of)\b/i;
+  const causal=/\b(caused?|causes?|led to|resulted in|produced|was responsible for|effect of)\b/i;
   const overclaim=/\b(proves?|proved|definitively|guarantees?|establishes beyond doubt|clearly demonstrates)\b/i;
   const discussWords=/\b(because|may be due to|could reflect|suggests that|important|implication|recommend|future research)\b/i;
   const resultWords=/\b(p\s*[<=>]|confidence interval|CI\b|mean\b|median\b|SD\b|standard deviation|t\(|F\(|χ²|chi-square|correlation|r\s*=|rho|odds ratio|effect size|theme)\b/i;
@@ -62,7 +62,7 @@ window.RMSWriting=(()=>{
     return [
       {job:"Establish the problem and define the central construct(s).",evidence:d.broadTopic||d.topicChoice||d.phenomenon||"",sourceIds:[]},
       {job:"Synthesize what the strongest prior research establishes and where evidence is qualified.",evidence:(map.slice(0,2).map(x=>x.claim).filter(Boolean).join(" | ")||claims.slice(0,3).map(x=>x.text).join(" | ")),sourceIds:[...new Set(map.slice(0,2).flatMap(x=>x.sourceIds||[]))]},
-      {job:"State the precise gap, inconsistency, replication need, or local rationale.",evidence:d.gapStatement||"",sourceIds:String(d.gapSourceIds||"").split(",").map(x=>x.trim()).filter(Boolean)},
+      {job:"Explain a defensible study rationale, such as an unresolved question, methodological limitation, replication need or local context. Do not assume that a literature-wide gap exists.",evidence:d.gapStatement||"",sourceIds:String(d.gapSourceIds||"").split(",").map(x=>x.trim()).filter(Boolean)},
       {job:"State the study purpose, research question, and hypothesis only if appropriate.",evidence:[d.finalRQ,d.researchHyp].filter(Boolean).join(" | "),sourceIds:[]}
     ];
   }
@@ -103,7 +103,7 @@ window.RMSWriting=(()=>{
 
   function discussionRequirements(p){
     const type=p.data?.designType||p.data?.questionType||"";
-    const req=["Directly answer the research question","Interpret 2–3 anchor findings","Connect interpretations to exact result evidence","Compare findings with prior literature","Analyze at least two limitations","State interpretation boundaries","Give evidence-supported implications","End without new evidence"];
+    const req=["Answer the research question within the design and available evidence","Interpret findings that bear on the answer without imposing an arbitrary count","Link interpretations to verifiable results","Compare relevant findings with checked literature","Explain consequential limitations where they affect particular claims","State interpretation boundaries","Offer implications only where the evidence supports them","Close without introducing unsupported new findings"];
     if(/Correlational|observational/i.test(type))req.push("Address plausible confounding, reverse causation, and the non-causal boundary");
     if(/Experimental|Quasi/i.test(type))req.push("Address internal-validity threats, implementation/adherence, and external-validity limits");
     if(/Qualitative/i.test(type))req.push("Address sampling, coding/interpretive decisions, discrepant cases, and transferability");
@@ -112,22 +112,26 @@ window.RMSWriting=(()=>{
 
   function sectionAudit(section,text,p){
     const t=String(text||""),issues=[],type=p.data?.designType||"";
-    if(words(t)<40)issues.push(["warning","Section is still very short",`Current draft is about ${words(t)} words.`]);
+    if(present(t)&&words(t)<20)issues.push(["info","Brief draft warrants a content check",`Approximately ${words(t)} words. Check whether the section fulfils its specific purpose; length alone does not determine adequacy.`]);
     if(overclaim.test(t))issues.push(["critical","Overclaiming language detected","Terms such as prove/definitively/guarantee usually exceed what a student study can establish."]);
     if(section==="introduction"){
       if(!present(p.data?.finalRQ))issues.push(["critical","Research question is not locked","The Introduction should end by leading to the actual study question."]);
       const ca=citationAudit(t,p.sources);if(ca.found.length<2)issues.push(["warning","Very few source citations detected","The Introduction normally needs evidence for background and prior-research claims."]);
       if(ca.unmatched.length)issues.push(["critical","Citation(s) do not match the source workspace",ca.unmatched.map(x=>x.text).join(", ")]);
+      if(ca.ambiguous.length)issues.push(["warning","Citation matches more than one source record","Verify the exact publication for "+ca.ambiguous.map(x=>x.text).join(", ")]);
+      if(ca.statusToCheck.length)issues.push(["info","Cited source status needs review","A pending or excluded source may be appropriate as background, but must not silently enter the included synthesis."]);
     }
     if(section==="literature"){
       const ca=citationAudit(t,p.sources);if(ca.found.length<3)issues.push(["warning","Literature review has few detectable citations","Check that important synthesis claims are supported by the source matrix."]);
       if(ca.unmatched.length)issues.push(["critical","Unmatched literature citation(s)",ca.unmatched.map(x=>x.text).join(", ")]);
+      if(ca.ambiguous.length)issues.push(["warning","Citation matches more than one source record","Verify the exact publication for "+ca.ambiguous.map(x=>x.text).join(", ")]);
+      if(ca.statusToCheck.length)issues.push(["info","Cited source status needs review","A pending or excluded source may be appropriate as background, but must not silently enter the included synthesis."]);
       const authorOpeners=(t.match(/(?:^|\n)\s*[A-Z][A-Za-z'’\-]+\s+(?:et al\.\s+)?\(\d{4}\)/g)||[]).length;
       if(authorOpeners>=3)issues.push(["warning","Possible source-by-source organization","Several paragraph/sentence starts appear author-led. Check whether paragraphs are organized around ideas and synthesize multiple studies."]);
     }
     if(section==="method"){
       if(/\bwe found|results showed|significant|p\s*[<=>]\b/i.test(t))issues.push(["critical","Results language appears in Method","Method should explain what was planned/done, not what the results were."]);
-      const bp=methodBlueprint(p);if(!bp.locked)issues.push(["warning","No locked protocol version","The Method draft is currently being compared with the live planning state. Locking a pre-collection protocol gives stronger traceability."]);
+      const bp=methodBlueprint(p);if(!bp.locked)issues.push(["warning","No saved protocol version","The Method draft is being compared with the live plan. Describe completed work from actual records and report deviations; a dated prospective plan can help distinguish earlier decisions from later changes."]);
     }
     if(section==="results"){
       if(discussWords.test(t))issues.push(["warning","Possible Discussion language in Results","Explanations, importance, mechanisms, recommendations, and future research generally belong in Discussion."]);
@@ -139,6 +143,8 @@ window.RMSWriting=(()=>{
       if(!present(p.data?.directAnswer)&&!t.match(/research question|results (suggest|indicate|show)/i))issues.push(["warning","Direct answer is unclear","The Discussion should state the answer to the research question near the beginning."]);
       if(/Correlational|Descriptive/.test(type)&&causal.test(t))issues.push(["critical","Causal interpretation exceeds the design","Statistical significance cannot raise a nonexperimental study to a causal claim."]);
       const ca=citationAudit(t,p.sources);if(p.sources?.length&&ca.unmatched.length)issues.push(["critical","Unmatched literature citation(s) in Discussion",ca.unmatched.map(x=>x.text).join(", ")]);
+      if(ca.ambiguous.length)issues.push(["warning","Citation matches more than one source record","Verify the exact publication for "+ca.ambiguous.map(x=>x.text).join(", ")]);
+      if(ca.statusToCheck.length)issues.push(["info","Cited source status needs review","A pending or excluded source may be appropriate as background, but must not silently enter the included synthesis."]);
       if(!/\blimit|confound|uncertain|cannot|boundary|generaliz/i.test(t))issues.push(["warning","Interpretive limitations are difficult to find","Explain how specific design features restrict the claims."]);
     }
     if(section==="conclusion"){
@@ -159,7 +165,7 @@ window.RMSWriting=(()=>{
     const sectionAudits={};sectionNames.forEach(s=>sectionAudits[s]=sectionAudit(s,w[s],p));
     if(!present(d.finalRQ))issues.push(["critical","Research question missing","The paper cannot be aligned without a final research question."]);
     if(!present(d.designType))issues.push(["critical","Design missing","The Method and claim ceiling depend on the study design."]);
-    if(!(m.protocolVersions||[]).length)issues.push(["warning","No locked protocol","A locked method version strengthens the distinction between planned and post-result decisions."]);
+    if(!(m.protocolVersions||[]).length)issues.push(["warning","No saved protocol version","Check the actual procedure and whether a dated plan documents decisions made before evidence collection or analysis."]);
     if(!runs.length)issues.push(["critical","No stored analysis","Results cannot be traced to an analysis record."]);
     if(!present(w.sections.results))issues.push(["critical","Results draft missing","Report what the evidence showed before interpreting it."]);
     if(!present(w.sections.discussion))issues.push(["critical","Discussion draft missing","The paper still needs interpretation, limitations, literature comparison, and implications."]);
