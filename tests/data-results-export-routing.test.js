@@ -1,0 +1,41 @@
+global.window={};
+require("../assets/analytics.js");
+const A=window.RMSAnalytics;
+const fs=require("node:fs"),path=require("node:path");
+const source=fs.readFileSync(path.join(__dirname,"../assets/data-lab-ui.js"),"utf8");
+const start=source.indexOf("function bind(p,save,rr){"),end=source.indexOf("\nreturn{open};})();",start);
+if(start<0||end<=start)process.exit(1);
+const controls={exportStats:{},exportResults:{}};
+const id=name=>controls[name]||null;
+const document={querySelectorAll:()=>[]};
+const downloads=[],docs=[];
+const dl=(name,body,type)=>downloads.push({name,body,type});
+window.RMSWordExport={fromMarkdown:(name,body,title)=>docs.push({name,body,title})};
+const bind=new Function("id","document","dl","A","window",source.slice(start,end)+"\nreturn bind;")(id,document,dl,A,window);
+const p={data:{finalRQ:"Does salinity affect the outcome?"},methods:{design:{experimentalUnit:"dish",rowUnit:"dish",independentUnits:3}},
+analysis:{fileName:"current.csv",importedAt:"2026-11-01T12:00:00Z",headers:["dish","outcome"],missingTokens:"NA",
+ importWarnings:["Header 2 was renamed."],decisionLog:{structure:"descriptive_numeric",estimand:"mean current outcome"},
+ rawData:[{dish:"D1",outcome:"0"},{dish:"D2",outcome:"NA"},{dish:"D3",outcome:"4"}],runs:[]}};
+A.normalizeProject(p);
+const calculated=A.runAnalysis(p,{structure:"descriptive_numeric",y:"outcome"});
+if(calculated.error)process.exit(1);
+const newer=A.analysisRecord(p,calculated);
+const historic={timestamp:"2026-09-15T10:00:00Z",structure:"correlation",output:{test:"Pearson correlation"},neutral_summary:"Historical calculation requires review."};
+p.analysis.runs=[historic,newer];
+p.analysis.fileName="later.csv";p.analysis.decisionLog.estimand="revised estimand";
+bind(p,()=>{},()=>{});
+if(typeof controls.exportStats.onclick!=="function"||typeof controls.exportResults.onclick!=="function")process.exit(1);
+controls.exportStats.onclick();controls.exportResults.onclick();
+if(downloads.length!==1||docs.length!==1)process.exit(1);
+const json=JSON.parse(downloads[0].body);
+if(json.dataset.file!=="later.csv"||!json.dataset.scope.includes("Current imported dataset"))process.exit(1);
+if(json.runs[1].traceability.file!=="current.csv"||json.runs[1].traceability.estimand!=="mean current outcome")process.exit(1);
+if(json.runs[0].calculation_guard_version!==undefined)process.exit(1);
+const word=docs[0].body;
+if(!word.includes("Historical record, not verified under current guards"))process.exit(1);
+if(!word.includes("Dataset file recorded for this analysis  current.csv"))process.exit(1);
+if(!word.includes("Rows used for selected calculation  2"))process.exit(1);
+if(!word.includes("Missing tokens used for this analysis  NA"))process.exit(1);
+if(!word.includes("Recorded model and column choices"))process.exit(1);
+if(!word.includes("Estimand recorded when this analysis was stored  mean current outcome"))process.exit(1);
+console.log("PASS Results export handler routing and historic provenance");
