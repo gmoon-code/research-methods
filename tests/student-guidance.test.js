@@ -23,4 +23,20 @@ if(!/The numerical value calculated/.test(G.glossary.estimand))process.exit(1);
 if(!/independently assigned/.test(G.glossary["experimental unit"]))process.exit(1);
 if(!/In observational research, exposure is recorded/.test(G.glossary.exposure))process.exit(1);
 
+// Stage C-X3c3b | glossary definitions 31-60 retain inferential distinctions.
+const middleThirty=Object.keys(G.glossary).slice(30,60);
+if(middleThirty.length!==30||middleThirty[0]!=="generalization"||middleThirty[29]!=="predictor")process.exit(1);
+for(const term of middleThirty)if(!G.glossary[term]?.trim()||G.glossary[term].includes("—"))process.exit(1);
+if(!/generalisation/.test(G.glossary.generalization))process.exit(1);
+if(!/re-identified/.test(G.glossary.identifier))process.exit(1);
+if(!/matched pairs/.test(G.glossary["independent groups"]))process.exit(1);
+if(!/population or model parameter/.test(G.glossary["interval estimate"]))process.exit(1);
+if(!/a brief scan cannot establish/.test(G.glossary["literature gap"]))process.exit(1);
+if(!/dependence between estimates/.test(G.glossary["meta-analysis"]))process.exit(1);
+if(!/observed zero/.test(G.glossary["missing data"]))process.exit(1);
+if(!/categorical data/.test(G.glossary.numerical))process.exit(1);
+if(!/test statistic as extreme/.test(G.glossary["p-value"]))process.exit(1);
+if(!/census/.test(G.glossary.population))process.exit(1);
+if(!/observed or assigned/.test(G.glossary.predictor))process.exit(1);
+
 console.log("PASS student guidance coverage");
