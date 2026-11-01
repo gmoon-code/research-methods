@@ -1283,7 +1283,7 @@
       "typical_length": "about 30–110 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "The hypothesis was correct, and this proves salt stops growth.",
-      "good_working_response": "For a completed experiment, the conclusion should report the observed direction and magnitude of the dish-level salinity comparison only after analysis. Any conclusion about early development would remain bounded by the seed batch, treatment units and combined growth measure. A proposal should instead close on its planned question and anticipated evidence without claiming results.",
+      "good_working_response": "For a completed experiment, the conclusion should report the observed direction and magnitude of the dish-level salinity comparison only after analysis. Any conclusion about early development would remain bounded by the seed batch, treatment units and defined visible-shoot-and-length measure. A proposal should instead close on its planned question and anticipated evidence without claiming results.",
       "detailed_response": "",
       "why_it_works": "Close with the actual answer when one exists, or the study purpose when work remains proposed. Keep limitations proportionate and introduce no new findings."
     },
