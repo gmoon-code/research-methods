@@ -43,4 +43,17 @@ L.normalizeProject(background);
 if(L.gapReadiness(background).multiSourceThemes!==0)process.exit(1);
 const unclassified=L.themeMap(background).find(t=>t.theme==="unclassified");
 if(!unclassified||unclassified.supporting.length||unclassified.background.length||unclassified.sources.length!==1)process.exit(1);
+// Stage C-X3c8c | search records retain their provenance and legacy status.
+const fullSearch={date:"2026-11-01",database:"ERIC",query:"retrieval practice AND science",filters:"none",results:0,kept:"",notes:""};
+if(L.searchLogStatus(fullSearch).confirmed)process.exit(1);
+if(L.searchLogStatus(fullSearch).label!=="Execution not confirmed")process.exit(1);
+fullSearch.executed=true;
+if(!L.searchLogStatus(fullSearch).confirmed)process.exit(1);
+const partialSearch={date:"2026-11-01",database:"ERIC",query:"retrieval practice",filters:"",results:"0",executed:true};
+if(L.searchLogStatus(partialSearch).complete||L.searchLogStatus(partialSearch).label!=="Incomplete record")process.exit(1);
+const historical={searchLog:[{...fullSearch,executed:undefined},fullSearch,partialSearch]};
+L.normalizeProject(historical);
+if(historical.searchLog[0].executed!==undefined||historical.searchLog[1].executed!==true)process.exit(1);
+const csv=L.makeSearchLogCSV(historical);
+if(!csv.includes("Documentation status")||!csv.includes("Execution not confirmed")||!csv.includes("Execution confirmed by student")||!csv.includes("Incomplete record"))process.exit(1);
 console.log("PASS literature workspace engine");
