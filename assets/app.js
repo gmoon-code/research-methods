@@ -485,7 +485,7 @@
   }
 
   function searchWorkspace(){
-    return `<div class="lit-section"><h4>Search log</h4><p>Record actual searches. This allows you to distinguish “I did not find it” from “I searched systematically enough to support a claim about the literature.”</p>
+    return `<div class="lit-section"><h4>Search log</h4><p>Record searches you have actually run, including their dates, exact queries and settings. Documented searches help you describe what your search covered and where uncertainty remains.</p>
       <div class="form-grid two">
         <label><span>Date</span><input type="date" id="slDate"></label><label><span>Database / search system</span><input id="slDatabase" placeholder="Google Scholar, ERIC, PubMed…"></label>
         <label><span>Exact search string</span><textarea id="slQuery"></textarea></label><label><span>Filters / limits</span><textarea id="slFilters" placeholder="Years, language, article type, population…"></textarea></label>
@@ -505,7 +505,7 @@
 
   function studyMatrixWorkspace(){
     const included=project.sources.filter(s=>s.screeningStatus==="Included");
-    return `<div class="lit-section"><h4>Study matrix</h4><p>Your course materials require population/context, variables, methods/design, key findings, limitations, and quality notes so theme claims remain traceable.</p>
+    return `<div class="lit-section"><h4>Study matrix</h4><p>Compare eligible studies using their actual populations, methods, measurements, findings and limitations. Keep source identifiers so you can verify every comparison.</p>
       <div class="lit-toolbar"><button class="ghost small" id="downloadStudyMatrix">Download study matrix CSV</button></div>
       <div class="matrix-scroll"><table><thead><tr><th>ID</th><th>Study</th><th>Population/context</th><th>Variables</th><th>Method/design</th><th>Measures</th><th>Key finding</th><th>Limitations</th><th>Quality notes</th></tr></thead><tbody>${included.map(s=>`<tr><td>${esc(s.id)}</td><td>${esc(s.citation||s.title)}</td><td>${esc(s.sample)}</td><td>${esc(s.variables)}</td><td>${esc(s.design)}</td><td>${esc(s.measures)}</td><td>${esc(s.finding)}</td><td>${esc(s.limits)}</td><td>${esc(s.qualityNotes)}</td></tr>`).join("")}</tbody></table></div></div>`;
   }
@@ -523,14 +523,14 @@
         return `<td class="${cl}" title="${esc(ev.note||"")}">${esc(ev.stance)}</td>`;
       }).join("")}</tr>`).join("")}</tbody></table></div>`;
     }
-    return `<div class="lit-section"><h4>Synthesis matrix</h4><p>The goal is comparison across studies. “Supports,” “conflicts,” “mixed,” and “background” prevent a theme tag from falsely implying that every paper agrees.</p>${matrix||'<p class="muted tiny">Add theme evidence to included source records.</p>'}
+    return `<div class="lit-section"><h4>Synthesis matrix</h4><p>Compare eligible studies using evidence-specific descriptions. A theme tag or stance is a working classification and must be checked against each paper's actual findings.</p>${matrix||'<p class="muted tiny">Add theme evidence to included source records.</p>'}
       <div class="lit-toolbar"><button class="ghost small" id="downloadThemeMatrix">Download theme synthesis CSV</button></div>
       <h4 style="margin-top:16px">Evidence map</h4>${map.map(t=>`<div class="source-card"><h5>${esc(t.theme)}</h5><p><b>Supporting</b> ${esc(t.supporting.map(s=>s.id).join(", ")||"none")}</p><p><b>Conflicting</b> ${esc(t.conflicting.map(s=>s.id).join(", ")||"none")}</p><p><b>Mixed</b> ${esc(t.mixed.map(s=>s.id).join(", ")||"none")}</p><p><b>Background/context</b> ${esc(t.background.map(s=>s.id).join(", ")||"none")}</p></div>`).join("")||'<p class="muted tiny">No themes yet.</p>'}</div>`;
   }
 
   function gapWorkspace(){
     const g=Lit.gapReadiness(project);
-    return `<div class="lit-section"><h4>Gap & study-rationale evidence check</h4><p>This does not “find a gap” automatically. It checks whether you have enough organized evidence to justify the type of claim you want to make.</p>
+    return `<div class="lit-section"><h4>Gap & study-rationale evidence check</h4><p>This view summarises recorded sources and themes to help you examine a possible rationale. No number of studies or themes, by itself, establishes a literature gap.</p>
       <div class="lit-scorecards"><div class="lit-scorecard"><span>Included studies</span><b>${g.included}</b></div><div class="lit-scorecard"><span>Themes</span><b>${g.themes}</b></div><div class="lit-scorecard"><span>Multi-source themes</span><b>${g.multiSourceThemes}</b></div><div class="lit-scorecard"><span>Conflict/mixed themes</span><b>${g.conflictThemes}</b></div><div class="lit-scorecard"><span>Measure diversity</span><b>${g.measurementDiversity}</b></div></div>
       ${g.messages.map(x=>`<div class="gap-warning">${esc(x)}</div>`).join("")}
       <div class="form-grid two" style="margin-top:12px">
@@ -544,14 +544,14 @@
 
   function claimsWorkspace(){
     const audit=Lit.claimAudit(project);
-    return `<div class="lit-section"><h4>Claim–source traceability</h4><p>Each literature claim should point to the studies that support it. Claims supported by multiple sources are candidates for synthesis; a one-source claim may still be valid but should not be presented as a broad consensus.</p>
+    return `<div class="lit-section"><h4>Claim–source traceability</h4><p>Link each literature claim to the specific studies you have checked. A source ID confirms a link to a record, not that the paper supports the claim. Compare actual measures and findings before describing a pattern.</p>
       <div class="form-grid two"><label><span>Literature claim</span><textarea id="claimText"></textarea></label><label><span>Supporting source IDs</span><input id="claimSources" placeholder="S01, S04"></label><label><span>Claim type</span><select id="claimType"><option>Theme / convergence</option><option>Difference / contradiction</option><option>Methodological limitation</option><option>Definition / background</option><option>Gap / rationale</option></select></label><label><span>Boundary / qualification</span><textarea id="claimBoundary"></textarea></label></div><button class="secondary" id="addLitClaim">Add claim</button>
-      ${audit.map((c,i)=>`<div class="claim-entry"><div style="float:right"><button class="danger small" data-del-claim="${i}">Remove</button></div><b>${esc(c.type||"Claim")}</b><p>${esc(c.text)}</p><p>Sources: ${esc((c.sourceIds||[]).join(", ")||"none")} · <span class="${c.sourceCount>=2?"trace-good":c.sourceCount===1?"trace-warn":"trace-bad"}">${c.sourceCount>=2?"multi-source synthesis candidate":c.sourceCount===1?"one-source claim":"untraceable"}</span></p><p>Boundary: ${esc(c.boundary||"—")}</p></div>`).join("")||'<p class="muted tiny">No claims recorded yet.</p>'}</div>`;
+      ${audit.map((c,i)=>`<div class="claim-entry"><div style="float:right"><button class="danger small" data-del-claim="${i}">Remove</button></div><b>${esc(c.type||"Claim")}</b><p>${esc(c.text)}</p><p>Sources: ${esc((c.sourceIds||[]).join(", ")||"none")} · <span class="${c.sourceCount>0?"trace-warn":"trace-bad"}">${c.sourceCount} included source ID(s) linked; verify each claim against the source</span>${c.pendingIds?.length?`<p>Pending source IDs: ${esc(c.pendingIds.join(", "))}</p>`:""}${c.excludedIds?.length?`<p>Excluded source IDs: ${esc(c.excludedIds.join(", "))}</p>`:""}${c.missingIds?.length?`<p>Unrecognised source IDs: ${esc(c.missingIds.join(", "))}</p>`:""}</p><p>Boundary: ${esc(c.boundary||"—")}</p></div>`).join("")||'<p class="muted tiny">No claims recorded yet.</p>'}</div>`;
   }
 
   function outlineWorkspace(){
     const themes=Lit.uniqueThemes(project);
-    return `<div class="lit-section"><h4>Literature-review paragraph planner</h4><p>The planner structures synthesis; it does not write the paragraph. Each paragraph should have a job, a claim, multiple sources where appropriate, comparison/qualification, and a transition or implication.</p>
+    return `<div class="lit-section"><h4>Literature-review paragraph planner</h4><p>Plan the connected ideas that will develop your review. Choose checked evidence for each paragraph, including a close examination of one source when appropriate, and consider how its reasoning leads into the next.</p>
       <div class="form-grid two"><label><span>Choose theme for new paragraph</span><select id="outlineTheme"><option value="">Choose…</option>${themes.map(t=>`<option>${esc(t)}</option>`).join("")}</select></label><label><span>Or type a paragraph focus</span><input id="outlineCustom"></label></div><button class="secondary" id="addOutline">Add paragraph plan</button>
       ${(project.litOutline||[]).map((p,i)=>`<div class="outline-entry"><div style="float:right"><button class="danger small" data-del-outline="${i}">Remove</button></div><div class="outline-top"><label><span>Theme / focus</span><input data-outline-theme="${i}" value="${esc(p.theme||"")}"></label><label><span>Source IDs</span><input data-outline-sources="${i}" value="${esc((p.sourceIds||[]).join(", "))}"></label></div>
         <label><span>Paragraph job</span><textarea data-outline-job="${i}">${esc(p.job||"")}</textarea></label>
