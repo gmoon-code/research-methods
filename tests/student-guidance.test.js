@@ -222,4 +222,14 @@ if(!G.choices.gapType.options["Documented literature gap"].includes("databases, 
 if(!G.choices.designType.options["Quasi-experimental"].includes("without random assignment"))process.exit(1);
 if(!G.choices.hypothesisNeeded.options.No.includes("exploratory qualitative"))process.exit(1);
 if(!G.choices.citationStyle.options["APA 7"].includes("seventh edition"))process.exit(1);
+// Stage C-X3c7b | sampling, ethics and participant choice explanations.
+for(const k of ["mdAssignment","mdSameUnit","msMethod","meHuman","meMinors","meIdent","meSensitive","meIntervention"])if(!G.choices[k]?.title||!G.choices[k]?.prompt||!Object.keys(G.choices[k].options).length)process.exit(1);
+if(!G.choices.msMethod.options["Snowball / network sample"].includes("approved consent and privacy"))process.exit(1);
+if(!G.choices.meHuman.options.yes.includes("behaviour data"))process.exit(1);
+if(!G.choices.meIdent.options.no.includes("retained code keys"))process.exit(1);
+if(!G.choices.meIntervention.questions[0].includes("beyond asking them to provide information"))process.exit(1);
+if(!G.choices.mdAssignment.options["Random assignment"].includes("random process"))process.exit(1);
+if(!G.choices.mdSameUnit.options.yes.includes("multiple times or conditions"))process.exit(1);
+if(!G.choices.meMinors.options.yes.includes("minor"))process.exit(1);
+if(!G.choices.meSensitive.options.yes.includes("sensitive health"))process.exit(1);
 console.log("PASS student guidance coverage");
