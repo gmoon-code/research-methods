@@ -152,7 +152,7 @@
     const cards=project.sources.map((s,i)=>{
       const comp=Lit.sourceCompleteness(s), tr=Lit.trappSummary(s);
       const stClass=s.screeningStatus==="Included"?"status-inc":s.screeningStatus==="Excluded"?"status-exc":"status-pen";
-      return `<div class="source-card"><div class="lit-source-head"><div><div class="lit-source-title">${esc(s.id)} · ${esc(s.citation||s.title||"Untitled source")}</div><div><span class="pill ${stClass}">${esc(s.screeningStatus)}</span><span class="pill">${Math.round(comp.ratio*100)}% extraction</span><span class="pill">${tr.filled}/5 TRAAP</span>${s.verified?'<span class="pill green">bibliography verified</span>':""}</div></div><div class="source-actions"><button class="ghost small" data-edit-source="${i}">Edit</button><button class="danger small" data-del-source="${i}">Remove</button></div></div>
+      return `<div class="source-card"><div class="lit-source-head"><div><div class="lit-source-title">${esc(s.id)} · ${esc(s.citation||s.title||"Untitled source")}</div><div><span class="pill ${stClass}">${esc(s.screeningStatus)}</span><span class="pill">${Math.round(comp.ratio*100)}% extraction fields filled</span><span class="pill">${tr.filled}/5 TRAAP fields filled</span>${s.verified?'<span class="pill green">bibliography checked by student</span>':""}</div></div><div class="source-actions"><button class="ghost small" data-edit-source="${i}">Edit</button><button class="danger small" data-del-source="${i}">Remove</button></div></div>
         <p><b>Design</b> ${esc(s.design||"—")} · <b>Population/context</b> ${esc(s.sample||"—")}</p>
         <p><b>Measures</b> ${esc(s.measures||"—")}</p><p><b>Finding</b> ${esc(s.finding||"—")}</p><p><b>Limitations</b> ${esc(s.limits||"—")}</p>
         ${(s.themeEvidence||[]).length?`<p><b>Theme evidence</b><br>${s.themeEvidence.map(e=>`<span class="theme-chip">${esc(e.theme)} · ${esc(e.stance||"stance not recorded")}</span>`).join("")}</p>`:""}</div>`;
@@ -451,7 +451,7 @@
           <label><span>Source type</span><select id="lfType"><option value="" ${!s.type?"selected":""}>Choose source type…</option>${["Peer-reviewed empirical article","Systematic review / meta-analysis","Scholarly review","Government / institutional report","Book / chapter","Other"].map(o=>`<option ${s.type===o?"selected":""}>${o}</option>`).join("")}</select></label>
           <label><span>Bibliographic record checked against the actual source?</span><select id="lfVerified"><option value="false" ${!s.verified?"selected":""}>Not yet</option><option value="true" ${s.verified?"selected":""}>Yes</option></select></label>
         </div>
-        <p class="source-pass-note"><b>Important</b> “Bibliography verified” means you checked the citation details against the source. It does not mean the study is automatically high quality.</p>
+        <p class="source-pass-note"><b>Important</b> Selecting Yes records your confirmation that you compared the bibliographic details with the source. This is student-reported and does not independently verify the citation, the study findings or its quality.</p>
       </details>
 
       <details class="source-pass"><summary><span>2</span><div><b>Decide whether the source belongs</b><small>Use your research question and inclusion rules before extracting everything.</small></div></summary>
