@@ -1,0 +1,37 @@
+global.window={};
+require("../assets/analytics.js");
+const A=window.RMSAnalytics;
+const p={data:{},methods:{},analysis:{headers:["id","x","group"],missingTokens:"NA",rawData:[
+ {id:"1",x:"NA",group:"A"},{id:"2",x:"NA",group:"B"},{id:"3",x:"NA",group:"C"}]}};
+A.normalizeProject(p);
+const numeric=A.runAnalysis(p,{structure:"descriptive_numeric",y:"x"});
+if(!numeric.error||!numeric.error.includes("no observed numeric values"))process.exit(1);
+const category=A.runAnalysis(p,{structure:"descriptive_categorical",y:"x"});
+if(!category.error||!category.error.includes("no observed categories"))process.exit(1);
+if(!A.runAnalysis(p,{structure:"descriptive_categorical",y:"unrecorded"}).error)process.exit(1);
+const exact=A.runAnalysis(p,{structure:"categorical_assoc",x:"group",y:"id",fisher:"yes"});
+if(!exact.error||!exact.error.includes("No chi-square substitution"))process.exit(1);
+const many={data:{},methods:{},analysis:{headers:["category"],rawData:["A","B","C","D","E"].map(category=>({category}))}};
+A.normalizeProject(many);
+const cats=A.runAnalysis(many,{structure:"descriptive_categorical",y:"category"});
+if(cats.error||!A.neutralSummary(cats).includes("showing 4 of 5 observed categories"))process.exit(1);
+if(!A.neutralSummary(cats).includes("of non-missing"))process.exit(1);
+const matched={data:{},methods:{},analysis:{headers:["a","b"],fileName:"before.csv",rawData:[
+ {a:"1",b:"3"},{a:"2",b:"4"},{a:"3",b:"8"},{a:"4",b:"9"}],decisionLog:{estimand:"mean paired change"}}};
+A.normalizeProject(matched);
+const calc=A.runAnalysis(matched,{structure:"paired_two",x:"a",y:"b"});
+if(calc.error)process.exit(1);
+const saved=A.analysisRecord(matched,calc);
+const originalOutput=saved.output.mean_difference;
+calc.config.x="other";calc.output.mean_difference=999;calc.missingness.tokens.push("UNRECORDED");
+if(saved.configuration.x!=="a"||saved.output.mean_difference!==originalOutput||saved.missingness.tokens.includes("UNRECORDED"))process.exit(1);
+matched.analysis.runs=[saved];
+const notes=A.resultsMarkdown(matched);
+if(!notes.includes("Recorded model and column choices")||!notes.includes('"x":"a"'))process.exit(1);
+if(!notes.includes("Selected analysis structure  paired_two")||!notes.includes("Current automated safeguard set"))process.exit(1);
+const legacy={timestamp:"2026-01-01T00:00:00Z",structure:"correlation",neutral_summary:"Unverified old result"};
+matched.analysis.runs=[legacy,{...saved,calculation_guard_version:"C-X3c10c"}];
+const history=A.resultsMarkdown(matched);
+if(!history.includes("Historical record, not verified under current guards"))process.exit(1);
+if(!history.includes("Earlier safeguard set (C-X3c10c), review required"))process.exit(1);
+console.log("PASS Data Lab empty, exact-test and historical export integrity");
