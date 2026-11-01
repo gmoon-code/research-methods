@@ -135,13 +135,17 @@ window.RMSMethods = (() => {
     const e=(project.methods||{}).ethics||{}, issues=[], status="clear";
     let level=status;
     const elevate=x=>{ if(x==="do_not_facilitate") level=x; else if(level==="clear") level=x; };
+    if(!["yes","no"].includes(e.humanParticipants)) {
+      elevate("teacher_review");
+      issues.push(["warning","Human participation not classified","Determine whether the project involves people or linkable human records before deciding which permissions and privacy protections apply."]);
+    }
     if(e.humanParticipants==="yes"){
       elevate("teacher_review");
-      if(!present(e.consent)) issues.push(["critical","Consent/permission plan missing","Human-participant research generally requires an appropriate consent/permission route before collection."]);
-      if(e.minors==="yes" && !present(e.assent)) issues.push(["critical","Minor participant assent/permission plan missing","Student projects involving minors require teacher/institutional guidance on assent and parent/guardian permission requirements."]);
+      if(!present(e.consent)) issues.push(["critical","Consent/permission plan missing","Document the required school or institutional review and consent or permission process before recruitment or collection. A written plan is not evidence that approval was granted."]);
+      if(e.minors==="yes" && !present(e.assent)) issues.push(["critical","Minor participant assent/permission plan missing","Before recruitment, check the required student assent and parent/guardian permission arrangements with the responsible school or institution. A completed text field is not proof of approval."]);
       if(e.identifiable==="yes" && !present(e.deidentification)) issues.push(["critical","Identifiable data protection missing","Collect the least identifying information necessary and define access/storage/deidentification rules."]);
       if(e.sensitive==="yes") {elevate("teacher_review"); issues.push(["warning","Sensitive information","The project requires heightened privacy, necessity, and approval review."]); }
-      if(e.intervention==="yes" && !present(e.authority)) issues.push(["critical","Authority to implement intervention not documented","A student cannot assume authority to assign classmates or alter school procedures."]);
+      if(e.intervention==="yes" && !present(e.authority)) issues.push(["critical","Authority to implement intervention not documented","Do not begin a participant intervention merely because classroom access is available. Identify who may authorise the intervention and what review must occur first."]);
     }
     const text=[e.risks,e.procedureRisk,project.data.finalRQ].join(" ");
     if(/\b(sleep deprivation|sleep less|skip sleep|self[- ]harm|injury|pain induction|medication dose|prescription|dangerous exercise)\b/i.test(text)){
@@ -149,34 +153,47 @@ window.RMSMethods = (() => {
       issues.push(["critical","Unsafe manipulation route","Do not facilitate a student experiment that deliberately creates harmful or medically sensitive exposure. Use safe observation, secondary data, or literature instead."]);
     }
     if(!present(e.withdrawal) && e.humanParticipants==="yes") issues.push(["warning","Withdrawal/voluntariness plan missing","Explain that participation is voluntary and how withdrawal will be handled without penalty where applicable."]);
-    if(!present(e.storage)) issues.push(["info","Data storage plan missing","State where data will be stored, who can access them, and when identifiers/files will be deleted or archived."]);
+    if(!present(e.storage)) issues.push(["info","Data storage plan missing","State where records will be stored, who can access them, and how retention, deletion or secure archiving will be managed."]);
     return {status:level,issues};
   }
 
   function procedureAudit(project){
     const steps=(project.methods||{}).procedureSteps||[], issues=[];
-    if(steps.length<3) issues.push(["warning","Procedure is under-specified","A replicable procedure usually needs enough ordered steps to cover preparation, assignment/setup, collection, recording, deviations, and storage."]);
+    if(steps.length<3) issues.push(["warning","Procedure may be under-specified","Describe the selection or setup, evidence collection, recording and handling decisions in enough detail to follow them. An exact number of steps does not establish reproducibility."]);
     steps.forEach((s,i)=>{
       if(!present(s.action)) issues.push(["critical",`Step ${i+1} has no action`,"State exactly what occurs."]);
       if(!present(s.record)) issues.push(["info",`Step ${i+1} does not say what is recorded`,"If this step produces data or a protocol decision, name the record."]);
     });
     const hasConsent=steps.some(s=>/consent|assent|permission/i.test(s.action||""));
-    if(project.methods?.ethics?.humanParticipants==="yes" && !hasConsent) issues.push(["warning","Human-participant procedure has no consent/permission step","The procedure should show when approval/consent occurs before research data collection."]);
+    if(project.methods?.ethics?.humanParticipants==="yes"){
+      if(!hasConsent) issues.push(["warning","Human-participant procedure has no consent/permission step","Show required review, consent and permission before recruitment or research collection, following the applicable school or institutional rules."]);
+      const firstPermission=steps.findIndex(step=>/consent|assent|permission|approval/i.test(step.action||""));
+      const firstCollection=steps.findIndex(step=>/interview|survey|measure|record responses|collect data|extract grade|assign treatment/i.test(step.action||""));
+      if(firstCollection>=0 && firstPermission>=0 && firstPermission>firstCollection) issues.push(["critical","Permission appears after research collection","The listed procedure places collection before a permission or review step. Confirm the correct order and required approvals before approaching participants."]);
+    }
     return {issues,count:steps.length};
   }
 
   function dataSchemaAudit(project){
     const schema=project.schema||[], d=(project.methods||{}).design||{}, issues=[];
-    if(!schema.length) issues.push(["critical","No data dictionary columns","Design the data table before final collection."]);
+    const profile=designProfile(project);
+    if(!schema.length){
+      if(profile.isQual) issues.push(["warning","Qualitative record structure missing","Define how interviews, observations, documents, codes or other evidence will be identified and linked to interpretations. A spreadsheet is not mandatory."]);
+      else issues.push(["critical","No data dictionary columns","Define the recorded variables or extraction fields before data collection or review extraction."]);
+    }
     const names=schema.map(x=>String(x.name||"").trim()).filter(Boolean);
     if(new Set(names).size!==names.length) issues.push(["critical","Duplicate column names","Each variable should have a unique machine-readable column name."]);
     schema.forEach((x,i)=>{
       if(!present(x.name)) issues.push(["critical",`Column ${i+1} has no name`,"Give every field a unique variable name."]);
-      if(!present(x.definition)) issues.push(["warning",`${x.name||`Column ${i+1}`}: definition missing`,"Record units/categories, coding rule, allowed values, and missing-value representation."]);
+      if(!present(x.definition)) issues.push(["warning",`${x.name||`Column ${i+1}`}: definition missing`,"Record the operational meaning, units or categories, allowable codes and any missing-value rule."]);
+      if(["0","0.0"].includes(String(x.missing||"").trim()) && /Numeric|Count|Binary|Ordinal/i.test(String(x.type||""))) issues.push(["warning",`${x.name||`Column ${i+1}`}: zero used as a missing code`,"Check whether zero is a valid observed value. Preserve missing status separately when zero can represent a genuine measurement or category."]);
     });
-    if(!present(d.rowUnit)) issues.push(["critical","Row unit missing","State exactly what one row represents."]);
+    if(!present(d.rowUnit)){
+      if(profile.isQual && !schema.length) issues.push(["info","Evidence-record unit not described","Describe how each interview, observation, document or excerpt will be identified and linked, even when there is no data table."]);
+      else issues.push(["critical","Row unit missing","Define the meaning of one row or extracted record, including how it links to a participant, study, occasion or assigned unit."]);
+    }
     if(present(d.rowUnit) && present(d.experimentalUnit) && d.rowUnit!==d.experimentalUnit){
-      issues.push(["warning","Rows are nested/repeated within the independent unit","Your later analysis must preserve unit IDs so repeated rows are not treated as independent samples."]);
+      issues.push(["warning","Row and study unit differ","This may be correct. Explain how row IDs link observations to the assigned or observed unit, including repeated or nested records, before choosing an analysis."]);
     }
     return {issues,count:schema.length};
   }
@@ -199,7 +216,7 @@ window.RMSMethods = (() => {
     const score=Math.max(0,100-critical*15-warning*6-info*2);
     return {
       score,
-      label: critical ? "Not ready to collect" : warning ? "Revise before collection" : "Method plan ready for teacher review",
+      label: sections.ethics.status==="do_not_facilitate" ? "Unsafe procedure requires a safer design" : critical ? "Critical issues remain in the method plan" : sections.ethics.status==="teacher_review" ? "Institutional or teacher review required" : warning ? "Review the method plan's warnings" : "No issues detected by this rule set",
       critical,warning,info,sections,
       ethicsStatus:sections.ethics.status
     };
@@ -247,7 +264,7 @@ window.RMSMethods = (() => {
       "# Method Planning Record","",
       d.finalRQ?`**Research question:** ${d.finalRQ}`:"",
       d.designType?`**Design:** ${d.designType}`:"",
-      `**Pre-collection readiness:** ${r.score}/100 — ${r.label}`,"",
+      `**Planning diagnostic (not research approval):** ${r.score}/100 — ${r.label}`,"",
       "## Constructs and variables"
     ];
     (m.constructs||[]).forEach(x=>lines.push(`- **${x.name||"Unnamed"}** — ${x.role||""}. ${x.operational||""}`));
