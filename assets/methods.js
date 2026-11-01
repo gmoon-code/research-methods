@@ -66,11 +66,11 @@ window.RMSMethods = (() => {
       if(!roles.includes("Outcome / dependent variable")) issues.push(["critical","Outcome missing","The study needs a measured response that answers the research question."]);
       if(!present(d.experimentalUnit)) issues.push(["critical","Experimental unit missing","Without the independently assigned unit, replication and independence cannot be evaluated."]);
       if(d.sameUnitAllConditions==="yes" && !present(d.orderPlan)) issues.push(["warning","Order/carryover plan missing","When the same unit receives multiple conditions, order, practice, fatigue, and carryover need consideration."]);
-      if(d.sameUnitAllConditions!=="yes" && d.assignment==="") issues.push(["warning","Assignment process not specified","State how units reach conditions. Random assignment, nonrandom assignment, and naturally occurring exposure support different claims."]);
+      if(d.sameUnitAllConditions!=="yes" && !present(d.assignment)) issues.push(["warning","Assignment process not specified","State how units reach conditions. Random assignment, nonrandom assignment, and naturally occurring exposure support different claims."]);
       if((m.conditions||[]).length<2) issues.push(["critical","Comparison structure incomplete","A causal comparison requires at least two levels/conditions or a justified baseline/reference structure."]);
     }
     if(p.isObs){
-      if(roles.includes("Manipulated independent variable")) issues.push(["critical","Role terminology mismatch","The selected design is observational, so a measured predictor/exposure should not be labeled as a manipulated independent variable."]);
+      if(roles.includes("Manipulated independent variable")) issues.push(["critical","Role terminology mismatch","The selected design is observational, so a measured predictor/exposure should not be labelled as a manipulated independent variable."]);
       if(!roles.includes("Predictor / exposure")) issues.push(["warning","Predictor/exposure missing","Identify the measured explanatory variable if the question concerns an association."]);
       if(!roles.includes("Outcome")) issues.push(["warning","Outcome missing","Identify what response is measured for the same observational unit."]);
     }
@@ -78,7 +78,7 @@ window.RMSMethods = (() => {
     if(p.isQual && roles.some(x=>/independent|Outcome \/ dependent/.test(x))) issues.push(["warning","Qualitative work is being forced into IV/DV language","Use participant/context descriptors, prompts, observations, codes, and units of qualitative analysis instead."]);
     if(present(d.experimentalUnit)) good.push("A primary study unit is recorded; confirm whether it is assigned to conditions, measured, or analysed.");
     if(present(d.assignment)) good.push("Assignment/exposure process is recorded.");
-    if(present(d.primaryOutcome)) good.push("Primary outcome is identified before analysis.");
+    if(present(d.primaryOutcome)) good.push("Primary outcome is recorded; check whether it was specified before the outcomes were examined.");
     return {issues,good,profile:p,structure:inferStructure(project)};
   }
 
@@ -101,13 +101,13 @@ window.RMSMethods = (() => {
     if(!present(s.population)) issues.push(["warning","Target population/system missing","State the broader population or system the research question refers to."]);
     if(!present(s.sample)) issues.push(["critical","Planned or observed sample missing","For proposed work, specify the planned sample or corpus. For completed work, report the people, organisms, records or documents actually studied."]);
     if(!present(s.method)) issues.push(["warning","Sampling method missing","Convenience, probability, purposive or census sampling can support different claims about the wider population."]);
-    if(!present(s.frame) && /random|stratified|systematic/i.test(s.method||"")) issues.push(["warning","Sampling frame missing","Probability-style sampling requires a defined list/frame or mechanism from which units can actually be sampled."]);
+    if(!present(s.frame) && /random|stratified|systematic/i.test(s.method||"") && !/nonrandom|non-random/i.test(s.method||"")) issues.push(["warning","Sampling frame missing","Probability-style sampling requires a defined list/frame or mechanism from which units can actually be sampled."]);
     if(!present(s.inclusion)) issues.push(["info","Inclusion criteria not recorded","State which units qualify before seeing outcomes."]);
     if(!present(s.exclusion)) issues.push(["info","Exclusion criteria not recorded","Separate eligibility exclusions from later data-quality exclusions."]);
     if(!present(s.recruitment) && (project.methods?.ethics?.humanParticipants==="yes")) issues.push(["warning","Recruitment route missing","Human-participant recruitment can introduce coercion or selection bias."]);
     if(present(s.generalization)) good.push("A generalisation or transferability boundary is recorded for review.");
     else issues.push(["warning","Scope of conclusions missing","Explain which populations, settings or cases the evidence may inform and where generalisation or transferability remains uncertain."]);
-    if(/convenience/i.test(s.method||"")) issues.push(["info","Convenience sampling","This may be appropriate for a student project, but broad population generalization should be limited."]);
+    if(/convenience/i.test(s.method||"")) issues.push(["info","Convenience sampling","This may be appropriate for a student project, but broad population generalisation should be limited."]);
     return {issues,good};
   }
 
@@ -125,7 +125,7 @@ window.RMSMethods = (() => {
       if(!present(x.instrument)) issues.push(["warning",`${lab}: instrument/procedure missing`,"State the tool, rubric, sensor, survey, test, interview, observation rule, or data source."]);
       if(!present(x.scale)) issues.push(["warning",`${lab}: unit/scale missing`,"Give units, score range, response categories, or coding structure."]);
       if(!present(x.timing)) issues.push(["info",`${lab}: timing/frequency missing`,"State when and how often the measurement occurs."]);
-      if(!present(x.reliability)) issues.push(["warning",`${lab}: reliability/consistency plan missing`,"Explain repeated calibration, scorer agreement, standardized administration, internal consistency evidence, or another relevant consistency check."]);
+      if(!present(x.reliability)) issues.push(["warning",`${lab}: reliability/consistency plan missing`,"Explain repeated calibration, scorer agreement, standardised administration, internal consistency evidence, or another relevant consistency check."]);
       if(!present(x.validity)) issues.push(["warning",`${lab}: validity evidence missing`,"Explain why this measurement supports the interpretation required by the research question."]);
     });
     return {issues,count:ms.length};
