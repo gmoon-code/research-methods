@@ -36,7 +36,7 @@ window.RMSGuidanceUI=(()=>{
    return `<div class="response-models">
      <div class="response-expectation"><b>How much should I write?</b><p>${E(r.expected_shape)}. A typical working response is ${E(r.typical_length)}.</p><small>${E(r.length_note)}</small></div>
      <div class="response-contrast vague"><b>Too vague</b><p>${E(r.too_vague)}</p></div>
-     <div class="response-contrast good"><b>Good working response</b><p>${E(r.good_working_response)}</p><small>This is an illustrative response. Use its level of specificity, then check any factual claims against your own project records.</small></div>
+     <div class="response-contrast good"><b>Illustrative working response</b><p>${E(r.good_working_response)}</p><small>This is an illustrative response. Use its level of specificity, then check any factual claims against your own project records.</small></div>
      ${r.detailed_response?`<div class="response-contrast detailed"><b>More detailed response when this field needs fuller explanation</b><p>${E(r.detailed_response)}</p></div>`:""}
      <div class="response-why"><b>What makes this example useful</b><p>${E(r.why_it_works)}</p></div>
    </div>`;
