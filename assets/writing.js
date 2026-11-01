@@ -168,7 +168,7 @@ window.RMSWriting=(()=>{
 
   function paperAudit(p){
     normalizeProject(p);const w=p.writing.sections,d=p.data||{},m=p.methods||{},runs=p.analysis?.runs||[],issues=[];
-    const mode=w.reportingMode||"unconfirmed",proposal=mode==="proposal",qualitative=/Qualitative/i.test(d.designType||""),review=/Literature review|Meta-analysis/i.test(d.designType||"");
+    const mode=p.writing.reportingMode||"unconfirmed",proposal=mode==="proposal",qualitative=/Qualitative/i.test(d.designType||""),review=/Literature review|Meta-analysis/i.test(d.designType||"");
     const sectionNames=["introduction","literature","method","results","discussion","conclusion","abstract"];
     const sectionAudits={};sectionNames.forEach(s=>sectionAudits[s]=sectionAudit(s,w[s],p));
     if(mode==="unconfirmed")issues.push(["info","Manuscript reporting status unconfirmed","Specify whether this is a proposal or completed research before interpreting results-related checks."]);
