@@ -766,7 +766,7 @@
   function methodsReplicationTab(){
     const d=project.methods.design||{}, r=PathCoach.methodSection(project,"replication");
     return `<div class="methods-section"><h4>Independent units, repeated measures, and replication</h4><p>First decide what counts as one independent case. Then describe repeats, subsamples, and dependence only as far as your design needs them.</p>
-      <section class="method-substep open"><div class="method-substep-head"><span>1</span><div><b>What is one independent case?</b><small>This decision controls the effective sample size and analysis structure.</small></div></div>
+      <section class="method-substep open"><div class="method-substep-head"><span>1</span><div><b>What is one independent case?</b><small>The unit structure determines which observations are independent and which must remain linked in analysis.</small></div></div>
         <div class="form-grid two">
           ${mInput("mrUnit","Independent experimental/observational unit",d.experimentalUnit||"")}
           ${mInput("mrNUnits","Number of independent units",d.independentUnits||"")}
@@ -793,12 +793,12 @@
 
   function methodsSamplingTab(){
     const s=project.methods.sampling||{}, a=PathCoach.methodSection(project,"sampling");
-    return `<div class="methods-section"><h4>Population, sample, sampling, and recruitment</h4><p>Keep two questions separate. Who or what do you want the results to describe? Who or what will actually provide the evidence?</p>
+    return `<div class="methods-section"><h4>Population, sample, sampling, and recruitment</h4><p>Identify the population or system the question concerns, then describe the units or sources you plan to study or have already examined.</p>
       <section class="method-substep open"><div class="method-substep-head"><span>1</span><div><b>Who or what is in scope?</b><small>Target population/system, accessible frame, and actual sample/corpus</small></div></div>
         <div class="form-grid two">
           ${mInput("msPopulation","Target population / system",s.population||project.data.population||"","textarea")}
           ${mInput("msFrame","Sampling frame / accessible population",s.frame||"","textarea")}
-          ${mInput("msSample","Actual sample / corpus",s.sample||project.data.sample||"","textarea")}
+          ${mInput("msSample","Planned or actual sample / corpus",s.sample||project.data.sample||"","textarea")}
         </div>
       </section>
       <details class="method-substep"><summary><span>2</span><div><b>How will cases enter the study?</b><small>Selection method, recruitment, and eligibility rules</small></div></summary>
@@ -821,7 +821,7 @@
 
   function methodsMeasurementTab(){
     const a=PathCoach.methodSection(project,"measurement");
-    return `<div class="methods-section"><h4>Measurement quality laboratory</h4><p>A named instrument is not enough. Explain what it measures, how scores are produced, when measurement occurs, whether it is sufficiently consistent, and why the score/observation supports the interpretation your question requires.</p>
+    return `<div class="methods-section"><h4>Measurement quality laboratory</h4><p>For measured outcomes, define the recording or scoring procedure, timing, consistency checks and evidence supporting the intended interpretation. Qualitative and review projects may instead require a documented evidence-collection or extraction approach.</p>
       ${measurementRows()||'<p class="muted tiny">No measurements recorded.</p>'}<button class="ghost small" id="addMeasurement">Add measurement</button>
       <div style="margin-top:12px">${a.issues.map(x=>`<div class="issue ${x[0]}"><b>${esc(x[1])}</b><p>${esc(x[2])}</p></div>`).join("")}</div>
     </div>`;
