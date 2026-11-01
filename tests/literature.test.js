@@ -28,4 +28,19 @@ if(L.makeThemeCSV(review).includes("candidate"))process.exit(1);
 if(L.gapReadiness(review).safeToClaimGlobalGap)process.exit(1);
 const many={sources:Array.from({length:12},(_,i)=>({id:"X"+i,screeningStatus:"Included",measures:"test",sample:"school",limits:"observational"})),searchLog:[],data:{}};
 if(L.gapReadiness(many).safeToClaimGlobalGap)process.exit(1);
+// Stage C-X3c8b | source links, evidence status and unclassified themes.
+review.litClaims=[{text:"Claim needs checking",sourceIds:["S10","S11","S12","S12","UNKNOWN"]}];
+const checked=L.claimAudit(review)[0];
+if(checked.sourceCount!==1||checked.includedIds.join(",")!=="S12")process.exit(1);
+if(checked.pendingIds.join(",")!=="S10"||checked.excludedIds.join(",")!=="S11")process.exit(1);
+if(checked.missingIds.join(",")!=="UNKNOWN"||checked.synthesis)process.exit(1);
+const background={sources:[
+ {id:"B01",screeningStatus:"Included",themeEvidence:[{theme:"context",stance:"background",note:"not direct evidence"}]},
+ {id:"B02",screeningStatus:"Included",themeEvidence:[{theme:"context",stance:"background",note:"not direct evidence"}]},
+ {id:"B03",screeningStatus:"Included",themeEvidence:[{theme:"unclassified",note:"no stance entered"}]}
+],litClaims:[],searchLog:[],data:{}};
+L.normalizeProject(background);
+if(L.gapReadiness(background).multiSourceThemes!==0)process.exit(1);
+const unclassified=L.themeMap(background).find(t=>t.theme==="unclassified");
+if(!unclassified||unclassified.supporting.length||unclassified.background.length||unclassified.sources.length!==1)process.exit(1);
 console.log("PASS literature workspace engine");
