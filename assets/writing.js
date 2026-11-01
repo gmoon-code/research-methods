@@ -26,17 +26,26 @@ window.RMSWriting=(()=>{
   }
 
   function sourceKey(s){
-    let year=String(s.year||"").match(/\b(19|20)\d{2}[a-z]?\b/i)?.[0]||"";
-    let auth=String(s.authors||s.citation||"").trim();
-    let first=auth.split(/[,;&]/)[0].trim().split(/\s+/).filter(Boolean);
-    let surname=first.length?first[first.length-1].replace(/[().]/g,""):"";
-    if(!surname && s.citation)surname=String(s.citation).split(/[,(]/)[0].trim();
+    const year=String(s.year||"").trim().match(/^(?:19|20)\d{2}[a-z]?$/i)?.[0]||"";
+    const authors=String(s.authors||"").trim(),citation=String(s.citation||"").trim();
+    let surname="";
+    if(authors){
+      const first=authors.includes(",")?authors.split(",")[0].trim():authors;
+      if(/^[\p{L}\p{M}’'-]+$/u.test(first))surname=first;
+      else if(/^[\p{L}\p{M}’'-]+\s+et al\.$/u.test(first))surname=first.split(/\s+/)[0];
+    }else if(citation){
+      const initial=citation.match(/^([\p{L}\p{M}’'-]+)\s*(?:,|\()/u);
+      if(initial)surname=initial[1];
+    }
     return {surname,year,key:(surname&&year)?`${surname.toLowerCase()}|${year.toLowerCase()}`:""};
   }
 
   function citationAudit(text,sources){
-    const sourceKeys=new Map();
-    (sources||[]).forEach(source=>{const k=sourceKey(source);if(k.key){if(!sourceKeys.has(k.key))sourceKeys.set(k.key,[]);sourceKeys.get(k.key).push(source)}});
+    const sourceKeys=new Map(),unindexable=[];
+    (sources||[]).forEach(source=>{
+      const k=sourceKey(source);if(!k.key){unindexable.push(source);return}
+      if(!sourceKeys.has(k.key))sourceKeys.set(k.key,[]);sourceKeys.get(k.key).push(source);
+    });
     const found=[],input=String(text||"");
     const make=(fragment,surname,year)=>{
       const key=`${surname.toLowerCase()}|${year.toLowerCase()}`,candidates=sourceKeys.get(key)||[],record=candidates.length===1?candidates[0]:null;
@@ -46,16 +55,17 @@ window.RMSWriting=(()=>{
     const parentheses=/\(([^()]{1,350})\)/g;
     for(const group of input.matchAll(parentheses)){
       for(const item of group[1].split(";")){
-        const match=item.trim().match(/^([\p{Lu}][\p{L}'’\-]+)(?:\s+et al\.)?(?:\s*&\s*[\p{Lu}][\p{L}'’\-]+)?,\s*((?:19|20)\d{2}[a-z]?)$/u);
-        if(match)make(`(${item.trim()})`,match[1],match[2]);
+        const itemText=item.trim(),clean=itemText.replace(/^(?:(?:see(?: also)?)|(?:e\.g\.,?)|(?:cf\.))\s+/i,"");
+        const match=clean.match(/^([\p{Lu}][\p{L}\p{M}'’\-]+)(?:\s+et al\.)?(?:\s*&\s*[\p{Lu}][\p{L}\p{M}'’\-]+)?,\s*((?:19|20)\d{2}[a-z]?)$/u);
+        if(match)make(`(${itemText})`,match[1],match[2]);
       }
     }
-    const narrative=/\b([\p{Lu}][\p{L}'’\-]+)(?:\s+et al\.)?\s+\(((?:19|20)\d{2}[a-z]?)\)/gu;
-    for(const match of input.matchAll(narrative))make(match[0],match[1],match[2]);
+    const narrative=/(^|[^\p{L}\p{M}])([\p{Lu}][\p{L}\p{M}'’\-]+)(?:\s+et al\.|\s+(?:and|&)\s+[\p{Lu}][\p{L}\p{M}'’\-]+)?\s+\(((?:19|20)\d{2}[a-z]?)\)/gmu;
+    for(const match of input.matchAll(narrative))make(match[0].slice(match[1].length),match[2],match[3]);
     const matchedKeys=new Set(found.filter(x=>x.matched).map(x=>`${x.surname}|${x.year}`));
     const unused=(sources||[]).filter(source=>{const key=sourceKey(source).key;return key&&!matchedKeys.has(key)});
     return {found,unmatched:found.filter(x=>!x.matched&&!x.ambiguous),ambiguous:found.filter(x=>x.ambiguous),
-      statusToCheck:found.filter(x=>x.matched&&["Pending","Excluded"].includes(x.screeningStatus)),unused};
+      statusToCheck:found.filter(x=>x.matched&&["Pending","Excluded"].includes(x.screeningStatus)),unindexable,unused};
   }
 
   function introBlueprint(p){
@@ -183,6 +193,7 @@ window.RMSWriting=(()=>{
     const ca=citationAudit(sectionNames.map(section=>w[section]||"").join("\n"),p.sources);
     if(ca.unmatched.length)issues.push(["critical","Paper contains citation(s) without a matching bibliographic record",ca.unmatched.map(x=>x.text).join(", ")]);
     if(ca.ambiguous.length)issues.push(["warning","Citation(s) match more than one source record","Clarify the exact publication for "+ca.ambiguous.map(x=>x.text).join(", ")]);
+    if(ca.unindexable.length)issues.push(["info","Some source records lack an unambiguous author–year key","Check structured authors and publication years; the citation checker cannot safely identify these records from their current fields."]);
     if(ca.statusToCheck.length)issues.push(["warning","Cited records require eligibility review","Confirm whether pending or excluded records are being used appropriately as background rather than included synthesis evidence."]);
     const score=Math.max(0,100-issues.filter(x=>x[0]==="critical").length*12-issues.filter(x=>x[0]==="warning").length*5-
       Object.values(sectionAudits).flatMap(x=>x.issues).filter(x=>x[0]==="critical").length*4);
