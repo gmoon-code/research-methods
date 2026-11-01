@@ -96,18 +96,19 @@ function runAnalysis(p,c){
     if(u&&rowUnit&&u.toLowerCase()!==rowUnit.toLowerCase())return{error:`The study unit (${u}) differs from the data-row unit (${rowUnit}). This laboratory cannot adjust inferential tests for nested or repeated rows. Prepare an appropriate independent-unit dataset or use an analysis that models dependence.`};
     if(Number.isFinite(nIndependent)&&nIndependent>0&&rows.length>nIndependent)return{error:`The imported table contains ${rows.length} rows but the plan records ${nIndependent} independent units. Check for repeated, nested or technical observations and analyse them at an appropriate unit level.`};
   }
+  const prepared=missingTokenAudit(p);
+  if(prepared.zeroTokens.length)return{error:"Zero is configured as a missing-value token. Zero may be a genuine observed value. Preserve the original data and recode missing zeros in a documented analysis copy before running a calculation."};
+
   if(["paired_binary","repeated_binary"].includes(structure)){
     const columns=structure==="paired_binary"?[c.x,c.y]:(Array.isArray(c.columns)?c.columns:[]);
     if(columns.some(col=>!col||!p.analysis.headers?.includes(col))||columns.length<(structure==="paired_binary"?2:3))return{error:"Choose the required existing binary-outcome columns before running this analysis."};
     const success=String(c.success??"").trim();
     if(!success)return{error:"Specify the recorded category that represents success."};
-    const entries=rows.flatMap(row=>columns.map(col=>String(row[col]??"").trim()).filter(Boolean));
+    const entries=prepared.rows.flatMap(row=>columns.map(col=>String(row[col]??"").trim()).filter(Boolean));
     if(entries.some(v=>/^(?:n\/?a|missing|null|not recorded)$/i.test(v)))return{error:"An apparent missing-value code appears in the binary-outcome columns. Resolve missingness before running a paired binary analysis."};
     const distinct=[...new Set(entries)];
     if(distinct.length>2||!distinct.includes(success))return{error:"The selected binary columns must contain no more than two observed categories, including the stated success value. Check coding and missing-value rules."};
   }
-  const prepared=missingTokenAudit(p);
-  if(prepared.zeroTokens.length)return{error:"Zero is configured as a missing-value token. Zero may be a genuine observed value. Preserve the original data and recode missing zeros in a documented analysis copy before running a calculation."};
   const activeProject={...p,analysis:{...p.analysis,rawData:prepared.rows}};
   const result=calculateAnalysis(activeProject,c);
   if(result&&!result.error){result.missingness={tokens:prepared.active,convertedCells:prepared.replacements,countsByColumn:prepared.counts,rowsImported:rows.length};}
