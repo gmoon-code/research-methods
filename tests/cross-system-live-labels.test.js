@@ -1,0 +1,24 @@
+global.window={};
+const fs=require("node:fs"),path=require("node:path");
+const source=fs.readFileSync(path.join(__dirname,"../assets/app.js"),"utf8");
+const pathSource=fs.readFileSync(path.join(__dirname,"../assets/path-coach.js"),"utf8");
+const label=(name)=>'<label>'+name+'</label>',esc=s=>String(s??"");
+const project={data:{},methods:{sampling:{},design:{},protocolVersions:[{lockedAt:"invalid",researchQuestion:"Test",designType:"Qualitative"}]},schema:[]};
+const PathCoach={methodSection:()=>({issues:[]}),methodsReadiness:()=>({label:"Institutional or teacher review required",critical:0,warning:0,info:0,ethicsStatus:"teacher_review",sections:{}})};
+function extract(name,next){const i=source.indexOf("function "+name+"(){"),j=source.indexOf("function "+next+"(){",i);if(i<0||j<=i)throw Error("Cannot locate "+name);return source.slice(i,j)}
+const sample=new Function("project","PathCoach","mInput","esc",extract("methodsSamplingTab","methodsMeasurementTab")+"return methodsSamplingTab;")(project,PathCoach,label,esc);
+const data=new Function("project","PathCoach","mInput","esc",extract("methodsDataTab","methodsAuditTab")+"return methodsDataTab;")(project,PathCoach,label,esc);
+const audit=new Function("project","PathCoach","mInput","esc",extract("methodsAuditTab","methodsWorkspace")+"return methodsAuditTab;")(project,PathCoach,label,esc);
+const s=sample(),d=data(),a=audit();
+if(!s.includes("planned or observed sample or corpus")||s.includes("and actual sample/corpus"))process.exit(1);
+if(!d.includes("data row or evidence record")||!d.includes("tokens separately in the Data Lab"))process.exit(1);
+if(!d.includes("traceable records without a numerical table"))process.exit(1);
+if(!a.includes("critical issue(s) requiring attention")||!a.includes("No saved protocol versions yet.")&&project.methods.protocolVersions.length===0)process.exit(1);
+if(!a.includes("Date not recorded")||a.includes("Invalid Date"))process.exit(1);
+if(a.includes("No locked protocol versions yet."))process.exit(1);
+if(!source.includes("9 · Audit & version")||source.includes("9 · Audit & lock"))process.exit(1);
+if(!source.includes("Saving does not grant research approval."))process.exit(1);
+if(!pathSource.includes('sample:"planned or actual sample/corpus, or reviewed and included studies"'))process.exit(1);
+project.methods.protocolVersions=[];
+if(!audit().includes("No saved protocol versions yet."))process.exit(1);
+console.log("PASS rendered Method sampling, evidence records and protocol versioning labels");
