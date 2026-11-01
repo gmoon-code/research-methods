@@ -60,4 +60,44 @@ if(!missingAudit.issues.some(x=>x[1]==="Assignment process not specified"))proce
 if(!missingAudit.good.some(x=>x.includes("check whether it was specified before")))process.exit(1);
 const nonrandomSample={methods:{sampling:{population:"school",sample:"one class",method:"Nonrandom selection",generalization:"local class"}}};
 if(M.auditSampling(nonrandomSample).issues.some(x=>x[1]==="Sampling frame missing"))process.exit(1);
+// Stage C-X3c9b | consent, permission, procedure order, schema and version integrity.
+const unset={data:{finalRQ:"What is measured?"},methods:{ethics:{}}};
+if(M.ethicsRoute(unset).status!=="teacher_review")process.exit(1);
+if(!M.ethicsRoute(unset).issues.some(x=>x[1]==="Human participation not classified"))process.exit(1);
+const ethicsStudy={data:{designType:"Qualitative"},methods:{ethics:{humanParticipants:"yes",minors:"yes",consent:"review school policy",assent:"",withdrawal:"voluntary",storage:"restricted"}}};
+if(M.ethicsRoute(ethicsStudy).status!=="teacher_review")process.exit(1);
+if(!M.ethicsRoute(ethicsStudy).issues.some(x=>x[1]==="Minor participant assent/permission plan missing"))process.exit(1);
+ethicsStudy.methods.procedureSteps=[
+ {action:"Interview students",record:"recorded answer"},
+ {action:"Obtain school approval and consent",record:"signed permission"},
+ {action:"Protect files",record:"restricted folder"}];
+if(!M.procedureAudit(ethicsStudy).issues.some(x=>x[1]==="Permission appears after research collection"))process.exit(1);
+ethicsStudy.methods.procedureSteps=[ethicsStudy.methods.procedureSteps[1],ethicsStudy.methods.procedureSteps[0],ethicsStudy.methods.procedureSteps[2]];
+if(M.procedureAudit(ethicsStudy).issues.some(x=>x[1]==="Permission appears after research collection"))process.exit(1);
+const hazardous={data:{finalRQ:"Does sleep deprivation affect learning?"},methods:{ethics:{humanParticipants:"yes",consent:"ask school",withdrawal:"can stop",storage:"restricted"}}};
+if(M.ethicsRoute(hazardous).status!=="do_not_facilitate")process.exit(1);
+const qualitativeNoTable={data:{designType:"Qualitative"},methods:{design:{},ethics:{humanParticipants:"no"}}};
+const qualIssues=M.dataSchemaAudit(qualitativeNoTable).issues;
+if(qualIssues.some(x=>x[0]==="critical"))process.exit(1);
+if(!qualIssues.some(x=>x[1]==="Qualitative record structure missing"))process.exit(1);
+const nested={data:{designType:"Experimental"},methods:{design:{experimentalUnit:"dish",rowUnit:"seed per dish"}},schema:[
+ {name:"dish_id",type:"ID",definition:"dish identifier",missing:"NA"},
+ {name:"shoot_length_cm",type:"Numeric",definition:"cm from substrate surface to visible tip",missing:"0"}
+]};
+const nestedIssues=M.dataSchemaAudit(nested).issues;
+if(!nestedIssues.some(x=>x[1]==="Row and study unit differ"))process.exit(1);
+if(!nestedIssues.some(x=>x[1].includes("zero used as a missing code")))process.exit(1);
+const readyLabel=M.readiness({data:{},methods:{ethics:{humanParticipants:"yes",consent:"planned",withdrawal:"planned",storage:"restricted"}}}).label;
+if(/ready for teacher review|approved/i.test(readyLabel))process.exit(1);
+const snapshotProject={data:{finalRQ:"Seed response"},schema:[{name:"dish_id",definition:"dish key"}],methods:{
+ design:{experimentalUnit:"dish"},constructs:[{name:"shoot length",role:"Outcome / dependent variable"}],
+ ethics:{humanParticipants:"no"},procedureSteps:[{action:"record Day 7 status"}]
+}};
+const saved=M.protocolSnapshot(snapshotProject);
+snapshotProject.methods.design.experimentalUnit="seed";
+snapshotProject.methods.constructs[0].name="changed";
+snapshotProject.schema[0].name="changed";
+snapshotProject.methods.procedureSteps[0].action="changed";
+if(saved.design.experimentalUnit!=="dish"||saved.constructs[0].name!=="shoot length"||saved.schema[0].name!=="dish_id"||saved.procedureSteps[0].action!=="record Day 7 status")process.exit(1);
+if(!M.methodMarkdown(snapshotProject).includes("not research approval"))process.exit(1);
 console.log("PASS methods lab engine");
