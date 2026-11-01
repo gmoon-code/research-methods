@@ -149,7 +149,7 @@ if(!G.stages[8].walkthrough.draft.includes("cite the actual studies"))process.ex
 if(!G.stages[9].steps[1].includes("without random assignment"))process.exit(1);
 if(!G.stages[10].examples[1].text.includes("dish is the experimental unit"))process.exit(1);
 if(!/planned sample/i.test(G.stages[11].examples[0].text))process.exit(1);
-if(!G.stages[11].examples[1].text.includes("does not independently establish germination"))process.exit(1);
+if(!G.stages[11].examples[1].text.includes("do not independently establish germination"))process.exit(1);
 if(!G.stages[12].examples[0].text.includes("visible_shoot")||!G.stages[12].examples[0].text.includes("dish_id"))process.exit(1);
 if(!G.stages[12].examples[1].text.includes("does not establish whether a radicle emerged"))process.exit(1);
 if(!G.stages[12].walkthrough.draft.includes("independently assigned dishes"))process.exit(1);
