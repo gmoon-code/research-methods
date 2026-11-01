@@ -16,4 +16,11 @@ if(!b.includes("Nested observations require aggregation")||!b.includes("missing 
 if(!h.includes("If the analysis was selected or changed afterwards"))process.exit(1);
 if(!r.includes("Independent unit differs from row unit"))process.exit(1);
 if(!r.includes("A p-value alone does not establish"))process.exit(1);
+const oldRecord={timestamp:"2026-10-01T10:00:00Z",output:{test:"Pearson correlation"},neutral_summary:"r = 0.5",assumption_notes:[]};
+p.analysis.runs=[oldRecord];
+if(!history(p).includes("Historical analysis record."))process.exit(1);
+if(!audit(p).includes("predates the current calculation safeguards"))process.exit(1);
+p.analysis.runs=[{...oldRecord,calculation_guard_version:"C-X3c10c"}];
+if(!history(p).includes("Calculated under the current automated guards"))process.exit(1);
+if(audit(p).includes("predates the current calculation safeguards"))process.exit(1);
 console.log("PASS Data Lab analysis guidance and qualified output");
