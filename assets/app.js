@@ -485,13 +485,13 @@
   }
 
   function searchWorkspace(){
-    return `<div class="lit-section"><h4>Search log</h4><p>Record searches you have actually run, including their dates, exact queries and settings. Documented searches help you describe what your search covered and where uncertainty remains.</p>
+    return `<div class="lit-section"><h4>Search log</h4><p>Document searches you have run, including the date, submitted query, search settings and result count where reported. Earlier records without confirmed execution remain marked for review.</p>
       <div class="form-grid two">
-        <label><span>Date</span><input type="date" id="slDate"></label><label><span>Database / search system</span><input id="slDatabase" placeholder="Google Scholar, ERIC, PubMed…"></label>
-        <label><span>Exact search string</span><textarea id="slQuery"></textarea></label><label><span>Filters / limits</span><textarea id="slFilters" placeholder="Years, language, article type, population…"></textarea></label>
-        <label><span>Results returned</span><input id="slResults"></label><label><span>Screened / kept</span><input id="slKept"></label><label><span>Notes / what changed next</span><textarea id="slNotes"></textarea></label>
-      </div><button class="secondary" id="addSearchLog">Add search</button>
-      <div>${(project.searchLog||[]).map((x,i)=>`<div class="search-entry"><div style="float:right"><button class="danger small" data-del-search="${i}">Remove</button></div><b>${esc(x.database||"Search")} · ${esc(x.date||"date not recorded")}</b><p>${esc(x.query||"")}</p><p>Filters: ${esc(x.filters||"—")} · Results: ${esc(x.results||"—")} · Screened/kept: ${esc(x.kept||"—")}</p><p>${esc(x.notes||"")}</p></div>`).join("")||'<p class="muted tiny">No searches logged yet.</p>'}</div>`;
+        <label><span>Date search was run</span><input type="date" id="slDate"></label><label><span>Database / search system</span><input id="slDatabase" placeholder="Google Scholar, ERIC, PubMed…"></label>
+        <label><span>Exact search string</span><textarea id="slQuery"></textarea></label><label><span>Filters / limits</span><textarea id="slFilters" placeholder="Record filters used, or none"></textarea></label>
+        <label><span>Results returned</span><input id="slResults" placeholder="Reported count, 0, or not reported"></label><label><span>Screened / kept</span><input id="slKept"></label><label><span>Notes / what changed next</span><textarea id="slNotes"></textarea></label>
+      </div><label class="search-confirm"><input type="checkbox" id="slConfirmed"> I ran this search using the details recorded above.</label><button class="secondary" id="addSearchLog">Add completed search</button><p class="muted tiny" id="searchLogStatus" role="status"></p>
+      <div>${(project.searchLog||[]).map((x,i)=>`<div class="search-entry"><div style="float:right"><button class="danger small" data-del-search="${i}">Remove</button>${Lit.searchLogStatus(x).complete && !Lit.searchLogStatus(x).confirmed?`<button class="ghost small" data-confirm-search="${i}">Confirm I ran this search</button>`:""}</div><b>${esc(x.database||"Search")} · ${esc(x.date||"date not recorded")}</b><p><small>${esc(Lit.searchLogStatus(x).label)}</small></p><p>${esc(x.query||"")}</p><p>Filters: ${esc(x.filters||"—")} · Results: ${esc(x.results||"—")} · Screened/kept: ${esc(x.kept||"—")}</p><p>${esc(x.notes||"")}</p></div>`).join("")||'<p class="muted tiny">No searches logged yet.</p>'}</div>`;
   }
 
   function screeningWorkspace(){
@@ -594,8 +594,23 @@
       el.onchange=el.oninput;
     });
     if($("addSearchLog")) $("addSearchLog").onclick=()=>{
-      project.searchLog.push({date:$("slDate").value,database:$("slDatabase").value,query:$("slQuery").value,filters:$("slFilters").value,results:$("slResults").value,kept:$("slKept").value,notes:$("slNotes").value});save();rerender("search");
+      const record={date:$("slDate").value,database:$("slDatabase").value.trim(),query:$("slQuery").value.trim(),filters:$("slFilters").value.trim(),results:$("slResults").value.trim(),kept:$("slKept").value.trim(),notes:$("slNotes").value.trim()};
+      const status=Lit.searchLogStatus(record);
+      if(!status.complete){
+        $("searchLogStatus").textContent="Complete the date, database, submitted query, filters and result count. Use ‘none’ for no filters and ‘not reported’ when a count is unavailable.";
+        return;
+      }
+      if(!$("slConfirmed").checked){
+        $("searchLogStatus").textContent="Confirm that you ran this search before adding it to the log.";
+        return;
+      }
+      project.searchLog.push({...record,executed:true});save();rerender("search");
     };
+    document.querySelectorAll("[data-confirm-search]").forEach(b=>b.onclick=()=>{
+      const x=project.searchLog[Number(b.dataset.confirmSearch)];
+      if(!x||!Lit.searchLogStatus(x).complete)return;
+      x.executed=true;save();rerender("search");
+    });
     document.querySelectorAll("[data-del-search]").forEach(b=>b.onclick=()=>{const i=Number(b.dataset.delSearch),removed=project.searchLog.splice(i,1)[0];save();rerender("search");FlowUI.offerUndo("Search record removed.",()=>{project.searchLog.splice(i,0,removed);save();rerender("search")})});
     if($("addThemeEvidence")) $("addThemeEvidence").onclick=()=>{
       const rows=[...document.querySelectorAll("#themeEvidenceRows [data-theme-row]")].length;
