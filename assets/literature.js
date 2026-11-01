@@ -200,15 +200,20 @@ window.RMSLiterature = (() => {
       d.litIntroPlan||"_Not yet drafted_",
       ""
     ];
+    const sourceStatuses=new Map((project.sources||[]).map(src=>[src.id,src.screeningStatus||"Pending"]));
+
     (project.litOutline||[]).forEach((p,i)=>{
       lines.push(`## Paragraph ${i+1}: ${p.theme||"Untitled theme"}`);
       lines.push(`**Paragraph job:** ${p.job||""}`);
       lines.push(`**Claim:** ${p.claim||""}`);
-      lines.push(`**Supporting sources:** ${(p.sourceIds||[]).join(", ")}`);
+      const linkedIds=[...new Set((p.sourceIds||[]).map(x=>String(x||"").trim()).filter(Boolean))];
+      lines.push(`**Linked source IDs (verify claim support):** ${linkedIds.join(", ")||"None recorded"}`);
+      const unresolved=linkedIds.filter(id=>sourceStatuses.get(id)!=="Included");
+      if(unresolved.length)lines.push(`**Eligibility to check:** ${unresolved.map(id=>`${id} (${sourceStatuses.get(id)||"unknown ID"})`).join(", ")}`);
       lines.push(`**Comparison / synthesis:** ${p.synthesis||""}`);
       lines.push(`**Contradiction / qualification:** ${p.tension||""}`);
       lines.push(`**Method/context explanation:** ${p.conditions||""}`);
-      lines.push(`**Transition / implication:** ${p.transition||""}`);
+      if(p.transition)lines.push(`**Connection or implication (where useful):** ${p.transition}`);
       lines.push("");
     });
     lines.push("## Closing / study justification");
