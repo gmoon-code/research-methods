@@ -671,9 +671,9 @@
       "typical_length": "about 10–50 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Salt will affect the plants.",
-      "good_working_response": "Dishes assigned higher NaCl concentrations will have a lower mean shoot length per planted seed on Day 7.",
+      "good_working_response": "Dishes assigned 100 mM NaCl will have a lower mean Day 7 shoot length per planted seed than dishes assigned 0 mM NaCl.",
       "detailed_response": "",
-      "why_it_works": "Identify the predicted direction and the precise outcome before seeing the data. The prediction should have a reason grounded in prior evidence or a plausible mechanism."
+      "why_it_works": "State the predicted direction for the primary 100 mM versus 0 mM contrast before collecting outcomes. Treat the 50 mM comparison as secondary unless the analysis plan specifies a separate trend."
     },
     "nullHyp": {
       "stage": 10,
@@ -707,9 +707,9 @@
       "typical_length": "about 8–55 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "The independent variable is whatever changes.",
-      "good_working_response": "For the proposed dish experiment, the manipulated factor is assigned NaCl concentration, at 0, 50 or 100 mM. In a separate observational sleep study, reported hours of sleep would be a measured predictor rather than a treatment.",
+      "good_working_response": "The manipulated experimental factor is NaCl concentration, independently assigned to dishes at 0, 50 or 100 mM. Each entire dish receives one treatment condition.",
       "detailed_response": "",
-      "why_it_works": "Use assigned-treatment language for experiments and measured-exposure language for observational research."
+      "why_it_works": "Name one factor and specify how its values arise. A measured predictor in an observational study should be identified as observed rather than assigned."
     },
     "outcomeDV": {
       "stage": 10,
@@ -719,9 +719,9 @@
       "typical_length": "about 15–65 words",
       "length_note": "This is a working range, not a grading rule. Write enough to make the research decision clear and specific.",
       "too_vague": "Plant growth.",
-      "good_working_response": "Mean shoot length per planted seed in each dish on Day 7, in centimetres. Seeds that have not germinated are recorded as 0 cm under this prespecified combined germination-and-growth outcome.",
+      "good_working_response": "The primary outcome is each dish's mean Day 7 shoot length per planted seed, in centimetres. Record visible shoot length for each seed; use a prespecified analysis value of 0 cm when no shoot is visible, retaining that status separately. Missing observations are not zeroes.",
       "detailed_response": "",
-      "why_it_works": "Define a measurable outcome and identify the unit of analysis. A zero for an ungerminated seed must be justified as part of the chosen outcome definition."
+      "why_it_works": "Define the outcome, time and analysis unit. Distinguish the prespecified zero code for no shoot from an unrecorded or lost observation."
     },
     "operationalDefs": {
       "stage": 10,
