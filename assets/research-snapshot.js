@@ -122,7 +122,7 @@ window.RMSResearchSnapshot=(()=>{
      name:trim(x.name),type:trim(x.type),unit:trim(x.unit||x.units),definition:trim(x.definition)
    }));
    const runs=(project.analysis?.runs||[]).map((x,i)=>({
-     id:`A${i+1}`,summary:trim(x.neutral_summary),test:trim(x.output?.test||x.structure),time:trim(x.timestamp)
+     id:`A${i+1}`,summary:trim(x.neutral_summary),test:trim(x.output?.test||x.structure),time:trim(x.timestamp),guardVersion:trim(x.calculation_guard_version),sourceFile:trim(x.traceability?.file),rowsUsed:x.traceability?.rows_used??null
    }));
    const writing=Object.entries(project.writing?.sections||{}).filter(([,v])=>filled(v)).map(([k,v])=>({
      section:k,text:trim(v),words:(String(v).match(/\b[\w’'-]+\b/g)||[]).length
@@ -203,7 +203,7 @@ window.RMSResearchSnapshot=(()=>{
      });
    }
    if(ws.schema.length){lines.push(`\n## Current data schema`);ws.schema.forEach(x=>lines.push(`\n**${x.name||"Unnamed column"}** · ${[x.type,x.unit].filter(Boolean).join(" · ")}${x.definition?`\n\n${x.definition}`:""}`))}
-   if(ws.runs.length){lines.push(`\n## Stored analysis runs`);ws.runs.forEach(x=>lines.push(`\n**${x.id}${x.test?` · ${x.test}`:""}**\n\n${x.summary||"_No neutral summary stored_"}`))}
+   if(ws.runs.length){lines.push(`\n## Stored analysis runs`);ws.runs.forEach(x=>lines.push(`\n**${x.id}${x.test?` · ${x.test}`:""}**\n\n${x.summary||"_No neutral summary stored_"}\n\nSafeguard status: ${x.guardVersion==="C-X3c10d"?"Recorded automated safeguards; verify assumptions, units and source evidence":"Earlier or unversioned calculation; recheck the original model, coding, units and source evidence"}\n\nDataset recorded with this analysis: ${x.sourceFile||"Not recorded"}\n\nRows used in calculation: ${x.rowsUsed??"Not recorded"} (not necessarily independent study units)`))}
    if(ws.writing.length){lines.push(`\n## Writing Lab drafts`);ws.writing.forEach(x=>lines.push(`\n### ${x.section}\n\n${x.text}`))}
    if(ws.feedback.length){lines.push(`\n## Teacher feedback`);ws.feedback.forEach(x=>lines.push(`\n- ${x.comment}`))}
    if(ws.crossPath?.length){lines.push(`\n## Earlier / cross-path responses`);ws.crossPath.forEach(x=>lines.push(`\n**Stage ${x.stage} · ${x.label}**\n\n${x.value}`))}
