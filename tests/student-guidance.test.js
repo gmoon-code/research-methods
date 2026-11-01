@@ -138,4 +138,19 @@ if(!G.stages[5].walkthrough.draft.includes("has not yet been run"))process.exit(
 if(!G.stages[6].steps[0].includes("page or section locations"))process.exit(1);
 if(!G.stages[6].steps[3].includes("measurement quality directly"))process.exit(1);
 if(!G.stages[6].examples[0].label.includes("Hypothetical"))process.exit(1);
+// Stage C-X3c5b | stage summaries 7-12; literature, design and evidence units.
+const stagesB=[7,8,9,10,11,12].map(n=>G.stages[n]);
+if(stagesB.some(s=>!s?.title||!s?.plain||s.steps.length<4||s.examples.length<1||s.stuck.length<2||s.terms.length<2||!s.walkthrough?.draft))process.exit(1);
+if(stagesB.some(s=>JSON.stringify(s).includes("—")))process.exit(1);
+if(!G.stages[7].examples[0].text.includes("Fictional illustration only"))process.exit(1);
+if(!G.stages[7].walkthrough.draft.includes("need the studies' estimates"))process.exit(1);
+if(!G.stages[8].plain.includes("Some paragraphs compare"))process.exit(1);
+if(!G.stages[8].walkthrough.draft.includes("cite the actual studies"))process.exit(1);
+if(!G.stages[9].steps[1].includes("without random assignment"))process.exit(1);
+if(!G.stages[10].examples[1].text.includes("dish is the experimental unit"))process.exit(1);
+if(!G.stages[11].examples[0].text.includes("Planned sample"))process.exit(1);
+if(!G.stages[11].examples[1].text.includes("does not independently establish germination"))process.exit(1);
+if(!G.stages[12].examples[0].text.includes("visible_shoot")||!G.stages[12].examples[0].text.includes("dish_id"))process.exit(1);
+if(!G.stages[12].examples[1].text.includes("does not establish whether a radicle emerged"))process.exit(1);
+if(!G.stages[12].walkthrough.draft.includes("independently assigned dishes"))process.exit(1);
 console.log("PASS student guidance coverage");
