@@ -14,7 +14,7 @@ if(!R.fields.sample.label.includes("Planned or actual sample")||!R.fields.sample
 if(!G.stages["11"].steps[0].includes("proposed sample")||!G.stages["11"].walkthrough.thinking.some(s=>s.includes("actual sample will depend")))process.exit(1);
 if(!s12.title.includes("save a dated data plan")||!/saving a plan does not establish/.test(s12.learn))process.exit(1);
 if(!R.fields.rowUnit.levels["2"].body.includes("interviews, documents"))process.exit(1);
-if(!G.stages["12"].plain.includes("tabular dataset")||!s12.learn.includes("qualitative interviews"))process.exit(1);
+if(!G.stages["12"].plain.includes("tabular dataset")||!/qualitative interviews/i.test(s12.learn))process.exit(1);
 if(!field(12,"rowUnit")[1].includes("evidence record"))process.exit(1);
 if(!R.fields.missingRule.levels["2"].body.includes("separately in the Data Lab"))process.exit(1);
 if(!G.stages["12"].steps.some(s=>s.includes("explicit missing tokens separately")))process.exit(1);
