@@ -9,4 +9,18 @@ for(const k of ["binary","experimental unit","estimand","paired data","confounde
 for(let i=1;i<=18;i++){const s=G.stages[i];if(!s||s.steps.length<4||s.examples.length<1||s.stuck.length<2||s.terms.length<2)process.exit(1);}
 for(const h of Object.values(G.fields))if(!h.meaning||!h.write||!h.example||!h.questions?.length||!h.avoid)process.exit(1);
 for(const lab of ["literature","methods","data","writing"])if(!G.labs[lab]||Object.keys(G.labs[lab]).length<7)process.exit(1);
+// Stage C-X3c3a | first 30 glossary definitions and methodological boundaries.
+const firstThirty=Object.keys(G.glossary).slice(0,30);
+if(firstThirty.length!==30||firstThirty[0]!=="analysis"||firstThirty[29]!=="Fisher exact test")process.exit(1);
+for(const term of firstThirty)if(!G.glossary[term]?.trim()||G.glossary[term].includes("—"))process.exit(1);
+if(!/organising evidence/.test(G.glossary.analysis))process.exit(1);
+if(!/related terms when justified/.test(G.glossary["boolean search"]))process.exit(1);
+if(!/labelling passages/.test(G.glossary.coding))process.exit(1);
+if(!/repeated studies/.test(G.glossary["confidence interval"]))process.exit(1);
+if(!/standardised/.test(G.glossary["controlled condition"]))process.exit(1);
+if(!/carryover may still require/.test(G.glossary.counterbalancing))process.exit(1);
+if(!/The numerical value calculated/.test(G.glossary.estimand))process.exit(1);
+if(!/independently assigned/.test(G.glossary["experimental unit"]))process.exit(1);
+if(!/In observational research, exposure is recorded/.test(G.glossary.exposure))process.exit(1);
+
 console.log("PASS student guidance coverage");
