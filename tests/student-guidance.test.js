@@ -214,4 +214,12 @@ if(!writeLab.discussion.text.includes("paragraph order")||!writeLab.discussion.t
 if(!writeLab.closing.text.includes("without inventing results"))process.exit(1);
 if(!writeLab.citations.text.includes("quotation fidelity"))process.exit(1);
 if(!writeLab.audit.text.includes("adjacent sentences and paragraphs")||!writeLab.audit.text.includes("Canadian English"))process.exit(1);
+// Stage C-X3c7a | novice help and first research-choice groups.
+if(Object.keys(G.choices).length!==21)process.exit(1);
+if(!G.novicePromise.includes("Student Guide and Research Terms"))process.exit(1);
+if(!G.choices.questionType.options.Descriptive.includes("seeds per dish show a visible shoot on Day 7"))process.exit(1);
+if(!G.choices.gapType.options["Documented literature gap"].includes("databases, dates and scope"))process.exit(1);
+if(!G.choices.designType.options["Quasi-experimental"].includes("without random assignment"))process.exit(1);
+if(!G.choices.hypothesisNeeded.options.No.includes("exploratory qualitative"))process.exit(1);
+if(!G.choices.citationStyle.options["APA 7"].includes("seventh edition"))process.exit(1);
 console.log("PASS student guidance coverage");
