@@ -75,4 +75,11 @@ if(!L.makeSearchLogCSV(legacy).includes("Documentation status"))process.exit(1);
 let unchanged=false;
 try{L.reviseSearchLog(legacy,0,{},"No actual difference","2026-11-01T09:33:00Z")}catch(e){unchanged=true}
 if(!unchanged||legacy.searchLog[0].revisions.length!==2)process.exit(1);
+// Stage C-X3c8d outline | linked source IDs do not imply verified evidence.
+const outlineSample={sources:[{id:"I01",screeningStatus:"Included"},{id:"P01",screeningStatus:"Pending"},{id:"E01",screeningStatus:"Excluded"}],
+  litOutline:[{theme:"Methods",sourceIds:["I01","P01","E01","MISSING","I01"],job:"Compare records",claim:"Working claim",transition:""}],data:{}};
+const outlineText=L.outlineMarkdown(outlineSample);
+if(!outlineText.includes("Linked source IDs (verify claim support)")||outlineText.includes("**Supporting sources:**"))process.exit(1);
+if(!outlineText.includes("P01 (Pending)")||!outlineText.includes("E01 (Excluded)")||!outlineText.includes("MISSING (unknown ID)"))process.exit(1);
+if(outlineText.includes("**Transition / implication:**"))process.exit(1);
 console.log("PASS literature workspace engine");
