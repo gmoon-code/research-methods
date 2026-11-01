@@ -563,13 +563,13 @@
     const themes=Lit.uniqueThemes(project);
     return `<div class="lit-section"><h4>Literature-review paragraph planner</h4><p>Plan the connected ideas that will develop your review. Choose checked evidence for each paragraph, including a close examination of one source when appropriate, and consider how its reasoning leads into the next.</p>
       <div class="form-grid two"><label><span>Choose theme for new paragraph</span><select id="outlineTheme"><option value="">Choose…</option>${themes.map(t=>`<option>${esc(t)}</option>`).join("")}</select></label><label><span>Or type a paragraph focus</span><input id="outlineCustom"></label></div><button class="secondary" id="addOutline">Add paragraph plan</button>
-      ${(project.litOutline||[]).map((p,i)=>`<div class="outline-entry"><div style="float:right"><button class="danger small" data-del-outline="${i}">Remove</button></div><div class="outline-top"><label><span>Theme / focus</span><input data-outline-theme="${i}" value="${esc(p.theme||"")}"></label><label><span>Source IDs</span><input data-outline-sources="${i}" value="${esc((p.sourceIds||[]).join(", "))}"></label></div>
-        <label><span>Paragraph job</span><textarea data-outline-job="${i}">${esc(p.job||"")}</textarea></label>
+      ${(project.litOutline||[]).map((p,i)=>`<div class="outline-entry"><div style="float:right"><button class="danger small" data-del-outline="${i}">Remove</button></div><div class="outline-top"><label><span>Theme / focus</span><input data-outline-theme="${i}" value="${esc(p.theme||"")}"></label><label><span>Linked source IDs (verify claim support)</span><input data-outline-sources="${i}" value="${esc((p.sourceIds||[]).join(", "))}"></label></div>
+        <label><span>What this paragraph develops</span><textarea data-outline-job="${i}">${esc(p.job||"")}</textarea></label>
         <label><span>Claim about the literature</span><textarea data-outline-claim="${i}">${esc(p.claim||"")}</textarea></label>
         <label><span>How the studies compare / synthesize</span><textarea data-outline-synth="${i}">${esc(p.synthesis||"")}</textarea></label>
         <label><span>Contradiction / qualification</span><textarea data-outline-tension="${i}">${esc(p.tension||"")}</textarea></label>
         <label><span>How method, measure, population, or context may explain differences</span><textarea data-outline-cond="${i}">${esc(p.conditions||"")}</textarea></label>
-        <label><span>Transition / implication for next paragraph or study</span><textarea data-outline-transition="${i}">${esc(p.transition||"")}</textarea></label>
+        <label><span>Possible connection to the next idea, if useful</span><textarea data-outline-transition="${i}">${esc(p.transition||"")}</textarea></label>
       </div>`).join("")}
       <div class="lit-toolbar"><button class="ghost small" id="downloadLitOutline">Download Word outline</button></div></div>`;
   }
