@@ -124,7 +124,7 @@ function analysisRecord(p,r){
   return {timestamp:new Date().toISOString(),structure:r.kind,configuration:r.config,output:r.output,
     neutral_summary:summary(r),assumption_notes:audit.issues,missingness:missing,calculation_guard_version:"C-X3c10d",
     validation_scope:"Automated data and model checks only; inferential assumptions and source evidence require independent review.",
-    traceability:{file:p.analysis.fileName||"",imported_at:p.analysis.importedAt||"",rows_imported:p.analysis.rawData.length,rows_used:n,rows_not_used:n!=null?p.analysis.rawData.length-n:null,
+    traceability:{file:p.analysis.fileName||"",imported_at:p.analysis.importedAt||"",estimand:p.analysis.decisionLog?.estimand||"",rows_imported:p.analysis.rawData.length,rows_used:n,rows_not_used:n!=null?p.analysis.rawData.length-n:null,
       headers:[...(p.analysis.headers||[])],import_warnings:[...(p.analysis.importWarnings||[])]}};
 }
 function resultsMarkdown(p){
