@@ -151,7 +151,7 @@ window.RMSMethods = (() => {
       if(e.sensitive==="yes") {elevate("teacher_review"); issues.push(["warning","Sensitive information","The project requires heightened privacy, necessity, and approval review."]); }
       if(e.intervention==="yes" && !present(e.authority)) issues.push(["critical","Authority to implement intervention not documented","Do not begin a participant intervention merely because classroom access is available. Identify who may authorise the intervention and what review must occur first."]);
     }
-    const text=[e.risks,e.procedureRisk,project.data.finalRQ].join(" ");
+    const text=[e.risks,e.procedureRisk,project.data?.finalRQ].join(" ");
     if(/\b(sleep deprivation|sleep less|skip sleep|self[- ]harm|injury|pain induction|medication dose|prescription|dangerous exercise)\b/i.test(text)){
       level="do_not_facilitate";
       issues.push(["critical","Unsafe manipulation route","Do not facilitate a student experiment that deliberately creates harmful or medically sensitive exposure. Use safe observation, secondary data, or literature instead."]);
