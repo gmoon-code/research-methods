@@ -89,7 +89,7 @@ window.RMSLiterature = (() => {
     const contexts=new Set(included.map(s=>s.sample).filter(Boolean)).size;
     const messages=[];
     if(!included.length) messages.push("No sources have been marked Included. Check eligibility decisions before summarising a literature pattern.");
-    if(withMulti.length<2) messages.push("Fewer than two themes currently link multiple eligible sources with recorded evidence stances. Review the studies and their measures before describing convergence.");
+    if(withMulti.length<2) messages.push("The current evidence map has fewer than two themes linking multiple student-included records with recorded evidence stances. Check eligibility, extracted findings and study measures before describing convergence; recorded stances do not independently verify a shared finding.");
     if(limitations<Math.max(2,Math.ceil(included.length/2))) messages.push("Extract limitations from more included studies before using recurring limitations as a study rationale.");
     return {
       included:included.length,
