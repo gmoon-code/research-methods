@@ -191,4 +191,15 @@ if(!/before recruitment/i.test(methodLab.ethics.text)||!methodLab.ethics.text.in
 if(!methodLab.procedure.text.includes("deviation"))process.exit(1);
 if(!methodLab.data.text.includes("nested units")||!methodLab.data.text.includes("observed zero"))process.exit(1);
 if(!methodLab.audit.text.includes("retrospective changes"))process.exit(1);
+// Stage C-X3c6c | Data Lab descriptions and unit-level evidence integrity.
+const dataLab=G.labs.data;
+if(Object.keys(dataLab).length!==7)process.exit(1);
+for(const x of Object.values(dataLab))if(!x.title||!x.text||!x.terms?.length||JSON.stringify(x).includes("—"))process.exit(1);
+if(!dataLab.import.text.includes("source file unchanged")||!dataLab.import.text.includes("leading zeroes"))process.exit(1);
+if(!dataLab.quality.text.includes("not automatic deletion commands"))process.exit(1);
+if(!dataLab.explore.text.includes("categorical counts with denominators"))process.exit(1);
+if(!dataLab.setup.text.includes("qualitative work")||!dataLab.setup.text.includes("clustered"))process.exit(1);
+if(!dataLab.run.text.includes("selected column"))process.exit(1);
+if(!dataLab.history.text.includes("dataset version")||!dataLab.history.text.includes("sensitivity runs"))process.exit(1);
+if(!dataLab.audit.text.includes("reported sample")||!dataLab.audit.text.includes("causal claims"))process.exit(1);
 console.log("PASS student guidance coverage");
