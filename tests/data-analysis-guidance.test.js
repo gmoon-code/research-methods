@@ -35,4 +35,10 @@ p.analysis.missingTokens="NA";p.analysis.decisionLog={structure:"independent_two
 const newAudit=audit(p);
 if(!newAudit.includes("current analysis structure differs")||!newAudit.includes("current estimand differs"))process.exit(1);
 if(!newAudit.includes("Most recent stored analysis")||!newAudit.includes("Results evidence check"))process.exit(1);
+if(!source.includes('id="raSuccess" placeholder=')||source.includes('id="raSuccess" value="1"'))process.exit(1);
+const noTimestamp={...oldRecord,timestamp:undefined};p.analysis.runs=[noTimestamp];
+if(!history(p).includes("Date not recorded")||history(p).includes("Invalid Date"))process.exit(1);
+p.methods.design={};p.analysis.runs=[{...oldRecord,calculation_guard_version:"C-X3c10d",structure:"correlation"}];
+if(!audit(p).includes("Statistical independence cannot be confirmed"))process.exit(1);
+if(!source.includes("Current imported dataset and current missing-code choices."))process.exit(1);
 console.log("PASS Data Lab analysis guidance and qualified output");
