@@ -70,4 +70,12 @@ if(!/based on source evidence already read/.test(G.fields.uncertain.write))proce
 if(!/hypothetical reading exercise/.test(G.fields.questionShift.example))process.exit(1);
 if(!/describe the study practices/.test(G.fields.rq2.example))process.exit(1);
 
+// Stage C-X3c4b | literature-help content checkpoints.
+const k25=Object.keys(G.fields).slice(25,50);
+if(k25.length!==25||k25[0]!=="rq3"||k25[24]!=="litDraft")process.exit(1);
+for(const key of k25){const v=G.fields[key];if(!v.meaning||!v.write||!v.example||!v.questions?.length||!v.avoid||JSON.stringify(v).includes("—"))process.exit(1)}
+if(!G.fields.rqJustification.example.includes("would not be anonymous"))process.exit(1);
+if(!G.fields.searchLog.example.includes("not an executed search"))process.exit(1);
+if(!G.fields.litThemePlan.write.includes("as many sections as the actual evidence needs"))process.exit(1);
+if(!G.fields.litDraft.example.includes("Fictional drafting illustration only"))process.exit(1);
 console.log("PASS student guidance coverage");
