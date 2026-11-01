@@ -3092,7 +3092,7 @@
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Distinguish an accessible population or planned target from an observed or analysed sample. State actual counts only when they are known.",
+          "body": "Distinguish an accessible population or planned target from an observed or analyzed sample. State actual counts only when they are known.",
           "questions": [
             "Who or what is expected to contribute evidence, and by which authorised selection process?",
             "If evidence has been collected, what actually entered the sample or corpus?"
