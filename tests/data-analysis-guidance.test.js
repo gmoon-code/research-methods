@@ -1,4 +1,6 @@
 global.window={RMSStudentFlow:{contextItems:()=>[]}};
+require("../assets/analytics.js");
+const A=window.RMSAnalytics;
 const fs=require("node:fs"),path=require("node:path");
 const source=fs.readFileSync(path.join(__dirname,"../assets/data-lab-ui.js"),"utf8");
 const E=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -7,7 +9,7 @@ const opts=p=>p.analysis.headers.map(h=>'<option>'+E(h)+'</option>').join("");
 const setup=new Function("E","window",extract("function setupTab(p){","function runTab(p){")+"return setupTab;")(E,window);
 const run=new Function("E","opts",extract("function runTab(p){","function historyTab(p){")+"return runTab;")(E,opts);
 const history=new Function("E",extract("function historyTab(p){","function auditTab(p){")+"return historyTab;")(E);
-const audit=new Function("E",extract("function auditTab(p){","function open(project,save")+"return auditTab;")(E);
+const audit=new Function("E","A",extract("function auditTab(p){","function open(project,save")+"return auditTab;")(E,A);
 const p={analysis:{rawData:[{dish_id:"D1",score:"0"}],headers:["dish_id","score"],decisionLog:{structure:"paired_two",estimand:"difference"},runs:[]},data:{finalRQ:"Example",designType:"Experimental"},methods:{design:{experimentalUnit:"dish",rowUnit:"seed"}}};
 const a=setup(p),b=run(p),h=history(p),r=audit(p);
 if(!a.includes("before examining results")||!a.includes("independent units"))process.exit(1);
