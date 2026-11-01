@@ -132,9 +132,18 @@ window.RMSLiterature = (() => {
     return [heads,...rows].map(r=>r.map(escCSV).join(",")).join("\n");
   }
 
+  function searchLogStatus(record){
+    const x=record||{};
+    const required=["date","database","query","filters","results"];
+    const missing=required.filter(k=>String(x[k]??"").trim()==="");
+    const complete=missing.length===0;
+    const confirmed=complete && x.executed===true;
+    return {complete,confirmed,missing,label:!complete?"Incomplete record":confirmed?"Execution confirmed by student":"Execution not confirmed"};
+  }
+
   function makeSearchLogCSV(project){
-    const heads=["Date","Database/search system","Search string","Filters","Results returned","Screened/kept","Notes"];
-    const rows=(project.searchLog||[]).map(x=>[x.date,x.database,x.query,x.filters,x.results,x.kept,x.notes]);
+    const heads=["Date","Database/search system","Search string","Filters","Results returned","Screened/kept","Notes","Documentation status"];
+    const rows=(project.searchLog||[]).map(x=>[x.date,x.database,x.query,x.filters,x.results,x.kept,x.notes,searchLogStatus(x).label]);
     return [heads,...rows].map(r=>r.map(escCSV).join(",")).join("\n");
   }
 
@@ -187,7 +196,7 @@ window.RMSLiterature = (() => {
 
   return {
     normalizeProject,nextSourceId,trappSummary,sourceCompleteness,uniqueThemes,themeMap,
-    gapReadiness,claimAudit,makeStudyMatrixCSV,makeSearchLogCSV,makeThemeCSV,
+    gapReadiness,claimAudit,makeStudyMatrixCSV,makeSearchLogCSV,searchLogStatus,makeThemeCSV,
     outlineMarkdown,sourceIdsForTheme
   };
 })();
