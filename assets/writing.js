@@ -34,18 +34,27 @@ window.RMSWriting=(()=>{
   }
 
   function citationAudit(text,sources){
-    const srcKeys=new Map();
-    (sources||[]).forEach(s=>{const k=sourceKey(s);if(k.key)srcKeys.set(k.key,s)});
-    const found=[];
-    const rx=/\(([A-Z][A-Za-z'’\-]+)(?:\s+et al\.)?(?:\s*&\s*[A-Z][A-Za-z'’\-]+)?,\s*((?:19|20)\d{2}[a-z]?)\)|\b([A-Z][A-Za-z'’\-]+)(?:\s+et al\.)?\s+\(((?:19|20)\d{2}[a-z]?)\)/g;
-    let m;
-    while((m=rx.exec(String(text||"")))){
-      const surname=(m[1]||m[3]||"").toLowerCase(),year=(m[2]||m[4]||"").toLowerCase(),key=`${surname}|${year}`;
-      found.push({text:m[0],surname,year,matched:srcKeys.has(key),source:srcKeys.get(key)||null});
+    const sourceKeys=new Map();
+    (sources||[]).forEach(source=>{const k=sourceKey(source);if(k.key){if(!sourceKeys.has(k.key))sourceKeys.set(k.key,[]);sourceKeys.get(k.key).push(source)}});
+    const found=[],input=String(text||"");
+    const make=(fragment,surname,year)=>{
+      const key=`${surname.toLowerCase()}|${year.toLowerCase()}`,candidates=sourceKeys.get(key)||[],record=candidates.length===1?candidates[0]:null;
+      found.push({text:fragment,surname:surname.toLowerCase(),year:year.toLowerCase(),matched:!!record,ambiguous:candidates.length>1,
+        source:record,candidateCount:candidates.length,screeningStatus:record?.screeningStatus||"Not recorded"});
+    };
+    const parentheses=/\(([^()]{1,350})\)/g;
+    for(const group of input.matchAll(parentheses)){
+      for(const item of group[1].split(";")){
+        const match=item.trim().match(/^([\p{Lu}][\p{L}'’\-]+)(?:\s+et al\.)?(?:\s*&\s*[\p{Lu}][\p{L}'’\-]+)?,\s*((?:19|20)\d{2}[a-z]?)$/u);
+        if(match)make(`(${item.trim()})`,match[1],match[2]);
+      }
     }
+    const narrative=/\b([\p{Lu}][\p{L}'’\-]+)(?:\s+et al\.)?\s+\(((?:19|20)\d{2}[a-z]?)\)/gu;
+    for(const match of input.matchAll(narrative))make(match[0],match[1],match[2]);
     const matchedKeys=new Set(found.filter(x=>x.matched).map(x=>`${x.surname}|${x.year}`));
-    const unused=[...srcKeys.entries()].filter(([k])=>!matchedKeys.has(k)).map(([,s])=>s);
-    return {found,unmatched:found.filter(x=>!x.matched),unused};
+    const unused=(sources||[]).filter(source=>{const key=sourceKey(source).key;return key&&!matchedKeys.has(key)});
+    return {found,unmatched:found.filter(x=>!x.matched&&!x.ambiguous),ambiguous:found.filter(x=>x.ambiguous),
+      statusToCheck:found.filter(x=>x.matched&&["Pending","Excluded"].includes(x.screeningStatus)),unused};
   }
 
   function introBlueprint(p){
@@ -88,7 +97,7 @@ window.RMSWriting=(()=>{
       dataset:p.analysis?.fileName||"",
       sample:p.data?.analysisSample||"",
       runs:runs.map((r,i)=>({id:`A${i+1}`,test:r.output?.test||r.structure,summary:r.neutral_summary||"",assumptions:r.assumption_notes||[],config:r.configuration||{}})),
-      primary:runs[runs.length-1]||null
+      latest:runs[runs.length-1]||null
     };
   }
 
@@ -152,14 +161,16 @@ window.RMSWriting=(()=>{
     if(!present(d.designType))issues.push(["critical","Design missing","The Method and claim ceiling depend on the study design."]);
     if(!(m.protocolVersions||[]).length)issues.push(["warning","No locked protocol","A locked method version strengthens the distinction between planned and post-result decisions."]);
     if(!runs.length)issues.push(["critical","No stored analysis","Results cannot be traced to an analysis record."]);
-    if(!present(w.results))issues.push(["critical","Results draft missing","Report what the evidence showed before interpreting it."]);
-    if(!present(w.discussion))issues.push(["critical","Discussion draft missing","The paper still needs interpretation, limitations, literature comparison, and implications."]);
+    if(!present(w.sections.results))issues.push(["critical","Results draft missing","Report what the evidence showed before interpreting it."]);
+    if(!present(w.sections.discussion))issues.push(["critical","Discussion draft missing","The paper still needs interpretation, limitations, literature comparison, and implications."]);
     if(/Correlational|Descriptive/.test(d.designType||"")&&causal.test(w.discussion+" "+w.conclusion+" "+w.abstract))issues.push(["critical","Causal claim ceiling violation","Nonexperimental designs should not be described as establishing that X caused Y."]);
     const ca=citationAudit([w.introduction,w.literature,w.discussion].join("\n"),p.sources);
-    if(ca.unmatched.length)issues.push(["critical","Paper contains citation(s) absent from the source workspace",ca.unmatched.map(x=>x.text).join(", ")]);
+    if(ca.unmatched.length)issues.push(["critical","Paper contains citation(s) without a matching bibliographic record",ca.unmatched.map(x=>x.text).join(", ")]);
+    if(ca.ambiguous.length)issues.push(["warning","Citation(s) match more than one source record","Clarify the exact publication for "+ca.ambiguous.map(x=>x.text).join(", ")]);
+    if(ca.statusToCheck.length)issues.push(["warning","Cited records require eligibility review","Confirm whether pending or excluded records are being used appropriately as background rather than included synthesis evidence."]);
     const score=Math.max(0,100-issues.filter(x=>x[0]==="critical").length*12-issues.filter(x=>x[0]==="warning").length*5-
       Object.values(sectionAudits).flatMap(x=>x.issues).filter(x=>x[0]==="critical").length*4);
-    return {score,label:score>=90?"Strong alignment":score>=75?"Developing well":score>=55?"Revision needed":"Major revision needed",issues,sectionAudits,citations:ca};
+    return {score,label:score>=90?"Few automated concerns identified":score>=75?"Some automated concerns identified":score>=55?"Several areas need review":"Substantial checks remain",issues,sectionAudits,citations:ca};
   }
 
   function titleAudit(title,p){
