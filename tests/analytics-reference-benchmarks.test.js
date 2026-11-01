@@ -1,0 +1,21 @@
+// Numerical fixtures checked against SciPy 1.17.0 and statsmodels 0.14.6 on 1 November 2026.
+global.window={};
+require("../assets/analytics.js");
+const A=window.RMSAnalytics,near=(a,b,t=1e-8)=>Number.isFinite(a)&&Math.abs(a-b)<=t;
+const welch=A.welchT([1,2,4,5,8],[3,4,7,9,10]);
+if(!near(welch.t,-1.4184162865339502)||!near(welch.df,7.909205548549812)||!near(welch.p,0.19424697302087635))process.exit(1);
+if(!near(welch.hedges_g,-0.8102705277439255))process.exit(1);
+const paired=A.pairedT([1,3,2,6,7],[2,2,4,9,8]);
+if(!near(paired.t,-1.8090680674665816)||!near(paired.p,0.14470399860633043))process.exit(1);
+const fisher=A.fisherExact2x2([[1,9],[11,3]]);
+if(!near(fisher.p,0.0027594561852200836)||!near(fisher.odds_ratio,0.030303030303030304))process.exit(1);
+const chi=A.chiSquare({rows:["A","B"],cols:["yes","no"],table:[[10,20],[20,10]],n:60});
+if(!near(chi.chi2,6.666666666666667)||!near(chi.p,0.009823274507519235))process.exit(1);
+const q=A.cochranQ([[1,0,1],[0,1,0],[1,1,0],[1,0,0],[0,1,1]]);
+if(!near(q.Q,0.4)||!near(q.p,0.8187307530779818))process.exit(1);
+const groups={A:[1,2,3,4,5],B:[4,5,6,7,8],C:[2,4,6,8,10]};
+const wa=A.welchANOVA(groups);
+if(!near(wa.F,4.595744680851063)||!near(wa.p,0.04930330929749136)||!near(wa.df2,7.578947368421052))process.exit(1);
+const ca=A.oneWayANOVA(groups);
+if(!near(ca.F,3)||!near(ca.p,0.0877914951989026)||!near(ca.eta_squared,1/3))process.exit(1);
+console.log("PASS independent statistical reference benchmarks");
