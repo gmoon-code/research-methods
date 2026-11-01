@@ -21,14 +21,14 @@ window.RMSMethods = (() => {
 
   function designProfile(project){
     const d=project.data||{}, m=project.methods||{};
-    const type=d.designType||m.design.type||"Undecided";
+    const type=d.designType||m.design?.type||"Undecided";
     const isExp=/^Experimental$/i.test(type);
     const isQuasi=/Quasi-experimental/i.test(type);
     const isObs=/Correlational|observational/i.test(type);
     const isDesc=/Descriptive/i.test(type);
     const isQual=/Qualitative/i.test(type);
     const isReview=/Literature review|Meta-analysis/i.test(type);
-    return {type,isExp,isQuasi,isObs,isDesc,isQual,isReview,human:m.ethics.humanParticipants==="yes"};
+    return {type,isExp,isQuasi,isObs,isDesc,isQual,isReview,human:m.ethics?.humanParticipants==="yes"};
   }
 
   function roleOptions(project){
