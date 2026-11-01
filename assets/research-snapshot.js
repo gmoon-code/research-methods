@@ -194,7 +194,7 @@ window.RMSResearchSnapshot=(()=>{
      if(mr.procedureSteps?.length){lines.push(`\n### Procedure steps`);mr.procedureSteps.forEach((x,i)=>lines.push(`\n${i+1}. ${Object.entries(x).filter(([,v])=>filled(v)).map(([k,v])=>`${k}: ${v}`).join(" | ")}`))}
    }
    if(ss.total){
-     lines.push(`\n## Source workspace\n\n${ss.total} source record(s), ${ss.included} marked included, ${ss.verified} bibliography record(s) marked verified.`);
+     lines.push(`\n## Source workspace\n\n${ss.total} source record(s), ${ss.included} marked included, ${ss.verified} bibliography record(s) marked checked by student.`);
      ws.sources.forEach(s=>{
        let block=`\n### ${s.id||"Source"}\n\n${s.citation||"_No citation recorded_"}`;
        if(s.finding)block+=`\n\n**Finding / contribution**\n\n${s.finding}`;
