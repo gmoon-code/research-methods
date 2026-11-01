@@ -138,9 +138,13 @@ function resultsMarkdown(p){
     lines.push(`## Analysis ${i+1}`,`Recorded test  ${r.output?.test||r.structure||"Unknown"}`,
       `Calculation safeguards  ${r.calculation_guard_version||"Historical record, not verified under current guards"}`,
       `Dataset file recorded for this analysis  ${r.traceability?.file||"Not recorded"}`,
+      `Estimand recorded when this analysis was stored  ${r.traceability?.estimand||"Not recorded"}`,
       `Rows in imported dataset at calculation  ${r.traceability?.rows_imported??"Not recorded"}`,
       `Missing tokens used for this analysis  ${(r.missingness?.tokens||[]).join(", ")||"Not recorded"}`,
       `Cells reclassified as missing across imported data  ${r.missingness?.convertedCells??"Not recorded"}`,
+      `Rows used for selected calculation  ${r.traceability?.rows_used??"Not recorded"}`,
+      `Rows omitted for selected calculation  ${r.traceability?.rows_not_used??"Not recorded"}`,
+      ...((r.traceability?.import_warnings||[]).map(x=>`- Import note recorded with analysis  ${x}`)),
       `Calculation summary  ${r.neutral_summary||"Not recorded"}`,"",
       ...(r.assumption_notes||[]).map(x=>`- Check  ${x[1]}${x[2]?`. ${x[2]}`:""}`),"");
   });
