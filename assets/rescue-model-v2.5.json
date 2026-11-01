@@ -3081,27 +3081,27 @@
     },
     "sample": {
       "stage": 11,
-      "label": "Actual sample",
+      "label": "Planned or actual sample, with status",
       "type": "textarea",
       "options": [],
       "levels": {
         "1": {
           "name": "Clarify what this field is asking",
-          "body": "The units that will actually be studied.",
-          "prompt": "Which units will actually enter the study, and how many are confirmed?"
+          "body": "For proposed work, describe the expected units or records and the intended selection route. For completed work, report the actual sample or corpus.",
+          "prompt": "Which units or records are planned, and which have actually entered the study?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State the actual number/type/source when known.",
+          "body": "Distinguish an accessible population or planned target from an observed or analysed sample. State actual counts only when they are known.",
           "questions": [
-            "Who or what is actually in the dataset?",
-            "How does this differ from the target population?"
+            "Who or what is expected to contribute evidence, and by which authorised selection process?",
+            "If evidence has been collected, what actually entered the sample or corpus?"
           ]
         },
         "3": {
           "name": "Compare examples and choices",
-          "strong_example": "30 students who voluntarily participate from one biology class; or 18 plants across 9 dishes.",
-          "avoid": "Do not copy the population description if the actual sample is narrower.",
+          "strong_example": "Planned recruitment from one biology class, subject to permission and voluntary participation; the actual number of eligible contributors is not yet known.",
+          "avoid": "Do not describe access to a class or site as completed recruitment. A planned count is not an observed count.",
           "choice": null
         },
         "4": {
@@ -3119,7 +3119,7 @@
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "The sample consists of [specific units and source], with [confirmed count or planned target]. Its inclusion depends on [selection or access condition].",
+          "frame": "The [planned or observed] sample comprises [specified units or records] from [access or selection setting]. The count is [confirmed figure or pending target], and inclusion depends on [eligibility or approved process].",
           "path_frames": {
             "literature_review": "The final evidence set will consist of the studies/reports that pass the documented search and screening criteria."
           }
@@ -3579,18 +3579,18 @@
     },
     "rowUnit": {
       "stage": 12,
-      "label": "What one row represents",
+      "label": "What one data row or evidence record represents",
       "type": "text",
       "options": [],
       "levels": {
         "1": {
           "name": "Clarify what this field is asking",
-          "body": "The exact meaning of one row in the dataset.",
+          "body": "Define the level and identity of each data row, document, case or other evidence record.",
           "prompt": "What exactly does one record represent, and which IDs show whether records share a study unit?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Write one sentence: 'One row represents…'",
+          "body": "For tabular evidence, define what one row represents. For interviews, documents or other records, define how each case or excerpt is identified and linked to its source.",
           "questions": [
             "Can the same independent unit appear in several rows?",
             "What ID is needed to preserve that relationship?"
@@ -3617,7 +3617,7 @@
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "One row represents [one observation or source at defined level and time]. The fields [ID(s)] link [repeated measures or nested units]; the independent analysis unit is [unit, if applicable].",
+          "frame": "One [row or evidence record] represents [observation, case or source at a defined level and time]. The identifiers [ID(s)] preserve [repeated or nested relationships], and the independent analysis unit is [unit, if applicable].",
           "path_frames": {}
         }
       }
@@ -3680,7 +3680,7 @@
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "State what counts as missing, how it is coded, and whether complete-case or another approach will be used later.",
+          "body": "State which values are genuinely missing, how missingness is coded and how analysis will handle it. Enter exact missing tokens separately in the Data Lab when calculating from imported columns; this written plan does not automatically recode values.",
           "questions": [
             "Could 0 be a real value?",
             "Why might data be missing?"
@@ -3707,7 +3707,7 @@
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "A value is missing when [observable condition]. I will code it as [missing code distinct from legitimate values] and record [reason or status]. The planned analysis will [appropriate handling approach] subject to [assumptions and sensitivity check].",
+          "frame": "A value is missing when [observable condition]. I will document [missing code distinct from legitimate values] and [reason or status], then configure that code for the relevant analysis. The handling approach [plan] remains subject to [assumptions and sensitivity checks].",
           "path_frames": {}
         }
       }
@@ -3758,18 +3758,18 @@
     },
     "analysisIntent": {
       "stage": 12,
-      "label": "Primary descriptive and inferential/qualitative analysis plan",
+      "label": "Intended analysis and timing of the decision",
       "type": "textarea",
       "options": [],
       "levels": {
         "1": {
           "name": "Clarify what this field is asking",
-          "body": "The planned way you expect to summarize or analyze the data before final results are known.",
+          "body": "Describe the analysis planned before reviewing results, or identify when a later method was selected. Distinguish intended analyses from calculations actually run.",
           "prompt": "What will you summarise or compare first, at what unit, and which method could address the question without overstating it?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Identify the primary question-aligned quantity or qualitative purpose, the independent analysis unit, how evidence will be summarised and which assumptions would need checking before using a specific method.",
+          "body": "Identify the question-aligned quantity or qualitative purpose, the appropriate case or independent unit, and the method or synthesis approach. Record whether the choice was prospective or made after examining evidence.",
           "questions": [
             "What exact quantity answers the question?",
             "Does the planned analysis preserve unit structure?"
@@ -3796,7 +3796,7 @@
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "My planned analysis targets [primary quantity or evidence pattern] using [observational or experimental unit] and [descriptive comparison or qualitative synthesis]. I will check [relevant assumptions or evidence quality] and limit inference to [design-supported scope].",
+          "frame": "The [planned or later-selected] analysis targets [quantity or evidence pattern] at [unit or case level] using [method or qualitative synthesis]. It was selected [date or decision stage]; I will examine [relevant assumptions or evidence quality] and limit claims to [design-supported scope].",
           "path_frames": {}
         }
       }
@@ -4708,18 +4708,18 @@
     },
     "limitations": {
       "stage": 16,
-      "label": "At least two limitations and exactly how each restricts claims",
+      "label": "Consequential limitations and how each affects claims",
       "type": "textarea",
       "options": [],
       "levels": {
         "1": {
           "name": "Clarify what this field is asking",
           "body": "Specific design/measurement/sampling limits and how each restricts the conclusion.",
-          "prompt": "What are at least two specific limitations, and how does each change the conclusion you can draw?"
+          "prompt": "Which limitations materially affect particular interpretations, and how?"
         },
         "2": {
           "name": "Explain how to approach it",
-          "body": "Identify at least two distinct, substantive limitations. For each, explain the mechanism by which it affects measurement, inference, generalization or transferability rather than merely naming a weakness.",
+          "body": "Identify the substantive design, measurement or sampling limitations relevant to the argument. Explain the mechanism by which each affects measurement, inference, generalisation or transferability rather than merely listing weaknesses.",
           "questions": [
             "How could this feature bias or limit the result?",
             "What claim becomes weaker because of it?"
@@ -4746,7 +4746,7 @@
         },
         "5": {
           "name": "Help me build my own answer",
-          "frame": "Limitation 1 is [design or measurement feature], which restricts [specific inference] through [mechanism]. Limitation 2 is [different feature], affecting [different claim] through [mechanism]. [Possible safeguard] could reduce [one problem] in later work.",
+          "frame": "A consequential limitation is [specific design, measure or selection feature]. It restricts [particular claim] through [mechanism or missing evidence]. [Additional relevant limitation, if any] affects [related inference]. [Practical safeguard or future design] could help address [identified uncertainty].",
           "path_frames": {}
         }
       }
