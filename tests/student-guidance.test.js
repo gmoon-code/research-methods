@@ -78,4 +78,24 @@ if(!G.fields.rqJustification.example.includes("would not be anonymous"))process.
 if(!G.fields.searchLog.example.includes("not an executed search"))process.exit(1);
 if(!G.fields.litThemePlan.write.includes("as many sections as the actual evidence needs"))process.exit(1);
 if(!G.fields.litDraft.example.includes("Fictional drafting illustration only"))process.exit(1);
+// Stage C-X3c4c | research design and methods help entries 51-75.
+const thirdFieldKeys=Object.keys(G.fields).slice(50,75);
+if(thirdFieldKeys.length!==25||thirdFieldKeys[0]!=="designType"||thirdFieldKeys[24]!=="procedure")process.exit(1);
+for(const key of thirdFieldKeys){
+ const v=G.fields[key];
+ if(!v.meaning||!v.write||!v.example||!v.questions?.length||!v.avoid||JSON.stringify(v).includes("—"))process.exit(1);
+}
+if(!G.fields.designType.example.includes("Correlational / observational"))process.exit(1);
+if(!G.fields.comparisonStructure.example.includes("18 dishes"))process.exit(1);
+if(!G.fields.researchHyp.example.includes("100 mM NaCl"))process.exit(1);
+if(!G.fields.outcomeDV.example.includes("Day 7 shoot length"))process.exit(1);
+if(!G.fields.operationalDefs.example.includes("visible_shoot"))process.exit(1);
+if(!G.fields.experimentalUnit.example.includes("not five independent treatment replicates"))process.exit(1);
+if(!G.fields.sample.example.includes("Neither is a completed sample count"))process.exit(1);
+if(!G.fields.sampleLimits.meaning.includes("generalisation"))process.exit(1);
+if(!G.fields.instrument.example.includes("millimetre-marked ruler"))process.exit(1);
+if(!G.fields.measureQuality.example.includes("does not independently assess germination"))process.exit(1);
+if(!G.fields.materials.example.includes("90 radish seeds"))process.exit(1);
+if(!G.fields.procedure.example.includes("keeping no-visible-shoot zeroes distinct from missing records"))process.exit(1);
+
 console.log("PASS student guidance coverage");
