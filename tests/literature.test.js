@@ -56,4 +56,23 @@ L.normalizeProject(historical);
 if(historical.searchLog[0].executed!==undefined||historical.searchLog[1].executed!==true)process.exit(1);
 const csv=L.makeSearchLogCSV(historical);
 if(!csv.includes("Documentation status")||!csv.includes("Execution not confirmed")||!csv.includes("Execution confirmed by student")||!csv.includes("Incomplete record"))process.exit(1);
+// Stage C-X3c8d | correcting legacy search entries preserves evidence and resets confirmation.
+const legacy={searchLog:[{date:"",database:"ERIC",query:"salinity AND germination",filters:"none",results:0,notes:"archived record",legacyFlag:"retain",executed:true}]};
+const prev=JSON.stringify(legacy.searchLog[0]);
+let errorCount=0;
+try{L.reviseSearchLog(legacy,0,{date:"2026-10-31"},"","2026-11-01T09:30:00Z")}catch(e){errorCount++}
+if(errorCount!==1||JSON.stringify(legacy.searchLog[0])!==prev)process.exit(1);
+const correction=L.reviseSearchLog(legacy,0,{date:"2026-10-31"},"Recovered recorded search date from notes","2026-11-01T09:31:00Z");
+if(!correction.requiresConfirmation||legacy.searchLog[0].executed!==false)process.exit(1);
+if(legacy.searchLog[0].date!=="2026-10-31"||legacy.searchLog[0].results!=="0"||legacy.searchLog[0].legacyFlag!=="retain")process.exit(1);
+if(legacy.searchLog[0].revisions.length!==1||legacy.searchLog[0].revisions[0].before.date!==""||legacy.searchLog[0].revisions[0].before.executed!==true)process.exit(1);
+legacy.searchLog[0].executed=true;
+const second=L.reviseSearchLog(legacy,0,{notes:"Corrected transcription in note"},"Checked source annotation","2026-11-01T09:32:00Z");
+if(second.requiresConfirmation||!legacy.searchLog[0].executed||legacy.searchLog[0].revisions.length!==2)process.exit(1);
+if(!L.makeSearchRevisionCSV(legacy).includes("Recovered recorded search date from notes"))process.exit(1);
+if(!L.makeSearchRevisionCSV(legacy).includes("Checked source annotation"))process.exit(1);
+if(!L.makeSearchLogCSV(legacy).includes("Documentation status"))process.exit(1);
+let unchanged=false;
+try{L.reviseSearchLog(legacy,0,{},"No actual difference","2026-11-01T09:33:00Z")}catch(e){unchanged=true}
+if(!unchanged||legacy.searchLog[0].revisions.length!==2)process.exit(1);
 console.log("PASS literature workspace engine");
