@@ -83,3 +83,21 @@ for(const phrase of ["3 records","Student-confirmed execution","Execution not co
 }
 if(provenanceHTML.includes("locked protocol version"))process.exit(1);
 console.log("PASS snapshot display/export provenance parity");
+
+// Stage C-X3c12n | Historical analysis records retain calculation provenance.
+const analysisProvenanceProject={
+  ...provenanceProject,
+  analysis:{runs:[
+    {neutral_summary:"Current-guard calculation",output:{test:"Welch comparison"},calculation_guard_version:"C-X3c10d",traceability:{file:"source-rows.csv",rows_used:18}},
+    {neutral_summary:"Legacy calculation",output:{test:"Correlation"},traceability:{file:"legacy.csv",rows_used:12}}
+  ]}
+};
+const analysisRuns=S.workspaceData(analysisProvenanceProject).runs;
+if(analysisRuns[0].guardVersion!=="C-X3c10d"||analysisRuns[1].guardVersion!=="")process.exit(1);
+if(analysisRuns[0].sourceFile!=="source-rows.csv"||analysisRuns[0].rowsUsed!==18)process.exit(1);
+const analysisMarkdown=S.markdown(analysisProvenanceProject);
+const analysisHTML=renderWorkspace(analysisProvenanceProject);
+for(const fragment of ["Recorded automated safeguards","Earlier or unversioned calculation","source-rows.csv","legacy.csv","not necessarily independent study units"]){
+  if(!analysisMarkdown.includes(fragment)||!analysisHTML.includes(fragment))process.exit(1);
+}
+console.log("PASS snapshot stored-analysis provenance");
