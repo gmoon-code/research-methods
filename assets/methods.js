@@ -113,7 +113,12 @@ window.RMSMethods = (() => {
 
   function auditMeasurements(project){
     const ms=(project.methods||{}).measurements||[], issues=[];
-    if(!ms.length) issues.push(["critical","No measurement plan","Every construct central to the research question must have a measurement, scoring, observation, or manipulation rule."]);
+    if(!ms.length){
+      const p=designProfile(project);
+      if(p.isReview) issues.push(["info","Review evidence plan to check","Specify how sources will be selected, information extracted and evidence synthesised in the appropriate review fields; participant measurements are not automatically required."]);
+      else if(p.isQual) issues.push(["warning","Qualitative evidence procedure missing","Describe how interviews, observations, documents or other qualitative records will be collected and interpreted, without forcing them into numerical measurement categories."]);
+      else issues.push(["critical","No measurement plan","Describe how each central outcome or construct will be measured, scored or recorded."]);
+    }
     ms.forEach((x,i)=>{
       const lab=x.construct||`Measure ${i+1}`;
       if(!present(x.operational)) issues.push(["critical",`${lab}: operational definition missing`,"State exactly what will be counted, scored, measured, coded, or manipulated."]);
