@@ -602,6 +602,46 @@ test(
 );
 
 test(
+  "a prompt HTTP response with a stalled JSON body still respects the total startup timeout",
+  async () => {
+    let resolveBody;
+    let fireDeadline;
+    const setup = contextFor({
+      fetchImpl: async () => ({
+        status: 200,
+        ok: true,
+        json: () => new Promise(resolve => { resolveBody = resolve; })
+      }),
+      setTimeoutImpl: fn => {
+        fireDeadline = fn;
+        return 1;
+      },
+      clearTimeoutImpl: () => {}
+    });
+
+    const baseline = deepClone(setup.curriculum.stages);
+    vm.runInNewContext(loaderSource, setup.context, {
+      filename: "assets/public-content-loader.js"
+    });
+
+    for (let i = 0; i < 12 && !resolveBody; i++) await Promise.resolve();
+    assert.equal(typeof resolveBody, "function", "the 200 response must begin parsing its body");
+    assert.equal(typeof fireDeadline, "function");
+    fireDeadline();
+    const state = await setup.context.window.RMSPublicContentReady;
+    assert.equal(state.source, "bundled");
+    assert.equal(state.load_status, "timeout");
+    assert.deepEqual(deepClone(setup.curriculum.stages), baseline);
+
+    resolveBody(releaseFor(setup.curriculum, {
+      mutateRecord(records) { records[0].value.title = "Too late after body timeout"; }
+    }));
+    for (let i = 0; i < 5; i++) await Promise.resolve();
+    assert.deepEqual(deepClone(setup.curriculum.stages), baseline);
+  }
+);
+
+test(
   "invalid or missing public endpoint never sends a request",
   async () => {
     let calls = 0;
