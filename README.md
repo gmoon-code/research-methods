@@ -93,6 +93,8 @@ Research Chat is optional. When project context is enabled, the browser minimize
 
 The class Chat code is session-only in the browser and is not included in project backups.
 
+The Pilot & Recovery Center offers two different local JSON downloads. Full recovery backups can contain student-entered project details, research notes, raw data and Chat history. The separate **limited progress summary** retains a stage number, activity counts and export time without written project responses or project-title-based filenames. The summary **cannot restore a project** and is not guaranteed anonymous or approved for sharing. Files labelled “privacy copies” downloaded before this change may contain substantially more notebook information and should be treated as sensitive.
+
 The Admin publication access code and signed Admin session are separate from the student Chat code. Secret values never belong in browser source, GitHub, screenshots, student project files, or content releases.
 
 The v3.0.0 release does not enable operational telemetry or research-study data collection.
