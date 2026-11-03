@@ -214,7 +214,8 @@
     const hist=(project.reviews||[]).filter(r=>r.stage===current().id).slice(-3).reverse();
     const aiPolicy=Pilot.featureAccess(project,"ai"),ai=AI.reviewEnabled()&&aiPolicy.allowed;
     return `<div class="coach-panel"><div class="coach-panel-head"><div><h4>Check my work</h4><div class="muted tiny">Use this after you have made your own attempt. The local check looks for missing or inconsistent research decisions.</div></div></div>
-      <div class="button-row"><button class="primary small" id="reviewStage">Check my work</button>${ai?'<button class="ghost small" id="reviewAI">Ask Chat for deeper feedback</button>':""}</div>
+      <div class="button-row"><button class="primary small" id="reviewStage">Check my work</button>${ai?'<button class="ghost small" id="reviewAI">Ask Chat about my research plan</button>':""}</div>
+      ${ai?'<p class="muted tiny">Chat uses a limited project summary only when “Use my current project context” is on in Research Chat. It does not read all stage answers. Your request still goes to the class Chat service.</p>':""}
       <div id="coachReview"></div><div id="aiCoachReview"></div>
       ${hist.length?`<details class="history"><summary>Earlier checks (${hist.length})</summary>${hist.map(h=>`<div class="history-row">${new Date(h.time).toLocaleString()} · ${esc((h.kind||"local")==="AI"?"Chat":(h.kind||"local"))} · ${esc(h.label||h.verdict||"review")}</div>`).join("")}</details>`:""}
     </div>`;
@@ -1090,15 +1091,12 @@
 
     if($("reviewAI")) $("reviewAI").onclick=async()=>{
       const btn=$("reviewAI"); btn.disabled=true; btn.textContent="Reviewing…";
-      const local=PathCoach.reviewStage(current().id,project);
+      const includeProjectContext=project.aiHelper?.includeProjectContext!==false;
       const payload={
         stage_id:current().id,
-        project_context:stageContext(),
-        student_work:stageStudentWork(),
-        deterministic_flags:local.messages.map(x=>({level:x.level,title:x.title,body:x.body})),
-        scaffold_level:1,
-        source_context:(current().id>=6 && current().id<=8)?project.sources:[],
-        course_config:{audience:"secondary student",citation_style:project.data.citationStyle||"APA 7",research_path:project.pathway?.selected||"unsure",pathway_rule:"Evaluate only requirements appropriate to the confirmed research path; do not require hypotheses, IV/DV, p-values, effect sizes, participant sampling, or experimental controls unless that pathway and question genuinely need them."}
+        stage_title:current().title||current().nav||`Stage ${current().id}`,
+        useProjectContext:includeProjectContext,
+        project_context:includeProjectContext?stageContext():{}
       };
       try{
         const r=await AI.review(payload);
@@ -1107,7 +1105,7 @@
         save(); $("aiCoachReview").innerHTML=renderAIResponse(r);
       }catch(err){
         $("aiCoachReview").innerHTML=`<div class="coach-feedback bad"><b>Chat feedback is unavailable right now</b><br>${esc(err.message)}</div>`;
-      }finally{btn.disabled=false;btn.textContent="Ask Chat for deeper feedback";}
+      }finally{btn.disabled=false;btn.textContent="Ask Chat about my research plan";}
     };
     if($("runInterest")) $("runInterest").onclick=()=>{
       Competency.recordSupport(project,current().id,2,"Interest Compass","Conceptual research-pathway cue");
