@@ -129,7 +129,8 @@ window.RMSPilot = (() => {
     return {allowed:true,reason:"No pilot restriction applies."};
   }
   function backupFilename(project,mode="full"){
-    const stem=String(project?.name||"research-project").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,42)||"research-project";
+    // Reduced summaries must not disclose the student's project title in a filename.
+    const stem=mode==="privacy"?"research":String(project?.name||"research-project").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,42)||"research-project";
     const stamp=new Date().toISOString().replace(/[:.]/g,"-");
     return `${stem}-${mode==="privacy"?"progress-summary":"full-backup"}-${stamp}.json`;
   }
