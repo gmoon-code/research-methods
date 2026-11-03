@@ -100,11 +100,8 @@ window.RMSAIHelper=(()=>{
       conversation_id:project.aiHelper.conversationId,
       question:String(question||"").trim(),
       conversation_history:conversation(project),
-      project_context:include?contextPacket(project,PathCoach,question):{
-        stage:{id:stage(project).id,title:stageTitle(project)},
-        research_path:{id:project.pathway?.selected||"unsure",name:Paths.selected?Paths.selected(project).name:(project.pathway?.selected||"Unsure")},
-        current_field:currentField(project)
-      },
+      useProjectContext:include,
+      project_context:include?contextPacket(project,PathCoach,question):{},
       helper_policy:{
         audience:"secondary student / novice researcher",
         answer_clarification_directly:true,
