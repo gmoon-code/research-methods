@@ -89,8 +89,10 @@ test('privacy export remains a nonrestorable packet and warns against assuming a
   assert.match(e.warning, /not anonymous/);
   assert.match(e.warning, /not.*recovery backup/);
   assert.match(e.warning, /creation time/);
-  assert.match(P.backupFilename({ name: secret }, 'privacy'), /-progress-summary-/);
-  assert.doesNotMatch(P.backupFilename({ name: secret }, 'privacy'), /privacy-copy/);
+  const summaryFilename = P.backupFilename({ name: secret + ' Participant' }, 'privacy');
+  assert.match(summaryFilename, /^research-progress-summary-/);
+  assert.doesNotMatch(summaryFilename, /PRIVATE|participant|privacy-copy/i);
+  assert.match(P.backupFilename({ name: 'Ordinary research' }, 'full'), /^ordinary-research-full-backup-/);
 });
 
 test('full recovery backups remain complete, readable and restorable', () => {
