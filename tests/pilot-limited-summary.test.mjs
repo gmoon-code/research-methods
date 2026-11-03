@@ -5,6 +5,7 @@ import vm from 'node:vm';
 
 const source = readFileSync(new URL('../assets/pilot.js', import.meta.url), 'utf8');
 const uiSource = readFileSync(new URL('../assets/pilot-ui.js', import.meta.url), 'utf8');
+const readme = readFileSync(new URL('../README.md', import.meta.url), 'utf8');
 const secret = 'PRIVATE-DO-NOT-EXPORT-LEVEL-9';
 
 function actualPilot() {
@@ -130,4 +131,7 @@ test('UI names this a limited summary and warns it cannot restore or ensure safe
   assert.match(uiSource, /Older files previously labelled/);
   assert.match(uiSource, /detailed notebook text or Chat history/);
   assert.doesNotMatch(uiSource, /Download privacy-minimized copy/);
+  assert.match(readme, /limited progress summary/);
+  assert.match(readme, /cannot restore a project/);
+  assert.match(readme, /privacy copies.*substantially more notebook information/);
 });
