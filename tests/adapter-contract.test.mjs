@@ -260,6 +260,44 @@ test('real Research Chat helper checkbox excludes notebook context from the seri
   assert.equal(requestBody.context.focused_field.value, secret);
 });
 
+test('stage-review Chat respects shared project-context choice and discloses summary scope', async () => {
+  const appSource = await readFile(new URL('../assets/app.js', import.meta.url), 'utf8');
+  assert.match(appSource, /useProjectContext:includeProjectContext/);
+  assert.match(appSource, /project_context:includeProjectContext\?stageContext\(\):\{\}/);
+  assert.match(appSource, /Ask Chat about my research plan/);
+  assert.match(appSource, /It does not read all stage answers/);
+  assert.doesNotMatch(appSource, /Ask Chat for deeper feedback/);
+
+  let requestBody;
+  const { ctx } = makeContext(async (_url, options) => {
+    requestBody = JSON.parse(options.body);
+    return new Response(JSON.stringify(successBody()), { status: 200, headers: { 'Content-Type': 'application/json' } });
+  });
+  ctx.window.RMSAI.setAccessCode('class-code-12345678');
+  const secret = 'PRIVATE CURRENT RESEARCH QUESTION';
+
+  await ctx.window.RMSAI.review({
+    stage_id: 4, stage_title: 'Research question',
+    useProjectContext: false,
+    project_context: { research_question: secret, design: 'Sensitive project design' }
+  });
+  assert.deepEqual(JSON.parse(JSON.stringify(requestBody.context)), {
+    stage: { id: 0, title: '' },
+    focused_field: { key: '', label: '', value: '' },
+    project: { summary: {}, verified_sources: [] }
+  });
+  assert.doesNotMatch(JSON.stringify(requestBody), /PRIVATE CURRENT RESEARCH QUESTION|Sensitive project design/);
+  assert.match(requestBody.question, /Research question/);
+
+  await ctx.window.RMSAI.review({
+    stage_id: 4, stage_title: 'Research question',
+    useProjectContext: true,
+    project_context: { research_question: secret, design: 'Observational' }
+  });
+  assert.equal(requestBody.context.project.summary.research_question, secret);
+  assert.equal(requestBody.context.project.summary.design, 'Observational');
+});
+
 test('review compatibility uses the same fixed secure endpoint and returns legacy aliases', async () => {
   let captured;
   const { ctx } = makeContext(async (url, options) => {
