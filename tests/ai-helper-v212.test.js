@@ -23,6 +23,7 @@ if(!field||field.key!=="finalRQ"||field.has_attempt!==false)process.exit(1);
 
 const payload=H.buildPayload(project,"Write my research question for me.",{reviewStage:()=>({messages:[{level:"warning",title:"Question incomplete",body:"Specify variables and population."}]})});
 if(payload.request_version)process.exit(1); // adapter adds request_version
+if(payload.useProjectContext!==true)process.exit(1);
 if(payload.project_context.stage.id!==4)process.exit(1);
 if(payload.project_context.current_field.key!=="finalRQ")process.exit(1);
 if(payload.project_context.current_field.has_attempt!==false)process.exit(1);
@@ -40,9 +41,10 @@ if(project.aiHelper.messages.length!==2)process.exit(1);
 if(H.quickPrompts(project).length<4)process.exit(1);
 
 project.aiHelper.includeProjectContext=false;
-const minimal=H.buildPayload(project,"Explain correlation.",null).project_context;
-if("accumulated_research_chain" in minimal)process.exit(1);
-if(!minimal.stage||!minimal.research_path)process.exit(1);
+const contextOff=H.buildPayload(project,"Explain correlation.",null);
+if(contextOff.useProjectContext!==false)process.exit(1);
+if(Object.keys(contextOff.project_context).length!==0)process.exit(1);
+if(!contextOff.question||!Array.isArray(contextOff.conversation_history))process.exit(1);
 
 H.clear(project);
 if(project.aiHelper.messages.length!==0)process.exit(1);
