@@ -75,21 +75,34 @@ window.RMSPilot = (() => {
   }
   function clone(x){return JSON.parse(JSON.stringify(x))}
   function privacyCopy(project){
-    const p=clone(project);normalizeProject(p);
-    if(p.analysis){p.analysis.rawData=[];p.analysis.fileName=p.analysis.fileName?"[omitted from privacy copy]":""}
-    if(p.writing?.sections)for(const k of Object.keys(p.writing.sections))p.writing.sections[k]="[full manuscript omitted]";
-    if(Array.isArray(p.sources))p.sources=p.sources.map(s=>({id:s.id,citation:s.citation,title:s.title,authors:s.authors,year:s.year,screeningStatus:s.screeningStatus,verified:s.verified,themes:s.themes,themeEvidence:s.themeEvidence}));
-    return p;
+    // Explicit allowlist. Never serialize student-entered text, sources, methods,
+    // Chat history, identifiers, raw datasets or manuscript fragments here.
+    const count=value=>Array.isArray(value)?value.length:0;
+    const stage=Number(project?.currentStage);
+    const sections=project?.writing?.sections;
+    return {
+      copy_type:"limited_progress_summary",
+      current_stage:Number.isInteger(stage)&&stage>=1&&stage<=18?stage:null,
+      activity_counts:{
+        source_records:count(project?.sources),
+        search_log_records:count(project?.searchLog),
+        literature_claims:count(project?.litClaims),
+        schema_fields:count(project?.schema),
+        analysis_runs:count(project?.analysis?.runs),
+        written_sections:sections&&typeof sections==="object"&&!Array.isArray(sections)
+          ?Object.values(sections).filter(value=>typeof value==="string"&&value.trim().length>0).length:0
+      }
+    };
   }
   function backupEnvelope(project,mode="full"){
     const body=mode==="privacy"?privacyCopy(project):clone(project),payload=JSON.stringify(body);
     return {packet_type:"rms_project_backup",version:"2.0",mode,created_at:new Date().toISOString(),baseline_id:BASELINE_ID,checksum_fingerprint:stableHash(payload),project:body,
-      warning:mode==="full"?"Full recovery backup may contain raw data, source notes, and manuscript text. Store it according to school/privacy requirements.":"Privacy-minimized copy is not a complete recovery backup."};
+      warning:mode==="full"?"Full recovery backup may contain raw data, source notes, and manuscript text. Store it according to school/privacy requirements.":"Limited progress summary only. Includes stage, activity counts and creation time; excludes notebook text and is not anonymous, approved for sharing, or a recovery backup."};
   }
   function validateBackup(packet){
     if(packet?.packet_type==="rms_project_backup"&&packet.version==="2.0"&&packet.project){
       const fp=stableHash(JSON.stringify(packet.project)),ok=fp===packet.checksum_fingerprint,mode=packet.mode||"full";
-      return {ok,project:ok?normalizeProject(packet.project):null,mode,legacy:false,restorable:ok&&mode!=="privacy",error:ok&&mode==="privacy"?"Privacy-minimized copies intentionally omit raw data and manuscript text and cannot be used as recovery backups.":ok?"":"Backup integrity fingerprint does not match."};
+      return {ok,project:ok?normalizeProject(packet.project):null,mode,legacy:false,restorable:ok&&mode!=="privacy",error:ok&&mode==="privacy"?"Limited progress summaries omit the project’s written work and cannot be used as recovery backups.":ok?"":"Backup integrity fingerprint does not match."};
     }
     if(packet && typeof packet==="object" && (packet.data||packet.ready||packet.name))return {ok:true,project:normalizeProject(packet),mode:"legacy-full",legacy:true,restorable:true};
     return {ok:false,restorable:false,error:"File is not a recognized Research Methods Studio project backup."};
