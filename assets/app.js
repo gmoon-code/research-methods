@@ -1430,25 +1430,54 @@
     wrap.className="modal-backdrop";
     wrap.id="newProjectBackdrop";
     wrap.innerHTML=`<div class="modal"><div class="journey-head"><div><h3>Start a different project?</h3><p>Your current project is saved only on this browser unless you download a backup.</p></div><button class="ghost small" id="cancelNewProject">Cancel</button></div>
-      <div class="help-choice-grid"><button id="backupThenNew"><b>Download backup and start new</b><span>Recommended. Save a full recovery copy first.</span></button><button id="newWithoutBackup" class="destructive-option"><b>Start new without backup</b><span>Clear this browser's current project and begin again.</span></button></div></div>`;
+      <div class="help-choice-grid"><button id="backupThenNew"><b>Download full recovery backup</b><span>Save your current project before deciding whether to clear it.</span></button><button id="newWithoutBackup" class="destructive-option"><b>Start new without backup</b><span>Clear this browser's current project and begin again.</span></button></div>
+      <div id="backupNewConfirmation" hidden><p>Check that the downloaded JSON file is saved somewhere you can find it. Starting a download does not confirm that the file was saved.</p>
+        <label class="checkline"><input type="checkbox" id="backupFileConfirmed"> I have located the full recovery backup file on my device or approved storage.</label>
+        <button class="primary" id="confirmBackupNew" disabled>Start new with saved backup</button></div>
+      <p id="newProjectStatus" role="status" aria-live="polite"></p></div>`;
     document.body.appendChild(wrap);
     $("cancelNewProject").onclick=()=>wrap.remove();
     wrap.onclick=e=>{if(e.target===wrap)wrap.remove()};
+    const status=$("newProjectStatus");
+    const clearAndReload=()=>{
+      const cleared=Pilot.clearProjectStorage(KEY,{clearOnboarding:false});
+      if(!cleared.primary||!cleared.recovery||!cleared.meta){
+        status.textContent="Browser storage could not be cleared completely. Check the project before starting again.";
+        return;
+      }
+      location.reload();
+    };
     $("backupThenNew").onclick=()=>{
-      download(
-        "research-methods-studio-full-backup.json",
-        JSON.stringify(Pilot.backupEnvelope(project,"full"),null,2),
-        "application/json"
-      );
-      setTimeout(()=>{
-        Pilot.clearProjectStorage(KEY,{clearOnboarding:false});
-        location.reload();
-      },250);
+      const confirmation=$("backupNewConfirmation");
+      const checked=$("backupFileConfirmed");
+      const proceed=$("confirmBackupNew");
+      confirmation.hidden=true;
+      checked.checked=false;
+      proceed.disabled=true;
+      status.textContent="";
+      try{
+        download(
+          "research-methods-studio-full-backup.json",
+          JSON.stringify(Pilot.backupEnvelope(project,"full"),null,2),
+          "application/json"
+        );
+        confirmation.hidden=false;
+        status.textContent="Download requested. Locate and check the saved JSON file before continuing. Your browser project has not been cleared.";
+      }catch(err){
+        status.textContent="The backup download could not be started. Your browser project has not been cleared.";
+      }
+    };
+    $("backupFileConfirmed").onchange=()=>{
+      $("confirmBackupNew").disabled=!$("backupFileConfirmed").checked;
+    };
+    $("confirmBackupNew").onclick=()=>{
+      if(!$("backupFileConfirmed").checked)return;
+      if(!confirm("Have you located the saved full recovery JSON file? Starting a new project will clear this browser's current project."))return;
+      clearAndReload();
     };
     $("newWithoutBackup").onclick=()=>{
       if(confirm("Clear the current browser project without downloading a backup?")){
-        Pilot.clearProjectStorage(KEY,{clearOnboarding:false});
-        location.reload();
+        clearAndReload();
       }
     };
   };
