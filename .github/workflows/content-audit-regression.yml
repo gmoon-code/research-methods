@@ -6,6 +6,8 @@ on:
     paths:
       - 'api/research-chat.js'
       - 'assets/ai-adapter.js'
+      - 'assets/public-content-loader.js'
+      - 'tests/public-content-loader.test.mjs'
       - 'assets/research-snapshot.js'
       - 'assets/research-snapshot-ui.js'
       - 'tests/research-chat-backend.test.mjs'
@@ -29,3 +31,5 @@ jobs:
         run: node --test tests/research-chat-backend.test.mjs tests/adapter-contract.test.mjs
       - name: Research Snapshot regression
         run: node tests/snapshot-v211.test.js
+      - name: Public content loader startup, validation and fallback regressions
+        run: node --test tests/public-content-loader.test.mjs
