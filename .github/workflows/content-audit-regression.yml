@@ -14,6 +14,7 @@ on:
       - 'tests/backup-reset-confirmation.test.mjs'
       - 'tests/backup-restore-save-first.test.mjs'
       - 'tests/pilot-save-rollback.test.mjs'
+      - 'tests/pilot-limited-summary.test.mjs'
       - 'assets/research-snapshot.js'
       - 'assets/research-snapshot-ui.js'
       - 'tests/research-chat-backend.test.mjs'
@@ -45,3 +46,5 @@ jobs:
         run: node --test tests/backup-restore-save-first.test.mjs
       - name: Browser-local multi-key save and rollback regressions
         run: node --test tests/pilot-save-rollback.test.mjs
+      - name: Limited progress summary privacy and backup-format regressions
+        run: node --test tests/pilot-limited-summary.test.mjs
