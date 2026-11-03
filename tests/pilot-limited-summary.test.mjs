@@ -127,5 +127,7 @@ test('UI names this a limited summary and warns it cannot restore or ensure safe
   assert.match(uiSource, /not guaranteed anonymous or approved for sharing/);
   assert.match(uiSource, /It cannot restore your work/);
   assert.match(uiSource, /Check the file and your school/);
+  assert.match(uiSource, /Older files previously labelled/);
+  assert.match(uiSource, /detailed notebook text or Chat history/);
   assert.doesNotMatch(uiSource, /Download privacy-minimized copy/);
 });
