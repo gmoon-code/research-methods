@@ -25,17 +25,40 @@ window.RMSPilot = (() => {
   function emit(status){lastStatus=status;try{window.dispatchEvent(new CustomEvent("rms-save-status",{detail:status}))}catch{}}
   function safeSave(key,project){
     normalizeProject(project); const raw=JSON.stringify(project),now=new Date().toISOString();
+    let previousPrimary=null,primaryWritten=false;
     try{
       const metaKey=key+META_SUFFIX,recoveryKey=key+RECOVERY_SUFFIX;
       let meta={};try{meta=JSON.parse(localStorage.getItem(metaKey)||"{}")||{}}catch{}
-      const prev=localStorage.getItem(key),lastRecovery=meta.lastRecovery?new Date(meta.lastRecovery).getTime():0;
-      if(prev && Date.now()-lastRecovery>5*60*1000 && bytes(prev)<2_500_000){
-        try{localStorage.setItem(recoveryKey,prev);meta.lastRecovery=now}catch{}
+      previousPrimary=localStorage.getItem(key);
+      const lastRecovery=meta.lastRecovery?new Date(meta.lastRecovery).getTime():0;
+      if(previousPrimary && Date.now()-lastRecovery>5*60*1000 && bytes(previousPrimary)<2_500_000){
+        try{localStorage.setItem(recoveryKey,previousPrimary);meta.lastRecovery=now}catch{}
       }
-      localStorage.setItem(key,raw);
+      localStorage.setItem(key,raw);primaryWritten=true;
       meta.lastSavedAt=now;meta.bytes=bytes(raw);meta.version=VERSION;localStorage.setItem(metaKey,JSON.stringify(meta));
       emit({ok:true,time:now,message:"Saved locally",bytes:meta.bytes});return {ok:true,...meta};
-    }catch(err){emit({ok:false,time:now,message:`Save failed: ${err?.message||err}`});return {ok:false,error:String(err?.message||err)}}
+    }catch(err){
+      // localStorage has no multi-key transaction. If metadata failed after the
+      // primary write, attempt to restore the prior primary without clobbering
+      // a different value written by another tab in the meantime.
+      let rollback="not-needed";
+      if(primaryWritten){
+        try{
+          const current=localStorage.getItem(key);
+          if(current!==raw){rollback="changed-elsewhere"}
+          else{
+            if(previousPrimary===null)localStorage.removeItem(key);
+            else localStorage.setItem(key,previousPrimary);
+            rollback="restored";
+          }
+        }catch{rollback="failed"}
+      }
+      const error=String(err?.message||err);
+      const warning=(rollback==="failed"||rollback==="changed-elsewhere")
+        ? " The previously saved browser copy may have changed. Export your open project before leaving this tab." : "";
+      emit({ok:false,time:now,message:`Save failed: ${error}${warning}`,rollback});
+      return {ok:false,error,rollback};
+    }
   }
   function safeLoad(key){
     let primary=null,recovery=null,error="";
