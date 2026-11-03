@@ -766,6 +766,12 @@ window.RMSPublicContentLoader = (() => {
         : null;
 
     let timer = null;
+    const stopTimer = () => {
+      if (timer !== null) {
+        clearTimeout(timer);
+        timer = null;
+      }
+    };
 
     const timeout =
       new Promise(
@@ -815,24 +821,18 @@ window.RMSPublicContentLoader = (() => {
           timeout
         ]);
     } catch {
-      if (timer) {
-        clearTimeout(timer);
-      }
-
+      stopTimer();
       return bundledState(
         "unavailable",
         "network"
       );
     }
 
-    if (timer) {
-      clearTimeout(timer);
-    }
-
     if (
       response?.timeout ===
       true
     ) {
+      stopTimer();
       return bundledState(
         "timeout",
         "startup-timeout"
@@ -844,6 +844,7 @@ window.RMSPublicContentLoader = (() => {
       typeof response.status !==
         "number"
     ) {
+      stopTimer();
       return bundledState(
         "unavailable",
         "response"
@@ -854,12 +855,14 @@ window.RMSPublicContentLoader = (() => {
       response.status ===
         404
     ) {
+      stopTimer();
       return bundledState(
         "no-publication"
       );
     }
 
     if (!response.ok) {
+      stopTimer();
       return bundledState(
         "unavailable",
         "http"
@@ -869,14 +872,30 @@ window.RMSPublicContentLoader = (() => {
     let payload;
 
     try {
-      payload =
-        await response.json();
+      // Share the same startup deadline with the response body. A quick
+      // HTTP status must not leave a slow JSON stream blocking the app.
+      const parsed = await Promise.race([
+        Promise.resolve()
+          .then(() => response.json())
+          .then(value => ({ value })),
+        timeout
+      ]);
+      if (parsed?.timeout === true) {
+        stopTimer();
+        return bundledState(
+          "timeout",
+          "startup-timeout"
+        );
+      }
+      payload = parsed.value;
     } catch {
+      stopTimer();
       return bundledState(
         "rejected",
         "malformed-json"
       );
     }
+    stopTimer();
 
     if (
       !exactKeys(
