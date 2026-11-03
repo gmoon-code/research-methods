@@ -8,8 +8,11 @@ on:
       - 'assets/ai-adapter.js'
       - 'assets/public-content-loader.js'
       - 'assets/app.js'
+      - 'assets/pilot-ui.js'
+      - 'assets/pilot.js'
       - 'tests/public-content-loader.test.mjs'
       - 'tests/backup-reset-confirmation.test.mjs'
+      - 'tests/backup-restore-save-first.test.mjs'
       - 'assets/research-snapshot.js'
       - 'assets/research-snapshot-ui.js'
       - 'tests/research-chat-backend.test.mjs'
@@ -37,3 +40,5 @@ jobs:
         run: node --test tests/public-content-loader.test.mjs
       - name: Browser-project reset and backup confirmation regressions
         run: node --test tests/backup-reset-confirmation.test.mjs
+      - name: Browser-project backup restore, validation and failed-save regressions
+        run: node --test tests/backup-restore-save-first.test.mjs
