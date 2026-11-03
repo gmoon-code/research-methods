@@ -7,7 +7,9 @@ on:
       - 'api/research-chat.js'
       - 'assets/ai-adapter.js'
       - 'assets/public-content-loader.js'
+      - 'assets/app.js'
       - 'tests/public-content-loader.test.mjs'
+      - 'tests/backup-reset-confirmation.test.mjs'
       - 'assets/research-snapshot.js'
       - 'assets/research-snapshot-ui.js'
       - 'tests/research-chat-backend.test.mjs'
@@ -33,3 +35,5 @@ jobs:
         run: node tests/snapshot-v211.test.js
       - name: Public content loader startup, validation and fallback regressions
         run: node --test tests/public-content-loader.test.mjs
+      - name: Browser-project reset and backup confirmation regressions
+        run: node --test tests/backup-reset-confirmation.test.mjs
