@@ -131,7 +131,7 @@ window.RMSPilot = (() => {
   function backupFilename(project,mode="full"){
     const stem=String(project?.name||"research-project").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,42)||"research-project";
     const stamp=new Date().toISOString().replace(/[:.]/g,"-");
-    return `${stem}-${mode==="privacy"?"privacy-copy":"full-backup"}-${stamp}.json`;
+    return `${stem}-${mode==="privacy"?"progress-summary":"full-backup"}-${stamp}.json`;
   }
   function applyRestore(current,restored){
     const p=normalizeProject(restored);p.pilot.restoreHistory.push({time:new Date().toISOString(),fromVersion:current?.pilot?.softwareVersion||"unknown",restoredVersion:p.pilot.softwareVersion||"unknown"});return p;
