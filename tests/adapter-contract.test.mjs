@@ -219,6 +219,47 @@ test('explicit context-off flag overrides even a populated legacy project_contex
   assert.doesNotMatch(JSON.stringify(requestBody), new RegExp(classCode));
 });
 
+test('real Research Chat helper checkbox excludes notebook context from the serialized request', async () => {
+  const helperSource = await readFile(new URL('../assets/ai-helper.js', import.meta.url), 'utf8');
+  let requestBody;
+  const { ctx } = makeContext(async (_url, options) => {
+    requestBody = JSON.parse(options.body);
+    return new Response(JSON.stringify(successBody()), { status: 200, headers: { 'Content-Type': 'application/json' } });
+  });
+  ctx.window.RMSCurriculum = {
+    stages: [{ id: 4, title: 'Research question', sections: [{ fields: [['finalRQ', 'Research question', 'textarea']] }] }]
+  };
+  ctx.window.RMSPathways = { selected: () => ({ name: 'Observational' }) };
+  ctx.window.RMSResearchSnapshot = { coreChain: () => [] };
+  vm.runInContext(helperSource, ctx);
+  ctx.window.RMSAI.setAccessCode('class-code-12345678');
+
+  const secret = 'PRIVATE NOTEBOOK FIELD - NEVER SEND WHEN CONTEXT IS OFF';
+  const project = {
+    currentStage: 4, pathway: { selected: 'observational' },
+    data: { finalRQ: secret }, sources: [], schema: [], analysis: { runs: [] }, writing: { sections: {} },
+    aiHelper: { includeProjectContext: false, lastField: { key: 'finalRQ', label: 'Research question' } }
+  };
+  const H = ctx.window.RMSAIHelper;
+  const off = H.buildPayload(project, 'What is a useful variable?', null);
+  assert.equal(off.useProjectContext, false);
+  assert.deepEqual(JSON.parse(JSON.stringify(off.project_context)), {});
+  await ctx.window.RMSAI.chat(off);
+  assert.deepEqual(JSON.parse(JSON.stringify(requestBody.context)), {
+    stage: { id: 0, title: '' },
+    focused_field: { key: '', label: '', value: '' },
+    project: { summary: {}, verified_sources: [] }
+  });
+  assert.equal(requestBody.question, 'What is a useful variable?');
+  assert.doesNotMatch(JSON.stringify(requestBody), /PRIVATE NOTEBOOK FIELD|Observational|Research question/);
+
+  project.aiHelper.includeProjectContext = true;
+  const on = H.buildPayload(project, 'Help me critique my question.', null);
+  assert.equal(on.useProjectContext, true);
+  await ctx.window.RMSAI.chat(on);
+  assert.equal(requestBody.context.focused_field.value, secret);
+});
+
 test('review compatibility uses the same fixed secure endpoint and returns legacy aliases', async () => {
   let captured;
   const { ctx } = makeContext(async (url, options) => {
